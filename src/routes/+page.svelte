@@ -536,7 +536,7 @@
             </h1>
             <p class="text-sm md:text-base text-slate-700 max-w-2xl">
               Simulate the inbox, the portal, and the “we regret to inform you” emails now, so the
-              real day hurts less—and your application is better.
+              real day hurts less — and your application is better.
             </p>
           </div>
           <div class="hidden md:flex flex-col items-end text-xs text-slate-600 space-y-1">
