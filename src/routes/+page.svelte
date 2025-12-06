@@ -7,7 +7,7 @@
   import SiteHeader from '$lib/components/layout/SiteHeader.svelte';
   import SiteFooter from '$lib/components/layout/SiteFooter.svelte';
   import ApplicationTimeline from '$lib/components/home/ApplicationTimeline.svelte';
-  import AdmitMail from '$lib/components/admitMail/AdmitMail.svelte';
+  import AdmitMail from '$lib/components/AdmitMail.svelte';
 
   import {
     portals,
@@ -868,4 +868,3 @@
 
   <SiteFooter />
 </main>
-```
