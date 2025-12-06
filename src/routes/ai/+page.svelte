@@ -1,101 +1,115 @@
+<script>
+  import SiteFooter from '$lib/components/layout/SiteFooter.svelte';
+  import SiteHeader from '$lib/components/layout/SiteHeader.svelte';
+</script>
+
 <svelte:head>
-  <title>Ivy League essays in 5 minutes – PredictAdmit AI</title>
+  <title>Stress-test your application in 5 minutes – PredictAdmit AI</title>
   <meta
     name="description"
-    content="PredictAdmit AI helps you draft standout college essays, generate extracurricular ideas, and get AI-powered feedback in minutes."
+    content="PredictAdmit AI is a purpose-built college app engine that reads your application like an AO and helps you refine the story — not auto-generate it."
   />
 </svelte:head>
 
-<script>
-    import SiteFooter from '$lib/components/layout/SiteFooter.svelte';
-import SiteHeader from '$lib/components/layout/SiteHeader.svelte';
-</script>
-
 <SiteHeader />
+
 <main class="min-h-screen bg-slate-950 text-slate-50">
   <div class="max-w-6xl mx-auto px-4 py-10 space-y-16">
     <!-- HERO -->
     <section class="grid gap-10 md:grid-cols-2 items-center">
       <div class="space-y-4">
         <p class="text-xs uppercase tracking-[0.3em] text-sky-400/80">
-          Ivy League essays · in 5 minutes
+          Decision day prep · PredictAdmit AI
         </p>
-        <h1 class="text-3xl md:text-4xl font-bold leading-tight">
-          The AI-powered platform for
+        <h1 class="text-3xl md:text-4xl font-bold leading-tight space-y-1">
+          <span class="block">Stress-test your application</span>
           <span class="block text-sky-300">
-            standout college applications.
+            with an AI that reads the whole story.
           </span>
         </h1>
         <p class="text-sm md:text-base text-slate-300 max-w-xl">
-          PredictAdmit AI helps you turn your stats, activities, and story into essays, activities,
-          and a narrative that actually stands out — without sounding like AI sludge.
+          PredictAdmit AI doesn’t spit out new essays. It reads what you already have — essays,
+          activities, context — and tells you how the narrative actually lands in an AO’s head.
         </p>
 
         <div class="flex flex-col sm:flex-row gap-3 mt-4">
           <a
             href="https://discord.gg"
             target="_blank"
-            class="inline-flex items-center justify-center px-4 py-2.5 text-sm font-semibold rounded-sm border border-slate-600 bg-slate-900 hover:bg-slate-800"
+            class="inline-flex items-center justify-center px-4 py-2.5 text-sm font-semibold rounded-sm border border-slate-700 bg-slate-900 hover:bg-slate-800"
           >
-            Join the Discord
+            Join the PredictAdmit Discord
           </a>
           <a
             href="#pricing"
             class="inline-flex items-center justify-center px-4 py-2.5 text-sm font-semibold rounded-sm border border-sky-500 bg-sky-400 text-slate-900 hover:bg-sky-300 hover:border-sky-400"
           >
-            Get started, it’s free
+            Run a 5-minute AI stress test
           </a>
         </div>
 
         <p class="text-[11px] text-slate-400 mt-2">
-          No credit card required. Built by students who actually went through this.
+          No credit card. Built by students who lived decision day — and trained the AI to focus on
+          narrative, coherence, and spike instead of auto-writing for you.
         </p>
       </div>
 
+      <!-- Live preview card -->
       <div class="relative">
         <div class="absolute -inset-4 bg-sky-500/10 blur-3xl rounded-full"></div>
         <div class="relative border border-slate-800 bg-slate-900 rounded-xl p-5 shadow-2xl">
           <p class="text-[11px] font-semibold tracking-[0.2em] uppercase text-slate-400 mb-2">
-            Live preview
+            Live preview · committee brain
           </p>
           <h2 class="text-lg font-semibold text-slate-50">
-            “Rewrite my Common App essay to sound like me, but 20% more polished.”
+            “Read this like a top-20 AO in committee. Is this a yes, maybe, or no — and what’s
+            killing the story or carrying it?”
           </h2>
           <p class="mt-3 text-sm text-slate-300">
-            PredictAdmit AI analyzes your draft, your voice, and your goals — then suggests
-            edits, structures, and hooks tailored to you, not some generic template.
+            Under the hood, PredictAdmit AI runs your existing file through layered rubrics,
+            simulated admit files, and committee-style reasoning — surfacing how your narrative
+            plays when someone has 6 minutes and 40 other apps to read.
           </p>
           <div class="mt-4 text-[11px] text-slate-400">
-            Powered by GPT-5 level reasoning, tuned specifically for college applications.
+            Coherence checks, spike checks, and consistency filters stacked on top of advanced
+            models — so it behaves less like a text generator and more like a brutally honest reader
+            living in your laptop.
           </div>
         </div>
       </div>
     </section>
 
-    <!-- MAIN FEATURES -->
+    <!-- MAIN FEATURES: BUILT AROUND STRESS-TESTING -->
     <section class="space-y-6">
       <div>
         <p class="text-xs uppercase tracking-[0.25em] text-sky-400/80 mb-1">
-          Our main features 🦸🏼
+          What PredictAdmit AI actually does
         </p>
         <h2 class="text-xl md:text-2xl font-bold">
-          Standout applications, <span class="text-sky-300">powered by AI.</span>
+          Not “write my essay.” A
+          <span class="text-sky-300">college application reader</span>
+          plugged into the PredictAdmit sim.
         </h2>
+        <p class="text-sm text-slate-300 max-w-xl mt-1">
+          You bring drafts, activities, and context. PredictAdmit AI brings the committee brain:
+          where your story threads connect, where they drop, and what the overall file is really
+          saying about you.
+        </p>
       </div>
 
       <div class="grid gap-6 md:grid-cols-2">
-        <!-- Feature 1: AI Essay Generator -->
+        <!-- Feature 1: 5-minute narrative lab -->
         <article class="border border-slate-800 bg-slate-900/60 rounded-lg p-5 flex flex-col gap-3">
           <div>
-            <h3 class="text-sm font-semibold">AI Essay Generator</h3>
+            <h3 class="text-sm font-semibold">5-minute narrative lab</h3>
             <p class="text-xs text-slate-400">
-              Draft an Ivy League–level essay in just 5 minutes.
+              When the pieces are there but the story isn’t.
             </p>
           </div>
           <p class="text-sm text-slate-200">
-            Generate and refine your college essays through a personalized 5-step process — where
-            PredictAdmit AI will ask about your values, help you find a personal anecdote, suggest
-            a structure, and finally draft something you can adapt into your own words.
+            Paste in your existing essay and a quick snapshot of the rest of your app. The lab maps
+            what story those pieces are telling now — then points out gaps, contradictions, and
+            missed through-lines, so you know what to cut, move, or rewrite yourself.
           </p>
           <div class="mt-2 border-t border-slate-800 pt-3 text-[11px] text-slate-300 italic">
             “I WILL be recommending this to all of my friends as we go through this college journey
@@ -104,17 +118,18 @@ import SiteHeader from '$lib/components/layout/SiteHeader.svelte';
           </div>
         </article>
 
-        <!-- Feature 2: AI Essay Feedback -->
+        <!-- Feature 2: AO-style feedback -->
         <article class="border border-slate-800 bg-slate-900/60 rounded-lg p-5 flex flex-col gap-3">
           <div>
-            <h3 class="text-sm font-semibold">AI Essay Feedback</h3>
+            <h3 class="text-sm font-semibold">AO-style essay feedback</h3>
             <p class="text-xs text-slate-400">
-              One-click, high-quality feedback on any draft.
+              Reads your draft like a real file, not a blank page.
             </p>
           </div>
           <p class="text-sm text-slate-200">
-            PredictAdmit AI analyzes your essay with advanced models, giving targeted comments on
-            clarity, structure, voice, and impact — in seconds. No more vague “this is good” feedback.
+            You don’t get a new essay — you get margin notes: what’s memorable, what feels generic,
+            what parts of your spike are underplayed, and how this essay fits (or clashes) with your
+            activities and goals. It’s narrative triage, not auto-writing.
           </p>
           <div class="mt-2 border-t border-slate-800 pt-3 text-[11px] text-slate-300 italic">
             “It’s definitely convenient to access all my writing documents in one spot while having
@@ -123,18 +138,18 @@ import SiteHeader from '$lib/components/layout/SiteHeader.svelte';
           </div>
         </article>
 
-        <!-- Feature 3: AI Extracurricular Generator -->
+        <!-- Feature 3: Activity & spike builder -->
         <article class="border border-slate-800 bg-slate-900/60 rounded-lg p-5 flex flex-col gap-3">
           <div>
-            <h3 class="text-sm font-semibold">AI Extracurricular Generator</h3>
+            <h3 class="text-sm font-semibold">Activity &amp; spike alignment</h3>
             <p class="text-xs text-slate-400">
-              Get personalized extracurricular activity ideas.
+              Makes your 150 characters match the story, not fight it.
             </p>
           </div>
           <p class="text-sm text-slate-200">
-            Generate tailored extracurricular ideas based on your interests, time, and goals. Choose
-            your favorites and get concrete overviews, example Common App descriptions, and actionable
-            to-do plans.
+            Feed in how you currently describe an activity. PredictAdmit AI flags jargon, fluff, and
+            buried impact — then suggests tighter framing and emphasis so your descriptions echo
+            the same spike your essays are trying to sell.
           </p>
           <div class="mt-2 border-t border-slate-800 pt-3 text-[11px] text-slate-300 italic">
             “I was able to write perfect essays — it gives you a skeleton to work off of and helps
@@ -143,17 +158,18 @@ import SiteHeader from '$lib/components/layout/SiteHeader.svelte';
           </div>
         </article>
 
-        <!-- Feature 4: Example Essays -->
+        <!-- Feature 4: Example essays & patterns -->
         <article class="border border-slate-800 bg-slate-900/60 rounded-lg p-5 flex flex-col gap-3">
           <div>
-            <h3 class="text-sm font-semibold">Example Essays</h3>
+            <h3 class="text-sm font-semibold">Example patterns, not copy-paste</h3>
             <p class="text-xs text-slate-400">
-              Get inspired by top-notch example essays.
+              Shows you how strong files are assembled.
             </p>
           </div>
           <p class="text-sm text-slate-200">
-            Explore a curated library of 500+ high-quality example essays from top schools. Use them
-            as models for structure, tone, and narrative — without ever copying a single line.
+            Instead of “here, copy this essay,” the engine highlights how successful essays move:
+            where they pivot, when they zoom out, how they land the ending — then points to spots in
+            <em>your</em> draft where a similar move would sharpen the story.
           </p>
           <div class="mt-2 border-t border-slate-800 pt-3 text-[11px] text-slate-300 italic">
             “I felt like this was really easy to use ngl.”
@@ -163,79 +179,87 @@ import SiteHeader from '$lib/components/layout/SiteHeader.svelte';
       </div>
     </section>
 
-    <!-- MORE FEATURES -->
+    <!-- MORE FEATURES: APPLICATION LAB -->
     <section class="space-y-6">
       <div>
         <p class="text-xs uppercase tracking-[0.25em] text-sky-400/80 mb-1">
-          And so much more… 💼
+          Application lab · beyond essays
         </p>
         <h2 class="text-xl md:text-2xl font-bold">
-          Our tools quietly <span class="text-sky-300">revolutionize</span> applying to college.
+          Less “AI wrote this,” more
+          <span class="text-sky-300">“my whole file finally makes sense.”</span>
         </h2>
       </div>
 
       <div class="grid gap-4 md:grid-cols-3 text-sm">
         <div class="border border-slate-800 bg-slate-900/70 rounded-lg p-4">
-          <h3 class="text-sm font-semibold mb-1">AI College Consultant</h3>
+          <h3 class="text-sm font-semibold mb-1">AI college strategist</h3>
           <p class="text-xs text-slate-400 mb-2">
-            Fully personalized college consultant at your fingertips.
+            Looks at the file like a human strategist would.
           </p>
           <p class="text-xs text-slate-300">
-            Upload your stats, activities, and essays and get school-by-school strategy,
-            suggestions, and risk ranges — all in one place.
+            Upload your stats, activities, and targets. Instead of rewriting anything, the engine
+            calls out where your list, your spike, and your current materials don’t line up — and
+            where a small tweak could make the story more believable.
           </p>
         </div>
 
         <div class="border border-slate-800 bg-slate-900/70 rounded-lg p-4">
-          <h3 class="text-sm font-semibold mb-1">Generate Hook</h3>
+          <h3 class="text-sm font-semibold mb-1">Opening line surgery</h3>
           <p class="text-xs text-slate-400 mb-2">
-            Instantly create an engaging opening.
+            Fixes what’s already there, not inventing a new persona.
           </p>
           <p class="text-xs text-slate-300">
-            Turn a boring first sentence into a memorable hook that makes an overworked AO keep
-            reading.
+            Paste your existing intro. PredictAdmit AI flags clichés, slow starts, and confusing
+            pivots — then offers concrete edits and alternatives that still sound like you, but
+            land faster in a skim read.
           </p>
         </div>
 
         <div class="border border-slate-800 bg-slate-900/70 rounded-lg p-4">
-          <h3 class="text-sm font-semibold mb-1">Write About Next</h3>
+          <h3 class="text-sm font-semibold mb-1">“What next?” structure hints</h3>
           <p class="text-xs text-slate-400 mb-2">
-            Never get stuck mid-essay again.
+            Keeps the narrative moving instead of bloating it.
           </p>
           <p class="text-xs text-slate-300">
-            Receive real-time suggestions for the most compelling themes and ideas to develop next.
+            If you’re stuck mid-draft, the system doesn’t write the next paragraph for you; it
+            points to the next <em>move</em> that keeps your spike in view — reflect, zoom out,
+            counterpoint, tighten, etc.
           </p>
         </div>
 
         <div class="border border-slate-800 bg-slate-900/70 rounded-lg p-4">
-          <h3 class="text-sm font-semibold mb-1">Extracurriculars</h3>
+          <h3 class="text-sm font-semibold mb-1">Activities polish</h3>
           <p class="text-xs text-slate-400 mb-2">
-            Upgrade your activities list.
+            Makes each line support the same story.
           </p>
           <p class="text-xs text-slate-300">
-            Rewrite your activities in Common App format with stronger verbs, clearer impact, and
-            tighter character counts.
+            Rewrites are tuned for AO skim speed: role → impact → scale. You see before/after
+            phrasings so you can decide what feels most like you while still backing up your
+            narrative.
           </p>
         </div>
 
         <div class="border border-slate-800 bg-slate-900/70 rounded-lg p-4">
-          <h3 class="text-sm font-semibold mb-1">Continue Writing</h3>
+          <h3 class="text-sm font-semibold mb-1">Continue in your voice</h3>
           <p class="text-xs text-slate-400 mb-2">
-            Pick up exactly where you left off.
+            Protects tone while you make the edits.
           </p>
           <p class="text-xs text-slate-300">
-            Prompt the AI to continue in your voice and style so drafts don’t die as half-finished docs.
+            The engine studies your earlier paragraphs, then proposes tweaks and additions in that
+            same register. You accept, reject, and rewrite — it’s scaffolding, not a ghostwriter.
           </p>
         </div>
 
         <div class="border border-slate-800 bg-slate-900/70 rounded-lg p-4">
-          <h3 class="text-sm font-semibold mb-1">GPT-5-level engine</h3>
+          <h3 class="text-sm font-semibold mb-1">Modern AI engine</h3>
           <p class="text-xs text-slate-400 mb-2">
-            Built on cutting-edge models.
+            Built to edit and evaluate, not to take over.
           </p>
           <p class="text-xs text-slate-300">
-            Leverage state-of-the-art reasoning models to level up the sophistication and nuance of
-            every essay draft.
+            Underneath is a cutting-edge reasoning model, but the real value is the college app
+            layer on top — rubrics, checks, and flows that stay focused on refining your narrative,
+            not replacing it with AI-sounding prose.
           </p>
         </div>
       </div>
@@ -245,25 +269,29 @@ import SiteHeader from '$lib/components/layout/SiteHeader.svelte';
     <section id="pricing" class="space-y-6">
       <div class="space-y-1">
         <p class="text-xs uppercase tracking-[0.25em] text-sky-400/80 mb-1">
-          Pricing 💰
+          Pricing
         </p>
         <h2 class="text-xl md:text-2xl font-bold">
-          Unleash your application’s potential.
+          Start free. Upgrade if it changes how your file reads.
         </h2>
         <p class="text-sm text-slate-300 max-w-xl">
-          Start free and upgrade only if it actually moves the needle for your applications.
+          The free tier is enough to feel the difference between “AI helped me write” and “AI
+          helped me finally see my application as a story.”
         </p>
       </div>
 
       <div class="flex flex-col sm:flex-row gap-5">
         <!-- Free plan -->
-        <article class="flex-1 border border-slate-800 bg-slate-900/70 rounded-lg p-5 flex flex-col">
+        <article
+          class="flex-1 border border-slate-800 bg-slate-900/70 rounded-lg p-5 flex flex-col"
+        >
           <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 mb-1">
-            Free
+            Free · first stress test
           </p>
-          <h3 class="text-lg font-bold mb-1">Get a feel before paying anything.</h3>
+          <h3 class="text-lg font-bold mb-1">Run PredictAdmit AI on real drafts.</h3>
           <p class="text-sm text-slate-300 mb-4">
-            Try PredictAdmit AI on real essays and ideas, with enough usage to see if it fits your workflow.
+            Enough usage to see how your current essays and activities land in a narrative pass —
+            without changing a single school on your list or writing anything from scratch.
           </p>
           <div class="flex items-baseline gap-1 mb-4">
             <span class="text-3xl font-bold">$0</span>
@@ -275,26 +303,29 @@ import SiteHeader from '$lib/components/layout/SiteHeader.svelte';
             Try for free
           </button>
           <ul class="mt-4 space-y-1 text-xs text-slate-300">
-            <li>• 10,000 tokens</li>
-            <li>• 3 example essays</li>
-            <li>• Unlimited ideas & brainstorming</li>
-            <li>• Unlimited essay projects</li>
+            <li>• 10,000 tokens for narrative passes</li>
+            <li>• 3 example application breakdowns</li>
+            <li>• Unlimited essay &amp; activity reviews</li>
+            <li>• Unlimited projects to keep drafts organized</li>
           </ul>
         </article>
 
         <!-- Pro plan -->
-        <article class="flex-1 border border-sky-500 bg-slate-900 rounded-lg p-5 flex flex-col relative overflow-hidden">
+        <article
+          class="flex-1 border border-sky-500 bg-slate-900 rounded-lg p-5 flex flex-col relative overflow-hidden"
+        >
           <span
             class="absolute right-3 top-3 text-[10px] uppercase tracking-[0.2em] bg-sky-500 text-slate-900 px-2 py-1 rounded-sm font-semibold"
           >
-            Best deal 🔥
+            Best for full app cycle
           </span>
           <p class="text-xs font-semibold uppercase tracking-[0.2em] text-sky-300 mb-1">
-            Pro · Full cycle
+            Pro · full decision-day prep
           </p>
-          <h3 class="text-lg font-bold mb-1">Get the full PredictAdmit AI experience.</h3>
+          <h3 class="text-lg font-bold mb-1">Keep the “narrative AO” on call all year.</h3>
           <p class="text-sm text-slate-200 mb-4">
-            For students who want a serious edge from the first draft to the final “submit” click.
+            For students who want that godsend feeling — a tuned reader that keeps the whole story
+            aligned — from first messy draft to the final “submit” and portal refresh.
           </p>
           <div class="flex items-baseline gap-1 mb-4">
             <span class="text-3xl font-bold">$19</span>
@@ -306,10 +337,10 @@ import SiteHeader from '$lib/components/layout/SiteHeader.svelte';
             Purchase now
           </button>
           <ul class="mt-4 space-y-1 text-xs text-slate-100">
-            <li>• Unlimited tokens</li>
-            <li>• Access to 500+ example essays</li>
-            <li>• Full AI essay writing suite</li>
-            <li>• Extracurricular recommendation & polishing tools</li>
+            <li>• Effectively unlimited narrative passes</li>
+            <li>• Access to 500+ example essay breakdowns</li>
+            <li>• Full feedback suite for essays &amp; supplements</li>
+            <li>• Activity list framing &amp; polish tools</li>
             <li>• Priority support via Discord community</li>
           </ul>
         </article>
@@ -320,10 +351,10 @@ import SiteHeader from '$lib/components/layout/SiteHeader.svelte';
     <section class="space-y-6">
       <div>
         <p class="text-xs uppercase tracking-[0.25em] text-sky-400/80 mb-1">
-          Frequently asked questions 📣
+          Frequently asked questions
         </p>
         <h2 class="text-xl md:text-2xl font-bold">
-          Questions about AI, ethics, and how this fits into your process.
+          How this is different from “just using ChatGPT for my essays.”
         </h2>
       </div>
 
@@ -331,64 +362,73 @@ import SiteHeader from '$lib/components/layout/SiteHeader.svelte';
         <div class="border border-slate-800 bg-slate-900/70 rounded-lg p-4">
           <h3 class="font-semibold text-sm mb-1">What is PredictAdmit AI’s mission?</h3>
           <p class="text-xs text-slate-300">
-            To make high-quality guidance accessible to students who don’t have $5,000+ for private
-            consultants — while still respecting integrity and your own voice.
+            To give you structured, committee-style reads on the story your file tells — something
+            families usually only get from expensive counselors, not from a generic “rewrite this”
+            chatbot.
           </p>
         </div>
 
         <div class="border border-slate-800 bg-slate-900/70 rounded-lg p-4">
-          <h3 class="font-semibold text-sm mb-1">Is using this ethical?</h3>
+          <h3 class="font-semibold text-sm mb-1">Can’t I just copy your prompts into another AI?</h3>
           <p class="text-xs text-slate-300">
-            Yes, when used correctly. PredictAdmit AI is a brainstorming and editing assistant. You
-            stay in control of the ideas, stories, and final wording.
+            The value isn’t a magic prompt. It’s the sequence of checks — narrative, spike,
+            coherence, context — chained together around the assumption that you already wrote the
+            draft and just need to see it the way a reader will.
           </p>
         </div>
 
         <div class="border border-slate-800 bg-slate-900/70 rounded-lg p-4">
           <h3 class="font-semibold text-sm mb-1">Will colleges know if I use it?</h3>
           <p class="text-xs text-slate-300">
-            Colleges can’t “detect” tools like this when you write your own work and use AI as an
-            assistant rather than a ghostwriter.
+            Not when you use it as a reader and editor. You’re still doing the writing; the system
+            is just holding up a mirror to how your pieces fit together. If it doesn’t sound like
+            you, you change it until it does.
           </p>
         </div>
 
         <div class="border border-slate-800 bg-slate-900/70 rounded-lg p-4">
-          <h3 class="font-semibold text-sm mb-1">What’s your stance on AI in applications?</h3>
+          <h3 class="font-semibold text-sm mb-1">How does this connect to the portal sim?</h3>
           <p class="text-xs text-slate-300">
-            We think AI should make the process fairer — not replace your story. Our tooling is
-            explicitly designed to keep you in the loop.
+            PredictAdmit AI refines what’s in the file. The PredictAdmit simulator lets you feel
+            what that file leads to on decision day. Together they cover both: the narrative and the
+            emotional punch of opening those portals.
           </p>
         </div>
 
         <div class="border border-slate-800 bg-slate-900/70 rounded-lg p-4">
-          <h3 class="font-semibold text-sm mb-1">How do you ensure academic integrity?</h3>
+          <h3 class="font-semibold text-sm mb-1">Is using this ethical?</h3>
           <p class="text-xs text-slate-300">
-            We encourage revision, reflection, and personalization. The best outcomes happen when
-            students use AI drafts as scaffolding, then heavily rewrite in their own voice.
+            Yes, when you treat it as a narrative coach. We ask you to revise, fact-check, and make
+            final calls. The goal is to sharpen your story, not erase it under AI prose.
           </p>
         </div>
 
         <div class="border border-slate-800 bg-slate-900/70 rounded-lg p-4">
           <h3 class="font-semibold text-sm mb-1">What is your refund policy?</h3>
           <p class="text-xs text-slate-300">
-            If you don’t find value in the Pro plan within 7 days, reach out and we’ll make it right.
+            If you don’t feel a meaningful difference in how your app reads within 7 days, reach
+            out and we’ll make it right. This should feel like the reader you wish you had from day
+            one — not just another tool.
           </p>
         </div>
       </div>
     </section>
 
     <!-- FINAL CTA -->
-    <section class="border border-sky-500/80 bg-sky-500/10 rounded-xl p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+    <section
+      class="border border-sky-500/80 bg-sky-500/10 rounded-xl p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4"
+    >
       <div class="space-y-2">
         <p class="text-xs uppercase tracking-[0.25em] text-sky-300">
-          Last call ! 🚀
+          Next step
         </p>
         <h2 class="text-xl md:text-2xl font-bold">
-          Ready to start?
+          Give it one draft and see if your story gets clearer.
         </h2>
         <p class="text-sm text-slate-200 max-w-xl">
-          You won’t regret it. PredictAdmit AI helps you reach your potential and walk into decision
-          day with essays you’re proud of.
+          PredictAdmit AI is meant to be the reader who gets the big picture when you’re too deep in
+          the weeds — the tool that makes you say, “Oh. <em>That’s</em> what my app is actually
+          saying about me.”
         </p>
         <p class="text-[11px] text-slate-300 italic">
           “This is actually going to change the applying-to-college game forever.”
@@ -405,4 +445,6 @@ import SiteHeader from '$lib/components/layout/SiteHeader.svelte';
       </div>
     </section>
   </div>
+
+  <SiteFooter />
 </main>
