@@ -586,6 +586,9 @@
 
                 <!-- body copy -->
                 <div class="px-4 py-4 text-sm text-slate-800 space-y-3 leading-relaxed flex-1">
+                  <p class="text-sm md:text-base font-semibold text-slate-900">
+                   Free random decision simulator.
+                  </p>
                   <p>
                     <span class="font-semibold">Desensitize yourself.</span><br />
                     Watch realistic decision emails hit your fake inbox so the real “accepted” and
