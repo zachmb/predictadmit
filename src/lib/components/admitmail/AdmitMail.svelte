@@ -7,7 +7,7 @@
   // view state
   export let viewMode: 'inbox' | 'email';
   export let activeFolder: 'inbox' | 'sent';
-
+// ?
   // search + lists
   export let searchQuery: string;
   export let filteredPortals: PortalEmail[];
