@@ -58,12 +58,10 @@
   // AI hero state
   let aiExpanded = false;
 
-  // AI advisor should be separate from the simulation
   const handleAiGetStarted = () => {
     aiExpanded = true;
   };
 
-  // Main simulation CTA – reveals the fake account form
   const handleStartSimulationClick = () => {
     showAccountForm = true;
   };
@@ -209,7 +207,7 @@
     });
 
     hasSavedProfile = true;
-    saveMessage = 'Fake login saved locally.';
+    saveMessage = 'Fake login saved.';
     showAccountForm = true;
     saveState();
   };
@@ -363,7 +361,7 @@
 
   const handleApply = () => {
     if (!canApply) {
-      saveMessage = 'Please create a fake account above before applying.';
+      saveMessage = 'Fill out name, email, and password first.';
       return;
     }
     if (hasApplied) return;
@@ -412,7 +410,7 @@
     name = '';
     email = '';
     password = '';
-    saveMessage = 'Simulation reset. Enter a new fake login to start again.';
+    saveMessage = 'Simulation reset. Start fresh with a new fake login.';
 
     // reset flow flags
     hasApplied = false;
@@ -454,7 +452,6 @@
   };
 
   // Unlock ED / RD emails as the calendar + application phase progress
-  // IMPORTANT: this now runs for any hasApplied, not only when applicationPhase === 'finished'
   $: if (hasApplied) {
     const currentDate = calendarDates[calendarIndex];
 
@@ -526,92 +523,81 @@
 <main class="min-h-screen bg-slate-200 text-slate-900 font-serif flex flex-col">
   <SiteHeader />
 
-  <!-- CONTENT WRAPPER -->
   <div class="flex-1">
-    <div class="max-w-5xl mx-auto px-4 py-8 space-y-8">
+    <div class="max-w-5xl mx-auto px-4 py-10 space-y-10">
       <!-- HERO -->
-      <section class="bg-white border border-slate-400 shadow-md rounded-sm overflow-hidden">
+      <section class="bg-white border border-slate-400 shadow-md rounded-md overflow-hidden">
         <div
-          class="border-b border-slate-300 bg-gradient-to-r from-slate-100 via-slate-50 to-slate-100 px-4 py-3 flex flex-col md:flex-row md:items-center md:justify-between gap-3"
+          class="border-b border-slate-300 bg-gradient-to-r from-slate-100 via-slate-50 to-slate-100 px-5 py-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4"
         >
-          <div>
-            <p class="text-[10px] uppercase tracking-[0.25em] text-slate-500 mb-1">
+          <div class="space-y-1">
+            <p class="text-xs tracking-[0.25em] uppercase text-slate-500">
               decision day sandbox · beta
             </p>
-            <h1 class="text-xl md:text-2xl font-bold text-slate-900">
-              PredictAdmit Undergraduate Admissions Portal Simulator
+            <h1 class="text-2xl md:text-3xl font-bold text-slate-900">
+              Practice college decision day before it’s real.
             </h1>
-            <p class="text-xs text-slate-700 mt-1 max-w-3xl">
-              Rehearse college decision day with a fully simulated inbox and portal system. Nothing is real,
-              nothing is sent anywhere, and everything stays on your device.
+            <p class="text-sm md:text-base text-slate-700 max-w-2xl">
+              Simulate the inbox, the portal, and the “we regret to inform you” emails now, so the real day
+              hurts less—and your application is better.
             </p>
           </div>
-          <div class="hidden md:flex flex-col items-end text-[10px] text-slate-600">
+          <div class="hidden md:flex flex-col items-end text-xs text-slate-600 space-y-1">
             <span
-              class="px-2 py-1 border border-emerald-400 bg-emerald-50 text-emerald-800 rounded-sm mb-1"
+              class="px-2 py-1 border border-emerald-400 bg-emerald-50 text-emerald-800 rounded-sm"
             >
-              New · ED / RD timeline built-in
+              New · ED / RD timeline
             </span>
-            <span>
-              Uses your name + fake login to make portals feel uncomfortably real (in a good way).
-            </span>
+            <span>Runs fully in your browser. No real data, no accounts.</span>
           </div>
         </div>
 
-        <div class="px-4 py-5 space-y-6">
-          <!-- HERO GRID: how predictadmit works + AI essays box -->
+        <div class="px-5 py-6 space-y-8">
+          <!-- HERO GRID -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
-            <!-- LEFT: HOW predictadmit works -->
-            <div class="bg-slate-50 border border-slate-300 rounded-sm shadow-inner flex flex-col">
+            <!-- LEFT: value prop -->
+            <div class="bg-slate-50 border border-slate-300 rounded-md shadow-inner flex flex-col">
               <div class="bg-slate-900 text-slate-50 px-4 py-3 flex items-center justify-between">
                 <div>
-                  <p class="text-[11px] font-semibold tracking-[0.2em] uppercase">
-                    how predictadmit works
+                  <p class="text-xs md:text-sm font-semibold tracking-[0.2em] uppercase">
+                    train for decision day
                   </p>
-                  <p class="text-[11px] text-slate-200 mt-1">
-                    Practice decision day before it counts.
+                  <p class="text-xs md:text-sm text-slate-200 mt-1">
+                    Feel the emails now. Fix the app while it counts.
                   </p>
                 </div>
-                <div class="hidden md:block text-[10px] text-slate-300">
-                  No servers. No real data.
+                <div class="hidden md:block text-xs text-slate-300">
+                  100% simulation.
                 </div>
               </div>
 
-              <div
-                class="px-4 py-4 text-[11px] text-slate-800 space-y-3 leading-relaxed flex-1"
-              >
+              <div class="px-4 py-4 text-sm text-slate-800 space-y-3 leading-relaxed flex-1">
                 <p>
-                  <span class="font-semibold">1. Create your “fake you.”</span><br />
-                  Pick a name, email, and password. This powers your admitMail inbox and portals. Everything
-                  stays in your browser.
+                  <span class="font-semibold">Desensitize the moment.</span><br />
+                  Watch realistic decision emails hit your fake inbox so the real “accepted” and “denied”
+                  messages don’t feel like the first punch.
                 </p>
                 <p>
-                  <span class="font-semibold">2. Choose your ED / REA (optional).</span><br />
-                  Flag one school as Early Decision or Restrictive Early Action to see its email hit first on
-                  December 15.
+                  <span class="font-semibold">See your app honestly.</span><br />
+                  As you open each result, you’ll notice which schools feel like reach / match / safety and
+                  where your essays and activities are weak.
                 </p>
                 <p>
-                  <span class="font-semibold">3. Click Apply and watch time jump.</span><br />
-                  We walk you from August 1 through Common App, transcripts, and testing, all the way to
-                  December and March decision dates.
-                </p>
-                <p>
-                  <span class="font-semibold">4. Open decisions in admitMail.</span><br />
-                  Your simulated inbox fills with realistic portal emails. Click “View Status” to step into
-                  each portal and rehearse the moment.
+                  <span class="font-semibold">Adjust before it’s locked.</span><br />
+                  Use what you learn here to tweak your school list, improve your app, and walk into real
+                  decision day calmer and prepared.
                 </p>
               </div>
 
               <div
-                class="px-4 pb-4 pt-3 text-[10px] text-slate-600 flex flex-col sm:flex-row items-center justify-between gap-3"
+                class="px-4 pb-4 pt-3 text-xs md:text-sm text-slate-700 flex flex-col sm:flex-row items-center justify-between gap-3"
               >
-                <p>
-                  Nothing you enter is sent to a server. It’s just you, your browser, and a brutally realistic
-                  decision-day sandbox.
+                <p class="max-w-xs">
+                  Everything stays in your browser. Close the tab and it’s gone.
                 </p>
                 <button
                   type="button"
-                  class="inline-flex items-center justify-center px-3 py-2 text-[11px] font-semibold rounded-sm border border-green-800 bg-green-700 text-white hover:bg-green-600 shadow-sm"
+                  class="inline-flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-md border border-green-800 bg-green-700 text-white hover:bg-green-600 shadow-sm"
                   on:click={handleStartSimulationClick}
                 >
                   {hasApplied
@@ -625,7 +611,7 @@
 
             <!-- RIGHT: AI box (essays etc.) -->
             <div
-              class="bg-slate-900 text-slate-50 rounded-sm shadow-md border border-slate-900 flex flex-col justify-between relative overflow-hidden"
+              class="bg-slate-900 text-slate-50 rounded-md shadow-md border border-slate-900 flex flex-col justify-between relative overflow-hidden"
             >
               <div
                 class="pointer-events-none absolute inset-0 bg-gradient-to-br from-slate-900/0 via-slate-900/40 to-slate-900/70"
@@ -639,94 +625,87 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
               <!-- Left: Form -->
               <form class="space-y-4" on:submit={handleSubmit}>
-                <p class="text-[11px] text-slate-700 mb-1">
-                  You must create a fake account to continue. This is only stored locally so the portals feel
-                  like a real login.
+                <p class="text-xs md:text-sm text-slate-700">
+                  Set up a fake login. It powers the portals and never leaves your browser.
                 </p>
 
-                <!-- Name -->
                 <div>
                   <label
                     class="block text-sm font-semibold text-slate-800 mb-1"
                     for="applicant-name"
                   >
-                    Applicant Name:
+                    Name
                   </label>
                   <input
                     id="applicant-name"
                     type="text"
-                    class="w-full border border-slate-500 bg-slate-50 px-3 py-2 text-sm rounded-sm shadow-inner focus:outline-none focus:ring-1 focus:ring-blue-800 focus:border-blue-800"
+                    class="w-full border border-slate-500 bg-slate-50 px-3 py-2 text-sm rounded-md shadow-inner focus:outline-none focus:ring-1 focus:ring-blue-800 focus:border-blue-800"
                     bind:value={name}
                     placeholder="e.g., Zachary Basinger"
                     autocomplete="name"
                   />
-                  <p class="text-[11px] text-slate-700 mt-1">
-                    This name will appear in email greetings and on each portal.
-                  </p>
                 </div>
 
-                <!-- Email -->
                 <div>
                   <label
                     class="block text-sm font-semibold text-slate-800 mb-1"
                     for="applicant-email"
                   >
-                    Email Address (fake is fine):
+                    Email
                   </label>
                   <input
                     id="applicant-email"
                     type="email"
-                    class="w-full border border-slate-500 bg-slate-50 px-3 py-2 text-sm rounded-sm shadow-inner focus:outline-none focus:ring-1 focus:ring-blue-800 focus:border-blue-800"
+                    class="w-full border border-slate-500 bg-slate-50 px-3 py-2 text-sm rounded-md shadow-inner focus:outline-none focus:ring-1 focus:ring-blue-800 focus:border-blue-800"
                     bind:value={email}
                     placeholder="you@example.com"
                     autocomplete="email"
                   />
-                  <p class="text-[11px] text-slate-700 mt-1">
-                    This is just for realism. You will never actually be emailed.
+                  <p class="text-xs text-slate-700 mt-1">
+                    Fake emails are totally fine.
                   </p>
                 </div>
 
-                <!-- Password + show toggle -->
                 <div>
                   <label
                     class="block text-sm font-semibold text-slate-800 mb-1"
                     for="applicant-password"
                   >
-                    Password (fake is fine):
+                    Password
                   </label>
                   <div class="flex items-center gap-2">
                     <input
                       id="applicant-password"
                       type={showPassword ? 'text' : 'password'}
-                      class="w-full border border-slate-500 bg-slate-50 px-3 py-2 text-sm rounded-sm shadow-inner focus:outline-none focus:ring-1 focus:ring-blue-800 focus:border-blue-800"
+                      class="w-full border border-slate-500 bg-slate-50 px-3 py-2 text-sm rounded-md shadow-inner focus:outline-none focus:ring-1 focus:ring-blue-800 focus:border-blue-800"
                       bind:value={password}
-                      placeholder="Choose a password"
+                      placeholder="Make one up"
                       autocomplete="new-password"
                     />
                     <button
                       type="button"
-                      class="text-[11px] border border-slate-400 bg-slate-100 px-2 py-1 hover:bg-slate-200"
+                      class="text-xs border border-slate-400 bg-slate-100 px-2 py-1 rounded hover:bg-slate-200"
                       on:click={() => (showPassword = !showPassword)}
                       aria-pressed={showPassword}
                     >
                       {showPassword ? 'Hide' : 'Show'}
                     </button>
                   </div>
-                  <p class="text-[11px] text-slate-700 mt-1">
-                    This password will be used to “log in” to each portal. Stored locally only.
+                  <p class="text-xs text-slate-700 mt-1">
+                    Used only to “log in” to portals here.
                   </p>
                 </div>
 
                 <div class="mt-2 flex items-center gap-3">
                   <button
                     type="submit"
-                    class="inline-block bg-blue-900 text-white text-sm font-semibold px-4 py-2 rounded-sm border border-blue-800 shadow hover:bg-blue-800 focus:outline-none focus:ring-1 focus:ring-blue-900"
+                    class="inline-block bg-blue-900 text-white text-sm font-semibold px-4 py-2 rounded-md border border-blue-800 shadow hover:bg-blue-800 focus:outline-none focus:ring-1 focus:ring-blue-900"
                   >
-                    Save Login
+                    Save login
                   </button>
 
                   {#if saveMessage}
-                    <span class="text-[11px] text-emerald-700">
+                    <span class="text-xs text-emerald-700">
                       {saveMessage}
                     </span>
                   {/if}
@@ -734,41 +713,36 @@
               </form>
 
               <!-- Right: ED/REA choice & explanation -->
-              <div class="border border-slate-400 bg-slate-50 h-full text-sm flex flex-col">
-                <div class="border-b border-slate-300 bg-slate-200 px-3 py-2">
+              <div class="border border-slate-400 bg-slate-50 h-full text-sm flex flex-col rounded-md">
+                <div class="border-b border-slate-300 bg-slate-200 px-3 py-2 rounded-t-md">
                   <span class="text-xs font-bold text-slate-900 uppercase">
-                    Early Decision / REA (optional)
+                    Early Decision / REA
                   </span>
                 </div>
-                <div
-                  class="px-3 py-3 space-y-2 text-[11px] leading-relaxed text-slate-800 flex-1"
-                >
+                <div class="px-3 py-3 space-y-3 text-xs md:text-sm leading-relaxed text-slate-800 flex-1">
                   <p>
-                    Pick one school below to simulate applying Early Decision or Restrictive Early Action. Its
-                    email will appear first on December 15, and you must open it before Regular Decision emails
-                    unlock.
+                    Pick one school as your ED / REA. Its email hits first—just like real life.
                   </p>
-                  <div class="mt-2">
+                  <div class="mt-1">
                     <label
                       for="ed-choice"
-                      class="block text-[11px] font-semibold mb-1 text-slate-800"
+                      class="block text-xs font-semibold mb-1 text-slate-800"
                     >
-                      ED / REA school:
+                      ED / REA school
                     </label>
                     <select
                       id="ed-choice"
-                      class="w-full border border-slate-500 bg-white px-2 py-1 text-[11px]"
+                      class="w-full border border-slate-500 bg-white px-2 py-2 text-xs rounded-md"
                       bind:value={edChoiceSlug}
                     >
-                      <option value="">None – Regular Decision only</option>
+                      <option value="">None – RD only</option>
                       {#each portals as portal}
                         <option value={portal.slug}>{portal.name}</option>
                       {/each}
                     </select>
                   </div>
-                  <p class="mt-2 text-[11px] text-slate-700">
-                    If you leave this as “None,” all decisions will come in as Regular Decision on the March
-                    decision date.
+                  <p class="mt-1 text-xs text-slate-700">
+                    Leave it as “None” if you only want Regular Decision results.
                   </p>
                 </div>
               </div>
@@ -780,19 +754,19 @@
       <!-- APPLY BUTTON / INBOX ANIMATION CONTROL -->
       {#if showAccountForm && hasSavedProfile}
         <section
-          class="bg-white border border-slate-400 shadow-sm rounded-sm px-4 py-3 flex flex-col md:flex-row items-center justify-between gap-3"
+          class="bg-white border border-slate-400 shadow-sm rounded-md px-5 py-4 flex flex-col md:flex-row items-center justify-between gap-3"
         >
-          <div class="text-[11px] text-slate-800">
-            <p class="font-semibold mb-1">Ready to see your decisions?</p>
+          <div class="text-sm text-slate-800 space-y-1">
+            <p class="font-semibold">Run the simulation.</p>
             <p>
-              Create your fake account above, then click <span class="font-semibold">Apply</span>. We’ll simulate
-              Common App, transcripts, test scores, and the slow crawl of time leading up to decision day.
+              Click <span class="font-semibold">Apply</span> to fast-forward from August to decision day and
+              watch the emails roll in.
             </p>
           </div>
-          <div class="ml-0 md:ml-4 text-right">
+          <div class="ml-0 md:ml-4 text-right space-y-1">
             <button
               type="button"
-              class={`text-sm font-semibold px-5 py-2 rounded-sm border shadow focus:outline-none focus:ring-1 ${
+              class={`text-sm font-semibold px-5 py-2 rounded-md border shadow focus:outline-none focus:ring-1 ${
                 !canApply
                   ? 'bg-slate-200 text-slate-500 border-slate-400 cursor-not-allowed'
                   : hasApplied
@@ -806,18 +780,18 @@
                 ? isApplying
                   ? 'Simulating…'
                   : 'Simulation started'
-                : 'Start simulation'}
+                : 'Apply'}
             </button>
             {#if !canApply}
-              <p class="mt-1 text-[10px] text-slate-600">
-                Fill in all three fields above to enable Apply.
+              <p class="text-xs text-slate-600">
+                Fill in name, email, and password first.
               </p>
             {:else if hasApplied && visiblePortals.length === 0}
-              <p class="mt-1 text-[10px] text-slate-600">
-                Building your Common App and sending applications…
+              <p class="text-xs text-slate-600">
+                Sending apps and waiting…
               </p>
             {:else if hasApplied}
-              <p class="mt-1 text-[10px] text-slate-600">
+              <p class="text-xs text-slate-600">
                 Decisions are loading into admitMail.
               </p>
             {/if}
