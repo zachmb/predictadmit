@@ -531,85 +531,98 @@
           class="border-b border-slate-300 bg-gradient-to-r from-slate-100 via-slate-50 to-slate-100 px-5 py-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4"
         >
           <div class="space-y-1">
-            <p class="text-xs tracking-[0.25em] uppercase text-slate-500">
-              decision day sandbox · beta
-            </p>
             <h1 class="text-2xl md:text-3xl font-bold text-slate-900">
               Practice college decision day before it’s real.
             </h1>
             <p class="text-sm md:text-base text-slate-700 max-w-2xl">
-              Simulate the inbox, the portal, and the “we regret to inform you” emails now, so the real day
-              hurts less—and your application is better.
+              Simulate the inbox, the portal, and the “we regret to inform you” emails now, so the
+              real day hurts less—and your application is better.
             </p>
           </div>
           <div class="hidden md:flex flex-col items-end text-xs text-slate-600 space-y-1">
             <span
               class="px-2 py-1 border border-emerald-400 bg-emerald-50 text-emerald-800 rounded-sm"
             >
-              New · ED / RD timeline
+              Built by Ivy admits
             </span>
-            <span>Runs fully in your browser. No real data, no accounts.</span>
+            <span>Free simulator &amp; premium AI.</span>
           </div>
         </div>
 
         <div class="px-5 py-6 space-y-8">
           <!-- HERO GRID -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
-            <!-- LEFT: value prop -->
-            <div class="bg-slate-50 border border-slate-300 rounded-md shadow-inner flex flex-col">
-              <div class="bg-slate-900 text-slate-50 px-4 py-3 flex items-center justify-between">
-                <div>
-                  <p class="text-xs md:text-sm font-semibold tracking-[0.2em] uppercase">
-                    train for decision day
-                  </p>
-                  <p class="text-xs md:text-sm text-slate-200 mt-1">
-                    Feel the emails now. Fix the app while it counts.
-                  </p>
-                </div>
-                <div class="hidden md:block text-xs text-slate-300">
-                  100% simulation.
-                </div>
+            <!-- LEFT: FREE SIM CARD (light / gray, but same design language) -->
+            <div
+              class="relative overflow-hidden rounded-md border border-slate-300 bg-gradient-to-br from-slate-50 via-slate-100 to-slate-50 shadow-inner flex flex-col justify-between"
+            >
+              <!-- soft glow -->
+              <div class="pointer-events-none absolute inset-0">
+                <div
+                  class="absolute -top-16 -right-16 h-40 w-40 rounded-full bg-slate-200/70 blur-3xl"
+                ></div>
+                <div
+                  class="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(148,163,184,0.22)_0,_transparent_55%)]"
+                ></div>
               </div>
 
-              <div class="px-4 py-4 text-sm text-slate-800 space-y-3 leading-relaxed flex-1">
-                <p>
-                  <span class="font-semibold">Desensitize the moment.</span><br />
-                  Watch realistic decision emails hit your fake inbox so the real “accepted” and “denied”
-                  messages don’t feel like the first punch.
-                </p>
-                <p>
-                  <span class="font-semibold">See your app honestly.</span><br />
-                  As you open each result, you’ll notice which schools feel like reach / match / safety and
-                  where your essays and activities are weak.
-                </p>
-                <p>
-                  <span class="font-semibold">Adjust before it’s locked.</span><br />
-                  Use what you learn here to tweak your school list, improve your app, and walk into real
-                  decision day calmer and prepared.
-                </p>
-              </div>
-
-              <div
-                class="px-4 pb-4 pt-3 text-xs md:text-sm text-slate-700 flex flex-col sm:flex-row items-center justify-between gap-3"
-              >
-                <p class="max-w-xs">
-                  Everything stays in your browser. Close the tab and it’s gone.
-                </p>
-                <button
-                  type="button"
-                  class="inline-flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-md border border-green-800 bg-green-700 text-white hover:bg-green-600 shadow-sm"
-                  on:click={handleStartSimulationClick}
+              <div class="relative flex flex-col h-full">
+                <!-- header / label row -->
+                <div
+                  class="px-4 pt-4 pb-3 border-b border-slate-200 flex items-center justify-between gap-3"
                 >
-                  {hasApplied
-                    ? isApplying
-                      ? 'Simulating…'
-                      : 'Simulation started'
-                    : 'Start simulation'}
-                </button>
+                  <div
+                    class="inline-flex items-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-3 py-1"
+                  >
+                    <span class="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span class="text-[10px] font-semibold uppercase tracking-[0.24em] text-emerald-900">
+                      Free decision sim
+                    </span>
+                  </div>
+                  <span class="text-[10px] text-slate-500">
+                    Static · non-AI · always free
+                  </span>
+                </div>
+
+                <!-- body copy -->
+                <div class="px-4 py-4 text-sm text-slate-800 space-y-3 leading-relaxed flex-1">
+                  <p>
+                    <span class="font-semibold">Desensitize yourself.</span><br />
+                    Watch realistic decision emails hit your fake inbox so the real “accepted” and
+                    “denied” messages don’t feel like the first punch.
+                  </p>
+                  <p>
+                    <span class="font-semibold">Static simulator only.</span><br />
+                    This mode never reads your actual application. It’s there to make the inbox and
+                    portals feel real — the PredictAdmit AI engine is what stress-tests your real
+                    narrative.
+                  </p>
+                </div>
+
+                <!-- footer / CTA -->
+                <div
+                  class="px-4 pb-4 pt-3 text-xs md:text-sm text-slate-700 flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-slate-200"
+                >
+                  <p class="max-w-xs">
+                    Powered by predictadmit.com. Start here, then upgrade to Pro if you want the AI
+                    to read your actual app.
+                  </p>
+                  <button
+                    type="button"
+                    class="inline-flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-md border border-emerald-700 bg-emerald-600 text-white hover:bg-emerald-500 shadow-sm"
+                    on:click={handleStartSimulationClick}
+                  >
+                    {hasApplied
+                      ? isApplying
+                        ? 'Simulating…'
+                        : 'Simulation started'
+                      : 'Start free simulation'}
+                  </button>
+                </div>
               </div>
             </div>
 
-            <!-- RIGHT: AI box (essays etc.) -->
+            <!-- RIGHT: PREMIUM AI box (navy / cyan) -->
             <div
               class="bg-slate-900 text-slate-50 rounded-md shadow-md border border-slate-900 flex flex-col justify-between relative overflow-hidden"
             >

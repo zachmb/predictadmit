@@ -28,12 +28,12 @@
         class="inline-flex items-center gap-2 rounded-full border border-sky-500/40 bg-sky-500/10 px-3 py-1"
       >
         <span class="h-1.5 w-1.5 rounded-full bg-sky-400 animate-pulse"></span>
-        <span class="text-[11px] font-medium uppercase tracking-[0.22em] text-sky-100">
-          Ivy &amp; T20 app lab
+        <span class="text-[10px] font-semibold uppercase tracking-[0.26em] text-sky-100">
+          PredictAdmit Pro
         </span>
       </div>
       <span class="hidden text-[10px] text-slate-400 md:inline">
-        Built for serious applicants
+        Premium AI narrative engine
       </span>
     </div>
 
@@ -42,29 +42,23 @@
       <h2 class="text-2xl md:text-3xl font-semibold leading-snug tracking-tight space-y-1">
         <span class="block text-slate-100">
           <span class="underline decoration-sky-400/80 decoration-2 underline-offset-[6px]">
-            Stress-test your application
+            AI-powered platform
           </span>
         </span>
 
-        <span
-          class="mt-1 flex items-center justify-center gap-2 text-slate-300 md:justify-start"
-        >
-          <span>and refine it in</span>
+        <span class="mt-1 flex items-center justify-center gap-2 text-slate-300 md:justify-start">
+          <span>for standout college applications</span>
           <span
-            class="inline-flex items-center justify-center rounded-full border border-sky-400/60 bg-sky-400/10 px-3 py-1"
+            class="inline-flex items-center rounded-full border border-sky-400/60 bg-sky-400/10 px-2 py-0.5 text-[10px] font-medium text-sky-100 uppercase tracking-[0.18em]"
           >
-            <span
-              class="font-mono text-lg md:text-xl font-semibold text-sky-200 underline decoration-sky-400/70 decoration-2 underline-offset-4"
-            >
-              5 min
-            </span>
+            Start Free
           </span>
         </span>
       </h2>
 
       <!-- 1-line explainer -->
       <p class="max-w-md text-[12px] md:text-sm text-slate-200/90">
-        Quick pass on essays, activities, and school list—before AOs ever see them.
+        Simulate your predicted decisions hitting your inbox and get the help you need to turn every one of them into 'congratulations'.
       </p>
     </div>
 
@@ -74,13 +68,13 @@
         class="inline-flex items-center gap-1 rounded-full border border-slate-600 bg-slate-900/40 px-2.5 py-1"
       >
         <span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
-        Essay angles
+        Narrative alignment
       </span>
       <span
         class="inline-flex items-center gap-1 rounded-full border border-slate-600 bg-slate-900/40 px-2.5 py-1"
       >
         <span class="h-1.5 w-1.5 rounded-full bg-sky-400"></span>
-        Activity polish
+        Activity framing
       </span>
       <span
         class="inline-flex items-center gap-1 rounded-full border border-slate-600 bg-slate-900/40 px-2.5 py-1"
@@ -97,12 +91,12 @@
         class="inline-flex items-center justify-center gap-2 rounded-lg border border-sky-400/80 bg-sky-400 text-slate-950 px-4 py-2.5 text-sm font-semibold shadow-lg shadow-sky-500/30 transition hover:-translate-y-[1px] hover:bg-sky-300 focus:outline-none focus:ring-2 focus:ring-sky-400/70 focus:ring-offset-2 focus:ring-offset-slate-900"
         on:click={handleGetStarted}
       >
-        Get started, it’s free
-        <span class="text-xs font-normal text-slate-900/70">~5 min flow</span>
+        Get AI help, free
       </button>
 
       <p class="max-w-xs text-[11px] text-slate-300">
-        You stay in control. We just surface where the app feels soft.
+        Run the static decision sim for free. Upgrade to Pro to stress-test the actual narrative
+        sitting in your file.
       </p>
     </div>
   </div>
@@ -110,8 +104,8 @@
   <div
     class="relative border-t border-slate-800/80 bg-slate-950/80 px-5 py-3 text-[11px] text-slate-300 flex flex-wrap items-center gap-2"
   >
-    <span class="font-semibold">PredictAdmit AI</span>
+    <span class="font-semibold">PredictAdmit Pro</span>
     <span class="text-slate-500">•</span>
-    <span>Stress-test your essays and app before decision day.</span>
+    <span>Premium narrative, activity, and school-list analysis layered on top of the sim.</span>
   </div>
 </section>
