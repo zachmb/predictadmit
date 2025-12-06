@@ -18,22 +18,11 @@
     explanation: string;
   };
 
-  // Application inputs (text)
+  // Application inputs (text only – PDFs not supported yet)
   let essay = '';
   let activities = '';
   let honors = '';
   let transcript = '';
-
-  // Optional PDF uploads
-  let essayFile: File | null = null;
-  let activitiesFile: File | null = null;
-  let honorsFile: File | null = null;
-  let transcriptFile: File | null = null;
-
-  let essayFileName = '';
-  let activitiesFileName = '';
-  let honorsFileName = '';
-  let transcriptFileName = '';
 
   // Google sign-in (simulated for now)
   let googleSignedIn = false;
@@ -103,28 +92,6 @@
     activeFolder = 'inbox';
   }
 
-  function handleFileChange(
-    event: Event,
-    field: 'essay' | 'activities' | 'honors' | 'transcript'
-  ) {
-    const input = event.currentTarget as HTMLInputElement;
-    const file = input.files?.[0] ?? null;
-
-    if (field === 'essay') {
-      essayFile = file;
-      essayFileName = file ? file.name : '';
-    } else if (field === 'activities') {
-      activitiesFile = file;
-      activitiesFileName = file ? file.name : '';
-    } else if (field === 'honors') {
-      honorsFile = file;
-      honorsFileName = file ? file.name : '';
-    } else if (field === 'transcript') {
-      transcriptFile = file;
-      transcriptFileName = file ? file.name : '';
-    }
-  }
-
   function simulateGoogleSignIn() {
     // Front-end-only: this is a simulated Google sign-in.
     // You can later replace this with a real OAuth flow if you want.
@@ -138,28 +105,8 @@
       !!essay.trim() ||
       !!activities.trim() ||
       !!honors.trim() ||
-      !!transcript.trim() ||
-      !!essayFile ||
-      !!activitiesFile ||
-      !!honorsFile ||
-      !!transcriptFile
+      !!transcript.trim()
     );
-  }
-
-  function fileToBase64(file: File): Promise<string> {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onerror = () => reject(new Error('Failed to read file'));
-      reader.onload = () => {
-        const result = reader.result;
-        if (typeof result === 'string') {
-          resolve(result);
-        } else {
-          reject(new Error('Unexpected file reader result'));
-        }
-      };
-      reader.readAsDataURL(file);
-    });
   }
 
   async function runEvaluation() {
@@ -172,7 +119,7 @@
 
     if (!ensureHasSomeInput()) {
       aiError =
-        'Add at least one piece of application data (text or PDF) before applying to the AI simulator.';
+        'Add at least one piece of application data (essay, activities, honors, or transcript text) before applying to the AI simulator.';
       return;
     }
 
@@ -193,48 +140,6 @@
         googleName
       };
 
-      const filePromises: Promise<void>[] = [];
-
-      if (essayFile) {
-        filePromises.push(
-          fileToBase64(essayFile).then((b64) => {
-            payload.essayPdf = b64;
-            payload.essayPdfName = essayFileName;
-          })
-        );
-      }
-
-      if (activitiesFile) {
-        filePromises.push(
-          fileToBase64(activitiesFile).then((b64) => {
-            payload.activitiesPdf = b64;
-            payload.activitiesPdfName = activitiesFileName;
-          })
-        );
-      }
-
-      if (honorsFile) {
-        filePromises.push(
-          fileToBase64(honorsFile).then((b64) => {
-            payload.honorsPdf = b64;
-            payload.honorsPdfName = honorsFileName;
-          })
-        );
-      }
-
-      if (transcriptFile) {
-        filePromises.push(
-          fileToBase64(transcriptFile).then((b64) => {
-            payload.transcriptPdf = b64;
-            payload.transcriptPdfName = transcriptFileName;
-          })
-        );
-      }
-
-      if (filePromises.length) {
-        await Promise.all(filePromises);
-      }
-
       const res = await fetch('/api/ai-evaluate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -253,7 +158,7 @@
 
       if (!aiDecisions.length) {
         aiError =
-          'The AI did not return any decisions. Try adding more detail (or PDFs) to your application and apply again.';
+          'The AI did not return any decisions. Try adding more detail to your application and apply again.';
       }
     } catch (err) {
       console.error(err);
@@ -359,10 +264,15 @@
             PredictAdmit <span class="text-cyan-300">/AI</span>
           </h1>
           <p class="mt-1 max-w-2xl text-sm text-slate-300">
-            Connect with Google, upload your Common App PDFs or paste your text, choose an ED school,
-            and click <span class="font-semibold text-cyan-300">Apply</span>. DeepSeek simulates your
-            decisions for the same HYPSM+ list as admitMail, then delivers them into a dark-mode inbox
-            with adcom-style explanations.
+            Connect with Google, paste your Common App materials into the text boxes, choose an ED
+            school, and click <span class="font-semibold text-cyan-300">Apply</span>. The model
+            simulates your decisions for the same HYPSM+ list as admitMail, then delivers them into a
+            dark-mode inbox with adcom-style explanations.
+          </p>
+          <p class="mt-2 max-w-2xl text-[11px] text-slate-400">
+            PDF uploads are <span class="font-semibold text-slate-100">not supported yet</span>. If your
+            essay, activities, or transcript are in a PDF, open it on your computer and
+            <span class="font-semibold text-cyan-300"> copy–paste the text</span> into the boxes below.
           </p>
           <p class="mt-2 max-w-2xl text-[11px] text-slate-400">
             This is a training ground, not a crystal ball. Use it the way you’d use UWorld: iterate on
@@ -370,8 +280,8 @@
             breakdowns—not just one-word verdicts.
           </p>
         </div>
-        <p class="text-[11px] text-slate-400 max-w-xs md:text-right">
-          Your inputs (text and PDFs) are sent only to the DeepSeek API for evaluation. PredictAdmit
+        <p class="mt-2 text-[11px] text-slate-400 max-w-xs md:text-right">
+          Your inputs are sent only to the AI API for evaluation. PredictAdmit
           does <span class="font-semibold text-slate-200">not</span> store, reuse, or sell your data.
           Nothing is ever sent to real universities.
         </p>
@@ -441,6 +351,12 @@
             </div>
           {/if}
 
+          <!-- PDF not supported notice inside card -->
+          <div class="rounded-lg border border-amber-500/40 bg-amber-500/10 px-3 py-2 text-[11px] text-amber-100">
+            PDFs aren’t supported yet. If your essay, activities list, or transcript are in a PDF, open it
+            and <span class="font-semibold">copy–paste the text</span> into the boxes below.
+          </div>
+
           <div class="grid gap-4 md:grid-cols-2">
             <!-- Essay -->
             <div class="space-y-2">
@@ -451,29 +367,13 @@
                 >
                   Personal Essay
                 </label>
-                <label class="relative inline-flex items-center gap-1 text-[10px] text-slate-400">
-                  <input
-                    type="file"
-                    accept="application/pdf"
-                    class="absolute inset-0 opacity-0 cursor-pointer"
-                    on:change={(e) => handleFileChange(e, 'essay')}
-                  />
-                  <span class="border border-slate-600 rounded-full px-2 py-0.5 bg-slate-900/70">
-                    Upload PDF
-                  </span>
-                </label>
               </div>
-              {#if essayFileName}
-                <p class="text-[10px] text-slate-400 mb-1">
-                  Uploaded: <span class="text-cyan-300">{essayFileName}</span>
-                </p>
-              {/if}
               <textarea
                 id="essay"
                 bind:value={essay}
                 rows="4"
                 class="w-full rounded-lg border border-slate-700 bg-slate-950/70 px-3 py-2 text-xs text-slate-50 placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-cyan-400 focus:border-cyan-400 resize-y"
-                placeholder="Paste your Common App-style personal statement or a realistic draft. You can also just upload your Common App PDF above."
+                placeholder="Paste your Common App-style personal statement or a realistic draft. If it’s in a PDF, open it and copy–paste the text here."
               ></textarea>
             </div>
 
@@ -486,29 +386,13 @@
                 >
                   Activities / Résumé
                 </label>
-                <label class="relative inline-flex items-center gap-1 text-[10px] text-slate-400">
-                  <input
-                    type="file"
-                    accept="application/pdf"
-                    class="absolute inset-0 opacity-0 cursor-pointer"
-                    on:change={(e) => handleFileChange(e, 'activities')}
-                  />
-                  <span class="border border-slate-600 rounded-full px-2 py-0.5 bg-slate-900/70">
-                    Upload PDF
-                  </span>
-                </label>
               </div>
-              {#if activitiesFileName}
-                <p class="text-[10px] text-slate-400 mb-1">
-                  Uploaded: <span class="text-cyan-300">{activitiesFileName}</span>
-                </p>
-              {/if}
               <textarea
                 id="activities"
                 bind:value={activities}
                 rows="4"
                 class="w-full rounded-lg border border-slate-700 bg-slate-950/70 px-3 py-2 text-xs text-slate-50 placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-cyan-400 focus:border-cyan-400 resize-y"
-                placeholder="Paste your activities list, résumé bullets, or upload your activities section as a PDF."
+                placeholder="Paste your activities list or résumé bullets here. If they’re in a PDF, copy–paste the text."
               ></textarea>
             </div>
           </div>
@@ -523,29 +407,13 @@
                 >
                   Honors & Awards
                 </label>
-                <label class="relative inline-flex items-center gap-1 text-[10px] text-slate-400">
-                  <input
-                    type="file"
-                    accept="application/pdf"
-                    class="absolute inset-0 opacity-0 cursor-pointer"
-                    on:change={(e) => handleFileChange(e, 'honors')}
-                  />
-                  <span class="border border-slate-600 rounded-full px-2 py-0.5 bg-slate-900/70">
-                    Upload PDF
-                  </span>
-                </label>
               </div>
-              {#if honorsFileName}
-                <p class="text-[10px] text-slate-400 mb-1">
-                  Uploaded: <span class="text-cyan-300">{honorsFileName}</span>
-                </p>
-              {/if}
               <textarea
                 id="honors"
                 bind:value={honors}
                 rows="3"
                 class="w-full rounded-lg border border-slate-700 bg-slate-950/70 px-3 py-2 text-xs text-slate-50 placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-cyan-400 focus:border-cyan-400 resize-y"
-                placeholder="Major competitions, scholarships, distinctions, or upload the relevant section from your app."
+                placeholder="List major competitions, scholarships, and distinctions. Copy–paste from your app if needed."
               ></textarea>
             </div>
 
@@ -558,29 +426,13 @@
                 >
                   Transcript / GPA
                 </label>
-                <label class="relative inline-flex items-center gap-1 text-[10px] text-slate-400">
-                  <input
-                    type="file"
-                    accept="application/pdf"
-                    class="absolute inset-0 opacity-0 cursor-pointer"
-                    on:change={(e) => handleFileChange(e, 'transcript')}
-                  />
-                  <span class="border border-slate-600 rounded-full px-2 py-0.5 bg-slate-900/70">
-                    Upload PDF
-                  </span>
-                </label>
               </div>
-              {#if transcriptFileName}
-                <p class="text-[10px] text-slate-400 mb-1">
-                  Uploaded: <span class="text-cyan-300">{transcriptFileName}</span>
-                </p>
-              {/if}
               <textarea
                 id="transcript"
                 bind:value={transcript}
                 rows="3"
                 class="w-full rounded-lg border border-slate-700 bg-slate-950/70 px-3 py-2 text-xs text-slate-50 placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-cyan-400 focus:border-cyan-400 resize-y"
-                placeholder="GPA, rank (if any), course rigor, key grades, testing, and school context—or upload your transcript PDF."
+                placeholder="Include GPA, course rigor, key grades, testing, and any school context. Copy–paste from your transcript if needed."
               ></textarea>
             </div>
           </div>
@@ -612,8 +464,8 @@
 
             <div class="space-y-1 text-[10px] text-slate-500">
               <p>
-                Your PDFs and text are packaged into a single application payload and sent directly
-                from your browser to DeepSeek. PredictAdmit’s servers do not store your application
+                Your text inputs are packaged into a single application payload and sent directly
+                from your browser to the AI API. PredictAdmit’s servers do not store your application
                 materials, and nothing is forwarded to real colleges.
               </p>
             </div>
@@ -657,7 +509,7 @@
           {#if applicantSummary}
             <details class="mt-3 text-[10px] text-slate-400">
               <summary class="cursor-pointer text-cyan-300">
-                Preview what the AI sees (text + PDFs)
+                Preview what the AI sees (text only)
               </summary>
               <pre
                 class="mt-2 max-h-48 overflow-auto whitespace-pre-wrap text-[10px] text-slate-200 border border-slate-700 rounded-lg p-2 bg-slate-950/70"
@@ -681,7 +533,7 @@
                 AIMail · AI Admissions Inbox
               </span>
               <span class="rounded-full bg-slate-900 px-2 py-0.5 text-[10px] text-cyan-300 border border-cyan-500/40">
-                DeepSeek-generated decisions
+                Model-generated decisions
               </span>
             </div>
             <p class="mt-1 text-xs text-slate-400">
