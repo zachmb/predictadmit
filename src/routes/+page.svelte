@@ -641,7 +641,7 @@
                     type="text"
                     class="w-full border border-slate-500 bg-slate-50 px-3 py-2 text-sm rounded-md shadow-inner focus:outline-none focus:ring-1 focus:ring-blue-800 focus:border-blue-800"
                     bind:value={name}
-                    placeholder="e.g., Zachary Basinger"
+                    placeholder="e.g., Ben Dover"
                     autocomplete="name"
                   />
                 </div>
