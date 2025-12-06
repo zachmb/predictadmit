@@ -1,450 +1,952 @@
-<script>
-  import SiteFooter from '$lib/components/layout/SiteFooter.svelte';
-  import SiteHeader from '$lib/components/layout/SiteHeader.svelte';
+<script lang="ts">
+  import AIHeader from '$lib/components/layout/AIHeader.svelte';
+  import AIFooter from '$lib/components/layout/AIFooter.svelte';
+
+  type DecisionOutcome = 'admit' | 'deny' | 'waitlist' | 'defer';
+
+  type AiDecision = {
+    school: string;
+    slug: string;
+    outcome: DecisionOutcome;
+    short_reason: string;
+  };
+
+  type DeepDiveItem = {
+    school: string;
+    slug: string;
+    outcome: DecisionOutcome;
+    explanation: string;
+  };
+
+  // Application inputs (text)
+  let essay = '';
+  let activities = '';
+  let honors = '';
+  let transcript = '';
+
+  // Optional PDF uploads
+  let essayFile: File | null = null;
+  let activitiesFile: File | null = null;
+  let honorsFile: File | null = null;
+  let transcriptFile: File | null = null;
+
+  let essayFileName = '';
+  let activitiesFileName = '';
+  let honorsFileName = '';
+  let transcriptFileName = '';
+
+  // Google sign-in (simulated for now)
+  let googleSignedIn = false;
+  let googleEmail = '';
+  let googleName = '';
+
+  // ED selection
+  const ED_SCHOOLS = [
+    { slug: 'harvard', label: 'Harvard (REA)' },
+    { slug: 'stanford', label: 'Stanford (REA)' },
+    { slug: 'yale', label: 'Yale (SCEA)' },
+    { slug: 'princeton', label: 'Princeton (SCEA)' },
+    { slug: 'duke', label: 'Duke (ED)' },
+    { slug: 'u-penn', label: 'Penn (ED)' },
+    { slug: 'brown', label: 'Brown (ED)' },
+    { slug: 'northwestern', label: 'Northwestern (ED)' },
+    { slug: 'dartmouth', label: 'Dartmouth (ED)' },
+    { slug: 'vanderbilt', label: 'Vanderbilt (ED I/II)' }
+  ];
+
+  let edSlug: string = '';
+
+  let isSubmitting = false;
+  let aiError = '';
+  let aiDecisions: AiDecision[] = [];
+  let selectedDecision: AiDecision | null = null;
+
+  let activeFolder: 'inbox' | 'deepDive' = 'inbox';
+  let viewMode: 'list' | 'detail' = 'list';
+
+  let deepDiveItems: DeepDiveItem[] = [];
+  let deepDiveLoadingSlug: string | null = null;
+
+  // Summary of all materials returned from the evaluate endpoint.
+  let applicantSummary = '';
+
+  function outcomeLabel(outcome: DecisionOutcome): string {
+    if (outcome === 'admit') return 'Admitted';
+    if (outcome === 'deny') return 'Denied';
+    if (outcome === 'waitlist') return 'Waitlisted';
+    return 'Deferred';
+  }
+
+  function outcomeClasses(outcome: DecisionOutcome): string {
+    if (outcome === 'admit') {
+      return 'bg-emerald-500/15 text-emerald-300 border-emerald-400/70';
+    }
+    if (outcome === 'deny') {
+      return 'bg-rose-500/10 text-rose-300 border-rose-400/70';
+    }
+    if (outcome === 'waitlist') {
+      return 'bg-amber-500/15 text-amber-300 border-amber-400/70';
+    }
+    return 'bg-sky-500/15 text-sky-300 border-sky-400/70';
+  }
+
+  function isEDDecision(decision: AiDecision): boolean {
+    return !!edSlug && decision.slug === edSlug;
+  }
+
+  function resetInboxState() {
+    aiDecisions = [];
+    selectedDecision = null;
+    deepDiveItems = [];
+    applicantSummary = '';
+    viewMode = 'list';
+    activeFolder = 'inbox';
+  }
+
+  function handleFileChange(
+    event: Event,
+    field: 'essay' | 'activities' | 'honors' | 'transcript'
+  ) {
+    const input = event.currentTarget as HTMLInputElement;
+    const file = input.files?.[0] ?? null;
+
+    if (field === 'essay') {
+      essayFile = file;
+      essayFileName = file ? file.name : '';
+    } else if (field === 'activities') {
+      activitiesFile = file;
+      activitiesFileName = file ? file.name : '';
+    } else if (field === 'honors') {
+      honorsFile = file;
+      honorsFileName = file ? file.name : '';
+    } else if (field === 'transcript') {
+      transcriptFile = file;
+      transcriptFileName = file ? file.name : '';
+    }
+  }
+
+  function simulateGoogleSignIn() {
+    // Front-end-only: this is a simulated Google sign-in.
+    // You can later replace this with a real OAuth flow if you want.
+    googleSignedIn = true;
+    googleEmail = 'you@predictadmit.ai';
+    googleName = 'PredictAdmit User';
+  }
+
+  function ensureHasSomeInput(): boolean {
+    return (
+      !!essay.trim() ||
+      !!activities.trim() ||
+      !!honors.trim() ||
+      !!transcript.trim() ||
+      !!essayFile ||
+      !!activitiesFile ||
+      !!honorsFile ||
+      !!transcriptFile
+    );
+  }
+
+  function fileToBase64(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onerror = () => reject(new Error('Failed to read file'));
+      reader.onload = () => {
+        const result = reader.result;
+        if (typeof result === 'string') {
+          resolve(result);
+        } else {
+          reject(new Error('Unexpected file reader result'));
+        }
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  async function runEvaluation() {
+    aiError = '';
+
+    if (!googleSignedIn) {
+      aiError = 'Please sign in with Google first to create your AI application.';
+      return;
+    }
+
+    if (!ensureHasSomeInput()) {
+      aiError =
+        'Add at least one piece of application data (text or PDF) before applying to the AI simulator.';
+      return;
+    }
+
+    isSubmitting = true;
+    selectedDecision = null;
+    viewMode = 'list';
+    activeFolder = 'inbox';
+    deepDiveItems = [];
+
+    try {
+      const payload: Record<string, unknown> = {
+        essay,
+        activities,
+        honors,
+        transcript,
+        edSlug,
+        googleEmail,
+        googleName
+      };
+
+      const filePromises: Promise<void>[] = [];
+
+      if (essayFile) {
+        filePromises.push(
+          fileToBase64(essayFile).then((b64) => {
+            payload.essayPdf = b64;
+            payload.essayPdfName = essayFileName;
+          })
+        );
+      }
+
+      if (activitiesFile) {
+        filePromises.push(
+          fileToBase64(activitiesFile).then((b64) => {
+            payload.activitiesPdf = b64;
+            payload.activitiesPdfName = activitiesFileName;
+          })
+        );
+      }
+
+      if (honorsFile) {
+        filePromises.push(
+          fileToBase64(honorsFile).then((b64) => {
+            payload.honorsPdf = b64;
+            payload.honorsPdfName = honorsFileName;
+          })
+        );
+      }
+
+      if (transcriptFile) {
+        filePromises.push(
+          fileToBase64(transcriptFile).then((b64) => {
+            payload.transcriptPdf = b64;
+            payload.transcriptPdfName = transcriptFileName;
+          })
+        );
+      }
+
+      if (filePromises.length) {
+        await Promise.all(filePromises);
+      }
+
+      const res = await fetch('/api/ai-evaluate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        aiError = data?.error ?? 'Something went wrong talking to the AI evaluator.';
+        return;
+      }
+
+      aiDecisions = (data.decisions ?? []) as AiDecision[];
+      applicantSummary = (data.applicantSummary ?? '') as string;
+
+      if (!aiDecisions.length) {
+        aiError =
+          'The AI did not return any decisions. Try adding more detail (or PDFs) to your application and apply again.';
+      }
+    } catch (err) {
+      console.error(err);
+      aiError = 'Network or server error while calling the AI evaluator.';
+    } finally {
+      isSubmitting = false;
+    }
+  }
+
+  function openDecision(decision: AiDecision) {
+    selectedDecision = decision;
+    viewMode = 'detail';
+    activeFolder = 'inbox';
+  }
+
+  function backToList() {
+    viewMode = 'list';
+    selectedDecision = null;
+  }
+
+  function openDeepDiveFolder() {
+    activeFolder = 'deepDive';
+    viewMode = 'list';
+    selectedDecision = null;
+  }
+
+  async function requestDeepDive(decision: AiDecision) {
+    if (!applicantSummary) {
+      // Fallback: reconstruct very rough summary on client if needed.
+      applicantSummary = [
+        essay && `Personal essay:\n${essay}`,
+        activities && `Activities / extracurriculars:\n${activities}`,
+        honors && `Honors & awards:\n${honors}`,
+        transcript && `Transcript / GPA & coursework:\n${transcript}`
+      ]
+        .filter(Boolean)
+        .join('\n\n');
+    }
+
+    aiError = '';
+    deepDiveLoadingSlug = decision.slug;
+
+    try {
+      const res = await fetch('/api/ai-deep-dive', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          school: decision.school,
+          slug: decision.slug,
+          outcome: decision.outcome,
+          short_reason: decision.short_reason,
+          applicantSummary,
+          edSlug
+        })
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        aiError = data?.error ?? 'Something went wrong generating the deep dive.';
+        return;
+      }
+
+      const deepDive = data.deepDive as DeepDiveItem | undefined;
+
+      if (deepDive) {
+        // Replace any existing deep dive for this school.
+        deepDiveItems = [
+          ...deepDiveItems.filter((d) => d.slug !== deepDive.slug),
+          deepDive
+        ];
+        activeFolder = 'deepDive';
+        viewMode = 'list';
+        selectedDecision = null;
+      }
+    } catch (err) {
+      console.error(err);
+      aiError = 'Network or server error while calling the AI deep dive.';
+    } finally {
+      deepDiveLoadingSlug = null;
+    }
+  }
 </script>
 
 <svelte:head>
-  <title>Stress-test your application in 5 minutes – PredictAdmit AI</title>
-  <meta
-    name="description"
-    content="PredictAdmit AI is a purpose-built college app engine that reads your application like an AO and helps you refine the story — not auto-generate it."
-  />
+  <title>PredictAdmit – AI Admissions Inbox</title>
 </svelte:head>
 
-<SiteHeader />
+<AIHeader />
 
 <main class="min-h-screen bg-slate-950 text-slate-50">
-  <div class="max-w-6xl mx-auto px-4 py-10 space-y-16">
-    <!-- HERO -->
-    <section class="grid gap-10 md:grid-cols-2 items-center">
-      <div class="space-y-4">
-        <p class="text-xs uppercase tracking-[0.3em] text-sky-400/80">
-          Decision day prep · PredictAdmit AI
-        </p>
-        <h1 class="text-3xl md:text-4xl font-bold leading-tight space-y-1">
-          <span class="block">Stress-test your application</span>
-          <span class="block text-sky-300">
-            with an AI that reads the whole story.
-          </span>
-        </h1>
-        <p class="text-sm md:text-base text-slate-300 max-w-xl">
-          PredictAdmit AI doesn’t spit out new essays. It reads what you already have — essays,
-          activities, context — and tells you how the narrative actually lands in an AO’s head.
-        </p>
-
-        <div class="flex flex-col sm:flex-row gap-3 mt-4">
-          <a
-            href="https://discord.gg"
-            target="_blank"
-            class="inline-flex items-center justify-center px-4 py-2.5 text-sm font-semibold rounded-sm border border-slate-700 bg-slate-900 hover:bg-slate-800"
-          >
-            Join the PredictAdmit Discord
-          </a>
-          <a
-            href="#pricing"
-            class="inline-flex items-center justify-center px-4 py-2.5 text-sm font-semibold rounded-sm border border-sky-500 bg-sky-400 text-slate-900 hover:bg-sky-300 hover:border-sky-400"
-          >
-            Run a 5-minute AI stress test
-          </a>
-        </div>
-
-        <p class="text-[11px] text-slate-400 mt-2">
-          No credit card. Built by students who lived decision day — and trained the AI to focus on
-          narrative, coherence, and spike instead of auto-writing for you.
-        </p>
+  <div class="max-w-6xl mx-auto px-4 py-8 space-y-8">
+    <!-- Hero -->
+    <header class="space-y-3">
+      <div class="inline-flex items-center gap-2 rounded-full border border-cyan-500/40 bg-slate-900/70 px-3 py-1 text-xs uppercase tracking-[0.2em] text-cyan-300">
+        <span class="h-1.5 w-1.5 rounded-full bg-cyan-400" aria-hidden="true"></span>
+        <span>AI LAB · PREMIUM SIMULATION</span>
       </div>
 
-      <!-- Live preview card -->
-      <div class="relative">
-        <div class="absolute -inset-4 bg-sky-500/10 blur-3xl rounded-full"></div>
-        <div class="relative border border-slate-800 bg-slate-900 rounded-xl p-5 shadow-2xl">
-          <p class="text-[11px] font-semibold tracking-[0.2em] uppercase text-slate-400 mb-2">
-            Live preview · committee brain
+      <div class="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <h1 class="text-3xl md:text-4xl font-semibold tracking-tight text-slate-50">
+            PredictAdmit <span class="text-cyan-300">/AI</span>
+          </h1>
+          <p class="mt-1 max-w-2xl text-sm text-slate-300">
+            Connect with Google, upload your Common App PDFs or paste your text, choose an ED school,
+            and click <span class="font-semibold text-cyan-300">Apply</span>. DeepSeek simulates your
+            decisions for the same HYPSM+ list as admitMail, then delivers them into a dark-mode inbox
+            with adcom-style explanations.
           </p>
-          <h2 class="text-lg font-semibold text-slate-50">
-            “Read this like a top-20 AO in committee. Is this a yes, maybe, or no — and what’s
-            killing the story or carrying it?”
-          </h2>
-          <p class="mt-3 text-sm text-slate-300">
-            Under the hood, PredictAdmit AI runs your existing file through layered rubrics,
-            simulated admit files, and committee-style reasoning — surfacing how your narrative
-            plays when someone has 6 minutes and 40 other apps to read.
+          <p class="mt-2 max-w-2xl text-[11px] text-slate-400">
+            This is a training ground, not a crystal ball. Use it the way you’d use UWorld: iterate on
+            your “answers” (your profile), see how the results change, and learn from detailed
+            breakdowns—not just one-word verdicts.
           </p>
-          <div class="mt-4 text-[11px] text-slate-400">
-            Coherence checks, spike checks, and consistency filters stacked on top of advanced
-            models — so it behaves less like a text generator and more like a brutally honest reader
-            living in your laptop.
-          </div>
         </div>
+        <p class="text-[11px] text-slate-400 max-w-xs md:text-right">
+          Your inputs (text and PDFs) are sent only to the DeepSeek API for evaluation. PredictAdmit
+          does <span class="font-semibold text-slate-200">not</span> store, reuse, or sell your data.
+          Nothing is ever sent to real universities.
+        </p>
       </div>
-    </section>
+    </header>
 
-    <!-- MAIN FEATURES: BUILT AROUND STRESS-TESTING -->
+    <!-- Application builder + AI controls -->
     <section class="space-y-6">
-      <div>
-        <p class="text-xs uppercase tracking-[0.25em] text-sky-400/80 mb-1">
-          What PredictAdmit AI actually does
-        </p>
-        <h2 class="text-xl md:text-2xl font-bold">
-          Not “write my essay.” A
-          <span class="text-sky-300">college application reader</span>
-          plugged into the PredictAdmit sim.
-        </h2>
-        <p class="text-sm text-slate-300 max-w-xl mt-1">
-          You bring drafts, activities, and context. PredictAdmit AI brings the committee brain:
-          where your story threads connect, where they drop, and what the overall file is really
-          saying about you.
-        </p>
-      </div>
-
-      <div class="grid gap-6 md:grid-cols-2">
-        <!-- Feature 1: 5-minute narrative lab -->
-        <article class="border border-slate-800 bg-slate-900/60 rounded-lg p-5 flex flex-col gap-3">
-          <div>
-            <h3 class="text-sm font-semibold">5-minute narrative lab</h3>
-            <p class="text-xs text-slate-400">
-              When the pieces are there but the story isn’t.
+      <!-- Application card -->
+      <div
+        class="rounded-2xl border border-cyan-500/30 bg-gradient-to-b from-slate-900/90 to-slate-950/90 shadow-[0_0_40px_rgba(34,211,238,0.25)]"
+      >
+        <!-- Google sign-in bar -->
+        <div class="border-b border-cyan-500/20 px-5 py-3 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+          <div class="space-y-1">
+            <h2 class="text-sm font-semibold text-cyan-200 uppercase tracking-[0.22em]">
+              Step 1 · Sign in with Google
+            </h2>
+            <p class="text-xs text-slate-300 max-w-md">
+              We simulate a Google-based applicant login. In production, this can be wired to real
+              OAuth—but here, it’s just a gate before your AI application is created.
             </p>
           </div>
-          <p class="text-sm text-slate-200">
-            Paste in your existing essay and a quick snapshot of the rest of your app. The lab maps
-            what story those pieces are telling now — then points out gaps, contradictions, and
-            missed through-lines, so you know what to cut, move, or rewrite yourself.
-          </p>
-          <div class="mt-2 border-t border-slate-800 pt-3 text-[11px] text-slate-300 italic">
-            “I WILL be recommending this to all of my friends as we go through this college journey
-            together!”
-            <span class="not-italic font-semibold"> — Joseph R, Student</span>
-          </div>
-        </article>
 
-        <!-- Feature 2: AO-style feedback -->
-        <article class="border border-slate-800 bg-slate-900/60 rounded-lg p-5 flex flex-col gap-3">
-          <div>
-            <h3 class="text-sm font-semibold">AO-style essay feedback</h3>
-            <p class="text-xs text-slate-400">
-              Reads your draft like a real file, not a blank page.
-            </p>
+          <div class="flex items-center gap-3">
+            {#if googleSignedIn}
+              <div class="text-[11px] text-slate-300 text-right">
+                <div class="font-semibold text-cyan-200">
+                  {googleName || 'Signed in'}
+                </div>
+                <div class="text-slate-400">
+                  {googleEmail}
+                </div>
+              </div>
+            {:else}
+              <button
+                type="button"
+                class="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-xs font-semibold text-slate-900 shadow hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-cyan-300"
+                on:click={simulateGoogleSignIn}
+              >
+                <span class="h-4 w-4 rounded bg-cyan-500/10 border border-cyan-400 flex items-center justify-center text-[10px] font-bold text-cyan-400">
+                  G
+                </span>
+                <span>Continue with Google</span>
+              </button>
+            {/if}
           </div>
-          <p class="text-sm text-slate-200">
-            You don’t get a new essay — you get margin notes: what’s memorable, what feels generic,
-            what parts of your spike are underplayed, and how this essay fits (or clashes) with your
-            activities and goals. It’s narrative triage, not auto-writing.
-          </p>
-          <div class="mt-2 border-t border-slate-800 pt-3 text-[11px] text-slate-300 italic">
-            “It’s definitely convenient to access all my writing documents in one spot while having
-            AI integrated into the same platform.”
-            <span class="not-italic font-semibold"> — Matieis M, Student</span>
-          </div>
-        </article>
-
-        <!-- Feature 3: Activity & spike builder -->
-        <article class="border border-slate-800 bg-slate-900/60 rounded-lg p-5 flex flex-col gap-3">
-          <div>
-            <h3 class="text-sm font-semibold">Activity &amp; spike alignment</h3>
-            <p class="text-xs text-slate-400">
-              Makes your 150 characters match the story, not fight it.
-            </p>
-          </div>
-          <p class="text-sm text-slate-200">
-            Feed in how you currently describe an activity. PredictAdmit AI flags jargon, fluff, and
-            buried impact — then suggests tighter framing and emphasis so your descriptions echo
-            the same spike your essays are trying to sell.
-          </p>
-          <div class="mt-2 border-t border-slate-800 pt-3 text-[11px] text-slate-300 italic">
-            “I was able to write perfect essays — it gives you a skeleton to work off of and helps
-            you generate everything you need.”
-            <span class="not-italic font-semibold"> — Isa A, Student</span>
-          </div>
-        </article>
-
-        <!-- Feature 4: Example essays & patterns -->
-        <article class="border border-slate-800 bg-slate-900/60 rounded-lg p-5 flex flex-col gap-3">
-          <div>
-            <h3 class="text-sm font-semibold">Example patterns, not copy-paste</h3>
-            <p class="text-xs text-slate-400">
-              Shows you how strong files are assembled.
-            </p>
-          </div>
-          <p class="text-sm text-slate-200">
-            Instead of “here, copy this essay,” the engine highlights how successful essays move:
-            where they pivot, when they zoom out, how they land the ending — then points to spots in
-            <em>your</em> draft where a similar move would sharpen the story.
-          </p>
-          <div class="mt-2 border-t border-slate-800 pt-3 text-[11px] text-slate-300 italic">
-            “I felt like this was really easy to use ngl.”
-            <span class="not-italic font-semibold"> — Alex L, Student</span>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- MORE FEATURES: APPLICATION LAB -->
-    <section class="space-y-6">
-      <div>
-        <p class="text-xs uppercase tracking-[0.25em] text-sky-400/80 mb-1">
-          Application lab · beyond essays
-        </p>
-        <h2 class="text-xl md:text-2xl font-bold">
-          Less “AI wrote this,” more
-          <span class="text-sky-300">“my whole file finally makes sense.”</span>
-        </h2>
-      </div>
-
-      <div class="grid gap-4 md:grid-cols-3 text-sm">
-        <div class="border border-slate-800 bg-slate-900/70 rounded-lg p-4">
-          <h3 class="text-sm font-semibold mb-1">AI college strategist</h3>
-          <p class="text-xs text-slate-400 mb-2">
-            Looks at the file like a human strategist would.
-          </p>
-          <p class="text-xs text-slate-300">
-            Upload your stats, activities, and targets. Instead of rewriting anything, the engine
-            calls out where your list, your spike, and your current materials don’t line up — and
-            where a small tweak could make the story more believable.
-          </p>
         </div>
 
-        <div class="border border-slate-800 bg-slate-900/70 rounded-lg p-4">
-          <h3 class="text-sm font-semibold mb-1">Opening line surgery</h3>
-          <p class="text-xs text-slate-400 mb-2">
-            Fixes what’s already there, not inventing a new persona.
-          </p>
-          <p class="text-xs text-slate-300">
-            Paste your existing intro. PredictAdmit AI flags clichés, slow starts, and confusing
-            pivots — then offers concrete edits and alternatives that still sound like you, but
-            land faster in a skim read.
-          </p>
-        </div>
-
-        <div class="border border-slate-800 bg-slate-900/70 rounded-lg p-4">
-          <h3 class="text-sm font-semibold mb-1">“What next?” structure hints</h3>
-          <p class="text-xs text-slate-400 mb-2">
-            Keeps the narrative moving instead of bloating it.
-          </p>
-          <p class="text-xs text-slate-300">
-            If you’re stuck mid-draft, the system doesn’t write the next paragraph for you; it
-            points to the next <em>move</em> that keeps your spike in view — reflect, zoom out,
-            counterpoint, tighten, etc.
-          </p>
-        </div>
-
-        <div class="border border-slate-800 bg-slate-900/70 rounded-lg p-4">
-          <h3 class="text-sm font-semibold mb-1">Activities polish</h3>
-          <p class="text-xs text-slate-400 mb-2">
-            Makes each line support the same story.
-          </p>
-          <p class="text-xs text-slate-300">
-            Rewrites are tuned for AO skim speed: role → impact → scale. You see before/after
-            phrasings so you can decide what feels most like you while still backing up your
-            narrative.
-          </p>
-        </div>
-
-        <div class="border border-slate-800 bg-slate-900/70 rounded-lg p-4">
-          <h3 class="text-sm font-semibold mb-1">Continue in your voice</h3>
-          <p class="text-xs text-slate-400 mb-2">
-            Protects tone while you make the edits.
-          </p>
-          <p class="text-xs text-slate-300">
-            The engine studies your earlier paragraphs, then proposes tweaks and additions in that
-            same register. You accept, reject, and rewrite — it’s scaffolding, not a ghostwriter.
-          </p>
-        </div>
-
-        <div class="border border-slate-800 bg-slate-900/70 rounded-lg p-4">
-          <h3 class="text-sm font-semibold mb-1">Modern AI engine</h3>
-          <p class="text-xs text-slate-400 mb-2">
-            Built to edit and evaluate, not to take over.
-          </p>
-          <p class="text-xs text-slate-300">
-            Underneath is a cutting-edge reasoning model, but the real value is the college app
-            layer on top — rubrics, checks, and flows that stay focused on refining your narrative,
-            not replacing it with AI-sounding prose.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- PRICING -->
-    <section id="pricing" class="space-y-6">
-      <div class="space-y-1">
-        <p class="text-xs uppercase tracking-[0.25em] text-sky-400/80 mb-1">
-          Pricing
-        </p>
-        <h2 class="text-xl md:text-2xl font-bold">
-          Start free. Upgrade if it changes how your file reads.
-        </h2>
-        <p class="text-sm text-slate-300 max-w-xl">
-          The free tier is enough to feel the difference between “AI helped me write” and “AI
-          helped me finally see my application as a story.”
-        </p>
-      </div>
-
-      <div class="flex flex-col sm:flex-row gap-5">
-        <!-- Free plan -->
-        <article
-          class="flex-1 border border-slate-800 bg-slate-900/70 rounded-lg p-5 flex flex-col"
+        <!-- Application inputs -->
+        <form
+          class="px-5 py-4 space-y-5 text-sm relative"
+          on:submit|preventDefault={runEvaluation}
+          aria-label="AI admissions evaluation form"
         >
-          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 mb-1">
-            Free · first stress test
-          </p>
-          <h3 class="text-lg font-bold mb-1">Run PredictAdmit AI on real drafts.</h3>
-          <p class="text-sm text-slate-300 mb-4">
-            Enough usage to see how your current essays and activities land in a narrative pass —
-            without changing a single school on your list or writing anything from scratch.
-          </p>
-          <div class="flex items-baseline gap-1 mb-4">
-            <span class="text-3xl font-bold">$0</span>
-            <span class="text-xs text-slate-400">/mo · free forever</span>
+          {#if !googleSignedIn}
+            <div class="absolute inset-0 flex items-center justify-center bg-slate-950/70 backdrop-blur-[1px] z-10">
+              <div class="rounded-xl border border-cyan-500/40 bg-slate-950/90 px-5 py-4 max-w-xs text-center space-y-2">
+                <p class="text-xs text-cyan-200 font-semibold uppercase tracking-[0.18em]">
+                  Google sign-in required
+                </p>
+                <p class="text-[11px] text-slate-300">
+                  Click <span class="font-semibold text-cyan-300">Continue with Google</span> above to
+                  unlock the AI application builder.
+                </p>
+              </div>
+            </div>
+          {/if}
+
+          <div class="grid gap-4 md:grid-cols-2">
+            <!-- Essay -->
+            <div class="space-y-2">
+              <div class="flex items-center justify-between gap-2">
+                <label
+                  for="essay"
+                  class="block text-[11px] font-medium text-cyan-100 uppercase tracking-[0.2em]"
+                >
+                  Personal Essay
+                </label>
+                <label class="relative inline-flex items-center gap-1 text-[10px] text-slate-400">
+                  <input
+                    type="file"
+                    accept="application/pdf"
+                    class="absolute inset-0 opacity-0 cursor-pointer"
+                    on:change={(e) => handleFileChange(e, 'essay')}
+                  />
+                  <span class="border border-slate-600 rounded-full px-2 py-0.5 bg-slate-900/70">
+                    Upload PDF
+                  </span>
+                </label>
+              </div>
+              {#if essayFileName}
+                <p class="text-[10px] text-slate-400 mb-1">
+                  Uploaded: <span class="text-cyan-300">{essayFileName}</span>
+                </p>
+              {/if}
+              <textarea
+                id="essay"
+                bind:value={essay}
+                rows="4"
+                class="w-full rounded-lg border border-slate-700 bg-slate-950/70 px-3 py-2 text-xs text-slate-50 placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-cyan-400 focus:border-cyan-400 resize-y"
+                placeholder="Paste your Common App-style personal statement or a realistic draft. You can also just upload your Common App PDF above."
+              ></textarea>
+            </div>
+
+            <!-- Activities -->
+            <div class="space-y-2">
+              <div class="flex items-center justify-between gap-2">
+                <label
+                  for="activities"
+                  class="block text-[11px] font-medium text-cyan-100 uppercase tracking-[0.2em]"
+                >
+                  Activities / Résumé
+                </label>
+                <label class="relative inline-flex items-center gap-1 text-[10px] text-slate-400">
+                  <input
+                    type="file"
+                    accept="application/pdf"
+                    class="absolute inset-0 opacity-0 cursor-pointer"
+                    on:change={(e) => handleFileChange(e, 'activities')}
+                  />
+                  <span class="border border-slate-600 rounded-full px-2 py-0.5 bg-slate-900/70">
+                    Upload PDF
+                  </span>
+                </label>
+              </div>
+              {#if activitiesFileName}
+                <p class="text-[10px] text-slate-400 mb-1">
+                  Uploaded: <span class="text-cyan-300">{activitiesFileName}</span>
+                </p>
+              {/if}
+              <textarea
+                id="activities"
+                bind:value={activities}
+                rows="4"
+                class="w-full rounded-lg border border-slate-700 bg-slate-950/70 px-3 py-2 text-xs text-slate-50 placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-cyan-400 focus:border-cyan-400 resize-y"
+                placeholder="Paste your activities list, résumé bullets, or upload your activities section as a PDF."
+              ></textarea>
+            </div>
           </div>
-          <button
-            class="inline-flex items-center justify-center px-4 py-2.5 text-sm font-semibold rounded-sm border border-slate-600 bg-slate-50 text-slate-900 hover:bg-slate-200"
-          >
-            Try for free
-          </button>
-          <ul class="mt-4 space-y-1 text-xs text-slate-300">
-            <li>• 10,000 tokens for narrative passes</li>
-            <li>• 3 example application breakdowns</li>
-            <li>• Unlimited essay &amp; activity reviews</li>
-            <li>• Unlimited projects to keep drafts organized</li>
-          </ul>
-        </article>
 
-        <!-- Pro plan -->
-        <article
-          class="flex-1 border border-sky-500 bg-slate-900 rounded-lg p-5 flex flex-col relative overflow-hidden"
-        >
-          <span
-            class="absolute right-3 top-3 text-[10px] uppercase tracking-[0.2em] bg-sky-500 text-slate-900 px-2 py-1 rounded-sm font-semibold"
-          >
-            Best for full app cycle
-          </span>
-          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-sky-300 mb-1">
-            Pro · full decision-day prep
-          </p>
-          <h3 class="text-lg font-bold mb-1">Keep the “narrative AO” on call all year.</h3>
-          <p class="text-sm text-slate-200 mb-4">
-            For students who want that godsend feeling — a tuned reader that keeps the whole story
-            aligned — from first messy draft to the final “submit” and portal refresh.
-          </p>
-          <div class="flex items-baseline gap-1 mb-4">
-            <span class="text-3xl font-bold">$19</span>
-            <span class="text-xs text-slate-300">/mo · for the full application cycle</span>
+          <div class="grid gap-4 md:grid-cols-2">
+            <!-- Honors -->
+            <div class="space-y-2">
+              <div class="flex items-center justify-between gap-2">
+                <label
+                  for="honors"
+                  class="block text-[11px] font-medium text-cyan-100 uppercase tracking-[0.2em]"
+                >
+                  Honors & Awards
+                </label>
+                <label class="relative inline-flex items-center gap-1 text-[10px] text-slate-400">
+                  <input
+                    type="file"
+                    accept="application/pdf"
+                    class="absolute inset-0 opacity-0 cursor-pointer"
+                    on:change={(e) => handleFileChange(e, 'honors')}
+                  />
+                  <span class="border border-slate-600 rounded-full px-2 py-0.5 bg-slate-900/70">
+                    Upload PDF
+                  </span>
+                </label>
+              </div>
+              {#if honorsFileName}
+                <p class="text-[10px] text-slate-400 mb-1">
+                  Uploaded: <span class="text-cyan-300">{honorsFileName}</span>
+                </p>
+              {/if}
+              <textarea
+                id="honors"
+                bind:value={honors}
+                rows="3"
+                class="w-full rounded-lg border border-slate-700 bg-slate-950/70 px-3 py-2 text-xs text-slate-50 placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-cyan-400 focus:border-cyan-400 resize-y"
+                placeholder="Major competitions, scholarships, distinctions, or upload the relevant section from your app."
+              ></textarea>
+            </div>
+
+            <!-- Transcript -->
+            <div class="space-y-2">
+              <div class="flex items-center justify-between gap-2">
+                <label
+                  for="transcript"
+                  class="block text-[11px] font-medium text-cyan-100 uppercase tracking-[0.2em]"
+                >
+                  Transcript / GPA
+                </label>
+                <label class="relative inline-flex items-center gap-1 text-[10px] text-slate-400">
+                  <input
+                    type="file"
+                    accept="application/pdf"
+                    class="absolute inset-0 opacity-0 cursor-pointer"
+                    on:change={(e) => handleFileChange(e, 'transcript')}
+                  />
+                  <span class="border border-slate-600 rounded-full px-2 py-0.5 bg-slate-900/70">
+                    Upload PDF
+                  </span>
+                </label>
+              </div>
+              {#if transcriptFileName}
+                <p class="text-[10px] text-slate-400 mb-1">
+                  Uploaded: <span class="text-cyan-300">{transcriptFileName}</span>
+                </p>
+              {/if}
+              <textarea
+                id="transcript"
+                bind:value={transcript}
+                rows="3"
+                class="w-full rounded-lg border border-slate-700 bg-slate-950/70 px-3 py-2 text-xs text-slate-50 placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-cyan-400 focus:border-cyan-400 resize-y"
+                placeholder="GPA, rank (if any), course rigor, key grades, testing, and school context—or upload your transcript PDF."
+              ></textarea>
+            </div>
           </div>
-          <button
-            class="inline-flex items-center justify-center px-4 py-2.5 text-sm font-semibold rounded-sm border border-sky-500 bg-sky-400 text-slate-900 hover:bg-sky-300"
-          >
-            Purchase now
-          </button>
-          <ul class="mt-4 space-y-1 text-xs text-slate-100">
-            <li>• Effectively unlimited narrative passes</li>
-            <li>• Access to 500+ example essay breakdowns</li>
-            <li>• Full feedback suite for essays &amp; supplements</li>
-            <li>• Activity list framing &amp; polish tools</li>
-            <li>• Priority support via Discord community</li>
-          </ul>
-        </article>
+
+          <!-- ED selection + privacy note -->
+          <div class="grid gap-4 md:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] items-start">
+            <div class="space-y-2">
+              <label
+                for="edSchool"
+                class="block text-[11px] font-medium text-cyan-100 uppercase tracking-[0.2em]"
+              >
+                Early Decision / REA (Optional)
+              </label>
+              <select
+                id="edSchool"
+                bind:value={edSlug}
+                class="w-full rounded-lg border border-slate-700 bg-slate-950/70 px-3 py-2 text-xs text-slate-50 focus:outline-none focus:ring-1 focus:ring-cyan-400 focus:border-cyan-400"
+              >
+                <option value="">No ED selected (all RD)</option>
+                {#each ED_SCHOOLS as school}
+                  <option value={school.slug}>{school.label}</option>
+                {/each}
+              </select>
+              <p class="text-[10px] text-slate-400">
+                This tells the AI which school to treat as your binding early choice, so decisions and
+                explanations can reflect ED vs RD dynamics.
+              </p>
+            </div>
+
+            <div class="space-y-1 text-[10px] text-slate-500">
+              <p>
+                Your PDFs and text are packaged into a single application payload and sent directly
+                from your browser to DeepSeek. PredictAdmit’s servers do not store your application
+                materials, and nothing is forwarded to real colleges.
+              </p>
+            </div>
+          </div>
+
+          {#if aiError}
+            <p class="text-xs text-rose-300 bg-rose-500/10 border border-rose-500/40 rounded-lg px-3 py-2">
+              {aiError}
+            </p>
+          {/if}
+
+          <!-- Apply controls -->
+          <div class="flex flex-wrap items-center gap-3 pt-1">
+            <button
+              type="submit"
+              class="inline-flex items-center gap-2 rounded-full bg-cyan-500 px-4 py-2 text-xs font-semibold text-slate-950 shadow-[0_0_25px_rgba(34,211,238,0.6)] hover:bg-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-300 disabled:opacity-60 disabled:cursor-not-allowed"
+              disabled={isSubmitting || !googleSignedIn}
+            >
+              {#if isSubmitting}
+                <span class="h-3 w-3 animate-spin rounded-full border border-slate-900 border-t-transparent"></span>
+                <span>AI is judging your application…</span>
+              {:else}
+                <span>Apply to HYPSM+ with AI</span>
+              {/if}
+            </button>
+
+            <button
+              type="button"
+              class="text-[11px] text-slate-400 hover:text-slate-200 underline decoration-dotted"
+              on:click={resetInboxState}
+            >
+              Clear AI inbox
+            </button>
+
+            <p class="text-[10px] text-slate-500">
+              Once your application is processed, AIMail below will populate with simulated decisions
+              for the same school list as your main admitMail inbox.
+            </p>
+          </div>
+
+          {#if applicantSummary}
+            <details class="mt-3 text-[10px] text-slate-400">
+              <summary class="cursor-pointer text-cyan-300">
+                Preview what the AI sees (text + PDFs)
+              </summary>
+              <pre
+                class="mt-2 max-h-48 overflow-auto whitespace-pre-wrap text-[10px] text-slate-200 border border-slate-700 rounded-lg p-2 bg-slate-950/70"
+              >
+{applicantSummary}
+              </pre>
+            </details>
+          {/if}
+        </form>
       </div>
-    </section>
 
-    <!-- FAQ -->
-    <section class="space-y-6">
-      <div>
-        <p class="text-xs uppercase tracking-[0.25em] text-sky-400/80 mb-1">
-          Frequently asked questions
-        </p>
-        <h2 class="text-xl md:text-2xl font-bold">
-          How this is different from “just using ChatGPT for my essays.”
-        </h2>
-      </div>
-
-      <div class="grid gap-4 md:grid-cols-2 text-sm">
-        <div class="border border-slate-800 bg-slate-900/70 rounded-lg p-4">
-          <h3 class="font-semibold text-sm mb-1">What is PredictAdmit AI’s mission?</h3>
-          <p class="text-xs text-slate-300">
-            To give you structured, committee-style reads on the story your file tells — something
-            families usually only get from expensive counselors, not from a generic “rewrite this”
-            chatbot.
-          </p>
+      <!-- AIMail Inbox (stacked below the application card) -->
+      <div
+        class="rounded-2xl border border-slate-800 bg-gradient-to-b from-slate-950 to-slate-900/95 shadow-[0_0_40px_rgba(15,23,42,0.9)]"
+      >
+        <!-- Top bar -->
+        <div class="flex items-center justify-between border-b border-slate-800 px-4 py-3">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-400">
+                AIMail · AI Admissions Inbox
+              </span>
+              <span class="rounded-full bg-slate-900 px-2 py-0.5 text-[10px] text-cyan-300 border border-cyan-500/40">
+                DeepSeek-generated decisions
+              </span>
+            </div>
+            <p class="mt-1 text-xs text-slate-400">
+              Inbox shows raw AI decisions. The Deep Dive folder stores tagged explanations per school—like
+              detailed answer keys for why a decision swung admit, deny, defer, or waitlist.
+            </p>
+          </div>
+          <div class="text-right text-[10px] text-slate-500">
+            <div>Signed in as: <span class="text-slate-300">{googleEmail || 'you@predictadmit.ai'}</span></div>
+            <div>Mode: <span class="text-cyan-300">AI Admissions Simulator</span></div>
+          </div>
         </div>
 
-        <div class="border border-slate-800 bg-slate-900/70 rounded-lg p-4">
-          <h3 class="font-semibold text-sm mb-1">Can’t I just copy your prompts into another AI?</h3>
-          <p class="text-xs text-slate-300">
-            The value isn’t a magic prompt. It’s the sequence of checks — narrative, spike,
-            coherence, context — chained together around the assumption that you already wrote the
-            draft and just need to see it the way a reader will.
-          </p>
-        </div>
+        <!-- Judging banner -->
+        {#if isSubmitting}
+          <div class="border-b border-slate-800 bg-slate-900/80 px-4 py-2 flex items-center gap-2 text-[11px] text-slate-300">
+            <span class="h-3 w-3 animate-spin rounded-full border border-cyan-400 border-t-transparent"></span>
+            <span>
+              Your AI application is in the reading queue. Simulated adcoms are reviewing your file across
+              HYPSM+…
+            </span>
+          </div>
+        {/if}
 
-        <div class="border border-slate-800 bg-slate-900/70 rounded-lg p-4">
-          <h3 class="font-semibold text-sm mb-1">Will colleges know if I use it?</h3>
-          <p class="text-xs text-slate-300">
-            Not when you use it as a reader and editor. You’re still doing the writing; the system
-            is just holding up a mirror to how your pieces fit together. If it doesn’t sound like
-            you, you change it until it does.
-          </p>
-        </div>
+        <!-- Main content: inbox + deep dive -->
+        <div class="flex flex-col h-[520px] text-xs">
+          <!-- Tabs -->
+          <div class="flex border-b border-slate-800 text-[10px] uppercase tracking-[0.2em]">
+            <button
+              type="button"
+              class="px-4 py-2 border-b-2"
+              class:border-cyan-400={activeFolder === 'inbox'}
+              class:border-transparent={activeFolder !== 'inbox'}
+              class:text-cyan-200={activeFolder === 'inbox'}
+              class:text-slate-500={activeFolder !== 'inbox'}
+              on:click={() => {
+                activeFolder = 'inbox';
+                viewMode = 'list';
+              }}
+            >
+              Inbox
+            </button>
+            <button
+              type="button"
+              class="px-4 py-2 border-b-2"
+              class:border-cyan-400={activeFolder === 'deepDive'}
+              class:border-transparent={activeFolder !== 'deepDive'}
+              class:text-cyan-200={activeFolder === 'deepDive'}
+              class:text-slate-500={activeFolder !== 'deepDive'}
+              on:click={openDeepDiveFolder}
+            >
+              Deep Dive
+            </button>
+          </div>
 
-        <div class="border border-slate-800 bg-slate-900/70 rounded-lg p-4">
-          <h3 class="font-semibold text-sm mb-1">How does this connect to the portal sim?</h3>
-          <p class="text-xs text-slate-300">
-            PredictAdmit AI refines what’s in the file. The PredictAdmit simulator lets you feel
-            what that file leads to on decision day. Together they cover both: the narrative and the
-            emotional punch of opening those portals.
-          </p>
-        </div>
+          <!-- Folder content -->
+          {#if activeFolder === 'inbox'}
+            {#if !aiDecisions.length}
+              <div class="flex-1 flex items-center justify-center px-6 text-xs text-slate-500 text-center">
+                <p>
+                  Your AI inbox is empty. Build your application above, connect with Google, and click
+                  <span class="text-cyan-300 font-medium"> Apply to HYPSM+ with AI</span> to generate
+                  simulated decisions.
+                </p>
+              </div>
+            {:else}
+              {#if viewMode === 'list'}
+                <div class="flex-1 overflow-auto">
+                  <table class="min-w-full text-xs">
+                    <tbody>
+                      {#each aiDecisions as decision (decision.slug)}
+                        <tr
+                          class="border-b border-slate-800/80 hover:bg-slate-900 cursor-pointer"
+                          on:click={() => openDecision(decision)}
+                        >
+                          <td class="px-3 py-2 w-8 align-top">
+                            <input
+                              type="checkbox"
+                              aria-label={`Select ${decision.school} decision`}
+                              class="h-3 w-3 rounded border-slate-600 bg-slate-900 text-cyan-400"
+                            />
+                          </td>
+                          <td class="px-1 py-2 w-6 align-top">
+                            <span class="inline-block h-3 w-3 rounded-full bg-cyan-400/60" aria-hidden="true"></span>
+                          </td>
+                          <td class="px-2 py-2 align-top">
+                            <div class="flex items-center gap-2 flex-wrap">
+                              <span class="font-medium text-slate-100">
+                                {decision.school}
+                              </span>
+                              <span
+                                class={`inline-flex items-center px-2 py-0.5 rounded-full border text-[10px] font-medium ${outcomeClasses(
+                                  decision.outcome
+                                )}`}
+                              >
+                                {outcomeLabel(decision.outcome)}
+                              </span>
+                              {#if isEDDecision(decision)}
+                                <span class="inline-flex items-center px-2 py-0.5 rounded-full border border-cyan-500/70 bg-cyan-500/10 text-[10px] text-cyan-200 font-medium">
+                                  ED / REA
+                                </span>
+                              {/if}
+                            </div>
+                            <div class="mt-0.5 text-[11px] text-slate-300">
+                              Application Status – AI simulation result available in your portal.
+                            </div>
+                            <div class="mt-0.5 text-[11px] text-slate-500 line-clamp-2">
+                              {decision.short_reason}
+                            </div>
+                          </td>
+                          <td class="px-3 py-2 align-top text-right whitespace-nowrap">
+                            <button
+                              type="button"
+                              class="inline-flex items-center gap-1 rounded-full border border-cyan-500/40 px-2.5 py-1 text-[10px] text-cyan-200 hover:bg-cyan-500/10 focus:outline-none focus:ring-1 focus:ring-cyan-400"
+                              on:click|stopPropagation={() => requestDeepDive(decision)}
+                              disabled={deepDiveLoadingSlug === decision.slug}
+                            >
+                              {#if deepDiveLoadingSlug === decision.slug}
+                                <span
+                                  class="h-3 w-3 animate-spin rounded-full border border-cyan-300 border-t-transparent"
+                                ></span>
+                                <span>Deep diving…</span>
+                              {:else}
+                                <span>Deep dive</span>
+                              {/if}
+                            </button>
+                          </td>
+                        </tr>
+                      {/each}
+                    </tbody>
+                  </table>
+                </div>
+              {:else}
+                <!-- Detail view for one decision -->
+                {#if selectedDecision}
+                  <div class="flex-1 flex flex-col">
+                    <div class="flex items-center justify-between border-b border-slate-800 px-4 py-2">
+                      <div class="flex items-center gap-2">
+                        <button
+                          type="button"
+                          class="rounded-full border border-slate-600 px-2 py-1 text-[11px] text-slate-200 hover:bg-slate-800 focus:outline-none focus:ring-1 focus:ring-cyan-400"
+                          on:click={backToList}
+                        >
+                          ← Back to inbox
+                        </button>
+                        <span class="text-[11px] text-slate-500">
+                          AI decision details
+                        </span>
+                      </div>
+                      <button
+                        type="button"
+                        class="inline-flex items-center gap-1 rounded-full border border-cyan-500/40 px-3 py-1.5 text-[11px] text-cyan-200 hover:bg-cyan-500/10 focus:outline-none focus:ring-1 focus:ring-cyan-400"
+                        on:click={() => requestDeepDive(selectedDecision)}
+                        disabled={deepDiveLoadingSlug === selectedDecision.slug}
+                      >
+                        {#if deepDiveLoadingSlug === selectedDecision.slug}
+                          <span
+                            class="h-3 w-3 animate-spin rounded-full border border-cyan-300 border-t-transparent"
+                          ></span>
+                          <span>Tag for Deep Dive</span>
+                        {:else}
+                          <span>Tag for Deep Dive</span>
+                        {/if}
+                      </button>
+                    </div>
 
-        <div class="border border-slate-800 bg-slate-900/70 rounded-lg p-4">
-          <h3 class="font-semibold text-sm mb-1">Is using this ethical?</h3>
-          <p class="text-xs text-slate-300">
-            Yes, when you treat it as a narrative coach. We ask you to revise, fact-check, and make
-            final calls. The goal is to sharpen your story, not erase it under AI prose.
-          </p>
-        </div>
+                    <div class="flex-1 overflow-auto px-5 py-4 space-y-3 text-xs">
+                      <div class="space-y-1">
+                        <h3 class="text-sm font-semibold text-slate-50">
+                          {selectedDecision.school} – Application Status (AI Simulation)
+                        </h3>
+                        <div class="flex flex-wrap items-center gap-2 text-[11px] text-slate-400">
+                          <span>From: PredictAdmit AI &lt;no-reply@predictadmit.ai&gt;</span>
+                          <span>·</span>
+                          <span>To: {googleEmail || 'you@predictadmit.ai'}</span>
+                          <span>·</span>
+                          <span
+                            class={`inline-flex items-center px-2 py-0.5 rounded-full border ${outcomeClasses(
+                              selectedDecision.outcome
+                            )}`}
+                          >
+                            {outcomeLabel(selectedDecision.outcome)}
+                          </span>
+                          {#if isEDDecision(selectedDecision)}
+                            <span class="inline-flex items-center px-2 py-0.5 rounded-full border border-cyan-500/70 bg-cyan-500/10 text-[10px] text-cyan-200 font-medium">
+                              ED / REA
+                            </span>
+                          {/if}
+                        </div>
+                      </div>
 
-        <div class="border border-slate-800 bg-slate-900/70 rounded-lg p-4">
-          <h3 class="font-semibold text-sm mb-1">What is your refund policy?</h3>
-          <p class="text-xs text-slate-300">
-            If you don’t feel a meaningful difference in how your app reads within 7 days, reach
-            out and we’ll make it right. This should feel like the reader you wish you had from day
-            one — not just another tool.
-          </p>
-        </div>
-      </div>
-    </section>
+                      <div class="h-px bg-gradient-to-r from-transparent via-slate-700 to-transparent"></div>
 
-    <!-- FINAL CTA -->
-    <section
-      class="border border-sky-500/80 bg-sky-500/10 rounded-xl p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4"
-    >
-      <div class="space-y-2">
-        <p class="text-xs uppercase tracking-[0.25em] text-sky-300">
-          Next step
-        </p>
-        <h2 class="text-xl md:text-2xl font-bold">
-          Give it one draft and see if your story gets clearer.
-        </h2>
-        <p class="text-sm text-slate-200 max-w-xl">
-          PredictAdmit AI is meant to be the reader who gets the big picture when you’re too deep in
-          the weeds — the tool that makes you say, “Oh. <em>That’s</em> what my app is actually
-          saying about me.”
-        </p>
-        <p class="text-[11px] text-slate-300 italic">
-          “This is actually going to change the applying-to-college game forever.”
-          <span class="not-italic font-semibold"> — Adam G, Student</span>
-        </p>
-      </div>
-      <div>
-        <a
-          href="#pricing"
-          class="inline-flex items-center justify-center px-5 py-3 text-sm font-semibold rounded-sm border border-sky-500 bg-sky-400 text-slate-900 hover:bg-sky-300"
-        >
-          Get started, it’s free
-        </a>
+                      <p class="text-slate-200">
+                        The AI simulator has generated a predicted decision for your application to
+                        <span class="font-medium"> {selectedDecision.school}</span> based on the materials you
+                        provided.
+                      </p>
+
+                      <p class="text-slate-300">
+                        <span class="font-semibold">Summary rationale:</span>
+                        <br />
+                        {selectedDecision.short_reason}
+                      </p>
+
+                      <p class="text-slate-400">
+                        For a more detailed, school-voice explanation, tag this email for a
+                        <span class="text-cyan-300"> Deep dive</span>. The Deep Dive folder will hold a full
+                        breakdown written as if by {selectedDecision.school}'s admissions committee—so you get
+                        something closer to an annotated answer explanation, not just a one-word verdict.
+                      </p>
+                    </div>
+                  </div>
+                {/if}
+              {/if}
+            {/if}
+          {:else}
+            <!-- Deep Dive folder -->
+            {#if !deepDiveItems.length}
+              <div class="flex-1 flex items-center justify-center px-6 text-xs text-slate-500 text-center">
+                <p>
+                  No deep dives yet. From the Inbox, click the
+                  <span class="text-cyan-300 font-medium"> Deep dive</span> button on any AI decision to
+                  generate a full explanation from that school’s perspective—your personalized
+                  “solutions manual” for the admissions process.
+                </p>
+              </div>
+            {:else}
+              <div class="flex-1 overflow-auto px-5 py-4 space-y-5 text-xs">
+                {#each deepDiveItems as item (item.slug)}
+                  <article class="rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3 space-y-2">
+                    <header class="flex flex-wrap items-center justify-between gap-2">
+                      <div class="space-y-0.5">
+                        <h3 class="text-sm font-semibold text-slate-50">
+                          {item.school} – Deep Dive (AI Simulation)
+                        </h3>
+                        <div class="flex flex-wrap items-center gap-2 text-[11px] text-slate-400">
+                          <span>Folder: Deep Dive</span>
+                          <span>·</span>
+                          <span>From: Simulated adcom</span>
+                        </div>
+                      </div>
+                      <span
+                        class={`inline-flex items-center px-2.5 py-0.5 rounded-full border text-[10px] font-medium ${outcomeClasses(
+                          item.outcome
+                        )}`}
+                      >
+                        {outcomeLabel(item.outcome)}
+                      </span>
+                    </header>
+
+                    <div class="h-px bg-gradient-to-r from-transparent via-slate-700 to-transparent"></div>
+
+                    <div class="prose prose-invert prose-slate max-w-none text-[11px] leading-relaxed">
+                      {@html item.explanation.replace(/\n/g, '<br />')}
+                    </div>
+                  </article>
+                {/each}
+              </div>
+            {/if}
+          {/if}
+        </div>
       </div>
     </section>
   </div>
-
-  <SiteFooter />
 </main>
+
+<AIFooter />
