@@ -13,6 +13,8 @@
   import DukeDenied from '$lib/components/duke/DukeDenied.svelte';
   import HarvardAccepted from '$lib/components/harvard/HarvardAccepted.svelte';
   import HarvardDenied from '$lib/components/harvard/HarvardDenied.svelte';
+  import UCBerkeleyAccepted from '$lib/components/berkeley/UCBerkeleyAccepted.svelte';
+  import UCBerkeleyDenied from '$lib/components/berkeley/UCBerkeleyDenied.svelte';
 
   /**
    * Use the type of GenericAcceptedLetter as the base component type.
@@ -33,6 +35,74 @@
     harvard: {
       accepted: HarvardAccepted,
       denied: HarvardDenied
+    },
+    yale: {
+      accepted: YaleAccepted,
+      denied: YaleDenied
+    },
+    stanford: {
+      accepted: StanfordAccepted,
+      denied: StanfordDenied
+    },
+    princeton: {
+      accepted: PrincetonAccepted,
+      denied: PrincetonDenied
+    },
+    columbia: {
+      accepted: ColumbiaAccepted,
+      denied: ColumbiaDenied
+    },
+    brown: {
+      accepted: BrownAccepted,
+      denied: BrownDenied
+    },
+    upenn: {
+      accepted: UPennAccepted,
+      denied: UPennDenied
+    },
+    uchicago: {
+      accepted: UChicagoAccepted,
+      denied: UChicagoDenied
+    },
+    mit: {
+      accepted: MITAccepted,
+      denied: MITDenied
+    },
+    northwestern: {
+      accepted: NorthwesternAccepted,
+      denied: NorthwesternDenied
+    },
+    georgiatech: {
+      accepted: GeorgiaTechAccepted,
+      denied: GeorgiaTechDenied
+    },
+    johnshopkins: {
+      accepted: JHUAccepted,
+      denied: JHUDenied
+    },
+    dartmouth: {
+      accepted: DartmouthAccepted,
+      denied: DartmouthDenied
+    },
+    vanderbilt: {
+      accepted: VanderbiltAccepted,
+      denied: VanderbiltDenied
+    },
+    rice: {
+      accepted: RiceAccepted,
+      denied: RiceDenied
+    }, 
+    wustl: {
+      accepted: WUSTLAccepted,
+      denied: WUSTLDenied
+    },
+    berkeley: {
+      accepted: UCBerkeleyAccepted,
+      denied: UCBerkeleyDenied
+    },
+    ucla: {
+      accepted: UCLAAccepted,
+      denied: UCLADenied
     }
     // Add more here as you create per-school components.
   };
