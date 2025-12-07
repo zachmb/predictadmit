@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import AIHeader from '$lib/components/layout/AIHeader.svelte';
   import AIFooter from '$lib/components/layout/AIFooter.svelte';
 
@@ -18,11 +19,28 @@
     explanation: string;
   };
 
-  // Application inputs (text only – PDFs not supported yet)
+  // Application inputs (can be typed or filled via OCR)
   let essay = '';
   let activities = '';
   let honors = '';
   let transcript = '';
+
+  // OCR state
+  let ocrUploading = false;
+  let ocrError = '';
+  let ocrText = '';
+
+  // Free-tier limits (persisted per browser)
+  let hasUsedFreeSimulation = false; // one full HYPSM+ run
+  let hasUsedFreePdfOcr = false; // one Common App PDF upload
+
+  // Paywall modal state
+  let showPaywallModal = false;
+  let paywallMode: 'simulation' | 'ocr' | 'deepDive' | null = null;
+  let paywallContextDecision: AiDecision | null = null;
+
+  // In a real app this would come from your backend / Stripe webhook
+  const hasDeepDiveAccess = false;
 
   // Google sign-in (simulated for now)
   let googleSignedIn = false;
@@ -59,6 +77,16 @@
   // Summary of all materials returned from the evaluate endpoint.
   let applicantSummary = '';
 
+  // Restore free-tier usage from localStorage
+  onMount(() => {
+    if (typeof localStorage !== 'undefined') {
+      hasUsedFreeSimulation =
+        localStorage.getItem('predictadmit_hasUsedFreeSimulation') === 'true';
+      hasUsedFreePdfOcr =
+        localStorage.getItem('predictadmit_hasUsedFreePdfOcr') === 'true';
+    }
+  });
+
   function outcomeLabel(outcome: DecisionOutcome): string {
     if (outcome === 'admit') return 'Admitted';
     if (outcome === 'deny') return 'Denied';
@@ -93,8 +121,6 @@
   }
 
   function simulateGoogleSignIn() {
-    // Front-end-only: this is a simulated Google sign-in.
-    // You can later replace this with a real OAuth flow if you want.
     googleSignedIn = true;
     googleEmail = 'you@predictadmit.ai';
     googleName = 'PredictAdmit User';
@@ -109,6 +135,18 @@
     );
   }
 
+  function openPaywall(mode: 'simulation' | 'ocr' | 'deepDive', decision?: AiDecision) {
+    paywallMode = mode;
+    paywallContextDecision = decision ?? null;
+    showPaywallModal = true;
+  }
+
+  function closePaywall() {
+    showPaywallModal = false;
+    paywallMode = null;
+    paywallContextDecision = null;
+  }
+
   async function runEvaluation() {
     aiError = '';
 
@@ -120,6 +158,12 @@
     if (!ensureHasSomeInput()) {
       aiError =
         'Add at least one piece of application data (essay, activities, honors, or transcript text) before applying to the AI simulator.';
+      return;
+    }
+
+    // 🔒 Free tier: one full HYPSM+ simulation per browser
+    if (hasUsedFreeSimulation) {
+      openPaywall('simulation');
       return;
     }
 
@@ -159,6 +203,12 @@
       if (!aiDecisions.length) {
         aiError =
           'The AI did not return any decisions. Try adding more detail to your application and apply again.';
+      } else {
+        // Mark free simulation as used after a successful run
+        hasUsedFreeSimulation = true;
+        if (typeof localStorage !== 'undefined') {
+          localStorage.setItem('predictadmit_hasUsedFreeSimulation', 'true');
+        }
       }
     } catch (err) {
       console.error(err);
@@ -185,9 +235,14 @@
     selectedDecision = null;
   }
 
+  // 🔒 Deep Dive is fully paywalled – no API call until they upgrade
   async function requestDeepDive(decision: AiDecision) {
+    if (!hasDeepDiveAccess) {
+      openPaywall('deepDive', decision);
+      return;
+    }
+
     if (!applicantSummary) {
-      // Fallback: reconstruct very rough summary on client if needed.
       applicantSummary = [
         essay && `Personal essay:\n${essay}`,
         activities && `Activities / extracurriculars:\n${activities}`,
@@ -225,7 +280,6 @@
       const deepDive = data.deepDive as DeepDiveItem | undefined;
 
       if (deepDive) {
-        // Replace any existing deep dive for this school.
         deepDiveItems = [
           ...deepDiveItems.filter((d) => d.slug !== deepDive.slug),
           deepDive
@@ -240,6 +294,73 @@
     } finally {
       deepDiveLoadingSlug = null;
     }
+  }
+
+  // === OCR handler ===
+  async function handleOcrChange(event: Event) {
+    const target = event.currentTarget as HTMLInputElement;
+    const file = target.files?.[0];
+
+    ocrError = '';
+    ocrText = '';
+
+    if (!file) return;
+
+    // 🔒 Free tier: one Common App PDF OCR per browser
+    if (hasUsedFreePdfOcr) {
+      openPaywall('ocr');
+      // reset file input so they can pick again later if they upgrade
+      target.value = '';
+      return;
+    }
+
+    // Guard: only PDFs
+    if (file.type !== 'application/pdf') {
+      ocrError = 'Please upload a PDF file.';
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    ocrUploading = true;
+
+    try {
+      const res = await fetch('/api/ocr', {
+        method: 'POST',
+        body: formData
+      });
+
+      if (!res.ok) {
+        const text = await res.text();
+        console.error('OCR error:', text);
+        ocrError = 'OCR failed on this file. Try another PDF or copy–paste manually.';
+        return;
+      }
+
+      const data = (await res.json()) as { text?: string };
+      ocrText = (data.text ?? '').trim();
+
+      if (!ocrText) {
+        ocrError = 'OCR completed but returned no text. The PDF might be image-only or locked.';
+      } else {
+        // Mark free OCR as used after a successful extraction
+        hasUsedFreePdfOcr = true;
+        if (typeof localStorage !== 'undefined') {
+          localStorage.setItem('predictadmit_hasUsedFreePdfOcr', 'true');
+        }
+      }
+    } catch (err) {
+      console.error(err);
+      ocrError = 'Network error while calling OCR. Please try again.';
+    } finally {
+      ocrUploading = false;
+    }
+  }
+
+  function applyOcrToEssay() {
+    if (!ocrText) return;
+    essay = ocrText;
   }
 </script>
 
@@ -264,15 +385,16 @@
             PredictAdmit <span class="text-cyan-300">/AI</span>
           </h1>
           <p class="mt-1 max-w-2xl text-sm text-slate-300">
-            Connect with Google, paste your Common App materials into the text boxes, choose an ED
+            Connect with Google, upload or paste your Common App materials, choose an ED
             school, and click <span class="font-semibold text-cyan-300">Apply</span>. The model
             simulates your decisions for the same HYPSM+ list as admitMail, then delivers them into a
             dark-mode inbox with adcom-style explanations.
           </p>
           <p class="mt-2 max-w-2xl text-[11px] text-slate-400">
-            PDF uploads are <span class="font-semibold text-slate-100">not supported yet</span>. If your
-            essay, activities, or transcript are in a PDF, open it on your computer and
-            <span class="font-semibold text-cyan-300"> copy–paste the text</span> into the boxes below.
+            If your materials live in a PDF, you can either
+            <span class="font-semibold text-cyan-300"> copy–paste the text</span> into the boxes below
+            or upload the Common App PDF to our <span class="font-semibold text-slate-100">OCR beta</span>,
+            which will extract the text and drop it into your essay box.
           </p>
           <p class="mt-2 max-w-2xl text-[11px] text-slate-400">
             This is a training ground, not a crystal ball. Use it the way you’d use UWorld: iterate on
@@ -351,10 +473,86 @@
             </div>
           {/if}
 
-          <!-- PDF not supported notice inside card -->
-          <div class="rounded-lg border border-amber-500/40 bg-amber-500/10 px-3 py-2 text-[11px] text-amber-100">
-            PDFs aren’t supported yet. If your essay, activities list, or transcript are in a PDF, open it
-            and <span class="font-semibold">copy–paste the text</span> into the boxes below.
+          <!-- PDF info + OCR upload area -->
+          <div class="grid gap-3 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] items-start">
+            <div
+              class="rounded-lg border border-amber-500/40 bg-amber-500/10 px-3 py-2 text-[11px] text-amber-100"
+            >
+              PDFs can be messy. For the cleanest results, you can still
+              <span class="font-semibold">copy–paste</span> your essay, activities, and transcript text into
+              the boxes below.
+              <br /><br />
+              Or try the <span class="font-semibold text-amber-50">Common App PDF OCR beta</span> on the
+              right and send the extracted text straight into your essay box.
+              {#if hasUsedFreePdfOcr}
+                <span class="mt-1 block text-[10px] text-amber-200">
+                  You’ve already used your free Common App PDF scan. Further uploads require unlocking
+                  PredictAdmit /AI.
+                </span>
+              {/if}
+            </div>
+
+            <div class="rounded-lg border border-slate-700 bg-slate-950/80 px-3 py-3 space-y-2">
+              <h3 class="text-[11px] font-medium text-cyan-100 uppercase tracking-[0.2em]">
+                Common App PDF · OCR beta
+              </h3>
+              <p class="text-[10px] text-slate-400">
+                Upload the PDF you downloaded from the Common App. We’ll run OCR and show the extracted
+                text below. Then click
+                <span class="font-semibold text-cyan-200">Use in essay</span> to copy it into the Personal
+                Essay box.
+              </p>
+
+              <label class="mt-1 flex items-center justify-between gap-2 text-[11px] text-slate-200">
+                <span>
+                  Upload PDF
+                  {#if hasUsedFreePdfOcr}
+                    <span class="ml-1 text-[10px] text-amber-300">
+                      · Free scan used
+                    </span>
+                  {/if}
+                </span>
+                <input
+                  type="file"
+                  accept="application/pdf"
+                  class="block w-40 text-[10px] text-slate-200 file:mr-2 file:rounded-full file:border-none file:bg-cyan-500 file:px-3 file:py-1 file:text-[10px] file:font-semibold file:text-slate-950 hover:file:bg-cyan-400 cursor-pointer"
+                  on:change={handleOcrChange}
+                />
+              </label>
+
+              {#if ocrUploading}
+                <p class="mt-2 text-[10px] text-cyan-300 flex items-center gap-2">
+                  <span class="h-3 w-3 animate-spin rounded-full border border-cyan-400 border-t-transparent"></span>
+                  Running OCR on your PDF…
+                </p>
+              {/if}
+
+              {#if ocrError}
+                <p class="mt-2 text-[10px] text-rose-300 bg-rose-500/10 border border-rose-500/40 rounded px-2 py-1">
+                  {ocrError}
+                </p>
+              {/if}
+
+              {#if ocrText}
+                <div class="mt-2 space-y-1">
+                  <div class="flex items-center justify-between">
+                    <span class="text-[10px] text-slate-400">
+                      OCR preview (first few hundred words)
+                    </span>
+                    <button
+                      type="button"
+                      class="text-[10px] rounded-full border border-cyan-500/50 px-2 py-1 text-cyan-200 hover:bg-cyan-500/10"
+                      on:click={applyOcrToEssay}
+                    >
+                      Use in essay
+                    </button>
+                  </div>
+                  <div class="max-h-40 overflow-auto rounded border border-slate-700 bg-slate-950/70 p-2 text-[10px] text-slate-200 whitespace-pre-wrap">
+                    {ocrText}
+                  </div>
+                </div>
+              {/if}
+            </div>
           </div>
 
           <div class="grid gap-4 md:grid-cols-2">
@@ -373,7 +571,7 @@
                 bind:value={essay}
                 rows="4"
                 class="w-full rounded-lg border border-slate-700 bg-slate-950/70 px-3 py-2 text-xs text-slate-50 placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-cyan-400 focus:border-cyan-400 resize-y"
-                placeholder="Paste your Common App-style personal statement or a realistic draft. If it’s in a PDF, open it and copy–paste the text here."
+                placeholder="Paste your Common App-style personal statement or use the OCR beta above to auto-fill from your PDF."
               ></textarea>
             </div>
 
@@ -488,7 +686,11 @@
                 <span class="h-3 w-3 animate-spin rounded-full border border-slate-900 border-t-transparent"></span>
                 <span>AI is judging your application…</span>
               {:else}
-                <span>Apply to HYPSM+ with AI</span>
+                {#if hasUsedFreeSimulation}
+                  <span>Upgrade to re-run HYPSM+</span>
+                {:else}
+                  <span>Apply to HYPSM+ with AI</span>
+                {/if}
               {/if}
             </button>
 
@@ -521,7 +723,7 @@
         </form>
       </div>
 
-      <!-- AIMail Inbox (stacked below the application card) -->
+      <!-- AIMail Inbox -->
       <div
         class="rounded-2xl border border-slate-800 bg-gradient-to-b from-slate-950 to-slate-900/95 shadow-[0_0_40px_rgba(15,23,42,0.9)]"
       >
@@ -547,7 +749,6 @@
           </div>
         </div>
 
-        <!-- Judging banner -->
         {#if isSubmitting}
           <div class="border-b border-slate-800 bg-slate-900/80 px-4 py-2 flex items-center gap-2 text-[11px] text-slate-300">
             <span class="h-3 w-3 animate-spin rounded-full border border-cyan-400 border-t-transparent"></span>
@@ -558,9 +759,7 @@
           </div>
         {/if}
 
-        <!-- Main content: inbox + deep dive -->
         <div class="flex flex-col h-[520px] text-xs">
-          <!-- Tabs -->
           <div class="flex border-b border-slate-800 text-[10px] uppercase tracking-[0.2em]">
             <button
               type="button"
@@ -589,7 +788,6 @@
             </button>
           </div>
 
-          <!-- Folder content -->
           {#if activeFolder === 'inbox'}
             {#if !aiDecisions.length}
               <div class="flex-1 flex items-center justify-center px-6 text-xs text-slate-500 text-center">
@@ -667,7 +865,6 @@
                   </table>
                 </div>
               {:else}
-                <!-- Detail view for one decision -->
                 {#if selectedDecision}
                   <div class="flex-1 flex flex-col">
                     <div class="flex items-center justify-between border-b border-slate-800 px-4 py-2">
@@ -751,7 +948,6 @@
               {/if}
             {/if}
           {:else}
-            <!-- Deep Dive folder -->
             {#if !deepDiveItems.length}
               <div class="flex-1 flex items-center justify-center px-6 text-xs text-slate-500 text-center">
                 <p>
@@ -799,6 +995,117 @@
       </div>
     </section>
   </div>
+
+  {#if showPaywallModal && paywallMode}
+    <!-- Paywall modal overlay -->
+    <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">
+      <div class="max-w-md w-full rounded-2xl border border-cyan-500/40 bg-slate-950 px-6 py-5 shadow-[0_0_40px_rgba(34,211,238,0.5)] space-y-4">
+        <div class="flex items-center justify-between gap-3">
+          <div class="space-y-1">
+            <p class="text-[11px] uppercase tracking-[0.22em] text-cyan-300">
+              {#if paywallMode === 'deepDive'}
+                Locked · Deep Dive Explanation
+              {:else if paywallMode === 'simulation'}
+                Locked · Extra AI Simulations
+              {:else}
+                Locked · Extra PDF Uploads
+              {/if}
+            </p>
+            <h2 class="text-lg font-semibold text-slate-50">
+              {#if paywallMode === 'deepDive' && paywallContextDecision}
+                You know the verdict. Now learn <span class="text-cyan-300">why</span>.
+              {:else if paywallMode === 'simulation'}
+                One full HYPSM+ run is free. The rest are premium.
+              {:else}
+                You’ve used your free Common App scan.
+              {/if}
+            </h2>
+          </div>
+          <button
+            type="button"
+            class="h-7 w-7 rounded-full border border-slate-700 text-slate-400 text-xs flex items-center justify-center hover:bg-slate-800"
+            on:click={closePaywall}
+          >
+            ✕
+          </button>
+        </div>
+
+        <div class="space-y-3 text-[13px] text-slate-300">
+          {#if paywallMode === 'deepDive' && paywallContextDecision}
+            <p>
+              Right now you’re staring at a single line — <span class="font-semibold">{outcomeLabel(
+                paywallContextDecision.outcome
+              )}</span> from <span class="font-semibold">{paywallContextDecision.school}</span>.
+              That’s how real portals work: one word, no context.
+            </p>
+            <p>
+              The Deep Dive turns that verdict into a full, adcom-style breakdown:
+              what helped you, what quietly hurt you, and what they’d need to see
+              to flip this decision next cycle.
+            </p>
+            <p class="text-slate-400 text-[12px]">
+              If this school is living rent-free in your head, this is where you finally
+              get to see the story <span class="italic">behind</span> the decision instead of
+              imagining the worst.
+            </p>
+          {:else if paywallMode === 'simulation'}
+            <p>
+              You’ve already used your free full HYPSM+ simulation on this device.
+              That first run is meant to feel like decision day: twenty verdicts,
+              one unified story of how the top schools are reading you <span class="italic">right now</span>.
+            </p>
+            <p>
+              To rerun with a new draft, different activities, or a rebalanced spike,
+              you’ll need to unlock PredictAdmit <span class="text-cyan-300">/AI Premium</span>.
+            </p>
+            <p class="text-slate-400 text-[12px]">
+              The value isn’t in a single “yes” or “no”. It’s in iterating:
+              tweak your profile, re-apply, and watch how the map of admits/denies shifts.
+            </p>
+          {:else}
+            <p>
+              You get <span class="font-semibold">one</span> free Common App PDF scan.
+              You’ve used it — which means you’ve already seen your application stripped
+              down to the raw text an AI reader actually sees.
+            </p>
+            <p>
+              To upload new versions, alternate essays, or a different Common App file,
+              you’ll need to unlock PredictAdmit <span class="text-cyan-300">/AI Premium</span>.
+            </p>
+            <p class="text-slate-400 text-[12px]">
+              Most applicants never see their own file the way a reader does.
+              Once you’ve seen it once, it’s hard not to want to revise and resubmit.
+            </p>
+          {/if}
+        </div>
+
+        <div class="space-y-2">
+          <a
+            href="/pricing"
+            class="inline-flex w-full items-center justify-center gap-2 rounded-full bg-cyan-500 px-4 py-2.5 text-xs font-semibold text-slate-950 shadow-[0_0_25px_rgba(34,211,238,0.7)] hover:bg-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-300"
+          >
+            {#if paywallMode === 'deepDive'}
+              Unlock Deep Dive explanations
+            {:else if paywallMode === 'simulation'}
+              Unlock more HYPSM+ simulations
+            {:else}
+              Unlock more Common App uploads
+            {/if}
+          </a>
+          <button
+            type="button"
+            class="w-full rounded-full border border-slate-700 bg-slate-950 px-4 py-2 text-[11px] text-slate-300 hover:bg-slate-900"
+            on:click={closePaywall}
+          >
+            Not now · keep the free run
+          </button>
+          <p class="text-[10px] text-slate-500 text-center">
+            No real applications are affected. This is a training ground, not a crystal ball.
+          </p>
+        </div>
+      </div>
+    </div>
+  {/if}
 </main>
 
 <AIFooter />

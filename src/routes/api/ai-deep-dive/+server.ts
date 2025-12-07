@@ -1,14 +1,20 @@
 // src/routes/api/ai-deep-dive/+server.ts
 import type { RequestHandler } from './$types';
 import { json } from '@sveltejs/kit';
-import { DEEPSEEK_API_KEY } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 
 type DecisionOutcome = 'admit' | 'deny' | 'waitlist' | 'defer';
 
 export const POST: RequestHandler = async ({ request }) => {
+  // 🔑 Read env at request time so it's never stale
+  const DEEPSEEK_API_KEY = env.DEEPSEEK_API_KEY;
+
   if (!DEEPSEEK_API_KEY) {
     return json(
-      { error: 'DEEPSEEK_API_KEY is not set on the server. Add it to your .env file.' },
+      {
+        error:
+          'DEEPSEEK_API_KEY is not set on the server. Add it to your .env file (DEEPSEEK_API_KEY=...) and restart the dev server.'
+      },
       { status: 500 }
     );
   }
