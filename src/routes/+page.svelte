@@ -259,19 +259,24 @@
     }, 700);
   };
 
-  const startRdEmailTimeline = (edPortal: PortalEmail | null) => {
-    const rdPortals = edPortal ? portals.filter((p) => p.slug !== edPortal.slug) : portals;
+ const startRdEmailTimeline = (edPortal: PortalEmail | null) => {
+  const rdPortals = edPortal ? portals.filter((p) => p.slug !== edPortal.slug) : portals;
 
-    rdPortals.forEach((portal, index) => {
-      const timeoutId = window.setTimeout(() => {
-        // avoid duplicates
-        if (!visiblePortals.some((vp) => vp.slug === portal.slug)) {
-          visiblePortals = [...visiblePortals, portal];
-        }
-      }, (index + 1) * 1000);
-      applyTimeoutIds.push(timeoutId);
-    });
-  };
+  rdPortals.forEach((portal, index) => {
+    const timeoutId = window.setTimeout(() => {
+      // avoid duplicates
+      if (!visiblePortals.some((vp) => vp.slug === portal.slug)) {
+        visiblePortals = [...visiblePortals, portal];
+
+        // 🔐 NEW: persist updated inbox so it survives navigation
+        saveState();
+      }
+    }, (index + 1) * 1000);
+
+    applyTimeoutIds.push(timeoutId);
+  });
+};
+
 
   const formatTime = (hour24: number, minute: number) => {
     const isPM = hour24 >= 12;

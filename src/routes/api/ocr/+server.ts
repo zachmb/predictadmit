@@ -3,16 +3,15 @@ import type { RequestHandler } from '@sveltejs/kit';
 import { createRequire } from 'module';
 import fs from 'fs';
 import path from 'path';
+import Tesseract from 'tesseract.js';
 
 const require = createRequire(import.meta.url);
-
-// CommonJS modules
-const Tesseract = require('tesseract.js');
+// pdf-poppler is CommonJS, so we still pull it in via require
 const Poppler = require('pdf-poppler');
 
 const TMP_DIR = path.join(process.cwd(), 'tmp');
 
-// Make sure tmp directory exists
+// Ensure tmp directory exists
 if (!fs.existsSync(TMP_DIR)) {
   fs.mkdirSync(TMP_DIR, { recursive: true });
 }
@@ -59,7 +58,11 @@ export const POST: RequestHandler = async ({ request }) => {
     if (imageFiles.length === 0) {
       console.error('No images produced from PDF by pdf-poppler');
       // Clean up pdf
-      fs.unlinkSync(pdfPath);
+      try {
+        fs.unlinkSync(pdfPath);
+      } catch (err) {
+        console.warn('Failed to delete temp pdf:', pdfPath, err);
+      }
       return new Response('Failed to render PDF pages for OCR', { status: 500 });
     }
 
@@ -68,11 +71,12 @@ export const POST: RequestHandler = async ({ request }) => {
     // OCR each page
     for (const imagePath of imageFiles) {
       console.log('Running Tesseract on:', imagePath);
-      const result = await Tesseract.recognize(imagePath, 'eng', {
+
+      const result = await (Tesseract as any).recognize(imagePath, 'eng', {
         logger: (m: any) => console.log(m)
       });
 
-      finalText += (result.data.text || '') + '\n';
+      finalText += ((result?.data?.text as string) || '') + '\n';
 
       // Delete PNG page after processing
       try {
