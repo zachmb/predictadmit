@@ -13,6 +13,9 @@
     type SentEmail
   } from '$lib/config/admitMail';
 
+  // NEW: store AI results globally so portals can read decisions
+  import { aiResults } from '$lib/stores/results';
+
   export let data: PageData;
 
   const session = data.session;
@@ -394,6 +397,9 @@
         aiError = data?.error ?? 'Something went wrong talking to the AI evaluator.';
         return;
       }
+
+      // 🔁 NEW: store this evaluation globally so individual portals can read their outcome
+      aiResults.setFromApi(data);
 
       aiDecisions = (data.decisions ?? []) as AiDecision[];
       applicantSummary = (data.applicantSummary ?? '') as string;
