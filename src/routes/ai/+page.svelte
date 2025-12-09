@@ -56,6 +56,10 @@
   let paywallMode: 'simulation' | 'ocr' | 'deepDive' | null = null;
   let paywallContextDecision: AiDecision | null = null;
 
+  // Promo code state
+  let promoCode = '';
+  let promoStatus = '';
+
   // Pro access (in a real app this would come from your backend / Stripe webhook)
   let hasDeepDiveAccess = false;
 
@@ -340,9 +344,39 @@
     paywallMode = mode;
     paywallContextDecision = decision ?? null;
     showPaywallModal = true;
+    promoStatus = '';
   }
 
   function closePaywall() {
+    showPaywallModal = false;
+    paywallMode = null;
+    paywallContextDecision = null;
+    promoStatus = '';
+    promoCode = '';
+  }
+
+  function redeemPromo() {
+    const code = promoCode.trim();
+
+    if (!code) {
+      promoStatus = 'Enter a promo code first.';
+      return;
+    }
+
+    // Single valid promo code: "Genzhi"
+    if (code !== 'Genzhi' && code.toUpperCase() !== 'GENZHI') {
+      promoStatus = 'Invalid promo code.';
+      return;
+    }
+
+    hasDeepDiveAccess = true;
+
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('predictadmit_pro', 'true');
+    }
+
+    promoStatus = 'Promo applied! You now have full /AI access on this browser.';
+    // Optional: close the modal immediately after applying
     showPaywallModal = false;
     paywallMode = null;
     paywallContextDecision = null;
@@ -1236,6 +1270,37 @@
           <p class="text-[10px] text-slate-500 text-center">
             No real applications are affected. This is a training ground, not a crystal ball.
           </p>
+        </div>
+
+        <!-- Promo code unlock -->
+        <div class="mt-4 space-y-1 border-t border-slate-800 pt-3">
+          <p class="text-[10px] text-slate-500 text-center">
+            Have a promo code? Unlock /AI on this device instantly.
+          </p>
+          <div class="flex flex-col gap-2 sm:flex-row">
+            <input
+              type="text"
+              placeholder="Enter promo code"
+              bind:value={promoCode}
+              class="flex-1 rounded-full border border-slate-700 bg-slate-950 px-3 py-2 text-[11px] text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-cyan-400 focus:border-cyan-400"
+            />
+            <button
+              type="button"
+              class="rounded-full border border-cyan-500/60 bg-slate-950 px-3 py-2 text-[11px] font-semibold text-cyan-200 hover:bg-cyan-500/10"
+              on:click={redeemPromo}
+            >
+              Apply code
+            </button>
+          </div>
+          {#if promoStatus}
+            <p
+              class={`text-[10px] text-center mt-1 ${
+                promoStatus.startsWith('Invalid') ? 'text-rose-300' : 'text-cyan-300'
+              }`}
+            >
+              {promoStatus}
+            </p>
+          {/if}
         </div>
       </div>
     </div>
