@@ -2,7 +2,7 @@
   import { page } from '$app/stores';
   import { userProfile } from '$lib/stores/user';
   import type { UserProfile } from '$lib/stores/user';
-
+  
   import AdmissionsPortalTemplate from '$lib/components/portal/AdmissionsPortalTemplate.svelte';
   import { schoolConfigs } from '$lib/config/schools';
 
@@ -13,7 +13,8 @@
   import DukeDenied from '$lib/components/duke/DukeDenied.svelte';
   import HarvardAccepted from '$lib/components/harvard/HarvardAccepted.svelte';
   import HarvardDenied from '$lib/components/harvard/HarvardDenied.svelte';
-
+  import YaleAccepted from '$lib/components/yale/YaleAccepted.svelte';
+  import YaleDenied from '$lib/components/yale/YaleDenied.svelte';
   /**
    * Use the type of GenericAcceptedLetter as the base component type.
    * All letter components have the same shape, so this keeps TS happy
@@ -33,7 +34,13 @@
     harvard: {
       accepted: HarvardAccepted,
       denied: HarvardDenied
+    },
+    yale: {
+      accepted: YaleAccepted,
+      denied: YaleDenied
     }
+    
+    
     // Add more here as you create per-school components.
   };
 
@@ -110,6 +117,7 @@
 
   const handleViewUpdate = () => {
     hasViewedUpdate = true;
+    
   };
 </script>
 

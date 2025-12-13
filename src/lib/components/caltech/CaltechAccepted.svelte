@@ -2,7 +2,7 @@
 	// Props passed from the main portal page
 	export let applicantName: string;
 	export let schoolName: string;
-	export let primaryColor: string; // Duke Blue: #003366
+	export let primaryColor: string; // Caltech Orange: #E15000
 	export let footerDomain: string;
 </script>
 
@@ -21,14 +21,14 @@
         <div class="border-b-2 pb-4 mb-8" style="border-color: {primaryColor};">
             <div class="flex items-center">
                 <div class="w-16 h-16 text-white flex items-center justify-center font-bold text-2xl mr-4" style="background-color: {primaryColor};">
-                    D
+                    C
                 </div>
                 <div>
-                    <h1 class="text-2xl font-bold" style="color: {primaryColor};">DUKE UNIVERSITY</h1>
+                    <h1 class="text-2xl font-bold" style="color: {primaryColor};">CALIFORNIA INSTITUTE OF TECHNOLOGY</h1>
                     <div class="text-sm text-gray-600">
                         Office of Undergraduate Admissions<br>
-                        2138 Campus Drive, Durham, North Carolina 27708<br>
-                        Telephone 919-684-3214 • Fax 919-684-8133
+                        1200 E California Blvd, Pasadena, California 91125<br>
+                        Telephone 626-395-6341 • Fax 626-449-9742
                     </div>
                 </div>
             </div>
@@ -36,7 +36,7 @@
 
         <div class="mb-8">
             <div class="text-right text-sm text-gray-600 mb-2">
-                March 26, 2020
+                March 14, 2020
             </div>
             <div class="space-y-1">
                 <div>{applicantName || 'Applicant'}</div>
@@ -46,60 +46,60 @@
         </div>
 
         <div class="mb-6">
-            <div class="text-lg font-bold text-red-700">Decision Notification</div>
+            <div class="text-lg font-bold text-green-700">Congratulations!</div>
         </div>
 
         <div class="space-y-4 mb-8">
             <p>
-                Thank you for your interest in Duke University and for the time and care you put into completing your application. This year, we received a record number of applications from exceptional students around the world.
+                The Undergraduate Admissions Committee is delighted to inform you that you have been offered admission to the California Institute of Technology Class of 2024. Your application demonstrated exceptional intellectual prowess, a deep curiosity for scientific inquiry, and the resilience needed to thrive in Caltech’s rigorous academic environment.
             </p>
 
             <p>
-                The Admissions Committee has completed a comprehensive review of your candidacy, and we regret to inform you that we are unable to offer you admission to the Class of 2024. This was a particularly challenging year due to the truly outstanding quality of the applicant pool and the necessity of limiting our first-year enrollment.
+                We received over 13,000 applications this year for a class of approximately 235 students. Your admission is a profound honor that reflects our belief in your potential to contribute significantly to discovery and innovation. We are eager for you to join our community of passionate scientists and engineers.
             </p>
 
             <p>
-                Please know that this decision reflects the competitive nature of our selection process rather than a lack of confidence in your ability to succeed. We were impressed by your achievements and thank you for considering Duke.
+                You are invited to attend Preview Weekend, our admitted students program, from April 13-15, 2020. This is your opportunity to visit our campus in Pasadena, meet the faculty, engage with current students (the Caltech Beavers!), and experience the unique Caltech culture.
             </p>
 
             <p>
-                You may log in to your admissions portal for additional information regarding our decision.
+                To officially accept your offer of admission, please complete the reply form available in your admissions portal by <strong>May 1, 2020</strong>. Further details regarding financial aid, housing, and enrollment will also be found there.
             </p>
 
             <p>
-                We wish you the very best in your future academic pursuits and every success in the years to come.
+                Again, congratulations on this outstanding achievement. We look forward to welcoming you to Caltech next fall.
             </p>
         </div>
 
         <div class="mt-12">
             <div class="mb-2 h-12 flex items-end">
-                <div class="text-xl italic font-serif" style="color: {primaryColor};">Christoph's Signature</div>
+                <div class="text-xl italic font-serif" style="color: {primaryColor};">Grant's Signature</div>
             </div>
-            <div class="font-bold">Christoph Guttentag</div>
+            <div class="font-bold">Grant D. Currin</div>
             <div class="text-sm text-gray-600">
-                Dean of Undergraduate Admissions<br>
-                Duke University
+                Director of Undergraduate Admissions<br>
+                Caltech
             </div>
         </div>
 
         <div class="mt-16 pt-8 border-t border-gray-200 text-xs text-gray-500">
             <div class="grid grid-cols-2 gap-8">
                 <div>
-                    <strong>Duke University Mission:</strong><br>
-                    To provide a superior liberal arts education, utilizing the best of the university's research and scholarly resources to nurture the next generation of leaders in every sector of society.
+                    <strong>Caltech Mission:</strong><br>
+                    To expand human knowledge and benefit society through research integrated with education, in a highly collegial, interdisciplinary atmosphere.
                 </div>
                 <div>
                     <strong>Contact Information:</strong><br>
-                    Email: undergraduate.admissions@duke.edu<br>
-                    Phone: 919-684-3214<br>
-                    Website: admissions.duke.edu
+                    Email: ugadmissions@caltech.edu<br>
+                    Phone: 626-395-6341<br>
+                    Website: admissions.caltech.edu
                 </div>
             </div>
         </div>
 
         <div class="mt-8 p-4 bg-amber-50 border border-amber-200 rounded text-sm text-amber-800">
             <strong>Note:</strong> This is a simulated admission letter for entertainment purposes only. 
-            This is not a real admission decision from Duke University.
+            This is not a real admission decision from Caltech.
         </div>
     </main>
 </div>
