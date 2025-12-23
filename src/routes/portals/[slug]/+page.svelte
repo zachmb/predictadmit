@@ -2,7 +2,7 @@
   import { page } from '$app/stores';
   import { userProfile } from '$lib/stores/user';
   import type { UserProfile } from '$lib/stores/user';
-
+  
   import AdmissionsPortalTemplate from '$lib/components/portal/AdmissionsPortalTemplate.svelte';
   import { schoolConfigs } from '$lib/config/schools';
 
@@ -36,7 +36,13 @@
     harvard: {
       accepted: HarvardAccepted,
       denied: HarvardDenied
+    },
+    yale: {
+      accepted: YaleAccepted,
+      denied: YaleDenied
     }
+    
+    
     // Add more here as you create per-school components.
   };
 
@@ -113,6 +119,7 @@
 
   const handleViewUpdate = () => {
     hasViewedUpdate = true;
+    
   };
 </script>
 

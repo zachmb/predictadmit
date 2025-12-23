@@ -1,112 +1,105 @@
 <script lang="ts">
-  export let applicantName: string;
-  export let schoolName: string = 'Harvard College';
-  export let primaryColor: string;
-  export let footerDomain: string = 'HARVARD.EDU';
-  import BackToInboxButton from '$lib/components/common/BackToInboxButton.svelte';
+	// The parent component passes these props
+	export let applicantName: string;
+	export let schoolName: string = 'Harvard College'; // Default
+	export let primaryColor: string = '#A41034'; // Default Harvard Crimson
+	export let footerDomain: string = 'harvard.edu'; // Default
 </script>
 
-<div class="min-h-screen bg-slate-200 text-slate-900 font-serif flex flex-col">
-  <header class="bg-white border-b border-slate-300">
-    <div class="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
-      <div>
-        <div class="text-2xl font-bold" style={`color: ${primaryColor};`}>
-          {schoolName}
-        </div>
-        <div class="text-[11px] tracking-[0.15em] uppercase text-slate-700">
-          Office of Admissions and Financial Aid
-        </div>
-      </div>
-      <div class="text-[11px] text-slate-700 text-right">
-        {applicantName} ·{' '}
-        <a href="/" class="text-blue-800 underline hover:no-underline">
-          Logout
-        </a>
-      </div>
-    </div>
-    <div class="h-3" style={`background-color: ${primaryColor};`}></div>
-  </header>
+<svelte:head>
+	<title>{schoolName} - Admission Decision</title>
+</svelte:head>
 
-  <section class="flex-1 bg-white">
-    <div class="max-w-4xl mx-auto px-6 py-10 relative">
-      <a
-        href="/"
-        class="fade-in-button inline-block border border-slate-500 bg-slate-100 px-3 py-1 text-[11px] font-semibold hover:bg-slate-200 active:bg-slate-300 absolute left-0 -top-8"
-      >
-        &#8592; Back to PredictAdmit admitMail
-      </a>
+<main class="min-h-screen bg-white text-gray-800 font-serif p-6">
+	<div class="max-w-3xl mx-auto mt-10">
+		
+		<div class="border-b-2 pb-4 mb-8" style="border-color: {primaryColor};">
+			<div class="flex items-center">
+				<div class="w-16 h-16 text-white flex items-center justify-center font-bold text-2xl mr-4" style="background-color: {primaryColor};">
+					H
+				</div>
+				<div>
+					<h1 class="text-2xl font-bold" style="color: {primaryColor};">HARVARD COLLEGE</h1>
+					<div class="text-sm text-gray-600">
+						Office of Admissions and Financial Aid<br>
+						86 Brattle Street, Cambridge, Massachusetts 02138<br>
+						Telephone 617-495-1551 • Fax 617-495-8821
+					</div>
+				</div>
+			</div>
+		</div>
 
-      <p class="text-[11px] text-slate-700 mb-4">
-        March 28, 2026
-      </p>
+		<div class="mb-8">
+			<div class="text-right text-sm text-gray-600 mb-2">
+				March 26, 2020
+			</div>
+			<div class="space-y-1">
+				<div>{applicantName || 'Applicant'}</div>
+				<div>1600 Massachusetts Ave</div>
+				<div>Cambridge, MA 02138</div>
+			</div>
+		</div>
 
-      <p class="text-[12px] text-slate-900 mb-4">
-        {applicantName}
-      </p>
+		<div class="mb-6">
+			<div class="text-xl font-bold" style="color: {primaryColor};">Dear {applicantName || 'Applicant'},</div>
+		</div>
 
-      <p class="text-[12px] leading-relaxed text-slate-900 mb-3">
-        Dear {applicantName},
-      </p>
+		<div class="space-y-4 mb-8">
+			<p>
+				It is my distinct pleasure to offer you admission to the Harvard College Class of 2024. Your application demonstrated exceptional academic achievement, intellectual curiosity, and a deep commitment to serving others. The Admissions Committee was profoundly impressed by your potential to contribute to the rich and vibrant life of Harvard University.
+			</p>
 
-      <p class="text-[12px] leading-relaxed text-slate-900 mb-3">
-        It is with great pleasure that I write to inform you of your admission to the
-        <span class="font-semibold"> {schoolName} Class of 2026</span>.
-      </p>
+			<p>
+				This year, we received a record number of applications from around the world. Your acceptance places you among a select and highly distinguished group of incoming students, and we sincerely hope you will accept our offer. We believe your unique perspectives, talents, and experiences are essential to the future of our community.
+			</p>
 
-      <p class="text-[12px] leading-relaxed text-slate-900 mb-3">
-        The Admissions Committee was deeply impressed by your outstanding academic record, your
-        intellectual curiosity, and the ways in which you have contributed to your school and
-        community.
-      </p>
+			<p>
+				We invite you to attend **Visitas**, our official visiting program for admitted students, held from April 18-20, 2020. This is the best opportunity to experience the academic and extracurricular life of the college, meet faculty, and connect with your future classmates. Details are available in your applicant portal.
+			</p>
 
-      <p class="text-[12px] leading-relaxed text-slate-900 mb-3">
-        In the coming weeks, you will receive additional information about financial aid, housing,
-        and our April visiting programs for admitted students.
-      </p>
+			<p>
+				To confirm your enrollment, please submit the signed Candidate's Reply Form and the non-refundable enrollment deposit through your online admissions portal by **May 1, 2020**. Please review the enclosed financial aid award for information on your generous financial assistance package.
+			</p>
 
-      <p class="text-[12px] leading-relaxed text-slate-900 mb-3">
-        On behalf of the faculty and students of {schoolName}, congratulations. We hope you will
-        choose to join us in Cambridge this fall.
-      </p>
+			<p>
+				Congratulations again on your remarkable achievement. We look forward to welcoming you to Harvard Yard in the fall.
+			</p>
+		</div>
 
-      <p class="text-[12px] leading-relaxed text-slate-900 mt-4">
-        Sincerely,<br />
-        <span class="font-semibold">William R. Fitzsimmons</span><br />
-        Dean of Admissions and Financial Aid<br />
-        {schoolName}
-      </p>
-    </div>
-  </section>
+		<div class="mt-12">
+			<div class="mb-2">
+				<img 
+					src="/signature-placeholder.png" 
+					alt="Signature" 
+					class="h-12" 
+					style="filter: invert(15%) sepia(85%) saturate(1500%) hue-rotate(330deg) brightness(30%) contrast(100%);"
+				>
+			</div>
+			<div class="font-bold">William R. Fitzsimmons</div>
+			<div class="text-sm text-gray-600">
+				Dean of Admissions and Financial Aid<br>
+				{schoolName}
+			</div>
+		</div>
 
-  <footer class="mt-auto">
-    <div
-      class="h-10 flex items-center"
-      style={`background-color: ${primaryColor};`}
-    >
-      <div class="max-w-4xl mx-auto px-6 w-full flex items-center justify-between text-[11px] text-white">
-        <span>&copy; {footerDomain} 2019</span>
-        <span class="opacity-80">
-          PredictAdmit.com simulation · Not affiliated with {schoolName}
-        </span>
-      </div>
-    </div>
-  </footer>
-</div>
+		<div class="mt-16 pt-8 border-t border-gray-200 text-xs text-gray-500">
+			<div class="grid grid-cols-2 gap-8">
+				<div>
+					<strong>The Harvard Mission:</strong><br>
+					To educate the citizens and citizen-leaders for our society. We do this through our commitment to the transformative power of a liberal arts and sciences education.
+				</div>
+				<div>
+					<strong>Contact Information:</strong><br>
+					Email: <a href="mailto:admissions@harvard.edu" class="hover:underline">admissions@harvard.edu</a><br>
+					Phone: 617-495-1551<br>
+					Website: <a href={`https://college.${footerDomain}`} class="hover:underline">college.{footerDomain}</a>
+				</div>
+			</div>
+		</div>
 
-<style>
-  .fade-in-button {
-    opacity: 0;
-    animation: fade-in-button 0.6s ease-out 0.2s forwards;
-  }
-
-  @keyframes fade-in-button {
-    from {
-      opacity: 0;
-      transform: translateY(-4px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-</style>
+		<div class="mt-8 p-4 bg-amber-50 border border-amber-200 rounded text-sm text-amber-800">
+			<strong>Note:</strong> This is a simulated admission letter for entertainment purposes only. 
+			This is not a real admission decision from Harvard University.
+		</div>
+	</div>
+</main>
