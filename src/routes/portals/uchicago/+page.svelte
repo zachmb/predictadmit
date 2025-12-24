@@ -8,8 +8,8 @@
 
 	// School-Specific Components (Decision Letters - assuming they exist or will be created)
 	// NOTE: I am referencing UchicagoAccepted/Denied components. You will need to create these files.
-	import UchicagoAccepted from '$lib/components/uchicago/UchicagoAccepted.svelte';
-	import UchicagoDenied from '$lib/components/uchicago/UchicagoDenied.svelte';
+	import UChicagoAccepted from '$lib/components/uchicago/UChicagoAccepted.svelte';
+	import UChicagoDenied from '$lib/components/uchicago/UChicagoDenied.svelte';
 
 	// --- Component Configuration ---
 	const SCHOOL_KEY = 'uchicago';
@@ -309,9 +309,9 @@
 						</div>
 					{:else}
 						{#if SCHOOL_DATA.decision === 'admit'}
-							<UchicagoAccepted applicantName={applicantName()} />
+							<UChicagoAccepted applicantName={applicantName()} />
 						{:else}
-							<UchicagoDenied applicantName={applicantName()} />
+							<UChicagoDenied applicantName={applicantName()} />
 						{/if}
 					{/if}
 				</div> <div class="w-1/4 pt-10">
