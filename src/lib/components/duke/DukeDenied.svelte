@@ -1,117 +1,105 @@
 <script lang="ts">
-  export let applicantName: string;
-  export let schoolName: string = 'Duke University';
-  export let primaryColor: string = '#00539B';
-  export let footerDomain: string = 'DUKE.EDU';
-  import BackToInboxButton from '$lib/components/common/BackToInboxButton.svelte';
+	// Props passed from the main portal page
+	export let applicantName: string;
+	export let schoolName: string;
+	export let primaryColor: string; // Duke Blue: #003366
+	export let footerDomain: string;
 </script>
 
-<div class="min-h-screen bg-slate-200 text-slate-900 font-serif flex flex-col">
-  <!-- HEADER -->
-  <header class="bg-white border-b border-slate-300">
-    <div class="max-w-5xl mx-auto px-6 pt-6 pb-4 flex items-center justify-between">
-      <div class="flex items-baseline gap-3">
-        <span class="text-3xl font-serif" style={`color: ${primaryColor};`}>
-          Duke
-        </span>
-        <span class="text-[11px] tracking-[0.18em] uppercase text-slate-700">
-          Undergraduate Admissions
-        </span>
-      </div>
-      <div class="text-[11px] text-slate-700">
-        {applicantName}{' '}
-        <span class="text-slate-400">&nbsp;|&nbsp;</span>
-        <a href="/" class="text-blue-800 underline hover:no-underline">
-          Logout
-        </a>
-      </div>
-    </div>
-    <div class="h-8" style={`background-color: ${primaryColor};`}></div>
-  </header>
+<div class="min-h-screen bg-white text-gray-800 font-sans p-6">
+    <main class="max-w-3xl mx-auto mt-10">
+        <div class="absolute left-1/2 transform -translate-x-1/2 max-w-3xl w-full" style="top: 2rem;">
+            <a
+                href="/"
+                class="inline-block border border-slate-500 bg-slate-100 px-3 py-1 text-[11px] font-semibold hover:bg-slate-200 active:bg-slate-300 transition-colors shadow-sm"
+                style="position: absolute; left: 0; top: 0;"
+            >
+                &#8592; Back to PredictAdmit admitMail
+            </a>
+        </div>
+        
+        <div class="border-b-2 pb-4 mb-8" style="border-color: {primaryColor};">
+            <div class="flex items-center">
+                <div class="w-16 h-16 text-white flex items-center justify-center font-bold text-2xl mr-4" style="background-color: {primaryColor};">
+                    D
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold" style="color: {primaryColor};">DUKE UNIVERSITY</h1>
+                    <div class="text-sm text-gray-600">
+                        Office of Undergraduate Admissions<br>
+                        2138 Campus Drive, Durham, North Carolina 27708<br>
+                        Telephone 919-684-3214 • Fax 919-684-8133
+                    </div>
+                </div>
+            </div>
+        </div>
 
-  <!-- LETTER -->
-  <section class="flex-1 bg-white">
-    <div class="max-w-5xl mx-auto px-10 py-10 relative">
-      <!-- Fade-in back button -->
-      <a
-        href="/"
-        class="fade-in-button inline-block border border-slate-500 bg-slate-100 px-3 py-1 text-[11px] font-semibold hover:bg-slate-200 active:bg-slate-300 absolute left-0 -top-8"
-      >
-        &#8592; Back to PredictAdmit admitMail
-      </a>
+        <div class="mb-8">
+            <div class="text-right text-sm text-gray-600 mb-2">
+                March 26, 2020
+            </div>
+            <div class="space-y-1">
+                <div>{applicantName || 'Applicant'}</div>
+                <div>1600 Pennsylvania Avenue NW</div>
+                <div>Washington, DC 20500</div>
+            </div>
+        </div>
 
-      <p class="text-[11px] text-slate-700 mb-4">
-        December 12, 2019
-      </p>
+        <div class="mb-6">
+            <div class="text-lg font-bold text-red-700">Decision Notification</div>
+        </div>
 
-      <p class="text-[12px] leading-relaxed text-slate-900 mb-3">
-        Dear {applicantName},
-      </p>
+        <div class="space-y-4 mb-8">
+            <p>
+                Thank you for your interest in Duke University and for the time and care you put into completing your application. This year, we received a record number of applications from exceptional students around the world.
+            </p>
 
-      <p class="text-[12px] leading-relaxed text-slate-900 mb-3">
-        Thank you for applying for admission to {schoolName}; I am sorry to tell you that we are
-        unable to offer you admission next fall.
-      </p>
+            <p>
+                The Admissions Committee has completed a comprehensive review of your candidacy, and we regret to inform you that we are unable to offer you admission to the Class of 2024. This was a particularly challenging year due to the truly outstanding quality of the applicant pool and the necessity of limiting our first-year enrollment.
+            </p>
 
-      <p class="text-[12px] leading-relaxed text-slate-900 mb-3">
-        I want to assure you that our decision is more a reflection of the number of applications
-        received and the limited space we have available for our incoming class rather than about any
-        shortcomings in your application. We received thousands of Early Decision applications this
-        year for a comparatively small number of places; we had to disappoint many accomplished,
-        talented, and fully deserving young people.
-      </p>
+            <p>
+                Please know that this decision reflects the competitive nature of our selection process rather than a lack of confidence in your ability to succeed. We were impressed by your achievements and thank you for considering Duke.
+            </p>
 
-      <p class="text-[12px] leading-relaxed text-slate-900 mb-3">
-        Because you applied under our Early Decision notification plan and this is a final decision,
-        you will not be able to apply through our Regular Decision plan. You have our best wishes as
-        you continue your senior year and for the remainder of your college search.
-      </p>
+            <p>
+                You may log in to your admissions portal for additional information regarding our decision.
+            </p>
 
-      <p class="text-[12px] leading-relaxed text-slate-900 mb-3">
-        I know this is not the letter you hoped to receive, especially since you demonstrated such a
-        strong interest in attending {schoolName}. I know you have great potential for success in
-        college and beyond, and I truly appreciate that we were your first choice.
-      </p>
+            <p>
+                We wish you the very best in your future academic pursuits and every success in the years to come.
+            </p>
+        </div>
 
-      <p class="text-[12px] leading-relaxed text-slate-900 mt-4">
-        Sincerely,<br />
-        <span class="font-semibold">Christoph Guttentag</span><br />
-        Dean of Undergraduate Admissions<br />
-        {schoolName}
-      </p>
-    </div>
-  </section>
+        <div class="mt-12">
+            <div class="mb-2 h-12 flex items-end">
+                <div class="text-xl italic font-serif" style="color: {primaryColor};">Christoph's Signature</div>
+            </div>
+            <div class="font-bold">Christoph Guttentag</div>
+            <div class="text-sm text-gray-600">
+                Dean of Undergraduate Admissions<br>
+                Duke University
+            </div>
+        </div>
 
-  <!-- FOOTER -->
-  <footer class="mt-auto">
-    <div
-      class="h-10 flex items-center"
-      style={`background-color: ${primaryColor};`}
-    >
-      <div class="max-w-5xl mx-auto px-6 w-full flex items-center justify-between text-[11px] text-white">
-        <span>&copy; {footerDomain} 2019</span>
-        <span class="opacity-80">
-          PredictAdmit.com simulation · Not affiliated with {schoolName}
-        </span>
-      </div>
-    </div>
-  </footer>
+        <div class="mt-16 pt-8 border-t border-gray-200 text-xs text-gray-500">
+            <div class="grid grid-cols-2 gap-8">
+                <div>
+                    <strong>Duke University Mission:</strong><br>
+                    To provide a superior liberal arts education, utilizing the best of the university's research and scholarly resources to nurture the next generation of leaders in every sector of society.
+                </div>
+                <div>
+                    <strong>Contact Information:</strong><br>
+                    Email: undergraduate.admissions@duke.edu<br>
+                    Phone: 919-684-3214<br>
+                    Website: admissions.duke.edu
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-8 p-4 bg-amber-50 border border-amber-200 rounded text-sm text-amber-800">
+            <strong>Note:</strong> This is a simulated admission letter for entertainment purposes only. 
+            This is not a real admission decision from Duke University.
+        </div>
+    </main>
 </div>
-
-<style>
-  .fade-in-button {
-    opacity: 0;
-    animation: fade-in-button 0.6s ease-out 0.2s forwards;
-  }
-
-  @keyframes fade-in-button {
-    from {
-      opacity: 0;
-      transform: translateY(-4px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-</style>

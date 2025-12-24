@@ -1,117 +1,105 @@
 <script lang="ts">
-  export let applicantName: string;
-  export let schoolName: string = 'Harvard College';
-  export let primaryColor: string;
-  export let footerDomain: string = 'HARVARD.EDU';
-  import BackToInboxButton from '$lib/components/common/BackToInboxButton.svelte';
+	// The parent component passes these props
+	export let applicantName: string;
+	export let schoolName: string = 'Harvard College'; // Default
+	export let primaryColor: string = '#A41034'; // Default Harvard Crimson
+	export let footerDomain: string = 'harvard.edu'; // Default
 </script>
 
-<div class="min-h-screen bg-slate-200 text-slate-900 font-serif flex flex-col">
-  <!-- HEADER -->
-  <header class="bg-white border-b border-slate-300">
-    <div class="max-w-5xl mx-auto px-6 pt-6 pb-4 flex items-center justify-between">
-      <div class="flex items-baseline gap-3">
-        <span class="text-3xl font-serif" style={`color: ${primaryColor};`}>
-          Harvard
-        </span>
-        <span class="text-[11px] tracking-[0.18em] uppercase text-slate-700">
-          Undergraduate Admissions
-        </span>
-      </div>
-      <div class="text-[11px] text-slate-700">
-        {applicantName}{' '}
-        <span class="text-slate-400">&nbsp;|&nbsp;</span>
-        <a href="/" class="text-blue-800 underline hover:no-underline">
-          Logout
-        </a>
-      </div>
-    </div>
-    <div class="h-8" style={`background-color: ${primaryColor};`}></div>
-  </header>
+<svelte:head>
+	<title>{schoolName} - Admission Decision</title>
+</svelte:head>
 
-  <!-- LETTER -->
-  <section class="flex-1 bg-white">
-    <div class="max-w-5xl mx-auto px-10 py-10 relative">
-      <!-- Fade-in back button -->
-      <a
-        href="/"
-        class="fade-in-button inline-block border border-slate-500 bg-slate-100 px-3 py-1 text-[11px] font-semibold hover:bg-slate-200 active:bg-slate-300 absolute left-0 -top-8"
-      >
-        &#8592; Back to PredictAdmit admitMail
-      </a>
+<main class="min-h-screen bg-white text-gray-800 font-serif p-6">
+	<div class="max-w-3xl mx-auto mt-10">
+		
+		<div class="border-b-2 pb-4 mb-8" style="border-color: {primaryColor};">
+			<div class="flex items-center">
+				<div class="w-16 h-16 text-white flex items-center justify-center font-bold text-2xl mr-4" style="background-color: {primaryColor};">
+					H
+				</div>
+				<div>
+					<h1 class="text-2xl font-bold" style="color: {primaryColor};">HARVARD COLLEGE</h1>
+					<div class="text-sm text-gray-600">
+						Office of Admissions and Financial Aid<br>
+						86 Brattle Street, Cambridge, Massachusetts 02138<br>
+						Telephone 617-495-1551 • Fax 617-495-8821
+					</div>
+				</div>
+			</div>
+		</div>
 
-      <p class="text-[11px] text-slate-700 mb-4">
-        December 12, 2019
-      </p>
+		<div class="mb-8">
+			<div class="text-right text-sm text-gray-600 mb-2">
+				March 26, 2020
+			</div>
+			<div class="space-y-1">
+				<div>{applicantName || 'Applicant'}</div>
+				<div>1600 Massachusetts Ave</div>
+				<div>Cambridge, MA 02138</div>
+			</div>
+		</div>
 
-      <p class="text-[12px] leading-relaxed text-slate-900 mb-3">
-        Dear {applicantName},
-      </p>
+		<div class="mb-6">
+			<div class="text-xl font-bold" style="color: {primaryColor};">Dear {applicantName || 'Applicant'},</div>
+		</div>
 
-      <p class="text-[12px] leading-relaxed text-slate-900 mb-3">
-        Thank you for applying for admission to {schoolName}; I am sorry to tell you that we are
-        unable to offer you admission next fall.
-      </p>
+		<div class="space-y-4 mb-8">
+			<p>
+				Thank you for your interest in {schoolName} and for your competitive application to the Class of 2024. This year, we received a deeply impressive pool of applications from students around the world. The review process was exceptionally rigorous, reflecting the extraordinary caliber of the applicant pool.
+			</p>
 
-      <p class="text-[12px] leading-relaxed text-slate-900 mb-3">
-        I want to assure you that our decision is more a reflection of the number of applications
-        received and the limited space we have available for our incoming class rather than about any
-        shortcomings in your application. We received thousands of Early Decision applications this
-        year for a comparatively small number of places; we had to disappoint many accomplished,
-        talented, and fully deserving young people.
-      </p>
+			<p>
+				The Committee reviewed your credentials with great care and attention, but due to the overwhelming number of highly qualified candidates and the limited capacity of our first-year class, we regret to inform you that we are unable to offer you admission to {schoolName}.
+			</p>
 
-      <p class="text-[12px] leading-relaxed text-slate-900 mb-3">
-        Because you applied under our Early Decision notification plan and this is a final decision,
-        you will not be able to apply through our Regular Decision plan. You have our best wishes as
-        you continue your senior year and for the remainder of your college search.
-      </p>
+			<p>
+				We recognize the tremendous effort and achievement represented by your application, and we know that this decision will be disappointing. Please know that this decision reflects only the competitive realities of our selection process, and not a lack of confidence in your abilities or potential for future success.
+			</p>
 
-      <p class="text-[12px] leading-relaxed text-slate-900 mb-3">
-        I know this is not the letter you hoped to receive, especially since you demonstrated such a
-        strong interest in attending {schoolName}. I know you have great potential for success in
-        college and beyond, and I truly appreciate that we were your first choice.
-      </p>
+			<p>
+				We wish you the very best as you pursue your education and future endeavors at another outstanding institution. You should take great pride in the accomplishments you have already achieved.
+			</p>
 
-      <p class="text-[12px] leading-relaxed text-slate-900 mt-4">
-        Sincerely,<br />
-        <span class="font-semibold">Christoph Guttentag</span><br />
-        Dean of Undergraduate Admissions<br />
-        {schoolName}
-      </p>
-    </div>
-  </section>
+			<p>
+				Thank you once again for considering Harvard College.
+			</p>
+		</div>
 
-  <!-- FOOTER -->
-  <footer class="mt-auto">
-    <div
-      class="h-10 flex items-center"
-      style={`background-color: ${primaryColor};`}
-    >
-      <div class="max-w-5xl mx-auto px-6 w-full flex items-center justify-between text-[11px] text-white">
-        <span>&copy; {footerDomain} 2019</span>
-        <span class="opacity-80">
-          PredictAdmit.com simulation · Not affiliated with {schoolName}
-        </span>
-      </div>
-    </div>
-  </footer>
-</div>
+		<div class="mt-12">
+			<div class="mb-2">
+				<img 
+					src="/signature-placeholder.png" 
+					alt="Signature" 
+					class="h-12" 
+					style="filter: invert(15%) sepia(85%) saturate(1500%) hue-rotate(330deg) brightness(30%) contrast(100%);"
+				>
+			</div>
+			<div class="font-bold">William R. Fitzsimmons</div>
+			<div class="text-sm text-gray-600">
+				Dean of Admissions and Financial Aid<br>
+				{schoolName}
+			</div>
+		</div>
 
-<style>
-  .fade-in-button {
-    opacity: 0;
-    animation: fade-in-button 0.6s ease-out 0.2s forwards;
-  }
+		<div class="mt-16 pt-8 border-t border-gray-200 text-xs text-gray-500">
+			<div class="grid grid-cols-2 gap-8">
+				<div>
+					<strong>The Harvard Mission:</strong><br>
+					To educate the citizens and citizen-leaders for our society. We do this through our commitment to the transformative power of a liberal arts and sciences education.
+				</div>
+				<div>
+					<strong>Contact Information:</strong><br>
+					Email: <a href="mailto:admissions@harvard.edu" class="hover:underline">admissions@harvard.edu</a><br>
+					Phone: 617-495-1551<br>
+					Website: <a href={`https://college.${footerDomain}`} class="hover:underline">college.{footerDomain}</a>
+				</div>
+			</div>
+		</div>
 
-  @keyframes fade-in-button {
-    from {
-      opacity: 0;
-      transform: translateY(-4px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-</style>
+		<div class="mt-8 p-4 bg-amber-50 border border-amber-200 rounded text-sm text-amber-800">
+			<strong>Note:</strong> This is a simulated admission letter for entertainment purposes only. 
+			This is not a real admission decision from Harvard University.
+		</div>
+	</div>
+</main>

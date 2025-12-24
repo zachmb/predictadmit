@@ -2,7 +2,7 @@
   import { page } from '$app/stores';
   import { userProfile } from '$lib/stores/user';
   import type { UserProfile } from '$lib/stores/user';
-
+  
   import AdmissionsPortalTemplate from '$lib/components/portal/AdmissionsPortalTemplate.svelte';
   import { schoolConfigs } from '$lib/config/schools';
 
@@ -13,6 +13,9 @@
   import DukeDenied from '$lib/components/duke/DukeDenied.svelte';
   import HarvardAccepted from '$lib/components/harvard/HarvardAccepted.svelte';
   import HarvardDenied from '$lib/components/harvard/HarvardDenied.svelte';
+
+  // 🔵 NEW: back-to-AI inbox button
+  import BackToAIInbox from '$lib/components/common/BackToAIInbox.svelte';
 
   /**
    * Use the type of GenericAcceptedLetter as the base component type.
@@ -33,7 +36,13 @@
     harvard: {
       accepted: HarvardAccepted,
       denied: HarvardDenied
+    },
+    yale: {
+      accepted: YaleAccepted,
+      denied: YaleDenied
     }
+    
+    
     // Add more here as you create per-school components.
   };
 
@@ -110,6 +119,7 @@
 
   const handleViewUpdate = () => {
     hasViewedUpdate = true;
+    
   };
 </script>
 
@@ -118,23 +128,34 @@
 </svelte:head>
 
 {#if !school}
-  <main class="min-h-screen bg-slate-200 text-slate-900 font-serif flex items-center justify-center px-4">
-    <div class="border border-slate-400 bg-white px-6 py-4 shadow-md max-w-md text-sm">
-      <h1 class="text-lg font-bold mb-2">Unknown Admissions Portal</h1>
-      <p class="text-[12px] text-slate-800 mb-2">
+  <main
+    class="min-h-screen bg-slate-200 text-slate-900 font-serif flex items-center justify-center px-4"
+  >
+    <div class="border border-slate-400 bg-white px-6 py-4 shadow-md max-w-md text-sm space-y-3">
+      <div class="flex items-center justify-between gap-2">
+        <h1 class="text-lg font-bold">Unknown Admissions Portal</h1>
+        <!-- Back to AI inbox button for unknown portals too -->
+        <BackToAIInbox className="ml-2" />
+      </div>
+      <p class="text-[12px] text-slate-800">
         The portal you tried to access is not part of this PredictAdmit simulation.
       </p>
       <p class="text-[11px] text-slate-700">
-        Please return to the admitMail inbox and try a different link.
+        Please return to the AI inbox and try a different link.
       </p>
     </div>
   </main>
 {:else}
   <!-- Outer wrapper (not <main>, so child templates can own <main> / main content) -->
   <div class="min-h-screen bg-slate-200 text-slate-900 font-serif">
+    <!-- 🔵 Global back-to-AI bar, shown on both login + decision views -->
+    <div class="max-w-5xl mx-auto px-6 pt-4 flex justify-end">
+      <BackToAIInbox />
+    </div>
+
     {#if !authenticated}
       <!-- LOGIN VIEW -->
-      <header class="bg-white border-b border-slate-300">
+      <header class="bg-white border-b border-slate-300 mt-2">
         <div class="max-w-5xl mx-auto px-6 pt-6 pb-4 flex items-center justify-between">
           <div class="flex items-baseline gap-3">
             <span class="text-3xl font-serif" style={`color: ${school.primaryColor};`}>
