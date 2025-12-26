@@ -1,13 +1,8 @@
 // src/routes/api/ocr/+server.ts
 import type { RequestHandler } from '@sveltejs/kit';
-import { createRequire } from 'module';
 import fs from 'fs';
 import path from 'path';
 import Tesseract from 'tesseract.js';
-
-const require = createRequire(import.meta.url);
-// pdf-poppler is CommonJS, so we still pull it in via require
-const Poppler = require('pdf-poppler');
 
 const TMP_DIR = path.join(process.cwd(), 'tmp');
 
@@ -18,91 +13,79 @@ if (!fs.existsSync(TMP_DIR)) {
 
 export const POST: RequestHandler = async ({ request }) => {
   try {
+    // Dynamically import pdf-poppler at runtime
+    let Poppler: any = null;
+    if (process.platform !== 'linux') {
+      // Only import Poppler on Windows/macOS
+      const { createRequire } = await import('module');
+      const require = createRequire(import.meta.url);
+      Poppler = require('pdf-poppler');
+    } else {
+      console.warn('pdf-poppler is not supported on Linux. Skipping PDF→PNG conversion.');
+    }
+
     const formData = await request.formData();
     const file = formData.get('file');
 
     if (!file || !(file instanceof File)) {
-      console.error('No file uploaded or wrong type:', file);
       return new Response('No file uploaded', { status: 400 });
     }
 
-    // Convert uploaded PDF → Buffer
+    // Save PDF temporarily
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
-
-    // Save PDF temporarily
     const pdfFilename = `upload-${Date.now()}.pdf`;
     const pdfPath = path.join(TMP_DIR, pdfFilename);
     fs.writeFileSync(pdfPath, buffer);
 
-    // Use ONLY the basename (no full path) as Poppler out_prefix
-    const baseName = path.basename(pdfPath, '.pdf');
+    let imageFiles: string[] = [];
 
-    const popplerOptions = {
-      format: 'png',
-      out_dir: TMP_DIR,
-      out_prefix: baseName,
-      page: null // all pages
-    };
+    if (Poppler) {
+      const baseName = path.basename(pdfPath, '.pdf');
 
-    // Convert PDF → PNG images
-    await Poppler.convert(pdfPath, popplerOptions);
+      const popplerOptions = {
+        format: 'png',
+        out_dir: TMP_DIR,
+        out_prefix: baseName,
+        page: null as number | null
+      };
 
-    // Collect the generated PNG image paths
-    const imageFiles = fs
-      .readdirSync(TMP_DIR)
-      .filter((f) => f.startsWith(baseName) && f.endsWith('.png'))
-      .sort() // keep pages in order
-      .map((f) => path.join(TMP_DIR, f));
+      // Convert PDF → PNG images
+      await Poppler.convert(pdfPath, popplerOptions);
 
-    if (imageFiles.length === 0) {
-      console.error('No images produced from PDF by pdf-poppler');
-      // Clean up pdf
-      try {
-        fs.unlinkSync(pdfPath);
-      } catch (err) {
-        console.warn('Failed to delete temp pdf:', pdfPath, err);
-      }
-      return new Response('Failed to render PDF pages for OCR', { status: 500 });
+      // Collect PNG files
+      imageFiles = fs
+        .readdirSync(TMP_DIR)
+        .filter((f) => f.startsWith(baseName) && f.endsWith('.png'))
+        .sort()
+        .map((f) => path.join(TMP_DIR, f));
     }
 
     let finalText = '';
 
-    // OCR each page
-    for (const imagePath of imageFiles) {
-      console.log('Running Tesseract on:', imagePath);
+    if (imageFiles.length > 0) {
+      // OCR each page
+      for (const imagePath of imageFiles) {
+        const result = await (Tesseract as any).recognize(imagePath, 'eng', {
+          logger: (m: any) => console.log(m)
+        });
+        finalText += ((result?.data?.text as string) || '') + '\n';
 
-      const result = await (Tesseract as any).recognize(imagePath, 'eng', {
-        logger: (m: any) => console.log(m)
-      });
-
-      finalText += ((result?.data?.text as string) || '') + '\n';
-
-      // Delete PNG page after processing
-      try {
-        fs.unlinkSync(imagePath);
-      } catch (err) {
-        console.warn('Failed to delete temp image:', imagePath, err);
+        try { fs.unlinkSync(imagePath); } catch {}
       }
+    } else {
+      console.warn('No PNG images generated, skipping OCR.');
     }
 
-    // Delete original PDF
-    try {
-      fs.unlinkSync(pdfPath);
-    } catch (err) {
-      console.warn('Failed to delete temp pdf:', pdfPath, err);
-    }
+    // Clean up PDF
+    try { fs.unlinkSync(pdfPath); } catch {}
 
-    // Return OCR text
-    return new Response(
-      JSON.stringify({ text: finalText.trim() }),
-      {
-        status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      }
-    );
+    return new Response(JSON.stringify({ text: finalText.trim() }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' }
+    });
   } catch (err) {
-    console.error('Tesseract OCR Error:', err);
+    console.error('OCR Error:', err);
     return new Response('OCR failed', { status: 500 });
   }
 };
