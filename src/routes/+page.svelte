@@ -615,17 +615,25 @@
                     Powered by predictadmit.com. Start here, then upgrade to Pro if you want the AI
                     to read your actual app.
                   </p>
-                  <button
-                    type="button"
-                    class="inline-flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-md border border-emerald-700 bg-emerald-600 text-white hover:bg-emerald-500 shadow-sm"
-                    on:click={handleStartSimulationClick}
-                  >
-                    {hasApplied
-                      ? isApplying
-                        ? 'Simulating…'
-                        : 'Simulation started'
-                      : 'Start free simulation'}
-                  </button>
+                  <div class="flex items-center gap-3">
+                    <a
+                      href="/portals"
+                      class="inline-flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-md border border-slate-600 bg-slate-100 text-slate-800 hover:bg-slate-200 shadow-sm"
+                    >
+                      All Portals
+                    </a>
+                    <button
+                      type="button"
+                      class="inline-flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-md border border-emerald-700 bg-emerald-600 text-white hover:bg-emerald-500 shadow-sm"
+                      on:click={handleStartSimulationClick}
+                    >
+                      {hasApplied
+                        ? isApplying
+                          ? 'Simulating…'
+                          : 'Simulation started'
+                        : 'Start free simulation'}
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
