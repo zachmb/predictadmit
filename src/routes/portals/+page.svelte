@@ -1,6 +1,9 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
   
+  import SiteHeader from '$lib/components/layout/SiteHeader.svelte';
+  import SiteFooter from '$lib/components/layout/SiteFooter.svelte';
+  
   type DecisionMode = 'random' | 'accepted' | 'denied';
   
   // List of all available portals with decision state
@@ -67,8 +70,11 @@
   <title>All College Portals - PredictAdmit</title>
 </svelte:head>
 
-<main class="min-h-screen bg-slate-200 text-slate-900 font-serif">
-  <div class="max-w-6xl mx-auto px-4 py-10">
+<main class="min-h-screen bg-slate-200 text-slate-900 font-serif flex flex-col">
+  <SiteHeader />
+
+  <div class="flex-1">
+    <div class="max-w-6xl mx-auto px-4 py-10">
     <div class="bg-white border border-slate-400 shadow-md rounded-md overflow-hidden">
       <div class="border-b border-slate-300 bg-gradient-to-r from-slate-100 via-slate-50 to-slate-100 px-5 py-4">
         <h1 class="text-3xl font-bold text-slate-900 mb-2">All College Portals</h1>
@@ -202,4 +208,7 @@
       </div>
     </div>
   </div>
+  </div>
+
+  <SiteFooter />
 </main>
