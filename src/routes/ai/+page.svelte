@@ -4,7 +4,7 @@
   import type { PageData } from './$types';
   import AIHeader from '$lib/components/layout/AIHeader.svelte';
   import AIFooter from '$lib/components/layout/AIFooter.svelte';
-  
+
   // NEW: bring in AdmitMail + types from the existing simulator
   import BetterAdmitMail from '$lib/components/BetterAdmitMail.svelte';
   import {
@@ -53,6 +53,7 @@
   // Free-tier limits (persisted per browser)
   let hasUsedFreeSimulation = false; // one full HYPSM+ run
   let hasUsedFreePdfOcr = false; // one Common App PDF upload
+  let promoCodeInput = '';
 
   // Paywall modal state
   let showPaywallModal = false;
@@ -86,6 +87,23 @@
     { slug: 'dartmouth', label: 'Dartmouth (ED)' },
     { slug: 'vanderbilt', label: 'Vanderbilt (ED I/II)' }
   ];
+
+  const handlePromoCode = (e: KeyboardEvent) => {
+    // Check if the key pressed was 'Enter'
+    if (e.key === 'Enter') {
+      // Prevent the form from submitting accidentally
+      e.preventDefault(); 
+      
+      if (promoCodeInput.trim() === 'strawberrylemonade') {
+        hasUsedFreeSimulation = false;
+        hasDeepDiveAccess = true;
+        promoCodeInput = ''; // Clear input on success
+        alert('Promo code applied! Deep Dive unlocked.');
+      } else {
+        alert('Invalid promo code.');
+      }
+    }
+  };
 
   let edSlug: string = '';
 
@@ -782,6 +800,35 @@
                 ></textarea>
               </div>
 
+              <!-- Promo Code -->
+              <div class="space-y-2 border-t border-slate-800 pt-4">
+                <label
+                  for="promoCode"
+                  class="block text-[11px] font-medium text-amber-100 uppercase tracking-[0.2em]"
+                >
+                  Promo Code (Optional)
+                </label>
+                <div class="relative max-w-xs">
+                  <input
+                    id="promoCode"
+                    type="text"
+                    bind:value={promoCodeInput}
+                    on:keydown={handlePromoCode}
+                    placeholder="Type code and hit Enter..."
+                    class="w-full rounded-lg border border-slate-700 bg-slate-950/70 px-3 py-2 text-xs text-slate-50 placeholder:text-slate-600 focus:outline-none focus:ring-1 focus:ring-amber-400 focus:border-amber-400"
+                  />
+                  {#if hasDeepDiveAccess}
+                    <div class="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-green-400 font-bold uppercase">
+                      Active
+                    </div>
+                  {/if}
+                </div>
+                <p class="text-[9px] text-slate-500">
+                  Have a special access code? Type it above and press Enter to apply.
+                </p>
+              </div>
+
+              
               <!-- Activities -->
               <div class="space-y-2">
                 <div class="flex items-center justify-between gap-2">
@@ -868,6 +915,8 @@
                   explanations can reflect ED vs RD dynamics.
                 </p>
               </div>
+
+              
 
               <div class="space-y-1 text-[10px] text-slate-500">
                 <p>
