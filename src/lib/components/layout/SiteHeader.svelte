@@ -53,6 +53,11 @@
 				<a
 					href="/ai"
 					class="text-base font-semibold text-slate-600 hover:text-slate-900 transition-colors"
+					>Predict</a
+				>
+				<a
+					href="/pro"
+					class="text-base font-semibold text-slate-600 hover:text-slate-900 transition-colors"
 					>Pro</a
 				>
 				<a
@@ -107,7 +112,7 @@
 					{/if}
 				</a>
 				<a
-					href="/ai"
+					href="/pro"
 					class="inline-flex items-center justify-center font-bold text-base bg-blue-600 text-white px-6 py-2.5 rounded-[var(--radius-btn)] hover:bg-blue-700 transition-colors"
 				>
 					Get Pro

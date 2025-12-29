@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { tick } from 'svelte';
-	import { userProfile } from '$lib/stores/user';
+	import { userProfile, defaultProfile } from '$lib/stores/user';
 	import type { UserProfile } from '$lib/stores/user';
 	import { decisionsBySlug } from '$lib/stores/results';
 
@@ -10,7 +10,7 @@
 
 	const DECISION: 'admit' | 'deny' = 'admit';
 
-	let profile: UserProfile = { name: '', email: '', password: '' };
+	let profile: UserProfile = { ...defaultProfile };
 	let emailInput = '';
 	let passwordInput = '';
 	let error = '';
@@ -24,19 +24,15 @@
 	const handleLoadSavedLogin = () => {
 		if (!profile.email || !profile.password) {
 			// Use default John Doe credentials if user hasn't set up their own
-			emailInput = 'john.doe@example.com';
-			passwordInput = 'password123';
-			// Also set the profile so authentication works
-			userProfile.set({
-				name: 'John Doe',
-				email: 'john.doe@example.com',
-				password: 'password123'
-			});
-			error = '';
-			return;
+			userProfile.update((u) => ({
+				...u,
+				name: u.name || 'John Doe',
+				email: u.email || 'john.doe@example.com',
+				password: u.password || 'password123'
+			}));
 		}
-		emailInput = profile.email;
-		passwordInput = profile.password;
+		// Directly authenticate
+		authenticated = true;
 		error = '';
 	};
 

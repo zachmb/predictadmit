@@ -64,13 +64,7 @@
 	>
 		<div class="space-y-1">
 			<div class="flex items-center gap-2">
-				<span class="text-sm font-semibold tracking-tight text-slate-900"> admitMail </span>
-				<span
-					class="inline-flex items-center gap-1 rounded-full border border-cyan-600/40 bg-cyan-50 px-2 py-[2px] text-[9px] uppercase tracking-[0.22em] text-cyan-700"
-				>
-					<span class="h-1.5 w-1.5 rounded-full bg-cyan-600 animate-pulse"></span>
-					beta
-				</span>
+				<span class="text-sm font-bold tracking-tight text-slate-900"> AIMail </span>
 			</div>
 			<p class="text-[10px] text-slate-500 max-w-md">
 				Simulated college decisions inbox. Click a subject to open the email, then

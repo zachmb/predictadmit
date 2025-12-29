@@ -1,6 +1,6 @@
 <script lang="ts">
 	// Svelte Stores and Types
-	import { userProfile } from '$lib/stores/user';
+	import { userProfile, defaultProfile } from '$lib/stores/user';
 	import type { UserProfile } from '$lib/stores/user';
 	import { decisionsBySlug } from '$lib/stores/results';
 	import { portalDecisionViewed } from '$lib/stores/ui';
@@ -17,7 +17,7 @@
 	const BROWN_RED = '#4E2A2A';
 
 	// --- State Variables (Authentication Logic) ---
-	let profile: UserProfile = { name: '', email: '', password: '' };
+	let profile: UserProfile = { ...defaultProfile };
 	let emailInput = '';
 	let passwordInput = '';
 	let error = '';
@@ -35,11 +35,16 @@
 	// NOTE: Assuming default placeholder for fields not in userProfile store (DOB, Address)
 	const handleLoadSavedLogin = () => {
 		if (!profile.email || !profile.password) {
-			error = 'No saved PredictAdmit login found. Please save it on the main page first.';
-			return;
+			// Use default John Doe credentials if user hasn't set up their own
+			userProfile.update((u) => ({
+				...u,
+				name: u.name || 'John Doe',
+				email: u.email || 'john.doe@example.com',
+				password: u.password || 'password123'
+			}));
 		}
-		emailInput = profile.email;
-		passwordInput = profile.password;
+		// Directly authenticate
+		authenticated = true;
 		error = '';
 	};
 
@@ -273,8 +278,8 @@
 						<h3 class="text-base font-bold pt-4 mb-2">Test Scores</h3>
 						<p class="text-xs max-w-md leading-relaxed">
 							You may <a href="#" class="text-red-700 underline hover:no-underline">self-report</a>
-							test scores that were not included in your Common Application. You can view our
-							testing requirements on our
+							test scores that were not included in your Common Application. You can view our testing
+							requirements on our
 							<a href="#" class="text-red-700 underline hover:no-underline">website.</a>
 						</p>
 					</div>

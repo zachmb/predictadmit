@@ -4,16 +4,47 @@ import { browser } from '$app/environment';
 
 const STORAGE_KEY = 'predictadmit:user';
 
+
+export type SchoolStatus = 'researching' | 'writing' | 'submitted' | 'accepted' | 'denied' | 'waitlisted';
+
+export type TrackedSchool = {
+  slug: string;
+  name: string;
+  deadline?: string;
+  status: SchoolStatus;
+  supplements: { prompt: string; draft: string; aiFeedback?: string }[];
+};
+
 export type UserProfile = {
   name: string;
   email: string;
   password: string;
+  isPro: boolean;
+  requestCount: number;
+  applicationProfile: {
+    gpa: string;
+    essays: string;
+    activities: string;
+    awards: string;
+    rigor: string;
+  };
+  schoolList: TrackedSchool[];
 };
 
-const defaultProfile: UserProfile = {
+export const defaultProfile: UserProfile = {
   name: '',
   email: '',
-  password: ''
+  password: '',
+  isPro: false,
+  requestCount: 0,
+  applicationProfile: {
+    gpa: '',
+    essays: '',
+    activities: '',
+    awards: '',
+    rigor: ''
+  },
+  schoolList: []
 };
 
 function loadInitial(): UserProfile {

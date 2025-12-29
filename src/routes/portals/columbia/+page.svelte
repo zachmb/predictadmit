@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { userProfile } from '$lib/stores/user';
+	import { userProfile, defaultProfile } from '$lib/stores/user';
 	import type { UserProfile } from '$lib/stores/user';
 	import { decisionsBySlug } from '$lib/stores/results';
 	import { portalDecisionViewed } from '$lib/stores/ui';
@@ -28,7 +28,7 @@
 
 	// ----------------- STATE -----------------
 
-	let profile: UserProfile = { name: '', email: '', password: '' };
+	let profile: UserProfile = { ...defaultProfile };
 	let emailInput = '';
 	let passwordInput = '';
 	let error = '';
@@ -44,19 +44,16 @@
 
 	const handleLoadSavedLogin = () => {
 		if (!profile.email || !profile.password) {
-			// Use default John Doe credentials
-			emailInput = 'john.doe@example.com';
-			passwordInput = 'password123';
-			userProfile.set({
-				name: 'John Doe',
-				email: 'john.doe@example.com',
-				password: 'password123'
-			});
-			error = '';
-			return;
+			// Use default John Doe credentials if user hasn't set up their own
+			userProfile.update((u) => ({
+				...u,
+				name: u.name || 'John Doe',
+				email: u.email || 'john.doe@example.com',
+				password: u.password || 'password123'
+			}));
 		}
-		emailInput = profile.email;
-		passwordInput = profile.password;
+		// Directly authenticate
+		authenticated = true;
 		error = '';
 	};
 

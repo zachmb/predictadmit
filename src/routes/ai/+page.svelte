@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { signIn } from '@auth/sveltekit/client';
+	import { goto } from '$app/navigation';
 	import type { PageData } from './$types';
 
 	import SiteFooter from '$lib/components/layout/SiteFooter.svelte';
@@ -12,6 +13,8 @@
 		type PortalEmail,
 		type SentEmail
 	} from '$lib/config/admitMail';
+
+	import { userProfile } from '$lib/stores/user';
 
 	// NEW: store AI results globally so portals can read decisions
 	import { aiResults } from '$lib/stores/results';
@@ -300,15 +303,11 @@
 
 		// If we just came back from Stripe with ?upgrade=success, mark this browser as Pro
 		if (params.get('upgrade') === 'success') {
-			localStorage.setItem('predictadmit_pro', 'true');
+			// Update the global store (which auto-persists to localStorage['predictadmit:user'])
+			userProfile.update((u) => ({ ...u, isPro: true }));
 
 			// Optional: clean ?upgrade=success from the URL
 			window.history.replaceState({}, '', window.location.pathname);
-		}
-
-		// Read Pro flag
-		if (localStorage.getItem('predictadmit_pro') === 'true') {
-			hasDeepDiveAccess = true;
 		}
 
 		// Restore free-tier usage flags (still used for non-Pro users)
@@ -318,6 +317,9 @@
 		// Restore AI inbox state (visiblePortals, read flags, selected email, etc.)
 		loadAiInboxState();
 	});
+
+	// Reactive Pro check
+	$: hasDeepDiveAccess = $userProfile.isPro;
 
 	function outcomeLabel(outcome: DecisionOutcome): string {
 		if (outcome === 'admit') return 'Admitted';
@@ -421,6 +423,22 @@
 				if (typeof localStorage !== 'undefined') {
 					localStorage.setItem('predictadmit_hasUsedFreeSimulation', 'true');
 				}
+
+				// Increment usage count in store (for analytics)
+				userProfile.update((u) => {
+					// Also auto-sync profile if it's the first time or empty
+					const newProfile = { ...u.applicationProfile };
+					if (!newProfile.essays && essay) newProfile.essays = essay;
+					if (!newProfile.activities && activities) newProfile.activities = activities;
+					if (!newProfile.awards && honors) newProfile.awards = honors;
+					if (!newProfile.rigor && transcript) newProfile.rigor = transcript; // roughly mapping transcript to rigor
+
+					return {
+						...u,
+						requestCount: (u.requestCount || 0) + 1,
+						applicationProfile: newProfile
+					};
+				});
 
 				// Hydrate AdmitMail inbox from AI decisions
 				visiblePortals = aiDecisions.map(decisionToPortalEmail);
@@ -565,6 +583,7 @@
 
 	import Card from '$lib/components/common/Card.svelte';
 	import Button from '$lib/components/common/Button.svelte';
+	import RadarChart from '$lib/components/common/RadarChart.svelte';
 </script>
 
 <svelte:head>
@@ -572,16 +591,18 @@
 </svelte:head>
 
 <main class="relative min-h-screen bg-slate-50 text-slate-900 overflow-hidden font-sans">
-	<!-- Blurred content when not signed in -->
-	<div class={googleSignedIn ? '' : 'pointer-events-none blur-sm opacity-70'}>
+	<!-- Main content wrapper -->
+	<div class="">
 		<div class="max-w-[1000px] mx-auto px-6 py-24 space-y-16">
 			<!-- Hero -->
 			<header class="text-center space-y-4 max-w-2xl mx-auto">
 				<h1 class="text-5xl font-bold tracking-tight text-slate-900 drop-shadow-sm">
-					Analyze Application.
+					Predict Your College Results.
 				</h1>
-				<p class="text-xl text-slate-500 font-light">
-					Upload PDF or paste text. Get instant feedback.
+				<p class="text-lg text-slate-600 font-light max-w-xl mx-auto leading-relaxed">
+					Get <span class="font-semibold text-emerald-600">one free real AI simulation</span>.
+					Assesses in depth every aspect of your application — trained and tuned to real admissions
+					results.
 				</p>
 			</header>
 
@@ -823,14 +844,21 @@
 							<!-- Apply controls -->
 							<div class="flex flex-col sm:flex-row items-center gap-4 pt-4">
 								<Button
-									type="submit"
-									disabled={isSubmitting || !googleSignedIn}
-									class="w-full sm:w-auto"
+									type={googleSignedIn ? 'submit' : 'button'}
+									disabled={isSubmitting}
+									on:click={!googleSignedIn
+										? () => signIn('google', { callbackUrl: '/ai' })
+										: undefined}
+									class="w-full py-4 text-base font-bold uppercase tracking-widest shadow-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-600 hover:from-blue-500 hover:via-indigo-500 hover:to-blue-500 transition-all transform hover:scale-[1.02] active:scale-[0.98]"
 								>
-									{#if isSubmitting}
+									{#if !googleSignedIn}
+										<span>Sign in with Google to Simulate</span>
+									{:else if isSubmitting}
 										<span>DeepSeek AI is analyzing...</span>
 									{:else if hasUsedFreeSimulation && !hasDeepDiveAccess}
-										<span>Upgrade to re-run</span>
+										<span on:click|preventDefault|stopPropagation={() => goto('/pro')}
+											>Upgrade to Pro (Unlimited Runs)</span
+										>
 									{:else}
 										<span>Get Application Results (DeepSeek AI)</span>
 									{/if}
@@ -862,166 +890,135 @@
 			</section>
 
 			<!-- AIMail Inbox (now powered by AdmitMail + portal-style status emails) -->
-			<section class="rounded-2xl border border-slate-200 bg-white shadow-xl overflow-hidden mt-8">
-				<!-- Top bar -->
-				<div
-					class="flex items-center justify-between border-b border-slate-100 px-6 py-4 bg-slate-50/50"
+			{#if hasUsedFreeSimulation || isSubmitting}
+				<section
+					class="rounded-2xl border border-slate-200 bg-white shadow-xl overflow-hidden mt-8"
 				>
-					<div>
-						<div class="flex items-center gap-2">
-							<span class="text-xs font-bold uppercase tracking-widest text-slate-500">
-								AIMail
-							</span>
-							<span
-								class="rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] text-emerald-700 border border-emerald-100 font-bold"
-							>
-								AI Generated
-							</span>
-						</div>
-					</div>
-					<div class="text-right text-[10px] text-slate-400">
-						<span class="font-medium text-slate-600">
-							{googleEmail || 'you@predictadmit.ai'}
-						</span>
-					</div>
-				</div>
-
-				{#if isSubmitting}
+					<!-- Top bar -->
 					<div
-						class="border-b border-slate-100 bg-slate-50 px-6 py-3 flex items-center gap-3 text-xs text-slate-600"
+						class="flex items-center justify-between border-b border-slate-100 px-6 py-4 bg-slate-50/50"
 					>
-						<span
-							class="h-3 w-3 animate-spin rounded-full border-2 border-slate-200 border-t-slate-600"
-						></span>
-						<span class="font-medium"> Simulating decision committee... </span>
-					</div>
-				{/if}
-
-				<div class="bg-white min-h-[400px]">
-					<BetterAdmitMail
-						bind:inboxSection
-						viewMode={mailViewMode}
-						activeFolder={mailActiveFolder}
-						bind:searchQuery
-						{filteredPortals}
-						{sortedVisiblePortals}
-						{visiblePortals}
-						{currentEdPortal}
-						{edEmailMustBeViewed}
-						{hasViewedEdEmail}
-						{readPortalSlugs}
-						{selectedPortal}
-						{selectedSent}
-						{sentEmails}
-						{displayName}
-						{displayEmail}
-						getReceivedLabel={getReceivedLabelForAI}
-						resetSimulation={resetInboxState}
-						{selectPortal}
-						{selectSent}
-						{switchFolder}
-						{openInboxList}
-						{deepDiveItems}
-						{deepDiveLoadingSlug}
-						requestDeepDiveForSlug={(slug: string) => {
-							const decision = aiDecisions.find(
-								(d) => d.slug === slug || d.school.toLowerCase().replace(/\s+/g, '-') === slug
-							);
-
-							if (decision) {
-								// uses your existing requestDeepDive(decision: AiDecision)
-								requestDeepDive(decision);
-							}
-						}}
-					/>
-				</div>
-
-				{#if deepDiveItems.length}
-					<!-- Deep Dive explanations, driven by AI -->
-					<div class="border-t border-slate-100 bg-slate-50 px-6 py-6 space-y-6">
-						<div class="flex items-center justify-between gap-3">
-							<div>
-								<p class="text-xs font-bold uppercase tracking-widest text-slate-900">
-									Decision Analysis
-								</p>
-								<p class="mt-1 text-xs text-slate-500 max-w-xl leading-relaxed">
-									Confidential adcom-style breakdown of why you were admitted, denied, or
-									waitlisted.
-								</p>
+						<div>
+							<div class="flex items-center gap-2">
+								<span class="text-xs font-bold uppercase tracking-widest text-slate-500">
+									AIMail
+								</span>
+								<span
+									class="rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] text-emerald-700 border border-emerald-100 font-bold"
+								>
+									AI Generated
+								</span>
 							</div>
 						</div>
-
-						<div class="space-y-4">
-							{#each deepDiveItems as item (item.slug)}
-								<article class="rounded-lg border border-slate-200 bg-white px-5 py-4 shadow-sm">
-									<div class="flex flex-wrap items-center justify-between gap-2 mb-3">
-										<div class="flex items-center gap-3">
-											<h3 class="text-sm font-bold text-slate-900">
-												{item.school}
-											</h3>
-											<span
-												class={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide border ${
-													item.outcome === 'admit'
-														? 'bg-emerald-50 text-emerald-700 border-emerald-200'
-														: item.outcome === 'deny'
-															? 'bg-rose-50 text-rose-700 border-rose-200'
-															: 'bg-amber-50 text-amber-700 border-amber-200'
-												}`}
-											>
-												{outcomeLabel(item.outcome)}
-											</span>
-										</div>
-										<span class="text-[10px] font-medium text-slate-400"> AI Analysis </span>
-									</div>
-
-									<div
-										class="text-sm leading-relaxed text-slate-700 whitespace-pre-wrap font-serif"
-									>
-										{item.explanation}
-									</div>
-								</article>
-							{/each}
+						<div class="text-right text-[10px] text-slate-400">
+							<span class="font-medium text-slate-600">
+								{googleEmail || 'you@predictadmit.ai'}
+							</span>
 						</div>
 					</div>
-				{/if}
-			</section>
+
+					{#if isSubmitting}
+						<div
+							class="border-b border-slate-100 bg-slate-50 px-6 py-3 flex items-center gap-3 text-xs text-slate-600"
+						>
+							<span
+								class="h-3 w-3 animate-spin rounded-full border-2 border-slate-200 border-t-slate-600"
+							></span>
+							<span class="font-medium"> Simulating decision committee... </span>
+						</div>
+					{/if}
+
+					<div class="bg-white min-h-[400px]">
+						<BetterAdmitMail
+							bind:inboxSection
+							viewMode={mailViewMode}
+							activeFolder={mailActiveFolder}
+							bind:searchQuery
+							{filteredPortals}
+							{sortedVisiblePortals}
+							{visiblePortals}
+							{currentEdPortal}
+							{edEmailMustBeViewed}
+							{hasViewedEdEmail}
+							{readPortalSlugs}
+							{selectedPortal}
+							{selectedSent}
+							{sentEmails}
+							{displayName}
+							{displayEmail}
+							getReceivedLabel={getReceivedLabelForAI}
+							resetSimulation={resetInboxState}
+							{selectPortal}
+							{selectSent}
+							{switchFolder}
+							{openInboxList}
+							{deepDiveItems}
+							{deepDiveLoadingSlug}
+							requestDeepDiveForSlug={(slug: string) => {
+								const decision = aiDecisions.find(
+									(d) => d.slug === slug || d.school.toLowerCase().replace(/\s+/g, '-') === slug
+								);
+
+								if (decision) {
+									// uses your existing requestDeepDive(decision: AiDecision)
+									requestDeepDive(decision);
+								}
+							}}
+						/>
+					</div>
+
+					{#if deepDiveItems.length}
+						<!-- Deep Dive explanations, driven by AI -->
+						<div class="border-t border-slate-100 bg-slate-50 px-6 py-6 space-y-6">
+							<div class="flex items-center justify-between gap-3">
+								<div>
+									<p class="text-xs font-bold uppercase tracking-widest text-slate-900">
+										Decision Analysis
+									</p>
+									<p class="mt-1 text-xs text-slate-500 max-w-xl leading-relaxed">
+										Confidential adcom-style breakdown of why you were admitted, denied, or
+										waitlisted.
+									</p>
+								</div>
+							</div>
+
+							<div class="space-y-4">
+								{#each deepDiveItems as item (item.slug)}
+									<article class="rounded-lg border border-slate-200 bg-white px-5 py-4 shadow-sm">
+										<div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+											<div class="flex items-center gap-3">
+												<h3 class="text-sm font-bold text-slate-900">
+													{item.school}
+												</h3>
+												<span
+													class={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide border ${
+														item.outcome === 'admit'
+															? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+															: item.outcome === 'deny'
+																? 'bg-rose-50 text-rose-700 border-rose-200'
+																: 'bg-amber-50 text-amber-700 border-amber-200'
+													}`}
+												>
+													{outcomeLabel(item.outcome)}
+												</span>
+											</div>
+											<span class="text-[10px] font-medium text-slate-400"> AI Analysis </span>
+										</div>
+
+										<div
+											class="text-sm leading-relaxed text-slate-700 whitespace-pre-wrap font-serif"
+										>
+											{item.explanation}
+										</div>
+									</article>
+								{/each}
+							</div>
+						</div>
+					{/if}
+				</section>
+			{/if}
 		</div>
 	</div>
-
-	{#if !googleSignedIn}
-		<!-- Full-screen auth gate (top-aligned, softer blur) -->
-		<div
-			class="pointer-events-auto absolute inset-0 z-20 flex items-start justify-center pt-8 bg-white/80 backdrop-blur-md"
-		>
-			<div
-				class="max-w-sm w-full rounded-2xl border border-slate-200 bg-white px-6 py-8 shadow-2xl space-y-4 text-center"
-			>
-				<p class="text-xs font-bold uppercase tracking-widest text-emerald-700">
-					Unlock PredictAdmit /AI
-				</p>
-				<p class="text-sm text-slate-600 leading-relaxed">
-					Sign in with Google to create your private AI inbox. You’ll see simulated HYPSM+ decisions
-					and can decide later whether to upgrade.
-				</p>
-				<button
-					type="button"
-					class="mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-slate-900 px-5 py-2.5 text-xs font-bold text-white shadow-lg hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-400 w-full transition-all"
-					on:click={() => signIn('google', { callbackUrl: '/ai' })}
-				>
-					<span
-						class="h-4 w-4 rounded bg-white/10 flex items-center justify-center text-[10px] font-bold text-white"
-					>
-						G
-					</span>
-					<span>Continue with Google</span>
-				</button>
-				<p class="text-[10px] text-slate-400">
-					We never send your materials to real universities. Signing in just ties your free trial
-					and upgrades to a single account.
-				</p>
-			</div>
-		</div>
-	{/if}
 
 	{#if showPaywallModal && paywallMode}
 		<!-- Paywall modal overlay -->
@@ -1076,13 +1073,20 @@
 							The Deep Dive turns that verdict into a full, adcom-style breakdown: what helped you,
 							what quietly hurt you, and what they’d need to see to flip this decision next cycle.
 						</p>
-					{:else if paywallMode === 'simulation'}
 						<p>You’ve already used your free full HYPSM+ simulation on this device.</p>
 						<p>
 							To rerun with a new draft, different activities, or a rebalanced spike, you’ll need to
 							unlock PredictAdmit
-							<span class="font-bold text-emerald-600">/AI Premium</span>.
+							<span class="font-bold text-emerald-600">Pro</span>.
 						</p>
+						<div class="mt-4">
+							<button
+								on:click={() => goto('/pro')}
+								class="w-full rounded-full bg-slate-900 px-4 py-3 text-sm font-bold text-white hover:bg-slate-800 transition-all"
+							>
+								Upgrade to Pro
+							</button>
+						</div>
 					{:else}
 						<p>
 							You get <span class="font-bold text-slate-900">one</span> free Common App PDF scan. You’ve
@@ -1091,8 +1095,16 @@
 						<p>
 							To upload new versions, alternate essays, or a different Common App file, you’ll need
 							to unlock PredictAdmit
-							<span class="font-bold text-emerald-600">/AI Premium</span>.
+							<span class="font-bold text-emerald-600">Pro</span>.
 						</p>
+						<div class="mt-4">
+							<button
+								on:click={() => goto('/pro')}
+								class="w-full rounded-full bg-slate-900 px-4 py-3 text-sm font-bold text-white hover:bg-slate-800 transition-all"
+							>
+								Upgrade to Pro
+							</button>
+						</div>
 					{/if}
 				</div>
 

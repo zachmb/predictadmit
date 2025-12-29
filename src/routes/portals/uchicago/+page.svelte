@@ -1,6 +1,6 @@
 <script lang="ts">
 	// Svelte Stores and Types
-	import { userProfile } from '$lib/stores/user';
+	import { userProfile, defaultProfile } from '$lib/stores/user';
 	import type { UserProfile } from '$lib/stores/user';
 	import { decisionsBySlug } from '$lib/stores/results';
 	import { portalDecisionViewed } from '$lib/stores/ui';
@@ -19,7 +19,7 @@
 	const UCHICAGO_MAROON = '#800000'; // UChicago main color
 
 	// --- State Variables ---
-	let profile: UserProfile = { name: '', email: '', password: '' };
+	let profile: UserProfile = { ...defaultProfile };
 	let emailInput = '';
 	let passwordInput = '';
 	let error = '';
@@ -36,13 +36,16 @@
 	// --- Login Handlers (Using a standard login for consistency across portals) ---
 	const handleLoadSavedLogin = () => {
 		if (!profile.email || !profile.password) {
-			emailInput = 'john.doe@gmail.com';
-			passwordInput = 'password123';
-			error = '';
-			return;
+			// Use default John Doe credentials if user hasn't set up their own
+			userProfile.update((u) => ({
+				...u,
+				name: u.name || 'John Doe',
+				email: u.email || 'john.doe@example.com',
+				password: u.password || 'password123'
+			}));
 		}
-		emailInput = profile.email;
-		passwordInput = profile.password;
+		// Directly authenticate
+		authenticated = true;
 		error = '';
 	};
 

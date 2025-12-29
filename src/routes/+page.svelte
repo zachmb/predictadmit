@@ -12,12 +12,11 @@
 	import Card from '$lib/components/common/Card.svelte';
 	import Button from '$lib/components/common/Button.svelte';
 
-	import SMMInviteModal from '$lib/components/popups/SMMInviteModal.svelte';
-
 	// University search state
 	let searchQuery = '';
 	let showSearchResults = false;
 	let filteredUniversities: typeof portals = [];
+	let selectedIndex = -1;
 
 	// Filter universities as user types
 	$: {
@@ -27,11 +26,37 @@
 				.filter((p) => p.name.toLowerCase().includes(query) || p.slug.toLowerCase().includes(query))
 				.slice(0, 5); // Show max 5 results
 			showSearchResults = filteredUniversities.length > 0;
+			selectedIndex = -1; // Reset selection on new search
 		} else {
 			filteredUniversities = [];
 			showSearchResults = false;
+			selectedIndex = -1;
 		}
 	}
+
+	const handleKeydown = (e: KeyboardEvent) => {
+		if (!showSearchResults || filteredUniversities.length === 0) return;
+
+		if (e.key === 'ArrowDown') {
+			e.preventDefault();
+			selectedIndex = (selectedIndex + 1) % filteredUniversities.length;
+		} else if (e.key === 'ArrowUp') {
+			e.preventDefault();
+			selectedIndex =
+				(selectedIndex - 1 + filteredUniversities.length) % filteredUniversities.length;
+		} else if (e.key === 'Enter') {
+			e.preventDefault();
+			if (selectedIndex >= 0 && selectedIndex < filteredUniversities.length) {
+				handleUniversitySelect(filteredUniversities[selectedIndex].slug);
+			} else if (filteredUniversities.length > 0) {
+				// If nothing selected but results exist, auto-select top result on Enter?
+				// User usually expects this from search bars.
+				handleUniversitySelect(filteredUniversities[0].slug);
+			}
+		} else if (e.key === 'Escape') {
+			showSearchResults = false;
+		}
+	};
 
 	// Navigate to portal
 	const handleUniversitySelect = (slug: string) => {
@@ -41,16 +66,10 @@
 			sessionStorage.setItem(`decision-${slug}`, mode === 'accepted' ? 'admit' : 'deny');
 		}
 
-		// Check if user has saved credentials
-		if (!$userProfile.name || !$userProfile.email || !$userProfile.password) {
-			// Show login modal first
-			showAccountForm = true;
-			// Store the slug to navigate after login
-			sessionStorage.setItem('pendingPortalSlug', slug);
-		} else {
-			// Navigate directly
-			goto(`/portals/${slug}`);
-		}
+		// Navigate directly to the portal page
+		// (Portals handle their own auth/login state)
+		goto(`/portals/${slug}`);
+
 		searchQuery = '';
 		showSearchResults = false;
 	};
@@ -683,6 +702,7 @@
 							<input
 								type="text"
 								bind:value={searchQuery}
+								on:keydown={handleKeydown}
 								placeholder="Search for Harvard, Stanford, MIT..."
 								class="w-full text-slate-900 text-lg px-6 py-4 outline-none placeholder:text-slate-400"
 							/>
@@ -693,11 +713,12 @@
 							<div
 								class="absolute top-full left-0 right-0 mt-2 bg-white border border-slate-200 rounded-lg shadow-xl z-50 max-h-80 overflow-y-auto"
 							>
-								{#each filteredUniversities as university}
+								{#each filteredUniversities as university, index}
 									<button
 										type="button"
 										class="w-full text-left px-4 py-3 hover:bg-blue-50 transition-colors border-b border-slate-100 last:border-b-0"
-										on:click={() => handleUniversitySelect(university.slug)}
+										class:bg-blue-50={index === selectedIndex}
+										on:mousedown|preventDefault={() => handleUniversitySelect(university.slug)}
 									>
 										<div class="font-semibold text-slate-900">{university.name}</div>
 										<div class="text-xs text-slate-500">View admission portal →</div>
@@ -729,7 +750,7 @@
 						</p>
 						<p>
 							Search for any university above, or run a full simulation to see decisions from
-							multiple schools at once.
+							multiple schools at once. The AI Application Simulator is now available for everyone.
 						</p>
 					</div>
 				</div>
@@ -737,16 +758,12 @@
 				<Card class="bg-gradient-to-br from-blue-50 to-indigo-50 border-blue-200">
 					<div class="p-6 space-y-4">
 						<div class="flex items-center justify-between">
-							<h3 class="text-xl font-bold text-slate-900">Want Predicted Decisions?</h3>
-							<span
-								class="text-xs font-mono text-blue-700 bg-blue-100 border border-blue-300 px-2 py-1 rounded"
-								>PRO</span
-							>
+							<h3 class="text-xl font-bold text-slate-900">Get Predicted Decisions</h3>
 						</div>
 
 						<p class="text-sm text-slate-700">
-							Use PredictAdmit Pro's AI simulator to see your predicted admission decisions based on
-							your actual profile.
+							Use our AI simulator to see your predicted admission decisions based on your actual
+							profile. <strong>Your first simulation is completely free!</strong>
 						</p>
 
 						<div class="pt-2">
@@ -754,7 +771,7 @@
 								href="/ai"
 								class="inline-flex items-center justify-center w-full font-bold text-sm bg-blue-600 text-white px-4 py-2.5 rounded-lg hover:bg-blue-700 transition-colors"
 							>
-								Try Pro AI Simulator →
+								Try AI Simulator →
 							</a>
 						</div>
 					</div>
@@ -963,15 +980,6 @@
 			{/if}
 
 			<!-- POPUPS -->
-
-			<SMMInviteModal
-				visible={showSMMInvite}
-				on:close={() => (showSMMInvite = false)}
-				on:accept={() => {
-					showSMMInvite = false;
-					window.location.href = '/smm-dashboard';
-				}}
-			/>
 
 			<!-- APPLICATION ANIMATION -->
 			{#if hasApplied}

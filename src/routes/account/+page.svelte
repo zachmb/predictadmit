@@ -4,6 +4,8 @@
 
 	import { signIn, signOut } from '@auth/sveltekit/client';
 	import { page } from '$app/stores';
+	import { goto } from '$app/navigation';
+	import { userProfile } from '$lib/stores/user';
 
 	$: session = $page.data.session;
 	$: isSignedIn = !!session;

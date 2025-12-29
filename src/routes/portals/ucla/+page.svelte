@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { tick } from 'svelte';
-	import { userProfile } from '$lib/stores/user';
+	import { userProfile, defaultProfile } from '$lib/stores/user';
 	import type { UserProfile } from '$lib/stores/user';
 	import UCLAAccepted from '$lib/components/ucla/UCLAAccepted.svelte';
 	import UCLADenied from '$lib/components/ucla/UCLADenied.svelte';
@@ -9,7 +9,7 @@
 
 	const DECISION: 'admit' | 'deny' = 'admit';
 
-	let profile: UserProfile = { name: '', email: '', password: '' };
+	let profile: UserProfile = { ...defaultProfile };
 	let lastNameInput = '';
 	let applicationIdInput = '';
 	let dateOfBirthInput = '';
@@ -54,6 +54,12 @@
 		applicationIdInput = '123456789';
 		dateOfBirthInput = '01/01/2007';
 		cityOfBirthInput = 'San Francisco';
+		// Ensure profile is robust
+		if (!profile.email) {
+			userProfile.update((u) => ({ ...u, ...defaultProfile, name: 'John Doe' }));
+		}
+		// Directly authenticate
+		authenticated = true;
 		error = '';
 	};
 </script>

@@ -1,25 +1,34 @@
 <script lang="ts">
-	import { userProfile } from '$lib/stores/user';
+	// Svelte Stores and Types
+	import { userProfile, defaultProfile } from '$lib/stores/user';
 	import type { UserProfile } from '$lib/stores/user';
-
-	import VanderbiltAccepted from '$lib/components/vanderbilt/VanderbiltAccepted.svelte';
-	import VanderbiltDenied from '$lib/components/vanderbilt/VanderbiltDenied.svelte';
 	import { decisionsBySlug } from '$lib/stores/results';
 	import { portalDecisionViewed } from '$lib/stores/ui';
 
+	// Shared Components and Configuration
+	// (None specific for Vanderbilt logic yet, aside from stores)
+
+	// School-Specific Components (Decision Letters)
+	import VanderbiltAccepted from '$lib/components/vanderbilt/VanderbiltAccepted.svelte';
+	import VanderbiltDenied from '$lib/components/vanderbilt/VanderbiltDenied.svelte';
+
 	const DECISION: 'admit' | 'deny' = 'admit';
 
-	let profile: UserProfile = { name: '', email: '', password: '' };
+	// --- State Variables ---
+	let profile: UserProfile = { ...defaultProfile };
 	let emailInput = '';
 	let passwordInput = '';
 	let error = '';
 	let authenticated = false;
 	let hasViewedUpdate = false;
 
+	// Subscribe to the global user profile store
 	$: profile = $userProfile;
 
+	// Dynamic Data Helpers
 	const applicantName = () => profile.name || 'Applicant';
 
+	// --- Handlers ---
 	const handleLogin = (event: SubmitEvent) => {
 		event.preventDefault();
 
@@ -40,6 +49,7 @@
 
 	const handleViewUpdate = () => {
 		hasViewedUpdate = true;
+		portalDecisionViewed.set(true); // Ensure global store is updated
 		requestAnimationFrame(() => {
 			window.scrollTo(0, 0);
 		});
@@ -47,12 +57,17 @@
 
 	const loadSavedLogin = () => {
 		if (!profile.email || !profile.password) {
-			emailInput = 'john.doe@gmail.com';
-			passwordInput = 'password123';
-			return;
+			// Use default John Doe credentials if user hasn't set up their own
+			userProfile.update((u) => ({
+				...u,
+				name: u.name || 'John Doe',
+				email: u.email || 'john.doe@example.com',
+				password: u.password || 'password123'
+			}));
 		}
-		emailInput = profile.email;
-		passwordInput = profile.password;
+		// Directly authenticate
+		authenticated = true;
+		error = '';
 	};
 </script>
 
