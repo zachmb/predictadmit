@@ -11,7 +11,7 @@
 	import AdmitMail from '$lib/components/AdmitMail.svelte';
 	import Card from '$lib/components/common/Card.svelte';
 	import Button from '$lib/components/common/Button.svelte';
-	import ExitIntentPortal from '$lib/components/popups/ExitIntentPortal.svelte';
+
 	import SMMInviteModal from '$lib/components/popups/SMMInviteModal.svelte';
 
 	// University search state
@@ -963,7 +963,7 @@
 			{/if}
 
 			<!-- POPUPS -->
-			<ExitIntentPortal />
+
 			<SMMInviteModal
 				visible={showSMMInvite}
 				on:close={() => (showSMMInvite = false)}

@@ -828,11 +828,11 @@
 									class="w-full sm:w-auto"
 								>
 									{#if isSubmitting}
-										<span>AI is judging...</span>
+										<span>DeepSeek AI is analyzing...</span>
 									{:else if hasUsedFreeSimulation && !hasDeepDiveAccess}
 										<span>Upgrade to re-run</span>
 									{:else}
-										<span>Apply to HYPSM+ with AI</span>
+										<span>Get Application Results (DeepSeek AI)</span>
 									{/if}
 								</Button>
 
