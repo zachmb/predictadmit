@@ -4,7 +4,7 @@
   import type { PageData } from './$types';
   import AIHeader from '$lib/components/layout/AIHeader.svelte';
   import AIFooter from '$lib/components/layout/AIFooter.svelte';
-
+  
   // NEW: bring in AdmitMail + types from the existing simulator
   import BetterAdmitMail from '$lib/components/BetterAdmitMail.svelte';
   import {

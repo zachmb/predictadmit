@@ -4,6 +4,7 @@
   import type { UserProfile } from '$lib/stores/user';
   import UCLAAccepted from '$lib/components/ucla/UCLAAccepted.svelte';
   import UCLADenied from '$lib/components/ucla/UCLADenied.svelte';
+	import { decisionsBySlug } from '$lib/stores/results';
 
   const DECISION: 'admit' | 'deny' = 'admit';
 
@@ -150,7 +151,7 @@
     </div>
   </div>
 {:else}
-  {#if DECISION === 'admit'}
+  {#if $decisionsBySlug['ucla'] === 'admit'}
     <UCLAAccepted applicantName={applicantName()} />
   {:else}
     <UCLADenied applicantName={applicantName()} />

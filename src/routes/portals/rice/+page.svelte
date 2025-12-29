@@ -5,6 +5,7 @@
   import RiceImage from '$lib/assets/ricecampus-beautifulsunset2022-2560x1728.jpeg';
   import RiceAccepted from '$lib/components/rice/RiceAccepted.svelte';
   import RiceDenied from '$lib/components/rice/RiceDenied.svelte';
+	import { decisionsBySlug } from '$lib/stores/results';
 
   const DECISION: 'admit' | 'deny' = 'admit';
 
@@ -348,7 +349,7 @@
       </footer>
     </div>
   {:else}
-    {#if DECISION === 'admit'}
+    {#if $decisionsBySlug['rice'] === 'admit'}
       <RiceAccepted applicantName={applicantName()} />
     {:else}
       <RiceDenied applicantName={applicantName()} />

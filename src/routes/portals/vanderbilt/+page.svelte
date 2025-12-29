@@ -4,6 +4,7 @@
 
   import VanderbiltAccepted from '$lib/components/vanderbilt/VanderbiltAccepted.svelte';
   import VanderbiltDenied from '$lib/components/vanderbilt/VanderbiltDenied.svelte';
+	import { decisionsBySlug } from '$lib/stores/results';
 
   const DECISION: 'admit' | 'deny' = 'admit';
 
@@ -376,7 +377,7 @@ requestAnimationFrame(() => {
       </div>
     </div>
   {:else}
-    {#if DECISION === 'admit'}
+    {#if $decisionsBySlug['vanderbilt'] === 'admit'}
       <VanderbiltAccepted applicantName={applicantName()} />
     {:else}
       <VanderbiltDenied applicantName={applicantName()} />

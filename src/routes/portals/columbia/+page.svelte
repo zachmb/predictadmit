@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { userProfile } from '$lib/stores/user';
 	import type { UserProfile } from '$lib/stores/user';
+	import { decisionsBySlug } from '$lib/stores/results';
 
 	// School Config
 	import { schoolConfigs } from '$lib/config/schools';
@@ -361,7 +362,7 @@
 
 
 		{:else}
-            {#if school.decision === 'admit'}
+            {#if $decisionsBySlug[SLUG] === 'admit'}
 				<ColumbiaAccepted
 					applicantName={applicantName()}
 					schoolName={school.schoolName}

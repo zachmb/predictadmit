@@ -4,6 +4,7 @@
   import type { UserProfile } from '$lib/stores/user';
   import WashUAccepted from '$lib/components/washu/WashUAccepted.svelte';
   import WashUDenied from '$lib/components/washu/WashUDenied.svelte';
+  import { decisionsBySlug } from '$lib/stores/results';
 
   const DECISION: 'admit' | 'deny' = 'admit';
 
@@ -276,7 +277,7 @@
       </div>
     </footer>
   {:else}
-    {#if DECISION === 'admit'}
+    {#if $decisionsBySlug['wustl'] === 'admit'}
       <WashUAccepted applicantName={applicantName()} />
     {:else}
       <WashUDenied applicantName={applicantName()} />

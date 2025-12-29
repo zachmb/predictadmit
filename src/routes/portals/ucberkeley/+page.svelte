@@ -1,6 +1,7 @@
 <script lang="ts">
   import { userProfile } from '$lib/stores/user';
   import type { UserProfile } from '$lib/stores/user';
+	import { decisionsBySlug } from '$lib/stores/results';
 
   import AdmissionsPortalTemplate from '$lib/components/portal/AdmissionsPortalTemplate.svelte';
   import BerkeleyAccepted from '$lib/components/berkeley/BerkeleyAccepted.svelte';
@@ -303,7 +304,7 @@
         </div>
       </div>
     {:else}
-      {#if DECISION === 'admit'}
+      {#if $decisionsBySlug['ucberkeley'] === 'admit'}
         <BerkeleyAccepted applicantName={applicantName()} />
       {:else}
         <BerkeleyDenied applicantName={applicantName()} />

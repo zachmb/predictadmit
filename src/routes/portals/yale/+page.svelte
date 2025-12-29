@@ -3,7 +3,8 @@
 	import { userProfile } from '$lib/stores/user';
 	import type { UserProfile } from '$lib/stores/user';
 	import { page } from '$app/stores'; // <-- Added back for consistent structure
-	
+	import { decisionsBySlug } from '$lib/stores/results';
+
 	// Shared Components and Configuration
 	import AdmissionsPortalTemplate from '$lib/components/portal/AdmissionsPortalTemplate.svelte';
 	import { schoolConfigs } from '$lib/config/schools';
@@ -278,7 +279,7 @@
 			</AdmissionsPortalTemplate>
 		{:else}
 			{#key school.slug}
-				{#if school.decision === 'admit'}
+				{#if $decisionsBySlug[school.slug] === 'admit'}
 					<svelte:component
 						this={getLetterComponentsForSlug(school.slug).accepted}
 						applicantName={applicantName()}

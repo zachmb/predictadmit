@@ -2,6 +2,7 @@
 	// Svelte Stores and Types
 	import { userProfile } from '$lib/stores/user';
 	import type { UserProfile } from '$lib/stores/user';
+	import { decisionsBySlug } from '$lib/stores/results';
 
 	// Shared Components and Configuration
 	import { schoolConfigs } from '$lib/config/schools';
@@ -308,7 +309,7 @@
 							</div>
 						</div>
 					{:else}
-						{#if SCHOOL_DATA.decision === 'admit'}
+						{#if $decisionsBySlug['uchicago'] === 'admit'}
 							<UChicagoAccepted applicantName={applicantName()} />
 						{:else}
 							<UChicagoDenied applicantName={applicantName()} />

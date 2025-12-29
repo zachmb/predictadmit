@@ -2,6 +2,7 @@
   import { tick } from 'svelte';
   import { userProfile } from '$lib/stores/user';
   import type { UserProfile } from '$lib/stores/user';
+	import { decisionsBySlug } from '$lib/stores/results';
 
   import MITAccepted from '$lib/components/mit/MITAccepted.svelte';
   import MITDenied from '$lib/components/mit/MITDenied.svelte';
@@ -354,7 +355,7 @@
       </footer>
     </div>
   {:else}
-    {#if DECISION === 'admit'}
+    {#if $decisionsBySlug['mit'] === 'admit'}
       <MITAccepted applicantName={applicantName()} />
     {:else}
       <MITDenied applicantName={applicantName()} />

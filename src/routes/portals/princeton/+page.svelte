@@ -2,6 +2,7 @@
 	// Svelte Stores and Types
 	import { userProfile } from '$lib/stores/user';
 	import type { UserProfile } from '$lib/stores/user';
+	import { decisionsBySlug } from '$lib/stores/results';
 
 	// Shared Components and Configuration
 	import { schoolConfigs } from '$lib/config/schools';
@@ -280,7 +281,7 @@
 				</div>
 			</footer>
 		{:else}
-			{#if SCHOOL_DATA.decision === 'admit'}
+			{#if $decisionsBySlug['princeton'] === 'admit'}
 				<PrincetonAccepted applicantName={applicantName()} />
 			{:else}
 				<PrincetonDenied applicantName={applicantName()} />

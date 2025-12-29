@@ -3,7 +3,7 @@
   import { userProfile } from '$lib/stores/user';
   import AI from '$lib/components/common/AI.svelte';
   import type { UserProfile } from '$lib/stores/user';
-
+  import { aiResults } from '$lib/stores/results';
   import SiteHeader from '$lib/components/layout/SiteHeader.svelte';
   import SiteFooter from '$lib/components/layout/SiteFooter.svelte';
   import ApplicationTimeline from '$lib/components/home/ApplicationTimeline.svelte';
@@ -370,8 +370,18 @@
       return;
     }
     if (hasApplied) return;
-
+    
     hasApplied = true;
+
+    // --- NEW: GENERATE RANDOM DECISIONS ---
+    const randomDecisions = portals.map(portal => ({
+      school: portal.name,
+      slug: portal.slug,
+      // Randomly pick 'admit' or 'deny'
+      outcome: Math.random() > 0.5 ? 'admit' : 'deny' as const
+    }));
+
+    aiResults.setDecisions(randomDecisions);
 
     // Set up ED choice & reset inbox-related state
     currentEdPortal = edChoiceSlug ? portals.find((p) => p.slug === edChoiceSlug) ?? null : null;

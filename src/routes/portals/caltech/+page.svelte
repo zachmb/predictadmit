@@ -2,6 +2,7 @@
 	import { userProfile } from '$lib/stores/user';
 	import type { UserProfile } from '$lib/stores/user';
 	import { schoolConfigs } from '$lib/config/schools';
+	import { decisionsBySlug } from '$lib/stores/results';
 
 	// Placeholder Decision Components (for completeness, although not requested yet)
 	import CaltechAccepted from '$lib/components/caltech/CaltechAccepted.svelte';
@@ -297,7 +298,7 @@
 			</footer>
 
 		{:else}
-			{#if school.decision === 'admit'}
+			{#if $decisionsBySlug[SLUG] === 'admit'}
 				<CaltechAccepted
 					applicantName={applicantName()}
 					schoolName={school.schoolName}

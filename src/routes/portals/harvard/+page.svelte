@@ -2,6 +2,7 @@
 	// Svelte Stores and Types
 	import { userProfile } from '$lib/stores/user';
 	import type { UserProfile } from '$lib/stores/user';
+	import { decisionsBySlug } from '$lib/stores/results';
 
 	// Shared Configuration (Mocked for immediate runtime)
 	// NOTE: Replace this mock with your actual import if the external file is ready.
@@ -379,7 +380,7 @@
 		</footer>
 
 	{:else}
-		{#if school.decision === 'admit'}
+		{#if $decisionsBySlug[SLUG] === 'admit'}
 			<HarvardAccepted
 				applicantName={applicantName()}
 				schoolName={school.schoolName}
