@@ -36,10 +36,7 @@
 		class="sticky top-0 z-[9999] border-b border-slate-200/50 bg-white/95 backdrop-blur-md transition-all h-[64px] flex items-center shadow-sm"
 	>
 		<div class="max-w-[1200px] w-full mx-auto px-6 h-full flex items-center justify-between">
-			<a
-				href="https://predictadmit.com/"
-				class="text-xl font-bold tracking-tight text-[var(--color-brand-primary)]"
-			>
+			<a href="/" class="text-xl font-bold tracking-tight text-[var(--color-brand-primary)]">
 				predictadmit<span class="text-blue-900">.com</span>
 			</a>
 
