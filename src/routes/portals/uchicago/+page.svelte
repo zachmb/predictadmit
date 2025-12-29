@@ -3,6 +3,7 @@
 	import { userProfile } from '$lib/stores/user';
 	import type { UserProfile } from '$lib/stores/user';
 	import { decisionsBySlug } from '$lib/stores/results';
+	import { portalDecisionViewed } from '$lib/stores/ui';
 
 	// Shared Components and Configuration
 	import { schoolConfigs } from '$lib/config/schools';
@@ -35,7 +36,9 @@
 	// --- Login Handlers (Using a standard login for consistency across portals) ---
 	const handleLoadSavedLogin = () => {
 		if (!profile.email || !profile.password) {
-			error = 'No saved PredictAdmit login found. Please save it on the main page first.';
+			emailInput = 'john.doe@gmail.com';
+			passwordInput = 'password123';
+			error = '';
 			return;
 		}
 		emailInput = profile.email;
@@ -67,6 +70,7 @@
 
 	const handleViewUpdate = () => {
 		hasViewedUpdate = true;
+		portalDecisionViewed.set(true);
 	};
 </script>
 
@@ -75,15 +79,12 @@
 </svelte:head>
 
 <div class="bg-white text-slate-900 font-sans flex flex-col {authenticated ? 'min-h-screen' : ''}">
-	
 	{#if !authenticated}
 		<div class="bg-white">
 			<header class="bg-white border-b border-slate-300">
 				<div class="max-w-5xl mx-auto px-6 pt-6 pb-4 flex items-center justify-between">
 					<div class="flex items-baseline gap-3">
-						<span class="text-3xl font-serif text-slate-900">
-							The University of Chicago
-						</span>
+						<span class="text-3xl font-serif text-slate-900"> The University of Chicago </span>
 						<span class="text-[11px] tracking-[0.18em] uppercase text-slate-700">
 							College Admissions
 						</span>
@@ -105,32 +106,65 @@
 
 					<form class="space-y-4 text-sm" on:submit={handleLogin}>
 						{#if error}
-							<p class="text-xs text-red-800 border border-red-300 bg-red-50 px-3 py-2 mb-2" role="alert">
+							<p
+								class="text-xs text-red-800 border border-red-300 bg-red-50 px-3 py-2 mb-2"
+								role="alert"
+							>
 								{error}
 							</p>
 						{/if}
 
 						<div class="flex items-center gap-4">
-							<label for="portal-email" class="w-32 text-[12px] font-semibold text-slate-900 text-right">Email Address</label>
-							<input id="portal-email" type="email" class="border border-slate-500 bg-white px-2 py-1 text-[13px] w-80" bind:value={emailInput} autocomplete="email" />
+							<label
+								for="portal-email"
+								class="w-32 text-[12px] font-semibold text-slate-900 text-right"
+								>Email Address</label
+							>
+							<input
+								id="portal-email"
+								type="email"
+								class="border border-slate-500 bg-white px-2 py-1 text-[13px] w-80"
+								bind:value={emailInput}
+								autocomplete="email"
+							/>
 						</div>
 
 						<div class="flex items-center gap-4">
-							<label for="portal-password" class="w-32 text-[12px] font-semibold text-slate-900 text-right">Password</label>
-							<input id="portal-password" type="password" class="border border-slate-500 bg-white px-2 py-1 text-[13px] w-80" bind:value={passwordInput} autocomplete="current-password" />
-							<a href="/disclaimer" class="text-[12px] text-blue-800 underline hover:no-underline">Forgot Your Password?</a>
+							<label
+								for="portal-password"
+								class="w-32 text-[12px] font-semibold text-slate-900 text-right">Password</label
+							>
+							<input
+								id="portal-password"
+								type="password"
+								class="border border-slate-500 bg-white px-2 py-1 text-[13px] w-80"
+								bind:value={passwordInput}
+								autocomplete="current-password"
+							/>
+							<a href="/disclaimer" class="text-[12px] text-blue-800 underline hover:no-underline"
+								>Forgot Your Password?</a
+							>
 						</div>
 
 						<div class="flex items-center gap-4 pt-4">
 							<div class="w-32"></div>
 							<div class="flex flex-wrap items-center gap-3">
-								<button type="submit" class="border border-slate-500 bg-slate-300 px-4 py-1 text-[12px] font-semibold hover:bg-slate-400 active:bg-slate-500">Login</button>
-								<button type="button" class="border border-slate-400 bg-slate-100 px-3 py-1 text-[11px] hover:bg-slate-200 active:bg-slate-300" on:click={handleLoadSavedLogin}>Load saved PredictAdmit login</button>
+								<button
+									type="submit"
+									class="border border-slate-500 bg-slate-300 px-4 py-1 text-[12px] font-semibold hover:bg-slate-400 active:bg-slate-500"
+									>Login</button
+								>
+								<button
+									type="button"
+									class="border border-slate-400 bg-slate-100 px-3 py-1 text-[11px] hover:bg-slate-200 active:bg-slate-300"
+									on:click={handleLoadSavedLogin}>Load saved PredictAdmit login</button
+								>
 							</div>
 						</div>
 
 						<p class="pt-4 text-[10px] leading-relaxed text-slate-600 max-w-xl">
-							This is a simulation. Use the same email and password saved on the PredictAdmit.com home page.
+							This is a simulation. Use the same email and password saved on the PredictAdmit.com
+							home page.
 						</p>
 					</form>
 				</div>
@@ -139,16 +173,18 @@
 
 		<footer class="mt-8">
 			<div class="h-10 flex items-center" style={`background-color: ${UCHICAGO_MAROON};`}>
-				<div class="max-w-5xl mx-auto px-6 w-full flex items-center justify-between text-[11px] text-white">
+				<div
+					class="max-w-5xl mx-auto px-6 w-full flex items-center justify-between text-[11px] text-white"
+				>
 					<span>&copy; {SCHOOL_DATA.footerDomain} 2019</span>
-					<span class="opacity-80">PredictAdmit.com simulation · Not affiliated with {SCHOOL_DATA.schoolName}</span>
+					<span class="opacity-80"
+						>PredictAdmit.com simulation · Not affiliated with {SCHOOL_DATA.schoolName}</span
+					>
 				</div>
 			</div>
 		</footer>
-
 	{:else}
 		<div class="flex-grow flex flex-col min-h-screen bg-white">
-			
 			<header class="w-full">
 				<div class="w-full py-2 text-white" style={`background-color: ${UCHICAGO_MAROON};`}>
 					<div class="max-w-6xl mx-auto px-6">
@@ -162,9 +198,7 @@
 
 				<div class="w-full text-white pt-2 pb-0.5" style={`background-color: #A00000;`}>
 					<div class="max-w-6xl mx-auto px-6 flex justify-between items-end">
-						<h1 class="text-3xl font-serif font-bold tracking-wide">
-							College Admissions
-						</h1>
+						<h1 class="text-3xl font-serif font-bold tracking-wide">College Admissions</h1>
 						<nav class="text-[11px] font-bold uppercase tracking-wider space-x-4">
 							<a href="#" class="hover:underline">Apply</a>
 							<a href="#" class="hover:underline">Visit</a>
@@ -180,7 +214,6 @@
 			</header>
 
 			<main class="max-w-6xl mx-auto px-6 py-8 w-full flex-1 flex">
-				
 				<div class="w-3/4 pr-10">
 					{#if !hasViewedUpdate}
 						<div class="flex justify-between items-start mb-6">
@@ -192,11 +225,14 @@
 						</div>
 
 						<p class="text-[11px] leading-relaxed mb-4">
-							Thank you for submitting an application to the College. We are pleased to provide you with your name and reference number: **42004200**.
+							Thank you for submitting an application to the College. We are pleased to provide you
+							with your name and reference number: **42004200**.
 						</p>
 
 						<div class="border border-gray-300 p-4 mb-6">
-							<h3 class="text-xs font-bold text-red-700 mb-2">Your UChicago Account is your resource to:</h3>
+							<h3 class="text-xs font-bold text-red-700 mb-2">
+								Your UChicago Account is your resource to:
+							</h3>
 							<ul class="text-[11px] space-y-1 ml-4 list-disc text-gray-800">
 								<li>Complete and update your profile.</li>
 								<li>Change your <a href="#" class="text-blue-700 underline">password</a>.</li>
@@ -207,24 +243,38 @@
 						</div>
 
 						<p class="text-[11px] leading-relaxed mb-4 text-gray-700">
-							You can always contact the <a href="#" class="text-blue-700 underline">Admissions Office</a> or your <a href="#" class="text-blue-700 underline">regional admissions manager</a> for help or to change your decision plan, for logistical issues related to your application process, or about the application itself.
+							You can always contact the <a href="#" class="text-blue-700 underline"
+								>Admissions Office</a
+							>
+							or your <a href="#" class="text-blue-700 underline">regional admissions manager</a> for
+							help or to change your decision plan, for logistical issues related to your application
+							process, or about the application itself.
 						</p>
 
 						<div class="border border-red-700 bg-red-50 p-4 mb-6">
 							<p class="text-[11px] italic leading-relaxed text-gray-800">
-								We want to take this moment to say thank thank you—you are ALL amazing. You have invented new companies, contributed to the mysteries of the Divine, taken to stage, etc. We can only imagine the difficulty our team faced in selecting a limited number of qualified students to join us. We hope you're proud of your accomplishments, and will continue to do great work wherever you go.
+								We want to take this moment to say thank thank you—you are ALL amazing. You have
+								invented new companies, contributed to the mysteries of the Divine, taken to stage,
+								etc. We can only imagine the difficulty our team faced in selecting a limited number
+								of qualified students to join us. We hope you're proud of your accomplishments, and
+								will continue to do great work wherever you go.
 							</p>
 							<p class="text-[10px] italic text-gray-700 mt-2">
-								**Sincerely,**<br>
-								**James G. Rosendorf**<br>
+								**Sincerely,**<br />
+								**James G. Rosendorf**<br />
 								**Dean of Admissions & Financial Aid**
 							</p>
 						</div>
 
 						<div class="mb-6">
 							<div class="bg-blue-800 text-white font-bold p-2 text-xs mb-2">Status Update</div>
-							<p class="text-[11px] text-gray-700">An update to your application was posted **March 15, 2020**</p>
-							<button on:click={handleViewUpdate} class="text-red-700 font-bold text-xs mt-1 hover:underline">
+							<p class="text-[11px] text-gray-700">
+								An update to your application was posted **March 15, 2020**
+							</p>
+							<button
+								on:click={handleViewUpdate}
+								class="text-red-700 font-bold text-xs mt-1 hover:underline"
+							>
 								View Update >>
 							</button>
 						</div>
@@ -232,11 +282,21 @@
 						<div class="mb-6">
 							<div class="bg-blue-800 text-white font-bold p-2 text-xs mb-2">Portfolio</div>
 							<div class="text-[11px] text-gray-700 mb-3">
-								<p>In this section, you can upload all supplemental arts materials. Uploading materials will automatically submit them to the admissions office. Please read the instructions and file-type specifications. **We strongly encourage you to submit all materials online if possible.**</p>
-								<p class="mt-2">For uploading the optional video profile, please edit the file after upload and update the title to: **Optional Video Profile.**</p>
+								<p>
+									In this section, you can upload all supplemental arts materials. Uploading
+									materials will automatically submit them to the admissions office. Please read the
+									instructions and file-type specifications. **We strongly encourage you to submit
+									all materials online if possible.**
+								</p>
+								<p class="mt-2">
+									For uploading the optional video profile, please edit the file after upload and
+									update the title to: **Optional Video Profile.**
+								</p>
 							</div>
 
-							<p class="text-[11px] text-gray-700 mb-2">We have received the following portfolio submissions from you:</p>
+							<p class="text-[11px] text-gray-700 mb-2">
+								We have received the following portfolio submissions from you:
+							</p>
 							<div class="border border-gray-300 p-2 text-xs mb-3">
 								<table class="w-full text-left">
 									<thead>
@@ -252,24 +312,30 @@
 										</tr>
 									</tbody>
 								</table>
-								<a href="#" class="text-red-700 font-bold text-xs mt-2 inline-block hover:underline">Edit Portfolios</a>
+								<a href="#" class="text-red-700 font-bold text-xs mt-2 inline-block hover:underline"
+									>Edit Portfolios</a
+								>
 							</div>
 						</div>
 
 						<div class="mb-6">
 							<div class="bg-blue-800 text-white font-bold p-2 text-xs mb-2">Forms</div>
 							<div class="flex items-center text-[11px] text-gray-700">
-								<span class="text-green-600 font-bold mr-2">✔</span> Delivered Student Response Form - <a href="#" class="text-blue-700 underline ml-1">Display</a>
+								<span class="text-green-600 font-bold mr-2">✔</span> Delivered Student Response Form
+								- <a href="#" class="text-blue-700 underline ml-1">Display</a>
 							</div>
 						</div>
 
 						<div class="mb-6">
 							<div class="bg-blue-800 text-white font-bold p-2 text-xs mb-2">Upload Materials</div>
 							<p class="text-[11px] text-gray-700 mb-3">
-								If you need to upload additional forms for your application or financial aid, please use the links below. Only *one* document can be uploaded at a time. Do not attempt to upload materials already received, like your transcript.
+								If you need to upload additional forms for your application or financial aid, please
+								use the links below. Only *one* document can be uploaded at a time. Do not attempt
+								to upload materials already received, like your transcript.
 							</p>
 							<p class="text-[10px] text-gray-600 mb-3">
-								**NOTE:** Only documents that can be submitted through your UChicago Account will appear here.
+								**NOTE:** Only documents that can be submitted through your UChicago Account will
+								appear here.
 							</p>
 
 							<div class="text-[10px] text-gray-800 space-y-1 mb-4">
@@ -279,13 +345,19 @@
 							</div>
 
 							<div class="flex items-center space-x-4">
-								<input type="file" id="file-upload" class="text-[11px] p-1 border border-gray-400" />
-								<button class="bg-gray-200 border border-gray-400 text-xs px-4 py-1 hover:bg-gray-300">
+								<input
+									type="file"
+									id="file-upload"
+									class="text-[11px] p-1 border border-gray-400"
+								/>
+								<button
+									class="bg-gray-200 border border-gray-400 text-xs px-4 py-1 hover:bg-gray-300"
+								>
 									Upload
 								</button>
 							</div>
 						</div>
-						
+
 						<div class="mb-6">
 							<div class="bg-blue-800 text-white font-bold p-2 text-xs mb-2">Verify Address</div>
 							<div class="border border-gray-300 p-4 text-[11px] text-gray-700">
@@ -305,17 +377,18 @@
 										<p>United States</p>
 									</div>
 								</div>
-								<a href="#" class="text-red-700 font-bold text-xs mt-2 inline-block hover:underline">Edit Addresses</a>
+								<a href="#" class="text-red-700 font-bold text-xs mt-2 inline-block hover:underline"
+									>Edit Addresses</a
+								>
 							</div>
 						</div>
+					{:else if $decisionsBySlug['uchicago'] === 'admit'}
+						<UChicagoAccepted applicantName={applicantName()} />
 					{:else}
-						{#if $decisionsBySlug['uchicago'] === 'admit'}
-							<UChicagoAccepted applicantName={applicantName()} />
-						{:else}
-							<UChicagoDenied applicantName={applicantName()} />
-						{/if}
+						<UChicagoDenied applicantName={applicantName()} />
 					{/if}
-				</div> <div class="w-1/4 pt-10">
+				</div>
+				<div class="w-1/4 pt-10">
 					<div class="p-4 border border-gray-300 text-[11px] text-gray-700 bg-gray-50">
 						<p class="font-bold mb-2">UChicago Quick Links</p>
 						<ul class="space-y-1 list-disc ml-4">
@@ -341,7 +414,7 @@
 					<div class="col-span-1">
 						<p class="text-xs">&copy; 2018 The University of Chicago</p>
 					</div>
-					
+
 					<div class="col-span-1 space-y-1">
 						<p class="font-bold">College Admissions</p>
 						<p>1101 E. 58th Street</p>

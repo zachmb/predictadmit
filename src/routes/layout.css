@@ -1,1 +1,52 @@
 @import 'tailwindcss';
+
+@theme {
+  /* Default (Light Mode) Palette */
+  --color-brand-bg: #F8FAFC; /* slate-50 */
+  --color-brand-text: #0F172A; /* slate-900 */
+  
+  /* Vigilante/Authority Accents (Universal) */
+  --color-brand-crimson: #A51C30; /* Harvard/Stress */
+  --color-brand-navy: #00356B; /* Yale/Authority */
+  --color-brand-gold: #CFB87C; /* Prestige */
+  
+  --font-inter: 'Inter', sans-serif;
+
+  /* Shadows */
+  --shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  --shadow-glow: 0 0 20px -5px rgba(34, 211, 238, 0.15); 
+  
+  --radius-card: 16px;
+  --radius-btn: 8px; /* Restored to 8px for friendly UI */
+}
+
+  /* Shared Brand Colors */
+  --color-brand-primary: #0F172A; /* Slate 900 - Main Text/Header */
+
+
+:root {
+  font-family: var(--font-inter);
+  background-color: var(--color-brand-bg);
+  color: var(--color-brand-text);
+  /* color-scheme: light; -- Defaulting to light */
+}
+
+body {
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: var(--color-brand-bg);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    LETTER-SPACING: -0.02EM;
+    color: var(--color-brand-text);
+}
+
+p, li, a, span, div {
+    font-weight: 400;
+    line-height: 1.6;
+}
+
+

@@ -14,6 +14,7 @@ export interface SchoolConfig {
   statusLastPosted: string;
   statusLinkLabel: string;
   decision: SchoolDecision;
+  footerDomain: string;
 }
 
 export const schoolConfigs: Record<string, SchoolConfig> = {
@@ -30,7 +31,8 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
       'Admission decisions for Regular Decision candidates will be available Sunday, March 29 at 7:00 p.m. Eastern Time.',
     statusLastPosted: 'March 15, 2026',
     statusLinkLabel: 'View Status >>',
-    decision: 'deny'
+    decision: 'deny',
+    footerDomain: 'harvard.edu'
   },
   stanford: {
     slug: 'stanford',
@@ -45,7 +47,8 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
       'Admission decisions for first-year applicants will be available Friday, March 27 at 4:00 p.m. Pacific Time.',
     statusLastPosted: 'March 14, 2026',
     statusLinkLabel: 'View Admission Decision >>',
-    decision: 'deny'
+    decision: 'deny',
+    footerDomain: 'stanford.edu'
   },
   mit: {
     slug: 'mit',
@@ -60,7 +63,8 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
       'MIT Admissions decisions will be posted in your MyMIT account on Pi Day at 6:28 p.m. ET.',
     statusLastPosted: 'March 14, 2026',
     statusLinkLabel: 'View Your Decision >>',
-    decision: 'deny'
+    decision: 'deny',
+    footerDomain: 'mit.edu'
   },
   princeton: {
     slug: 'princeton',
@@ -75,7 +79,8 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
       'Regular Decision results for first-year applicants will be available in the applicant portal on March 28 at 7:00 p.m. ET.',
     statusLastPosted: 'March 12, 2026',
     statusLinkLabel: 'View Update >>',
-    decision: 'deny'
+    decision: 'deny',
+    footerDomain: 'princeton.edu'
   },
   yale: {
     slug: 'yale',
@@ -90,7 +95,8 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
       'Your Yale admissions decision is now available in your Yale Admissions Status Portal.',
     statusLastPosted: 'March 15, 2026',
     statusLinkLabel: 'View Status >>',
-    decision: 'admit'
+    decision: 'admit',
+    footerDomain: 'yale.edu'
   },
   columbia: {
     slug: 'columbia',
@@ -105,7 +111,8 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
       'Admission decisions are now available in your applicant status page. Please log in to view your decision.',
     statusLastPosted: 'March 13, 2026',
     statusLinkLabel: 'View Decision >>',
-    decision: 'admit'
+    decision: 'admit',
+    footerDomain: 'columbia.edu'
   },
   uchicago: {
     slug: 'uchicago',
@@ -120,7 +127,8 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
       'A decision has been posted to your UChicago Account. For security reasons, decisions are not released by email or telephone.',
     statusLastPosted: 'March 16, 2026',
     statusLinkLabel: 'View Your UChicago Decision >>',
-    decision: 'admit'
+    decision: 'admit',
+    footerDomain: 'uchicago.edu'
   },
   upenn: {
     slug: 'upenn',
@@ -135,7 +143,8 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
       'Your admissions decision is now available in your Penn Applicant Portal. Please log in using your existing credentials.',
     statusLastPosted: 'March 13, 2026',
     statusLinkLabel: 'View Status >>',
-    decision: 'deny'
+    decision: 'deny',
+    footerDomain: 'upenn.edu'
   },
   caltech: {
     slug: 'caltech',
@@ -150,7 +159,8 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
       'Caltech admissions decisions for first-year applicants are now available via the Beaver Breakroom portal.',
     statusLastPosted: 'March 14, 2026',
     statusLinkLabel: 'View Caltech Decision >>',
-    decision: 'deny'
+    decision: 'deny',
+    footerDomain: 'caltech.edu'
   },
   duke: {
     slug: 'duke',
@@ -165,7 +175,8 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
       'Admission decisions for Regular Decision (and deferred Early Decision) candidates will be available Thursday, March 26 at 7 p.m. Eastern Time.',
     statusLastPosted: 'December 12, 2019',
     statusLinkLabel: 'View Update >>',
-    decision: 'admit'
+    decision: 'admit',
+    footerDomain: 'duke.edu'
   },
   jhu: {
     slug: 'jhu',
@@ -180,7 +191,8 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
       'Admission decisions are now available in your Johns Hopkins applicant portal.',
     statusLastPosted: 'March 15, 2026',
     statusLinkLabel: 'View Admissions Decision >>',
-    decision: 'admit'
+    decision: 'admit',
+    footerDomain: 'jhu.edu'
   },
   northwestern: {
     slug: 'northwestern',
@@ -195,7 +207,8 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
       'Your Northwestern admissions decision is now available in your applicant portal.',
     statusLastPosted: 'March 17, 2026',
     statusLinkLabel: 'View Status >>',
-    decision: 'admit'
+    decision: 'admit',
+    footerDomain: 'northwestern.edu'
   },
   dartmouth: {
     slug: 'dartmouth',
@@ -210,7 +223,8 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
       'A decision has been posted to your Dartmouth applicant portal. Please log in to view it.',
     statusLastPosted: 'March 16, 2026',
     statusLinkLabel: 'View Decision >>',
-    decision: 'admit'
+    decision: 'admit',
+    footerDomain: 'dartmouth.edu'
   },
   brown: {
     slug: 'brown',
@@ -225,7 +239,8 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
       'Your Brown decision is now available via your Brown Applicant Portal. Please sign in to view your admission decision.',
     statusLastPosted: 'March 15, 2026',
     statusLinkLabel: 'View Status >>',
-    decision: 'deny'
+    decision: 'deny',
+    footerDomain: 'brown.edu'
   },
   vanderbilt: {
     slug: 'vanderbilt',
@@ -240,7 +255,8 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
       'Your Vanderbilt admissions decision is now available via your MyAppVU portal.',
     statusLastPosted: 'March 17, 2026',
     statusLinkLabel: 'View Decision >>',
-    decision: 'admit'
+    decision: 'admit',
+    footerDomain: 'vanderbilt.edu'
   },
   rice: {
     slug: 'rice',
@@ -255,7 +271,8 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
       'Rice admission decisions are available in your Rice Admission Student Portal.',
     statusLastPosted: 'March 16, 2026',
     statusLinkLabel: 'View Status >>',
-    decision: 'admit'
+    decision: 'admit',
+    footerDomain: 'rice.edu'
   },
   wustl: {
     slug: 'wustl',
@@ -270,7 +287,8 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
       'A status update has been posted to your WashU Pathway portal. Please log in to view your decision.',
     statusLastPosted: 'March 18, 2026',
     statusLinkLabel: 'View Update >>',
-    decision: 'admit'
+    decision: 'admit',
+    footerDomain: 'wustl.edu'
   },
   cornell: {
     slug: 'cornell',
@@ -285,7 +303,8 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
       'Your admission decision is now available in your Cornell application status page.',
     statusLastPosted: 'March 15, 2026',
     statusLinkLabel: 'View Status >>',
-    decision: 'deny'
+    decision: 'deny',
+    footerDomain: 'cornell.edu'
   },
   ucla: {
     slug: 'ucla',
@@ -300,7 +319,8 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
       'Your UCLA admission decision has been posted to the UCLA Applicant Portal.',
     statusLastPosted: 'March 20, 2026',
     statusLinkLabel: 'View Decision >>',
-    decision: 'admit'
+    decision: 'admit',
+    footerDomain: 'ucla.edu'
   },
   ucberkeley: {
     slug: 'ucberkeley',
@@ -315,6 +335,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
       'Your UC Berkeley admission decision is now available in the MAP@Berkeley portal.',
     statusLastPosted: 'March 20, 2026',
     statusLinkLabel: 'View Status >>',
-    decision: 'admit'
+    decision: 'admit',
+    footerDomain: 'berkeley.edu'
   }
 };

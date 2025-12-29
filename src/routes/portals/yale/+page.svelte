@@ -2,8 +2,9 @@
 	// Svelte Stores and Types
 	import { userProfile } from '$lib/stores/user';
 	import type { UserProfile } from '$lib/stores/user';
-	import { page } from '$app/stores'; // <-- Added back for consistent structure
+	import { page } from '$app/stores';
 	import { decisionsBySlug } from '$lib/stores/results';
+	import { portalDecisionViewed } from '$lib/stores/ui';
 
 	// Shared Components and Configuration
 	import AdmissionsPortalTemplate from '$lib/components/portal/AdmissionsPortalTemplate.svelte';
@@ -30,10 +31,12 @@
 	};
 
 	const getLetterComponentsForSlug = (slug: string): LetterComponents => {
-		return letterComponentsBySlug[slug] ?? {
-			accepted: GenericAcceptedLetter,
-			denied: GenericDeniedLetter
-		};
+		return (
+			letterComponentsBySlug[slug] ?? {
+				accepted: GenericAcceptedLetter,
+				denied: GenericDeniedLetter
+			}
+		);
 	};
 
 	// ----------------- STATE -----------------
@@ -64,7 +67,15 @@
 
 	const handleLoadSavedLogin = () => {
 		if (!profile.email || !profile.password) {
-			error = 'No saved PredictAdmit login found. Please save it on the main page first.';
+			// Use default John Doe credentials
+			emailInput = 'john.doe@example.com';
+			passwordInput = 'password123';
+			userProfile.set({
+				name: 'John Doe',
+				email: 'john.doe@example.com',
+				password: 'password123'
+			});
+			error = '';
 			return;
 		}
 		emailInput = profile.email;
@@ -98,6 +109,7 @@
 
 	const handleViewUpdate = () => {
 		hasViewedUpdate = true;
+		portalDecisionViewed.set(true);
 	};
 </script>
 
@@ -126,9 +138,7 @@
 
 		<section class="bg-white">
 			<div class="max-w-5xl mx-auto px-10 py-10">
-				<h1 class="text-3xl font-normal mb-6">
-					Login
-				</h1>
+				<h1 class="text-3xl font-normal mb-6">Login</h1>
 
 				<div class="border border-lime-700 bg-lime-100 px-4 py-3 mb-8 text-[12px] text-slate-900">
 					To log in, please enter your email address and password.
@@ -174,10 +184,7 @@
 							bind:value={passwordInput}
 							autocomplete="current-password"
 						/>
-						<a
-							href="/disclaimer"
-							class="text-[12px] text-blue-800 underline hover:no-underline"
-						>
+						<a href="/disclaimer" class="text-[12px] text-blue-800 underline hover:no-underline">
 							Forgot Your Password?
 						</a>
 					</div>
@@ -211,11 +218,10 @@
 		</section>
 
 		<footer class="mt-8">
-			<div
-				class="h-10 flex items-center"
-				style={`background-color: ${school.primaryColor};`}
-			>
-				<div class="max-w-5xl mx-auto px-6 w-full flex items-center justify-between text-[11px] text-white">
+			<div class="h-10 flex items-center" style={`background-color: ${school.primaryColor};`}>
+				<div
+					class="max-w-5xl mx-auto px-6 w-full flex items-center justify-between text-[11px] text-white"
+				>
 					<span>&copy; {school.footerDomain} 2019</span>
 					<span class="opacity-80">
 						PredictAdmit.com simulation · Not affiliated with {school.schoolName}
@@ -223,80 +229,86 @@
 				</div>
 			</div>
 		</footer>
+	{:else if !hasViewedUpdate}
+		<AdmissionsPortalTemplate
+			logoPrimary={school.logoPrimary}
+			logoSecondary={school.logoSecondary}
+			schoolName={school.schoolName}
+			primaryColor={school.primaryColor}
+			applicantName={applicantName()}
+			admissionsId={school.admissionsId}
+			financialAidId={school.financialAidId}
+			bannerText={school.bannerText}
+			noticeText={school.noticeText}
+			statusLastPosted={school.statusLastPosted}
+			statusLinkLabel={school.statusLinkLabel}
+			onViewUpdate={handleViewUpdate}
+		>
+			<h2 class="text-lg font-bold text-gray-800 mb-2">Application Updates and Questions</h2>
+			<ul class="list-disc list-inside text-sm mb-4 pl-4 space-y-1">
+				<li>
+					<a href="#" class="text-blue-600 hover:underline">Update Application</a> - Use this form to
+					notify Yale of changes or updates to your application.
+				</li>
+				<li>
+					<a href="#" class="text-blue-600 hover:underline">Change Name or Phone Number</a> - Use this
+					form to request a change of name or phone number.
+				</li>
+			</ul>
+			<p class="text-sm mb-6">
+				If you have a question that is not answered on our <a
+					href="#"
+					class="text-blue-600 hover:underline">website</a
+				>, you may
+				<a href="mailto:admissions@yale.edu" class="text-blue-600 hover:underline"
+					>email a question to the admissions office</a
+				> or call 203-432-9300 Mon-Fri 8:30am-4:30pm.
+			</p>
+
+			<h2 class="text-lg font-bold text-gray-800 mb-2">Verify Address</h2>
+			<p class="text-sm mb-4">We have your addresses listed as follows:</p>
+
+			<div class="flex text-xs space-x-12">
+				<div>
+					<p class="font-bold mb-1">Mailing Address</p>
+					<p>1600 Pennsylvania Ave</p>
+					<p>Washington, DC 20500</p>
+					<p>United States</p>
+				</div>
+				<div>
+					<p class="font-bold mb-1">Permanent Address</p>
+					<p>1600 Pennsylvania Ave</p>
+					<p>Washington, DC 20500</p>
+					<p>United States</p>
+				</div>
+			</div>
+			<a href="#" class="text-blue-600 hover:underline text-sm mt-3 inline-block">Edit Addresses</a>
+
+			<div class="mt-8 pt-4 border-t border-gray-300 flex justify-center space-x-6 text-xs">
+				<a href="#" class="text-blue-600 hover:underline">Change Email Address</a>
+				<a href="#" class="text-blue-600 hover:underline">Change Password</a>
+				<a href="#" class="text-blue-600 hover:underline">Logout</a>
+			</div>
+		</AdmissionsPortalTemplate>
 	{:else}
-		{#if !hasViewedUpdate}
-			<AdmissionsPortalTemplate
-				logoPrimary={school.logoPrimary}
-				logoSecondary={school.logoSecondary}
-				schoolName={school.schoolName}
-				primaryColor={school.primaryColor}
-				applicantName={applicantName()}
-				admissionsId={school.admissionsId}
-				financialAidId={school.financialAidId}
-				bannerText={school.bannerText}
-				noticeText={school.noticeText}
-				statusLastPosted={school.statusLastPosted}
-				statusLinkLabel={school.statusLinkLabel}
-				onViewUpdate={handleViewUpdate}
-			>
-				<h2 class="text-lg font-bold text-gray-800 mb-2">Application Updates and Questions</h2>
-				<ul class="list-disc list-inside text-sm mb-4 pl-4 space-y-1">
-					<li>
-						<a href="#" class="text-blue-600 hover:underline">Update Application</a> - Use this form to notify Yale of changes or updates to your application.
-					</li>
-					<li>
-						<a href="#" class="text-blue-600 hover:underline">Change Name or Phone Number</a> - Use this form to request a change of name or phone number.
-					</li>
-				</ul>
-				<p class="text-sm mb-6">
-					If you have a question that is not answered on our <a href="#" class="text-blue-600 hover:underline">website</a>, you may <a href="mailto:admissions@yale.edu" class="text-blue-600 hover:underline">email a question to the admissions office</a> or call 203-432-9300 Mon-Fri 8:30am-4:30pm.
-				</p>
-
-				<h2 class="text-lg font-bold text-gray-800 mb-2">Verify Address</h2>
-				<p class="text-sm mb-4">We have your addresses listed as follows:</p>
-
-				<div class="flex text-xs space-x-12">
-					<div>
-						<p class="font-bold mb-1">Mailing Address</p>
-						<p>1600 Pennsylvania Ave</p>
-						<p>Washington, DC 20500</p>
-						<p>United States</p>
-					</div>
-					<div>
-						<p class="font-bold mb-1">Permanent Address</p>
-						<p>1600 Pennsylvania Ave</p>
-						<p>Washington, DC 20500</p>
-						<p>United States</p>
-					</div>
-				</div>
-				<a href="#" class="text-blue-600 hover:underline text-sm mt-3 inline-block">Edit Addresses</a>
-
-				<div class="mt-8 pt-4 border-t border-gray-300 flex justify-center space-x-6 text-xs">
-					<a href="#" class="text-blue-600 hover:underline">Change Email Address</a>
-					<a href="#" class="text-blue-600 hover:underline">Change Password</a>
-					<a href="#" class="text-blue-600 hover:underline">Logout</a>
-				</div>
-			</AdmissionsPortalTemplate>
-		{:else}
-			{#key school.slug}
-				{#if $decisionsBySlug[school.slug] === 'admit'}
-					<svelte:component
-						this={getLetterComponentsForSlug(school.slug).accepted}
-						applicantName={applicantName()}
-						schoolName={school.schoolName}
-						primaryColor={school.primaryColor}
-						footerDomain={school.footerDomain}
-					/>
-				{:else}
-					<svelte:component
-						this={getLetterComponentsForSlug(school.slug).denied}
-						applicantName={applicantName()}
-						schoolName={school.schoolName}
-						primaryColor={school.primaryColor}
-						footerDomain={school.footerDomain}
-					/>
-				{/if}
-			{/key}
-		{/if}
+		{#key school.slug}
+			{#if $decisionsBySlug[school.slug] === 'admit'}
+				<svelte:component
+					this={getLetterComponentsForSlug(school.slug).accepted}
+					applicantName={applicantName()}
+					schoolName={school.schoolName}
+					primaryColor={school.primaryColor}
+					footerDomain={school.footerDomain}
+				/>
+			{:else}
+				<svelte:component
+					this={getLetterComponentsForSlug(school.slug).denied}
+					applicantName={applicantName()}
+					schoolName={school.schoolName}
+					primaryColor={school.primaryColor}
+					footerDomain={school.footerDomain}
+				/>
+			{/if}
+		{/key}
 	{/if}
 </div>

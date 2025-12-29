@@ -56,6 +56,9 @@ function createResultsStore() {
 
 export const aiResults = createResultsStore();
 
+export type OverrideMode = 'random' | 'accepted' | 'denied';
+export const manualOverrideMode = writable<OverrideMode>('random');
+
 /**
  * Derived store: map slug -> outcome for quick lookup in portals.
  */
