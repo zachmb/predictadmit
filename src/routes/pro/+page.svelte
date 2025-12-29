@@ -411,88 +411,109 @@
 			</section>
 
 			<!-- Junior Promotional Section -->
-			<section class="bg-indigo-900 text-white py-20 px-6">
-				<div class="max-w-4xl mx-auto text-center space-y-8">
-					<span
-						class="inline-block px-3 py-1 rounded-full bg-indigo-800 text-indigo-200 text-xs font-bold uppercase tracking-widest border border-indigo-700"
-					>
-						Class of 2026 & 2027
-					</span>
+			<section class="bg-slate-50 text-slate-900 py-20 px-6 border-t border-slate-200">
+				<div class="max-w-5xl mx-auto text-center space-y-10">
+					<div class="space-y-4">
+						<span
+							class="inline-block px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-bold uppercase tracking-widest"
+						>
+							Class of 2026 & 2027
+						</span>
 
-					<h2 class="text-3xl md:text-4xl font-bold">It's never too early to start winning.</h2>
+						<h2 class="text-3xl md:text-5xl font-bold tracking-tight">
+							Sophomores & Juniors: <br /><span class="text-blue-600"
+								>Start winning before senior year.</span
+							>
+						</h2>
 
-					<p class="text-indigo-200 text-lg max-w-2xl mx-auto leading-relaxed">
-						Purchase the <strong>Full Application Cycle</strong> plan today and get instant access
-						to tools that help you <em>right now</em>. Build your school list, track your
-						extracurriculars, and get a head start on your strategy before senior year panic sets
-						in.
-					</p>
+						<p class="text-slate-600 text-lg max-w-2xl mx-auto leading-relaxed">
+							The most competitive applicants don't wait until fall of senior year. Use PredictAdmit
+							Pro <strong>right now</strong> to identify your spikes, plan your summer, and secure your
+							best possible recommendations.
+						</p>
+					</div>
 
-					<div class="grid md:grid-cols-3 gap-6 text-left py-8">
-						<div class="bg-indigo-800/50 p-6 rounded-2xl border border-indigo-700/50">
-							<div class="text-indigo-300 mb-3">
+					<div class="grid md:grid-cols-3 gap-8 text-left py-4">
+						<!-- ECs -->
+						<div
+							class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow"
+						>
+							<div
+								class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center text-emerald-600 mb-6"
+							>
 								<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"
 									><path
 										stroke-linecap="round"
 										stroke-linejoin="round"
 										stroke-width="2"
-										d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+										d="M13 10V3L4 14h7v7l9-11h-7z"
 									/></svg
 								>
 							</div>
-							<h3 class="font-bold text-white mb-2">Build Your EC Profile</h3>
-							<p class="text-sm text-indigo-200">
-								Track and refine your activities list early to identify gaps while you still have
-								time to fill them.
+							<h3 class="font-bold text-slate-900 text-lg mb-3">Find High-Impact ECs</h3>
+							<p class="text-slate-600 text-sm leading-relaxed">
+								Stop guessing which activities matter. Simulate your profile to see exactly which
+								extracurriculars move the needle for your dream school.
 							</p>
 						</div>
 
-						<div class="bg-indigo-800/50 p-6 rounded-2xl border border-indigo-700/50">
-							<div class="text-indigo-300 mb-3">
+						<!-- Narrative -->
+						<div
+							class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow"
+						>
+							<div
+								class="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center text-indigo-600 mb-6"
+							>
 								<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"
 									><path
 										stroke-linecap="round"
 										stroke-linejoin="round"
 										stroke-width="2"
-										d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"
+										d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
 									/></svg
 								>
 							</div>
-							<h3 class="font-bold text-white mb-2">Test Your Strategy</h3>
-							<p class="text-sm text-indigo-200">
-								Run simulations on your current stats to see where you stand and what needs to
-								improve.
+							<h3 class="font-bold text-slate-900 text-lg mb-3">Craft Your Narrative</h3>
+							<p class="text-slate-600 text-sm leading-relaxed">
+								Don't just list achievements. Learn how to weave your stats and interests into a
+								cohesive "spike" that admissions officers can't ignore.
 							</p>
 						</div>
 
-						<div class="bg-indigo-800/50 p-6 rounded-2xl border border-indigo-700/50">
-							<div class="text-indigo-300 mb-3">
+						<!-- LORs -->
+						<div
+							class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow"
+						>
+							<div
+								class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center text-purple-600 mb-6"
+							>
 								<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"
 									><path
 										stroke-linecap="round"
 										stroke-linejoin="round"
 										stroke-width="2"
-										d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+										d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
 									/></svg
 								>
 							</div>
-							<h3 class="font-bold text-white mb-2">Junior Diagnostic</h3>
-							<p class="text-sm text-indigo-200">
-								Get a specialized breakdown of your readiness for the upcoming cycle.
+							<h3 class="font-bold text-slate-900 text-lg mb-3">LOR Strategy</h3>
+							<p class="text-slate-600 text-sm leading-relaxed">
+								Know exactly what your recommenders need to say. Use our tools to draft "brag
+								sheets" that guide your teachers to write stellar letters.
 							</p>
 						</div>
 					</div>
 
-					<div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+					<div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
 						<button
 							on:click={() => goto('/pricing')}
-							class="bg-white text-indigo-900 px-8 py-3 rounded-full font-bold hover:bg-indigo-50 transition-colors shadow-lg"
+							class="bg-slate-900 text-white px-8 py-4 rounded-full font-bold hover:bg-slate-800 transition-all hover:-translate-y-0.5 shadow-lg shadow-slate-200"
 						>
-							Get the Full Cycle Plan
+							Get the Full Application Cycle Plan
 						</button>
 						<a
 							href="/junior-diagnostic"
-							class="text-indigo-200 hover:text-white font-semibold flex items-center gap-2 transition-colors"
+							class="text-slate-600 hover:text-slate-900 font-semibold flex items-center gap-2 transition-colors px-4 py-2"
 						>
 							Take the Junior Diagnostic <span aria-hidden="true">&rarr;</span>
 						</a>

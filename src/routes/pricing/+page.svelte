@@ -170,7 +170,7 @@
 			<div class="relative group perspective-1000">
 				<!-- Glow effect -->
 				<div
-					class="absolute -inset-1 bg-gradient-to-r from-blue-500 via-indigo-500 to-violet-500 rounded-[2rem] opacity-30 blur-2xl transition duration-500 group-hover:opacity-50"
+					class="absolute -inset-1 bg-gradient-to-r from-blue-500 via-indigo-500 to-violet-500 rounded-[2rem] opacity-0 blur-3xl transition duration-1000 group-hover:opacity-20"
 				></div>
 
 				<div
