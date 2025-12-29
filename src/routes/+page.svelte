@@ -174,10 +174,6 @@
 	let edEmailRevealed = false;
 	let rdTimelineStarted = false;
 
-	// POPUP STATE
-	let showSMMInvite = false;
-	let hasViewedSMMInvite = false;
-
 	// Timeouts used both for animation & email drip
 	let applyTimeoutIds: number[] = [];
 
@@ -291,11 +287,12 @@
 		const trimmedName = name.trim();
 		const trimmedEmail = email.trim();
 
-		userProfile.set({
+		userProfile.update((u) => ({
+			...u,
 			name: trimmedName,
 			email: trimmedEmail,
 			password // keep as typed
-		});
+		}));
 
 		hasSavedProfile = true;
 		saveMessage = 'Fake login saved.';
@@ -322,11 +319,12 @@
 		const trimmedName = name.trim();
 		const trimmedEmail = email.trim();
 
-		userProfile.set({
+		userProfile.update((u) => ({
+			...u,
 			name: trimmedName,
 			email: trimmedEmail,
 			password
-		});
+		}));
 
 		hasSavedProfile = true;
 		saveMessage = 'Credentials saved! You can now start the simulation.';
@@ -444,17 +442,6 @@
 	} else {
 		// If simulation not finished yet, keep sorted list in sync but no scroll
 		sortedVisiblePortals = [...visiblePortals];
-	}
-
-	// TRIGGER SMM INVITATION
-	$: if (hasApplied && applicationPhase === 'finished' && !hasViewedSMMInvite) {
-		// Wait 6 seconds after simulation finishes (users looking at emails) then trigger
-		setTimeout(() => {
-			if (!hasViewedSMMInvite) {
-				showSMMInvite = true;
-				hasViewedSMMInvite = true;
-			}
-		}, 6000);
 	}
 
 	// 🔍 Apply search filter to sorted portals
@@ -669,9 +656,51 @@
 	class="min-h-screen bg-[var(--color-brand-bg)] text-slate-900 font-sans flex flex-col relative overflow-hidden transition-colors duration-700 ease-in-out"
 >
 	<div class="flex-1 w-full relative z-10 transition-colors duration-500">
-		<div class="max-w-[1200px] mx-auto px-6 py-32 space-y-32">
+		<div class="max-w-[1200px] mx-auto px-6 pt-20 pb-32 space-y-32">
 			<!-- HERO: SEARCH + SIMULATION -->
 			<section class="text-center max-w-4xl mx-auto space-y-8">
+				<!-- TRUST BADGE -->
+				<div class="flex justify-center mb-8">
+					<div
+						class="inline-flex items-center gap-3 px-3 py-1.5 bg-white rounded-full shadow-sm border border-slate-200 hover:border-blue-300 transition-all cursor-default"
+					>
+						<div class="flex items-center gap-2 border-r border-slate-200 pr-3">
+							<span class="relative flex h-2 w-2">
+								<span
+									class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"
+								></span>
+								<span class="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+							</span>
+							<span
+								class="text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-blue-700 to-indigo-700 bg-clip-text text-transparent"
+							>
+								Developed by T10 Admits
+							</span>
+						</div>
+						<div class="flex items-center gap-2">
+							<div class="flex text-yellow-400">
+								{#each Array(5) as _}
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										viewBox="0 0 20 20"
+										fill="currentColor"
+										class="w-3.5 h-3.5"
+									>
+										<path
+											fill-rule="evenodd"
+											d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z"
+											clip-rule="evenodd"
+										/>
+									</svg>
+								{/each}
+							</div>
+							<span class="text-slate-600 text-xs font-medium">
+								<span class="text-slate-900 font-bold">4.9</span> (7,000+ students)
+							</span>
+						</div>
+					</div>
+				</div>
+
 				<h1 class="text-4xl md:text-6xl font-bold tracking-tighter text-slate-900">
 					Simulate Any University Portal
 				</h1>
@@ -730,7 +759,7 @@
 
 					<button
 						type="button"
-						class="px-8 h-[56px] bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg rounded-lg transition-colors shadow-sm whitespace-nowrap"
+						class="px-8 bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg rounded-lg transition-colors shadow-sm whitespace-nowrap"
 						on:click={handleStartSimulationClick}
 					>
 						Simulate Full Cycle

@@ -62,6 +62,29 @@
 	$: session = $page.data.session;
 	$: isPro = $userProfile.isPro;
 	$: hasAccess = session && isPro;
+
+	// Dynamic Class Years Logic
+	$: {
+		const now = new Date();
+		const currentYear = now.getFullYear();
+		const currentMonth = now.getMonth(); // 0-11
+		// If past June (month > 5), we are in the start of a new academic year (e.g., Fall 2025).
+		// Juniors (11th) graduate in +2 years (Spring 2027).
+		// Sophomores (10th) graduate in +3 years (Spring 2028).
+		const baseYear = currentMonth > 5 ? currentYear : currentYear - 1;
+
+		// If currently Dec 2025: baseYear = 2025.
+		// Juniors = 2027. Sophomores = 2028.
+	}
+	// Make reachable in template
+	const now = new Date();
+	const currentYear = now.getFullYear();
+	const currentMonth = now.getMonth();
+	const baseYear = currentMonth > 5 ? currentYear : currentYear - 1;
+	// Juniors
+	const juniorClassYear = baseYear + 2;
+	// Sophomores
+	const sophomoreClassYear = baseYear + 3;
 </script>
 
 <svelte:head>
@@ -417,7 +440,7 @@
 						<span
 							class="inline-block px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-bold uppercase tracking-widest"
 						>
-							Class of 2026 & 2027
+							Class of {juniorClassYear} & {sophomoreClassYear}
 						</span>
 
 						<h2 class="text-3xl md:text-5xl font-bold tracking-tight">

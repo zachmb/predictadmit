@@ -4,124 +4,44 @@
 	import SiteFooter from '$lib/components/layout/SiteFooter.svelte';
 	import { decisionsBySlug, manualOverrideMode } from '$lib/stores/results';
 
+	import { schoolConfigs } from '$lib/config/schools';
+
 	type DecisionMode = 'random' | 'accepted' | 'denied' | 'waitlisted' | 'deferred';
 
-	let portals = [
-		{
-			name: 'Brown University',
-			slug: 'brown',
-			color: '#4E3629',
+	// Generate initial list from config, sorted alphabetically
+	const initialPortals = Object.values(schoolConfigs)
+		.map((s) => ({
+			name: s.schoolName,
+			slug: s.slug,
+			color: s.primaryColor,
 			decision: 'random' as DecisionMode
-		},
-		{
-			name: 'California Institute of Technology',
-			slug: 'caltech',
-			color: '#F48221',
-			decision: 'random' as DecisionMode
-		},
-		{
-			name: 'Columbia University',
-			slug: 'columbia',
-			color: '#004A8D',
-			decision: 'random' as DecisionMode
-		},
-		{
-			name: 'Cornell University',
-			slug: 'cornell',
-			color: '#B31B1B',
-			decision: 'random' as DecisionMode
-		},
-		{
-			name: 'Dartmouth College',
-			slug: 'dartmouth',
-			color: '#00743F',
-			decision: 'random' as DecisionMode
-		},
-		{ name: 'Duke University', slug: 'duke', color: '#00539C', decision: 'random' as DecisionMode },
-		{
-			name: 'Harvard College',
-			slug: 'harvard',
-			color: '#A41034',
-			decision: 'random' as DecisionMode
-		},
-		{
-			name: 'Johns Hopkins University',
-			slug: 'jhu',
-			color: '#002D72',
-			decision: 'random' as DecisionMode
-		},
-		{
-			name: 'Massachusetts Institute of Technology',
-			slug: 'mit',
-			color: '#A31F34',
-			decision: 'random' as DecisionMode
-		},
-		{
-			name: 'Northwestern University',
-			slug: 'northwestern',
-			color: '#4E6588',
-			decision: 'random' as DecisionMode
-		},
-		{
-			name: 'Princeton University',
-			slug: 'princeton',
-			color: '#FE7A22',
-			decision: 'random' as DecisionMode
-		},
-		{ name: 'Rice University', slug: 'rice', color: '#003D5B', decision: 'random' as DecisionMode },
-		{
-			name: 'Stanford University',
-			slug: 'stanford',
-			color: '#8C1515',
-			decision: 'random' as DecisionMode
-		},
-		{
-			name: 'University of California, Berkeley',
-			slug: 'ucberkeley',
-			color: '#003262',
-			decision: 'random' as DecisionMode
-		},
-		{
-			name: 'University of Chicago',
-			slug: 'uchicago',
-			color: '#800000',
-			decision: 'random' as DecisionMode
-		},
-		{
-			name: 'University of California, Los Angeles',
-			slug: 'ucla',
-			color: '#2774AE',
-			decision: 'random' as DecisionMode
-		},
-		{
-			name: 'University of Pennsylvania',
-			slug: 'upenn',
-			color: '#012265',
-			decision: 'random' as DecisionMode
-		},
-		{
-			name: 'Vanderbilt University',
-			slug: 'vanderbilt',
-			color: '#8C6633',
-			decision: 'random' as DecisionMode
-		},
-		{
-			name: 'Washington University in St. Louis',
-			slug: 'wustl',
-			color: '#5A2B82',
-			decision: 'random' as DecisionMode
-		},
-		{ name: 'Yale University', slug: 'yale', color: '#0E4A84', decision: 'random' as DecisionMode }
-	];
+		}))
+		.sort((a, b) => a.name.localeCompare(b.name));
 
-	// Sync with persistent store
-	$: if (Object.keys($decisionsBySlug).length > 0) {
-		portals = portals.map((p) => {
-			const outcome = $decisionsBySlug[p.slug];
+	let portals = [...initialPortals];
+
+	// Sync with persistent store AND manual override mode
+	$: {
+		const mode = $manualOverrideMode;
+		const decisions = $decisionsBySlug;
+
+		portals = initialPortals.map((p) => {
+			// 1. Global Override
+			if (mode === 'accepted') {
+				return { ...p, decision: 'accepted' };
+			}
+			if (mode === 'denied') {
+				return { ...p, decision: 'denied' };
+			}
+
+			// 2. Simulation Results
+			const outcome = decisions[p.slug];
 			if (outcome) {
 				const mappedMode: DecisionMode = outcome === 'admit' ? 'accepted' : 'denied';
 				return { ...p, decision: mappedMode };
 			}
+
+			// 3. Default
 			return p;
 		});
 	}

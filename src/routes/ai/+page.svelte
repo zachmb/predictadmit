@@ -843,26 +843,62 @@
 
 							<!-- Apply controls -->
 							<div class="flex flex-col sm:flex-row items-center gap-4 pt-4">
-								<Button
+								<button
 									type={googleSignedIn ? 'submit' : 'button'}
 									disabled={isSubmitting}
 									on:click={!googleSignedIn
 										? () => signIn('google', { callbackUrl: '/ai' })
 										: undefined}
-									class="w-full py-4 text-base font-bold uppercase tracking-widest shadow-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-600 hover:from-blue-500 hover:via-indigo-500 hover:to-blue-500 transition-all transform hover:scale-[1.02] active:scale-[0.98]"
+									class="group relative w-full rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 active:scale-[0.98]"
 								>
-									{#if !googleSignedIn}
-										<span>Sign in with Google to Simulate</span>
-									{:else if isSubmitting}
-										<span>DeepSeek AI is analyzing...</span>
-									{:else if hasUsedFreeSimulation && !hasDeepDiveAccess}
-										<span on:click|preventDefault|stopPropagation={() => goto('/pro')}
-											>Upgrade to Pro (Unlimited Runs)</span
+									<!-- Border Beam (Spinning Gradient) - Visible on Hover -->
+									<div
+										class="absolute inset-[-200%] bg-[conic-gradient(from_90deg_at_50%_50%,#E2E8F0_0%,#3B82F6_50%,#E2E8F0_100%)] opacity-0 group-hover:opacity-100 animate-spin-slow transition-opacity duration-300 pointer-events-none"
+									></div>
+
+									<!-- Button Content Container -->
+									<div
+										class="relative m-[1px] rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-600 px-6 py-4 transition-all duration-300 group-hover:bg-slate-900"
+									>
+										<!-- Text Content -->
+										<div
+											class="text-base font-bold uppercase tracking-widest text-white flex items-center justify-center gap-2"
 										>
-									{:else}
-										<span>Get Application Results (DeepSeek AI)</span>
-									{/if}
-								</Button>
+											{#if !googleSignedIn}
+												<span>Sign in with Google to Simulate</span>
+											{:else if isSubmitting}
+												<span class="flex items-center gap-2">
+													<span
+														class="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white"
+													></span>
+													DeepSeek AI is analyzing...
+												</span>
+											{:else if hasUsedFreeSimulation && !hasDeepDiveAccess}
+												<span
+													on:click|preventDefault|stopPropagation={() => goto('/pro')}
+													class="flex items-center gap-2"
+												>
+													Upgrade to Pro (Unlimited Runs)
+													<svg
+														class="w-4 h-4 opacity-70"
+														fill="none"
+														viewBox="0 0 24 24"
+														stroke="currentColor"
+													>
+														<path
+															stroke-linecap="round"
+															stroke-linejoin="round"
+															stroke-width="2"
+															d="M13 10V3L4 14h7v7l9-11h-7z"
+														/>
+													</svg>
+												</span>
+											{:else}
+												<span>Get Application Results (DeepSeek AI)</span>
+											{/if}
+										</div>
+									</div>
+								</button>
 
 								<button
 									type="button"

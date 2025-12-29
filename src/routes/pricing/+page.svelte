@@ -73,7 +73,7 @@
 		<div class="flex justify-center">
 			<div class="relative bg-slate-200/50 p-1.5 rounded-full flex items-center shadow-inner">
 				<button
-					class="relative z-10 px-8 py-2.5 text-sm font-semibold rounded-full transition-colors duration-300 {isMonthly
+					class="relative z-10 w-1/2 text-sm font-bold transition-colors duration-200 py-3 flex items-center justify-center {isMonthly
 						? 'text-slate-500 hover:text-slate-700'
 						: 'text-slate-900'}"
 					on:click={() => (isMonthly = false)}
@@ -81,7 +81,7 @@
 					Full App Cycle
 				</button>
 				<button
-					class="relative z-10 px-8 py-2.5 text-sm font-semibold rounded-full transition-colors duration-300 {isMonthly
+					class="relative z-10 w-1/2 text-sm font-bold transition-colors duration-200 py-3 flex items-center justify-center {isMonthly
 						? 'text-slate-900'
 						: 'text-slate-500 hover:text-slate-700'}"
 					on:click={() => (isMonthly = true)}
@@ -167,10 +167,10 @@
 			</div>
 
 			<!-- Pricing Card -->
-			<div class="relative group perspective-1000">
+			<div class="relative group group/card perspective-1000 z-10">
 				<!-- Glow effect -->
 				<div
-					class="absolute -inset-1 bg-gradient-to-r from-blue-500 via-indigo-500 to-violet-500 rounded-[2rem] opacity-0 blur-3xl transition duration-1000 group-hover:opacity-20"
+					class="absolute -inset-1 bg-gradient-to-r from-blue-500 via-indigo-500 to-violet-500 rounded-[2rem] opacity-0 blur-3xl transition duration-1000 group-hover:opacity-20 group-hover/card:opacity-20"
 				></div>
 
 				<div

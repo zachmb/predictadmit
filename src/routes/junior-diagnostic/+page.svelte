@@ -1,8 +1,6 @@
-<script lang="ts">
-	import SiteFooter from '$lib/components/layout/SiteFooter.svelte';
-	import Button from '$lib/components/common/Button.svelte';
-	import Card from '$lib/components/common/Card.svelte';
-</script>
+import SiteFooter from '$lib/components/layout/SiteFooter.svelte'; import Button from
+'$lib/components/common/Button.svelte'; import Card from '$lib/components/common/Card.svelte';
+import {goto} from '$app/navigation';
 
 <svelte:head>
 	<title>Junior Diagnostic | PredictAdmit</title>
@@ -30,9 +28,10 @@
 
 			<div class="flex justify-center gap-4 pt-4">
 				<Button
+					on:click={() => goto('/ai')}
 					class="px-8 py-3 text-base shadow-lg shadow-slate-200 border border-slate-200 bg-white text-slate-900 hover:bg-slate-50 font-bold"
 				>
-					Start Free Diagnostic
+					Start Free AI Diagnostic
 				</Button>
 				<Button
 					variant="secondary"
