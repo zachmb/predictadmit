@@ -1,6 +1,12 @@
 <script lang="ts">
   export let applicantName: string = 'Applicant';
-  
+  import { goto } from '$app/navigation';
+
+  import { decisionsBySlug } from '$lib/stores/results';
+  const viewAnalysis = () => {
+    goto('/results/brown');
+  };
+
   const handleImageError = (event: Event) => {
     const img = event.target as HTMLImageElement;
     img.style.display = 'none';
@@ -9,6 +15,16 @@
 
 <div class="min-h-screen bg-white p-8 font-serif">
   <div class="max-w-2xl mx-auto">
+    <div class="mb-6 flex justify-end">
+      <button 
+        on:click={viewAnalysis}
+        class="group flex items-center px-4 py-2 bg-[#003262] text-white rounded-lg text-sm font-sans font-bold hover:bg-slate-800 transition-all shadow-md active:scale-95"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 transition-transform group-hover:-translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        </svg>
+        Deep Dive: Why did I get {$decisionsBySlug['brown']}?
+      </button>
+    </div>
     <!-- Letterhead - Brown University uses brown and red -->
     <div class="border-b-2 border-[#4E3629] pb-4 mb-8">
       <div class="flex items-center mb-4">
