@@ -351,9 +351,9 @@
 	{:else}
 		<CaltechDenied
 			applicantName={applicantName()}
-			schoolName={school.schoolName}
+			schoolName='California Institute of Technology'
 			primaryColor={school.primaryColor}
-			footerDomain={school.footerDomain}
+			footerDomain='caltech.edu'
 		/>
 	{/if}
 </div>

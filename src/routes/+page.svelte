@@ -495,7 +495,19 @@
 			school: portal.name,
 			slug: portal.slug,
 			// Randomly pick 'admit' or 'deny'
-			outcome: (Math.random() > 0.5 ? 'admit' : 'deny') as 'admit' | 'deny'
+			outcome: (Math.random() > 0.5 ? 'admit' : 'deny') as 'admit' | 'deny',
+			academic_score: 0,
+			extracurricular_score: 0,
+			intellectual_score: 0,
+			fit_score: 0,
+			character_score: 0,
+			academic_explanation: 'N/A: random sim',
+			extracurricular_explanation: 'N/A: random sim',
+			fit_explanation: 'N/A: random sim',
+			intellectual_explanation: 'N/A: random sim',
+			character_explanation: 'N/A: random sim',
+			improvement_tips: 'N/A: random sim'
+
 		}));
 
 		aiResults.setDecisions(randomDecisions);

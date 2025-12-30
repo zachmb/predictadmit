@@ -1,5 +1,8 @@
 <script lang="ts">
   export let applicantName: string = 'Applicant';
+  export let schoolName: string;  //just so the portal doesn't get mad
+  export let primaryColor: string; 
+  export let footerDomain: string; 
 </script>
 
 <div class="min-h-screen bg-white p-8 font-serif">

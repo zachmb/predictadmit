@@ -243,7 +243,7 @@
 								on:click={handleViewUpdate}
 								class="text-[#A8171E] font-normal text-sm hover:underline"
 							>
-								View Update>>
+								View Update
 							</button>
 						</div>
 						<div class="w-1/3"></div>
@@ -266,7 +266,7 @@
 			</div>
 			<div class="text-center text-[10px] pt-4 text-white/50">PredictAdmit Simulation</div>
 		</footer>
-	{:else if $decisionsBySlug[school.slug] === 'admit'}
+	{:else if $decisionsBySlug[SLUG] === 'admit'}
 		<PennAccepted
 			applicantName={applicantName()}
 			schoolName={school.schoolName}

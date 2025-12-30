@@ -29,11 +29,21 @@
 	type DecisionOutcome = 'admit' | 'deny' | 'waitlist' | 'defer';
 
 	type AiDecision = {
-		school: string;
-		slug: string;
-		outcome: DecisionOutcome;
-		short_reason: string;
-	};
+  school: string;
+  slug: string;
+  outcome: DecisionOutcome;
+  academic_score: number;
+  academic_explanation: string;
+  extracurricular_score: number;
+  extracurricular_explanation: string;
+  fit_score: number;
+  fit_explanation: string;
+  intellectual_score: number;
+  intellectual_explanation: string;
+  character_score: number;
+  character_explanation: string;
+  improvement_tips: string; // NEW: Detailed actionable feedback
+};
 
 	type DeepDiveItem = {
 		school: string;
@@ -47,7 +57,8 @@
 	let activities = '';
 	let honors = '';
 	let transcript = '';
-
+	let major = '';
+	let supplementals = '';
 	// OCR state
 	let ocrUploading = false;
 	let ocrError = '';
@@ -471,7 +482,9 @@
 				essay && `Personal essay:\n${essay}`,
 				activities && `Activities / extracurriculars:\n${activities}`,
 				honors && `Honors & awards:\n${honors}`,
-				transcript && `Transcript / GPA & coursework:\n${transcript}`
+				transcript && `Transcript / GPA & coursework:\n${transcript}`,
+				major && `Intended major:\n${major}`,
+				supplementals && `Supplemental prompts and essays:\n${supplementals}`
 			]
 				.filter(Boolean)
 				.join('\n\n');
@@ -485,10 +498,25 @@
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
-					school: decision.school,
-					slug: decision.slug,
-					outcome: decision.outcome,
-					short_reason: decision.short_reason,
+					// School Metadata
+    school: decision.school,
+    slug: decision.slug,
+    outcome: decision.outcome,
+
+    // Granular Scores
+    academic_score: decision.academic_score,
+    academic_explanation: decision.academic_explanation,
+    extracurricular_score: decision.extracurricular_score,
+    extracurricular_explanation: decision.extracurricular_explanation,
+    fit_score: decision.fit_score,
+    fit_explanation: decision.fit_explanation,
+    intellectual_score: decision.intellectual_score,
+    intellectual_explanation: decision.intellectual_explanation,
+    character_score: decision.character_score,
+    character_explanation: decision.character_explanation,
+    
+    // Feedback & Tips
+    improvement_tips: decision.improvement_tips,
 					applicantSummary,
 					edSlug
 				})
@@ -700,6 +728,20 @@
 							</div>
 
 							<div class="space-y-6">
+								<!-- Major -->
+								<div class="space-y-2">
+									<label for="major" class="block text-sm font-bold text-slate-900">
+										Intended Major
+									</label>
+									<input
+										id="major"
+										type="text"
+										bind:value={major}
+										class="w-full rounded-md border border-slate-200 bg-white px-3 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all shadow-inner"
+										placeholder="e.g. Computer Science, Comparative Literature..."
+									/>
+								</div>
+								
 								<!-- Essay -->
 								<div class="space-y-2">
 									<label for="essay" class="block text-sm font-bold text-slate-900">
@@ -711,6 +753,20 @@
 										rows="6"
 										class="w-full rounded-md border border-slate-200 bg-white px-3 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all shadow-inner"
 										placeholder="Paste your personal statement here..."
+									></textarea>
+								</div>
+
+								<!-- Supplements -->
+								<div class="space-y-2">
+									<label for="supplementals" class="block text-sm font-bold text-slate-900">
+										Supplemental Essays
+									</label>
+									<textarea
+										id="supplementals"
+										bind:value={supplementals}
+										rows="6"
+										class="w-full rounded-md border border-slate-200 bg-white px-3 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all shadow-inner"
+										placeholder="Paste school-specific supplements or 'Why Us' essays here..."
 									></textarea>
 								</div>
 

@@ -1,9 +1,9 @@
 <script lang="ts">
 	// Props passed from the main portal page
 	export let applicantName: string;
-	const schoolName = 'California Institute of Technology';
+	export let schoolName: string; 
 	export let primaryColor: string; // Caltech Orange: #E15000
-	const footerDomain = 'caltech.edu';
+	export let footerDomain: string; 
 </script>
 
 <div class="min-h-screen bg-white text-gray-800 font-sans p-6">

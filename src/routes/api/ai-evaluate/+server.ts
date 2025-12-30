@@ -1,4 +1,3 @@
-// src/routes/api/ai-evaluate/+server.ts
 import type { RequestHandler } from './$types';
 import { json } from '@sveltejs/kit';
 import { env } from '$env/dynamic/private';
@@ -8,8 +7,18 @@ type DecisionOutcome = 'admit' | 'deny' | 'waitlist' | 'defer';
 type AiDecision = {
   school: string;
   slug: string;
-  outcome: DecisionOutcome | string;
-  short_reason: string;
+  outcome: DecisionOutcome;
+  academic_score: number;
+  academic_explanation: string;
+  extracurricular_score: number;
+  extracurricular_explanation: string;
+  fit_score: number;
+  fit_explanation: string;
+  intellectual_score: number;
+  intellectual_explanation: string;
+  character_score: number;
+  character_explanation: string;
+  improvement_tips: string; // NEW: Detailed actionable feedback
 };
 
 const SCHOOLS = [
@@ -35,28 +44,19 @@ const SCHOOLS = [
   { school: 'University of California, Berkeley', slug: 'ucberkeley' }
 ];
 
-// Hard cap to avoid sending insane amounts of text to DeepSeek
-function truncateForModel(text: string, maxChars = 12000): string {
+function truncateForModel(text: string, maxChars = 14000): string {
   if (text.length <= maxChars) return text;
   return text.slice(0, maxChars) + '\n\n[Truncated for length]';
 }
 
 export const POST: RequestHandler = async ({ request }) => {
-  // 🔑 Read env at request time
   const DEEPSEEK_API_KEY = env.DEEPSEEK_API_KEY;
 
   if (!DEEPSEEK_API_KEY) {
-    return json(
-      {
-        error:
-          'DEEPSEEK_API_KEY is not set on the server. Add it to your .env file (DEEPSEEK_API_KEY=...) and restart the dev server.'
-      },
-      { status: 500 }
-    );
+    return json({ error: 'DEEPSEEK_API_KEY is not set.' }, { status: 500 });
   }
 
-  let body: unknown;
-
+  let body: any;
   try {
     body = await request.json();
   } catch {
@@ -64,116 +64,77 @@ export const POST: RequestHandler = async ({ request }) => {
   }
 
   const {
-    essay: essayTextInput,
-    activities: activitiesTextInput,
-    honors: honorsTextInput,
-    transcript: transcriptTextInput,
+    essay,
+    activities,
+    honors,
+    transcript,
+    major,
+    supplementals,
     edSlug,
     googleEmail,
     googleName
-  } = (body ?? {}) as {
-    essay?: string;
-    activities?: string;
-    honors?: string;
-    transcript?: string;
-    edSlug?: string;
-    googleEmail?: string;
-    googleName?: string;
-  };
-
-  console.log('ai-evaluate body keys:', Object.keys(body ?? {}));
-
-  // Require at least one text input
-  if (
-    !essayTextInput?.trim() &&
-    !activitiesTextInput?.trim() &&
-    !honorsTextInput?.trim() &&
-    !transcriptTextInput?.trim()
-  ) {
-    return json(
-      {
-        error:
-          'Please provide at least one of: essay, activities, honors, or transcript text. PDFs are not supported yet—copy and paste your text into the boxes.'
-      },
-      { status: 400 }
-    );
-  }
-
-  const essayText = (essayTextInput ?? '').trim();
-  const activitiesText = (activitiesTextInput ?? '').trim();
-  const honorsText = (honorsTextInput ?? '').trim();
-  const transcriptText = (transcriptTextInput ?? '').trim();
+  } = body;
 
   const sections: string[] = [];
-
-  if (essayText) sections.push(`Personal essay:\n${essayText}`);
-  if (activitiesText) sections.push(`Activities / extracurriculars:\n${activitiesText}`);
-  if (honorsText) sections.push(`Honors & awards:\n${honorsText}`);
-  if (transcriptText)
-    sections.push(`Transcript / GPA & coursework / testing:\n${transcriptText}`);
+  if (major) sections.push(`Intended Major: ${major}`);
+  if (essay) sections.push(`Personal Essay:\n${essay}`);
+  if (supplementals) sections.push(`Supplemental Essays:\n${supplementals}`);
+  if (activities) sections.push(`Activities / Résumé:\n${activities}`);
+  if (honors) sections.push(`Honors & Awards:\n${honors}`);
+  if (transcript) sections.push(`Transcript / GPA / Testing:\n${transcript}`);
 
   let applicantSummary = sections.join('\n\n').trim();
 
   if (!applicantSummary) {
-    return json(
-      {
-        error:
-          'No usable text could be extracted from your inputs. Make sure you paste your essay, activities, honors, or transcript text into the boxes. PDFs are not supported yet.'
-      },
-      { status: 400 }
-    );
+    return json({ error: 'Please provide application data.' }, { status: 400 });
   }
 
-  applicantSummary = truncateForModel(applicantSummary, 12000);
-
-  // --- DeepSeek admissions simulation ----------------------------------
+  applicantSummary = truncateForModel(applicantSummary);
 
   const systemPrompt = `You are an elite US college admissions simulation engine.
-You will receive an applicant's materials and a fixed list of highly selective US universities.
-Your job is to predict outcomes and briefly explain them.
+Evaluate the applicant based on their Major, Essays, Supplementals, Activities, Honors, and Transcript.
 
-You must respond with JSON only (valid json), and nothing else.
-The JSON must be an object with a single key "decisions" which is an array of objects.
+For each school, provide a decision and five granular scores (1-10):
+1. **Academic**: Stats/rigor fit.
+2. **Extracurricular**: Strength and major-alignment.
+3. **Fit**: Cultural and goal alignment.
+4. **Intellectual**: Curiosity and achievement.
+5. **Character**: Personality and "human" qualities.
 
-Each decision object must have:
-- "school": string, the school name exactly as provided
-- "slug": string, the slug exactly as provided
-- "outcome": one of "admit", "deny", "waitlist", or "defer"
-- "short_reason": string, 1–3 sentences explaining the decision.
+ADDITIONALLY: Provide "improvement_tips". This should be 3-4 specific, actionable bullet points on how this applicant can improve their chances for THIS specific school (e.g., "Take the SAT again for a 1550+", "Lean more into your volunteer work in the supplemental essay", "Clarify your role in the Robotics club").
 
-Only use information present in the applicant's materials. Do NOT hallucinate extra awards, stats, or achievements.
-
-Example JSON (structure only):
-
+RESPONSE FORMAT: Valid JSON only.
+Structure:
 {
   "decisions": [
     {
-      "school": "Harvard University",
-      "slug": "harvard",
-      "outcome": "deny",
-      "short_reason": "Example rationale."
+      "school": "Name",
+      "slug": "slug",
+      "outcome": "admit" | "deny" | "waitlist" | "defer",
+      "academic_score": number,
+      "academic_explanation": "string",
+      "extracurricular_score": number,
+      "extracurricular_explanation": "string",
+      "fit_score": number,
+      "fit_explanation": "string",
+      "intellectual_score": number,
+      "intellectual_explanation": "string",
+      "character_score": number,
+      "character_explanation": "string",
+      "improvement_tips": "string (bulleted list)"
     }
   ]
-}
-
-The word "json" appears in this prompt so you know you must output valid JSON.`;
-
-  const schoolListText = SCHOOLS.map(
-    (s, i) => `${i + 1}. ${s.school} (slug: ${s.slug})`
-  ).join('\n');
+}`;
 
   const userPrompt = `Applicant materials:
-
 ${applicantSummary}
 
-Applicant metadata:
-- Declared ED/REA slug (may be empty): ${edSlug || 'none'}
-- Simulated Google identity: ${googleName || 'N/A'} <${googleEmail || 'N/A'}>
+Metadata:
+- Intended Major: ${major || 'Undecided'}
+- ED/REA School: ${edSlug || 'None'}
 
-Now evaluate this applicant for the following universities:
-${schoolListText}
-
-Return json only in the format described above.`;
+Evaluate for these schools:
+${SCHOOLS.map(s => `- ${s.school} (slug: ${s.slug})`).join('\n')}`;
 
   try {
     const response = await fetch('https://api.deepseek.com/chat/completions', {
@@ -188,81 +149,32 @@ Return json only in the format described above.`;
           { role: 'system', content: systemPrompt },
           { role: 'user', content: userPrompt }
         ],
-        temperature: 0.4,
-        response_format: { type: 'json_object' },
-        max_tokens: 2000
+        temperature: 0.3,
+        response_format: { type: 'json_object' }
       })
     });
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error('DeepSeek evaluate error:', errorText);
-      return json(
-        { error: 'DeepSeek API error while generating decisions.', details: errorText },
-        { status: 502 }
-      );
-    }
-
     const completion = await response.json();
     const content = completion?.choices?.[0]?.message?.content;
+    const parsed = JSON.parse(content);
 
-    if (!content || typeof content !== 'string') {
-      return json({ error: 'DeepSeek returned empty content.' }, { status: 502 });
-    }
-
-    let parsed: { decisions?: AiDecision[] };
-
-    try {
-      parsed = JSON.parse(content);
-    } catch (err) {
-      console.error('Failed to parse DeepSeek JSON:', err, 'content:', content);
-      return json(
-        {
-          error: 'Failed to parse DeepSeek JSON output. Try again or simplify your inputs.',
-          raw: content
-        },
-        { status: 502 }
-      );
-    }
-
-    const rawDecisions = parsed?.decisions ?? [];
-
-    const decisions = rawDecisions
-      .filter(
-        (d): d is AiDecision =>
-          typeof d.school === 'string' &&
-          typeof d.slug === 'string' &&
-          typeof d.outcome === 'string' &&
-          typeof d.short_reason === 'string'
-      )
-      .map((d) => {
-        const normalized = d.outcome.toLowerCase();
-        const outcome: DecisionOutcome =
-          normalized === 'admit' ||
-          normalized === 'deny' ||
-          normalized === 'waitlist' ||
-          normalized === 'defer'
-            ? (normalized as DecisionOutcome)
-            : 'deny';
-
-        return {
-          school: d.school,
-          slug: d.slug,
-          outcome,
-          short_reason: d.short_reason
-        };
-      });
-
-    return json({
-      decisions,
-      schools: SCHOOLS,
-      applicantSummary
+    const decisions = (parsed.decisions || []).map((d: any) => {
+      const normalized = (d.outcome || 'deny').toLowerCase();
+      return {
+        ...d,
+        outcome: ['admit', 'deny', 'waitlist', 'defer'].includes(normalized) ? normalized : 'deny',
+        academic_score: Number(d.academic_score) || 0,
+        extracurricular_score: Number(d.extracurricular_score) || 0,
+        fit_score: Number(d.fit_score) || 0,
+        intellectual_score: Number(d.intellectual_score) || 0,
+        character_score: Number(d.character_score) || 0,
+        improvement_tips: d.improvement_tips || "No specific tips provided."
+      };
     });
+
+    return json({ decisions, applicantSummary });
   } catch (error) {
-    console.error('Unexpected DeepSeek evaluate error:', error);
-    return json(
-      { error: 'Unexpected server error while calling DeepSeek for evaluation.' },
-      { status: 500 }
-    );
+    console.error(error);
+    return json({ error: 'Evaluation failed.' }, { status: 500 });
   }
 };

@@ -1,8 +1,10 @@
 <script lang="ts">
 	export let applicantName: string;
+	export let schoolName: string;  //just so the portal doesn't get mad
+  export let footerDomain: string; 
 
 	// Cornell Red
-	const primaryColor = '#B31B1B';
+	export let primaryColor: string;
 </script>
 
 <svelte:head>

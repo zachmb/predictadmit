@@ -1,5 +1,16 @@
 <script lang="ts">
-  let { applicantName = '' } = $props<{ applicantName: string }>();
+  let { 
+    applicantName = '', 
+    schoolName = '',
+    primaryColor ='',
+    footerDomain=''
+
+  } = $props<{ 
+    applicantName: string, 
+    schoolName: string,
+    primaryColor: string,
+    footerDomain: string
+  }>();  
   
   // Extract first name from full name
   const firstName = $derived(() => {

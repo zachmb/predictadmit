@@ -1,5 +1,8 @@
 <script lang="ts">
   export let applicantName: string;
+  export let schoolName: string;  //just so the portal doesn't get mad
+  export let primaryColor: string; 
+  export let footerDomain: string; 
 </script>
 
 <svelte:head>
