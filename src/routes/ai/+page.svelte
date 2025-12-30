@@ -102,6 +102,29 @@
 		{ slug: 'vanderbilt', label: 'Vanderbilt (ED I/II)' }
 	];
 
+	export const SCHOOLS = [
+  { school: 'Harvard University', slug: 'harvard' },
+  { school: 'Stanford University', slug: 'stanford' },
+  { school: 'Massachusetts Institute of Technology', slug: 'mit' },
+  { school: 'Princeton University', slug: 'princeton' },
+  { school: 'Yale University', slug: 'yale' },
+  { school: 'Columbia University', slug: 'columbia' },
+  { school: 'University of Chicago', slug: 'uchicago' },
+  { school: 'University of Pennsylvania', slug: 'upenn' },
+  { school: 'California Institute of Technology', slug: 'caltech' },
+  { school: 'Duke University', slug: 'duke' },
+  { school: 'Johns Hopkins University', slug: 'jhu' },
+  { school: 'Northwestern University', slug: 'northwestern' },
+  { school: 'Dartmouth College', slug: 'dartmouth' },
+  { school: 'Brown University', slug: 'brown' },
+  { school: 'Vanderbilt University', slug: 'vanderbilt' },
+  { school: 'Rice University', slug: 'rice' },
+  { school: 'Washington University in St. Louis', slug: 'wustl' },
+  { school: 'Cornell University', slug: 'cornell' },
+  { school: 'University of California, Los Angeles', slug: 'ucla' },
+  { school: 'University of California, Berkeley', slug: 'ucberkeley' }
+];
+
 	const handlePromoCode = (e: KeyboardEvent) => {
 		// Check if the key pressed was 'Enter'
 		if (e.key === 'Enter') {
@@ -396,78 +419,92 @@
 		deepDiveItems = [];
 
 		try {
-			const payload: Record<string, unknown> = {
-				essay,
-				activities,
-				honors,
-				transcript,
-				edSlug,
-				googleEmail,
-				googleName
-			};
+            // 1. Reset state before starting the loop
+            aiResults.clear();
+            aiDecisions = [];
+            visiblePortals = [];
+            readPortalSlugs = new Set();
+            
+            // 2. Define the payload without school-specific info
+            const basePayload = {
+                essay,
+                activities,
+                honors,
+                transcript,
+                major,
+                supplementals,
+                edSlug,
+                googleEmail,
+                googleName
+            };
 
-			const res = await fetch('/api/ai-evaluate', {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify(payload)
-			});
+            // 3. Loop through each school slug
+            // Note: Ensure SCHOOLS is imported or defined in your script
+            for (const { slug } of SCHOOLS) {
+                const res = await fetch(`/api/ai-evaluate/${slug}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(basePayload)
+                });
 
-			const data = await res.json();
+                const data = await res.json();
 
-			if (!res.ok) {
-				aiError = data?.error ?? 'Something went wrong talking to the AI evaluator.';
-				return;
-			}
+                if (!res.ok) {
+                    console.error(`Error evaluating ${slug}:`, data?.error);
+                    continue; // Skip failed schools and move to the next
+                }
 
-			// 🔁 NEW: store this evaluation globally so individual portals can read their outcome
-			aiResults.setFromApi(data);
+                // 4. Add individual decision to the store
+                aiResults.addDecision(data.decision, { 
+                    major, 
+                    applicantSummary: data.applicantSummary 
+                });
 
-			aiDecisions = (data.decisions ?? []) as AiDecision[];
-			applicantSummary = (data.applicantSummary ?? '') as string;
+                // 5. Update local state for the UI
+                aiDecisions = $aiResults.decisions;
+                applicantSummary = data.applicantSummary;
 
-			if (!aiDecisions.length) {
-				aiError =
-					'The AI did not return any decisions. Try adding more detail to your application and apply again.';
-			} else {
-				// Mark free simulation as used after a successful run
-				hasUsedFreeSimulation = true;
-				if (typeof localStorage !== 'undefined') {
-					localStorage.setItem('predictadmit_hasUsedFreeSimulation', 'true');
-				}
+                // 6. Update the AdmitMail inbox in real-time
+                visiblePortals = aiDecisions.map(decisionToPortalEmail);
+            }
 
-				// Increment usage count in store (for analytics)
-				userProfile.update((u) => {
-					// Also auto-sync profile if it's the first time or empty
-					const newProfile = { ...u.applicationProfile };
-					if (!newProfile.essays && essay) newProfile.essays = essay;
-					if (!newProfile.activities && activities) newProfile.activities = activities;
-					if (!newProfile.awards && honors) newProfile.awards = honors;
-					if (!newProfile.rigor && transcript) newProfile.rigor = transcript; // roughly mapping transcript to rigor
+            // --- Post-Loop Logic (Finalizing the run) ---
 
-					return {
-						...u,
-						requestCount: (u.requestCount || 0) + 1,
-						applicationProfile: newProfile
-					};
-				});
+            if (!aiDecisions.length) {
+                aiError = 'The AI did not return any decisions. Try adding more detail to your application.';
+            } else {
+                hasUsedFreeSimulation = true;
+                if (typeof localStorage !== 'undefined') {
+                    localStorage.setItem('predictadmit_hasUsedFreeSimulation', 'true');
+                }
 
-				// Hydrate AdmitMail inbox from AI decisions
-				visiblePortals = aiDecisions.map(decisionToPortalEmail);
-				readPortalSlugs = new Set();
-				selectedPortal = null;
-				selectedSent = null;
-				mailActiveFolder = 'inbox';
-				mailViewMode = 'inbox';
+                userProfile.update((u) => {
+                    const newProfile = { ...u.applicationProfile };
+                    if (!newProfile.essays && essay) newProfile.essays = essay;
+                    if (!newProfile.activities && activities) newProfile.activities = activities;
+                    if (!newProfile.awards && honors) newProfile.awards = honors;
+                    if (!newProfile.rigor && transcript) newProfile.rigor = transcript;
 
-				// Persist inbox so it survives navigation
-				saveAiInboxState();
-			}
-		} catch (err) {
-			console.error(err);
-			aiError = 'Network or server error while calling the AI evaluator.';
-		} finally {
-			isSubmitting = false;
-		}
+                    return {
+                        ...u,
+                        requestCount: (u.requestCount || 0) + 1,
+                        applicationProfile: newProfile
+                    };
+                });
+
+                selectedPortal = null;
+                selectedSent = null;
+                mailActiveFolder = 'inbox';
+                mailViewMode = 'inbox';
+
+                saveAiInboxState();
+            }
+        } catch (err) {
+            console.error(err);
+            aiError = 'Network or server error while calling the AI evaluator.';
+        } finally {
+            isSubmitting = false;
+        }
 	}
 
 	// 🔒 Deep Dive is fully paywalled – no API call until they upgrade
@@ -741,7 +778,7 @@
 										placeholder="e.g. Computer Science, Comparative Literature..."
 									/>
 								</div>
-								
+
 								<!-- Essay -->
 								<div class="space-y-2">
 									<label for="essay" class="block text-sm font-bold text-slate-900">

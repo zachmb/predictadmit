@@ -32,6 +32,13 @@ function createResultsStore() {
 
   return {
     subscribe,
+    addDecision: (decision: AiDecision, rawPayload?: any) => {
+      update((prev) => ({
+        ...prev,
+        decisions: [...prev.decisions, decision], // Appends new school to the list
+        raw: rawPayload ?? prev.raw // Keeps track of latest metadata
+      }));
+    },
     setFromApi: (payload: any) => {
       set({
         decisions: payload.decisions ?? [],
