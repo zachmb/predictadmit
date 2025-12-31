@@ -1,4 +1,5 @@
 import { writable, derived } from 'svelte/store';
+import { browser } from '$app/environment';
 
 export type DecisionOutcome = 'admit' | 'deny' | 'waitlist' | 'defer';
 
@@ -19,35 +20,114 @@ export type AiDecision = {
   improvement_tips: string; // NEW
 };
 
+
 export type AiResultsPayload = {
   decisions: AiDecision[];
   raw?: any;
+  applicantSummary?: string;
+  isEvaluating: boolean;
+  progress: number; // 0 to 100
 };
 
+const AI_PERSIST_KEY = 'predictadmit_ai_results_v2';
+
 function createResultsStore() {
-  const { subscribe, set, update } = writable<AiResultsPayload>({
+  // Try to load from localStorage
+  let initial: AiResultsPayload = {
     decisions: [],
-    raw: null
-  });
+    raw: null,
+    applicantSummary: '',
+    isEvaluating: false,
+    progress: 0
+  };
+
+
+
+  if (browser && typeof localStorage !== 'undefined') {
+    const stored = localStorage.getItem(AI_PERSIST_KEY);
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored);
+        // Only restore data, not ephemeral state like isEvaluating
+        initial = {
+          ...initial,
+          ...parsed,
+          isEvaluating: false,
+          progress: parsed.decisions?.length ? 100 : 0
+        };
+      } catch (e) {
+        console.error('Failed to parse stored AI results', e);
+      }
+    }
+  }
+
+  const { subscribe, set, update } = writable<AiResultsPayload>(initial);
 
   return {
     subscribe,
-    addDecision: (decision: AiDecision, rawPayload?: any) => {
-      update((prev) => ({
-        ...prev,
-        decisions: [...prev.decisions, decision], // Appends new school to the list
-        raw: rawPayload ?? prev.raw // Keeps track of latest metadata
-      }));
+
+    startEvaluation: () => {
+      update(s => ({ ...s, isEvaluating: true, progress: 0, decisions: [], applicantSummary: '' }));
     },
-    setFromApi: (payload: any) => {
-      set({
-        decisions: payload.decisions ?? [],
-        raw: payload
+
+    addDecision: (decision: AiDecision, rawPayload?: any) => {
+      update((prev) => {
+        const nextDecisions = [...prev.decisions, decision];
+        // simple progress estimation based on decision count (assuming ~20 schools)
+        // You might want to pass in the total count to be more accurate
+        const nextProgress = Math.min(95, Math.floor((nextDecisions.length / 20) * 100));
+
+        const nextState = {
+          ...prev,
+          decisions: nextDecisions,
+          raw: rawPayload ?? prev.raw,
+          applicantSummary: rawPayload?.applicantSummary ?? prev.applicantSummary,
+          progress: nextProgress
+        };
+
+        if (browser && typeof localStorage !== 'undefined') {
+          // Don't save isEvaluating to disk usually, but we save data
+          localStorage.setItem(AI_PERSIST_KEY, JSON.stringify({
+            decisions: nextState.decisions,
+            raw: nextState.raw,
+            applicantSummary: nextState.applicantSummary
+          }));
+        }
+        return nextState;
       });
     },
+
+    finishEvaluation: () => {
+      update(s => ({ ...s, isEvaluating: false, progress: 100 }));
+    },
+
+    setFromApi: (payload: any) => {
+      const nextState = {
+        decisions: payload.decisions ?? [],
+        raw: payload,
+        applicantSummary: payload.applicantSummary ?? '',
+        isEvaluating: false,
+        progress: 100
+      };
+      set(nextState);
+      if (browser && typeof localStorage !== 'undefined') {
+        localStorage.setItem(AI_PERSIST_KEY, JSON.stringify({
+          decisions: nextState.decisions,
+          raw: nextState.raw,
+          applicantSummary: nextState.applicantSummary
+        }));
+      }
+    },
+
     setDecisions: (decisions: AiDecision[]) =>
       update((prev) => ({ ...prev, decisions })),
-    clear: () => set({ decisions: [], raw: null })
+
+    clear: () => {
+      set({ decisions: [], raw: null, applicantSummary: '', isEvaluating: false, progress: 0 });
+      if (browser && typeof localStorage !== 'undefined') {
+        localStorage.removeItem(AI_PERSIST_KEY);
+      }
+    }
   };
 }
 

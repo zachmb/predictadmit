@@ -1,5 +1,5 @@
 // src/lib/config/schools.ts
-export type SchoolDecision = 'admit' | 'deny';
+export type SchoolDecision = 'admit' | 'deny' | 'waitlist' | 'defer';
 
 export interface SchoolConfig {
   slug: string;

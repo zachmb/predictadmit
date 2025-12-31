@@ -3,6 +3,7 @@
 	import SchoolTracker from '$lib/components/pro/SchoolTracker.svelte';
 	import SupplementalAnalyzer from '$lib/components/pro/SupplementalAnalyzer.svelte';
 	import SiteFooter from '$lib/components/layout/SiteFooter.svelte';
+	import MindMap from '$lib/components/pro/MindMap.svelte';
 	import { goto } from '$app/navigation';
 	import { userProfile } from '$lib/stores/user';
 	import { signIn } from '@auth/sveltekit/client';
@@ -91,7 +92,7 @@
 	<title>PredictAdmit Pro - {isPro ? 'My Hub' : 'Upgrade'}</title>
 </svelte:head>
 
-<main class="min-h-screen bg-slate-50 flex flex-col font-sans text-slate-900">
+<main class="min-h-screen bg-slate-50 flex flex-col font-sans text-slate-900 animate-enter">
 	<div class="flex-1 flex flex-col">
 		{#if hasAccess}
 			<!-- PRO HUB VIEW -->
@@ -254,9 +255,26 @@
 						<SupplementalAnalyzer />
 					</div>
 				</div>
+
+				<!-- NEW: Mind Map Section (Pro View) -->
+				<div class="space-y-6 pt-8 border-t border-slate-200">
+					<div class="flex items-end justify-between border-b border-slate-200 pb-4">
+						<h2 class="text-2xl font-bold text-slate-900">Evaluation Mind Map</h2>
+					</div>
+					<MindMap savedDecisions={$userProfile.savedDecisions} />
+				</div>
 			</div>
 		{:else}
-			<!-- SALES PAGE (Existing Content) -->
+			<!-- Non-Pro View -->
+			{#if $userProfile.savedDecisions.length > 0}
+				<div class="bg-slate-50 border-b border-slate-200">
+					<div class="max-w-7xl mx-auto px-6 py-12">
+						<MindMap savedDecisions={$userProfile.savedDecisions} />
+					</div>
+				</div>
+			{/if}
+
+			<!-- SALES PAGE -->
 			<section class="flex-1 flex flex-col md:flex-row bg-white">
 				<!-- Feature Selling Point Side (Left) -->
 				<div class="p-8 md:p-20 flex-1 space-y-12 flex flex-col justify-center">

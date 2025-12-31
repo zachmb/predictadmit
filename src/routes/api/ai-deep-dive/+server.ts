@@ -9,15 +9,11 @@ export const POST: RequestHandler = async ({ request }) => {
   // 🔑 Read env at request time so it's never stale
   const DEEPSEEK_API_KEY = env.DEEPSEEK_API_KEY;
 
-  if (!DEEPSEEK_API_KEY) {
-    return json(
-      {
-        error:
-          'DEEPSEEK_API_KEY is not set on the server. Add it to your .env file (DEEPSEEK_API_KEY=...) and restart the dev server.'
-      },
-      { status: 500 }
-    );
-  }
+  console.error('DEEPSEEK_API_KEY is not set.');
+  return json(
+    { error: 'AI service configuration error.' },
+    { status: 500 }
+  );
 
   let body: unknown;
 
@@ -49,7 +45,7 @@ export const POST: RequestHandler = async ({ request }) => {
 You are writing a confidential, internal-style explanation for why this applicant received their decision.
 Be candid, nuanced, and constructive – but always professional and humane.`;
 
-  const userPrompt = `You are simulating ${school}'s admissions committee explaining why they chose to ${outcome.toUpperCase()} this applicant.
+  const userPrompt = `You are simulating ${school}'s admissions committee explaining why they chose to ${outcome!.toUpperCase()} this applicant.
 
 Decision outcome: ${outcome}
 Short summary of rationale from the prediction engine: ${short_reason ?? '(none provided)'}
@@ -91,7 +87,7 @@ Do not include JSON – just write readable markdown text.`;
       const errorText = await response.text();
       console.error('DeepSeek deep-dive error:', errorText);
       return json(
-        { error: 'DeepSeek API error while generating deep dive.', details: errorText },
+        { error: 'AI service error while generating deep dive.', details: errorText },
         { status: 502 }
       );
     }
@@ -100,7 +96,7 @@ Do not include JSON – just write readable markdown text.`;
     const content = completion?.choices?.[0]?.message?.content;
 
     if (!content || typeof content !== 'string') {
-      return json({ error: 'DeepSeek returned empty content for deep dive.' }, { status: 502 });
+      return json({ error: 'AI service returned empty content for deep dive.' }, { status: 502 });
     }
 
     return json({
@@ -114,7 +110,7 @@ Do not include JSON – just write readable markdown text.`;
   } catch (error) {
     console.error('Unexpected DeepSeek deep-dive error:', error);
     return json(
-      { error: 'Unexpected server error while calling DeepSeek for deep dive.' },
+      { error: 'Unexpected server error while calling AI service for deep dive.' },
       { status: 500 }
     );
   }

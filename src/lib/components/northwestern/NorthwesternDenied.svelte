@@ -3,7 +3,8 @@
   export let schoolName: string;  //just so the portal doesn't get mad
   export let primaryColor: string; 
   export let footerDomain: string; 
-  import { goto } from '$app/navigation';
+  export let showDeepDive = false;
+	import { goto } from '$app/navigation';
 
 import { decisionsBySlug } from '$lib/stores/results';
 const viewAnalysis = () => {
@@ -13,7 +14,8 @@ const viewAnalysis = () => {
 
 <div class="min-h-screen bg-white p-8 font-serif">
   <div class="max-w-2xl mx-auto">
-    <div class="mb-6 flex justify-end">
+    {#if showDeepDive}
+<div class="mb-6 flex justify-end">
 			<button 
 			  on:click={viewAnalysis}
 			  class="group flex items-center px-4 py-2 bg-[#003262] text-white rounded-lg text-sm font-sans font-bold hover:bg-slate-800 transition-all shadow-md active:scale-95"
@@ -23,6 +25,7 @@ const viewAnalysis = () => {
 			  Deep Dive: Why did I get {$decisionsBySlug['northwestern']}?
 			</button>
 		  </div>
+{/if}
     <!-- Letterhead -->
     <div class="border-b-2 border-gray-300 pb-4 mb-8">
       <div class="flex items-center mb-4">

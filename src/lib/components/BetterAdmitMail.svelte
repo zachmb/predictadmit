@@ -117,7 +117,7 @@
 		<!-- INBOX VIEW -->
 		<div class="flex text-[11px]">
 			<!-- LEFT SIDEBAR -->
-			<aside class="w-52 border-r border-slate-200 bg-slate-50 py-3 flex flex-col gap-3">
+			<aside class="hidden md:flex w-52 border-r border-slate-200 bg-slate-50 py-3 flex-col gap-3">
 				<!-- Compose pill (non-functional, just for UI parity) -->
 				<div class="px-3">
 					<button
@@ -351,7 +351,7 @@
 		<!-- EMAIL VIEW -->
 		<div class="flex text-[11px]">
 			<!-- LEFT SIDEBAR (same as inbox) -->
-			<aside class="w-52 border-r border-slate-200 bg-slate-50 py-3 flex flex-col gap-3">
+			<aside class="hidden md:flex w-52 border-r border-slate-200 bg-slate-50 py-3 flex-col gap-3">
 				<div class="px-3">
 					<button
 						type="button"
