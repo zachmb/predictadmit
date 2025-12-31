@@ -149,7 +149,7 @@
 			<div
 				class="fixed inset-0 top-[64px] bg-white z-[1000] p-6 flex flex-col gap-6 md:hidden animate-fade-in text-center"
 			>
-				<nav class="flex flex-col gap-6 text-lg font-bold text-slate-800">
+				<nav class="flex flex-col gap-6 text-lg font-bold text-slate-600">
 					<a href="/portals" on:click={() => (mobileMenuOpen = false)}>Portals</a>
 					<a href="/ai" on:click={() => (mobileMenuOpen = false)}>Predict Results</a>
 					<a href="/research-hub" on:click={() => (mobileMenuOpen = false)}>Research Hub</a>

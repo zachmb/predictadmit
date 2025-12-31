@@ -673,10 +673,10 @@
 	class="min-h-screen bg-slate-50 text-slate-900 font-sans flex flex-col relative overflow-hidden transition-colors duration-700 ease-in-out animate-enter"
 >
 	<div class="flex-1 w-full relative z-10 transition-colors duration-500">
-		<div class="max-w-[1200px] mx-auto px-6 pt-20 pb-32 space-y-32">
+		<div class="w-full max-w-screen-2xl mx-auto px-6 pt-20 pb-32 space-y-16">
 			<!-- HERO: SEARCH + SIMULATION -->
 			<section
-				class="text-center max-w-4xl mx-auto flex flex-col justify-center min-h-[calc(100vh-144px)] space-y-8"
+				class="text-center w-full max-w-none mx-auto flex flex-col justify-center min-h-[55vh] space-y-14"
 			>
 				<!-- TRUST BADGE -->
 				<div class="flex justify-center mb-8">
@@ -725,7 +725,7 @@
 				</h1>
 
 				<!-- Search Bar + Simulation Button -->
-				<div class="flex flex-col md:flex-row gap-3 max-w-3xl mx-auto relative">
+				<div class="flex flex-col md:flex-row gap-3 w-full max-w-4xl mx-auto relative">
 					<div class="flex-1 relative">
 						<!-- Search Bar Container -->
 						<div
