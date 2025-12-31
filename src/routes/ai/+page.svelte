@@ -19,6 +19,7 @@
 	import Card from '$lib/components/common/Card.svelte';
 	import Button from '$lib/components/common/Button.svelte';
 	import RadarChart from '$lib/components/common/RadarChart.svelte';
+	import MajorInput from '$lib/components/common/MajorInput.svelte';
 
 	export let data: PageData;
 
@@ -578,13 +579,7 @@
 									<label for="major" class="block text-sm font-bold text-slate-900"
 										>Intended Major</label
 									>
-									<input
-										id="major"
-										type="text"
-										bind:value={major}
-										class="w-full rounded-md border border-slate-200 bg-white px-3 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all shadow-inner"
-										placeholder="e.g. Computer Science, Comparative Literature..."
-									/>
+									<MajorInput id="major" bind:value={major} />
 								</div>
 								<div class="space-y-2">
 									<label for="essay" class="block text-sm font-bold text-slate-900"

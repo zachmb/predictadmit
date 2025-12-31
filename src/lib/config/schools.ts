@@ -337,5 +337,20 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
     statusLinkLabel: 'View Status >>',
     decision: 'admit',
     footerDomain: 'berkeley.edu'
+  },
+  ubiquity: {
+    slug: 'ubiquity',
+    schoolName: 'Ubiquity University',
+    logoPrimary: 'Ubiquity',
+    logoSecondary: 'TRANS-DIMENSIONAL MAPPING',
+    primaryColor: '#6B21A8',
+    admissionsId: 'UBIQ-2026-X1Y2Z3',
+    financialAidId: 'FA-UBIQ-998877',
+    bannerText: 'Thank you for applying to the TransDimensional Mapping program at Ubiquity University.',
+    noticeText: 'Your admission decision has been materialized from the void. Please observe it.',
+    statusLastPosted: 'March 20, 2026',
+    statusLinkLabel: 'Enter The Void >>',
+    decision: 'admit',
+    footerDomain: 'ubiquity.edu'
   }
 };

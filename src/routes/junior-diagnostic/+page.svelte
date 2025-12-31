@@ -5,6 +5,7 @@
 	import Card from '$lib/components/common/Card.svelte';
 	import Button from '$lib/components/common/Button.svelte';
 	import RadarChart from '$lib/components/common/RadarChart.svelte';
+	import MajorInput from '$lib/components/common/MajorInput.svelte';
 
 	export let data: PageData;
 	const session = data.session;
@@ -187,11 +188,7 @@
 						</div>
 						<div class="space-y-2">
 							<label class="block text-sm font-bold text-slate-900">Intended Major</label>
-							<input
-								bind:value={major}
-								class="w-full border rounded-lg p-3 text-sm"
-								placeholder="e.g. CS, Bio..."
-							/>
+							<MajorInput bind:value={major} />
 						</div>
 					</div>
 

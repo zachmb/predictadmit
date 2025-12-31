@@ -46,7 +46,7 @@
 			</a>
 
 			<!-- DESKTOP NAVIGATION -->
-			<nav class="hidden md:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
+			<nav class="hidden md:flex items-center gap-8">
 				<a
 					href="/portals"
 					class="text-lg font-bold text-slate-600 hover:text-slate-900 transition-colors px-4 py-2"

@@ -16,6 +16,7 @@
 	import HarvardDenied from '$lib/components/harvard/HarvardDenied.svelte';
 	import YaleAccepted from '$lib/components/yale/YaleAccepted.svelte';
 	import YaleDenied from '$lib/components/yale/YaleDenied.svelte';
+	import UbiquityAccepted from '$lib/components/ubiquity/UbiquityAccepted.svelte';
 
 	/**
 	 * Use the type of GenericAcceptedLetter as the base component type.
@@ -40,6 +41,10 @@
 		yale: {
 			accepted: YaleAccepted,
 			denied: YaleDenied
+		},
+		ubiquity: {
+			accepted: UbiquityAccepted,
+			denied: GenericDeniedLetter
 		}
 
 		// Add more here as you create per-school components.

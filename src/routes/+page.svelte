@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onDestroy, onMount } from 'svelte';
+	import { onDestroy, onMount, tick } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { userProfile, defaultProfile } from '$lib/stores/user';
 	import AI from '$lib/components/common/AI.svelte';
@@ -127,8 +127,13 @@
 		aiExpanded = true;
 	};
 
-	const handleStartSimulationClick = () => {
+	const handleStartSimulationClick = async () => {
 		showAccountForm = true;
+		await tick();
+		const el = document.getElementById('simulation-login');
+		if (el) {
+			el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+		}
 	};
 
 	// Generate fake credentials automatically
@@ -872,7 +877,7 @@
 			</section>
 
 			{#if showAccountForm}
-				<div class="py-12 max-w-[600px] mx-auto">
+				<div id="simulation-login" class="py-12 max-w-[600px] mx-auto">
 					<Card>
 						<div class="p-8">
 							<h3 class="text-xl font-bold mb-6 text-[var(--color-brand-primary)]">
