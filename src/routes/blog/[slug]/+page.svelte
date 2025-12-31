@@ -51,7 +51,7 @@
 							<span class="bg-white/10 px-3 py-1 rounded-full backdrop-blur-sm">{tag}</span>
 						{/each}
 					</div>
-					<h1 class="text-4xl md:text-6xl font-bold text-white leading-tight">
+					<h1 class="text-4xl md:text-6xl font-bold !text-white leading-tight">
 						{post.title}
 					</h1>
 					<div class="flex items-center justify-center gap-3 text-blue-200 font-medium">
