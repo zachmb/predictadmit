@@ -721,10 +721,6 @@
 				<h1 class="text-4xl md:text-6xl font-bold tracking-tighter text-slate-900">
 					Simulate Any University Portal
 				</h1>
-				<p class="text-lg text-slate-600 max-w-2xl mx-auto">
-					Experience realistic college admission portals. Search for any university or run a full
-					simulation.
-				</p>
 
 				<!-- Search Bar + Simulation Button -->
 				<div class="flex flex-col md:flex-row gap-3 max-w-3xl mx-auto relative">
