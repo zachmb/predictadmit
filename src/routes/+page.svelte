@@ -675,7 +675,9 @@
 	<div class="flex-1 w-full relative z-10 transition-colors duration-500">
 		<div class="max-w-[1200px] mx-auto px-6 pt-20 pb-32 space-y-32">
 			<!-- HERO: SEARCH + SIMULATION -->
-			<section class="text-center max-w-4xl mx-auto space-y-8">
+			<section
+				class="text-center max-w-4xl mx-auto flex flex-col justify-center min-h-[calc(100vh-144px)] space-y-8"
+			>
 				<!-- TRUST BADGE -->
 				<div class="flex justify-center mb-8">
 					<div
