@@ -114,12 +114,6 @@
 						Sign in
 					{/if}
 				</a>
-				<a
-					href="/pro"
-					class="hidden md:inline-flex items-center justify-center font-bold text-lg bg-blue-600 text-white px-8 py-3 rounded-[var(--radius-btn)] hover:bg-blue-700 transition-colors"
-				>
-					Get Pro
-				</a>
 
 				<!-- MOBILE HAMBURGER -->
 				<button
