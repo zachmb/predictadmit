@@ -127,7 +127,6 @@
 							bind:value={$manualOverrideMode}
 							class="bg-white border border-slate-300 text-slate-700 text-xs font-semibold px-3 py-1.5 rounded-md outline-none cursor-pointer hover:border-slate-400 transition-colors"
 						>
-							<option value="random">Random / As Simulated</option>
 							<option value="accepted">Force Accepted</option>
 							<option value="denied">Force Rejected</option>
 						</select>

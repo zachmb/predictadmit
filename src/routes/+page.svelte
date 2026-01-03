@@ -1,11 +1,13 @@
 <script lang="ts">
+	import { get } from 'svelte/store';
+	import { schoolConfigs } from '$lib/config/schools';
 	import { onDestroy, onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { userProfile } from '$lib/stores/user';
 	import AI from '$lib/components/common/AI.svelte';
 	import type { UserProfile } from '$lib/stores/user';
 	import { aiResults, manualOverrideMode, type OverrideMode } from '$lib/stores/results';
-
+	import {type AiDecision, type DecisionOutcome } from '$lib/stores/results';
 	import SiteFooter from '$lib/components/layout/SiteFooter.svelte';
 	import ApplicationTimeline from '$lib/components/home/ApplicationTimeline.svelte';
 	import AdmitMail from '$lib/components/AdmitMail.svelte';
@@ -60,20 +62,59 @@
 	};
 
 	// Navigate to portal
-	const handleUniversitySelect = (slug: string) => {
-		// Check override mode
-		const mode = $manualOverrideMode;
-		if (mode !== 'random') {
-			sessionStorage.setItem(`decision-${slug}`, mode === 'accepted' ? 'admit' : 'deny');
-		}
+	function handleUniversitySelect(slug: string) {
+        const mode = get(manualOverrideMode); // 'accepted' or 'denied'
+        const status: DecisionOutcome = mode === 'accepted' ? 'admit' : 'deny';
+        
+        // 1. Get current results snapshot
+        const currentResults = get(aiResults);
+        const schoolConfig = schoolConfigs[slug];
+        
+        if (!schoolConfig) return;
 
-		// Navigate directly to the portal page
-		// (Portals handle their own auth/login state)
-		goto(`/portals/${slug}`);
+        // 2. Prepare the new/updated decision object
+        const existingIndex = currentResults.decisions.findIndex(d => d.slug === slug);
+        
+        let updatedDecisions = [...currentResults.decisions];
 
-		searchQuery = '';
-		showSearchResults = false;
-	};
+        if (existingIndex !== -1) {
+            // Update existing entry
+            updatedDecisions[existingIndex] = {
+                ...updatedDecisions[existingIndex],
+                outcome: status
+            };
+        } else {
+            // Create a fresh entry for this school
+            const newDecision: AiDecision = {
+                school: schoolConfig.schoolName,
+                slug: slug,
+                outcome: status,
+                academic_score: 0,
+                academic_explanation: 'N/A: random sim',
+                extracurricular_score: 0,
+                extracurricular_explanation: 'Manual Search Override',
+                fit_score: 0,
+                fit_explanation: 'Manual Search Override',
+                intellectual_score: 0,
+                intellectual_explanation: 'Manual Search Override',
+                character_score: 0,
+                character_explanation: 'Manual Search Override',
+                improvement_tips: ''
+            };
+            updatedDecisions.push(newDecision);
+        }
+
+        // 3. Update the store
+        aiResults.setDecisions(updatedDecisions);
+
+        // 4. Navigate to the portal
+        sessionStorage.setItem(`decision-${slug}`, status);
+        goto(`/portals/${slug}`);
+        
+        // Reset search UI
+        searchQuery = '';
+        showSearchResults = false;
+    }
 
 	import {
 		portals,
@@ -756,6 +797,9 @@
 				<!-- Search Bar + Simulation Button -->
 				<div class="flex gap-3 max-w-3xl mx-auto relative">
 					<div class="flex-1 relative">
+						<span class="text-[10px] absolute left-8 bottom-15 uppercase tracking-tighter font-bold text-slate-600 leading-none mb-1">
+							Select
+						</span>
 						<!-- Search Bar Container -->
 						<div
 							class="flex bg-white border border-slate-300 rounded-lg shadow-sm focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-blue-500 transition-all overflow-hidden items-center"
@@ -766,7 +810,6 @@
 								class="bg-slate-50 text-slate-700 text-sm font-semibold px-4 py-4 border-r border-slate-200 outline-none cursor-pointer hover:bg-slate-100 transition-colors w-[130px] appearance-none text-center"
 								style="text-align-last: center;"
 							>
-								<option value="random">Random</option>
 								<option value="accepted">Accepted</option>
 								<option value="denied">Rejected</option>
 							</select>
