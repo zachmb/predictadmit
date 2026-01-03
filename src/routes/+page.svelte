@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { onDestroy, onMount } from 'svelte';
+	import { onDestroy, onMount, tick } from 'svelte';
 	import { goto } from '$app/navigation';
-	import { userProfile } from '$lib/stores/user';
+	import { userProfile, defaultProfile } from '$lib/stores/user';
 	import AI from '$lib/components/common/AI.svelte';
 	import type { UserProfile } from '$lib/stores/user';
 	import { aiResults, manualOverrideMode, type OverrideMode } from '$lib/stores/results';
@@ -128,8 +128,13 @@
 		aiExpanded = true;
 	};
 
-	const handleStartSimulationClick = () => {
+	const handleStartSimulationClick = async () => {
 		showAccountForm = true;
+		await tick();
+		const el = document.getElementById('simulation-login');
+		if (el) {
+			el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+		}
 	};
 
 	// Generate fake credentials automatically
@@ -539,7 +544,6 @@
 			intellectual_explanation: 'N/A: random sim',
 			character_explanation: 'N/A: random sim',
 			improvement_tips: 'N/A: random sim'
-
 		}));
 
 		aiResults.setDecisions(randomDecisions);
@@ -577,6 +581,7 @@
 
 		// clear global store
 		userProfile.set({
+			...defaultProfile,
 			name: '',
 			email: '',
 			password: ''
@@ -696,13 +701,15 @@
 	<title>PredictAdmit.com – College Admissions Portal Simulator</title>
 </svelte:head>
 
-<main
-	class="min-h-screen bg-[var(--color-brand-bg)] text-slate-900 font-sans flex flex-col relative overflow-hidden transition-colors duration-700 ease-in-out"
+<div
+	class="min-h-screen bg-slate-50 text-slate-900 font-sans flex flex-col relative overflow-hidden transition-colors duration-700 ease-in-out animate-enter"
 >
 	<div class="flex-1 w-full relative z-10 transition-colors duration-500">
-		<div class="max-w-[1200px] mx-auto px-6 pt-20 pb-32 space-y-32">
+		<div class="w-full max-w-screen-2xl mx-auto px-6 pt-20 pb-32 space-y-16">
 			<!-- HERO: SEARCH + SIMULATION -->
-			<section class="text-center max-w-4xl mx-auto space-y-8">
+			<section
+				class="text-center w-full max-w-none mx-auto flex flex-col justify-center min-h-[55vh] space-y-14"
+			>
 				<!-- TRUST BADGE -->
 				<div class="flex justify-center mb-8">
 					<div
@@ -748,13 +755,9 @@
 				<h1 class="text-4xl md:text-6xl font-bold tracking-tighter text-slate-900">
 					Simulate Any University Portal
 				</h1>
-				<p class="text-lg text-slate-600 max-w-2xl mx-auto">
-					Experience realistic college admission portals. Search for any university or run a full
-					simulation.
-				</p>
 
 				<!-- Search Bar + Simulation Button -->
-				<div class="flex gap-3 max-w-3xl mx-auto relative">
+				<div class="flex flex-col md:flex-row gap-3 w-full max-w-4xl mx-auto relative">
 					<div class="flex-1 relative">
 						<!-- Search Bar Container -->
 						<div
@@ -803,7 +806,7 @@
 
 					<button
 						type="button"
-						class="px-8 bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg rounded-lg transition-colors shadow-sm whitespace-nowrap"
+						class="px-8 py-4 md:py-0 bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg rounded-lg transition-colors shadow-sm whitespace-nowrap w-full md:w-auto"
 						on:click={handleStartSimulationClick}
 					>
 						Simulate Full Cycle
@@ -904,7 +907,7 @@
 			</section>
 
 			{#if showAccountForm}
-				<div class="py-12 max-w-[600px] mx-auto">
+				<div id="simulation-login" class="py-12 max-w-[600px] mx-auto">
 					<Card>
 						<div class="p-8">
 							<h3 class="text-xl font-bold mb-6 text-[var(--color-brand-primary)]">
@@ -1096,4 +1099,4 @@
 	</div>
 
 	<SiteFooter />
-</main>
+</div>

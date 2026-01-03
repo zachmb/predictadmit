@@ -16,6 +16,7 @@
 	import HarvardDenied from '$lib/components/harvard/HarvardDenied.svelte';
 	import YaleAccepted from '$lib/components/yale/YaleAccepted.svelte';
 	import YaleDenied from '$lib/components/yale/YaleDenied.svelte';
+	import UbiquityAccepted from '$lib/components/ubiquity/UbiquityAccepted.svelte';
 
 	/**
 	 * Use the type of GenericAcceptedLetter as the base component type.
@@ -40,6 +41,10 @@
 		yale: {
 			accepted: YaleAccepted,
 			denied: YaleDenied
+		},
+		ubiquity: {
+			accepted: UbiquityAccepted,
+			denied: GenericDeniedLetter
 		}
 
 		// Add more here as you create per-school components.
@@ -56,7 +61,22 @@
 
 	// ----------------- STATE -----------------
 
-	let profile: UserProfile = { name: '', email: '', password: '' };
+	let profile: UserProfile = {
+		name: '',
+		email: '',
+		password: '',
+		isPro: false,
+		requestCount: 0,
+		applicationProfile: {
+			gpa: '',
+			essays: '',
+			activities: '',
+			awards: '',
+			rigor: ''
+		},
+		schoolList: [],
+		savedDecisions: []
+	};
 	let emailInput = '';
 	let passwordInput = '';
 	let error = '';
@@ -68,13 +88,27 @@
 	let school: (typeof schoolConfigs)[string] | undefined = undefined;
 	let pageTitle = 'PredictAdmit – Unknown Portal';
 
+	import { aiResults } from '$lib/stores/results';
+	import type { AiDecision } from '$lib/stores/results';
+
 	// ----------------- REACTIVE DERIVATIONS -----------------
 
 	$: profile = $userProfile;
 
 	$: currentSlug = $page.params.slug;
 
-	$: school = schoolConfigs[currentSlug];
+	// Check for AI decision overlap
+	$: aiDecision = $aiResults.decisions.find(
+		(d) => d.slug === currentSlug || d.school.toLowerCase().replace(/\s+/g, '-') === currentSlug
+	);
+
+	// If AI decision exists, override the static school config's decision
+	$: school = schoolConfigs[currentSlug]
+		? {
+				...schoolConfigs[currentSlug],
+				decision: aiDecision ? aiDecision.outcome : schoolConfigs[currentSlug].decision
+			}
+		: undefined;
 
 	$: pageTitle = school
 		? `${school.schoolName} Undergraduate Admissions Portal`
@@ -120,10 +154,72 @@
 		}
 	};
 
+	import { goto } from '$app/navigation';
+	import PortalSidebar from '$lib/components/portal/PortalSidebar.svelte';
+	import { aiEvaluationService } from '$lib/services/aiEvaluationService';
+
 	const handleViewUpdate = () => {
 		hasViewedUpdate = true;
 		portalDecisionViewed.set(true);
 	};
+
+	let showDeepDiveModal = false;
+	let deepDiveContent: any = null;
+	let deepDiveLoading = false;
+
+	async function handleDeepDive() {
+		if (!aiDecision) return;
+		showDeepDiveModal = true;
+		deepDiveLoading = true;
+
+		try {
+			// Check if we already have it in store or cache?
+			// For now, straight fetch via service
+			const result = await aiEvaluationService.requestDeepDive(
+				aiDecision,
+				$aiResults.applicantSummary || '',
+				'' // ED slug not relevant here if we just want explanation
+			);
+			deepDiveContent = result;
+		} catch (e) {
+			console.error(e);
+		} finally {
+			deepDiveLoading = false;
+		}
+	}
+
+	function handleSidebarHome() {
+		goto('/ai');
+	}
+
+	function handleSaveDecision() {
+		if (!aiDecision) return;
+
+		userProfile.update((u) => {
+			const existing = u.savedDecisions.find((d) => d.slug === currentSlug);
+			if (existing) return u; // Already saved
+
+			const newDecision = {
+				id: currentSlug + '-' + Date.now(),
+				school: school?.schoolName || aiDecision.school,
+				slug: currentSlug,
+				outcome: aiDecision.outcome,
+				dateSaved: new Date().toISOString(),
+				stats: {
+					academic: aiDecision.academic_score,
+					extracurricular: aiDecision.extracurricular_score,
+					fit: aiDecision.fit_score,
+					intellectual: aiDecision.intellectual_score,
+					character: aiDecision.character_score
+				}
+			};
+
+			return {
+				...u,
+				savedDecisions: [...u.savedDecisions, newDecision]
+			};
+		});
+	}
 </script>
 
 <svelte:head>
@@ -148,7 +244,16 @@
 	</main>
 {:else}
 	<!-- Outer wrapper (not <main>, so child templates can own <main> / main content) -->
-	<div class="min-h-screen bg-slate-200 text-slate-900 font-serif">
+	<div class="min-h-screen bg-slate-200 text-slate-900 font-serif relative">
+		{#if school}
+			<PortalSidebar
+				showDeepDive={!!aiDecision && aiDecision.academic_explanation !== 'N/A: random sim'}
+				decisionOutcome={school.decision}
+				on:deepDive={handleDeepDive}
+				on:home={handleSidebarHome}
+				on:save={handleSaveDecision}
+			/>
+		{/if}
 		{#if !authenticated}
 			<!-- LOGIN VIEW -->
 			<header class="bg-white border-b border-slate-300 mt-2">
@@ -285,6 +390,7 @@
 						schoolName={school.schoolName}
 						primaryColor={school.primaryColor}
 						footerDomain={school.footerDomain}
+						showDeepDive={!!aiDecision && aiDecision.academic_explanation !== 'N/A: random sim'}
 					/>
 				{:else}
 					<svelte:component
@@ -293,9 +399,103 @@
 						schoolName={school.schoolName}
 						primaryColor={school.primaryColor}
 						footerDomain={school.footerDomain}
+						showDeepDive={!!aiDecision && aiDecision.academic_explanation !== 'N/A: random sim'}
 					/>
 				{/if}
 			{/key}
 		{/if}
 	</div>
+
+	<!-- Deep Dive Modal -->
+	{#if showDeepDiveModal}
+		<div
+			class="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4"
+		>
+			<div
+				class="max-w-2xl w-full bg-white rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
+			>
+				<header class="bg-indigo-600 px-6 py-4 flex items-center justify-between shrink-0">
+					<h2 class="text-white font-bold text-lg flex items-center gap-2">
+						<svg
+							class="w-5 h-5 text-indigo-200"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke="currentColor"
+							><path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M13 10V3L4 14h7v7l9-11h-7z"
+							/></svg
+						>
+						AI Deep Dive Analysis
+					</h2>
+					<button
+						on:click={() => (showDeepDiveModal = false)}
+						class="text-indigo-100 hover:text-white transition-colors"
+					>
+						<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+							><path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M6 18L18 6M6 6l12 12"
+							/></svg
+						>
+					</button>
+				</header>
+
+				<div class="p-6 overflow-y-auto font-sans">
+					{#if deepDiveLoading}
+						<div class="flex flex-col items-center justify-center py-12 space-y-4">
+							<div
+								class="w-10 h-10 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin"
+							></div>
+							<p class="text-sm text-slate-500 font-medium">Analyzing application file...</p>
+						</div>
+					{:else if deepDiveContent}
+						<div class="space-y-6">
+							<div>
+								<h3 class="text-xl font-bold text-slate-900 mb-2">{deepDiveContent.school}</h3>
+								<div
+									class={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wide border ${
+										deepDiveContent.outcome === 'admit'
+											? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+											: deepDiveContent.outcome === 'deny'
+												? 'bg-rose-50 text-rose-700 border-rose-200'
+												: 'bg-amber-50 text-amber-700 border-amber-200'
+									}`}
+								>
+									{deepDiveContent.outcome === 'admit'
+										? 'Admitted'
+										: deepDiveContent.outcome === 'deny'
+											? 'Denied'
+											: 'Waitlisted'}
+								</div>
+							</div>
+
+							<div class="prose prose-sm prose-slate max-w-none">
+								<p class="whitespace-pre-wrap leading-relaxed">{deepDiveContent.explanation}</p>
+							</div>
+
+							{#if deepDiveContent.improvement_tips}
+								<div class="bg-indigo-50 border border-indigo-100 rounded-lg p-4">
+									<h4 class="text-sm font-bold text-indigo-900 uppercase tracking-widest mb-2">
+										Key Insights
+									</h4>
+									<p class="text-sm text-indigo-800 leading-relaxed whitespace-pre-wrap">
+										{deepDiveContent.improvement_tips}
+									</p>
+								</div>
+							{/if}
+						</div>
+					{:else}
+						<p class="text-center text-slate-500 py-10">
+							Use Deep Dive to uncover the "why" behind this decision.
+						</p>
+					{/if}
+				</div>
+			</div>
+		</div>
+	{/if}
 {/if}

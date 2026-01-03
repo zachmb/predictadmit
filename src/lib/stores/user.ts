@@ -15,6 +15,24 @@ export type TrackedSchool = {
   supplements: { prompt: string; draft: string; aiFeedback?: string }[];
 };
 
+
+export type SavedDecision = {
+  id: string; // uuid or slug
+  school: string;
+  slug: string;
+  outcome: 'admit' | 'deny' | 'waitlist' | 'defer';
+  dateSaved: string;
+  notes?: string;
+  // Snapshot of scores for the mind map
+  stats: {
+    academic: number;
+    extracurricular: number;
+    fit: number;
+    intellectual: number;
+    character: number;
+  };
+};
+
 export type UserProfile = {
   name: string;
   email: string;
@@ -29,7 +47,11 @@ export type UserProfile = {
     rigor: string;
   };
   schoolList: TrackedSchool[];
+<<<<<<< HEAD
   isSubmitting: boolean;
+=======
+  savedDecisions: SavedDecision[];
+>>>>>>> cc39bb1ad6d8333d6608035c04e03bd6534a8301
 };
 
 export const defaultProfile: UserProfile = {
@@ -46,8 +68,13 @@ export const defaultProfile: UserProfile = {
     rigor: ''
   },
   schoolList: [],
+<<<<<<< HEAD
   isSubmitting: false
+=======
+  savedDecisions: []
+>>>>>>> cc39bb1ad6d8333d6608035c04e03bd6534a8301
 };
+
 
 function loadInitial(): UserProfile {
   if (!browser) return defaultProfile;

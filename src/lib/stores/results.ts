@@ -1,5 +1,9 @@
 import { writable, derived } from 'svelte/store';
+<<<<<<< HEAD
 import { browser } from '$app/environment'; 
+=======
+import { browser } from '$app/environment';
+>>>>>>> cc39bb1ad6d8333d6608035c04e03bd6534a8301
 
 export type DecisionOutcome = 'admit' | 'deny' | 'waitlist' | 'defer';
 
@@ -20,12 +24,19 @@ export type AiDecision = {
   improvement_tips: string; // NEW
 };
 
+
 export type AiResultsPayload = {
   decisions: AiDecision[];
   raw?: any;
+  applicantSummary?: string;
+  isEvaluating: boolean;
+  progress: number; // 0 to 100
 };
 
+const AI_PERSIST_KEY = 'predictadmit_ai_results_v2';
+
 function createResultsStore() {
+<<<<<<< HEAD
   // 1. Initial Data: Check localStorage if in the browser
   const stored = browser ? localStorage.getItem('ai_results_cache') : null;
   const initialValue: AiResultsPayload = stored 
@@ -49,18 +60,109 @@ function createResultsStore() {
         decisions: [...prev.decisions, decision],
         raw: rawPayload ?? prev.raw
       }));
+=======
+  // Try to load from localStorage
+  let initial: AiResultsPayload = {
+    decisions: [],
+    raw: null,
+    applicantSummary: '',
+    isEvaluating: false,
+    progress: 0
+  };
+
+
+
+  if (browser && typeof localStorage !== 'undefined') {
+    const stored = localStorage.getItem(AI_PERSIST_KEY);
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored);
+        // Only restore data, not ephemeral state like isEvaluating
+        initial = {
+          ...initial,
+          ...parsed,
+          isEvaluating: false,
+          progress: parsed.decisions?.length ? 100 : 0
+        };
+      } catch (e) {
+        console.error('Failed to parse stored AI results', e);
+      }
+    }
+  }
+
+  const { subscribe, set, update } = writable<AiResultsPayload>(initial);
+
+  return {
+    subscribe,
+
+    startEvaluation: () => {
+      update(s => ({ ...s, isEvaluating: true, progress: 0, decisions: [], applicantSummary: '' }));
+>>>>>>> cc39bb1ad6d8333d6608035c04e03bd6534a8301
     },
-    setFromApi: (payload: any) => {
-      set({
-        decisions: payload.decisions ?? [],
-        raw: payload
+
+    addDecision: (decision: AiDecision, rawPayload?: any) => {
+      update((prev) => {
+        const nextDecisions = [...prev.decisions, decision];
+        // simple progress estimation based on decision count (assuming ~20 schools)
+        // You might want to pass in the total count to be more accurate
+        const nextProgress = Math.min(95, Math.floor((nextDecisions.length / 20) * 100));
+
+        const nextState = {
+          ...prev,
+          decisions: nextDecisions,
+          raw: rawPayload ?? prev.raw,
+          applicantSummary: rawPayload?.applicantSummary ?? prev.applicantSummary,
+          progress: nextProgress
+        };
+
+        if (browser && typeof localStorage !== 'undefined') {
+          // Don't save isEvaluating to disk usually, but we save data
+          localStorage.setItem(AI_PERSIST_KEY, JSON.stringify({
+            decisions: nextState.decisions,
+            raw: nextState.raw,
+            applicantSummary: nextState.applicantSummary
+          }));
+        }
+        return nextState;
       });
     },
+
+    finishEvaluation: () => {
+      update(s => ({ ...s, isEvaluating: false, progress: 100 }));
+    },
+
+    setFromApi: (payload: any) => {
+      const nextState = {
+        decisions: payload.decisions ?? [],
+        raw: payload,
+        applicantSummary: payload.applicantSummary ?? '',
+        isEvaluating: false,
+        progress: 100
+      };
+      set(nextState);
+      if (browser && typeof localStorage !== 'undefined') {
+        localStorage.setItem(AI_PERSIST_KEY, JSON.stringify({
+          decisions: nextState.decisions,
+          raw: nextState.raw,
+          applicantSummary: nextState.applicantSummary
+        }));
+      }
+    },
+
     setDecisions: (decisions: AiDecision[]) =>
       update((prev) => ({ ...prev, decisions })),
+<<<<<<< HEAD
     clear: () => {
       set({ decisions: [], raw: null });
       if (browser) localStorage.removeItem('ai_results_cache');
+=======
+
+    clear: () => {
+      set({ decisions: [], raw: null, applicantSummary: '', isEvaluating: false, progress: 0 });
+      if (browser && typeof localStorage !== 'undefined') {
+        localStorage.removeItem(AI_PERSIST_KEY);
+      }
+>>>>>>> cc39bb1ad6d8333d6608035c04e03bd6534a8301
     }
   };
 }

@@ -6,7 +6,7 @@
 	<title>About - PredictAdmit</title>
 </svelte:head>
 
-<main class="min-h-screen bg-slate-50 font-sans text-slate-900">
+<main class="min-h-screen bg-slate-50 font-sans text-slate-900 animate-enter">
 	<!-- Hero Section -->
 	<section class="max-w-4xl mx-auto px-6 py-24 text-center">
 		<h1 class="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-6">

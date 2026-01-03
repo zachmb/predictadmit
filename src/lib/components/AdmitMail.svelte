@@ -454,7 +454,7 @@
 								<div class="text-[11px] text-slate-700 mb-3 border-b border-slate-300 pb-2">
 									<div>
 										<span class="font-semibold">From:</span>
-										{displayName} &lt;{displayEmail}&gt;
+										Dread Pirate Roberts &lt;rossulbricht@gmail.com&gt;
 									</div>
 									<div>
 										<span class="font-semibold">To:</span>

@@ -4,6 +4,7 @@
 	export let schoolName: string;
 	export let primaryColor: string; // Duke Blue: #003366
 	export let footerDomain: string;
+	export let showDeepDive = false;
 	import { goto } from '$app/navigation';
 
 import { decisionsBySlug } from '$lib/stores/results';
@@ -17,6 +18,7 @@ const viewAnalysis = () => {
 
 <div class="min-h-screen bg-white text-gray-800 font-sans p-6">
 	<main class="max-w-3xl mx-auto mt-10">
+		{#if showDeepDive}
 		<div class="mb-6 flex justify-end">
 			<button 
 			  on:click={viewAnalysis}
@@ -27,6 +29,7 @@ const viewAnalysis = () => {
 			  Deep Dive: Why did I get {$decisionsBySlug['duke']}?
 			</button>
 		  </div>
+		{/if}
 		<div class="border-b-2 pb-4 mb-8" style="border-color: {primaryColor};">
 			<div class="flex items-center">
 				<div

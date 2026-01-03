@@ -46,9 +46,7 @@
 					<li><a href="/terms" class="hover:text-slate-900 transition-colors">Terms</a></li>
 					<li><a href="/privacy" class="hover:text-slate-900 transition-colors">Privacy</a></li>
 					<li>
-						<a href="mailto:hello@predictadmit.com" class="hover:text-slate-900 transition-colors"
-							>Contact</a
-						>
+						<a href="/contact" class="hover:text-slate-900 transition-colors">Contact</a>
 					</li>
 				</ul>
 			</div>

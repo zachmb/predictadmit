@@ -3,6 +3,7 @@
 	import SchoolTracker from '$lib/components/pro/SchoolTracker.svelte';
 	import SupplementalAnalyzer from '$lib/components/pro/SupplementalAnalyzer.svelte';
 	import SiteFooter from '$lib/components/layout/SiteFooter.svelte';
+	import MindMap from '$lib/components/pro/MindMap.svelte';
 	import { goto } from '$app/navigation';
 	import { userProfile } from '$lib/stores/user';
 	import { signIn } from '@auth/sveltekit/client';
@@ -91,7 +92,7 @@
 	<title>PredictAdmit Pro - {isPro ? 'My Hub' : 'Upgrade'}</title>
 </svelte:head>
 
-<main class="min-h-screen bg-slate-50 flex flex-col font-sans text-slate-900">
+<main class="min-h-screen bg-slate-50 flex flex-col font-sans text-slate-900 animate-enter">
 	<div class="flex-1 flex flex-col">
 		{#if hasAccess}
 			<!-- PRO HUB VIEW -->
@@ -254,9 +255,26 @@
 						<SupplementalAnalyzer />
 					</div>
 				</div>
+
+				<!-- NEW: Mind Map Section (Pro View) -->
+				<div class="space-y-6 pt-8 border-t border-slate-200">
+					<div class="flex items-end justify-between border-b border-slate-200 pb-4">
+						<h2 class="text-2xl font-bold text-slate-900">Evaluation Mind Map</h2>
+					</div>
+					<MindMap savedDecisions={$userProfile.savedDecisions} />
+				</div>
 			</div>
 		{:else}
-			<!-- SALES PAGE (Existing Content) -->
+			<!-- Non-Pro View -->
+			{#if $userProfile.savedDecisions.length > 0}
+				<div class="bg-slate-50 border-b border-slate-200">
+					<div class="max-w-7xl mx-auto px-6 py-12">
+						<MindMap savedDecisions={$userProfile.savedDecisions} />
+					</div>
+				</div>
+			{/if}
+
+			<!-- SALES PAGE -->
 			<section class="flex-1 flex flex-col md:flex-row bg-white">
 				<!-- Feature Selling Point Side (Left) -->
 				<div class="p-8 md:p-20 flex-1 space-y-12 flex flex-col justify-center">
@@ -316,11 +334,8 @@
 									class="w-5 h-5"
 								>
 									<path
-										d="M10 2a.75.75 0 01.75.75v1.5a.75.75 0 001.5 0v-1.5a.75.75 0 011.5 0v1.5a.75.75 0 001.5 0v-1.5a.75.75 0 011.5 0v1.5A2.25 2.25 0 0118.75 6.25v2.5a.75.75 0 001.5 0v-2.5A3.75 3.75 0 0016.5 2.5V1.75a.75.75 0 00-1.5 0v.75a2.25 2.25 0 01-4.5 0v-.75a.75.75 0 00-1.5 0v.75A3.75 3.75 0 005.25 6.25v11A2.25 2.25 0 007.5 19.5h5a2.25 2.25 0 002.25-2.25v-1.19l-3.37-3.37a.75.75 0 00-1.06 1.06l1.964 1.964a.75.75 0 11-1.06 1.06l-2.5-2.5a.75.75 0 010-1.06l2.5-2.5a.75.75 0 011.06 1.06l-1.964 1.964H16.5a.75.75 0 01.75.75v2.25a.75.75 0 01-.75.75h-5A.75.75 0 0110.75 17.25v-11z"
-									/>
-									<path
 										fill-rule="evenodd"
-										d="M5.25 2.5A2.25 2.25 0 003 4.75v11a.75.75 0 001.5 0v-11A.75.75 0 015.25 4h9a.75.75 0 01.75.75v6.5a.75.75 0 001.5 0v-6.5A2.25 2.25 0 0014.25 2.5h-9z"
+										d="M10 2c-2.236 0-4.43.18-6.57.524C1.993 2.755 1 4.014 1 5.426v5.148c0 1.413.993 2.67 2.43 2.902.848.137 1.705.248 2.57.331v3.443a.75.75 0 001.28.53l3.58-3.579a.78.78 0 01.527-.224 41.202 41.202 0 005.183-.5c1.437-.232 2.43-1.49 2.43-2.903V5.426c0-1.413-.993-2.67-2.43-2.902A41.289 41.289 0 0010 2zm0 7a1 1 0 100-2 1 1 0 000 2zM8 8a1 1 0 11-2 0 1 1 0 012 0zm5 1a1 1 0 100-2 1 1 0 000 2z"
 										clip-rule="evenodd"
 									/>
 								</svg>
