@@ -1,5 +1,7 @@
 <script lang="ts">
     import { page } from '$app/stores';
+    import { goto } from '$app/navigation';
+    import { userProfile } from '$lib/stores/user';
     import { 
         aiResults, 
         academicExplanationsBySlug,
@@ -17,7 +19,11 @@
 
     const slug = $derived($page.params.slug ?? '');
     const schoolData = $derived($aiResults.decisions.find(d => d.slug === slug));
-    
+    $effect(() => {
+        if (schoolData && schoolData.academic_explanation === 'N/A: random sim') {
+            goto('/pro');
+        }
+    });
     // Updated outcome colors for higher contrast on light backgrounds
     const outcomeColors = {
         admit: 'text-emerald-600 border-emerald-600',
@@ -25,7 +31,14 @@
         waitlist: 'text-amber-600 border-amber-600',
         defer: 'text-blue-600 border-blue-600'
     };
-
+    const getPeekText = (text: string) => {
+        if (!text) return '';
+        return text.split(' ').slice(0, 3).join(' ') + ' ';
+    };
+    const getRemainingText = (text: string) => {
+        if (!text) return '';
+        return text.split(' ').slice(3).join(' ');
+    };
     const getRadarPoints = () => {
         const scores = [
             $academicScoresBySlug[slug] || 0,
@@ -47,6 +60,7 @@
     };
 </script>
 
+{#if schoolData && schoolData.academic_explanation !== 'N/A: random sim'}
 <div class="min-h-screen bg-slate-50 text-slate-700 p-4 md:p-8 font-sans">
     <header class="mb-8">
         <h1 class="text-3xl font-bold text-slate-900 mb-2">School Match & Ethos Check</h1>
@@ -140,16 +154,28 @@
                         <h3 class="text-rose-600 text-xs font-black uppercase tracking-widest border-l-2 border-rose-600 pl-3">Harsh Critique</h3>
                         
                         <div class="space-y-4 text-[13px] leading-relaxed italic text-slate-600">
-                            <p><strong class="text-slate-900 not-italic">Academic:</strong> {$academicExplanationsBySlug[slug]}</p>
-                            <p><strong class="text-slate-900 not-italic">Extracurricular:</strong> {$extracurricularExplanationsBySlug[slug]}</p>
-                            <p><strong class="text-slate-900 not-italic">Intellectual:</strong> {$intellectualExplanationsBySlug[slug]}</p>
-                            <p><strong class="text-slate-900 not-italic">Character:</strong> {$characterExplanationsBySlug[slug]}</p>
-                            <p><strong class="text-slate-900 not-italic">Fit:</strong> {$fitExplanationsBySlug[slug]}</p>
+                            {#each [
+                                { label: 'Academic', val: $academicExplanationsBySlug[slug] },
+                                { label: 'Extracurricular', val: $extracurricularExplanationsBySlug[slug] },
+                                { label: 'Intellectual', val: $intellectualExplanationsBySlug[slug] },
+                                { label: 'Character', val: $characterExplanationsBySlug[slug] },
+                                { label: 'Fit', val: $fitExplanationsBySlug[slug] }
+                            ] as item}
+                                <p>
+                                    <strong class="text-slate-900 not-italic">{item.label}:</strong> 
+                                    <span>{getPeekText(item.val)}</span>
+                                    <span class:blur-sm={!$userProfile.isPro} class:select-none={!$userProfile.isPro}>
+                                        {getRemainingText(item.val)}
+                                    </span>
+                                </p>
+                            {/each}
                         </div>
-
+                        
                         <div class="pt-6 border-t border-slate-100">
                             <h3 class="text-emerald-600 text-xs font-black uppercase tracking-widest mb-4">Key Improvements</h3>
-                            <div class="text-xs text-slate-700 space-y-2 whitespace-pre-line">
+                            <div class="text-xs text-slate-700 space-y-2 whitespace-pre-line" 
+                                 class:blur-sm={!$userProfile.isPro} 
+                                 class:select-none={!$userProfile.isPro}>
                                 {$improvementTipsBySlug[slug]}
                             </div>
                         </div>
@@ -159,3 +185,4 @@
         </div>
     {/if}
 </div>
+{/if}

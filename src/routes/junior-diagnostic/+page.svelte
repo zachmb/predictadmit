@@ -1,7 +1,8 @@
+<script lang="ts">
 import SiteFooter from '$lib/components/layout/SiteFooter.svelte'; import Button from
 '$lib/components/common/Button.svelte'; import Card from '$lib/components/common/Card.svelte';
 import {goto} from '$app/navigation';
-
+</script>
 <svelte:head>
 	<title>Junior Diagnostic | PredictAdmit</title>
 </svelte:head>

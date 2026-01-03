@@ -1,82 +1,105 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
+    import { goto } from '$app/navigation';
+    import { get } from 'svelte/store';
+    import SiteFooter from '$lib/components/layout/SiteFooter.svelte';
+    import { 
+        aiResults, 
+        decisionsBySlug, 
+        manualOverrideMode,
+        type DecisionOutcome,
+        type AiDecision 
+    } from '$lib/stores/results';
+    import { schoolConfigs } from '$lib/config/schools';
 
-	import SiteFooter from '$lib/components/layout/SiteFooter.svelte';
-	import { decisionsBySlug, manualOverrideMode } from '$lib/stores/results';
+    type DecisionMode = 'random' | 'accepted' | 'denied' | 'waitlisted' | 'deferred';
 
-	import { schoolConfigs } from '$lib/config/schools';
+    const initialPortals = Object.values(schoolConfigs)
+        .map((s) => ({
+            name: s.schoolName,
+            slug: s.slug,
+            color: s.primaryColor,
+            decision: 'random' as DecisionMode
+        }))
+        .sort((a, b) => a.name.localeCompare(b.name));
 
-	type DecisionMode = 'random' | 'accepted' | 'denied' | 'waitlisted' | 'deferred';
+    let portals = $state([...initialPortals]);
+    let lastMode = $state('random');
 
-	// Generate initial list from config, sorted alphabetically
-	const initialPortals = Object.values(schoolConfigs)
-		.map((s) => ({
-			name: s.schoolName,
-			slug: s.slug,
-			color: s.primaryColor,
-			decision: 'random' as DecisionMode
-		}))
-		.sort((a, b) => a.name.localeCompare(b.name));
+    $effect(() => {
+        const mode = $manualOverrideMode;
+        
+        if (mode !== lastMode && (mode === 'accepted' || mode === 'denied')) {
+            const status: DecisionOutcome = mode === 'accepted' ? 'admit' : 'deny';
+            const currentResults = get(aiResults);
+            
+            // LOGIC FIX: 
+            // If the simulation HAS NOT run, currentResults.decisions is empty.
+            // We need to create the array if it's empty, or map it if it exists.
+            
+            let updatedDecisions: AiDecision[] = [];
 
-	let portals = [...initialPortals];
+            if (currentResults.decisions.length === 0) {
+                // CREATE new decisions for all schools if nothing exists yet
+                updatedDecisions = initialPortals.map(p => ({
+                    school: p.name,
+                    slug: p.slug,
+                    outcome: status,
+                    academic_score: 0,
+                    academic_explanation: 'N/A: random sim',
+                    extracurricular_score: 0,
+                    extracurricular_explanation: 'Forced by Simulate Mode',
+                    fit_score: 0,
+                    fit_explanation: 'Forced by Simulate Mode',
+                    intellectual_score: 0,
+                    intellectual_explanation: 'Forced by Simulate Mode',
+                    character_score: 0,
+                    character_explanation: 'Forced by Simulate Mode',
+                    improvement_tips: ''
+                }));
+            } else {
+                // UPDATE existing decisions if the simulation already ran
+                updatedDecisions = currentResults.decisions.map(d => ({
+                    ...d,
+                    outcome: status
+                }));
+            }
+            
+            aiResults.setDecisions(updatedDecisions);
+            lastMode = mode;
+        }
 
-	// Sync with persistent store AND manual override mode
-	$: {
-		const mode = $manualOverrideMode;
-		const decisions = $decisionsBySlug;
+        // Keep local UI array in sync with the derived map
+        const decisions = $decisionsBySlug;
+        portals = initialPortals.map((p) => {
+            const outcome = decisions[p.slug];
+            if (outcome) {
+                const mappedMode: DecisionMode = outcome === 'admit' ? 'accepted' : 'denied';
+                return { ...p, decision: mappedMode };
+            }
+            return p;
+        });
+    });
 
-		portals = initialPortals.map((p) => {
-			// 1. Global Override
-			if (mode === 'accepted') {
-				return { ...p, decision: 'accepted' };
-			}
-			if (mode === 'denied') {
-				return { ...p, decision: 'denied' };
-			}
+    const handlePortalClick = (slug: string, currentDecision: DecisionMode) => {
+        const mode = $manualOverrideMode;
+        const status = mode === 'accepted' ? 'admit' : (mode === 'denied' ? 'deny' : currentDecision);
+        sessionStorage.setItem(`decision-${slug}`, status);
+        goto(`/portals/${slug}`);
+    };
 
-			// 2. Simulation Results
-			const outcome = decisions[p.slug];
-			if (outcome) {
-				const mappedMode: DecisionMode = outcome === 'admit' ? 'accepted' : 'denied';
-				return { ...p, decision: mappedMode };
-			}
+    const getDecisionLabel = (decision: DecisionMode) => {
+        if (decision === 'accepted') return 'Accepted';
+        if (decision === 'denied') return 'Denied';
+        return '';
+    };
 
-			// 3. Default
-			return p;
-		});
-	}
-
-	const handlePortalClick = (slug: string, currentDecision: DecisionMode) => {
-		const mode = $manualOverrideMode;
-		if (mode !== 'random') {
-			sessionStorage.setItem(`decision-${slug}`, mode === 'accepted' ? 'admit' : 'deny');
-		} else {
-			sessionStorage.setItem(`decision-${slug}`, currentDecision);
-		}
-		goto(`/portals/${slug}`);
-	};
-
-	const getDecisionLabel = (decision: DecisionMode) => {
-		switch (decision) {
-			case 'accepted':
-				return 'Accepted';
-			case 'denied':
-				return 'Denied';
-			default:
-				return '';
-		}
-	};
-
-	const getDecisionColor = (decision: DecisionMode) => {
-		switch (decision) {
-			case 'accepted':
-				return 'text-green-600 bg-green-50 border-green-200';
-			case 'denied':
-				return 'text-red-600 bg-red-50 border-red-200';
-			default:
-				return 'text-slate-600 bg-slate-50 border-slate-200';
-		}
-	};
+    const getDecisionColor = (decision: DecisionMode) => {
+        switch (decision) {
+            case 'accepted': return 'text-green-600 bg-green-50 border-green-200';
+            case 'denied': return 'text-red-600 bg-red-50 border-red-200';
+            default: return 'text-slate-600 bg-slate-50 border-slate-200';
+        }
+    };
 </script>
 
 <svelte:head>

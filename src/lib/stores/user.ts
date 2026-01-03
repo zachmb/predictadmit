@@ -29,6 +29,7 @@ export type UserProfile = {
     rigor: string;
   };
   schoolList: TrackedSchool[];
+  isSubmitting: boolean;
 };
 
 export const defaultProfile: UserProfile = {
@@ -44,7 +45,8 @@ export const defaultProfile: UserProfile = {
     awards: '',
     rigor: ''
   },
-  schoolList: []
+  schoolList: [],
+  isSubmitting: false
 };
 
 function loadInitial(): UserProfile {

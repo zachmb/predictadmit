@@ -12,12 +12,13 @@
 	import Card from '$lib/components/common/Card.svelte';
 	import Button from '$lib/components/common/Button.svelte';
 
+	
 	// University search state
 	let searchQuery = '';
 	let showSearchResults = false;
 	let filteredUniversities: typeof portals = [];
 	let selectedIndex = -1;
-
+	$: aiDecisions = $aiResults.decisions;
 	// Filter universities as user types
 	$: {
 		const query = searchQuery.trim().toLowerCase();
@@ -158,7 +159,8 @@
 
 	let hasApplied = false;
 	let hasSavedProfile = false;
-	let visiblePortals: PortalEmail[] = [];
+
+	let visiblePortals: (PortalEmail & { outcome?: string })[] = [];
 	let isApplying = false;
 
 	let applicationPhase: ApplicationPhase = 'idle';
@@ -182,6 +184,27 @@
 
 	const PERSIST_KEY = 'predictadmit_state_v1';
 
+	$: {
+    if (hasApplied && $aiResults.decisions.length > 0) {
+        const unlockedSlugs = new Set(visiblePortals.map(p => p.slug));
+        
+        visiblePortals = $aiResults.decisions
+            .filter(d => unlockedSlugs.has(d.slug))
+            .map(decision => {
+                const basePortal = portals.find(p => p.slug === decision.slug);
+                if (!basePortal) return null;
+
+                // Use "as any" or "as PortalEmail" here to bypass the strict check
+                // if you can't edit the original PortalEmail type definition.
+                return {
+                    ...basePortal,
+                    outcome: decision.outcome,
+                    received: getReceivedLabel(basePortal as any)
+                } as any; 
+            })
+            .filter((p): p is PortalEmail => p !== null);
+    }
+}
 	const saveState = () => {
 		if (typeof localStorage === 'undefined') return;
 
@@ -211,6 +234,10 @@
 		if (typeof localStorage === 'undefined') return;
 		const raw = localStorage.getItem(PERSIST_KEY);
 		if (!raw) return;
+		if (rdTimelineStarted && visiblePortals.length < portals.length) {
+    // If we left while emails were still dripping, resume the drip
+    startRdEmailTimeline(currentEdPortal);
+}
 
 		try {
 			const state = JSON.parse(raw) as Partial<PersistedState>;
@@ -379,25 +406,30 @@
 	};
 
 	const startRdEmailTimeline = (edPortal: PortalEmail | null) => {
-		const rdPortals = edPortal ? portals.filter((p) => p.slug !== edPortal.slug) : portals;
+    const rdPortals = edPortal ? portals.filter((p) => p.slug !== edPortal.slug) : portals;
 
-		rdPortals.forEach((portal, index) => {
-			const timeoutId = window.setTimeout(
-				() => {
-					// avoid duplicates
-					if (!visiblePortals.some((vp) => vp.slug === portal.slug)) {
-						visiblePortals = [...visiblePortals, portal];
+    rdPortals.forEach((portal, index) => {
+        const timeoutId = window.setTimeout(() => {
+    if (!visiblePortals.some((vp) => vp.slug === portal.slug)) {
+        const decision = $aiResults.decisions.find(d => d.slug === portal.slug);
+        
+        // We create a "Full" object that satisfies all requirements
+        const newPortalEntry = {
+            ...portal,
+            outcome: decision?.outcome || 'deny',
+            // FIX: Use the string-returning helper, NOT 'true'
+            received: getReceivedLabel(portal as PortalEmail) 
+        };
 
-						// 🔐 NEW: persist updated inbox so it survives navigation
-						saveState();
-					}
-				},
-				(index + 1) * 1000
-			);
+        // We use 'as any' here just to stop the array spread from complaining
+        visiblePortals = [...visiblePortals, newPortalEntry as any];
+        saveState();
+    }
+}, (index + 1) * 1000);
 
-			applyTimeoutIds.push(timeoutId);
-		});
-	};
+        applyTimeoutIds.push(timeoutId);
+    });
+};
 
 	const formatTime = (hour24: number, minute: number) => {
 		const isPM = hour24 >= 12;

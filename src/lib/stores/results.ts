@@ -1,4 +1,5 @@
 import { writable, derived } from 'svelte/store';
+import { browser } from '$app/environment'; 
 
 export type DecisionOutcome = 'admit' | 'deny' | 'waitlist' | 'defer';
 
@@ -25,18 +26,28 @@ export type AiResultsPayload = {
 };
 
 function createResultsStore() {
-  const { subscribe, set, update } = writable<AiResultsPayload>({
-    decisions: [],
-    raw: null
-  });
+  // 1. Initial Data: Check localStorage if in the browser
+  const stored = browser ? localStorage.getItem('ai_results_cache') : null;
+  const initialValue: AiResultsPayload = stored 
+    ? JSON.parse(stored) 
+    : { decisions: [], raw: null };
+
+  const { subscribe, set, update } = writable<AiResultsPayload>(initialValue);
+
+  // 2. Auto-Sync: Save to localStorage whenever the store changes
+  if (browser) {
+    subscribe((value) => {
+      localStorage.setItem('ai_results_cache', JSON.stringify(value));
+    });
+  }
 
   return {
     subscribe,
     addDecision: (decision: AiDecision, rawPayload?: any) => {
       update((prev) => ({
         ...prev,
-        decisions: [...prev.decisions, decision], // Appends new school to the list
-        raw: rawPayload ?? prev.raw // Keeps track of latest metadata
+        decisions: [...prev.decisions, decision],
+        raw: rawPayload ?? prev.raw
       }));
     },
     setFromApi: (payload: any) => {
@@ -47,7 +58,10 @@ function createResultsStore() {
     },
     setDecisions: (decisions: AiDecision[]) =>
       update((prev) => ({ ...prev, decisions })),
-    clear: () => set({ decisions: [], raw: null })
+    clear: () => {
+      set({ decisions: [], raw: null });
+      if (browser) localStorage.removeItem('ai_results_cache');
+    }
   };
 }
 

@@ -3,7 +3,6 @@
 	import { signIn } from '@auth/sveltekit/client';
 	import { goto } from '$app/navigation';
 	import type { PageData } from './$types';
-
 	import SiteFooter from '$lib/components/layout/SiteFooter.svelte';
 
 	// NEW: bring in AdmitMail + types from the existing simulator
@@ -78,13 +77,13 @@
 	let hasDeepDiveAccess = false;
 
 	// Google sign-in (real: derived from Auth.js session)
-	let googleSignedIn = false;
+	let googleSignedIn = true;
 	let googleEmail = '';
 	let googleName = '';
 
 	$: {
 		googleSignedIn = !!session?.user;
-		googleEmail = (session?.user?.email as string) ?? '';
+	googleEmail = (session?.user?.email as string) ?? '';
 		googleName = (session?.user?.name as string) ?? '';
 	}
 
@@ -134,6 +133,7 @@
 			if (promoCodeInput.trim() === 'strawberrylemonade') {
 				hasUsedFreeSimulation = false;
 				hasDeepDiveAccess = true;
+				userProfile.update((u) => ({ ...u, isPro: true }));
 				promoCodeInput = ''; // Clear input on success
 				alert('Promo code applied! Deep Dive unlocked.');
 			} else {
@@ -144,7 +144,7 @@
 
 	let edSlug: string = '';
 
-	let isSubmitting = false;
+
 	let aiError = '';
 	let aiDecisions: AiDecision[] = [];
 
@@ -168,8 +168,7 @@
 	let searchQuery = '';
 	let filteredPortals: PortalEmail[] = [];
 	let sortedVisiblePortals: PortalEmail[] = [];
-	let visiblePortals: PortalEmail[] = [];
-
+	$: visiblePortals = $aiResults.decisions.map(decisionToPortalEmail);
 	// ED / RD state (minimal in AI mode)
 	let currentEdPortal: PortalEmail | null = null;
 	let edEmailMustBeViewed = false;
@@ -206,7 +205,7 @@
 
 	// Keep sortedVisiblePortals in sync with visiblePortals
 	$: sortedVisiblePortals = [...visiblePortals];
-
+	
 	// Keep filteredPortals in sync with searchQuery
 	$: {
 		const q = searchQuery.trim().toLowerCase();
@@ -415,7 +414,7 @@
 			return;
 		}
 
-		isSubmitting = true;
+		userProfile.update(u => ({ ...u, isSubmitting: true }));
 		deepDiveItems = [];
 
 		try {
@@ -465,7 +464,7 @@
                 applicantSummary = data.applicantSummary;
 
                 // 6. Update the AdmitMail inbox in real-time
-                visiblePortals = aiDecisions.map(decisionToPortalEmail);
+                // This will automatically update the inbox every time a new school is added
             }
 
             // --- Post-Loop Logic (Finalizing the run) ---
@@ -503,7 +502,7 @@
             console.error(err);
             aiError = 'Network or server error while calling the AI evaluator.';
         } finally {
-            isSubmitting = false;
+			userProfile.update(u => ({ ...u, isSubmitting: false }));
         }
 	}
 
@@ -938,7 +937,7 @@
 							<div class="flex flex-col sm:flex-row items-center gap-4 pt-4">
 								<button
 									type={googleSignedIn ? 'submit' : 'button'}
-									disabled={isSubmitting}
+									disabled={$userProfile.isSubmitting}
 									on:click={!googleSignedIn
 										? () => signIn('google', { callbackUrl: '/ai' })
 										: undefined}
@@ -959,7 +958,7 @@
 										>
 											{#if !googleSignedIn}
 												<span>Sign in with Google to Simulate</span>
-											{:else if isSubmitting}
+											{:else if $userProfile.isSubmitting}
 												<span class="flex items-center gap-2">
 													<span
 														class="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white"
@@ -1019,7 +1018,7 @@
 			</section>
 
 			<!-- AIMail Inbox (now powered by AdmitMail + portal-style status emails) -->
-			{#if hasUsedFreeSimulation || isSubmitting}
+			{#if hasUsedFreeSimulation || $userProfile.isSubmitting}
 				<section
 					class="rounded-2xl border border-slate-200 bg-white shadow-xl overflow-hidden mt-8"
 				>
@@ -1046,7 +1045,7 @@
 						</div>
 					</div>
 
-					{#if isSubmitting}
+					{#if $userProfile.isSubmitting}
 						<div
 							class="border-b border-slate-100 bg-slate-50 px-6 py-3 flex items-center gap-3 text-xs text-slate-600"
 						>

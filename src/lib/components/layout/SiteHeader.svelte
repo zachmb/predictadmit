@@ -58,10 +58,18 @@
 					>Pro</a
 				>
 				<a
+					href="/essay-grader"
+					class="text-base font-semibold text-slate-600 hover:text-slate-900 transition-colors"
+					>Grader
+					</a>
+
+				<a
+				
 					href="/about"
 					class="text-base font-semibold text-slate-600 hover:text-slate-900 transition-colors"
 					>About</a
 				>
+				
 			</nav>
 
 			<div class="flex items-center gap-3">
