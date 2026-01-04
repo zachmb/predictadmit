@@ -415,6 +415,8 @@
 		}
 
 		userProfile.update(u => ({ ...u, isSubmitting: true }));
+		userProfile.update((u) => ({ ...u, usingAI: true }));
+
 		deepDiveItems = [];
 
 		try {

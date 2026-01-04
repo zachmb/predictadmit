@@ -1,7 +1,24 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
   import { decisionsBySlug } from '$lib/stores/results';
+  import { signIn } from '@auth/sveltekit/client';
 
+  import { userProfile } from '$lib/stores/user';
+	import { page } from '$app/stores';
+
+  
+
+	$: session = $page.data.session;
+
+  let googleSignedIn = true;
+	let googleEmail = '';
+	let googleName = '';
+
+	$: {
+		googleSignedIn = !!session?.user;
+	googleEmail = (session?.user?.email as string) ?? '';
+		googleName = (session?.user?.name as string) ?? '';
+	}
   export let applicantName: string = 'Applicant';
   const viewAnalysis = () => {
     goto('/results/ucberkeley');
@@ -10,7 +27,10 @@
 
 <div class="min-h-screen bg-white p-8 font-serif">
   <div class="max-w-2xl mx-auto">
+    {#if !googleSignedIn || !$userProfile.usingAI}
+      {:else}
     <div class="mb-6 flex justify-end">
+      
       <button 
         on:click={viewAnalysis}
         class="group flex items-center px-4 py-2 bg-[#003262] text-white rounded-lg text-sm font-sans font-bold hover:bg-slate-800 transition-all shadow-md active:scale-95"
@@ -19,7 +39,9 @@
         </svg>
         Deep Dive: Why did I get {$decisionsBySlug['ucberkeley']}?
       </button>
+      
     </div>
+    {/if}
     <!-- Letterhead - UC Berkeley Blue and Gold -->
     <div class="border-b-4 border-[#003262] pb-4 mb-8">
       <div class="flex items-center mb-4">

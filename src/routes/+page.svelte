@@ -555,6 +555,8 @@
 	};
 
 	const handleApply = () => {
+		userProfile.update((u) => ({ ...u, usingAI: false }));
+
 		if (!canApply) {
 			saveMessage = 'Fill out name, email, and password first.';
 			return;

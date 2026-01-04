@@ -2,6 +2,8 @@
     import { goto } from '$app/navigation';
     import { get } from 'svelte/store';
     import SiteFooter from '$lib/components/layout/SiteFooter.svelte';
+	import { userProfile } from '$lib/stores/user';
+
     import { 
         aiResults, 
         decisionsBySlug, 
@@ -46,6 +48,8 @@
         manualOverrideMode.set(newMode);
 
         if (newMode === 'accepted' || newMode === 'denied') {
+			userProfile.update((u) => ({ ...u, usingAI: false }));
+
             const status: DecisionOutcome = newMode === 'accepted' ? 'admit' : 'deny';
             const currentResults = get(aiResults);
             
@@ -58,7 +62,7 @@
                     slug: p.slug,
                     outcome: status,
                     academic_score: 0,
-                    academic_explanation: 'Forced via selector',
+                    academic_explanation: 'N/A: random sim',
                     extracurricular_score: 0,
                     extracurricular_explanation: 'Forced via selector',
                     fit_score: 0,
