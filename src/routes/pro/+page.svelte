@@ -96,6 +96,9 @@
 
 <main class="min-h-screen bg-slate-50 flex flex-col font-sans text-slate-900">
 	<div class="flex-1 flex flex-col">
+		{#if !hasAccess}
+		
+
 			<!-- SALES PAGE (Existing Content) -->
 			<section class="flex-1 flex flex-col md:flex-row bg-white">
 				<!-- Feature Selling Point Side (Left) -->
@@ -383,7 +386,7 @@
 					</div>
 				</div>
 			</section>
-		
+		{/if}
 	</div>
 	<SiteFooter />
 </main>

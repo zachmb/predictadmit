@@ -65,7 +65,8 @@
 	function handleUniversitySelect(slug: string) {
         const mode = get(manualOverrideMode); // 'accepted' or 'denied'
         const status: DecisionOutcome = mode === 'accepted' ? 'admit' : 'deny';
-        
+		userProfile.update((u) => ({ ...u, usingAI: false }));
+
         // 1. Get current results snapshot
         const currentResults = get(aiResults);
         const schoolConfig = schoolConfigs[slug];
