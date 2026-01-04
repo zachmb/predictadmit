@@ -62,6 +62,9 @@
 	$: session = $page.data.session;
 	$: isPro = $userProfile.isPro;
 	$: hasAccess = session && isPro;
+	$: if (hasAccess) {
+        goto('/essay-grader');
+    }
 
 	// Dynamic Class Years Logic
 	$: {
@@ -93,169 +96,6 @@
 
 <main class="min-h-screen bg-slate-50 flex flex-col font-sans text-slate-900">
 	<div class="flex-1 flex flex-col">
-		{#if hasAccess}
-			<!-- PRO HUB VIEW -->
-			<div class="max-w-7xl mx-auto w-full px-6 py-12 space-y-16">
-				<header
-					class="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-200 pb-8 gap-6"
-				>
-					<div>
-						<div class="flex items-center gap-2 mb-2">
-							<span
-								class="inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-emerald-700"
-							>
-								<span class="h-1.5 w-1.5 rounded-full bg-emerald-600"></span>
-								Active Pro Member
-							</span>
-						</div>
-						<h1 class="text-3xl font-bold text-slate-900">Admissions Command Center</h1>
-						<p class="text-slate-600 mt-2">
-							Manage your application strategy, track schools, and analyze essays.
-						</p>
-					</div>
-					<div class="flex gap-4">
-						<button
-							on:click={() => goto('/account')}
-							class="text-sm font-semibold text-slate-600 hover:text-slate-900"
-						>
-							Manage Account
-						</button>
-						<button
-							on:click={() => goto('/ai')}
-							class="rounded-full bg-slate-900 px-6 py-2.5 text-sm font-bold text-white shadow-lg hover:bg-slate-800 transition-all"
-						>
-							Run AI Simulation
-						</button>
-					</div>
-				</header>
-
-				<!-- TOP ROW: Master Profile & Analytics -->
-				<div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
-					<!-- LEFT: Master Profile Form -->
-					<div class="lg:col-span-2 space-y-8">
-						<div class="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm">
-							<div class="flex items-center justify-between mb-6">
-								<h2 class="text-xl font-bold text-slate-900">Master Application Profile</h2>
-								<button
-									on:click={saveProfile}
-									class="text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-lg transition-colors {isSaved
-										? 'bg-emerald-100 text-emerald-700'
-										: 'bg-slate-100 text-slate-600 hover:bg-slate-200'}"
-								>
-									{isSaved ? 'Saved!' : 'Save Changes'}
-								</button>
-							</div>
-
-							<div class="space-y-6">
-								<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-									<div class="space-y-2">
-										<label class="text-xs font-bold uppercase tracking-wider text-slate-500"
-											>GPA / Stats</label
-										>
-										<input
-											bind:value={gpa}
-											type="text"
-											placeholder="e.g. 3.9 UW, 1550 SAT"
-											class="w-full rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 text-sm focus:ring-2 focus:ring-emerald-500 outline-none"
-										/>
-									</div>
-									<div class="space-y-2">
-										<label class="text-xs font-bold uppercase tracking-wider text-slate-500"
-											>Course Rigor</label
-										>
-										<input
-											bind:value={rigor}
-											type="text"
-											placeholder="e.g. 10 APs, Multivariable Calc"
-											class="w-full rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 text-sm focus:ring-2 focus:ring-emerald-500 outline-none"
-										/>
-									</div>
-								</div>
-
-								<div class="space-y-2">
-									<label class="text-xs font-bold uppercase tracking-wider text-slate-500"
-										>Activities & Leadership</label
-									>
-									<textarea
-										bind:value={activities}
-										rows="4"
-										placeholder="Paste your main activities list here..."
-										class="w-full rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 text-sm focus:ring-2 focus:ring-emerald-500 outline-none resize-none"
-									></textarea>
-								</div>
-
-								<div class="space-y-2">
-									<label class="text-xs font-bold uppercase tracking-wider text-slate-500"
-										>Honors & Awards</label
-									>
-									<textarea
-										bind:value={awards}
-										rows="2"
-										placeholder="List your top awards..."
-										class="w-full rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 text-sm focus:ring-2 focus:ring-emerald-500 outline-none resize-none"
-									></textarea>
-								</div>
-
-								<div class="space-y-2">
-									<label class="text-xs font-bold uppercase tracking-wider text-slate-500"
-										>Main Essay Draft</label
-									>
-									<textarea
-										bind:value={essays}
-										rows="6"
-										placeholder="Paste your personal statement..."
-										class="w-full rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 text-sm focus:ring-2 focus:ring-emerald-500 outline-none resize-none"
-									></textarea>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<!-- RIGHT: Analytics & Tools -->
-					<div class="space-y-8">
-						<!-- Live Analysis Card -->
-						<div
-							class="bg-slate-900 rounded-2xl p-8 text-center text-white relative overflow-hidden shadow-xl"
-						>
-							<div
-								class="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-emerald-500/10 to-transparent"
-							></div>
-
-							<h3
-								class="relative z-10 text-xs font-bold uppercase tracking-widest text-emerald-400"
-							>
-								Live Analysis
-							</h3>
-							<div class="relative z-10 mt-6 flex justify-center">
-								<RadarChart data={chartData} size={220} color="text-emerald-400" />
-							</div>
-							<p class="relative z-10 mt-6 text-xs text-slate-400">
-								Visualize how your profile stacks up against T20 admits. Update your profile to see
-								changes.
-							</p>
-						</div>
-					</div>
-				</div>
-
-				<!-- MIDDLE: School List Tracker -->
-				<div class="space-y-6">
-					<div class="flex items-end justify-between border-b border-slate-200 pb-4">
-						<h2 class="text-2xl font-bold text-slate-900">School List Tracker</h2>
-					</div>
-					<SchoolTracker />
-				</div>
-
-				<!-- BOTTOM: Supplemental Analyzer -->
-				<div class="space-y-6">
-					<div class="flex items-end justify-between border-b border-slate-200 pb-4">
-						<h2 class="text-2xl font-bold text-slate-900">Supplemental Essay Analyzer</h2>
-					</div>
-					<div class="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm">
-						<SupplementalAnalyzer />
-					</div>
-				</div>
-			</div>
-		{:else}
 			<!-- SALES PAGE (Existing Content) -->
 			<section class="flex-1 flex flex-col md:flex-row bg-white">
 				<!-- Feature Selling Point Side (Left) -->
@@ -543,7 +383,7 @@
 					</div>
 				</div>
 			</section>
-		{/if}
+		
 	</div>
 	<SiteFooter />
 </main>

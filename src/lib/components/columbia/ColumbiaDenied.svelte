@@ -1,35 +1,42 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
+  import { browser } from '$app/environment';
   import { userProfile } from '$lib/stores/user';
-	import { onMount } from 'svelte';
-let googleSignedIn = $state(false);
-onMount(() => {
-  const user = localStorage.getItem('user_session');
-  googleSignedIn = !!user;
-})
-import { decisionsBySlug } from '$lib/stores/results';
-const viewAnalysis = () => {
-  goto('/results/columbia');
-};
-  let { 
-    applicantName = '', 
-    schoolName = '',
-    primaryColor ='',
-    footerDomain=''
+  import { decisionsBySlug } from '$lib/stores/results';
+  import { page } from '$app/stores';
+  $: session = $page.data.session;
 
-  } = $props<{ 
-    applicantName: string, 
-    schoolName: string,
-    primaryColor: string,
-    footerDomain: string
-  }>();  
-  
-  // Extract first name from full name
-  const firstName = $derived(() => {
-    if (!applicantName) return '';
-    const names = applicantName.split(' ');
-    return names[0] || '';
-  });
+  let googleSignedIn = false;
+	let googleEmail = '';
+	let googleName = '';
+
+	$: {
+		googleSignedIn = !!session?.user;
+	googleEmail = (session?.user?.email as string) ?? '';
+		googleName = (session?.user?.name as string) ?? '';
+	}
+
+  // 1. Props are defined using 'export let'
+  export let applicantName = '';
+  export let schoolName = '';
+  export let primaryColor = '';
+  export let footerDomain = '';
+
+  // 2. Derived/Reactive values use the '$:' label
+  // Note: Unlike runes, you don't use an arrow function here.
+  let firstName;
+  $: {
+    if (!applicantName) {
+      firstName = '';
+    } else {
+      const names = applicantName.split(' ');
+      firstName = names[0] || '';
+    }
+  }
+
+  const viewAnalysis = () => {
+    goto('/results/columbia');
+  };
 </script>
 
 <svelte:head>
