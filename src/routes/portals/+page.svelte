@@ -23,52 +23,9 @@
         .sort((a, b) => a.name.localeCompare(b.name));
 
     let portals = $state([...initialPortals]);
-    let lastMode = $state('random');
 
+    // This runs ONLY to keep the UI (the cards) synced with whatever is in the store
     $effect(() => {
-        const mode = $manualOverrideMode;
-        
-        if (mode !== lastMode && (mode === 'accepted' || mode === 'denied')) {
-            const status: DecisionOutcome = mode === 'accepted' ? 'admit' : 'deny';
-            const currentResults = get(aiResults);
-            
-            // LOGIC FIX: 
-            // If the simulation HAS NOT run, currentResults.decisions is empty.
-            // We need to create the array if it's empty, or map it if it exists.
-            
-            let updatedDecisions: AiDecision[] = [];
-
-            if (currentResults.decisions.length === 0) {
-                // CREATE new decisions for all schools if nothing exists yet
-                updatedDecisions = initialPortals.map(p => ({
-                    school: p.name,
-                    slug: p.slug,
-                    outcome: status,
-                    academic_score: 0,
-                    academic_explanation: 'N/A: random sim',
-                    extracurricular_score: 0,
-                    extracurricular_explanation: 'Forced by Simulate Mode',
-                    fit_score: 0,
-                    fit_explanation: 'Forced by Simulate Mode',
-                    intellectual_score: 0,
-                    intellectual_explanation: 'Forced by Simulate Mode',
-                    character_score: 0,
-                    character_explanation: 'Forced by Simulate Mode',
-                    improvement_tips: ''
-                }));
-            } else {
-                // UPDATE existing decisions if the simulation already ran
-                updatedDecisions = currentResults.decisions.map(d => ({
-                    ...d,
-                    outcome: status
-                }));
-            }
-            
-            aiResults.setDecisions(updatedDecisions);
-            lastMode = mode;
-        }
-
-        // Keep local UI array in sync with the derived map
         const decisions = $decisionsBySlug;
         portals = initialPortals.map((p) => {
             const outcome = decisions[p.slug];
@@ -76,12 +33,55 @@
                 const mappedMode: DecisionMode = outcome === 'admit' ? 'accepted' : 'denied';
                 return { ...p, decision: mappedMode };
             }
-            return p;
+            return { ...p, decision: 'random' };
         });
     });
 
+    // NEW: The explicit trigger
+    const handleModeChange = (event: Event) => {
+        const target = event.target as HTMLSelectElement;
+        const newMode = target.value as 'accepted' | 'denied' | 'random';
+        
+        // Update the mode store
+        manualOverrideMode.set(newMode);
+
+        if (newMode === 'accepted' || newMode === 'denied') {
+            const status: DecisionOutcome = newMode === 'accepted' ? 'admit' : 'deny';
+            const currentResults = get(aiResults);
+            
+            let updatedDecisions: AiDecision[] = [];
+
+            // If empty, generate dummy data; otherwise, map existing
+            if (currentResults.decisions.length === 0) {
+                updatedDecisions = initialPortals.map(p => ({
+                    school: p.name,
+                    slug: p.slug,
+                    outcome: status,
+                    academic_score: 0,
+                    academic_explanation: 'Forced via selector',
+                    extracurricular_score: 0,
+                    extracurricular_explanation: 'Forced via selector',
+                    fit_score: 0,
+                    fit_explanation: 'Forced via selector',
+                    intellectual_score: 0,
+                    intellectual_explanation: 'Forced via selector',
+                    character_score: 0,
+                    character_explanation: 'Forced via selector',
+                    improvement_tips: ''
+                }));
+            } else {
+                updatedDecisions = currentResults.decisions.map(d => ({
+                    ...d,
+                    outcome: status
+                }));
+            }
+            
+            aiResults.setDecisions(updatedDecisions);
+        }
+    };
+
     const handlePortalClick = (slug: string, currentDecision: DecisionMode) => {
-        const mode = $manualOverrideMode;
+        const mode = get(manualOverrideMode);
         const status = mode === 'accepted' ? 'admit' : (mode === 'denied' ? 'deny' : currentDecision);
         sessionStorage.setItem(`decision-${slug}`, status);
         goto(`/portals/${slug}`);
@@ -120,13 +120,13 @@
 					</p>
 
 					<div class="mt-4 flex items-center gap-3">
-						<span class="text-xs font-bold text-slate-500 uppercase tracking-wider"
-							>Simulate Mode:</span
-						>
+						<span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Simulate Mode:</span>
 						<select
-							bind:value={$manualOverrideMode}
+							value={$manualOverrideMode}
+							on:change={handleModeChange}
 							class="bg-white border border-slate-300 text-slate-700 text-xs font-semibold px-3 py-1.5 rounded-md outline-none cursor-pointer hover:border-slate-400 transition-colors"
 						>
+							<option value="random">Random / As Simulated</option>
 							<option value="accepted">Force Accepted</option>
 							<option value="denied">Force Rejected</option>
 						</select>
