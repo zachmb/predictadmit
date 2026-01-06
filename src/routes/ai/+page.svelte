@@ -211,7 +211,7 @@
 		const q = searchQuery.trim().toLowerCase();
 
 		if (!q) {
-			filteredPortals = [...sortedVisiblePortals];
+			filteredPortals = [...visiblePortals];
 		} else {
 			filteredPortals = sortedVisiblePortals.filter((portal) => {
 				return portal.name.toLowerCase().includes(q) || portal.slug.toLowerCase().includes(q);
@@ -464,6 +464,7 @@
 				const newPortal = decisionToPortalEmail(data.decision);
         
        			 visiblePortals = [...visiblePortals, newPortal];
+				 filteredPortals = [...visiblePortals];
 					saveAiInboxState();
 
                 // 5. Update local state for the UI
