@@ -168,7 +168,7 @@
 	let searchQuery = '';
 	let filteredPortals: PortalEmail[] = [];
 	let sortedVisiblePortals: PortalEmail[] = [];
-$: visiblePortals = $aiResults.decisions.map(decisionToPortalEmail);
+	let visiblePortals: (PortalEmail & { outcome?: string })[] = [];
 	// ED / RD state (minimal in AI mode)
 	let currentEdPortal: PortalEmail | null = null;
 	let edEmailMustBeViewed = false;
