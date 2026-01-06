@@ -30,6 +30,7 @@ export type UserProfile = {
   };
   schoolList: TrackedSchool[];
   isSubmitting: boolean;
+  isSubmittingAI: boolean;
   usingAI: boolean;
 };
 
@@ -48,6 +49,7 @@ export const defaultProfile: UserProfile = {
   },
   schoolList: [],
   isSubmitting: false,
+  isSubmittingAI: false,
   usingAI: false
 };
 

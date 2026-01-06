@@ -168,7 +168,7 @@
 	let searchQuery = '';
 	let filteredPortals: PortalEmail[] = [];
 	let sortedVisiblePortals: PortalEmail[] = [];
-	$: visiblePortals = $aiResults.decisions.map(decisionToPortalEmail);
+	let visiblePortals: (PortalEmail & { outcome?: string })[] = [];
 	// ED / RD state (minimal in AI mode)
 	let currentEdPortal: PortalEmail | null = null;
 	let edEmailMustBeViewed = false;
@@ -318,6 +318,7 @@
 		readPortalSlugs = new Set();
 		mailViewMode = 'inbox';
 		mailActiveFolder = 'inbox';
+		userProfile.update((u) => ({ ...u, isSubmittingAI: false }));
 
 		if (typeof localStorage !== 'undefined') {
 			try {
@@ -414,7 +415,7 @@
 			return;
 		}
 
-		userProfile.update(u => ({ ...u, isSubmitting: true }));
+		userProfile.update(u => ({ ...u, isSubmittingAI: true }));
 		userProfile.update((u) => ({ ...u, usingAI: true }));
 
 		deepDiveItems = [];
@@ -504,7 +505,7 @@
             console.error(err);
             aiError = 'Network or server error while calling the AI evaluator.';
         } finally {
-			userProfile.update(u => ({ ...u, isSubmitting: false }));
+			userProfile.update(u => ({ ...u, isSubmittingAI: false }));
         }
 	}
 
@@ -939,7 +940,7 @@
 							<div class="flex flex-col sm:flex-row items-center gap-4 pt-4">
 								<button
 									type={googleSignedIn ? 'submit' : 'button'}
-									disabled={$userProfile.isSubmitting}
+									disabled={$userProfile.isSubmittingAI}
 									on:click={!googleSignedIn
 										? () => signIn('google', { callbackUrl: '/ai' })
 										: undefined}
@@ -960,7 +961,7 @@
 										>
 											{#if !googleSignedIn}
 												<span>Sign in with Google to Simulate</span>
-											{:else if $userProfile.isSubmitting}
+											{:else if $userProfile.isSubmittingAI}
 												<span class="flex items-center gap-2">
 													<span
 														class="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white"
@@ -1020,7 +1021,7 @@
 			</section>
 
 			<!-- AIMail Inbox (now powered by AdmitMail + portal-style status emails) -->
-			{#if hasUsedFreeSimulation || $userProfile.isSubmitting}
+			{#if hasUsedFreeSimulation || $userProfile.isSubmittingAI}
 				<section
 					class="rounded-2xl border border-slate-200 bg-white shadow-xl overflow-hidden mt-8"
 				>
@@ -1047,7 +1048,7 @@
 						</div>
 					</div>
 
-					{#if $userProfile.isSubmitting}
+					{#if $userProfile.isSubmittingAI}
 						<div
 							class="border-b border-slate-100 bg-slate-50 px-6 py-3 flex items-center gap-3 text-xs text-slate-600"
 						>

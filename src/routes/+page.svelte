@@ -276,10 +276,7 @@
 		if (typeof localStorage === 'undefined') return;
 		const raw = localStorage.getItem(PERSIST_KEY);
 		if (!raw) return;
-		if (rdTimelineStarted && visiblePortals.length < portals.length) {
-    // If we left while emails were still dripping, resume the drip
-    startRdEmailTimeline(currentEdPortal);
-}
+		
 
 		try {
 			const state = JSON.parse(raw) as Partial<PersistedState>;
@@ -325,6 +322,10 @@
 				showAccountForm = true;
 				aiExpanded = true;
 			}
+			if (rdTimelineStarted && visiblePortals.length < portals.length) {
+    // If we left while emails were still dripping, resume the drip
+    startRdEmailTimeline(currentEdPortal);
+}
 		} catch (err) {
 			console.error('Failed to load PredictAdmit state', err);
 		}
@@ -332,6 +333,17 @@
 
 	onMount(() => {
 		loadState();
+		const savedIndex = localStorage.getItem('calendar_progress');
+    
+    if (savedIndex !== null) {
+        calendarIndex = parseInt(savedIndex);
+        // If the simulation wasn't finished, start the timer again
+        if (calendarIndex < calendarDates.length - 1) {
+            startCalendar();
+        }
+    }
+		
+		
 	});
 
 	// Sync local fields with store
@@ -438,13 +450,15 @@
 			clearInterval(calendarIntervalId);
 		}
 		calendarIntervalId = window.setInterval(() => {
-			if (calendarIndex < calendarDates.length - 1) {
-				calendarIndex += 1;
-			} else if (calendarIntervalId !== null) {
-				clearInterval(calendarIntervalId);
-				calendarIntervalId = null;
-			}
-		}, 700);
+    if (calendarIndex < calendarDates.length - 1) {
+        calendarIndex += 1;
+        // Save progress so we know where we left off
+        localStorage.setItem('calendar_progress', calendarIndex.toString());
+    } else {
+        calendarIntervalId = null;
+        localStorage.removeItem('calendar_progress'); // Clean up when done
+    }
+}, 700);
 	};
 
 	const startRdEmailTimeline = (edPortal: PortalEmail | null) => {
@@ -465,6 +479,11 @@
 
         // We use 'as any' here just to stop the array spread from complaining
         visiblePortals = [...visiblePortals, newPortalEntry as any];
+		if (index === rdPortals.length - 1) {
+                applicationPhase = 'finished'; // Mark the whole cycle as done
+				userProfile.update((u) => ({ ...u, isSubmitting: false }));
+
+            }
         saveState();
     }
 }, (index + 1) * 1000);
@@ -544,11 +563,7 @@
 
 		phaseSchedule.forEach(({ phase, delay }) => {
 			const timeoutId = window.setTimeout(() => {
-				applicationPhase = phase;
-				if (phase === 'finished') {
-					isApplying = false;
-					// After this, calendar + reactive block will unlock ED/RD emails
-				}
+				
 				saveState();
 			}, delay);
 			applyTimeoutIds.push(timeoutId);
@@ -556,13 +571,18 @@
 	};
 
 	const handleApply = () => {
-		userProfile.update((u) => ({ ...u, usingAI: false }));
 
 		if (!canApply) {
 			saveMessage = 'Fill out name, email, and password first.';
 			return;
 		}
 		if (hasApplied) return;
+		userProfile.update((u) => ({ ...u, usingAI: false }));
+		userProfile.update((u) => ({ ...u, isSubmitting: true }));
+
+
+
+		
 
 		hasApplied = true;
 
@@ -607,6 +627,7 @@
 		startCalendar();
 		startApplicationAnimation();
 		saveState();
+
 	};
 
 	// 🔄 Reset the whole simulation (profile, state, localStorage)
@@ -647,6 +668,7 @@
 		readPortalSlugs = new Set();
 		visiblePortals = [];
 		isApplying = false;
+		userProfile.update((u) => ({ ...u, isSubmitting: false }));
 
 		// reset calendar & phases
 		applicationPhase = 'idle';
@@ -1085,14 +1107,14 @@
 							on:click={handleApply}
 							disabled={!canApply || hasApplied}
 						>
-							{hasApplied ? (isApplying ? 'Simulating…' : 'Simulation started') : 'Apply'}
+							{hasApplied ? ($userProfile.isSubmitting ? 'Simulating…' : 'Simulation finished') : 'Apply'}
 						</button>
 						{#if !canApply}
 							<p class="text-xs text-slate-600">Fill in name, email, and password first.</p>
 						{:else if hasApplied && visiblePortals.length === 0}
 							<p class="text-xs text-slate-600">Sending apps and waiting…</p>
 						{:else if hasApplied}
-							<p class="text-xs text-slate-600">Decisions are loading into admitMail.</p>
+							<p class="text-xs text-slate-600">Check out your results.</p>
 						{/if}
 					</div>
 				</section>
@@ -1112,7 +1134,7 @@
 			{/if}
 
 			<!-- admitMail INBOX / EMAIL VIEW -->
-			{#if hasApplied && applicationPhase === 'finished'}
+			{#if hasApplied}
 				<AdmitMail
 					bind:inboxSection
 					{viewMode}
