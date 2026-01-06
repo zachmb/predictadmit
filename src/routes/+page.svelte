@@ -485,7 +485,6 @@
 
             }
         saveState();
-		loadState();
     }
 }, (index + 1) * 1000);
 

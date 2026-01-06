@@ -465,7 +465,6 @@
         
        			 visiblePortals = [...visiblePortals, newPortal];
 					saveAiInboxState();
-					loadAiInboxState();
 
                 // 5. Update local state for the UI
                 aiDecisions = $aiResults.decisions;
