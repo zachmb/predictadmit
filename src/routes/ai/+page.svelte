@@ -168,7 +168,7 @@
 	let searchQuery = '';
 	let filteredPortals: PortalEmail[] = [];
 	let sortedVisiblePortals: PortalEmail[] = [];
-	let visiblePortals: (PortalEmail & { outcome?: string })[] = [];
+$: visiblePortals = $aiResults.decisions.map(decisionToPortalEmail);
 	// ED / RD state (minimal in AI mode)
 	let currentEdPortal: PortalEmail | null = null;
 	let edEmailMustBeViewed = false;
@@ -461,7 +461,9 @@
                     major, 
                     applicantSummary: data.applicantSummary 
                 });
-
+				const newPortal = decisionToPortalEmail(data.decision);
+        
+       			 visiblePortals = [...visiblePortals, newPortal];
                 // 5. Update local state for the UI
                 aiDecisions = $aiResults.decisions;
                 applicantSummary = data.applicantSummary;
