@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, tick } from 'svelte';
 	import { signIn } from '@auth/sveltekit/client';
 	import { goto } from '$app/navigation';
 	import type { PageData } from './$types';
@@ -208,16 +208,22 @@
 	
 	// Keep filteredPortals in sync with searchQuery
 	$: {
-		const q = searchQuery.trim().toLowerCase();
+    const q = searchQuery.trim().toLowerCase();
+    
+    // Always derive from visiblePortals so updates are caught immediately
+    const baseList = [...visiblePortals]; 
 
-		if (!q) {
-			filteredPortals = [...visiblePortals];
-		} else {
-			filteredPortals = visiblePortals.filter((portal) => {
-				return portal.name.toLowerCase().includes(q) || portal.slug.toLowerCase().includes(q);
-			});
-		}
-	}
+    if (!q) {
+        filteredPortals = baseList;
+    } else {
+        filteredPortals = baseList.filter((p) => 
+            p.name.toLowerCase().includes(q) || p.slug.toLowerCase().includes(q)
+        );
+    }
+    
+    // Update this too so the email view works instantly
+    aiDecisions = $aiResults.decisions;
+}
 
 	// === Persistence helpers for AI inbox ===
 
@@ -350,6 +356,7 @@
 
 		// Restore AI inbox state (visiblePortals, read flags, selected email, etc.)
 		loadAiInboxState();
+		aiDecisions = $aiResults.decisions;
 	});
 
 	// Reactive Pro check
@@ -464,7 +471,7 @@
 				const newPortal = decisionToPortalEmail(data.decision);
         
        			 visiblePortals = [...visiblePortals, newPortal];
-				 filteredPortals = [...visiblePortals];
+					await tick();
 					saveAiInboxState();
 
                 // 5. Update local state for the UI
