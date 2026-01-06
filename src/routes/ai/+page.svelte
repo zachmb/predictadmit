@@ -213,7 +213,7 @@
 		if (!q) {
 			filteredPortals = [...visiblePortals];
 		} else {
-			filteredPortals = sortedVisiblePortals.filter((portal) => {
+			filteredPortals = visiblePortals.filter((portal) => {
 				return portal.name.toLowerCase().includes(q) || portal.slug.toLowerCase().includes(q);
 			});
 		}
