@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount, tick } from 'svelte';
+	import { onMount } from 'svelte';
 	import { signIn } from '@auth/sveltekit/client';
 	import { goto } from '$app/navigation';
 	import type { PageData } from './$types';
@@ -168,7 +168,8 @@
 	let searchQuery = '';
 	let filteredPortals: PortalEmail[] = [];
 	let sortedVisiblePortals: PortalEmail[] = [];
-	let visiblePortals: (PortalEmail & { outcome?: string })[] = [];
+	$: visiblePortals = $aiResults.decisions.map(decisionToPortalEmail);
+
 	// ED / RD state (minimal in AI mode)
 	let currentEdPortal: PortalEmail | null = null;
 	let edEmailMustBeViewed = false;
@@ -461,15 +462,6 @@
                     major, 
                     applicantSummary: data.applicantSummary 
                 });
-				const newPortal = decisionToPortalEmail(data.decision);
-        
-       			 visiblePortals = [...visiblePortals, newPortal];
-					await tick();
-					await new Promise(resolve => setTimeout(resolve, 0));
-
-					saveAiInboxState();
-					
-
 
                 // 5. Update local state for the UI
                 aiDecisions = $aiResults.decisions;
@@ -508,6 +500,7 @@
                 mailActiveFolder = 'inbox';
                 mailViewMode = 'inbox';
 
+                saveAiInboxState();
             }
         } catch (err) {
             console.error(err);
@@ -1068,7 +1061,6 @@
 					{/if}
 
 					<div class="bg-white min-h-[400px]">
-						{#key visiblePortals.length}
 						<BetterAdmitMail
 							bind:inboxSection
 							viewMode={mailViewMode}
@@ -1105,7 +1097,6 @@
 								}
 							}}
 						/>
-						{/key}
 					</div>
 
 					{#if deepDiveItems.length}
