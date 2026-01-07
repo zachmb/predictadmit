@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount, tick } from 'svelte';
+	import { onMount } from 'svelte';
 	import { signIn } from '@auth/sveltekit/client';
 	import { goto } from '$app/navigation';
 	import type { PageData } from './$types';
@@ -208,22 +208,16 @@
 	
 	// Keep filteredPortals in sync with searchQuery
 	$: {
-    const q = searchQuery.trim().toLowerCase();
-    
-    // Always derive from visiblePortals so updates are caught immediately
-    const baseList = [...visiblePortals]; 
+		const q = searchQuery.trim().toLowerCase();
 
-    if (!q) {
-        filteredPortals = baseList;
-    } else {
-        filteredPortals = baseList.filter((p) => 
-            p.name.toLowerCase().includes(q) || p.slug.toLowerCase().includes(q)
-        );
-    }
-    
-    // Update this too so the email view works instantly
-    aiDecisions = $aiResults.decisions;
-}
+		if (!q) {
+			filteredPortals = [...sortedVisiblePortals];
+		} else {
+			filteredPortals = sortedVisiblePortals.filter((portal) => {
+				return portal.name.toLowerCase().includes(q) || portal.slug.toLowerCase().includes(q);
+			});
+		}
+	}
 
 	// === Persistence helpers for AI inbox ===
 
@@ -356,11 +350,6 @@
 
 		// Restore AI inbox state (visiblePortals, read flags, selected email, etc.)
 		loadAiInboxState();
-		aiDecisions = $aiResults.decisions;
-		if ($userProfile.isSubmittingAI && $aiResults.decisions.length < SCHOOLS.length) {
-        console.log("Resuming simulation after refresh...");
-        runEvaluation(); // This will skip finished schools and finish the rest
-    }
 	});
 
 	// Reactive Pro check
@@ -454,9 +443,6 @@
             // 3. Loop through each school slug
             // Note: Ensure SCHOOLS is imported or defined in your script
             for (const { slug } of SCHOOLS) {
-				if ($aiResults.decisions.some(d => d.slug === slug)) {
-                continue; 
-            }
                 const res = await fetch(`/api/ai-evaluate/${slug}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -475,11 +461,6 @@
                     major, 
                     applicantSummary: data.applicantSummary 
                 });
-				const newPortal = decisionToPortalEmail(data.decision);
-        
-       			 visiblePortals = [...visiblePortals, newPortal];
-					await tick();
-					saveAiInboxState();
 
                 // 5. Update local state for the UI
                 aiDecisions = $aiResults.decisions;
@@ -518,6 +499,7 @@
                 mailActiveFolder = 'inbox';
                 mailViewMode = 'inbox';
 
+                saveAiInboxState();
             }
         } catch (err) {
             console.error(err);
