@@ -465,6 +465,8 @@
 				const newPortal = decisionToPortalEmail(data.decision);
         
        			 visiblePortals = [...visiblePortals, newPortal];
+					saveAiInboxState();
+
 
                 // 5. Update local state for the UI
                 aiDecisions = $aiResults.decisions;
