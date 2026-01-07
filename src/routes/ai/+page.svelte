@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, tick } from 'svelte';
 	import { signIn } from '@auth/sveltekit/client';
 	import { goto } from '$app/navigation';
 	import type { PageData } from './$types';
@@ -465,6 +465,9 @@
         
        			 visiblePortals = [...visiblePortals, newPortal];
 					saveAiInboxState();
+					
+					await new Promise(resolve => setTimeout(resolve, 0));
+
 
                 // 5. Update local state for the UI
                 aiDecisions = $aiResults.decisions;
