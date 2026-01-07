@@ -50,7 +50,7 @@
 		outcome: DecisionOutcome;
 		explanation: string;
 	};
-
+	let currentRunId = 0;
 	// Application inputs (can be typed or filled via OCR)
 	let essay = '';
 	let activities = '';
@@ -415,7 +415,7 @@
 			openPaywall('simulation');
 			return;
 		}
-
+		const runId = ++currentRunId;
 		userProfile.update(u => ({ ...u, isSubmittingAI: true }));
 		userProfile.update((u) => ({ ...u, usingAI: true }));
 
@@ -444,12 +444,13 @@
             // 3. Loop through each school slug
             // Note: Ensure SCHOOLS is imported or defined in your script
             for (const { slug } of SCHOOLS) {
+				if (runId !== currentRunId) return;
                 const res = await fetch(`/api/ai-evaluate/${slug}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(basePayload)
                 });
-
+				if (runId !== currentRunId) return;
                 const data = await res.json();
 
                 if (!res.ok) {
@@ -506,7 +507,9 @@
             console.error(err);
             aiError = 'Network or server error while calling the AI evaluator.';
         } finally {
-			userProfile.update(u => ({ ...u, isSubmittingAI: false }));
+			if (runId === currentRunId) {
+            userProfile.update(u => ({ ...u, isSubmittingAI: false }));
+        }
         }
 	}
 
@@ -1059,9 +1062,9 @@
 							<span class="font-medium"> Simulating decision committee... </span>
 						</div>
 					{/if}
-
+					{#if $userProfile.isSubmittingAI}
 					<div class="bg-white min-h-[400px]">
-						{#if $userProfile.usingAI}
+						
 						<BetterAdmitMail
 							bind:inboxSection
 							viewMode={mailViewMode}
@@ -1098,8 +1101,9 @@
 								}
 							}}
 						/>
-						{/if}
+						
 					</div>
+					{/if}
 
 					{#if deepDiveItems.length}
 						<!-- Deep Dive explanations, driven by AI -->

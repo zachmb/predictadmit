@@ -579,6 +579,8 @@
 		if (hasApplied) return;
 		userProfile.update((u) => ({ ...u, usingAI: false }));
 		userProfile.update((u) => ({ ...u, isSubmitting: true }));
+		userProfile.update((u) => ({ ...u, isSubmittingAI: false }));
+
 
 
 
