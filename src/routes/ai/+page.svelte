@@ -357,6 +357,10 @@
 		// Restore AI inbox state (visiblePortals, read flags, selected email, etc.)
 		loadAiInboxState();
 		aiDecisions = $aiResults.decisions;
+		if ($userProfile.isSubmittingAI && $aiResults.decisions.length < SCHOOLS.length) {
+        console.log("Resuming simulation after refresh...");
+        runEvaluation(); // This will skip finished schools and finish the rest
+    }
 	});
 
 	// Reactive Pro check
@@ -450,6 +454,9 @@
             // 3. Loop through each school slug
             // Note: Ensure SCHOOLS is imported or defined in your script
             for (const { slug } of SCHOOLS) {
+				if ($aiResults.decisions.some(d => d.slug === slug)) {
+                continue; 
+            }
                 const res = await fetch(`/api/ai-evaluate/${slug}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
