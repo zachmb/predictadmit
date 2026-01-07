@@ -464,9 +464,11 @@
 				const newPortal = decisionToPortalEmail(data.decision);
         
        			 visiblePortals = [...visiblePortals, newPortal];
+					await tick();
+					await new Promise(resolve => setTimeout(resolve, 0));
+
 					saveAiInboxState();
 					
-					await new Promise(resolve => setTimeout(resolve, 0));
 
 
                 // 5. Update local state for the UI
