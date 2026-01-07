@@ -1068,6 +1068,7 @@
 					{/if}
 
 					<div class="bg-white min-h-[400px]">
+						{#key visiblePortals.length}
 						<BetterAdmitMail
 							bind:inboxSection
 							viewMode={mailViewMode}
@@ -1104,6 +1105,7 @@
 								}
 							}}
 						/>
+						{/key}
 					</div>
 
 					{#if deepDiveItems.length}
