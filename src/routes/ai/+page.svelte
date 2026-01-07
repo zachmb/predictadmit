@@ -1061,7 +1061,7 @@
 					{/if}
 
 					<div class="bg-white min-h-[400px]">
-						{#if $userProfile.isSubmittingAI}
+						{#if $userProfile.usingAI}
 						<BetterAdmitMail
 							bind:inboxSection
 							viewMode={mailViewMode}
