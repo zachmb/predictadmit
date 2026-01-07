@@ -585,6 +585,8 @@
 		
 
 		hasApplied = true;
+		aiResults.clear();
+
 
 		// --- NEW: GENERATE RANDOM DECISIONS ---
 		const randomDecisions = portals.map((portal) => ({
