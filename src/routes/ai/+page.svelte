@@ -168,7 +168,7 @@
 	let searchQuery = '';
 	let filteredPortals: PortalEmail[] = [];
 	let sortedVisiblePortals: PortalEmail[] = [];
-	$: visiblePortals = $aiResults.decisions.map(decisionToPortalEmail);
+	let visiblePortals: (PortalEmail & { outcome?: string })[] = [];
 	// ED / RD state (minimal in AI mode)
 	let currentEdPortal: PortalEmail | null = null;
 	let edEmailMustBeViewed = false;
@@ -461,11 +461,14 @@
                     major, 
                     applicantSummary: data.applicantSummary 
                 });
+				const newPortal = decisionToPortalEmail(data.decision);
+        
+       			 visiblePortals = [...visiblePortals, newPortal];
+					saveAiInboxState();
 
                 // 5. Update local state for the UI
                 aiDecisions = $aiResults.decisions;
                 applicantSummary = data.applicantSummary;
-				saveAiInboxState();
 
                 // 6. Update the AdmitMail inbox in real-time
                 // This will automatically update the inbox every time a new school is added
@@ -500,7 +503,6 @@
                 mailActiveFolder = 'inbox';
                 mailViewMode = 'inbox';
 
-                saveAiInboxState();
             }
         } catch (err) {
             console.error(err);
