@@ -1138,7 +1138,7 @@
 			{/if}
 
 			<!-- admitMail INBOX / EMAIL VIEW -->
-			{#if hasApplied}
+			{#if hasApplied && $userProfile.usingAI === false}
 				<AdmitMail
 					bind:inboxSection
 					{viewMode}

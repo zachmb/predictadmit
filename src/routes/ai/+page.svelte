@@ -418,6 +418,8 @@
 		const runId = ++currentRunId;
 		userProfile.update(u => ({ ...u, isSubmittingAI: true }));
 		userProfile.update((u) => ({ ...u, usingAI: true }));
+		userProfile.update((u) => ({ ...u, isSubmitting: false }));
+
 
 		deepDiveItems = [];
 
@@ -1062,7 +1064,7 @@
 							<span class="font-medium"> Simulating decision committee... </span>
 						</div>
 					{/if}
-					{#if $userProfile.isSubmittingAI}
+					{#if $userProfile.usingAI}
 					<div class="bg-white min-h-[400px]">
 						
 						<BetterAdmitMail
