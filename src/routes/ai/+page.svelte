@@ -462,6 +462,10 @@
                     applicantSummary: data.applicantSummary 
                 });
 
+				const newPortal = decisionToPortalEmail(data.decision);
+        
+       			 visiblePortals = [...visiblePortals, newPortal];
+
                 // 5. Update local state for the UI
                 aiDecisions = $aiResults.decisions;
                 applicantSummary = data.applicantSummary;
