@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount, tick } from 'svelte';
+	import { onMount } from 'svelte';
 	import { signIn } from '@auth/sveltekit/client';
 	import { goto } from '$app/navigation';
 	import type { PageData } from './$types';
@@ -168,7 +168,7 @@
 	let searchQuery = '';
 	let filteredPortals: PortalEmail[] = [];
 	let sortedVisiblePortals: PortalEmail[] = [];
-	let visiblePortals: (PortalEmail & { outcome?: string })[] = [];
+	$: visiblePortals = $aiResults.decisions.map(decisionToPortalEmail);
 	// ED / RD state (minimal in AI mode)
 	let currentEdPortal: PortalEmail | null = null;
 	let edEmailMustBeViewed = false;
@@ -396,132 +396,118 @@
 	}
 
 	async function runEvaluation() {
-  aiError = '';
+		aiError = '';
 
-  if (!googleSignedIn) {
-    aiError = 'Please sign in with Google first to create your AI application.';
-    return;
-  }
+		if (!googleSignedIn) {
+			aiError = 'Please sign in with Google first to create your AI application.';
+			return;
+		}
 
-  if (!ensureHasSomeInput()) {
-    aiError =
-      'Add at least one piece of application data (essay, activities, honors, or transcript text) before applying to the AI simulator.';
-    return;
-  }
+		if (!ensureHasSomeInput()) {
+			aiError =
+				'Add at least one piece of application data (essay, activities, honors, or transcript text) before applying to the AI simulator.';
+			return;
+		}
 
-  // 🔒 Free tier: one full HYPSM+ simulation per browser (unless Pro)
-  if (hasUsedFreeSimulation && !hasDeepDiveAccess) {
-    openPaywall('simulation');
-    return;
-  }
+		// 🔒 Free tier: one full HYPSM+ simulation per browser (unless Pro)
+		if (hasUsedFreeSimulation && !hasDeepDiveAccess) {
+			openPaywall('simulation');
+			return;
+		}
 
-  userProfile.update(u => ({ ...u, isSubmittingAI: true }));
-  userProfile.update((u) => ({ ...u, usingAI: true }));
+		userProfile.update(u => ({ ...u, isSubmittingAI: true }));
+		userProfile.update((u) => ({ ...u, usingAI: true }));
 
-  deepDiveItems = [];
+		deepDiveItems = [];
 
-  try {
-    // 1. Reset state before starting the loop
-    aiResults.clear();
-    aiDecisions = [];
-    visiblePortals = []; // Reset at once
-    readPortalSlugs = new Set();
-    
-    // Force a reactive update
-    await tick();
+		try {
+            // 1. Reset state before starting the loop
+            aiResults.clear();
+            aiDecisions = [];
+            visiblePortals = [];
+            readPortalSlugs = new Set();
+            
+            // 2. Define the payload without school-specific info
+            const basePayload = {
+                essay,
+                activities,
+                honors,
+                transcript,
+                major,
+                supplementals,
+                edSlug,
+                googleEmail,
+                googleName
+            };
 
-    // 2. Define the payload without school-specific info
-    const basePayload = {
-      essay,
-      activities,
-      honors,
-      transcript,
-      major,
-      supplementals,
-      edSlug,
-      googleEmail,
-      googleName
-    };
+            // 3. Loop through each school slug
+            // Note: Ensure SCHOOLS is imported or defined in your script
+            for (const { slug } of SCHOOLS) {
+                const res = await fetch(`/api/ai-evaluate/${slug}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(basePayload)
+                });
 
-    // 3. Process schools sequentially
-    const newDecisions: AiDecision[] = [];
-    const newPortals: PortalEmail[] = [];
+                const data = await res.json();
 
-    for (const { slug } of SCHOOLS) {
-      const res = await fetch(`/api/ai-evaluate/${slug}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(basePayload)
-      });
+                if (!res.ok) {
+                    console.error(`Error evaluating ${slug}:`, data?.error);
+                    continue; // Skip failed schools and move to the next
+                }
 
-      const data = await res.json();
+                // 4. Add individual decision to the store
+                aiResults.addDecision(data.decision, { 
+                    major, 
+                    applicantSummary: data.applicantSummary 
+                });
 
-      if (!res.ok) {
-        console.error(`Error evaluating ${slug}:`, data?.error);
-        continue;
-      }
+                // 5. Update local state for the UI
+                aiDecisions = $aiResults.decisions;
+                applicantSummary = data.applicantSummary;
 
-      // 4. Store decision
-      aiResults.addDecision(data.decision, { 
-        major, 
-        applicantSummary: data.applicantSummary 
-      });
+                // 6. Update the AdmitMail inbox in real-time
+                // This will automatically update the inbox every time a new school is added
+            }
 
-      // 5. Add to arrays
-      newDecisions.push(data.decision);
-      const newPortal = decisionToPortalEmail(data.decision);
-      newPortals.push(newPortal);
-      
-      // 6. Update UI incrementally - update both arrays at once
-      aiDecisions = [...newDecisions];
-      visiblePortals = [...newPortals];
-      
-      // Force reactivity after each update
-      await tick();
-      
-      // Small delay for visual effect (optional)
-      await new Promise(resolve => setTimeout(resolve, 100));
-    }
+            // --- Post-Loop Logic (Finalizing the run) ---
 
-    // 7. Final update after all schools
-    applicantSummary = aiDecisions.length > 0 ? aiDecisions[0].improvement_tips : '';
+            if (!aiDecisions.length) {
+                aiError = 'The AI did not return any decisions. Try adding more detail to your application.';
+            } else {
+                hasUsedFreeSimulation = true;
+                if (typeof localStorage !== 'undefined') {
+                    localStorage.setItem('predictadmit_hasUsedFreeSimulation', 'true');
+                }
 
-    if (!aiDecisions.length) {
-      aiError = 'The AI did not return any decisions. Try adding more detail to your application.';
-    } else {
-      hasUsedFreeSimulation = true;
-      if (typeof localStorage !== 'undefined') {
-        localStorage.setItem('predictadmit_hasUsedFreeSimulation', 'true');
-      }
+                userProfile.update((u) => {
+                    const newProfile = { ...u.applicationProfile };
+                    if (!newProfile.essays && essay) newProfile.essays = essay;
+                    if (!newProfile.activities && activities) newProfile.activities = activities;
+                    if (!newProfile.awards && honors) newProfile.awards = honors;
+                    if (!newProfile.rigor && transcript) newProfile.rigor = transcript;
 
-      userProfile.update((u) => {
-        const newProfile = { ...u.applicationProfile };
-        if (!newProfile.essays && essay) newProfile.essays = essay;
-        if (!newProfile.activities && activities) newProfile.activities = activities;
-        if (!newProfile.awards && honors) newProfile.awards = honors;
-        if (!newProfile.rigor && transcript) newProfile.rigor = transcript;
+                    return {
+                        ...u,
+                        requestCount: (u.requestCount || 0) + 1,
+                        applicationProfile: newProfile
+                    };
+                });
 
-        return {
-          ...u,
-          requestCount: (u.requestCount || 0) + 1,
-          applicationProfile: newProfile
-        };
-      });
+                selectedPortal = null;
+                selectedSent = null;
+                mailActiveFolder = 'inbox';
+                mailViewMode = 'inbox';
 
-      selectedPortal = null;
-      selectedSent = null;
-      mailActiveFolder = 'inbox';
-      mailViewMode = 'inbox';
-
-      saveAiInboxState();
-    }
-  } catch (err) {
-    console.error(err);
-    aiError = 'Network or server error while calling the AI evaluator.';
-  } finally {
-    userProfile.update(u => ({ ...u, isSubmittingAI: false }));
-  }
-}
+                saveAiInboxState();
+            }
+        } catch (err) {
+            console.error(err);
+            aiError = 'Network or server error while calling the AI evaluator.';
+        } finally {
+			userProfile.update(u => ({ ...u, isSubmittingAI: false }));
+        }
+	}
 
 	// 🔒 Deep Dive is fully paywalled – no API call until they upgrade
 	async function requestDeepDive(decision: AiDecision) {
