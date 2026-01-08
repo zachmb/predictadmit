@@ -467,9 +467,9 @@
                 // 5. Update local state for the UI
                 aiDecisions = $aiResults.decisions;
                 applicantSummary = data.applicantSummary;
-
-				saveAiInboxState();
 				
+				await tick();
+				saveAiInboxState();
 
 
                 // 6. Update the AdmitMail inbox in real-time
