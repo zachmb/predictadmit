@@ -503,7 +503,6 @@
                 mailActiveFolder = 'inbox';
                 mailViewMode = 'inbox';
 
-                saveAiInboxState();
             }
         } catch (err) {
             console.error(err);
