@@ -579,8 +579,6 @@
 		if (hasApplied) return;
 		userProfile.update((u) => ({ ...u, usingAI: false }));
 		userProfile.update((u) => ({ ...u, isSubmitting: true }));
-		userProfile.update((u) => ({ ...u, isSubmittingAI: false }));
-
 
 
 
@@ -1138,7 +1136,7 @@
 			{/if}
 
 			<!-- admitMail INBOX / EMAIL VIEW -->
-			{#if hasApplied && $userProfile.usingAI === false}
+			{#if hasApplied}
 				<AdmitMail
 					bind:inboxSection
 					{viewMode}

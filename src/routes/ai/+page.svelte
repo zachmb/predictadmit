@@ -418,8 +418,6 @@
 
 		userProfile.update(u => ({ ...u, isSubmittingAI: true }));
 		userProfile.update((u) => ({ ...u, usingAI: true }));
-		userProfile.update((u) => ({ ...u, isSubmitting: false }));
-
 
 		deepDiveItems = [];
 
@@ -1035,7 +1033,7 @@
 						<div>
 							<div class="flex items-center gap-2">
 								<span class="text-xs font-bold uppercase tracking-widest text-slate-500">
-									AIMail
+									admitMail
 								</span>
 								<span
 									class="rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] text-emerald-700 border border-emerald-100 font-bold"
@@ -1061,9 +1059,9 @@
 							<span class="font-medium"> Simulating decision committee... </span>
 						</div>
 					{/if}
-					{#if $userProfile.usingAI}
 
 					<div class="bg-white min-h-[400px]">
+						{#if $userProfile.isSubmittingAI}
 						<BetterAdmitMail
 							bind:inboxSection
 							viewMode={mailViewMode}
@@ -1100,8 +1098,8 @@
 								}
 							}}
 						/>
+						{/if}
 					</div>
-					{/if}
 
 					{#if deepDiveItems.length}
 						<!-- Deep Dive explanations, driven by AI -->
