@@ -463,11 +463,14 @@
                     applicantSummary: data.applicantSummary 
                 });
 
+
                 // 5. Update local state for the UI
                 aiDecisions = $aiResults.decisions;
                 applicantSummary = data.applicantSummary;
 
-				await tick();
+				saveAiInboxState();
+				
+
 
                 // 6. Update the AdmitMail inbox in real-time
                 // This will automatically update the inbox every time a new school is added
