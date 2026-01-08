@@ -468,8 +468,6 @@
                 aiDecisions = $aiResults.decisions;
                 applicantSummary = data.applicantSummary;
 				
-				await tick();
-				saveAiInboxState();
 
 
                 // 6. Update the AdmitMail inbox in real-time
