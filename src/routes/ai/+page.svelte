@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, tick } from 'svelte';
 	import { signIn } from '@auth/sveltekit/client';
 	import { goto } from '$app/navigation';
 	import type { PageData } from './$types';
@@ -466,6 +466,8 @@
                 // 5. Update local state for the UI
                 aiDecisions = $aiResults.decisions;
                 applicantSummary = data.applicantSummary;
+
+				await tick();
 
                 // 6. Update the AdmitMail inbox in real-time
                 // This will automatically update the inbox every time a new school is added
@@ -1059,9 +1061,9 @@
 							<span class="font-medium"> Simulating decision committee... </span>
 						</div>
 					{/if}
-
+					{#if $userProfile.usingAI}
 					<div class="bg-white min-h-[400px]">
-						{#if $userProfile.isSubmittingAI}
+						
 						<BetterAdmitMail
 							bind:inboxSection
 							viewMode={mailViewMode}
@@ -1098,8 +1100,9 @@
 								}
 							}}
 						/>
-						{/if}
+						
 					</div>
+					{/if}
 
 					{#if deepDiveItems.length}
 						<!-- Deep Dive explanations, driven by AI -->
