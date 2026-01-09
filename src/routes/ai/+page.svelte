@@ -444,7 +444,8 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
                 const res = await fetch(`/api/ai-evaluate/${slug}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(basePayload)
+                    body: JSON.stringify(basePayload),
+					signal: signal
                 });
 				if (signal.aborted) return;
 
