@@ -19,7 +19,7 @@
 	import { aiResults } from '$lib/stores/results';
 
 let { data }: { data: PageData } = $props();
-
+let evaluationController: AbortController | null = null;
 	// 🔐 LocalStorage persistence key for AI inbox
 	const AI_PERSIST_KEY = 'predictadmit_ai_inbox_v1';
 
@@ -293,6 +293,8 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
 
 	// This is *not* the full simulator reset — just clears the AI inbox state.
 	function resetInboxState() {
+		aiResults.clear();
+		evaluationController?.abort();
 		aiDecisions = [];
 		deepDiveItems = [];
 		applicantSummary = '';
@@ -383,6 +385,8 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
 
 	async function runEvaluation() {
 		aiError = '';
+		evaluationController?.abort();
+    evaluationController = new AbortController();
 
 		if (!googleSignedIn) {
 			aiError = 'Please sign in with Google first to create your AI application.';
