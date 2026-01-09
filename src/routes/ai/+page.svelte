@@ -308,6 +308,8 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
 		mailViewMode = 'inbox';
 		mailActiveFolder = 'inbox';
 		userProfile.update((u) => ({ ...u, isSubmittingAI: false }));
+				userProfile.update((u) => ({ ...u, usingAI: false }));
+
 
 		if (typeof localStorage !== 'undefined') {
 			try {
