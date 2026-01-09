@@ -975,7 +975,7 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
 													<span
 														class="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white"
 													></span>
-													DeepSeek AI is analyzing...
+													Admissions Officers are analyzing...
 												</span>
 											{:else if hasUsedFreeSimulation && !hasDeepDiveAccess}
 												<span
@@ -998,7 +998,7 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
 													</svg>
 												</span>
 											{:else}
-												<span>Get Application Results (DeepSeek AI)</span>
+												<span>Submit Application</span>
 											{/if}
 										</div>
 									</div>

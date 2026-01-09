@@ -76,7 +76,7 @@
                 <div class="md:col-span-2 p-10 flex flex-col justify-center border-b md:border-b-0 md:border-r border-white/10">
                     <h2 class="text-white text-3xl font-black tracking-tight mb-4">See what they see.</h2>
                     <p class="text-slate-400 font-medium">
-                        Human AO notes are coded, blunt, and fast. Pro gives you access to the DeepSeek-V3 engine configured to replicate that exact internal dialogue.
+                        Human AO notes are coded, blunt, and fast. Pro gives you access to the analysis engine configured to replicate that exact internal dialogue.
                     </p>
                 </div>
                 <div class="md:col-span-3 p-10 bg-white/5 backdrop-blur-sm">

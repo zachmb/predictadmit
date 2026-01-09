@@ -95,7 +95,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
                     </div>
                     <h2 class="text-3xl font-black text-slate-900 tracking-tight mb-4">Unlock Premium Analysis</h2>
-                    <p class="text-slate-500 font-medium leading-relaxed max-w-sm mx-auto mb-10">Sign in to access the DeepSeek-V3 grading engine and get institutional feedback.</p>
+                    <p class="text-slate-500 font-medium leading-relaxed max-w-sm mx-auto mb-10">Sign in to access the grading engine and get institutional feedback.</p>
                     <button onclick={() => signIn('google', { callbackUrl: '/ai' })} class="group relative flex items-center justify-center gap-3 w-full max-w-xs mx-auto py-4 px-6 bg-slate-900 text-white rounded-2xl font-bold hover:bg-slate-800 transition-all shadow-xl shadow-slate-200">
                         Continue with Google
                     </button>
@@ -144,7 +144,6 @@
         </div>
         {/if}
         </div>
-        <span class="text-[10px] font-bold text-emerald-400 uppercase tracking-widest hidden sm:inline">Verified by DeepSeek-V3</span>
         </div>
         
         <div class="p-8 space-y-10">
@@ -245,7 +244,7 @@
         onclick={handleAnalyze}
         class="w-full bg-blue-600 text-white py-8 rounded-2xl font-black text-xl hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-xl shadow-blue-200"
         >
-        {isAnalyzing ? 'Processing via DeepSeek-V3...' : 'Analyze My Essays'}
+        {isAnalyzing ? 'Processing' : 'Analyze My Essays'}
         </button>
         </Card>
         </div>
