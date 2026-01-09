@@ -293,7 +293,6 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
 
 	// This is *not* the full simulator reset — just clears the AI inbox state.
 	function resetInboxState() {
-		aiResults.clear();
 		aiDecisions = [];
 		deepDiveItems = [];
 		applicantSummary = '';
