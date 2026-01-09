@@ -19,7 +19,6 @@
 	import { aiResults } from '$lib/stores/results';
 
 let { data }: { data: PageData } = $props();
-	const session = data.session;
 
 	// 🔐 LocalStorage persistence key for AI inbox
 	const AI_PERSIST_KEY = 'predictadmit_ai_inbox_v1';
@@ -51,33 +50,32 @@ let { data }: { data: PageData } = $props();
 	};
 
 	// Application inputs (can be typed or filled via OCR)
-	let essay = '';
-	let activities = '';
-	let honors = '';
-	let transcript = '';
-	let major = '';
-	let supplementals = '';
+	let essay = $state('');
+	let activities = $state('');
+	let honors = $state('');
+	let transcript = $state('');
+	let major = $state('');
+	let supplementals = $state('');
 	// OCR state
-	let ocrUploading = false;
-	let ocrError = '';
-	let ocrText = '';
+	let ocrUploading = $state(false);
+	let ocrError = $state('');
+	let ocrText = $state('');
 
 	// Free-tier limits (persisted per browser)
-	let hasUsedFreeSimulation = false; // one full HYPSM+ run
-	let hasUsedFreePdfOcr = false; // one Common App PDF upload
-	let promoCodeInput = '';
-
-	// Paywall modal state
-	let showPaywallModal = false;
-	let paywallMode: 'simulation' | 'ocr' | 'deepDive' | null = null;
-	let paywallContextDecision: AiDecision | null = null;
+	let hasUsedFreeSimulation = $state(false);
+	let hasUsedFreePdfOcr = $state(false);
+	let promoCodeInput = $state('');
+	let showPaywallModal = $state(false);
+	let paywallMode = $state<'simulation' | 'ocr' | 'deepDive' | null>(null);
+	let paywallContextDecision = $state<AiDecision | null>(null);
+	
 
 	// Pro access (in a real app this would come from your backend / Stripe webhook)
 
 	// Google sign-in (real: derived from Auth.js session)
-	let googleSignedIn = true;
-	let googleEmail = '';
-	let googleName = '';
+	let googleSignedIn = $state(true);
+	let googleEmail = $state('');
+	let googleName = $state('');
 
 	$effect(() => {
     googleSignedIn = !!data.session?.user;
@@ -140,18 +138,13 @@ let { data }: { data: PageData } = $props();
 		}
 	};
 
-	let edSlug: string = '';
 
 
-	let aiError = '';
-	let aiDecisions: AiDecision[] = [];
-
-	// Deep dive state
-	let deepDiveItems: DeepDiveItem[] = [];
-	let deepDiveLoadingSlug: string | null = null;
-
-	// Summary of all materials returned from the evaluate endpoint.
-	let applicantSummary = '';
+	let aiError = $state('');
+	let aiDecisions = $state<AiDecision[]>([]);
+	let deepDiveItems = $state<DeepDiveItem[]>([]);
+	let deepDiveLoadingSlug = $state<string | null>(null);
+	let applicantSummary = $state('');
 
 	// === AdmitMail-style inbox state, driven by AI decisions ===
 
@@ -159,11 +152,10 @@ let { data }: { data: PageData } = $props();
 	let inboxSection: HTMLElement | null = null;
 
 	// view state for AdmitMail
-	let mailViewMode: 'inbox' | 'email' = 'inbox';
-	let mailActiveFolder: 'inbox' | 'sent' = 'inbox';
-
+let mailViewMode = $state<'inbox' | 'email'>('inbox');
+let mailActiveFolder = $state<'inbox' | 'sent'>('inbox');
 	// search + lists
-	let searchQuery = '';
+	let searchQuery = $state('');
 let visiblePortals = $derived($aiResults.decisions.map(decisionToPortalEmail));
 
 // For complex logic like your search filter:
@@ -180,9 +172,10 @@ let filteredPortals = $derived.by(() => {
 	let hasViewedEdEmail = false;
 
 	// selections + read tracking
-	let readPortalSlugs: Set<string> = new Set();
-	let selectedPortal: PortalEmail | null = null;
-	let selectedSent: SentEmail | null = null;
+	let readPortalSlugs = $state<Set<string>>(new Set());
+	let selectedPortal = $state<PortalEmail | null>(null);
+	let selectedSent = $state<SentEmail | null>(null);
+	let edSlug = $state('');
 
 	// Sent mail list reused from the static simulator
 	const sentEmails: SentEmail[] = baseSentEmails;
@@ -647,7 +640,6 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
 	import Card from '$lib/components/common/Card.svelte';
 	import Button from '$lib/components/common/Button.svelte';
 	import RadarChart from '$lib/components/common/RadarChart.svelte';
-	import { findConfigFile } from 'typescript';
 </script>
 
 <svelte:head>
