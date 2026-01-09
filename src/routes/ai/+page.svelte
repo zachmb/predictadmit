@@ -293,32 +293,38 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
 
 	// This is *not* the full simulator reset — just clears the AI inbox state.
 	function resetInboxState() {
-		aiResults.clear();
-		evaluationController?.abort();
-		aiDecisions = [];
-		deepDiveItems = [];
-		applicantSummary = '';
+    // 1. Kill the loop and the network requests
+    evaluationController?.abort();
+    aiResults.clear();
 
-		visiblePortals = [];
-		// sortedVisiblePortals is reactive from visiblePortals
-		filteredPortals = [];
-		selectedPortal = null;
-		selectedSent = null;
-		readPortalSlugs = new Set();
-		mailViewMode = 'inbox';
-		mailActiveFolder = 'inbox';
-		userProfile.update((u) => ({ ...u, isSubmittingAI: false }));
-				userProfile.update((u) => ({ ...u, usingAI: false }));
+    // 3. Reset local $state variables
+    aiDecisions = [];
+    deepDiveItems = [];
+    applicantSummary = '';
 
+    // 4. Reset UI state variables (Ensure these are declared as $state)
+    selectedPortal = null;
+    selectedSent = null;
+    readPortalSlugs = new Set();
+    mailViewMode = 'inbox';
+    mailActiveFolder = 'inbox';
 
-		if (typeof localStorage !== 'undefined') {
-			try {
-				localStorage.removeItem(AI_PERSIST_KEY);
-			} catch (err) {
-				console.error('Failed to clear AI inbox state', err);
-			}
-		}
-	}
+    // 5. Update global profile state
+    userProfile.update((u) => ({ 
+        ...u, 
+        isSubmittingAI: false,
+        usingAI: false 
+    }));
+
+    // 6. Persistence cleanup
+    if (typeof localStorage !== 'undefined') {
+        try {
+            localStorage.removeItem(AI_PERSIST_KEY);
+        } catch (err) {
+            console.error('Failed to clear AI inbox state', err);
+        }
+    }
+}
 
 	// Restore free-tier usage + Pro flag from localStorage and handle Stripe return
 	onMount(() => {
@@ -417,8 +423,6 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
             // 1. Reset state before starting the loop
             aiResults.clear();
             aiDecisions = [];
-            visiblePortals = [];
-            readPortalSlugs = new Set();
             
             // 2. Define the payload without school-specific info
             const basePayload = {
