@@ -387,6 +387,7 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
 		aiError = '';
 		evaluationController?.abort();
     evaluationController = new AbortController();
+	const signal = evaluationController.signal;
 
 		if (!googleSignedIn) {
 			aiError = 'Please sign in with Google first to create your AI application.';
@@ -433,11 +434,13 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
             // 3. Loop through each school slug
             // Note: Ensure SCHOOLS is imported or defined in your script
             for (const { slug } of SCHOOLS) {
+				if (signal.aborted) return;
                 const res = await fetch(`/api/ai-evaluate/${slug}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(basePayload)
                 });
+				if (signal.aborted) return;
 
                 const data = await res.json();
 
@@ -451,6 +454,7 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
                     major, 
                     applicantSummary: data.applicantSummary 
                 });
+				if (signal.aborted) return;
 
 
                 // 5. Update local state for the UI
@@ -494,10 +498,16 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
 
             }
         } catch (err) {
+			if (err === 'AbortError') {
+            console.log('Evaluation aborted successfully');
+            return;
+        }
             console.error(err);
             aiError = 'Network or server error while calling the AI evaluator.';
         } finally {
-			userProfile.update(u => ({ ...u, isSubmittingAI: false }));
+			if (!signal.aborted) {
+            userProfile.update(u => ({ ...u, isSubmittingAI: false }));
+        }
         }
 	}
 
