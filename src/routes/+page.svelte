@@ -642,11 +642,12 @@
 		}
 
 		// clear global store
-		userProfile.set({
-			name: '',
-			email: '',
-			password: ''
-		});
+		userProfile.update(u => ({
+    ...u, // Keep everything else (like usingAI)
+    name: '',
+    email: '',
+    password: ''
+}));
 
 		// clear local fields
 		name = '';
