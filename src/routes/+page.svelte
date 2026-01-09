@@ -13,7 +13,6 @@
 	import AdmitMail from '$lib/components/AdmitMail.svelte';
 	import Card from '$lib/components/common/Card.svelte';
 	import Button from '$lib/components/common/Button.svelte';
-
 	
 	// University search state
 	let searchQuery = '';
@@ -1136,7 +1135,7 @@
 			{/if}
 
 			<!-- admitMail INBOX / EMAIL VIEW -->
-			{#if hasApplied && !$userProfile.usingAI}
+			{#if hasApplied && !$userProfile.isSubmittingAI}
 				<AdmitMail
 					bind:inboxSection
 					{viewMode}

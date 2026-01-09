@@ -18,7 +18,7 @@
 	// NEW: store AI results globally so portals can read decisions
 	import { aiResults } from '$lib/stores/results';
 
-let { data }: { data: PageData } = $props();
+let { data, finished }: { data: PageData, finished: boolean } = $props();
 let evaluationController: AbortController | null = null;
 	// 🔐 LocalStorage persistence key for AI inbox
 	const AI_PERSIST_KEY = 'predictadmit_ai_inbox_v1';
@@ -48,8 +48,7 @@ let evaluationController: AbortController | null = null;
 		outcome: DecisionOutcome;
 		explanation: string;
 	};
-
-	// Application inputs (can be typed or filled via OCR)
+// Application inputs (can be typed or filled via OCR)
 	let essay = $state('');
 	let activities = $state('');
 	let honors = $state('');
@@ -479,6 +478,7 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
             if (!aiDecisions.length) {
                 aiError = 'The AI did not return any decisions. Try adding more detail to your application.';
             } else {
+				
                 hasUsedFreeSimulation = true;
                 if (typeof localStorage !== 'undefined') {
                     localStorage.setItem('predictadmit_hasUsedFreeSimulation', 'true');
@@ -504,6 +504,7 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
                 mailViewMode = 'inbox';
 
             }
+			finished=true;
         } catch (err) {
 			if (err === 'AbortError') {
             console.log('Evaluation aborted successfully');
