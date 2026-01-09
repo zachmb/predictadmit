@@ -2,7 +2,11 @@
 import type { RequestHandler } from '@sveltejs/kit';
 import { json } from '@sveltejs/kit';
 import Stripe from 'stripe';
-import { STRIPE_SECRET_KEY, STRIPE_PRICE_ID } from '$env/static/private';
+import { env } from '$env/dynamic/private';
+
+const STRIPE_SECRET_KEY=env.STRIPE_SECRET_KEY;
+
+const STRIPE_PRICE_ID=env.STRIPE_PRICE_ID;
 
 export const POST: RequestHandler = async ({ request }) => {
   try {

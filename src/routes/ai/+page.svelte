@@ -18,8 +18,7 @@
 	// NEW: store AI results globally so portals can read decisions
 	import { aiResults } from '$lib/stores/results';
 
-	export let data: PageData;
-
+let { data }: { data: PageData } = $props();
 	const session = data.session;
 
 	// 🔐 LocalStorage persistence key for AI inbox
@@ -74,18 +73,17 @@
 	let paywallContextDecision: AiDecision | null = null;
 
 	// Pro access (in a real app this would come from your backend / Stripe webhook)
-	let hasDeepDiveAccess = false;
 
 	// Google sign-in (real: derived from Auth.js session)
 	let googleSignedIn = true;
 	let googleEmail = '';
 	let googleName = '';
 
-	$: {
-		googleSignedIn = !!session?.user;
-	googleEmail = (session?.user?.email as string) ?? '';
-		googleName = (session?.user?.name as string) ?? '';
-	}
+	$effect(() => {
+    googleSignedIn = !!data.session?.user;
+    googleEmail = data.session?.user?.email ?? '';
+    // This runs whenever data.session changes
+});
 
 	// ED selection
 	const ED_SCHOOLS = [
@@ -166,10 +164,16 @@
 
 	// search + lists
 	let searchQuery = '';
-	let filteredPortals: PortalEmail[] = [];
-	let sortedVisiblePortals: PortalEmail[] = [];
-	$: visiblePortals = $aiResults.decisions.map(decisionToPortalEmail);
+let visiblePortals = $derived($aiResults.decisions.map(decisionToPortalEmail));
 
+// For complex logic like your search filter:
+let filteredPortals = $derived.by(() => {
+    const q = searchQuery.trim().toLowerCase();
+    if (!q) return [...sortedVisiblePortals];
+    return sortedVisiblePortals.filter(p => 
+        p.name.toLowerCase().includes(q) || p.slug.toLowerCase().includes(q)
+    );
+});
 	// ED / RD state (minimal in AI mode)
 	let currentEdPortal: PortalEmail | null = null;
 	let edEmailMustBeViewed = false;
@@ -184,8 +188,8 @@
 	const sentEmails: SentEmail[] = baseSentEmails;
 
 	// Display name/email for AdmitMail
-	$: displayName = googleName?.trim() || 'Applicant';
-	$: displayEmail = googleEmail?.trim() || 'you@predictadmit.ai';
+let displayName = $derived(googleName?.trim() || 'Applicant');	
+let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
 
 	// Map an AI decision into a PortalEmail shape that AdmitMail expects
 	function decisionToPortalEmail(decision: AiDecision): PortalEmail {
@@ -205,20 +209,9 @@
 	}
 
 	// Keep sortedVisiblePortals in sync with visiblePortals
-	$: sortedVisiblePortals = [...visiblePortals];
+	let sortedVisiblePortals = $derived([...visiblePortals]);
 	
-	// Keep filteredPortals in sync with searchQuery
-	$: {
-		const q = searchQuery.trim().toLowerCase();
-
-		if (!q) {
-			filteredPortals = [...sortedVisiblePortals];
-		} else {
-			filteredPortals = sortedVisiblePortals.filter((portal) => {
-				return portal.name.toLowerCase().includes(q) || portal.slug.toLowerCase().includes(q);
-			});
-		}
-	}
+	
 
 	// === Persistence helpers for AI inbox ===
 
@@ -307,6 +300,7 @@
 
 	// This is *not* the full simulator reset — just clears the AI inbox state.
 	function resetInboxState() {
+		aiResults.clear();
 		aiDecisions = [];
 		deepDiveItems = [];
 		applicantSummary = '';
@@ -350,11 +344,10 @@
 		hasUsedFreePdfOcr = localStorage.getItem('predictadmit_hasUsedFreePdfOcr') === 'true';
 
 		// Restore AI inbox state (visiblePortals, read flags, selected email, etc.)
-		loadAiInboxState();
 	});
 
 	// Reactive Pro check
-	$: hasDeepDiveAccess = $userProfile.isPro;
+	let hasDeepDiveAccess = $derived($userProfile.isPro);
 
 	function outcomeLabel(outcome: DecisionOutcome): string {
 		if (outcome === 'admit') return 'Admitted';
@@ -468,7 +461,7 @@
                 aiDecisions = $aiResults.decisions;
                 applicantSummary = data.applicantSummary;
 				
-
+				saveAiInboxState();
 
                 // 6. Update the AdmitMail inbox in real-time
                 // This will automatically update the inbox every time a new school is added
@@ -654,6 +647,7 @@
 	import Card from '$lib/components/common/Card.svelte';
 	import Button from '$lib/components/common/Button.svelte';
 	import RadarChart from '$lib/components/common/RadarChart.svelte';
+	import { findConfigFile } from 'typescript';
 </script>
 
 <svelte:head>
