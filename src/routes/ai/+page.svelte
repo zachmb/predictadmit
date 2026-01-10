@@ -227,34 +227,7 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
 		}
 	}
 
-	function loadAiInboxState() {
-		if (typeof localStorage === 'undefined') return;
-
-		const raw = localStorage.getItem(AI_PERSIST_KEY);
-		if (!raw) return;
-
-		try {
-			const state = JSON.parse(raw) as {
-				visiblePortals?: PortalEmail[];
-				readPortalSlugs?: string[];
-				selectedPortal?: PortalEmail | null;
-				selectedSent?: SentEmail | null;
-				mailViewMode?: 'inbox' | 'email';
-				mailActiveFolder?: 'inbox' | 'sent';
-				searchQuery?: string;
-			};
-
-			visiblePortals = state.visiblePortals ?? [];
-			readPortalSlugs = new Set(state.readPortalSlugs ?? []);
-			selectedPortal = state.selectedPortal ?? null;
-			selectedSent = state.selectedSent ?? null;
-			mailViewMode = state.mailViewMode ?? 'inbox';
-			mailActiveFolder = state.mailActiveFolder ?? 'inbox';
-			searchQuery = state.searchQuery ?? '';
-		} catch (err) {
-			console.error('Failed to load AI inbox state', err);
-		}
-	}
+	
 
 	// Callbacks that AdmitMail expects
 
@@ -511,6 +484,7 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
         }
             console.error(err);
             aiError = 'Network or server error while calling the AI evaluator.';
+			return;
         } finally {
 			if (!signal.aborted) {
             userProfile.update(u => ({ ...u, isSubmittingAI: false }));

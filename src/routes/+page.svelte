@@ -1098,19 +1098,26 @@
 					</div>
 					<div class="ml-0 md:ml-4 text-right space-y-1">
 						<button
-							type="button"
-							class={`text-sm font-semibold px-5 py-2 rounded-md border shadow focus:outline-none focus:ring-1 ${
-								!canApply
-									? 'bg-slate-200 text-slate-500 border-slate-400 cursor-not-allowed'
-									: hasApplied
-										? 'bg-green-900 text-white border-green-950 cursor-default'
-										: 'bg-green-700 text-white border-green-900 hover:bg-green-600'
-							}`}
-							on:click={handleApply}
-							disabled={!canApply || hasApplied}
-						>
-							{hasApplied ? ($userProfile.isSubmitting ? 'Simulating…' : 'Simulation finished') : 'Apply'}
-						</button>
+    type="button"
+    class={`text-sm font-semibold px-5 py-2 rounded-md border shadow focus:outline-none focus:ring-1 ${
+        (!canApply || $userProfile.isSubmittingAI)
+            ? 'bg-slate-200 text-slate-500 border-slate-400 cursor-not-allowed'
+            : hasApplied
+                ? 'bg-green-900 text-white border-green-950 cursor-default'
+                : 'bg-green-700 text-white border-green-900 hover:bg-green-600'
+    }`}
+    on:click={handleApply}
+    disabled={!canApply || hasApplied || $userProfile.isSubmittingAI}
+    title={$userProfile.isSubmittingAI ? 'AI simulation is currently running' : ''}
+>
+    {#if $userProfile.isSubmittingAI}
+        AI Currently Running…
+    {:else if hasApplied}
+        {$userProfile.isSubmitting ? 'Simulating…' : 'Simulation finished'}
+    {:else}
+        Apply
+    {/if}
+</button>
 						{#if !canApply}
 							<p class="text-xs text-slate-600">Fill in name, email, and password first.</p>
 						{:else if hasApplied && visiblePortals.length === 0}
