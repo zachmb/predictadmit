@@ -19,8 +19,9 @@
 	import { aiResults } from '$lib/stores/results';
 
 let { data }: { data: PageData } = $props();
-let evaluationController = $state<AbortController | null>(null);	// 🔐 LocalStorage persistence key for AI inbox
-	const AI_PERSIST_KEY = 'predictadmit_ai_inbox_v1';
+let evaluationController: AbortController | null = null;
+
+const AI_PERSIST_KEY = 'predictadmit_ai_inbox_v1';
 
 	type DecisionOutcome = 'admit' | 'deny' | 'waitlist' | 'defer';
 
