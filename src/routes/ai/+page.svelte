@@ -16,7 +16,7 @@
 	import { userProfile } from '$lib/stores/user';
 
 	// NEW: store AI results globally so portals can read decisions
-	import { aiResults } from '$lib/stores/results';
+	import { aiResults, currentStoreVersion} from '$lib/stores/results';
 
 let { data }: { data: PageData } = $props();
 let activeGenerationId = $state(0);
@@ -362,7 +362,7 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
 	}
 
 	async function runEvaluation() {
-		const myId = ++activeGenerationId;
+		const myId = currentStoreVersion+1;
 
 		if (!googleSignedIn) {
 			aiError = 'Please sign in with Google first to create your AI application.';
@@ -389,6 +389,7 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
 		try {
             // 1. Reset state before starting the loop
             aiResults.clear();
+			const myValidId = currentStoreVersion;
             aiDecisions = [];
             
             // 2. Define the payload without school-specific info
@@ -407,26 +408,25 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
             // 3. Loop through each school slug
             // Note: Ensure SCHOOLS is imported or defined in your script
             for (const { slug } of SCHOOLS) {
-				if (myId !== activeGenerationId) return;
+				if (myValidId !== currentStoreVersion) return;
                 const res = await fetch(`/api/ai-evaluate/${slug}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(basePayload),
 					
                 });
-				if (myId !== activeGenerationId) return;
+				if (myValidId !== currentStoreVersion) return;
 
                 const data = await res.json();
-				if (myId !== activeGenerationId) return;
 
-                if (!res.ok) {
+                if (!res.ok ||  !(myValidId === currentStoreVersion)) {
                     console.error(`Error evaluating ${slug}:`, data?.error);
                     continue; // Skip failed schools and move to the next
                 }
 
 
                 // 4. Add individual decision to the store
-                aiResults.addDecision(data.decision, { 
+                aiResults.addDecision(data.decision, myValidId, { 
                     major, 
                     applicantSummary: data.applicantSummary 
                 });
@@ -481,7 +481,7 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
             aiError = 'Network or server error while calling the AI evaluator.';
 			return;
         } finally {
-			if (myId === activeGenerationId) {
+			if (currentStoreVersion === myValidId) {
             userProfile.update(u => ({ ...u, isSubmittingAI: false }));
         }
 			

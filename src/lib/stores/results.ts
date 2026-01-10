@@ -2,7 +2,7 @@ import { writable, derived } from 'svelte/store';
 import { browser } from '$app/environment'; 
 
 export type DecisionOutcome = 'admit' | 'deny' | 'waitlist' | 'defer';
-
+export let currentStoreVersion = 0;
 export type AiDecision = {
   school: string;
   slug: string;
@@ -43,7 +43,8 @@ function createResultsStore() {
 
   return {
     subscribe,
-    addDecision: (decision: AiDecision, rawPayload?: any) => {
+    addDecision: (decision: AiDecision, version: number, rawPayload?: any) => {
+      if (version !== currentStoreVersion) return;
       update((prev) => ({
         ...prev,
         decisions: [...prev.decisions, decision],
@@ -59,6 +60,7 @@ function createResultsStore() {
     setDecisions: (decisions: AiDecision[]) =>
       update((prev) => ({ ...prev, decisions })),
     clear: () => {
+      currentStoreVersion++;
       set({ decisions: [], raw: null });
       if (browser) localStorage.removeItem('ai_results_cache');
     }
