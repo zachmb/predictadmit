@@ -19,9 +19,7 @@
 	import { aiResults } from '$lib/stores/results';
 
 let { data }: { data: PageData } = $props();
-let resetting = $state(false);
-let evaluationController: AbortController | null = null;
-
+let activeGenerationId = $state(0);
 const AI_PERSIST_KEY = 'predictadmit_ai_inbox_v1';
 
 	type DecisionOutcome = 'admit' | 'deny' | 'waitlist' | 'defer';
@@ -265,8 +263,8 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
 
 	// This is *not* the full simulator reset — just clears the AI inbox state.
 	function resetInboxState() {
+		activeGenerationId++;
     // 1. Kill the loop and the network requests
-		resetting = true;
     aiResults.clear();
 
     // 3. Reset local $state variables
@@ -364,7 +362,7 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
 	}
 
 	async function runEvaluation() {
-		if (resetting) return;
+		const myId = ++activeGenerationId;
 
 		if (!googleSignedIn) {
 			aiError = 'Please sign in with Google first to create your AI application.';
@@ -409,25 +407,22 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
             // 3. Loop through each school slug
             // Note: Ensure SCHOOLS is imported or defined in your script
             for (const { slug } of SCHOOLS) {
-						if (resetting) return;
-
+				if (myId !== activeGenerationId) return;
                 const res = await fetch(`/api/ai-evaluate/${slug}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(basePayload),
 					
                 });
-				
+				if (myId !== activeGenerationId) return;
 
                 const data = await res.json();
-						if (resetting) return;
-
+				if (myId !== activeGenerationId) return;
 
                 if (!res.ok) {
                     console.error(`Error evaluating ${slug}:`, data?.error);
                     continue; // Skip failed schools and move to the next
                 }
-						if (resetting) return;
 
 
                 // 4. Add individual decision to the store
@@ -435,14 +430,12 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
                     major, 
                     applicantSummary: data.applicantSummary 
                 });
-						if (resetting) return;
 
 
 
                 // 5. Update local state for the UI
                 aiDecisions = $aiResults.decisions;
                 applicantSummary = data.applicantSummary;
-						if (resetting) return;
 
 				saveAiInboxState();
 
@@ -488,8 +481,10 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
             aiError = 'Network or server error while calling the AI evaluator.';
 			return;
         } finally {
-			
+			if (myId === activeGenerationId) {
             userProfile.update(u => ({ ...u, isSubmittingAI: false }));
+        }
+			
         
         }
 	}
