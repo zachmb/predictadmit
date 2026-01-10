@@ -19,8 +19,7 @@
 	import { aiResults } from '$lib/stores/results';
 
 let { data }: { data: PageData } = $props();
-let evaluationController: AbortController | null = null;
-	// 🔐 LocalStorage persistence key for AI inbox
+let evaluationController = $state<AbortController | null>(null);	// 🔐 LocalStorage persistence key for AI inbox
 	const AI_PERSIST_KEY = 'predictadmit_ai_inbox_v1';
 
 	type DecisionOutcome = 'admit' | 'deny' | 'waitlist' | 'defer';
@@ -364,6 +363,7 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
 	}
 
 	async function runEvaluation() {
+		
 		aiError = '';
 		evaluationController?.abort();
     evaluationController = new AbortController();
@@ -478,10 +478,11 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
 
             }
         } catch (err) {
-			if (err === 'AbortError') {
-            console.log('Evaluation aborted successfully');
-            return;
-        }
+			if (signal.aborted) {
+                console.log('Evaluation aborted successfully');
+                return; // 🛑 This is the most important line to stop the loop
+            }
+			
             console.error(err);
             aiError = 'Network or server error while calling the AI evaluator.';
 			return;
