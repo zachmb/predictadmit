@@ -386,10 +386,12 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
 
 		deepDiveItems = [];
 
+		let myValidId: number = 0;
+
 		try {
             // 1. Reset state before starting the loop
             aiResults.clear();
-			const myValidId = currentStoreVersion;
+			myValidId = currentStoreVersion;
             aiDecisions = [];
             
             // 2. Define the payload without school-specific info
