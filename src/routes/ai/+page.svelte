@@ -19,6 +19,7 @@
 	import { aiResults } from '$lib/stores/results';
 
 let { data }: { data: PageData } = $props();
+let resetting = $state(false);
 let evaluationController: AbortController | null = null;
 
 const AI_PERSIST_KEY = 'predictadmit_ai_inbox_v1';
@@ -265,8 +266,7 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
 	// This is *not* the full simulator reset — just clears the AI inbox state.
 	function resetInboxState() {
     // 1. Kill the loop and the network requests
-    evaluationController?.abort();
-	evaluationController = null;
+		resetting = true;
     aiResults.clear();
 
     // 3. Reset local $state variables
@@ -364,14 +364,7 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
 	}
 
 	async function runEvaluation() {
-		
-		aiError = '';
-		if (evaluationController) {
-        evaluationController.abort();
-    }
-const localController = new AbortController();    
-evaluationController = localController;
-	const { signal } = localController;
+		if (resetting) return;
 
 		if (!googleSignedIn) {
 			aiError = 'Please sign in with Google first to create your AI application.';
@@ -416,34 +409,41 @@ evaluationController = localController;
             // 3. Loop through each school slug
             // Note: Ensure SCHOOLS is imported or defined in your script
             for (const { slug } of SCHOOLS) {
-				if (signal.aborted) return;
+						if (resetting) return;
+
                 const res = await fetch(`/api/ai-evaluate/${slug}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(basePayload),
-					signal
+					
                 });
-				if (signal.aborted) return;
+				
 
                 const data = await res.json();
+						if (resetting) return;
+
 
                 if (!res.ok) {
                     console.error(`Error evaluating ${slug}:`, data?.error);
                     continue; // Skip failed schools and move to the next
                 }
+						if (resetting) return;
+
 
                 // 4. Add individual decision to the store
                 aiResults.addDecision(data.decision, { 
                     major, 
                     applicantSummary: data.applicantSummary 
                 });
-				if (signal.aborted) return;
+						if (resetting) return;
+
 
 
                 // 5. Update local state for the UI
                 aiDecisions = $aiResults.decisions;
                 applicantSummary = data.applicantSummary;
-				
+						if (resetting) return;
+
 				saveAiInboxState();
 
                 // 6. Update the AdmitMail inbox in real-time
@@ -482,18 +482,15 @@ evaluationController = localController;
 
             }
         } catch (err: any) {
-			if (err.name === 'AbortError' || signal.aborted) {
-            console.log('✅ Evaluation aborted successfully');
-            return; 
-        }
+		
 			
             console.error(err);
             aiError = 'Network or server error while calling the AI evaluator.';
 			return;
         } finally {
-			if (!signal.aborted) {
+			
             userProfile.update(u => ({ ...u, isSubmittingAI: false }));
-        }
+        
         }
 	}
 
