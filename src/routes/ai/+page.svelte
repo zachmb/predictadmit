@@ -156,11 +156,13 @@ let mailActiveFolder = $state<'inbox' | 'sent'>('inbox');
 	// search + lists
 	let searchQuery = $state('');
 let visiblePortals = $derived($aiResults?.decisions?.map(decisionToPortalEmail) ?? []);
+	let sortedVisiblePortals = $derived([...visiblePortals]);
+
 // For complex logic like your search filter:
 let filteredPortals = $derived.by(() => {
     const q = searchQuery.trim().toLowerCase();
-    if (!q) return [...sortedVisiblePortals];
-    return sortedVisiblePortals.filter(p => 
+    if (!q) return [...visiblePortals];
+    return visiblePortals.filter(p => 
         p.name.toLowerCase().includes(q) || p.slug.toLowerCase().includes(q)
     );
 });
@@ -199,8 +201,6 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
 		return 'March 20, 5:00 PM';
 	}
 
-	// Keep sortedVisiblePortals in sync with visiblePortals
-	let sortedVisiblePortals = $derived([...visiblePortals]);
 	
 	
 
