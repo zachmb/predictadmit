@@ -155,8 +155,7 @@ let mailViewMode = $state<'inbox' | 'email'>('inbox');
 let mailActiveFolder = $state<'inbox' | 'sent'>('inbox');
 	// search + lists
 	let searchQuery = $state('');
-let visiblePortals = $derived($aiResults.decisions.map(decisionToPortalEmail));
-
+let visiblePortals = $derived($aiResults?.decisions?.map(decisionToPortalEmail) ?? []);
 // For complex logic like your search filter:
 let filteredPortals = $derived.by(() => {
     const q = searchQuery.trim().toLowerCase();
@@ -267,6 +266,7 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
 	function resetInboxState() {
     // 1. Kill the loop and the network requests
     evaluationController?.abort();
+	evaluationController = null;
     aiResults.clear();
 
     // 3. Reset local $state variables
@@ -366,9 +366,12 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
 	async function runEvaluation() {
 		
 		aiError = '';
-		evaluationController?.abort();
-    evaluationController = new AbortController();
-	const signal = evaluationController.signal;
+		if (evaluationController) {
+        evaluationController.abort();
+    }
+const localController = new AbortController();    
+evaluationController = localController;
+	const { signal } = localController;
 
 		if (!googleSignedIn) {
 			aiError = 'Please sign in with Google first to create your AI application.';
@@ -418,7 +421,7 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(basePayload),
-					signal: signal
+					signal
                 });
 				if (signal.aborted) return;
 
@@ -478,11 +481,11 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
                 mailViewMode = 'inbox';
 
             }
-        } catch (err) {
-			if (signal.aborted) {
-                console.log('Evaluation aborted successfully');
-                return; // 🛑 This is the most important line to stop the loop
-            }
+        } catch (err: any) {
+			if (err.name === 'AbortError' || signal.aborted) {
+            console.log('✅ Evaluation aborted successfully');
+            return; 
+        }
 			
             console.error(err);
             aiError = 'Network or server error while calling the AI evaluator.';
