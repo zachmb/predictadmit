@@ -784,12 +784,17 @@ class="text-xs font-bold text-cyan-400 hover:text-cyan-300 hover:underline"
 								</div>
 
 								<!-- Supplements -->
-								<div class="space-y-4">
-    <h3 class="text-lg font-bold">Supplemental Essays</h3>
+								<div class="space-y-4 bg-white p-4 rounded-lg">
+    <h3 class="text-lg font-bold text-gray-900">Supplemental Essays</h3>
+    
     <div class="flex gap-2 overflow-x-auto pb-2">
         {#each SCHOOLS as { school, slug }}
             <button 
-                class="px-3 py-1 rounded-full border {activeSupTab === slug ? 'bg-blue-600' : 'bg-gray-800'}"
+                type="button"
+                class="px-3 py-1 rounded-full border transition-colors 
+                {activeSupTab === slug 
+                    ? 'bg-blue-600 text-white border-blue-600' 
+                    : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'}"
                 onclick={() => activeSupTab = slug}
             >
                 {slug}
@@ -800,7 +805,7 @@ class="text-xs font-bold text-cyan-400 hover:text-cyan-300 hover:underline"
     <textarea
         bind:value={supplementals[activeSupTab]}
         placeholder="Paste the supplemental for {activeSupTab} here..."
-        class="w-full h-48 bg-black/20 border border-white/10 p-4"
+        class="w-full h-48 bg-white border border-gray-300 rounded-md p-4 text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none shadow-sm"
     ></textarea>
 </div>
 
