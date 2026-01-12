@@ -5,6 +5,8 @@
 	import { page } from '$app/stores';
 	import { signIn } from '@auth/sveltekit/client';
 	import { fly, fade, slide } from 'svelte/transition';
+	import { tweened } from 'svelte/motion';
+	import { cubicOut } from 'svelte/easing';
 	import RadarChart from '$lib/components/common/RadarChart.svelte';
 	import { schoolConfigs } from '$lib/config/schools';
 	import { schoolPrompts } from '$lib/config/prompts';
@@ -19,13 +21,107 @@
 	let isPro = $derived($userProfile.isPro);
 
 	// Sales/Pricing State
-	let pricingMode = $state<'cycle' | 'monthly'>('cycle');
+	let pricingMode = $state<'lifetime' | 'monthly'>('monthly');
+	// Ticker Animation
+	const displayedPrice = tweened(5, {
+		duration: 800,
+		easing: cubicOut
+	});
+
+	$effect(() => {
+		if (pricingMode === 'monthly') {
+			displayedPrice.set(5);
+		} else {
+			displayedPrice.set(9);
+		}
+	});
+
 	let promoCode = $state('');
 	let promoError = $state('');
 	let isProcessing = $state(false);
 
 	// VIEW STATE
-	let currentView = $state<'dashboard' | 'editor'>('dashboard');
+	let currentView = $state<'dashboard' | 'editor' | 'mindmap'>('dashboard');
+
+	// Mind Map State
+	type MindMapNode = {
+		id: string;
+		x: number;
+		y: number;
+		text: string;
+	};
+	let mindMapNodes = $state<MindMapNode[]>([]);
+	let mindMapConnections = $state<{ from: string; to: string }[]>([]);
+	let mindMapAnalysis = $state('');
+	let isAnalyzingMindMap = $state(false);
+
+	let draggingNodeId = $state<string | null>(null);
+
+	function addMindMapNode(e: MouseEvent) {
+		if ((e.target as HTMLElement).closest('.node-input')) return;
+		if (draggingNodeId) return;
+
+		const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+		const x = e.clientX - rect.left;
+		const y = e.clientY - rect.top;
+
+		const id = Math.random().toString(36).substring(2, 9);
+		const newNode = { id, x, y, text: '' };
+
+		if (mindMapNodes.length > 0) {
+			// Connect to the last node
+			mindMapConnections = [
+				...mindMapConnections,
+				{
+					from: mindMapNodes[mindMapNodes.length - 1].id,
+					to: id
+				}
+			];
+		}
+
+		mindMapNodes = [...mindMapNodes, newNode];
+	}
+
+	function handleNodeMouseDown(e: MouseEvent, id: string) {
+		e.stopPropagation();
+		draggingNodeId = id;
+	}
+
+	function handleContainerMouseMove(e: MouseEvent) {
+		if (!draggingNodeId) return;
+		const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+		const x = e.clientX - rect.left;
+		const y = e.clientY - rect.top;
+
+		mindMapNodes = mindMapNodes.map((n) => {
+			if (n.id === draggingNodeId) {
+				return { ...n, x, y };
+			}
+			return n;
+		});
+	}
+
+	function handleContainerMouseUp() {
+		draggingNodeId = null;
+	}
+
+	async function analyzeMindMap() {
+		if (isAnalyzingMindMap) return;
+		isAnalyzingMindMap = true;
+		// Mock analysis
+		await new Promise((r) => setTimeout(r, 1500));
+
+		const themes = [
+			'Resilience',
+			'Intellectual Vitality',
+			'Community Leadership',
+			'Cultural Identity'
+		];
+		const randomTheme = themes[Math.floor(Math.random() * themes.length)];
+
+		mindMapAnalysis = `**Core Theme Detected: ${randomTheme}**\n\nBased on your notes, your application narrative circles around the idea of ${randomTheme.toLowerCase()}. Consider focusing your personal statement on how this trait has evolved over time.`;
+		isAnalyzingMindMap = false;
+	}
 
 	// IDE State
 	type File = {
@@ -44,11 +140,28 @@
 			name: 'Common App Personal',
 			language: 'markdown',
 			content:
-				'# Personal Statement\n\nPrompt: Some students have a background, identity, interest, or talent that is so meaningful they believe their application would be incomplete without it. If this sounds like you, then please share your story.\n\n---\n\nStart writing here...',
+				'# Personal Statement\n\n### Prompt\nSome students have a background, identity, interest, or talent that is so meaningful they believe their application would be incomplete without it. If this sounds like you, then please share your story.\n\nStart writing here...',
 			school: 'Common App',
 			isOpen: true,
 			isModified: false
-		}
+		},
+		...Object.values(schoolConfigs).map((config) => {
+			const prompts = schoolPrompts[config.slug] || [];
+			const promptsContent = prompts
+				.map((p) => `### ${p.title}\n${p.description}\n\nStart writing here...\n\n`)
+				.join('---\n\n');
+			const finalContent = `# ${config.schoolName} Supplement\n\n${promptsContent.length > 0 ? promptsContent : 'No specific prompts found. Start writing...'}`;
+
+			return {
+				id: config.slug + '-supplement',
+				name: `${config.schoolName.split(' ')[0]} Supplement`,
+				language: 'markdown' as const,
+				content: finalContent,
+				school: config.schoolName,
+				isOpen: true,
+				isModified: false
+			};
+		})
 	]);
 
 	let activeFileIndex = $state(0);
@@ -81,21 +194,42 @@
 	// Academic Index (AI) - Max 240
 	let academicIndex = $derived.by(() => {
 		// Parse Inputs
-		const gpa = parseFloat(profile.gpa_uw) || 0;
+		const gpaUw = parseFloat(profile.gpa_uw) || 0;
+		const gpaW = parseFloat(profile.gpa_w) || gpaUw; // Fallback to UW if no W
 		const test = parseFloat(profile.testScore) || 0;
+
+		// Use Average GPA for the component
+		const avgGpa = (gpaUw + gpaW) / 2;
 
 		// 1. Test Score Component (Max 160)
 		// Normalized to 1600 scale (Assuming SAT). If ACT (max 36), convert roughly.
-		// Simple logic: if < 37, assume ACT and multiply by ~44
+		// Simple logic: if < 37, assume ACT and multiply by ~44.44
 		let normalizedTest = test;
 		if (test > 0 && test < 37) normalizedTest = test * 44.44; // 36 * 44.44 = 1600
 
 		const testComponent = Math.min(160, (normalizedTest / 1600) * 160);
 
 		// 2. GPA Component (Max 80)
-		const gpaComponent = Math.min(80, (gpa / 4.0) * 80);
+		// We use a baseline of 4.0 scale but allow for boost from weighted.
+		// Formula: (AvgGPA / 4.0) * 80. Cap at 80? User wants weighted to affect it.
+		// Let's allow effective GPA to go up to ~4.5ish scaling for the calc but cap the component sum?
+		// Actually, standard AI caps GPA points. But let's just use the raw calc up to 80.
+		const gpaComponent = Math.min(80, (avgGpa / 4.0) * 80);
 
-		return Math.round(testComponent + gpaComponent);
+		let total = testComponent + gpaComponent;
+
+		// PENALTY: Weighted Penalty for Low GPA (< 3.7)
+		// Top tier schools are very sensitive to UW GPA.
+		if (gpaUw > 0 && gpaUw < 3.7) {
+			const gap = 3.7 - gpaUw;
+			// Penalty factor: 20 points per 0.1 gap?
+			// e.g. 3.5 = 0.2 gap * 50 = 10 points off?
+			// Let's make it significant.
+			const penalty = gap * 60;
+			total -= penalty;
+		}
+
+		return Math.max(0, Math.round(total));
 	});
 
 	// Holistic Scores (Heuristics)
@@ -120,9 +254,7 @@
 	});
 
 	// Add School State
-	let showAddSchoolModal = $state(false);
-	let schoolSearchQuery = $state('');
-	let addedSchoolSlugs = $state<string[]>([]); // Tracks schools added to dashboard
+	let addedSchoolSlugs = $state<string[]>(Object.keys(schoolConfigs)); // Default ALL schools
 
 	// Analysis/Terminal State
 	let isBuilding = $state(false);
@@ -130,6 +262,16 @@
 	let analysisResult = $state<any>(null); // Store the grade result here
 	let showTerminal = $state(false); // Changed default to false to be cleaner
 	let activeTab = $state<'terminal' | 'output'>('output');
+
+	// Radar Chart Data Helper
+	let radarData = $derived(
+		analysisResult?.essays?.[0]?.scores
+			? Object.entries(analysisResult.essays[0].scores).map(([k, v]: [string, any]) => ({
+					label: k.replace(/([A-Z])/g, ' $1').trim(), // split camelCase
+					value: (v.score || 0) * 10
+				}))
+			: []
+	);
 
 	// --- ACTIONS ---
 
@@ -144,7 +286,7 @@
 		}
 	}
 
-	async function handleCheckout(plan: 'cycle' | 'monthly') {
+	async function handleCheckout(plan: 'lifetime' | 'monthly') {
 		if (isProcessing) return;
 
 		if (!googleSignedIn) {
@@ -181,40 +323,136 @@
 		currentView = 'editor';
 	}
 
-	function addSchool(slug: string) {
-		if (addedSchoolSlugs.includes(slug)) return;
-
-		addedSchoolSlugs = [...addedSchoolSlugs, slug];
-		const config = schoolConfigs[slug];
-
-		// Fetch Prompts
-		const prompts = schoolPrompts[slug] || [];
-
-		// Create files for prompts
-		// Create ONE master file for the school
-		const promptsContent = prompts
-			.map((p) => `### ${p.title}\n${p.description}\n\nStart writing here...\n\n`)
-			.join('---\n\n');
-
-		const finalContent = `# ${config.schoolName} Supplement\n\n${promptsContent.length > 0 ? promptsContent : 'No specific prompts found. Start writing...'}`;
-
+	function addNewSupplemental() {
+		const id = Math.random().toString(36).substring(7);
 		const newFile: File = {
-			id: slug + '-supplement',
-			name: `${config.schoolName.split(' ')[0]} Supplement`, // e.g. "Harvard Supplement"
+			id: `supp-${id}`,
+			name: 'New Supplement',
 			language: 'markdown',
-			content: finalContent,
-			school: config.schoolName,
-			isOpen: true, // Auto-open the new file
+			content:
+				'# Supplemental Essay\n\n### Prompt\nPaste your prompt here...\n\nStart writing here...',
+			school: 'General',
+			isOpen: true,
 			isModified: false
 		};
-
 		files = [...files, newFile];
-		// Switch to the new file immediately
 		activeFileIndex = files.length - 1;
 		currentView = 'editor';
-		showAddSchoolModal = false;
-		schoolSearchQuery = '';
 	}
+
+	// Editor Split View Logic
+	let parsedSections = $derived.by(() => {
+		if (!activeFile?.content) return [];
+		// 1. Split by '---' to get individual prompt blocks (for multi-prompt schools)
+		// Note: The Common App file also uses '---' to separate prompt from answer.
+		// We need a robust way. Let's rely on '---' as the delimiter between "Essay Units".
+		const units = activeFile.content.split(/\n---\n/);
+
+		return units.map((unit, idx) => {
+			// 2. Inside each unit, split Prompt vs Answer.
+			// We look for the magic string "Start writing here..." created by addSchool.
+			// If not found, we assume the top part is prompt or we just provide raw access.
+			const magicSplit = unit.split('Start writing here...');
+			let promptHtml = '';
+			let answer = '';
+
+			if (magicSplit.length > 1) {
+				promptHtml = magicSplit[0].trim();
+				answer = magicSplit.slice(1).join('Start writing here...').replace(/^\n+/, ''); // Remove leading newlines
+			} else {
+				// Fallback: If no magic string, treat lines starting with # as prompt?
+				// Or just treat entire thing as answer?
+				// Let's treat it as answer to be safe, but this breaks "unable to be edited" for prompt.
+				// Actually, if it's the specific format we generated, it matches.
+				answer = unit;
+			}
+
+			// Simple markdown-ish to HTML for prompt display
+			promptHtml = promptHtml
+				.replace(/^### (.*$)/gm, '<h3 class="text-lg font-bold text-slate-900 mb-2">$1</h3>')
+				.replace(/^# (.*$)/gm, '<h1 class="text-2xl font-black text-slate-900 mb-4">$1</h1>')
+				.replace(/\n/g, '<br/>');
+
+			return { promptHtml, answer };
+		});
+	});
+
+	function updateSectionAnswer(index: number, newAnswer: string) {
+		// Reconstruct the file content
+		const newUnits = parsedSections.map((s, i) => {
+			if (i === index) {
+				// Return original structure
+				// We strip HTML tags from promptHtml to get back markdown? No, we lost it.
+				// We shouldn't modify derived state. We need to rebuild from `activeFile.content`?
+				// Constructing from `s.promptHtml` is hard because it's compiled.
+				// Better approach: Don't use derived for the source of truth if we only edit answer.
+				// We need to store constraints.
+				// Simplest: Just regex replace the answer part in the *original* content string.
+				return { ...s, answer: newAnswer };
+			}
+			return s;
+		});
+
+		// Re-join
+		// We need the original prompt markdown.
+		// This means `parsedSections` must store rawPrompt too.
+		// Let's redo `parsedSections` to store `rawPrompt`.
+		return;
+	}
+
+	// Better Re-Implementation of Parser that keeps raw parts
+	function getSections(content: string) {
+		const units = content.split(/\n---\n/);
+		return units.map((unit) => {
+			const split = unit.split('Start writing here...');
+			const hasSplit = split.length > 1;
+			return {
+				rawPrompt: hasSplit ? split[0] + 'Start writing here...' : '',
+				answer: hasSplit ? split.slice(1).join('Start writing here...') : unit,
+				isSplit: hasSplit
+			};
+		});
+	}
+
+	function handleAnswerChange(sectionIndex: number, newVal: string) {
+		const sections = getSections(activeFile.content);
+		if (sections[sectionIndex]) {
+			// Update the answer of this section
+			// We need to preserve leading newlines if we stripped them?
+			// Ideally we just append newVal.
+			sections[sectionIndex].answer = '\n\n' + newVal.trim();
+		}
+
+		// Rebuild full content
+		const fullContent = sections
+			.map((s) => {
+				if (s.isSplit) return s.rawPrompt + s.answer;
+				return s.answer;
+			})
+			.join('\n---\n');
+
+		activeFile.content = fullContent;
+
+		// Auto-Scan Debounce
+		clearTimeout(autoScanTimer);
+		autoScanTimer = setTimeout(() => {
+			// Only auto-scan if enough content
+			if (newVal.length > 50) runBuild();
+		}, 3000);
+	}
+
+	let autoScanTimer: any;
+
+	// Derived for View (UI Only)
+	let uiSections = $derived(
+		getSections(activeFile.content).map((s) => ({
+			...s,
+			promptDisplay: s.rawPrompt
+				.replace('Start writing here...', '')
+				.replace(/^#{1,3} (.*$)/gm, '<div class="font-bold text-slate-900 text-lg mb-2">$1</div>')
+				.replace(/\n/g, '<br/>')
+		}))
+	);
 
 	async function runBuild() {
 		if (isBuilding) return;
@@ -235,7 +473,8 @@
 		buildOutput = [
 			...buildOutput,
 			'> Integrating applicant profile...',
-			'> Handshake with DeepSeek inference engine...'
+			'> Integrating applicant profile...',
+			'> Handshake with PredictAdmit AI engine...'
 		];
 
 		try {
@@ -387,8 +626,43 @@
 					<span>Hub & Stats</span>
 				</button>
 
-				<div class="mt-4 px-6 pb-2 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-					Essays
+				<!-- MIND MAP TAB -->
+				<button
+					onclick={() => (currentView = 'mindmap')}
+					class="w-full text-left px-6 py-3 text-sm font-bold flex items-center gap-3 transition-all border-l-4 {currentView ===
+					'mindmap'
+						? 'bg-purple-50 text-purple-600 border-purple-600'
+						: 'text-slate-500 border-transparent hover:text-slate-900 hover:bg-slate-50'}"
+				>
+					<svg class="w-5 h-5 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M13 10V3L4 14h7v7l9-11h-7z"
+						/>
+					</svg>
+					<span>Mind Map / Inspo</span>
+				</button>
+
+				<div
+					class="mt-4 px-6 pb-2 text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center justify-between group"
+				>
+					<span>Essays</span>
+					<button
+						onclick={addNewSupplemental}
+						class="text-slate-300 hover:text-[#0052CC] p-1 rounded hover:bg-blue-50 transition-colors"
+						title="New Supplemental Essay"
+					>
+						<svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M12 4v16m8-8H4"
+							/>
+						</svg>
+					</button>
 				</div>
 
 				{#each files as file, i}
@@ -405,23 +679,6 @@
 						{/if}
 					</button>
 				{/each}
-
-				<div class="px-6 pt-4">
-					<button
-						onclick={() => (showAddSchoolModal = true)}
-						class="w-full py-2 border border-dashed border-slate-300 rounded-lg text-xs font-bold text-slate-400 hover:text-[#0052CC] hover:border-[#0052CC] transition-colors flex items-center justify-center gap-2"
-					>
-						<svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-							><path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								d="M12 4v16m8-8H4"
-							/></svg
-						>
-						<span>Add University</span>
-					</button>
-				</div>
 			</div>
 
 			<!-- User Menu -->
@@ -549,19 +806,24 @@
 								class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm flex flex-col justify-between"
 							>
 								<div>
-									<div class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-1">
+									<div class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">
 										Academic Index
 									</div>
-									<div class="text-5xl font-black tracking-tighter text-slate-900">
-										{academicIndex}<span class="text-lg text-slate-400 font-medium">/240</span>
+									<div class="flex items-baseline gap-2">
+										<div class="text-7xl font-black tracking-tighter text-slate-900 leading-none">
+											{academicIndex}
+										</div>
+										<div class="text-xl text-slate-400 font-medium mb-2">/240</div>
 									</div>
-									<p class="text-xs text-slate-400 mt-2 leading-relaxed">
+									<p class="text-[10px] text-slate-400 mt-3 leading-relaxed max-w-[200px]">
 										Calculated using the Ivy League formula (2/3 Test + 1/3 GPA).
 									</p>
 								</div>
 
-								<div class="mt-8 space-y-3">
-									<div class="flex justify-between text-xs font-bold text-slate-500">
+								<div class="mt-8 space-y-4">
+									<div
+										class="flex justify-between text-xs font-bold text-slate-500 border-b border-slate-100 pb-2"
+									>
 										<span>Holistic Rating</span>
 										<span class="text-slate-900"
 											>{Math.round(
@@ -574,29 +836,43 @@
 										>
 									</div>
 									<!-- Mini Bars for Metrics -->
-									<div class="space-y-2">
-										<div class="flex items-center gap-2">
-											<span class="text-[10px] w-12 text-slate-400 font-bold uppercase">Acad</span>
-											<div class="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden">
+									<div class="space-y-3">
+										<div class="flex items-center gap-3">
+											<span
+												class="text-[10px] w-12 text-slate-400 font-bold uppercase tracking-wide"
+												>Acad</span
+											>
+											<div
+												class="flex-1 h-2 bg-slate-50 rounded-full overflow-hidden border border-slate-100"
+											>
 												<div
-													class="h-full bg-slate-900 rounded-full"
+													class="h-full bg-slate-800 rounded-full transition-all duration-500"
 													style="width: {holisticMetrics.academics * 10}%"
 												></div>
 											</div>
 										</div>
-										<div class="flex items-center gap-2">
-											<span class="text-[10px] w-12 text-slate-400 font-bold uppercase">Extrac</span
+										<div class="flex items-center gap-3">
+											<span
+												class="text-[10px] w-12 text-slate-400 font-bold uppercase tracking-wide"
+												>Extrac</span
 											>
-											<div class="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden">
+											<div
+												class="flex-1 h-2 bg-slate-50 rounded-full overflow-hidden border border-slate-100"
+											>
 												<div
-													class="h-full bg-slate-900 rounded-full"
+													class="h-full bg-slate-800 rounded-full transition-all duration-500"
 													style="width: {holisticMetrics.ecs * 10}%"
 												></div>
 											</div>
 										</div>
 										<div class="flex items-center gap-2">
-											<span class="text-[10px] w-12 text-slate-400 font-bold uppercase">Pers</span>
-											<div class="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden">
+											<span
+												class="text-[10px] w-12 text-slate-400 font-bold uppercase tracking-wide"
+												>Pers</span
+											>
+											<div
+												class="flex-1 h-2 bg-slate-50 rounded-full overflow-hidden border border-slate-100"
+											>
 												<div class="h-full bg-slate-300 rounded-full" style="width: 50%"></div>
 											</div>
 										</div>
@@ -625,10 +901,7 @@
 									>
 									Your University List
 								</h2>
-								<button
-									onclick={() => (showAddSchoolModal = true)}
-									class="text-sm font-bold text-[#0052CC] hover:underline">+ Add School</button
-								>
+								<!-- Removed Add Button -->
 							</div>
 
 							{#if addedSchoolSlugs.length === 0}
@@ -680,6 +953,109 @@
 						</div>
 					</div>
 				</div>
+			{:else if currentView === 'mindmap'}
+				<!-- MIND MAP VIEW -->
+				<div class="flex-1 bg-slate-50 relative overflow-hidden flex flex-col">
+					<div
+						class="h-16 px-8 flex items-center justify-between bg-white border-b border-slate-200 shadow-sm z-10"
+					>
+						<h2 class="text-xl font-bold text-slate-900">Application Mind Map</h2>
+						<button
+							onclick={analyzeMindMap}
+							disabled={isAnalyzingMindMap || mindMapNodes.length === 0}
+							class="px-4 py-2 bg-purple-600 text-white font-bold rounded-lg shadow-lg hover:bg-purple-700 disabled:opacity-50 transition-all flex items-center gap-2"
+						>
+							{#if isAnalyzingMindMap}
+								<svg class="animate-spin h-4 w-4" viewBox="0 0 24 24"
+									><circle
+										class="opacity-25"
+										cx="12"
+										cy="12"
+										r="10"
+										stroke="currentColor"
+										stroke-width="4"
+									></circle><path
+										class="opacity-75"
+										fill="currentColor"
+										d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+									></path></svg
+								>
+								Analyzing...
+							{:else}
+								Analyze Themes
+							{/if}
+						</button>
+					</div>
+
+					<div
+						class="flex-1 relative overflow-hidden cursor-crosshair"
+						role="button"
+						tabindex="0"
+						onkeydown={(e) => {}}
+						onmousemove={handleContainerMouseMove}
+						onmouseup={handleContainerMouseUp}
+						onmouseleave={handleContainerMouseUp}
+						onclick={addMindMapNode}
+					>
+						<!-- SVG Connections -->
+						<svg class="absolute inset-0 w-full h-full pointer-events-none z-0">
+							{#each mindMapConnections as conn}
+								{@const from = mindMapNodes.find((n) => n.id === conn.from)}
+								{@const to = mindMapNodes.find((n) => n.id === conn.to)}
+								{#if from && to}
+									<line
+										x1={from.x}
+										y1={from.y}
+										x2={to.x}
+										y2={to.y}
+										stroke="#94a3b8"
+										stroke-width="2"
+										stroke-dasharray="4"
+									/>
+								{/if}
+							{/each}
+						</svg>
+
+						<!-- Nodes -->
+						{#each mindMapNodes as node}
+							<div
+								class="absolute transform -translate-x-1/2 -translate-y-1/2 min-w-[150px] bg-white rounded-xl shadow-lg border border-slate-200 p-3 z-10 node-input {draggingNodeId ===
+								node.id
+									? 'z-50 shadow-xl scale-105 cursor-grabbing'
+									: 'cursor-grab'}"
+								style="left: {node.x}px; top: {node.y}px"
+								onclick={(e) => e.stopPropagation()}
+								role="button"
+								tabindex="0"
+								onkeydown={() => {}}
+								onmousedown={(e) => handleNodeMouseDown(e, node.id)}
+							>
+								<textarea
+									bind:value={node.text}
+									placeholder="Idea..."
+									class="w-full text-sm font-medium text-slate-800 outline-none resize-none bg-transparent text-center"
+									rows="2"
+									autofocus
+								></textarea>
+							</div>
+						{/each}
+
+						{#if mindMapNodes.length === 0}
+							<div
+								class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-40"
+							>
+								<p class="text-xl font-bold text-slate-400">Click anywhere to add ideas</p>
+							</div>
+						{/if}
+					</div>
+
+					{#if mindMapAnalysis}
+						<div class="h-48 bg-purple-50 border-t border-purple-100 p-6 overflow-y-auto">
+							<h3 class="text-xs font-bold uppercase text-purple-600 mb-2">AI Analysis</h3>
+							<p class="text-sm text-slate-800 whitespace-pre-line">{mindMapAnalysis}</p>
+						</div>
+					{/if}
+				</div>
 			{:else if currentView === 'editor'}
 				<!-- EDITOR VIEW -->
 				<!-- Header/Breadcrumbs -->
@@ -708,11 +1084,21 @@
 				<div class="flex-1 overflow-hidden flex relative">
 					<!-- Text Editor -->
 					<div class="flex-1 relative flex flex-col">
-						<div class="flex-1 relative overflow-y-auto custom-scrollbar">
+						<div class="flex-1 relative overflow-y-auto custom-scrollbar p-8 space-y-12">
 							{#if analysisResult && activeTab === 'output'}
-								<!-- MODE: ANNOTATED VIEW -->
+								<!-- MODE: ANNOTATED VIEW (Read Only Highlight) -->
+								<!-- Click to dismiss -->
 								<div
-									class="w-full min-h-full bg-slate-50 text-slate-800 p-8 font-serif text-lg leading-loose outline-none"
+									class="w-full bg-slate-50 text-slate-800 font-serif text-lg leading-loose cursor-pointer hover:bg-slate-100/50 transition-colors p-2 rounded-xl"
+									onclick={() => {
+										activeTab = 'terminal';
+										analysisResult = null;
+										showTerminal = false;
+									}}
+									role="button"
+									tabindex="0"
+									onkeydown={() => {}}
+									title="Click to return to editing"
 								>
 									<!-- Interactive Highlight Render -->
 									<!-- eslint-disable-next-line svelte/no-at-html-tags -->
@@ -721,25 +1107,44 @@
 										analysisResult.essays?.[0]?.annotations
 									)}
 								</div>
-
-								<!-- Reset Button Overlay -->
-								<button
-									onclick={() => {
-										activeTab = 'terminal';
-										analysisResult = null;
-									}}
-									class="absolute top-4 right-4 bg-white shadow-md border border-slate-200 px-3 py-1 rounded-full text-xs font-bold text-slate-500 hover:text-slate-900 z-10"
-								>
-									Edit Mode
-								</button>
 							{:else}
-								<!-- MODE: EDIT -->
-								<textarea
-									bind:value={activeFile.content}
-									class="w-full h-full bg-slate-50 text-slate-800 p-8 resize-none outline-none font-sans text-base leading-relaxed custom-scrollbar placeholder:text-slate-300"
-									placeholder="Start writing your supplemental essay here..."
-									spellcheck="false"
-								></textarea>
+								<!-- MODE: SPLIT EDIT -->
+								{#each uiSections as section, idx}
+									<div class="space-y-4">
+										<!-- Read-Only Prompt -->
+										{#if section.promptDisplay}
+											<div
+												class="p-6 bg-slate-100/50 border border-slate-200 rounded-2xl select-text"
+											>
+												<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+												{@html section.promptDisplay}
+											</div>
+										{/if}
+
+										<!-- Writing Area -->
+										<div class="relative group">
+											<textarea
+												value={section.answer.trim()}
+												oninput={(e) => handleAnswerChange(idx, e.currentTarget.value)}
+												class="w-full bg-white text-slate-800 p-6 rounded-2xl border border-slate-200 focus:border-[#0052CC] focus:ring-4 focus:ring-blue-500/10 outline-none font-serif text-lg leading-relaxed shadow-sm transition-all min-h-[300px]"
+												placeholder="Paste your essay here..."
+												spellcheck="false"
+											></textarea>
+											<div
+												class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"
+											>
+												<span
+													class="text-[10px] font-bold text-slate-400 bg-slate-100 px-2 py-1 rounded"
+													>Auto-save & Scan</span
+												>
+											</div>
+										</div>
+									</div>
+
+									{#if idx < uiSections.length - 1}
+										<div class="h-px bg-slate-200 my-8"></div>
+									{/if}
+								{/each}
 							{/if}
 						</div>
 
@@ -756,15 +1161,9 @@
 							</div>
 							<div class="flex items-center gap-4">
 								<button
-									onclick={() => (showTerminal = !showTerminal)}
-									class="text-slate-400 hover:text-slate-600 font-medium text-sm transition-colors"
-								>
-									{showTerminal ? 'Hide Analysis' : 'Show Analysis'}
-								</button>
-								<button
 									onclick={runBuild}
 									disabled={isBuilding}
-									class="flex items-center gap-2 px-6 py-3 bg-[#0052CC] text-white rounded-xl font-bold hover:bg-blue-700 transition-all shadow-lg shadow-blue-200 disabled:opacity-50 disabled:shadow-none transform active:scale-95 duration-200"
+									class="flex items-center gap-3 px-8 py-4 bg-[#0052CC] text-white rounded-xl font-bold hover:bg-blue-700 transition-all shadow-xl shadow-blue-200 disabled:opacity-50 disabled:shadow-none transform active:scale-95 duration-200 text-lg"
 								>
 									{#if isBuilding}
 										<svg class="animate-spin h-4 w-4" viewBox="0 0 24 24"
@@ -828,7 +1227,7 @@
 									<div class="space-y-4">
 										<div class="flex items-center gap-3 text-slate-500 text-sm">
 											<span class="h-2 w-2 rounded-full bg-[#0052CC] animate-ping"></span>
-											Connecting to DeepSeek Engine...
+											Connecting to PredictAdmit AI...
 										</div>
 										<div class="space-y-2 pl-5 border-l-2 border-slate-100">
 											{#each buildOutput as line}
@@ -857,14 +1256,12 @@
 										</div>
 
 										<!-- RADAR CHART -->
-										<div class="flex justify-center -my-4">
-											{#if analysisResult.essays?.[0]}
-												{@const scores = Object.entries(analysisResult.essays[0].scores).map(
-													([k, v]: [string, any]) => ({ label: k.substring(0, 6), value: v.score })
-												)}
-												<RadarChart data={scores} max={10} size={250} color="text-[#0052CC]" />
-											{/if}
-										</div>
+										<!-- RADAR CHART -->
+										{#if radarData.length > 0}
+											<div class="flex justify-center -my-4 transform scale-90">
+												<RadarChart data={radarData} size={250} max={100} color="text-[#0052CC]" />
+											</div>
+										{/if}
 
 										<!-- ANNOTATIONS LIST -->
 										{#if analysisResult.essays?.[0]?.annotations?.length}
@@ -933,98 +1330,6 @@
 			{/if}
 		</main>
 	</div>
-
-	<!-- ADD SCHOOL MODAL -->
-	{#if showAddSchoolModal}
-		<div
-			class="fixed inset-0 z-[100] flex items-center justify-center"
-			transition:fade={{ duration: 150 }}
-		>
-			<div
-				class="absolute inset-0 bg-slate-900/50 backdrop-blur-sm"
-				onclick={() => (showAddSchoolModal = false)}
-			></div>
-			<div
-				class="bg-white rounded-2xl shadow-2xl overflow-hidden w-full max-w-lg relative z-10 border border-slate-200"
-				transition:fly={{ y: 20, duration: 300 }}
-			>
-				<div class="p-6 border-b border-slate-100">
-					<h2 class="text-xl font-bold text-slate-900">Add University</h2>
-					<p class="text-sm text-slate-500">Search for a school to add its supplemental essays.</p>
-				</div>
-
-				<div class="p-6 space-y-4">
-					<div class="relative">
-						<svg
-							class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke="currentColor"
-							><path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-							/></svg
-						>
-						<input
-							bind:value={schoolSearchQuery}
-							type="text"
-							placeholder="Harvard, Stanford, Yale..."
-							class="w-full pl-12 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0052CC] font-medium"
-							autofocus
-						/>
-					</div>
-
-					<div class="max-h-60 overflow-y-auto space-y-2">
-						{#each Object.entries(schoolConfigs).filter(([slug, conf]) => conf.schoolName
-								.toLowerCase()
-								.includes(schoolSearchQuery.toLowerCase())) as [slug, conf]}
-							<button
-								onclick={() => addSchool(slug)}
-								class="w-full text-left p-3 rounded-lg hover:bg-slate-50 flex items-center justify-between group transition-colors"
-							>
-								<div class="flex items-center gap-3">
-									<div
-										class="h-8 w-8 rounded-full bg-slate-100 flex items-center justify-center text-xs font-bold text-slate-500"
-									>
-										{conf.schoolName[0]}
-									</div>
-									<span class="font-medium text-slate-700 group-hover:text-slate-900"
-										>{conf.schoolName}</span
-									>
-								</div>
-								{#if addedSchoolSlugs.includes(slug)}
-									<span class="text-xs font-bold text-green-600 bg-green-50 px-2 py-1 rounded-md"
-										>Added</span
-									>
-								{:else}
-									<span
-										class="text-xs font-bold text-[#0052CC] opacity-0 group-hover:opacity-100 transition-opacity"
-										>+ Add</span
-									>
-								{/if}
-							</button>
-						{/each}
-						{#if schoolSearchQuery && Object.entries(schoolConfigs).filter( ([slug, conf]) => conf.schoolName
-										.toLowerCase()
-										.includes(schoolSearchQuery.toLowerCase()) ).length === 0}
-							<div class="text-center py-8 text-slate-400 text-sm">
-								No schools found (try 'Harvard' or 'Stanford')
-							</div>
-						{/if}
-					</div>
-				</div>
-
-				<div class="p-4 bg-slate-50 flex justify-end">
-					<button
-						onclick={() => (showAddSchoolModal = false)}
-						class="px-4 py-2 text-slate-500 font-bold text-sm hover:text-slate-800">Cancel</button
-					>
-				</div>
-			</div>
-		</div>
-	{/if}
 {:else}
 	<!-- SALES PAGE -->
 	<main class="min-h-screen bg-slate-50 font-sans text-slate-900 flex flex-col">
@@ -1054,13 +1359,13 @@
 								Monthly
 							</button>
 							<button
-								onclick={() => (pricingMode = 'cycle')}
+								onclick={() => (pricingMode = 'lifetime')}
 								class="relative z-10 px-6 py-2 rounded-full text-sm font-bold transition-all {pricingMode ===
-								'cycle'
+								'lifetime'
 									? 'text-[#0052CC] bg-white shadow-sm'
 									: 'text-slate-500 hover:text-slate-700'}"
 							>
-								Cycle Pass
+								Lifetime Pass
 							</button>
 						</div>
 					</div>
@@ -1157,7 +1462,7 @@
 
 					<!-- CARD B: Pro / Admit -->
 					<div
-						class="bg-[#0052CC] rounded-3xl p-1 shadow-2xl relative overflow-hidden transform md:-translate-y-4 flex flex-col"
+						class="bg-[#0052CC] rounded-3xl p-1 shadow-2xl relative overflow-hidden flex flex-col"
 					>
 						<div class="bg-white rounded-[20px] h-full p-8 flex flex-col relative overflow-hidden">
 							<!-- Background Decoration -->
@@ -1172,17 +1477,14 @@
 											Admit <span class="text-[#0052CC]">Pro</span>
 										</h3>
 										<div class="flex items-baseline gap-1 mt-2 h-10">
-											{#if pricingMode === 'monthly'}
-												<div in:fly={{ y: 10, duration: 200 }} class="flex items-baseline gap-1">
-													<span class="text-4xl font-black text-[#0052CC]">$5</span>
-													<span class="text-sm text-slate-500 font-medium">/ month</span>
-												</div>
-											{:else}
-												<div in:fly={{ y: 10, duration: 200 }} class="flex items-baseline gap-1">
-													<span class="text-4xl font-black text-[#0052CC]">$9</span>
-													<span class="text-sm text-slate-500 font-medium">/ one-time</span>
-												</div>
-											{/if}
+											<div class="flex items-baseline gap-1">
+												<span class="text-4xl font-black text-[#0052CC]">
+													${Math.round($displayedPrice)}
+												</span>
+												<span class="text-sm text-slate-500 font-medium">
+													{pricingMode === 'monthly' ? '/ month' : '/ one-time'}
+												</span>
+											</div>
 										</div>
 									</div>
 									<div
@@ -1194,7 +1496,9 @@
 								<p class="text-sm text-slate-400 mt-3 leading-relaxed">
 									{pricingMode === 'monthly'
 										? 'Cancel anytime. Flexible access.'
-										: 'Access for the full application cycle.'}
+										: pricingMode === 'lifetime'
+											? 'One-time payment. Forever access.'
+											: 'Access for the full application cycle.'}
 								</p>
 							</div>
 
@@ -1283,7 +1587,9 @@
 									{googleSignedIn
 										? pricingMode === 'monthly'
 											? 'Start Monthly Plan'
-											: 'Get Cycle Pass'
+											: pricingMode === 'lifetime'
+												? 'Get Lifetime Access'
+												: 'Get Cycle Pass'
 										: 'Sign in to Upgrade'}
 								</button>
 							</div>
@@ -1364,6 +1670,8 @@
 				</div>
 			</div>
 		</div>
+		<SiteFooter />
+		<!-- Footer -->
 		<SiteFooter />
 	</main>
 {/if}

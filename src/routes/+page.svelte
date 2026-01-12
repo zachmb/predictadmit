@@ -479,9 +479,9 @@
 						<div class="relative flex-shrink-0">
 							<select
 								bind:value={$manualOverrideMode}
-								class="appearance-none h-full pl-4 pr-8 bg-slate-50 font-bold text-sm text-slate-700 rounded-xl border-none focus:ring-2 focus:ring-blue-500 outline-none cursor-pointer"
+								class="appearance-none h-full pl-4 pr-8 bg-slate-50 font-bold text-sm text-slate-900 rounded-xl border-none focus:ring-2 focus:ring-blue-500 outline-none cursor-pointer"
 							>
-								<option value="" disabled selected>Decision</option>
+								<option value="" disabled selected class="text-slate-500">Decision</option>
 								<option value="accepted">Accept</option>
 								<option value="denied">Reject</option>
 							</select>
@@ -629,7 +629,7 @@
 						<div
 							class="w-10 h-10 rounded-full border-2 border-white bg-slate-200 relative overflow-hidden"
 						>
-							<img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${i + 12}`} alt="User" />
+							<img src={`https://i.pravatar.cc/150?img=${i + 10}`} alt="User" />
 						</div>
 					{/each}
 				</div>
@@ -643,7 +643,7 @@
 							>
 						{/each}
 					</div>
-					<span class="text-xs font-semibold text-slate-500">Trusted by 10,000+ Students</span>
+					<span class="text-xs font-semibold text-slate-500">Trusted by 500 students</span>
 				</div>
 			</div>
 		</div>
@@ -768,6 +768,21 @@
 	<!-- FEATURE BENTO GRID -->
 	<section class="py-24 bg-white">
 		<div class="max-w-[1200px] mx-auto px-6">
+			<!-- PRO HEADER -->
+			<div class="text-center mb-16 space-y-4">
+				<span
+					class="inline-block px-4 py-1.5 bg-blue-50 text-[#0052CC] text-xs font-bold uppercase rounded-full tracking-wide"
+				>
+					PredictAdmit Pro
+				</span>
+				<h2 class="text-3xl md:text-5xl font-black text-slate-900 tracking-tight">
+					The Unfair Advantage.
+				</h2>
+				<p class="text-lg text-slate-500 max-w-2xl mx-auto">
+					Unlock the same tools used by professional admissions consultants.
+				</p>
+			</div>
+
 			<!-- 3x2 Grid -->
 			<div class="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[300px]">
 				<!-- Large Card 1 -->
@@ -777,24 +792,45 @@
 					<div class="relative z-10 space-y-4">
 						<span
 							class="inline-block px-3 py-1 bg-blue-100 text-[#0052CC] text-[10px] font-bold uppercase rounded-md"
-							>Smart Feedback</span
+							>Pro Tool</span
 						>
-						<h3 class="text-2xl font-bold text-slate-900">Institutional-Grade Grading.</h3>
+						<h3 class="text-2xl font-bold text-slate-900">Pro Editor & IDE.</h3>
 						<p class="text-slate-500 max-w-md">
-							Our AI doesn't just check grammar. It evaluates your essays based on successful admit
-							profiles from Ivy League institutions.
+							Write, edit, and perfect your essays in our distraction-free IDE. Get instant AI
+							feedback on structure and tone.
 						</p>
 						<div class="pt-4">
 							<a
-								href="/essay-grader"
+								href="/pro"
 								class="text-sm font-bold text-[#0052CC] flex items-center gap-2 group-hover:gap-3 transition-all"
-								>Try Grader <span class="text-lg">&rarr;</span></a
+								>Open IDE <span class="text-lg">&rarr;</span></a
 							>
 						</div>
 					</div>
+					<!-- IDE Visual -->
 					<div
-						class="absolute right-0 bottom-0 w-64 h-64 bg-slate-200/50 rounded-tl-full translate-x-12 translate-y-12 group-hover:translate-x-10 group-hover:translate-y-10 transition-transform"
-					></div>
+						class="absolute right-0 bottom-0 w-80 h-64 bg-[#0F172A] rounded-tl-xl p-5 shadow-2xl translate-x-12 translate-y-12 group-hover:translate-x-10 group-hover:translate-y-10 transition-transform border border-slate-700/50"
+					>
+						<div class="flex gap-1.5 mb-4 opacity-50">
+							<div class="w-2.5 h-2.5 rounded-full bg-red-400"></div>
+							<div class="w-2.5 h-2.5 rounded-full bg-amber-400"></div>
+							<div class="w-2.5 h-2.5 rounded-full bg-green-400"></div>
+						</div>
+						<div class="space-y-3">
+							<div class="flex gap-2">
+								<div class="w-8 h-3 bg-purple-400/20 rounded-sm"></div>
+								<div class="w-20 h-3 bg-blue-400/20 rounded-sm"></div>
+							</div>
+							<div class="space-y-1.5 opacity-60">
+								<div class="h-2 w-full bg-slate-400/20 rounded-sm"></div>
+								<div class="h-2 w-3/4 bg-slate-400/20 rounded-sm"></div>
+								<div class="h-2 w-5/6 bg-slate-400/20 rounded-sm"></div>
+							</div>
+							<div class="p-3 bg-blue-500/10 border-l-2 border-blue-500 rounded-r mt-4">
+								<div class="h-2 w-32 bg-blue-400/40 rounded-sm"></div>
+							</div>
+						</div>
+					</div>
 				</div>
 
 				<!-- Small Card 2 -->
@@ -993,12 +1029,11 @@
 					{/each}
 				</div>
 				<blockquote class="text-2xl md:text-4xl font-serif leading-relaxed opacity-90">
-					"It feels almost too real. PredictAdmit gave me the wake-up call I needed to rewrite my
-					common app essay before it was too late."
+					"ts was lowkenuinely accurate"
 				</blockquote>
 				<div class="pt-4">
-					<div class="font-bold">Sarah J.</div>
-					<div class="text-sm text-slate-400">Accepted to Stanford '28</div>
+					<div class="font-bold">Miao S.</div>
+					<div class="text-sm text-slate-400">Accepted to Northwestern '30</div>
 				</div>
 			</div>
 		</div>

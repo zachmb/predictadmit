@@ -26,7 +26,7 @@ interface AIResponsePayload {
     essays: EssayEvaluation[];
 }
 
-interface DeepSeekResponse {
+interface AIProviderResponse {
     choices: Array<{
         message: {
             content: string;
@@ -86,7 +86,7 @@ export const POST: RequestHandler = async ({ request }) => {
         })
     });
 
-    const rawData = (await response.json()) as DeepSeekResponse;
+    const rawData = (await response.json()) as AIProviderResponse;
 
     if (!rawData.choices?.[0]?.message?.content) {
         return json({ error: 'Invalid response from AI' }, { status: 500 });

@@ -29,10 +29,10 @@ export const POST: RequestHandler = async ({ request }) => {
       // But requirements said "$9 for full cycle"
     }
 
-    const { pricingMode } = body; // 'cycle' | 'one_time'
+    const { pricingMode } = body; // 'lifetime' | 'monthly'
 
-    if (pricingMode === 'cycle') {
-      // $9.00 Full Cycle
+    if (pricingMode === 'lifetime') {
+      // $9.00 Lifetime Pass (formerly Cycle)
       sessionConfig = {
         mode: 'payment',
         line_items: [
@@ -40,15 +40,15 @@ export const POST: RequestHandler = async ({ request }) => {
             price_data: {
               currency: 'usd',
               product_data: {
-                name: 'PredictAdmit Pro - Full Application Cycle',
-                description: 'Unlimited access for the entire application cycle.'
+                name: 'PredictAdmit Pro - Lifetime Pass',
+                description: 'One-time payment. Forever access.'
               },
               unit_amount: 900, // $9.00
             },
             quantity: 1
           }
         ],
-        success_url: 'http://localhost:5201/ai?upgrade=success&plan=cycle',
+        success_url: 'http://localhost:5201/ai?upgrade=success&plan=lifetime',
         cancel_url: 'http://localhost:5201/pro?canceled=1'
       };
     } else if (pricingMode === 'monthly') {
