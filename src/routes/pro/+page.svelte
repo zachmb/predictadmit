@@ -1634,11 +1634,13 @@
 											</div>
 										</div>
 									</div>
-									<div
-										class="bg-blue-100 text-[#0052CC] px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide"
-									>
-										Most Popular
-									</div>
+									{#if pricingMode === 'lifetime'}
+										<div
+											class="bg-blue-100 text-[#0052CC] px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide"
+										>
+											Most Popular
+										</div>
+									{/if}
 								</div>
 								<p class="text-sm text-slate-400 mt-3 leading-relaxed">
 									{pricingMode === 'monthly'
@@ -1817,8 +1819,6 @@
 				</div>
 			</div>
 		</div>
-		<SiteFooter />
-		<!-- Footer -->
 		<SiteFooter />
 	</main>
 {/if}
