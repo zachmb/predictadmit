@@ -1,5 +1,6 @@
 import { json } from '@sveltejs/kit';
-import { DEEPSEEK_API_KEY } from '$env/static/private';
+import { env } from '$env/dynamic/private';
+
 import type { RequestHandler } from './$types';
 
 interface CategoryResult {
@@ -7,10 +8,18 @@ interface CategoryResult {
     explanation: string;
 }
 
+interface Annotation {
+    quote: string;
+    comment: string;
+    type: 'critical' | 'suggestion';
+}
+
 interface EssayEvaluation {
     prompt: string | null;
     scores: Record<string, CategoryResult>;
     average: number;
+    annotations: Annotation[];
+    harsh_feedback: string;
 }
 
 interface AIResponsePayload {
@@ -26,19 +35,25 @@ interface DeepSeekResponse {
 }
 
 export const POST: RequestHandler = async ({ request }) => {
-    const { major, selectedSchool, essayType, content } = await request.json();
+    const { major, selectedSchool, essayType, content, profile } = await request.json();
 
     // Define specific categories based on instructions
-    const categories = essayType === 'personal' 
+    const categories = essayType === 'personal'
         ? "selfReflection, personality/Character, writingQuality, growth, institutionalAlignment"
         : "personalityCharacter, majorFit, schoolFit, potentialContribution, promptAlignment";
+
+    const profileContext = profile
+        ? `\nAPPLICANT STATS:\nGPA: ${profile.gpa}\nTest Scores: ${profile.testScore}\nExtracurriculars: ${profile.ecs}\n`
+        : '';
 
     const systemPrompt = `You are a brutally honest, realistic, and elite Admissions Officer at ${selectedSchool}. 
     Review the following ${essayType} essay(s) for a ${major} applicant. 
     Be forthright and harsh. Do not manufacture problems, but reject fluff.
 
-    For EACH essay, you MUST provide scores (1-10) and a detailed, harsh explanation for EXACTLY these categories:
-    ${categories}.
+    For EACH essay, you MUST provide:
+    1. Scores (1-10) and a explanation for these categories: ${categories}.
+    2. A "harsh_feedback" summary that provides a overall critique.
+    3. "annotations": specific phrases from the text that need improvement.
 
     Return ONLY a JSON object with this exact structure: 
     { 
@@ -47,16 +62,18 @@ export const POST: RequestHandler = async ({ request }) => {
             "scores": { 
                 "categoryKey": { "score": number, "explanation": "string" } 
             }, 
-            "average": number 
+            "average": number,
+            "harsh_feedback": "string",
+            "annotations": [{ "quote": "exact substring from text", "comment": "string", "type": "critical" }]
         }] 
     }`;
 
-    const userPrompt = `Content: ${content}`;
+    const userPrompt = `${profileContext}\nContent: ${content}`;
 
     const response = await fetch('https://api.deepseek.com/v1/chat/completions', {
         method: 'POST',
         headers: {
-            'Authorization': `Bearer ${DEEPSEEK_API_KEY}`,
+            'Authorization': `Bearer ${env.DEEPSEEK_API_KEY}`,
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
@@ -75,7 +92,11 @@ export const POST: RequestHandler = async ({ request }) => {
         return json({ error: 'Invalid response from AI' }, { status: 500 });
     }
 
-    const parsedContent = JSON.parse(rawData.choices[0].message.content) as AIResponsePayload;
-
-    return json(parsedContent);
+    try {
+        const parsedContent = JSON.parse(rawData.choices[0].message.content) as AIResponsePayload;
+        return json(parsedContent);
+    } catch (e) {
+        console.error('AI Parse Error', e);
+        return json({ error: 'Failed to parse AI response' }, { status: 500 });
+    }
 };

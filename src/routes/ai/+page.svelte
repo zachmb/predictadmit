@@ -14,33 +14,34 @@
 	} from '$lib/config/admitMail';
 
 	import { userProfile } from '$lib/stores/user';
+	import { majors } from '$lib/config/majors';
 
 	// NEW: store AI results globally so portals can read decisions
-	import { aiResults, currentStoreVersion} from '$lib/stores/results';
+	import { aiResults, currentStoreVersion } from '$lib/stores/results';
 
-let { data }: { data: PageData } = $props();
-let activeGenerationId = $state(0);
-const AI_PERSIST_KEY = 'predictadmit_ai_inbox_v1';
-let activeSupTab = $state('harvard'); // Set a default school
+	let { data }: { data: PageData } = $props();
+	let activeGenerationId = $state(0);
+	const AI_PERSIST_KEY = 'predictadmit_ai_inbox_v1';
+	let activeSupTab = $state('harvard'); // Set a default school
 
 	type DecisionOutcome = 'admit' | 'deny' | 'waitlist' | 'defer';
 
 	type AiDecision = {
-  school: string;
-  slug: string;
-  outcome: DecisionOutcome;
-  academic_score: number;
-  academic_explanation: string;
-  extracurricular_score: number;
-  extracurricular_explanation: string;
-  fit_score: number;
-  fit_explanation: string;
-  intellectual_score: number;
-  intellectual_explanation: string;
-  character_score: number;
-  character_explanation: string;
-  improvement_tips: string; // NEW: Detailed actionable feedback
-};
+		school: string;
+		slug: string;
+		outcome: DecisionOutcome;
+		academic_score: number;
+		academic_explanation: string;
+		extracurricular_score: number;
+		extracurricular_explanation: string;
+		fit_score: number;
+		fit_explanation: string;
+		intellectual_score: number;
+		intellectual_explanation: string;
+		character_score: number;
+		character_explanation: string;
+		improvement_tips: string; // NEW: Detailed actionable feedback
+	};
 
 	type DeepDiveItem = {
 		school: string;
@@ -48,17 +49,27 @@ let activeSupTab = $state('harvard'); // Set a default school
 		outcome: DecisionOutcome;
 		explanation: string;
 	};
-// Application inputs (can be typed or filled via OCR)
+	// Application inputs (can be typed or filled via OCR)
 	let essay = $state('');
 	let activities = $state('');
 	let honors = $state('');
 	let transcript = $state('');
 	let major = $state('');
-let supplementals = $state<Record<string, string>>({});	
+	let supplementals = $state<Record<string, string>>({});
 	// OCR state
 	let ocrUploading = $state(false);
 	let ocrError = $state('');
 	let ocrText = $state('');
+
+	// Major Autofill
+	let majorSuggestions = $derived(
+		major.length > 0
+			? majors
+					.filter((m) => m.toLowerCase().includes(major.toLowerCase()) && m !== major)
+					.slice(0, 5)
+			: []
+	);
+	let showMajorDropdown = $state(false);
 
 	// Free-tier limits (persisted per browser)
 	let hasUsedFreeSimulation = $state(false);
@@ -67,7 +78,6 @@ let supplementals = $state<Record<string, string>>({});
 	let showPaywallModal = $state(false);
 	let paywallMode = $state<'simulation' | 'ocr' | 'deepDive' | null>(null);
 	let paywallContextDecision = $state<AiDecision | null>(null);
-	
 
 	// Pro access (in a real app this would come from your backend / Stripe webhook)
 
@@ -77,10 +87,10 @@ let supplementals = $state<Record<string, string>>({});
 	let googleName = $state('');
 
 	$effect(() => {
-    googleSignedIn = !!data.session?.user;
-    googleEmail = data.session?.user?.email ?? '';
-    // This runs whenever data.session changes
-});
+		googleSignedIn = !!data.session?.user;
+		googleEmail = data.session?.user?.email ?? '';
+		// This runs whenever data.session changes
+	});
 
 	// ED selection
 	const ED_SCHOOLS = [
@@ -97,27 +107,27 @@ let supplementals = $state<Record<string, string>>({});
 	];
 
 	export const SCHOOLS = [
-  { school: 'Harvard University', slug: 'harvard' },
-  { school: 'Stanford University', slug: 'stanford' },
-  { school: 'Massachusetts Institute of Technology', slug: 'mit' },
-  { school: 'Princeton University', slug: 'princeton' },
-  { school: 'Yale University', slug: 'yale' },
-  { school: 'Columbia University', slug: 'columbia' },
-  { school: 'University of Chicago', slug: 'uchicago' },
-  { school: 'University of Pennsylvania', slug: 'upenn' },
-  { school: 'California Institute of Technology', slug: 'caltech' },
-  { school: 'Duke University', slug: 'duke' },
-  { school: 'Johns Hopkins University', slug: 'jhu' },
-  { school: 'Northwestern University', slug: 'northwestern' },
-  { school: 'Dartmouth College', slug: 'dartmouth' },
-  { school: 'Brown University', slug: 'brown' },
-  { school: 'Vanderbilt University', slug: 'vanderbilt' },
-  { school: 'Rice University', slug: 'rice' },
-  { school: 'Washington University in St. Louis', slug: 'wustl' },
-  { school: 'Cornell University', slug: 'cornell' },
-  { school: 'University of California, Los Angeles', slug: 'ucla' },
-  { school: 'University of California, Berkeley', slug: 'ucberkeley' }
-];
+		{ school: 'Harvard University', slug: 'harvard' },
+		{ school: 'Stanford University', slug: 'stanford' },
+		{ school: 'Massachusetts Institute of Technology', slug: 'mit' },
+		{ school: 'Princeton University', slug: 'princeton' },
+		{ school: 'Yale University', slug: 'yale' },
+		{ school: 'Columbia University', slug: 'columbia' },
+		{ school: 'University of Chicago', slug: 'uchicago' },
+		{ school: 'University of Pennsylvania', slug: 'upenn' },
+		{ school: 'California Institute of Technology', slug: 'caltech' },
+		{ school: 'Duke University', slug: 'duke' },
+		{ school: 'Johns Hopkins University', slug: 'jhu' },
+		{ school: 'Northwestern University', slug: 'northwestern' },
+		{ school: 'Dartmouth College', slug: 'dartmouth' },
+		{ school: 'Brown University', slug: 'brown' },
+		{ school: 'Vanderbilt University', slug: 'vanderbilt' },
+		{ school: 'Rice University', slug: 'rice' },
+		{ school: 'Washington University in St. Louis', slug: 'wustl' },
+		{ school: 'Cornell University', slug: 'cornell' },
+		{ school: 'University of California, Los Angeles', slug: 'ucla' },
+		{ school: 'University of California, Berkeley', slug: 'ucberkeley' }
+	];
 
 	const handlePromoCode = (e: KeyboardEvent) => {
 		// Check if the key pressed was 'Enter'
@@ -137,8 +147,6 @@ let supplementals = $state<Record<string, string>>({});
 		}
 	};
 
-
-
 	let aiError = $state('');
 	let aiDecisions = $state<AiDecision[]>([]);
 	let deepDiveItems = $state<DeepDiveItem[]>([]);
@@ -151,21 +159,21 @@ let supplementals = $state<Record<string, string>>({});
 	let inboxSection: HTMLElement | null = null;
 
 	// view state for AdmitMail
-let mailViewMode = $state<'inbox' | 'email'>('inbox');
-let mailActiveFolder = $state<'inbox' | 'sent'>('inbox');
+	let mailViewMode = $state<'inbox' | 'email'>('inbox');
+	let mailActiveFolder = $state<'inbox' | 'sent'>('inbox');
 	// search + lists
 	let searchQuery = $state('');
-let visiblePortals = $derived($aiResults?.decisions?.map(decisionToPortalEmail) ?? []);
+	let visiblePortals = $derived($aiResults?.decisions?.map(decisionToPortalEmail) ?? []);
 	let sortedVisiblePortals = $derived([...visiblePortals]);
 
-// For complex logic like your search filter:
-let filteredPortals = $derived.by(() => {
-    const q = searchQuery.trim().toLowerCase();
-    if (!q) return [...visiblePortals];
-    return visiblePortals.filter(p => 
-        p.name.toLowerCase().includes(q) || p.slug.toLowerCase().includes(q)
-    );
-});
+	// For complex logic like your search filter:
+	let filteredPortals = $derived.by(() => {
+		const q = searchQuery.trim().toLowerCase();
+		if (!q) return [...visiblePortals];
+		return visiblePortals.filter(
+			(p) => p.name.toLowerCase().includes(q) || p.slug.toLowerCase().includes(q)
+		);
+	});
 	// ED / RD state (minimal in AI mode)
 	let currentEdPortal: PortalEmail | null = null;
 	let edEmailMustBeViewed = false;
@@ -181,8 +189,8 @@ let filteredPortals = $derived.by(() => {
 	const sentEmails: SentEmail[] = baseSentEmails;
 
 	// Display name/email for AdmitMail
-let displayName = $derived(googleName?.trim() || 'Applicant');	
-let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
+	let displayName = $derived(googleName?.trim() || 'Applicant');
+	let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
 
 	// Map an AI decision into a PortalEmail shape that AdmitMail expects
 	function decisionToPortalEmail(decision: AiDecision): PortalEmail {
@@ -200,9 +208,6 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
 	function getReceivedLabelForAI(portal: PortalEmail): string {
 		return 'March 20, 5:00 PM';
 	}
-
-	
-	
 
 	// === Persistence helpers for AI inbox ===
 
@@ -225,8 +230,6 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
 			console.error('Failed to persist AI inbox state', err);
 		}
 	}
-
-	
 
 	// Callbacks that AdmitMail expects
 
@@ -265,37 +268,37 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
 	// This is *not* the full simulator reset — just clears the AI inbox state.
 	function resetInboxState() {
 		activeGenerationId++;
-    // 1. Kill the loop and the network requests
-    aiResults.clear();
+		// 1. Kill the loop and the network requests
+		aiResults.clear();
 
-    // 3. Reset local $state variables
-    aiDecisions = [];
-    deepDiveItems = [];
-    applicantSummary = '';
+		// 3. Reset local $state variables
+		aiDecisions = [];
+		deepDiveItems = [];
+		applicantSummary = '';
 
-    // 4. Reset UI state variables (Ensure these are declared as $state)
-    selectedPortal = null;
-    selectedSent = null;
-    readPortalSlugs = new Set();
-    mailViewMode = 'inbox';
-    mailActiveFolder = 'inbox';
+		// 4. Reset UI state variables (Ensure these are declared as $state)
+		selectedPortal = null;
+		selectedSent = null;
+		readPortalSlugs = new Set();
+		mailViewMode = 'inbox';
+		mailActiveFolder = 'inbox';
 
-    // 5. Update global profile state
-    userProfile.update((u) => ({ 
-        ...u, 
-        isSubmittingAI: false,
-        usingAI: false 
-    }));
+		// 5. Update global profile state
+		userProfile.update((u) => ({
+			...u,
+			isSubmittingAI: false,
+			usingAI: false
+		}));
 
-    // 6. Persistence cleanup
-    if (typeof localStorage !== 'undefined') {
-        try {
-            localStorage.removeItem(AI_PERSIST_KEY);
-        } catch (err) {
-            console.error('Failed to clear AI inbox state', err);
-        }
-    }
-}
+		// 6. Persistence cleanup
+		if (typeof localStorage !== 'undefined') {
+			try {
+				localStorage.removeItem(AI_PERSIST_KEY);
+			} catch (err) {
+				console.error('Failed to clear AI inbox state', err);
+			}
+		}
+	}
 
 	// Restore free-tier usage + Pro flag from localStorage and handle Stripe return
 	onMount(() => {
@@ -317,6 +320,15 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
 		hasUsedFreePdfOcr = localStorage.getItem('predictadmit_hasUsedFreePdfOcr') === 'true';
 
 		// Restore AI inbox state (visiblePortals, read flags, selected email, etc.)
+
+		// NEW: Restore application inputs from persisted user profile if they exist
+		const savedProfile = $userProfile.applicationProfile;
+		if (savedProfile) {
+			if (!essay && savedProfile.essays) essay = savedProfile.essays;
+			if (!activities && savedProfile.activities) activities = savedProfile.activities;
+			if (!honors && savedProfile.awards) honors = savedProfile.awards;
+			if (!transcript && savedProfile.rigor) transcript = savedProfile.rigor;
+		}
 	});
 
 	// Reactive Pro check
@@ -350,6 +362,22 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
 		return !!essay.trim() || !!activities.trim() || !!honors.trim() || !!transcript.trim();
 	}
 
+	// NEW: Save current form state to the global store (persisted to localStorage)
+	function saveToStore() {
+		userProfile.update((u) => ({
+			...u,
+			applicationProfile: {
+				...u.applicationProfile,
+				essays: essay,
+				activities: activities,
+				awards: honors,
+				rigor: transcript
+				// Note: major and supplementals aren't in the default profile type yet,
+				// but we can add them or just rely on these main ones for now.
+			}
+		}));
+	}
+
 	function openPaywall(mode: 'simulation' | 'ocr' | 'deepDive', decision?: AiDecision) {
 		paywallMode = mode;
 		paywallContextDecision = decision ?? null;
@@ -363,7 +391,8 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
 	}
 
 	async function runEvaluation() {
-		const myId = currentStoreVersion+1;
+		saveToStore(); // Save before running
+		const myId = currentStoreVersion + 1;
 
 		if (!googleSignedIn) {
 			aiError = 'Please sign in with Google first to create your AI application.';
@@ -376,13 +405,10 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
 			return;
 		}
 
-		// 🔒 Free tier: one full HYPSM+ simulation per browser (unless Pro)
-		if (hasUsedFreeSimulation && !hasDeepDiveAccess) {
-			openPaywall('simulation');
-			return;
-		}
+		// Simulation is now free for all users (previously limited).
+		// if (hasUsedFreeSimulation && !hasDeepDiveAccess) { ... }
 
-		userProfile.update(u => ({ ...u, isSubmittingAI: true }));
+		userProfile.update((u) => ({ ...u, isSubmittingAI: true }));
 		userProfile.update((u) => ({ ...u, usingAI: true }));
 
 		deepDiveItems = [];
@@ -390,108 +416,99 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
 		let myValidId: number = 0;
 
 		try {
-            // 1. Reset state before starting the loop
-            aiResults.clear();
+			// 1. Reset state before starting the loop
+			aiResults.clear();
 			myValidId = currentStoreVersion;
-            aiDecisions = [];
-            
-            // 2. Define the payload without school-specific info
-            const basePayload = {
-                essay,
-                activities,
-                honors,
-                transcript,
-                major,
-                supplementals,
-                edSlug,
-                googleEmail,
-                googleName
-            };
+			aiDecisions = [];
 
-            // 3. Loop through each school slug
-            // Note: Ensure SCHOOLS is imported or defined in your script
-            for (const { slug } of SCHOOLS) {
+			// 2. Define the payload without school-specific info
+			const basePayload = {
+				essay,
+				activities,
+				honors,
+				transcript,
+				major,
+				supplementals,
+				edSlug,
+				googleEmail,
+				googleName
+			};
+
+			// 3. Loop through each school slug
+			// Note: Ensure SCHOOLS is imported or defined in your script
+			for (const { slug } of SCHOOLS) {
 				if (myValidId !== currentStoreVersion) return;
 
 				const schoolSpecificSupplemental = supplementals[slug] || '';
-                const res = await fetch(`/api/ai-evaluate/${slug}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(basePayload),
-					
-                });
+				const res = await fetch(`/api/ai-evaluate/${slug}`, {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify(basePayload)
+				});
 				if (myValidId !== currentStoreVersion) return;
 
-                const data = await res.json();
+				const data = await res.json();
 
-                if (!res.ok ||  !(myValidId === currentStoreVersion)) {
-                    console.error(`Error evaluating ${slug}:`, data?.error);
-                    continue; // Skip failed schools and move to the next
-                }
+				if (!res.ok || !(myValidId === currentStoreVersion)) {
+					console.error(`Error evaluating ${slug}:`, data?.error);
+					continue; // Skip failed schools and move to the next
+				}
 
+				// 4. Add individual decision to the store
+				aiResults.addDecision(data.decision, myValidId, {
+					major,
+					applicantSummary: data.applicantSummary
+				});
 
-                // 4. Add individual decision to the store
-                aiResults.addDecision(data.decision, myValidId, { 
-                    major, 
-                    applicantSummary: data.applicantSummary 
-                });
-
-
-
-                // 5. Update local state for the UI
-                aiDecisions = $aiResults.decisions;
-                applicantSummary = data.applicantSummary;
+				// 5. Update local state for the UI
+				aiDecisions = $aiResults.decisions;
+				applicantSummary = data.applicantSummary;
 
 				saveAiInboxState();
 
-                // 6. Update the AdmitMail inbox in real-time
-                // This will automatically update the inbox every time a new school is added
-            }
+				// 6. Update the AdmitMail inbox in real-time
+				// This will automatically update the inbox every time a new school is added
+			}
 
-            // --- Post-Loop Logic (Finalizing the run) ---
+			// --- Post-Loop Logic (Finalizing the run) ---
 
-            if (!aiDecisions.length) {
-                aiError = 'The AI did not return any decisions. Try adding more detail to your application.';
-            } else {
-	
-                hasUsedFreeSimulation = true;
-                if (typeof localStorage !== 'undefined') {
-                    localStorage.setItem('predictadmit_hasUsedFreeSimulation', 'true');
-                }
+			if (!aiDecisions.length) {
+				aiError =
+					'The AI did not return any decisions. Try adding more detail to your application.';
+			} else {
+				hasUsedFreeSimulation = true;
+				if (typeof localStorage !== 'undefined') {
+					localStorage.setItem('predictadmit_hasUsedFreeSimulation', 'true');
+				}
 
-                userProfile.update((u) => {
-                    const newProfile = { ...u.applicationProfile };
-                    if (!newProfile.essays && essay) newProfile.essays = essay;
-                    if (!newProfile.activities && activities) newProfile.activities = activities;
-                    if (!newProfile.awards && honors) newProfile.awards = honors;
-                    if (!newProfile.rigor && transcript) newProfile.rigor = transcript;
+				userProfile.update((u) => {
+					const newProfile = { ...u.applicationProfile };
+					if (!newProfile.essays && essay) newProfile.essays = essay;
+					if (!newProfile.activities && activities) newProfile.activities = activities;
+					if (!newProfile.awards && honors) newProfile.awards = honors;
+					if (!newProfile.rigor && transcript) newProfile.rigor = transcript;
 
-                    return {
-                        ...u,
-                        requestCount: (u.requestCount || 0) + 1,
-                        applicationProfile: newProfile
-                    };
-                });
+					return {
+						...u,
+						requestCount: (u.requestCount || 0) + 1,
+						applicationProfile: newProfile
+					};
+				});
 
-                selectedPortal = null;
-                selectedSent = null;
-                mailActiveFolder = 'inbox';
-                mailViewMode = 'inbox';
-
-            }
-        } catch (err: any) {
-		
-			
-            console.error(err);
-            aiError = 'Network or server error while calling the AI evaluator.';
+				selectedPortal = null;
+				selectedSent = null;
+				mailActiveFolder = 'inbox';
+				mailViewMode = 'inbox';
+			}
+		} catch (err: any) {
+			console.error(err);
+			aiError = 'Network or server error while calling the AI evaluator.';
 			return;
-        } finally {
+		} finally {
 			if (currentStoreVersion === myValidId) {
-            userProfile.update(u => ({ ...u, isSubmittingAI: false }));
-        }
-			
-        
-        }
+				userProfile.update((u) => ({ ...u, isSubmittingAI: false }));
+			}
+		}
 	}
 
 	// 🔒 Deep Dive is fully paywalled – no API call until they upgrade
@@ -523,24 +540,24 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
 					// School Metadata
-    school: decision.school,
-    slug: decision.slug,
-    outcome: decision.outcome,
+					school: decision.school,
+					slug: decision.slug,
+					outcome: decision.outcome,
 
-    // Granular Scores
-    academic_score: decision.academic_score,
-    academic_explanation: decision.academic_explanation,
-    extracurricular_score: decision.extracurricular_score,
-    extracurricular_explanation: decision.extracurricular_explanation,
-    fit_score: decision.fit_score,
-    fit_explanation: decision.fit_explanation,
-    intellectual_score: decision.intellectual_score,
-    intellectual_explanation: decision.intellectual_explanation,
-    character_score: decision.character_score,
-    character_explanation: decision.character_explanation,
-    
-    // Feedback & Tips
-    improvement_tips: decision.improvement_tips,
+					// Granular Scores
+					academic_score: decision.academic_score,
+					academic_explanation: decision.academic_explanation,
+					extracurricular_score: decision.extracurricular_score,
+					extracurricular_explanation: decision.extracurricular_explanation,
+					fit_score: decision.fit_score,
+					fit_explanation: decision.fit_explanation,
+					intellectual_score: decision.intellectual_score,
+					intellectual_explanation: decision.intellectual_explanation,
+					character_score: decision.character_score,
+					character_explanation: decision.character_explanation,
+
+					// Feedback & Tips
+					improvement_tips: decision.improvement_tips,
 					applicantSummary,
 					edSlug
 				})
@@ -652,7 +669,7 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
 					Predict Your College Results.
 				</h1>
 				<p class="text-lg text-slate-600 font-light max-w-xl mx-auto leading-relaxed">
-					Get <span class="font-semibold text-emerald-600">one free real AI simulation</span>.
+					Get <span class="font-semibold text-emerald-600">unlimited free AI simulations</span>.
 					Assesses in depth every aspect of your application — trained and tuned to real admissions
 					results.
 				</p>
@@ -685,7 +702,10 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
 									<button
 										type="button"
 										class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-bold text-slate-900 hover:bg-slate-50"
-										onclick={() => signIn('google', { callbackUrl: '/ai' })}
+										onclick={() => {
+											saveToStore();
+											signIn('google', { callbackUrl: '/ai' });
+										}}
 									>
 										<span>Continue with Google</span>
 									</button>
@@ -697,9 +717,9 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
 						<form
 							class="space-y-8"
 							onsubmit={(e) => {
-    e.preventDefault();
-    runEvaluation();
-}}
+								e.preventDefault();
+								runEvaluation();
+							}}
 							aria-label="AI admissions evaluation form"
 						>
 							<!-- PDF info + OCR upload area -->
@@ -744,8 +764,8 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
 										<div class="mt-3">
 											<button
 												type="button"
-onclick={applyOcrToEssay}												
-class="text-xs font-bold text-cyan-400 hover:text-cyan-300 hover:underline"
+												onclick={applyOcrToEssay}
+												class="text-xs font-bold text-cyan-400 hover:text-cyan-300 hover:underline"
 											>
 												Insert extracted text into essay &darr;
 											</button>
@@ -764,9 +784,29 @@ class="text-xs font-bold text-cyan-400 hover:text-cyan-300 hover:underline"
 										id="major"
 										type="text"
 										bind:value={major}
-										class="w-full rounded-md border border-slate-200 bg-white px-3 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all shadow-inner"
+										class="w-full rounded-md border border-slate-200 bg-white px-3 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all shadow-inner font-sans"
 										placeholder="e.g. Computer Science, Comparative Literature..."
+										onfocus={() => (showMajorDropdown = true)}
+										onblur={() => setTimeout(() => (showMajorDropdown = false), 200)}
 									/>
+									{#if showMajorDropdown && majorSuggestions.length > 0}
+										<div
+											class="absolute top-full left-0 right-0 mt-1 bg-white border border-slate-200 rounded-lg shadow-lg z-50"
+										>
+											{#each majorSuggestions as m}
+												<button
+													type="button"
+													onclick={() => {
+														major = m;
+														showMajorDropdown = false;
+													}}
+													class="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 font-medium"
+												>
+													{m}
+												</button>
+											{/each}
+										</div>
+									{/if}
 								</div>
 
 								<!-- Essay -->
@@ -778,43 +818,57 @@ class="text-xs font-bold text-cyan-400 hover:text-cyan-300 hover:underline"
 										id="essay"
 										bind:value={essay}
 										rows="6"
-										class="w-full rounded-md border border-slate-200 bg-white px-3 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all shadow-inner"
+										class="w-full rounded-md border border-slate-200 bg-white px-3 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all shadow-inner font-sans"
 										placeholder="Paste your personal statement here..."
 									></textarea>
 								</div>
 
 								<!-- Supplements -->
 								<div class="space-y-4 bg-white p-4 rounded-lg">
-    <h3 class="text-lg font-bold text-gray-900">Supplemental Essays</h3>
-    
-    <div class="flex gap-2 overflow-x-auto pb-2">
-        {#each SCHOOLS as { school, slug }}
-            <button 
-                type="button"
-                class="px-3 py-1 rounded-full border transition-colors 
-                {activeSupTab === slug 
-                    ? 'bg-blue-600 text-white border-blue-600' 
-                    : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'}"
-                onclick={() => activeSupTab = slug}
-            >
-                {slug}
-            </button>
-        {/each}
-    </div>
+									<div class="flex items-center justify-between">
+										<h3 class="text-lg font-bold text-gray-900">Supplemental Essays</h3>
+										<span
+											class="text-[10px] bg-blue-50 text-blue-700 px-2 py-1 rounded-full font-bold border border-blue-100"
+										>
+											AI Extrapolates Fit
+										</span>
+									</div>
 
-    <textarea
-        bind:value={supplementals[activeSupTab]}
-        placeholder="Paste the supplemental for {activeSupTab} here..."
-        class="w-full h-48 bg-white border border-gray-300 rounded-md p-4 text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none shadow-sm"
-    ></textarea>
-</div>
+									<p
+										class="text-xs text-slate-500 leading-relaxed italic border-l-2 border-blue-200 pl-3"
+									>
+										Note: The supplemental you provide here will be used as a "quality baseline" to
+										extrapolate your fit/why-us performance for <strong class="text-slate-700"
+											>all other schools</strong
+										>
+										in the simulation.
+									</p>
+
+									<div class="flex gap-2 overflow-x-auto pb-2">
+										{#each SCHOOLS as { school, slug }}
+											<button
+												type="button"
+												class="px-3 py-1 rounded-full border transition-colors
+                {activeSupTab === slug
+													? 'bg-blue-600 text-white border-blue-600'
+													: 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'}"
+												onclick={() => (activeSupTab = slug)}
+											>
+												{slug}
+											</button>
+										{/each}
+									</div>
+
+									<textarea
+										bind:value={supplementals[activeSupTab]}
+										placeholder="Paste the supplemental for {activeSupTab} here..."
+										class="w-full h-48 bg-white border border-gray-300 rounded-md p-4 text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none shadow-sm font-sans"
+									></textarea>
+								</div>
 
 								<!-- Promo Code -->
 								<div class="space-y-2 border-t border-slate-200 pt-4">
-									<label
-										for="promoCode"
-										class="block text-[11px] font-medium text-amber-700 uppercase tracking-[0.2em]"
-									>
+									<label for="promoCode" class="block text-sm font-bold text-slate-900">
 										Promo Code (Optional)
 									</label>
 									<div class="relative max-w-xs">
@@ -822,19 +876,19 @@ class="text-xs font-bold text-cyan-400 hover:text-cyan-300 hover:underline"
 											id="promoCode"
 											type="text"
 											bind:value={promoCodeInput}
-onkeydown={handlePromoCode}											
-placeholder="Type code and hit Enter..."
-											class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-amber-400 focus:border-amber-400"
+											onkeydown={handlePromoCode}
+											placeholder="Type code and hit Enter..."
+											class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-amber-400 focus:border-amber-400 font-sans"
 										/>
 										{#if hasDeepDiveAccess}
 											<div
-												class="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-green-400 font-bold uppercase"
+												class="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-green-600 font-bold"
 											>
 												Active
 											</div>
 										{/if}
 									</div>
-									<p class="text-[9px] text-slate-500">
+									<p class="text-xs text-slate-500">
 										Have a special access code? Type it above and press Enter to apply.
 									</p>
 								</div>
@@ -842,10 +896,7 @@ placeholder="Type code and hit Enter..."
 								<!-- Activities -->
 								<div class="space-y-2">
 									<div class="flex items-center justify-between gap-2">
-										<label
-											for="activities"
-											class="block text-[11px] font-medium text-cyan-700 uppercase tracking-[0.2em]"
-										>
+										<label for="activities" class="block text-sm font-bold text-slate-900">
 											Activities / Résumé
 										</label>
 									</div>
@@ -853,7 +904,7 @@ placeholder="Type code and hit Enter..."
 										id="activities"
 										bind:value={activities}
 										rows="4"
-										class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-cyan-400 focus:border-cyan-400 resize-y"
+										class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-cyan-400 focus:border-cyan-400 resize-y font-sans"
 										placeholder="Paste your activities list or résumé bullets here. If they’re in a PDF, copy–paste the text."
 									></textarea>
 								</div>
@@ -863,10 +914,7 @@ placeholder="Type code and hit Enter..."
 								<!-- Honors -->
 								<div class="space-y-2">
 									<div class="flex items-center justify-between gap-2">
-										<label
-											for="honors"
-											class="block text-[11px] font-medium text-cyan-700 uppercase tracking-[0.2em]"
-										>
+										<label for="honors" class="block text-sm font-bold text-slate-900">
 											Honors & Awards
 										</label>
 									</div>
@@ -874,7 +922,7 @@ placeholder="Type code and hit Enter..."
 										id="honors"
 										bind:value={honors}
 										rows="3"
-										class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-cyan-400 focus:border-cyan-400 resize-y"
+										class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-cyan-400 focus:border-cyan-400 resize-y font-sans"
 										placeholder="List major competitions, scholarships, and distinctions. Copy–paste from your app if needed."
 									></textarea>
 								</div>
@@ -882,10 +930,7 @@ placeholder="Type code and hit Enter..."
 								<!-- Transcript -->
 								<div class="space-y-2">
 									<div class="flex items-center justify-between gap-2">
-										<label
-											for="transcript"
-											class="block text-[11px] font-medium text-cyan-700 uppercase tracking-[0.2em]"
-										>
+										<label for="transcript" class="block text-sm font-bold text-slate-900">
 											Transcript / GPA
 										</label>
 									</div>
@@ -893,7 +938,7 @@ placeholder="Type code and hit Enter..."
 										id="transcript"
 										bind:value={transcript}
 										rows="3"
-										class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-cyan-400 focus:border-cyan-400 resize-y"
+										class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-cyan-400 focus:border-cyan-400 resize-y font-sans"
 										placeholder="Include GPA, course rigor, key grades, testing, and any school context. Copy–paste from your transcript if needed."
 									></textarea>
 								</div>
@@ -908,7 +953,7 @@ placeholder="Type code and hit Enter..."
 									<select
 										id="edSchool"
 										bind:value={edSlug}
-										class="w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent shadow-sm"
+										class="w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent shadow-sm font-sans"
 									>
 										<option value="">No ED selected (RD only)</option>
 										{#each ED_SCHOOLS as school}
@@ -970,11 +1015,11 @@ placeholder="Type code and hit Enter..."
 												</span>
 											{:else if hasUsedFreeSimulation && !hasDeepDiveAccess}
 												<span
-												onclick={(e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    goto('/pro');
-}}
+													onclick={(e) => {
+														e.preventDefault();
+														e.stopPropagation();
+														goto('/pro');
+													}}
 													class="flex items-center gap-2"
 												>
 													Upgrade to Pro (Unlimited Runs)
@@ -1063,46 +1108,44 @@ placeholder="Type code and hit Enter..."
 						</div>
 					{/if}
 					{#if $userProfile.usingAI}
-					<div class="bg-white min-h-[400px]">
-						
-						<BetterAdmitMail
-							bind:inboxSection
-							viewMode={mailViewMode}
-							activeFolder={mailActiveFolder}
-							bind:searchQuery
-							{filteredPortals}
-							{sortedVisiblePortals}
-							{visiblePortals}
-							{currentEdPortal}
-							{edEmailMustBeViewed}
-							{hasViewedEdEmail}
-							{readPortalSlugs}
-							{selectedPortal}
-							{selectedSent}
-							{sentEmails}
-							{displayName}
-							{displayEmail}
-							getReceivedLabel={getReceivedLabelForAI}
-							resetSimulation={resetInboxState}
-							{selectPortal}
-							{selectSent}
-							{switchFolder}
-							{openInboxList}
-							{deepDiveItems}
-							{deepDiveLoadingSlug}
-							requestDeepDiveForSlug={(slug: string) => {
-								const decision = aiDecisions.find(
-									(d) => d.slug === slug || d.school.toLowerCase().replace(/\s+/g, '-') === slug
-								);
+						<div class="bg-white min-h-[400px]">
+							<BetterAdmitMail
+								bind:inboxSection
+								viewMode={mailViewMode}
+								activeFolder={mailActiveFolder}
+								bind:searchQuery
+								{filteredPortals}
+								{sortedVisiblePortals}
+								{visiblePortals}
+								{currentEdPortal}
+								{edEmailMustBeViewed}
+								{hasViewedEdEmail}
+								{readPortalSlugs}
+								{selectedPortal}
+								{selectedSent}
+								{sentEmails}
+								{displayName}
+								{displayEmail}
+								getReceivedLabel={getReceivedLabelForAI}
+								resetSimulation={resetInboxState}
+								{selectPortal}
+								{selectSent}
+								{switchFolder}
+								{openInboxList}
+								{deepDiveItems}
+								{deepDiveLoadingSlug}
+								requestDeepDiveForSlug={(slug: string) => {
+									const decision = aiDecisions.find(
+										(d) => d.slug === slug || d.school.toLowerCase().replace(/\s+/g, '-') === slug
+									);
 
-								if (decision) {
-									// uses your existing requestDeepDive(decision: AiDecision)
-									requestDeepDive(decision);
-								}
-							}}
-						/>
-						
-					</div>
+									if (decision) {
+										// uses your existing requestDeepDive(decision: AiDecision)
+										requestDeepDive(decision);
+									}
+								}}
+							/>
+						</div>
 					{/if}
 
 					{#if deepDiveItems.length}
@@ -1144,7 +1187,7 @@ placeholder="Type code and hit Enter..."
 										</div>
 
 										<div
-											class="text-sm leading-relaxed text-slate-700 whitespace-pre-wrap font-serif"
+											class="text-sm leading-relaxed text-slate-700 whitespace-pre-wrap font-sans"
 										>
 											{item.explanation}
 										</div>
@@ -1248,7 +1291,7 @@ placeholder="Type code and hit Enter..."
 
 				<div class="space-y-3 pt-2">
 					<a
-						href="/pricing"
+						href="/pro"
 						class="inline-flex w-full items-center justify-center gap-2 rounded-full bg-slate-900 px-4 py-3 text-sm font-bold text-white shadow-lg hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-400 transition-all"
 					>
 						{#if paywallMode === 'deepDive'}

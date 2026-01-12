@@ -58,9 +58,9 @@
 						Beta
 					</span>
 				</div>
-				<p class="text-xs text-slate-500 mt-1">Your simulated college decisions inbox.</p>
+				<p class="text-xs text-slate-600 mt-1">Your simulated college decisions inbox.</p>
 			</div>
-			<div class="hidden md:flex flex-col items-end text-xs text-slate-500 gap-2">
+			<div class="hidden md:flex flex-col items-end text-xs text-slate-600 gap-2">
 				<div>
 					Signed in as <span class="font-semibold text-slate-900">{displayEmail}</span>
 				</div>
@@ -98,7 +98,11 @@
 				<!-- Left sidebar -->
 				<aside class="w-52 border-r border-slate-100 bg-white py-4 pl-2 pr-4">
 					<div class="mb-4 px-2">
-						<Button fullWidth variant="primary">Compose</Button>
+						<div
+							class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold py-3 px-4 rounded-xl text-center shadow-lg cursor-pointer transition-colors shadow-blue-200"
+						>
+							Compose
+						</div>
 					</div>
 					<nav class="text-[11px] text-slate-800 space-y-1">
 						<button
@@ -108,7 +112,7 @@
 							}`}
 							on:click={() => switchFolder('inbox')}
 						>
-							Inbox <span class="text-slate-500">({visiblePortals.length})</span>
+							Inbox <span class="text-slate-600 font-medium">({visiblePortals.length})</span>
 						</button>
 						<button
 							type="button"
@@ -237,12 +241,12 @@
 														>
 															{portal.subject}
 														</span>
-														<span class="text-slate-500">
+														<span class="text-slate-600">
 															&nbsp;– A status update is available in your application portal.
 														</span>
 													</td>
 													<td
-														class="px-3 py-2 align-top text-right text-slate-600 text-[11px] whitespace-nowrap w-40"
+														class="px-3 py-2 align-top text-right text-slate-700 font-medium text-[11px] whitespace-nowrap w-40"
 													>
 														{getReceivedLabel(portal)}
 													</td>

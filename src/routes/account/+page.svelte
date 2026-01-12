@@ -13,7 +13,7 @@
 	$: userName = session?.user?.name || '';
 	$: userImage = session?.user?.image || '';
 
-	let subscriptionStatus: 'free' | 'pro' = 'free';
+	$: subscriptionStatus = $userProfile.isPro ? 'pro' : 'free';
 
 	const handleGoogleSignIn = () => {
 		signIn('google');

@@ -1,10 +1,11 @@
 import { SvelteKitAuth } from '@auth/sveltekit';
 import Google from '@auth/core/providers/google';
+import { env } from '$env/dynamic/private';
 
-// Get environment variables with fallbacks for development
-const GOOGLE_ID = process.env.GOOGLE_ID || 'placeholder_google_id';
-const GOOGLE_SECRET = process.env.GOOGLE_SECRET || 'placeholder_google_secret';
-const AUTH_SECRET = process.env.AUTH_SECRET || 'placeholder_auth_secret';
+// Get environment variables with fallbacks for development (or undefined if missing)
+const GOOGLE_ID = env.GOOGLE_CLIENT_ID || env.GOOGLE_ID;
+const GOOGLE_SECRET = env.GOOGLE_CLIENT_SECRET || env.GOOGLE_SECRET;
+const AUTH_SECRET = env.AUTH_SECRET;
 
 // New API: destructure `handle` from SvelteKitAuth(...)
 export const { handle } = SvelteKitAuth({

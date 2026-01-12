@@ -5,12 +5,12 @@ import { env } from '$env/dynamic/private';
 
 const STRIPE_SECRET_KEY = env.STRIPE_SECRET_KEY;
 
-const stripe = new Stripe(STRIPE_SECRET_KEY as string, {
+const stripe = STRIPE_SECRET_KEY ? new Stripe(STRIPE_SECRET_KEY, {
   apiVersion: '2024-06-20'
-});
+}) : null;
 
 export const GET: RequestHandler = async ({ url }) => {
-  if (!STRIPE_SECRET_KEY) {
+  if (!stripe) {
     return json({ error: 'Stripe not configured on server' }, { status: 500 });
   }
 

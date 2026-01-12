@@ -16,9 +16,21 @@
 			<div>
 				<h4 class="font-bold text-slate-900 text-sm mb-4">Platform</h4>
 				<ul class="space-y-3 text-sm text-slate-600">
-					<li><a href="/portals" class="hover:text-slate-900 transition-colors">All Portals</a></li>
-					<li><a href="/ai" class="hover:text-slate-900 transition-colors">AI Analysis</a></li>
-					<li><a href="/pricing" class="hover:text-slate-900 transition-colors">Pricing</a></li>
+					<li>
+						<a href="/portals" class="hover:text-slate-900 hover:font-bold transition-all p-1 block"
+							>All Portals</a
+						>
+					</li>
+					<li>
+						<a href="/ai" class="hover:text-slate-900 hover:font-bold transition-all p-1 block"
+							>AI Analysis</a
+						>
+					</li>
+					<li>
+						<a href="/pricing" class="hover:text-slate-900 hover:font-bold transition-all p-1 block"
+							>Pricing</a
+						>
+					</li>
 				</ul>
 			</div>
 
@@ -27,14 +39,23 @@
 				<h4 class="font-bold text-slate-900 text-sm mb-4">Resources</h4>
 				<ul class="space-y-3 text-sm text-slate-600">
 					<li>
-						<a href="/junior-diagnostic" class="hover:text-slate-900 transition-colors"
+						<a
+							href="/junior-diagnostic"
+							class="hover:text-slate-900 hover:font-bold transition-all p-1 block"
 							>Junior Diagnostic</a
 						>
 					</li>
 					<li>
-						<a href="/research-hub" class="hover:text-slate-900 transition-colors">Research Hub</a>
+						<a
+							href="/research-hub"
+							class="hover:text-slate-900 hover:font-bold transition-all p-1 block">Research Hub</a
+						>
 					</li>
-					<li><a href="/blog" class="hover:text-slate-900 transition-colors">Blog</a></li>
+					<li>
+						<a href="/blog" class="hover:text-slate-900 hover:font-bold transition-all p-1 block"
+							>Blog</a
+						>
+					</li>
 				</ul>
 			</div>
 
@@ -42,12 +63,24 @@
 			<div>
 				<h4 class="font-bold text-slate-900 text-sm mb-4">Company</h4>
 				<ul class="space-y-3 text-sm text-slate-600">
-					<li><a href="/about" class="hover:text-slate-900 transition-colors">About Us</a></li>
-					<li><a href="/terms" class="hover:text-slate-900 transition-colors">Terms</a></li>
-					<li><a href="/privacy" class="hover:text-slate-900 transition-colors">Privacy</a></li>
 					<li>
-						<a href="mailto:hello@predictadmit.com" class="hover:text-slate-900 transition-colors"
-							>Contact</a
+						<a href="/about" class="hover:text-slate-900 hover:font-bold transition-all p-1 block"
+							>About Us</a
+						>
+					</li>
+					<li>
+						<a href="/terms" class="hover:text-slate-900 hover:font-bold transition-all p-1 block"
+							>Terms of Service</a
+						>
+					</li>
+					<li>
+						<a href="/privacy" class="hover:text-slate-900 hover:font-bold transition-all p-1 block"
+							>Privacy Policy</a
+						>
+					</li>
+					<li>
+						<a href="/contact" class="hover:text-slate-900 hover:font-bold transition-all p-1 block"
+							>Contact Support</a
 						>
 					</li>
 				</ul>

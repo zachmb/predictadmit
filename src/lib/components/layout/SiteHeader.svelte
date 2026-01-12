@@ -41,31 +41,27 @@
 			</a>
 
 			<!-- CENTERED NAVIGATION -->
-			<nav class="hidden md:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
+			<nav class="hidden md:flex items-center gap-2 absolute left-1/2 -translate-x-1/2">
 				<a
 					href="/portals"
-					class="text-base font-semibold text-slate-600 hover:text-slate-900 transition-colors"
+					class="text-base font-bold text-slate-600 hover:text-white hover:bg-[#0052CC] px-5 py-2.5 rounded-full transition-all duration-200"
 					>Portals</a
 				>
 				<a
 					href="/ai"
-					class="text-base font-semibold text-slate-600 hover:text-slate-900 transition-colors"
+					class="text-base font-bold text-slate-600 hover:text-white hover:bg-[#0052CC] px-5 py-2.5 rounded-full transition-all duration-200"
 					>Predict</a
 				>
 				<a
 					href="/pro"
-					class="text-base font-semibold text-slate-600 hover:text-slate-900 transition-colors"
+					class="text-base font-bold text-slate-600 hover:text-white hover:bg-[#0052CC] px-5 py-2.5 rounded-full transition-all duration-200"
 					>Pro</a
 				>
-				
-
 				<a
-				
 					href="/about"
-					class="text-base font-semibold text-slate-600 hover:text-slate-900 transition-colors"
+					class="text-base font-bold text-slate-600 hover:text-white hover:bg-[#0052CC] px-5 py-2.5 rounded-full transition-all duration-200"
 					>About</a
 				>
-				
 			</nav>
 
 			<div class="flex items-center gap-3">
@@ -111,12 +107,6 @@
 						</svg>
 						Sign in
 					{/if}
-				</a>
-				<a
-					href="/pro"
-					class="inline-flex items-center justify-center font-bold text-base bg-blue-600 text-white px-6 py-2.5 rounded-[var(--radius-btn)] hover:bg-blue-700 transition-colors"
-				>
-					Get Pro
 				</a>
 			</div>
 		</div>

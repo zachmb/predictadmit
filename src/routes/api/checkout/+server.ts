@@ -4,9 +4,9 @@ import { json } from '@sveltejs/kit';
 import Stripe from 'stripe';
 import { env } from '$env/dynamic/private';
 
-const STRIPE_SECRET_KEY=env.STRIPE_SECRET_KEY;
+const STRIPE_SECRET_KEY = env.STRIPE_SECRET_KEY;
 
-const STRIPE_PRICE_ID=env.STRIPE_PRICE_ID;
+const STRIPE_PRICE_ID = env.STRIPE_PRICE_ID;
 
 export const POST: RequestHandler = async ({ request }) => {
   try {
@@ -25,40 +25,62 @@ export const POST: RequestHandler = async ({ request }) => {
     let sessionConfig: Stripe.Checkout.SessionCreateParams;
 
     if (isMonthly) {
-      // Monthly Subscription ($19/mo) - Uses env var price ID (assumed to be the monthly price)
-      if (!STRIPE_PRICE_ID) {
-        return json({ error: 'Server misconfigured: Monthly price ID is missing.' }, { status: 500 });
-      }
-      sessionConfig = {
-        mode: 'subscription',
-        line_items: [
-          {
-            price: STRIPE_PRICE_ID,
-            quantity: 1
-          }
-        ],
-        success_url: 'http://localhost:5201/ai?upgrade=success&plan=monthly',
-        cancel_url: 'http://localhost:5201/pricing?canceled=1'
-      };
-    } else {
-      // Full Application Cycle ($29 one-time) - Uses provided Product ID
-      // We use price_data to specify the amount and currency inline, linked to the product.
+      // Keeping legacy logic just in case, or map 'cycle' to this if we consider it the subscription
+      // But requirements said "$9 for full cycle"
+    }
+
+    const { pricingMode } = body; // 'cycle' | 'one_time'
+
+    if (pricingMode === 'cycle') {
+      // $9.00 Full Cycle
       sessionConfig = {
         mode: 'payment',
         line_items: [
           {
             price_data: {
               currency: 'usd',
-              product: 'prod_ThAtfBHvk7fSZZ', // Provided by user
-              unit_amount: 2900, // $29.00
-              product_data: undefined // We provide 'product' ID directly, so product_data object isn't needed if product exists
+              product_data: {
+                name: 'PredictAdmit Pro - Full Application Cycle',
+                description: 'Unlimited access for the entire application cycle.'
+              },
+              unit_amount: 900, // $9.00
             },
             quantity: 1
           }
         ],
-        success_url: 'http://localhost:5201/ai?upgrade=success&plan=full_cycle',
-        cancel_url: 'http://localhost:5201/pricing?canceled=1'
+        success_url: 'http://localhost:5201/ai?upgrade=success&plan=cycle',
+        cancel_url: 'http://localhost:5201/pro?canceled=1'
       };
+    } else if (pricingMode === 'monthly') {
+      // $5.00 Monthly Subscription
+      sessionConfig = {
+        mode: 'subscription',
+        line_items: [
+          {
+            price_data: {
+              currency: 'usd',
+              product_data: {
+                name: 'PredictAdmit Pro - Monthly Access',
+                description: 'Monthly subscription. Cancel anytime.'
+              },
+              unit_amount: 500, // $5.00
+              recurring: {
+                interval: 'month'
+              }
+            },
+            quantity: 1
+          }
+        ],
+        success_url: 'http://localhost:5201/ai?upgrade=success&plan=monthly',
+        cancel_url: 'http://localhost:5201/pro?canceled=1'
+      };
+    } else {
+      // Fallback or Legacy (if existing calls use isMonthly)
+      if (isMonthly) {
+        // ... legacy code if needed, or error
+      }
+      // Default to error if no valid mode
+      return json({ error: 'Invalid pricing mode.' }, { status: 400 });
     }
 
     const session = await stripe.checkout.sessions.create(sessionConfig);
