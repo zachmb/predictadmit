@@ -21,6 +21,7 @@
 let { data }: { data: PageData } = $props();
 let activeGenerationId = $state(0);
 const AI_PERSIST_KEY = 'predictadmit_ai_inbox_v1';
+let activeSupTab = $state('harvard'); // Set a default school
 
 	type DecisionOutcome = 'admit' | 'deny' | 'waitlist' | 'defer';
 
@@ -53,7 +54,7 @@ const AI_PERSIST_KEY = 'predictadmit_ai_inbox_v1';
 	let honors = $state('');
 	let transcript = $state('');
 	let major = $state('');
-	let supplementals = $state('');
+let supplementals = $state<Record<string, string>>({});	
 	// OCR state
 	let ocrUploading = $state(false);
 	let ocrError = $state('');
@@ -411,6 +412,8 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
             // Note: Ensure SCHOOLS is imported or defined in your script
             for (const { slug } of SCHOOLS) {
 				if (myValidId !== currentStoreVersion) return;
+
+				const schoolSpecificSupplemental = supplementals[slug] || '';
                 const res = await fetch(`/api/ai-evaluate/${slug}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -682,7 +685,7 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
 									<button
 										type="button"
 										class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-bold text-slate-900 hover:bg-slate-50"
-										on:click={() => signIn('google', { callbackUrl: '/ai' })}
+										onclick={() => signIn('google', { callbackUrl: '/ai' })}
 									>
 										<span>Continue with Google</span>
 									</button>
@@ -693,7 +696,10 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
 						<!-- Application inputs -->
 						<form
 							class="space-y-8"
-							on:submit|preventDefault={runEvaluation}
+							onsubmit={(e) => {
+    e.preventDefault();
+    runEvaluation();
+}}
 							aria-label="AI admissions evaluation form"
 						>
 							<!-- PDF info + OCR upload area -->
@@ -717,7 +723,7 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
 											type="file"
 											accept="application/pdf"
 											class="hidden"
-											on:change={handleOcrChange}
+											onchange={handleOcrChange}
 										/>
 										<span class="text-xs text-slate-400">
 											{#if ocrUploading}
@@ -738,8 +744,8 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
 										<div class="mt-3">
 											<button
 												type="button"
-												on:click={applyOcrToEssay}
-												class="text-xs font-bold text-cyan-400 hover:text-cyan-300 hover:underline"
+onclick={applyOcrToEssay}												
+class="text-xs font-bold text-cyan-400 hover:text-cyan-300 hover:underline"
 											>
 												Insert extracted text into essay &darr;
 											</button>
@@ -778,18 +784,25 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
 								</div>
 
 								<!-- Supplements -->
-								<div class="space-y-2">
-									<label for="supplementals" class="block text-sm font-bold text-slate-900">
-										Supplemental Essays
-									</label>
-									<textarea
-										id="supplementals"
-										bind:value={supplementals}
-										rows="6"
-										class="w-full rounded-md border border-slate-200 bg-white px-3 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all shadow-inner"
-										placeholder="Paste school-specific supplements or 'Why Us' essays here..."
-									></textarea>
-								</div>
+								<div class="space-y-4">
+    <h3 class="text-lg font-bold">Supplemental Essays</h3>
+    <div class="flex gap-2 overflow-x-auto pb-2">
+        {#each SCHOOLS as { school, slug }}
+            <button 
+                class="px-3 py-1 rounded-full border {activeSupTab === slug ? 'bg-blue-600' : 'bg-gray-800'}"
+                onclick={() => activeSupTab = slug}
+            >
+                {slug}
+            </button>
+        {/each}
+    </div>
+
+    <textarea
+        bind:value={supplementals[activeSupTab]}
+        placeholder="Paste the supplemental for {activeSupTab} here..."
+        class="w-full h-48 bg-black/20 border border-white/10 p-4"
+    ></textarea>
+</div>
 
 								<!-- Promo Code -->
 								<div class="space-y-2 border-t border-slate-200 pt-4">
@@ -804,8 +817,8 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
 											id="promoCode"
 											type="text"
 											bind:value={promoCodeInput}
-											on:keydown={handlePromoCode}
-											placeholder="Type code and hit Enter..."
+onkeydown={handlePromoCode}											
+placeholder="Type code and hit Enter..."
 											class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-amber-400 focus:border-amber-400"
 										/>
 										{#if hasDeepDiveAccess}
@@ -923,7 +936,7 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
 								<button
 									type={googleSignedIn ? 'submit' : 'button'}
 									disabled={$userProfile.isSubmittingAI}
-									on:click={!googleSignedIn
+									onclick={!googleSignedIn
 										? () => signIn('google', { callbackUrl: '/ai' })
 										: undefined}
 									class="group relative w-full rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 active:scale-[0.98]"
@@ -952,7 +965,11 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
 												</span>
 											{:else if hasUsedFreeSimulation && !hasDeepDiveAccess}
 												<span
-													on:click|preventDefault|stopPropagation={() => goto('/pro')}
+												onclick={(e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    goto('/pro');
+}}
 													class="flex items-center gap-2"
 												>
 													Upgrade to Pro (Unlimited Runs)
@@ -980,7 +997,7 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
 								<button
 									type="button"
 									class="text-sm text-slate-400 hover:text-slate-600 underline decoration-dotted"
-									on:click={resetInboxState}
+									onclick={resetInboxState}
 								>
 									Clear AI inbox
 								</button>
@@ -1169,7 +1186,7 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
 					<button
 						type="button"
 						class="h-8 w-8 rounded-full bg-slate-100 text-slate-500 text-sm flex items-center justify-center hover:bg-slate-200 transition-colors"
-						on:click={closePaywall}
+						onclick={closePaywall}
 					>
 						✕
 					</button>
@@ -1197,7 +1214,7 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
 						</p>
 						<div class="mt-4">
 							<button
-								on:click={() => goto('/pro')}
+								onclick={() => goto('/pro')}
 								class="w-full rounded-full bg-slate-900 px-4 py-3 text-sm font-bold text-white hover:bg-slate-800 transition-all"
 							>
 								Upgrade to Pro
@@ -1215,7 +1232,7 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
 						</p>
 						<div class="mt-4">
 							<button
-								on:click={() => goto('/pro')}
+								onclick={() => goto('/pro')}
 								class="w-full rounded-full bg-slate-900 px-4 py-3 text-sm font-bold text-white hover:bg-slate-800 transition-all"
 							>
 								Upgrade to Pro
@@ -1240,7 +1257,7 @@ let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
 					<button
 						type="button"
 						class="w-full rounded-full border border-slate-200 bg-white px-4 py-2.5 text-xs font-bold text-slate-500 hover:bg-slate-50 hover:text-slate-700 transition-colors"
-						on:click={closePaywall}
+						onclick={closePaywall}
 					>
 						Not now · keep the free run
 					</button>
