@@ -443,7 +443,10 @@
 				const res = await fetch(`/api/ai-evaluate/${slug}`, {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify(basePayload)
+					body: JSON.stringify({
+                    ...basePayload,
+                    supplementals: schoolSpecificSupplemental 
+                })
 				});
 				if (myValidId !== currentStoreVersion) return;
 
