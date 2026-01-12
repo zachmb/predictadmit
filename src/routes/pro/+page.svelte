@@ -11,6 +11,7 @@
 	import { schoolConfigs } from '$lib/config/schools';
 	import { schoolPrompts } from '$lib/config/prompts';
 	import { majors } from '$lib/config/majors';
+	import { onMount } from 'svelte';
 
 	// --- RUNES STATE ---
 	let { data } = $props();
@@ -154,7 +155,7 @@
 
 			return {
 				id: config.slug + '-supplement',
-				name: `${config.schoolName.split(' ')[0]} Supplement`,
+				name: config.logoPrimary, // e.g. "Harvard", "MIT"
 				language: 'markdown' as const,
 				content: finalContent,
 				school: config.schoolName,
@@ -263,6 +264,94 @@
 	let showTerminal = $state(false); // Changed default to false to be cleaner
 	let activeTab = $state<'terminal' | 'output'>('output');
 
+	// --- PERSISTENCE LOGIC ---
+	onMount(() => {
+		// Load Profile
+		const savedProfile = localStorage.getItem('predictadmit_profile');
+		if (savedProfile) {
+			try {
+				const p = JSON.parse(savedProfile);
+				profile = { ...profile, ...p };
+			} catch (e) {
+				console.error('Failed to load profile', e);
+			}
+		}
+
+		// Load Mind Map
+		const savedNodes = localStorage.getItem('predictadmit_mindmap_nodes');
+		if (savedNodes) {
+			try {
+				mindMapNodes = JSON.parse(savedNodes);
+			} catch (e) {}
+		}
+		const savedConns = localStorage.getItem('predictadmit_mindmap_connections');
+		if (savedConns) {
+			try {
+				mindMapConnections = JSON.parse(savedConns);
+			} catch (e) {}
+		}
+
+		// Load Files
+		const savedFilesRes = localStorage.getItem('predictadmit_files');
+		if (savedFilesRes) {
+			try {
+				const savedFiles = JSON.parse(savedFilesRes) as File[];
+				// Merge strategy: Overwrite content for matching IDs, add new files if they don't exist
+				// But we also want to keep the new logic for prompts if we updated the site?
+				// User preference: Saved content overrides default prompt.
+				files = files.map((f) => {
+					const saved = savedFiles.find((s) => s.id === f.id);
+					if (saved)
+						return {
+							...f,
+							content: saved.content,
+							isOpen: saved.isOpen,
+							isModified: saved.isModified
+						};
+					return f;
+				});
+
+				// Add custom created files that are not in the default list
+				const defaultIds = new Set(files.map((f) => f.id));
+				const customFiles = savedFiles.filter((s) => !defaultIds.has(s.id));
+				if (customFiles.length > 0) {
+					files = [...files, ...customFiles];
+				}
+			} catch (e) {
+				console.error('Failed to load files', e);
+			}
+		}
+
+		// Load Active File
+		const savedActiveIdx = localStorage.getItem('predictadmit_active_file_idx');
+		if (savedActiveIdx) {
+			const idx = parseInt(savedActiveIdx);
+			if (!isNaN(idx) && idx >= 0 && idx < files.length) {
+				activeFileIndex = idx;
+			}
+		}
+
+		// Load Added Schools (to keep the list consistent)
+		const savedSchoolSlugs = localStorage.getItem('predictadmit_added_schools');
+		if (savedSchoolSlugs) {
+			try {
+				addedSchoolSlugs = JSON.parse(savedSchoolSlugs);
+			} catch (e) {}
+		}
+	});
+
+	// Save Effect
+	$effect(() => {
+		// This runs whenever dependencies change
+		// Debouncing is optional but good. For now, direct save is fine for text scale.
+		localStorage.setItem('predictadmit_profile', JSON.stringify(profile));
+		localStorage.setItem('predictadmit_mindmap_nodes', JSON.stringify(mindMapNodes));
+		localStorage.setItem('predictadmit_mindmap_connections', JSON.stringify(mindMapConnections));
+		localStorage.setItem('predictadmit_files', JSON.stringify(files));
+		localStorage.setItem('predictadmit_active_file_idx', activeFileIndex.toString());
+		localStorage.setItem('predictadmit_added_schools', JSON.stringify(addedSchoolSlugs));
+	});
+
 	// Radar Chart Data Helper
 	let radarData = $derived(
 		analysisResult?.essays?.[0]?.scores
@@ -272,6 +361,56 @@
 				}))
 			: []
 	);
+
+	// --- ODDS CALCULATION LOGIC ---
+	function calculateAdmissionsOdds(schoolSlug: string): number {
+		const config = schoolConfigs[schoolSlug];
+		// Safety check if config or new fields are missing
+		if (!config || config.baseRate === undefined || config.difficulty === undefined) return 5;
+
+		// 1. Determine Target AI based on difficulty (1-10)
+		// Scale: Diff 10 (Harvard) -> 230 AI (Near perfect)
+		// Diff 8.5 (UCLA) -> 215 AI
+		const targetAI = 130 + config.difficulty * 10;
+
+		// 2. Calculate Delta (User AI vs Target)
+		const delta = academicIndex - targetAI;
+
+		// 3. Multiplier Calculation
+		let multiplier = 1;
+
+		if (delta >= 0) {
+			// Boost: Positive delta boosts odds.
+			// e.g. +30 points above target -> ~2x boost. Max cap 4x.
+			multiplier = 1 + Math.min(3, delta / 30);
+		} else {
+			// Penalty: Negative delta punishes exponentially.
+			// e.g. -20 points -> ~0.44x odds
+			multiplier = Math.pow(1.5, delta / 15);
+		}
+
+		// 4. Base Rate Adjustment
+		let rawOdds = config.baseRate * 100 * multiplier;
+
+		// 5. Hooks / Caps
+		// Extremely selective schools (Diff 9+) rarely go above 35-40% even for perfect stats
+		const maxCap = config.difficulty >= 9 ? 35 : 80;
+		const minFloor = 2; // Always a non-zero chance
+
+		return Math.round(Math.max(minFloor, Math.min(maxCap, rawOdds)));
+	}
+
+	function getOddsColor(odds: number) {
+		if (odds < 15) return 'text-rose-600 bg-rose-50'; // Reach
+		if (odds < 40) return 'text-amber-600 bg-amber-50'; // Target
+		return 'text-emerald-600 bg-emerald-50'; // Likely
+	}
+
+	function getBarColor(odds: number) {
+		if (odds < 15) return 'bg-rose-500';
+		if (odds < 40) return 'bg-amber-500';
+		return 'bg-emerald-500';
+	}
 
 	// --- ACTIONS ---
 
@@ -917,6 +1056,7 @@
 								<div class="grid md:grid-cols-2 gap-4">
 									{#each addedSchoolSlugs as slug}
 										{@const conf = schoolConfigs[slug]}
+										{@const odds = calculateAdmissionsOdds(slug)}
 										<div
 											class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:shadow-md transition-all"
 										>
@@ -925,25 +1065,32 @@
 													<div
 														class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1"
 													>
-														Target
+														{odds < 15 ? 'Reach' : odds < 40 ? 'Target' : 'Likely'}
 													</div>
 													<h3 class="font-bold text-slate-900">{conf.schoolName}</h3>
 												</div>
-												<!-- Mock Progress -->
+												<!-- Dynamic Progress -->
 												<div
-													class="h-8 w-8 rounded-full bg-blue-50 flex items-center justify-center text-xs font-bold text-[#0052CC]"
+													class="h-10 w-12 rounded-xl flex items-center justify-center text-sm font-black {getOddsColor(
+														odds
+													)}"
 												>
-													20%
+													{odds}%
 												</div>
 											</div>
 
 											<div class="space-y-3">
 												<div class="flex justify-between text-xs">
-													<span class="text-slate-500">Deadline</span>
-													<span class="font-medium text-slate-900">Jan 1st (RD)</span>
+													<span class="text-slate-500">Admissions Probability</span>
+													<span class="font-medium text-slate-900">Est. AI Impact</span>
 												</div>
 												<div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
-													<div class="bg-[#0052CC] h-full rounded-full" style="width: 20%"></div>
+													<div
+														class="h-full rounded-full transition-all duration-1000 ease-out {getBarColor(
+															odds
+														)}"
+														style="width: {odds}%"
+													></div>
 												</div>
 											</div>
 										</div>
@@ -1150,7 +1297,7 @@
 
 						<!-- Bottom Action Bar -->
 						<div
-							class="h-20 bg-white border-t border-slate-200 flex items-center justify-between px-8 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] z-20"
+							class="h-24 bg-white border-t border-slate-200 flex items-center justify-between px-8 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] z-50 pb-2"
 						>
 							<div class="text-xs text-slate-500 font-medium">
 								{analysisResult
@@ -1258,8 +1405,8 @@
 										<!-- RADAR CHART -->
 										<!-- RADAR CHART -->
 										{#if radarData.length > 0}
-											<div class="flex justify-center -my-4 transform scale-90">
-												<RadarChart data={radarData} size={250} max={100} color="text-[#0052CC]" />
+											<div class="flex justify-center my-12 transform scale-100">
+												<RadarChart data={radarData} size={280} max={100} color="text-[#0052CC]" />
 											</div>
 										{/if}
 

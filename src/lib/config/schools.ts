@@ -15,6 +15,8 @@ export interface SchoolConfig {
   statusLinkLabel: string;
   decision: SchoolDecision;
   footerDomain: string;
+  difficulty: number; // 1-10 scale
+  baseRate: number; // Decimal (e.g. 0.04)
 }
 
 export const schoolConfigs: Record<string, SchoolConfig> = {
@@ -32,7 +34,9 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
     statusLastPosted: 'March 15, 2026',
     statusLinkLabel: 'View Status >>',
     decision: 'deny',
-    footerDomain: 'harvard.edu'
+    footerDomain: 'harvard.edu',
+    difficulty: 10,
+    baseRate: 0.034
   },
   stanford: {
     slug: 'stanford',
@@ -48,7 +52,9 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
     statusLastPosted: 'March 14, 2026',
     statusLinkLabel: 'View Admission Decision >>',
     decision: 'deny',
-    footerDomain: 'stanford.edu'
+    footerDomain: 'stanford.edu',
+    difficulty: 10,
+    baseRate: 0.037
   },
   mit: {
     slug: 'mit',
@@ -64,7 +70,9 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
     statusLastPosted: 'March 14, 2026',
     statusLinkLabel: 'View Your Decision >>',
     decision: 'deny',
-    footerDomain: 'mit.edu'
+    footerDomain: 'mit.edu',
+    difficulty: 10,
+    baseRate: 0.04
   },
   princeton: {
     slug: 'princeton',
@@ -80,7 +88,9 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
     statusLastPosted: 'March 12, 2026',
     statusLinkLabel: 'View Update >>',
     decision: 'deny',
-    footerDomain: 'princeton.edu'
+    footerDomain: 'princeton.edu',
+    difficulty: 9.8,
+    baseRate: 0.045
   },
   yale: {
     slug: 'yale',
@@ -96,7 +106,9 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
     statusLastPosted: 'March 15, 2026',
     statusLinkLabel: 'View Status >>',
     decision: 'admit',
-    footerDomain: 'yale.edu'
+    footerDomain: 'yale.edu',
+    difficulty: 9.8,
+    baseRate: 0.046
   },
   columbia: {
     slug: 'columbia',
@@ -112,7 +124,9 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
     statusLastPosted: 'March 13, 2026',
     statusLinkLabel: 'View Decision >>',
     decision: 'admit',
-    footerDomain: 'columbia.edu'
+    footerDomain: 'columbia.edu',
+    difficulty: 9.7,
+    baseRate: 0.039
   },
   uchicago: {
     slug: 'uchicago',
@@ -128,7 +142,9 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
     statusLastPosted: 'March 16, 2026',
     statusLinkLabel: 'View Your UChicago Decision >>',
     decision: 'admit',
-    footerDomain: 'uchicago.edu'
+    footerDomain: 'uchicago.edu',
+    difficulty: 9.6,
+    baseRate: 0.05
   },
   upenn: {
     slug: 'upenn',
@@ -144,7 +160,9 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
     statusLastPosted: 'March 13, 2026',
     statusLinkLabel: 'View Status >>',
     decision: 'deny',
-    footerDomain: 'upenn.edu'
+    footerDomain: 'upenn.edu',
+    difficulty: 9.5,
+    baseRate: 0.058
   },
   caltech: {
     slug: 'caltech',
@@ -160,7 +178,9 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
     statusLastPosted: 'March 14, 2026',
     statusLinkLabel: 'View Caltech Decision >>',
     decision: 'deny',
-    footerDomain: 'caltech.edu'
+    footerDomain: 'caltech.edu',
+    difficulty: 10,
+    baseRate: 0.03
   },
   duke: {
     slug: 'duke',
@@ -176,7 +196,9 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
     statusLastPosted: 'December 12, 2019',
     statusLinkLabel: 'View Update >>',
     decision: 'admit',
-    footerDomain: 'duke.edu'
+    footerDomain: 'duke.edu',
+    difficulty: 9.4,
+    baseRate: 0.06
   },
   jhu: {
     slug: 'jhu',
@@ -192,7 +214,9 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
     statusLastPosted: 'March 15, 2026',
     statusLinkLabel: 'View Admissions Decision >>',
     decision: 'admit',
-    footerDomain: 'jhu.edu'
+    footerDomain: 'jhu.edu',
+    difficulty: 9.3,
+    baseRate: 0.065
   },
   northwestern: {
     slug: 'northwestern',
@@ -208,7 +232,9 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
     statusLastPosted: 'March 17, 2026',
     statusLinkLabel: 'View Status >>',
     decision: 'admit',
-    footerDomain: 'northwestern.edu'
+    footerDomain: 'northwestern.edu',
+    difficulty: 9.2,
+    baseRate: 0.07
   },
   dartmouth: {
     slug: 'dartmouth',
@@ -224,7 +250,9 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
     statusLastPosted: 'March 16, 2026',
     statusLinkLabel: 'View Decision >>',
     decision: 'admit',
-    footerDomain: 'dartmouth.edu'
+    footerDomain: 'dartmouth.edu',
+    difficulty: 9.3,
+    baseRate: 0.062
   },
   brown: {
     slug: 'brown',
@@ -240,7 +268,9 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
     statusLastPosted: 'March 15, 2026',
     statusLinkLabel: 'View Status >>',
     decision: 'deny',
-    footerDomain: 'brown.edu'
+    footerDomain: 'brown.edu',
+    difficulty: 9.5,
+    baseRate: 0.051
   },
   vanderbilt: {
     slug: 'vanderbilt',
@@ -256,7 +286,9 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
     statusLastPosted: 'March 17, 2026',
     statusLinkLabel: 'View Decision >>',
     decision: 'admit',
-    footerDomain: 'vanderbilt.edu'
+    footerDomain: 'vanderbilt.edu',
+    difficulty: 9.1,
+    baseRate: 0.07
   },
   rice: {
     slug: 'rice',
@@ -272,7 +304,9 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
     statusLastPosted: 'March 16, 2026',
     statusLinkLabel: 'View Status >>',
     decision: 'admit',
-    footerDomain: 'rice.edu'
+    footerDomain: 'rice.edu',
+    difficulty: 9.0,
+    baseRate: 0.075
   },
   wustl: {
     slug: 'wustl',
@@ -288,7 +322,9 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
     statusLastPosted: 'March 18, 2026',
     statusLinkLabel: 'View Update >>',
     decision: 'admit',
-    footerDomain: 'wustl.edu'
+    footerDomain: 'wustl.edu',
+    difficulty: 8.8,
+    baseRate: 0.11
   },
   cornell: {
     slug: 'cornell',
@@ -304,7 +340,9 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
     statusLastPosted: 'March 15, 2026',
     statusLinkLabel: 'View Status >>',
     decision: 'deny',
-    footerDomain: 'cornell.edu'
+    footerDomain: 'cornell.edu',
+    difficulty: 9.0,
+    baseRate: 0.079
   },
   ucla: {
     slug: 'ucla',
@@ -320,7 +358,9 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
     statusLastPosted: 'March 20, 2026',
     statusLinkLabel: 'View Decision >>',
     decision: 'admit',
-    footerDomain: 'ucla.edu'
+    footerDomain: 'ucla.edu',
+    difficulty: 8.5,
+    baseRate: 0.09
   },
   ucberkeley: {
     slug: 'ucberkeley',
@@ -336,6 +376,8 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
     statusLastPosted: 'March 20, 2026',
     statusLinkLabel: 'View Status >>',
     decision: 'admit',
-    footerDomain: 'berkeley.edu'
+    footerDomain: 'berkeley.edu',
+    difficulty: 8.7,
+    baseRate: 0.11
   }
 };

@@ -54,8 +54,8 @@
 			<!-- We position text via foreignObject or pure SVG text. SVG text is simpler. -->
 			<!-- Logic to push label out a bit -->
 			<text
-				x={size / 2 + (axis.x - size / 2) * 1.25}
-				y={size / 2 + (axis.y - size / 2) * 1.25}
+				x={size / 2 + (axis.x - size / 2) * 1.4}
+				y={size / 2 + (axis.y - size / 2) * 1.4}
 				text-anchor="middle"
 				dominant-baseline="middle"
 				class="text-[9px] font-bold uppercase tracking-widest fill-slate-400"
