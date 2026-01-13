@@ -108,28 +108,31 @@ export const POST: RequestHandler = async ({ request }) => {
                     ],
                     response_format: { type: "json_object" }
                 })
+            }).catch(e => {
+                console.error('DeepSeek Network Error', e);
+                return null;
             })
         ]);
 
         if (!claudeRes.ok) throw new Error('Claude API Error');
-        // DeepSeek is optional but preferred, if it fails we just return no harsh feedback? 
-        // For now let's strict fail if user requested it works.
-        if (!deepSeekRes.ok) console.error('DeepSeek Error', await deepSeekRes.text());
 
         const claudeData = await claudeRes.json();
         const claudeText = claudeData.content[0].text;
 
+        // DeepSeek is optional but preferred
         let deepSeekFeedback = '';
-        if (deepSeekRes.ok) {
-            const deepSeekData = await deepSeekRes.json();
-            const dsContent = deepSeekData.choices[0].message.content;
+        if (deepSeekRes && deepSeekRes.ok) {
             try {
+                const deepSeekData = await deepSeekRes.json();
+                const dsContent = deepSeekData.choices[0].message.content;
                 const dsJson = JSON.parse(dsContent);
                 deepSeekFeedback = dsJson.harsh_feedback;
             } catch (e) {
                 console.error('DeepSeek Parse Error', e);
-                deepSeekFeedback = dsContent; // Fallback to raw text
+                // Fallback probably not needed if JSON parse failed, but we can verify
             }
+        } else if (deepSeekRes) {
+            console.error('DeepSeek API Error Status:', deepSeekRes.status, await deepSeekRes.text());
         }
 
         // Parse Claude JSON

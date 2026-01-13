@@ -732,7 +732,10 @@
 				headers: { 'Content-Type': 'application/json' }
 			});
 
-			if (!res.ok) throw new Error('Grading failed');
+			if (!res.ok) {
+				const errData = await res.json().catch(() => ({}));
+				throw new Error(errData.error || 'Grading failed');
+			}
 			const data = await res.json();
 
 			analysisStep = 'Generating Feedback';
