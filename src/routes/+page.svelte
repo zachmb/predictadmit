@@ -330,6 +330,16 @@
 		isApplying = true;
 		applicationPhase = 'commonapp';
 		setTimeout(() => saveState(), 1000); // reduced to 1s as requested
+
+		// Auto-scroll to admit mail
+		setTimeout(() => {
+			const mailSection = document.getElementById('admit-mail-section');
+			if (mailSection) {
+				mailSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+			} else if (inboxSection) {
+				inboxSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+			}
+		}, 100);
 	};
 
 	const resetSimulation = () => {
@@ -653,12 +663,11 @@
 	<section class="py-24 bg-[#F0F7FF] relative overflow-hidden">
 		<div class="max-w-[1200px] mx-auto px-6 relative z-10">
 			<div class="mb-16 text-center max-w-2xl mx-auto space-y-4">
-				<h2 class="text-3xl font-bold tracking-tight text-slate-900">
-					The Inbox You've Been Dreading.
-				</h2>
+				<h2 class="text-3xl font-bold tracking-tight text-slate-900">Free Portal Simulator.</h2>
 				<p class="text-lg text-slate-500">
-					Experience the heart-pounding moment of status updates without the life-altering
-					consequences.
+					Experience the heart-pounding moment of status updates <span
+						class="font-bold text-[#0052CC]">entirely for free</span
+					>. No signup required to try.
 				</p>
 			</div>
 
@@ -768,276 +777,380 @@
 	<!-- FEATURE BENTO GRID -->
 	<section class="py-24 bg-white">
 		<div class="max-w-[1200px] mx-auto px-6">
-			<!-- PRO HEADER -->
-			<div class="text-center mb-16 space-y-4">
-				<span
-					class="inline-block px-4 py-1.5 bg-blue-50 text-[#0052CC] text-xs font-bold uppercase rounded-full tracking-wide"
-				>
-					PredictAdmit Pro
-				</span>
-				<h2 class="text-3xl md:text-5xl font-black text-slate-900 tracking-tight">
-					The Unfair Advantage.
-				</h2>
-				<p class="text-lg text-slate-500 max-w-2xl mx-auto">
-					Unlock the same tools used by professional admissions consultants.
-				</p>
-			</div>
-
-			<!-- 3x2 Grid -->
-			<div class="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[300px]">
-				<!-- Large Card 1 -->
+			<!-- PREDICTADMIT PRO FEATURE GRID -->
+			<section class="py-32 bg-slate-50 relative overflow-hidden">
+				<!-- Background Accents -->
 				<div
-					class="md:col-span-2 bg-[#F9FCFF] rounded-2xl border border-slate-100 p-8 relative overflow-hidden group hover:border-[#0052CC]/20 transition-all"
-				>
-					<div class="relative z-10 space-y-4">
-						<span
-							class="inline-block px-3 py-1 bg-blue-100 text-[#0052CC] text-[10px] font-bold uppercase rounded-md"
-							>Pro Tool</span
-						>
-						<h3 class="text-2xl font-bold text-slate-900">Pro Editor & IDE.</h3>
-						<p class="text-slate-500 max-w-md">
-							Write, edit, and perfect your essays in our distraction-free IDE. Get instant AI
-							feedback on structure and tone.
-						</p>
-						<div class="pt-4">
-							<a
-								href="/pro"
-								class="text-sm font-bold text-[#0052CC] flex items-center gap-2 group-hover:gap-3 transition-all"
-								>Open IDE <span class="text-lg">&rarr;</span></a
-							>
-						</div>
-					</div>
-					<!-- IDE Visual -->
-					<div
-						class="absolute right-0 bottom-0 w-80 h-64 bg-[#0F172A] rounded-tl-xl p-5 shadow-2xl translate-x-12 translate-y-12 group-hover:translate-x-10 group-hover:translate-y-10 transition-transform border border-slate-700/50"
-					>
-						<div class="flex gap-1.5 mb-4 opacity-50">
-							<div class="w-2.5 h-2.5 rounded-full bg-red-400"></div>
-							<div class="w-2.5 h-2.5 rounded-full bg-amber-400"></div>
-							<div class="w-2.5 h-2.5 rounded-full bg-green-400"></div>
-						</div>
-						<div class="space-y-3">
-							<div class="flex gap-2">
-								<div class="w-8 h-3 bg-purple-400/20 rounded-sm"></div>
-								<div class="w-20 h-3 bg-blue-400/20 rounded-sm"></div>
-							</div>
-							<div class="space-y-1.5 opacity-60">
-								<div class="h-2 w-full bg-slate-400/20 rounded-sm"></div>
-								<div class="h-2 w-3/4 bg-slate-400/20 rounded-sm"></div>
-								<div class="h-2 w-5/6 bg-slate-400/20 rounded-sm"></div>
-							</div>
-							<div class="p-3 bg-blue-500/10 border-l-2 border-blue-500 rounded-r mt-4">
-								<div class="h-2 w-32 bg-blue-400/40 rounded-sm"></div>
-							</div>
-						</div>
-					</div>
-				</div>
+					class="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-blue-100/30 rounded-full blur-3xl -z-10"
+				></div>
 
-				<!-- Small Card 2 -->
-				<div
-					class="bg-white rounded-2xl border border-slate-100 p-8 shadow-lg shadow-slate-100/50 flex flex-col justify-between hover:shadow-xl transition-all"
-				>
-					<div
-						class="w-10 h-10 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-600 mb-4"
-					>
-						<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-							><path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-							/></svg
-						>
-					</div>
-					<div>
-						<h3 class="text-lg font-bold text-slate-900 mb-2">Instant Results</h3>
-						<p class="text-xs text-slate-500 leading-relaxed">
-							No 3-month wait times. Get decisions in seconds.
+				<div class="max-w-[1200px] mx-auto px-6">
+					<div class="text-center mb-20 space-y-4">
+						<h2 class="text-4xl md:text-5xl font-black tracking-tight text-slate-900">
+							The Ultimate Admissions Toolkit.
+						</h2>
+						<p class="text-lg text-slate-500 max-w-2xl mx-auto">
+							Master your story with the same tools used by the pros. Build your application with
+							confidence.
 						</p>
 					</div>
-				</div>
 
-				<!-- Small Card 3 -->
-				<div
-					class="bg-white rounded-2xl border border-slate-100 p-8 shadow-lg shadow-slate-100/50 flex flex-col justify-between hover:shadow-xl transition-all"
-				>
-					<div
-						class="w-10 h-10 rounded-lg bg-purple-50 flex items-center justify-center text-purple-600 mb-4"
-					>
-						<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-							><path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"
-							/></svg
+					<!-- BENTO GRID -->
+					<div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+						<!-- CARD 1: IDE (Double width) -->
+						<div
+							class="md:col-span-2 md:row-span-2 bg-slate-900 rounded-3xl p-8 relative overflow-hidden group hover:shadow-2xl hover:shadow-blue-500/20 transition-all duration-500 border border-slate-800"
 						>
-					</div>
-					<div>
-						<h3 class="text-lg font-bold text-slate-900 mb-2">Deep Dive</h3>
-						<p class="text-xs text-slate-500 leading-relaxed">
-							Understand the "Why". Full granular breakdown of your application.
-						</p>
-					</div>
-				</div>
+							<div class="relative z-10 h-full flex flex-col">
+								<div class="mb-auto">
+									<span
+										class="inline-block px-3 py-1 bg-blue-500/10 text-blue-400 border border-blue-500/20 text-[10px] font-bold uppercase rounded-md mb-4"
+										>Pro Tool</span
+									>
+									<h3 class="text-3xl font-bold text-white mb-2">Essay Superstation.</h3>
+									<p class="text-slate-400 text-sm leading-relaxed max-w-sm">
+										Write, edit, and perfect your essays in our distraction-free IDE. Get instant AI
+										feedback on structure and tone without leaving the page.
+									</p>
+								</div>
 
-				<!-- Large Card 4 -->
-				<div
-					class="md:col-span-2 bg-[#F9FCFF] rounded-2xl border border-slate-100 p-8 relative overflow-hidden group hover:border-[#0052CC]/20 transition-all"
-				>
-					<div class="relative z-10 space-y-4">
-						<span
-							class="inline-block px-3 py-1 bg-amber-100 text-amber-700 text-[10px] font-bold uppercase rounded-md"
-							>Unlimited Drafts</span
-						>
-						<h3 class="text-2xl font-bold text-slate-900">Iterate to Perfection.</h3>
-						<p class="text-slate-500 max-w-md">
-							Run as many simulations as you need. Tweak your essay, change your major, and see how
-							the probabilities shift.
-						</p>
-						<div class="pt-4">
-							<a
-								href="/pro"
-								class="text-sm font-bold text-[#0052CC] flex items-center gap-2 group-hover:gap-3 transition-all"
-								>Unlock Pro <span class="text-lg">&rarr;</span></a
-							>
-						</div>
-					</div>
-					<div
-						class="absolute right-0 top-0 w-32 h-32 bg-amber-100/50 rounded-bl-full translate-x-8 -translate-y-8 group-hover:translate-x-6 group-hover:-translate-y-6 transition-transform"
-					></div>
-				</div>
-			</div>
-		</div>
-	</section>
-
-	<!-- START SIMULATION (APP ENTRY) -->
-	<section id="simulation-start" class="py-24 bg-white border-t border-slate-100">
-		<div class="max-w-[800px] mx-auto px-6 text-center space-y-8">
-			<div class="space-y-4">
-				<h2 class="text-3xl font-bold text-slate-900">Ready to see your future?</h2>
-				<p class="text-slate-500">
-					Create a temporary profile to begin the simulation. Your data is not stored permanently
-					unless you upgrade.
-				</p>
-			</div>
-
-			<div
-				class="bg-white p-8 rounded-2xl shadow-xl border border-slate-200 text-left max-w-md mx-auto"
-			>
-				{#if showAccountForm}
-					<form on:submit={handleSubmit} class="space-y-5">
-						<div class="space-y-4">
-							<div>
-								<label for="name" class="block text-xs font-bold uppercase text-slate-500 mb-1"
-									>Applicant Name</label
+								<!-- Mock IDE UI -->
+								<div
+									class="mt-8 bg-slate-800 rounded-t-xl border border-slate-700 p-4 font-mono text-xs text-slate-300 shadow-2xl translate-y-4 group-hover:translate-y-2 transition-transform duration-500"
 								>
-								<div class="flex gap-2">
-									<input
-										id="name"
-										type="text"
-										bind:value={name}
-										placeholder="e.g. Jordan Lee"
-										class="flex-1 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+									<div class="flex items-center gap-2 mb-3 border-b border-slate-700 pb-2">
+										<div class="w-2 h-2 rounded-full bg-red-400"></div>
+										<div class="w-2 h-2 rounded-full bg-amber-400"></div>
+										<div class="w-2 h-2 rounded-full bg-emerald-400"></div>
+										<span class="ml-2 text-slate-500">harvard_supp.md</span>
+									</div>
+									<div class="space-y-1">
+										<p>
+											<span class="text-purple-400">const</span> story =
+											<span class="text-green-400">"My unique journey..."</span>;
+										</p>
+										<p>
+											<span class="text-blue-400">analyze</span>(story).<span
+												class="text-yellow-400">then</span
+											>(feedback =&gt; {'{'}
+										</p>
+										<p class="pl-4 text-slate-500">// AI feedback appears here</p>
+										<p class="pl-4">improve_clarity();</p>
+										<p>{'}'});</p>
+									</div>
+								</div>
+
+								<div class="mt-6">
+									<a
+										href="/pro"
+										class="inline-flex items-center gap-2 text-white font-bold text-sm bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-lg transition-colors"
+									>
+										Open Editor <span class="text-lg">&rarr;</span>
+									</a>
+								</div>
+							</div>
+						</div>
+
+						<!-- CARD 2: GRADER -->
+						<div
+							class="bg-white rounded-3xl border border-slate-100 p-6 shadow-xl shadow-slate-100/50 flex flex-col justify-between hover:border-slate-200 transition-all group"
+						>
+							<div
+								class="w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 mb-6 group-hover:scale-110 transition-transform duration-300"
+							>
+								<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										stroke-width="2"
+										d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
 									/>
-									<button
-										type="button"
-										on:click={generateFakeCredentials}
-										class="text-xs font-bold text-[#0052CC] hover:underline px-2">Auto-fill</button
+								</svg>
+							</div>
+							<div>
+								<h3 class="text-xl font-bold text-slate-900 mb-2">AI Scorecard.</h3>
+								<p class="text-xs text-slate-500 leading-relaxed mb-4">
+									Know exactly where you stand. Ivy-trained AI grades your essays on 5 key
+									institutional metrics.
+								</p>
+								<div class="flex items-center gap-2">
+									<div class="h-1.5 flex-1 bg-slate-100 rounded-full overflow-hidden">
+										<div class="h-full bg-emerald-500 w-[85%]"></div>
+									</div>
+									<span class="text-xs font-bold text-slate-900">8.5/10</span>
+								</div>
+							</div>
+						</div>
+
+						<!-- CARD 3: DEEP DIVE -->
+						<div
+							class="bg-white rounded-3xl border border-slate-100 p-6 shadow-xl shadow-slate-100/50 flex flex-col justify-between hover:border-slate-200 transition-all group"
+						>
+							<div
+								class="w-12 h-12 rounded-xl bg-purple-50 flex items-center justify-center text-purple-600 mb-6 group-hover:scale-110 transition-transform duration-300"
+							>
+								<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										stroke-width="2"
+										d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+									/>
+								</svg>
+							</div>
+							<div>
+								<h3 class="text-xl font-bold text-slate-900 mb-2">Application Analysis.</h3>
+								<p class="text-xs text-slate-500 leading-relaxed">
+									Understand the "Why". Get a full granular breakdown of your application's
+									strengths and weaknesses.
+								</p>
+							</div>
+						</div>
+
+						<!-- CARD 4: PLANNER (Longer horizontal) -->
+						<div
+							class="md:col-span-2 bg-[#F0F7FF] rounded-3xl border border-blue-100 p-8 relative overflow-hidden group hover:border-blue-200 transition-all"
+						>
+							<div class="relative z-10 flex flex-col h-full justify-between">
+								<div>
+									<span
+										class="inline-block px-3 py-1 bg-white text-blue-600 border border-blue-100 text-[10px] font-bold uppercase rounded-md mb-4 shadow-sm"
+										>Pro Tool</span
+									>
+									<h3 class="text-2xl font-bold text-slate-900 mb-2">Strategy Map.</h3>
+									<p class="text-slate-500 text-sm max-w-md">
+										Connect the dots. Organize your entire admissions strategy, track narratives,
+										and ensure you fit the specific institutional archetype for each school.
+									</p>
+								</div>
+								<div class="pt-6">
+									<a
+										href="/pro"
+										class="text-sm font-bold text-blue-600 flex items-center gap-2 group-hover:gap-3 transition-all"
+										>Start Planning <span class="text-lg">&rarr;</span></a
 									>
 								</div>
 							</div>
-							<div>
-								<label for="email" class="block text-xs font-bold uppercase text-slate-500 mb-1"
-									>Fake Email</label
-								>
-								<input
-									id="email"
-									type="email"
-									bind:value={email}
-									placeholder="jordan.lee@example.com"
-									class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-								/>
-							</div>
-							<div class="relative">
-								<label for="password" class="block text-xs font-bold uppercase text-slate-500 mb-1"
-									>Fake Password</label
-								>
-								<input
-									id="password"
-									type={showPassword ? 'text' : 'password'}
-									bind:value={password}
-									placeholder="••••••••"
-									class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-								/>
-							</div>
-						</div>
 
-						<div class="pt-2">
-							<button
-								type="submit"
-								on:click={handleApply}
-								class="w-full py-3 bg-[#0052CC] text-white font-bold rounded-xl hover:bg-blue-700 transition-colors shadow-lg shadow-blue-200"
+							<!-- Decorative "Map" elements -->
+							<div
+								class="absolute right-0 top-1/2 -translate-y-1/2 w-48 h-48 opacity-10 group-hover:opacity-20 transition-opacity"
 							>
-								Start Application Cycle
-							</button>
-							<p class="text-[10px] text-center text-slate-400 mt-3">
-								By clicking Start, you agree to our terms. This is a simulation.
-							</p>
+								<svg
+									viewBox="0 0 100 100"
+									fill="none"
+									stroke="currentColor"
+									class="text-blue-600 w-full h-full rotate-12"
+								>
+									<path stroke-width="0.5" d="M10 10 L40 40 L30 80 L80 20" />
+									<circle cx="10" cy="10" r="2" fill="currentColor" />
+									<circle cx="40" cy="40" r="2" fill="currentColor" />
+									<circle cx="30" cy="80" r="2" fill="currentColor" />
+									<circle cx="80" cy="20" r="2" fill="currentColor" />
+								</svg>
+							</div>
 						</div>
-					</form>
-				{:else}
-					<div class="text-center py-8 space-y-6">
-						<div
-							class="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto text-[#0052CC]"
-						>
-							<svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-								><path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									stroke-width="2"
-									d="M12 4v16m8-8H4"
-								/></svg
-							>
-						</div>
-						<p class="text-sm text-slate-600">
-							Initialize the simulator to begin your admissions journey.
-						</p>
-						<button
-							on:click={() => (showAccountForm = true)}
-							class="w-full py-3 bg-slate-900 text-white font-bold rounded-xl hover:bg-slate-800 transition-colors"
-						>
-							Initialize Simulator
-						</button>
 					</div>
-				{/if}
-			</div>
-		</div>
-	</section>
+				</div>
+			</section>
 
-	<!-- TESTIMONIAL (NAVY) -->
-	<section class="py-24 bg-[#001F3F] text-white">
-		<div class="max-w-[1200px] mx-auto px-6 text-center">
-			<div class="max-w-3xl mx-auto space-y-8">
-				<div class="flex justify-center text-[#0052CC]">
-					{#each Array(5) as _}
-						<svg class="w-6 h-6 fill-current" viewBox="0 0 20 20"
-							><path
-								d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-							/></svg
+			<!-- PRO COMPARISON TABLE -->
+			<section class="py-24 bg-slate-50 border-t border-slate-200">
+				<div class="max-w-[1000px] mx-auto px-6">
+					<div class="text-center mb-16">
+						<h2 class="text-3xl font-black text-slate-900 mb-4">Why Go Pro?</h2>
+						<p class="text-slate-500">The competition pays thousands. You pay less than a lunch.</p>
+					</div>
+
+					<div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-200">
+						<div
+							class="grid grid-cols-4 bg-slate-50 border-b border-slate-100 p-4 text-xs font-bold uppercase tracking-widest text-slate-500"
 						>
-					{/each}
+							<div class="col-span-2">Feature</div>
+							<div class="text-center text-[#0052CC]">PredictAdmit Pro</div>
+							<div class="text-center">Private Consultant</div>
+						</div>
+
+						<!-- Row 1 -->
+						<div
+							class="grid grid-cols-4 p-6 border-b border-slate-50 items-center hover:bg-slate-50/50 transition-colors"
+						>
+							<div class="col-span-2 font-bold text-slate-900">Unlimited Essay Grading</div>
+							<div class="text-center text-[#0052CC] font-bold text-lg">✓</div>
+							<div class="text-center text-slate-300 font-bold text-lg">✗</div>
+						</div>
+						<!-- Row 2 -->
+						<div
+							class="grid grid-cols-4 p-6 border-b border-slate-50 items-center hover:bg-slate-50/50 transition-colors"
+						>
+							<div class="col-span-2 font-bold text-slate-900">
+								Detailed AI "Deep Dive" Analysis
+							</div>
+							<div class="text-center text-[#0052CC] font-bold text-lg">✓</div>
+							<div class="text-center text-slate-900 font-medium">$250/hr</div>
+						</div>
+						<!-- Row 3 -->
+						<div
+							class="grid grid-cols-4 p-6 border-b border-slate-50 items-center hover:bg-slate-50/50 transition-colors"
+						>
+							<div class="col-span-2 font-bold text-slate-900">Application Strategy Map</div>
+							<div class="text-center text-[#0052CC] font-bold text-lg">✓</div>
+							<div class="text-center text-slate-900 font-medium">$5,000+</div>
+						</div>
+						<!-- Row 4 -->
+						<div
+							class="grid grid-cols-4 p-6 border-b border-slate-50 items-center hover:bg-slate-50/50 transition-colors"
+						>
+							<div class="col-span-2 font-bold text-slate-900">Research Opportunities Hub</div>
+							<div class="text-center text-[#0052CC] font-bold text-lg">✓</div>
+							<div class="text-center text-slate-300 font-bold text-lg">✗</div>
+						</div>
+						<!-- Price Row -->
+						<div class="grid grid-cols-4 p-6 bg-[#F0F7FF] items-center">
+							<div class="col-span-2 font-bold text-slate-900 text-lg">Monthly Cost</div>
+							<div class="text-center text-[#0052CC] font-black text-2xl">$5</div>
+							<div
+								class="text-center text-slate-500 font-medium strike-through decoration-slate-400"
+							>
+								$2,000+
+							</div>
+						</div>
+					</div>
 				</div>
-				<blockquote class="text-2xl md:text-4xl font-serif leading-relaxed opacity-90">
-					"ts was lowkenuinely accurate"
-				</blockquote>
-				<div class="pt-4">
-					<div class="font-bold">Miao S.</div>
-					<div class="text-sm text-slate-400">Accepted to Northwestern '30</div>
+			</section>
+
+			<!-- START SIMULATION (APP ENTRY) -->
+			<section id="simulation-start" class="py-24 bg-white border-t border-slate-100">
+				<div class="max-w-[800px] mx-auto px-6 text-center space-y-8">
+					<div class="space-y-4">
+						<h2 class="text-3xl font-bold text-slate-900">Ready to see your future?</h2>
+						<p class="text-slate-500">
+							Create a temporary profile to begin the simulation. Your data is not stored
+							permanently unless you upgrade.
+						</p>
+					</div>
+
+					<div
+						class="bg-white p-8 rounded-2xl shadow-xl border border-slate-200 text-left max-w-md mx-auto"
+					>
+						{#if showAccountForm}
+							<form on:submit={handleSubmit} class="space-y-5">
+								<div class="space-y-4">
+									<div>
+										<label for="name" class="block text-xs font-bold uppercase text-slate-500 mb-1"
+											>Applicant Name</label
+										>
+										<div class="flex gap-2">
+											<input
+												id="name"
+												type="text"
+												bind:value={name}
+												placeholder="e.g. Jordan Lee"
+												class="flex-1 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+											/>
+											<button
+												type="button"
+												on:click={generateFakeCredentials}
+												class="text-xs font-bold text-[#0052CC] hover:underline px-2"
+												>Auto-fill</button
+											>
+										</div>
+									</div>
+									<div>
+										<label for="email" class="block text-xs font-bold uppercase text-slate-500 mb-1"
+											>Fake Email</label
+										>
+										<input
+											id="email"
+											type="email"
+											bind:value={email}
+											placeholder="jordan.lee@example.com"
+											class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+										/>
+									</div>
+									<div class="relative">
+										<label
+											for="password"
+											class="block text-xs font-bold uppercase text-slate-500 mb-1"
+											>Fake Password</label
+										>
+										<input
+											id="password"
+											type={showPassword ? 'text' : 'password'}
+											bind:value={password}
+											placeholder="••••••••"
+											class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+										/>
+									</div>
+								</div>
+
+								<div class="pt-2">
+									<button
+										type="submit"
+										on:click={handleApply}
+										class="w-full py-3 bg-[#0052CC] text-white font-bold rounded-xl hover:bg-blue-700 transition-colors shadow-lg shadow-blue-200"
+									>
+										Start Application Cycle
+									</button>
+									<p class="text-[10px] text-center text-slate-400 mt-3">
+										By clicking Start, you agree to our terms. This is a simulation.
+									</p>
+								</div>
+							</form>
+						{:else}
+							<div class="text-center py-8 space-y-6">
+								<div
+									class="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto text-[#0052CC]"
+								>
+									<svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+										><path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											d="M12 4v16m8-8H4"
+										/></svg
+									>
+								</div>
+								<p class="text-sm text-slate-600">
+									The Simulator is always free. We fund it through our Pro tools.
+								</p>
+								<button
+									on:click={() => (showAccountForm = true)}
+									class="w-full py-3 bg-slate-900 text-white font-bold rounded-xl hover:bg-slate-800 transition-colors"
+								>
+									Start Free Simulation
+								</button>
+							</div>
+						{/if}
+					</div>
 				</div>
-			</div>
+			</section>
+
+			<!-- TESTIMONIAL (NAVY) -->
+			<section class="py-24 bg-[#001F3F] text-white">
+				<div class="max-w-[1200px] mx-auto px-6 text-center">
+					<div class="max-w-3xl mx-auto space-y-8">
+						<div class="flex justify-center text-[#0052CC]">
+							{#each Array(5) as _}
+								<svg class="w-6 h-6 fill-current" viewBox="0 0 20 20"
+									><path
+										d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+									/></svg
+								>
+							{/each}
+						</div>
+						<blockquote class="text-2xl md:text-4xl font-serif leading-relaxed opacity-90">
+							"ts was lowkenuinely accurate"
+						</blockquote>
+						<div class="pt-4">
+							<div class="font-bold">Miao S.</div>
+							<div class="text-sm text-slate-400">Accepted to Northwestern '30</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<SiteFooter />
 		</div>
 	</section>
-
-	<SiteFooter />
 </main>

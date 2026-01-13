@@ -298,6 +298,30 @@
 		profile.activities = profile.activities.filter((a) => a.id !== id);
 	}
 
+	// Activities Import Logic
+	let showImportModal = $state(false);
+	let importText = $state('');
+
+	function parseAndImportActivities() {
+		if (!importText.trim()) return;
+
+		const lines = importText.split('\n').filter((l) => l.trim().length > 0);
+		// Simple heuristic: Title - Role - Hours (or just Title)
+		const newActivities = lines.map((line) => {
+			const parts = line.split(/[-|–]/); // Split by common separators
+			return {
+				id: Math.random().toString(36).substring(2, 9),
+				name: parts[0]?.trim() || 'Activity',
+				role: parts[1]?.trim() || 'Member',
+				hoursPerWeek: parts[2]?.trim() || '2' // Default assumption
+			};
+		});
+
+		profile.activities = [...profile.activities, ...newActivities];
+		importText = '';
+		showImportModal = false;
+	}
+
 	let majorSuggestions = $derived(
 		profile.major.length > 0
 			? majors
@@ -311,45 +335,42 @@
 
 	// --- METRICS CALCULATION ---
 
-	// Academic Index (AI) - Max 240
+	// Academic Index (AI) - Improved Formula
 	let academicIndex = $derived.by(() => {
 		// Parse Inputs
 		const gpaUw = parseFloat(profile.gpa_uw) || 0;
-		const gpaW = parseFloat(profile.gpa_w) || gpaUw; // Fallback to UW if no W
+		const gpaW = parseFloat(profile.gpa_w) || gpaUw;
 		const test = parseFloat(profile.testScore) || 0;
 
-		// Use Average GPA for the component
-		const avgGpa = (gpaUw + gpaW) / 2;
-
-		// 1. Test Score Component (Max 160)
-		// Normalized to 1600 scale (Assuming SAT). If ACT (max 36), convert roughly.
-		// Simple logic: if < 37, assume ACT and multiply by ~44.44
+		// 1. Test Score Component (Max 80)
+		// Normalized to 80 points (AI standard usually scales CR+M / 20)
+		// 1600 SAT -> 80 pts. 36 ACT -> 80 pts.
 		let normalizedTest = test;
-		if (test > 0 && test < 37) normalizedTest = test * 44.44; // 36 * 44.44 = 1600
-
-		const testComponent = Math.min(160, (normalizedTest / 1600) * 160);
+		if (test > 0 && test < 37) {
+			// ACT Mapping
+			// 36->1600, 35->1560, 34->1520 approx
+			normalizedTest = test * 44.44;
+		}
+		const testComponent = Math.min(80, (normalizedTest / 1600) * 80);
 
 		// 2. GPA Component (Max 80)
-		// We use a baseline of 4.0 scale but allow for boost from weighted.
-		// Formula: (AvgGPA / 4.0) * 80. Cap at 80? User wants weighted to affect it.
-		// Let's allow effective GPA to go up to ~4.5ish scaling for the calc but cap the component sum?
-		// Actually, standard AI caps GPA points. But let's just use the raw calc up to 80.
-		const gpaComponent = Math.min(80, (avgGpa / 4.0) * 80);
+		// AI uses "Converted Rank Score" often, but we proxy with GPA.
+		// Base off Weighted if available, but cap boost to prevent grade inflation skew.
+		const effectiveGpa = gpaW > 0 ? Math.min(5.0, gpaW) : Math.min(4.0, gpaUw);
+
+		// 4.0 UW is typically ~75-80 depending on school profile.
+		// Let's say 4.0 = 75 pts base. +5 for Rigor.
+		let gpaScore = (effectiveGpa / 4.0) * 75;
+
+		// Rigor Bonus
+		if (profile.rigor === 'AP/IB') gpaScore += 5;
+		else if (profile.rigor === 'Honors') gpaScore += 2;
+
+		const gpaComponent = Math.min(80, gpaScore); // Cap at 80
 
 		let total = testComponent + gpaComponent;
 
-		// PENALTY: Weighted Penalty for Low GPA (< 3.7)
-		// Top tier schools are very sensitive to UW GPA.
-		if (gpaUw > 0 && gpaUw < 3.7) {
-			const gap = 3.7 - gpaUw;
-			// Penalty factor: 20 points per 0.1 gap?
-			// e.g. 3.5 = 0.2 gap * 50 = 10 points off?
-			// Let's make it significant.
-			const penalty = gap * 60;
-			total -= penalty;
-		}
-
-		return Math.max(0, Math.round(total));
+		return Math.max(0, Math.round(total * 1.5)); // Scale to typical 240 index (80+80=160 -> *1.5 = 240)
 	});
 
 	// Holistic Scores (Heuristics)
@@ -376,6 +397,22 @@
 	// Add School State
 	let addedSchoolSlugs = $state<string[]>(Object.keys(schoolConfigs)); // Default ALL schools
 	let selectedSchoolForDeepDive = $state<string | null>(null);
+	let schoolStrategies = $state<Record<string, string>>({});
+
+	// Load Strategies
+	onMount(() => {
+		const savedStrategies = localStorage.getItem('predictadmit_strategies');
+		if (savedStrategies) {
+			try {
+				schoolStrategies = JSON.parse(savedStrategies);
+			} catch (e) {}
+		}
+	});
+
+	// Save Strategies
+	$effect(() => {
+		localStorage.setItem('predictadmit_strategies', JSON.stringify(schoolStrategies));
+	});
 
 	// Analysis/Terminal State
 	let isBuilding = $state(false);
@@ -605,6 +642,16 @@
 		analysisResult = null; // Clear analysis on switch
 		showTerminal = false;
 		currentView = 'editor';
+	}
+
+	function downloadFile() {
+		const element = document.createElement('a');
+		const file = new Blob([activeFile.content], { type: 'text/markdown' });
+		element.href = URL.createObjectURL(file);
+		element.download = activeFile.name.endsWith('.md') ? activeFile.name : activeFile.name + '.md';
+		document.body.appendChild(element);
+		element.click();
+		document.body.removeChild(element);
 	}
 
 	function addNewSupplemental() {
@@ -896,6 +943,39 @@
 						{/if}
 					</button>
 				{/each}
+
+				<!-- Import Modal -->
+				{#if showImportModal}
+					<div class="fixed inset-0 z-[200] flex items-center justify-center p-4">
+						<div
+							class="absolute inset-0 bg-black/40 backdrop-blur-sm"
+							onclick={() => (showImportModal = false)}
+						></div>
+						<div class="bg-white rounded-xl shadow-2xl w-full max-w-lg relative z-10 p-6 space-y-4">
+							<h3 class="text-lg font-bold">Import Activities</h3>
+							<p class="text-sm text-slate-500">
+								Paste your resume activities here. One activity per line. <br />Format:
+								<code class="bg-slate-100 px-1 rounded">Name - Role - Hours</code>
+							</p>
+							<textarea
+								bind:value={importText}
+								class="w-full h-40 border border-slate-200 rounded-lg p-3 text-sm focus:ring-2 focus:ring-[#0052CC] outline-none"
+								placeholder="Debate Club - Captain - 5&#10;Varsity Soccer - Starter - 10"
+							></textarea>
+							<div class="flex justify-end gap-2">
+								<button
+									onclick={() => (showImportModal = false)}
+									class="px-4 py-2 text-slate-500 font-bold text-sm">Cancel</button
+								>
+								<button
+									onclick={parseAndImportActivities}
+									class="px-4 py-2 bg-[#0052CC] text-white font-bold rounded-lg text-sm"
+									>Import</button
+								>
+							</div>
+						</div>
+					</div>
+				{/if}
 			</div>
 
 			<!-- User Menu -->
@@ -1178,20 +1258,28 @@
 								<h3 class="text-sm font-bold text-slate-900 uppercase tracking-widest">
 									Activities & Honors
 								</h3>
-								<button
-									onclick={addActivity}
-									class="text-xs font-bold text-[#0052CC] hover:text-blue-700 flex items-center gap-1"
-								>
-									<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-										><path
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											stroke-width="2"
-											d="M12 4v16m8-8H4"
-										/></svg
+								<div class="flex gap-2">
+									<button
+										onclick={() => (showImportModal = true)}
+										class="text-xs font-bold text-slate-500 hover:text-slate-900 transition-colors"
 									>
-									Add Activity
-								</button>
+										Import
+									</button>
+									<button
+										onclick={addActivity}
+										class="text-xs font-bold text-[#0052CC] hover:text-blue-700 flex items-center gap-1"
+									>
+										<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+											><path
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												stroke-width="2"
+												d="M12 4v16m8-8H4"
+											/></svg
+										>
+										Add Activity
+									</button>
+								</div>
 							</div>
 
 							{#if profile.activities.length === 0}
@@ -1483,9 +1571,11 @@
 					<div class="max-w-6xl mx-auto space-y-8">
 						<div class="flex items-end justify-between">
 							<div>
-								<h2 class="text-3xl font-black text-slate-900 tracking-tight">Top Universities</h2>
+								<h2 class="text-3xl font-black text-slate-900 tracking-tight">
+									University Strategy
+								</h2>
 								<div class="text-sm text-slate-500 font-medium mt-1">
-									Explore and analyze your fit for the Top 20 schools.
+									Craft your narrative and track your progress for top schools.
 								</div>
 							</div>
 						</div>
@@ -1494,35 +1584,35 @@
 							{#each Object.values(schoolConfigs) as config}
 								{@const odds = calculateAdmissionsOdds(config.slug)}
 								<div
-									class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all group relative overflow-hidden"
+									class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-lg transition-all group relative flex flex-col h-full"
 								>
 									<!-- Header -->
-									<div class="flex items-start justify-between mb-4 relative z-10">
+									<div class="flex items-start justify-between mb-4">
 										<div
 											class="w-12 h-12 rounded-xl flex items-center justify-center text-xl font-bold bg-slate-50 text-slate-700 border border-slate-100 shadow-sm"
 										>
 											{config.schoolName[0]}
 										</div>
 										<div class="flex flex-col items-end">
+											<span class="text-xs font-bold text-slate-400 uppercase tracking-widest"
+												>Chance</span
+											>
 											<span
-												class="text-[10px] font-bold uppercase tracking-wider {odds < 15
+												class="text-xl font-black {odds < 15
 													? 'text-rose-500'
 													: odds < 40
 														? 'text-amber-500'
 														: 'text-emerald-500'}"
 											>
-												{odds < 15 ? 'Reach' : odds < 40 ? 'Target' : 'Likely'}
+												{odds}%
 											</span>
-											<span class="text-2xl font-black text-slate-900">{odds}%</span>
 										</div>
 									</div>
 
 									<!-- Content -->
-									<div class="space-y-4 relative z-10">
+									<div class="space-y-4 flex-1 flex flex-col">
 										<div>
-											<h3
-												class="font-bold text-slate-900 text-lg leading-tight group-hover:text-[#0052CC] transition-colors"
-											>
+											<h3 class="font-bold text-slate-900 text-lg leading-tight">
 												{config.schoolName}
 											</h3>
 											<p class="text-xs text-slate-400 mt-1 font-medium">
@@ -1530,42 +1620,19 @@
 											</p>
 										</div>
 
-										<!-- Progress Bar -->
-										<div class="space-y-1.5">
-											<div
-												class="flex justify-between text-[10px] font-bold text-slate-400 uppercase tracking-wide"
-											>
-												<span>Match Strength</span>
-												<span>{odds}/100</span>
-											</div>
-											<div class="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
-												<div
-													class="h-full rounded-full transition-all duration-1000 ease-out {getBarColor(
-														odds
-													)}"
-													style="width: {odds}%"
-												></div>
-											</div>
-										</div>
-
-										<button
-											onclick={() => (selectedSchoolForDeepDive = config.slug)}
-											class="w-full py-2.5 rounded-lg border border-slate-200 text-sm font-bold text-slate-600 hover:bg-slate-50 hover:text-slate-900 hover:border-slate-300 transition-all flex items-center justify-center gap-2 mt-2"
+										<!-- Strategy Input -->
+										<div
+											class="flex-1 bg-slate-50 rounded-xl p-3 border border-slate-100 focus-within:border-blue-200 focus-within:ring-2 focus-within:ring-blue-50 transition-all"
 										>
-											Deep Dive Analysis
-											<svg
-												class="w-4 h-4 opacity-70"
-												fill="none"
-												viewBox="0 0 24 24"
-												stroke="currentColor"
-												><path
-													stroke-linecap="round"
-													stroke-linejoin="round"
-													stroke-width="2"
-													d="M14 5l7 7m0 0l-7 7m7-7H3"
-												/></svg
+											<label class="block text-[10px] font-bold text-slate-400 uppercase mb-2"
+												>My Application Strategy</label
 											>
-										</button>
+											<textarea
+												bind:value={schoolStrategies[config.slug]}
+												placeholder="e.g. Focus on cultural identity essay..."
+												class="w-full bg-transparent border-none text-sm font-medium text-slate-700 placeholder:text-slate-300 resize-none focus:ring-0 p-0 h-24"
+											></textarea>
+										</div>
 									</div>
 								</div>
 							{/each}
@@ -1749,6 +1816,20 @@
 						<span class="text-xs font-medium text-slate-400">
 							{activeFile.content.length} chars
 						</span>
+						<button
+							class="p-1 hover:bg-slate-100 rounded-md transition-colors text-slate-400 hover:text-slate-600"
+							title="Download Essay"
+							onclick={downloadFile}
+						>
+							<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+								/>
+							</svg>
+						</button>
 					</div>
 				</div>
 
@@ -1905,7 +1986,7 @@
 							</div>
 
 							<div class="flex-1 overflow-y-auto p-6 bg-white custom-scrollbar pb-20">
-								{#if activeTab === 'terminal' && isBuilding}
+								{#if activeTab === 'terminal'}
 									<div class="space-y-8 py-10">
 										<!-- Progress Circle -->
 										<div class="relative h-32 w-32 mx-auto">
@@ -1942,9 +2023,13 @@
 											<p class="text-xs font-mono text-slate-400">{estimatedTime}</p>
 										</div>
 
-										<div class="space-y-1 pl-4 border-l-2 border-slate-100 opacity-60">
-											{#each buildOutput.slice(-3) as line}
-												<div class="text-[10px] text-slate-400 font-mono truncate">{line}</div>
+										<div
+											class="space-y-1 pl-4 border-l-2 border-indigo-500/30 opacity-80 bg-slate-900 rounded-r-lg p-2 font-mono text-[10px] text-green-400 shadow-inner"
+										>
+											{#each buildOutput.slice(-4) as line}
+												<div class="truncate">
+													<span class="text-blue-400 mr-2">➜</span>{line}
+												</div>
 											{/each}
 										</div>
 									</div>
@@ -2005,14 +2090,6 @@
 															Critique
 														</h3>
 														{#each essay.annotations as note, i}
-															<!-- Use a composite ID or offset index if we want strict uniqueness in scroll, 
-																 but for now simplistic index is okay as long as we handle highlight click correctly. 
-																 Actually, we need unique IDs for global scrolling. 
-																 Let's just use a global index strategy in the backend or flatmap, 
-																 but simpler is just local index for list display. 
-																 BUT the editor highlights use data-idx. 
-																 We need to know the GLOBAL index of this annotation in the flat list.
-																 Let's just calculate it. -->
 															{@const globalIndex =
 																analysisResult.essays
 																	.slice(0, essayIndex)
