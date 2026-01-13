@@ -814,29 +814,49 @@
 									</p>
 								</div>
 
-								<!-- Mock IDE UI -->
+								<!-- Mock Word Editor UI -->
 								<div
-									class="mt-8 bg-slate-800 rounded-t-xl border border-slate-700 p-4 font-mono text-xs text-slate-300 shadow-2xl translate-y-4 group-hover:translate-y-2 transition-transform duration-500"
+									class="mt-8 bg-white rounded-t-xl border border-slate-700 p-0 font-sans text-xs text-slate-800 shadow-2xl translate-y-4 group-hover:translate-y-2 transition-transform duration-500 overflow-hidden"
 								>
-									<div class="flex items-center gap-2 mb-3 border-b border-slate-700 pb-2">
-										<div class="w-2 h-2 rounded-full bg-red-400"></div>
-										<div class="w-2 h-2 rounded-full bg-amber-400"></div>
-										<div class="w-2 h-2 rounded-full bg-emerald-400"></div>
-										<span class="ml-2 text-slate-500">harvard_supp.md</span>
+									<!-- Toolbar -->
+									<div
+										class="bg-slate-100 border-b border-slate-200 px-4 py-2 flex items-center gap-3"
+									>
+										<div class="flex gap-1">
+											<div class="w-3 h-3 rounded-full bg-red-400"></div>
+											<div class="w-3 h-3 rounded-full bg-amber-400"></div>
+											<div class="w-3 h-3 rounded-full bg-emerald-400"></div>
+										</div>
+										<div class="h-4 w-[1px] bg-slate-300 mx-2"></div>
+										<div class="flex gap-2 opacity-50">
+											<div class="w-4 h-4 bg-slate-400 rounded-sm"></div>
+											<div class="w-4 h-4 bg-slate-400 rounded-sm"></div>
+											<div class="w-4 h-4 bg-slate-400 rounded-sm"></div>
+										</div>
+										<span class="ml-auto text-slate-500 font-medium">Harvard_Supplement.docx</span>
 									</div>
-									<div class="space-y-1">
-										<p>
-											<span class="text-purple-400">const</span> story =
-											<span class="text-green-400">"My unique journey..."</span>;
+									<!-- Editor Content -->
+									<div class="p-6 bg-white min-h-[120px]">
+										<h4 class="font-bold text-lg text-slate-900 mb-2">My Intellectual Journey</h4>
+										<p class="text-slate-600 leading-relaxed">
+											The moment I first encountered <span
+												class="bg-yellow-100 px-1 rounded border-b-2 border-yellow-300"
+												>recursive algorithms</span
+											>, I realized that computer science was more than just code—it was a way of
+											thinking.
 										</p>
-										<p>
-											<span class="text-blue-400">analyze</span>(story).<span
-												class="text-yellow-400">then</span
-											>(feedback =&gt; {'{'}
-										</p>
-										<p class="pl-4 text-slate-500">// AI feedback appears here</p>
-										<p class="pl-4">improve_clarity();</p>
-										<p>{'}'});</p>
+										<div
+											class="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-100 flex gap-3 items-start"
+										>
+											<div class="mt-1 w-2 h-2 rounded-full bg-blue-500 flex-shrink-0"></div>
+											<div>
+												<p class="text-blue-800 font-bold text-[10px] uppercase">AI Critique</p>
+												<p class="text-blue-700 text-[10px]">
+													Great opening hook. Consider adding a sensory detail here to ground the
+													abstract concept.
+												</p>
+											</div>
+										</div>
 									</div>
 								</div>
 

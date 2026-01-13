@@ -37,6 +37,10 @@ interface AIProviderResponse {
 export const POST: RequestHandler = async ({ request }) => {
     const { major, selectedSchool, essayType, content, profile } = await request.json();
 
+    if (!env.CLAUDE_API_KEY) {
+        return json({ error: 'Server Config Error: Missing CLAUDE_API_KEY' }, { status: 500 });
+    }
+
     const profileContext = profile
         ? `\nAPPLICANT STATS:\nGPA: ${profile.gpa}\nTest Scores: ${profile.testScore}\nExtracurriculars: ${profile.ecs}\n`
         : '';
