@@ -37,66 +37,76 @@ interface AIProviderResponse {
 export const POST: RequestHandler = async ({ request }) => {
     const { major, selectedSchool, essayType, content, profile } = await request.json();
 
-    // Define specific categories based on instructions
-    const categories = essayType === 'personal'
-        ? "selfReflection, personality/Character, writingQuality, growth, institutionalAlignment"
-        : "personalityCharacter, majorFit, schoolFit, potentialContribution, promptAlignment";
-
     const profileContext = profile
         ? `\nAPPLICANT STATS:\nGPA: ${profile.gpa}\nTest Scores: ${profile.testScore}\nExtracurriculars: ${profile.ecs}\n`
         : '';
 
     const systemPrompt = `You are a brutally honest, realistic, and elite Admissions Officer at ${selectedSchool}. 
-    Review the following ${essayType} essay(s) for a ${major} applicant. 
-    Be forthright and harsh. Do not manufacture problems, but reject fluff.
+    Review the following ${essayType} essay(s) for a ${major} applicant.
+    
+    YOUR MAIN TASK: Identify parts of the essay where an AO would be **confused** or generally need more clarity.
+    
+    For EACH essay in the input, you must:
+    1. Identify EXACTLY 5 distinct areas (phrases/sentences) where clarity is lacking or the narrative is confusing.
+    2. For each area, provide the "quote" and a "comment" that asks a specific question to clarify that confusion.
+    3. Also provide a "harsh_feedback" summary and score the essay on the specified categories.
 
-    For EACH essay, you MUST provide:
-    1. Scores (1-10) and a explanation for these categories: ${categories}.
-    2. A "harsh_feedback" summary that provides a overall critique.
-    3. "annotations": specific phrases from the text that need improvement.
+    Categories to Score (1-10): ${essayType === 'personal' ? "selfReflection, personality/Character, writingQuality, growth, institutionalAlignment" : "personalityCharacter, majorFit, schoolFit, potentialContribution, promptAlignment"}
 
     Return ONLY a JSON object with this exact structure: 
     { 
         "essays": [{ 
-            "prompt": "string or null", 
+            "prompt": "prompt text if detected, else null", 
             "scores": { 
                 "categoryKey": { "score": number, "explanation": "string" } 
             }, 
             "average": number,
             "harsh_feedback": "string",
-            "annotations": [{ "quote": "exact substring from text", "comment": "string", "type": "critical" }]
+            "annotations": [
+                // MUST have exactly 5 annotations per essay
+                { "quote": "exact substring from text", "comment": "How...? / Why...? / What does this mean...?", "type": "critical" }
+            ]
         }] 
     }`;
 
-    const userPrompt = `${profileContext}\nContent: ${content}`;
-
-    const response = await fetch('https://api.deepseek.com/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-            'Authorization': `Bearer ${env.DEEPSEEK_API_KEY}`,
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            model: "deepseek-chat",
-            messages: [
-                { role: "system", content: systemPrompt },
-                { role: "user", content: userPrompt }
-            ],
-            response_format: { type: 'json_object' }
-        })
-    });
-
-    const rawData = (await response.json()) as AIProviderResponse;
-
-    if (!rawData.choices?.[0]?.message?.content) {
-        return json({ error: 'Invalid response from AI' }, { status: 500 });
-    }
+    const userPrompt = `${profileContext}\nContent (may contain multiple essays separated by delimiters):\n${content}`;
 
     try {
-        const parsedContent = JSON.parse(rawData.choices[0].message.content) as AIResponsePayload;
+        const response = await fetch('https://api.anthropic.com/v1/messages', {
+            method: 'POST',
+            headers: {
+                'x-api-key': env.CLAUDE_API_KEY || '',
+                'anthropic-version': '2023-06-01',
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                model: "claude-3-5-sonnet-20240620",
+                max_tokens: 4096,
+                system: systemPrompt,
+                messages: [
+                    { role: "user", content: userPrompt }
+                ]
+            })
+        });
+
+        if (!response.ok) {
+            const errText = await response.text();
+            console.error('Anthropic API Error:', errText);
+            return json({ error: 'AI Provider Error' }, { status: 500 });
+        }
+
+        const data = await response.json();
+        const textContent = data.content[0].text;
+
+        // Locate JSON in response (in case of extra text)
+        const jsonMatch = textContent.match(/\{[\s\S]*\}/);
+        const jsonStr = jsonMatch ? jsonMatch[0] : textContent;
+
+        const parsedContent = JSON.parse(jsonStr) as AIResponsePayload;
         return json(parsedContent);
+
     } catch (e) {
-        console.error('AI Parse Error', e);
-        return json({ error: 'Failed to parse AI response' }, { status: 500 });
+        console.error('Essay Grader Error', e);
+        return json({ error: 'Failed to process essay' }, { status: 500 });
     }
 };

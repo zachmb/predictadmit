@@ -11,10 +11,102 @@
 	import { schoolConfigs } from '$lib/config/schools';
 	import { schoolPrompts } from '$lib/config/prompts';
 	import { majors } from '$lib/config/majors';
+	import { states } from '$lib/config/states';
 	import { onMount } from 'svelte';
 
 	// --- RUNES STATE ---
 	let { data } = $props();
+
+	// State Autofill logic
+	let showStateSuggestions = $state(false);
+	let filteredStates = $derived(
+		states.filter((s) => s.toLowerCase().includes((profile.state || '').toLowerCase()))
+	);
+
+	// Mind Map AI State
+	let isGeneratingMindMap = $state(false);
+	let isDraftingEssay = $state(false);
+	let selectedDraftSchool = $state('');
+
+	async function generateMindMap() {
+		if (isGeneratingMindMap) return;
+		isGeneratingMindMap = true;
+		try {
+			const res = await fetch('/api/ai/generate-mindmap', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ profile })
+			});
+			const data = await res.json();
+			if (data.nodes) {
+				mindMapNodes = data.nodes;
+				mindMapConnections = data.connections;
+			}
+		} catch (e) {
+			console.error(e);
+		} finally {
+			isGeneratingMindMap = false;
+		}
+	}
+
+	async function draftEssayFromMindMap() {
+		if (isDraftingEssay || !selectedDraftSchool) return;
+		isDraftingEssay = true;
+
+		// Find prompt if school selected
+		let prompt = 'Personal Statement';
+		if (selectedDraftSchool !== 'General') {
+			// quick lookup or pass the slug to backend
+		}
+
+		try {
+			const res = await fetch('/api/ai/draft-essay', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({
+					profile,
+					mindMap: { nodes: mindMapNodes, connections: mindMapConnections },
+					targetSchool: selectedDraftSchool
+				})
+			});
+			const data = await res.json();
+
+			if (data.content) {
+				const fileName = `Draft_${selectedDraftSchool}_${Date.now()}.md`;
+				const newFile = {
+					id: Math.random().toString(36).substring(7),
+					name: fileName,
+					content: data.content,
+					language: 'markdown' as const,
+					isOpen: true,
+					isModified: false,
+					school: selectedDraftSchool // Added school property
+				};
+				// @ts-ignore
+				files = [...files, newFile];
+				// @ts-ignore
+				activeFile = newFile;
+				currentView = 'editor';
+			}
+		} catch (e) {
+			console.error(e);
+		} finally {
+			isDraftingEssay = false;
+		}
+	}
+
+	function removeMindMapNode(id: string) {
+		mindMapNodes = mindMapNodes.filter((n) => n.id !== id);
+		mindMapConnections = mindMapConnections.filter((c) => c.from !== id && c.to !== id);
+	}
+
+	function resetMindMap() {
+		if (confirm('Are you sure you want to clear the entire mind map?')) {
+			mindMapNodes = [];
+			mindMapConnections = [];
+			mindMapAnalysis = '';
+		}
+	}
 
 	// Auth & Pro State
 	let session = $derived($page.data.session);
@@ -42,7 +134,7 @@
 	let isProcessing = $state(false);
 
 	// VIEW STATE
-	let currentView = $state<'dashboard' | 'editor' | 'mindmap'>('dashboard');
+	let currentView = $state<'dashboard' | 'editor' | 'mindmap' | 'universities'>('dashboard');
 
 	// Mind Map State
 	type MindMapNode = {
@@ -170,14 +262,41 @@
 	let activeFile = $derived(files[activeFileIndex] || files[0]);
 
 	// Stats / Profile State
+	type Activity = {
+		id: string;
+		name: string;
+		role: string;
+		hoursPerWeek: string;
+	};
+
 	let profile = $state({
 		gpa_uw: '',
 		gpa_w: '',
 		testScore: '',
-		ecs: '',
+		ecs: '', // Legacy string field, kept for compatibility if needed or migrated
+		activities: [] as Activity[],
 		rigor: 'Regular' as 'Regular' | 'Honors' | 'AP/IB',
-		major: ''
+		major: '',
+		state: '',
+		environment: 'Urban' as 'Urban' | 'Suburban' | 'Rural',
+		living: 'On Campus' as 'On Campus' | 'Off Campus' | 'Commuter'
 	});
+
+	function addActivity() {
+		profile.activities = [
+			...profile.activities,
+			{
+				id: Math.random().toString(36).substring(2, 9),
+				name: '',
+				role: '',
+				hoursPerWeek: ''
+			}
+		];
+	}
+
+	function removeActivity(id: string) {
+		profile.activities = profile.activities.filter((a) => a.id !== id);
+	}
 
 	let majorSuggestions = $derived(
 		profile.major.length > 0
@@ -256,6 +375,7 @@
 
 	// Add School State
 	let addedSchoolSlugs = $state<string[]>(Object.keys(schoolConfigs)); // Default ALL schools
+	let selectedSchoolForDeepDive = $state<string | null>(null);
 
 	// Analysis/Terminal State
 	let isBuilding = $state(false);
@@ -713,10 +833,33 @@
 							stroke-linecap="round"
 							stroke-linejoin="round"
 							stroke-width="2"
-							d="M13 10V3L4 14h7v7l9-11h-7z"
+							d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
 						/>
 					</svg>
 					<span>Mind Map / Inspo</span>
+				</button>
+
+				<!-- UNIVERSITIES TAB -->
+				<button
+					onclick={() => (currentView = 'universities')}
+					class="w-full text-left px-6 py-3 text-sm font-bold flex items-center gap-3 transition-all border-l-4 {currentView ===
+					'universities'
+						? 'bg-emerald-50 text-emerald-600 border-emerald-600'
+						: 'text-slate-500 border-transparent hover:text-slate-900 hover:bg-slate-50'}"
+				>
+					<svg class="w-5 h-5 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+						<path d="M12 14l9-5-9-5-9 5 9 5z" />
+						<path
+							d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"
+						/>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"
+						/>
+					</svg>
+					<span>Universities</span>
 				</button>
 
 				<div
@@ -780,174 +923,248 @@
 				<!-- DASHBOARD VIEW -->
 				<div class="flex-1 overflow-y-auto p-8 md:p-12">
 					<div class="max-w-5xl mx-auto space-y-8">
-						<!-- METRICS ROW -->
+						<!-- ACADEMIC & DEMOGRAPHICS GRID -->
 						<div class="grid md:grid-cols-3 gap-6">
-							<!-- STATS INPUTS -->
-							<div class="md:col-span-2 bg-white rounded-3xl border border-slate-200 shadow-sm p-8">
-								<div class="grid grid-cols-2 gap-4">
-									<div>
-										<label class="block text-xs font-bold uppercase text-slate-500 mb-2"
-											>Unweighted GPA</label
-										>
-										<input
-											bind:value={profile.gpa_uw}
-											type="text"
-											placeholder="4.0"
-											class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#0052CC] font-bold text-slate-900"
-										/>
-									</div>
-									<div>
-										<label class="block text-xs font-bold uppercase text-slate-500 mb-2"
-											>Weighted GPA</label
-										>
-										<input
-											bind:value={profile.gpa_w}
-											type="text"
-											placeholder="4.5"
-											class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#0052CC] font-bold text-slate-900"
-										/>
-									</div>
-									<div>
-										<label class="block text-xs font-bold uppercase text-slate-500 mb-2"
-											>SAT / ACT</label
-										>
-										<input
-											bind:value={profile.testScore}
-											type="text"
-											placeholder="1500"
-											class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#0052CC] font-bold text-slate-900"
-										/>
-									</div>
-									<div>
-										<label class="block text-xs font-bold uppercase text-slate-500 mb-2"
-											>Course Rigor</label
-										>
-										<select
-											bind:value={profile.rigor}
-											class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#0052CC] font-bold text-slate-900"
-										>
-											<option>Regular</option>
-											<option>Honors</option>
-											<option>AP/IB</option>
-										</select>
-									</div>
-									<div class="relative">
-										<label class="block text-xs font-bold uppercase text-slate-500 mb-2"
-											>Intended Major</label
-										>
-										<input
-											bind:value={profile.major}
-											onfocus={() => (showMajorDropdown = true)}
-											onblur={() => setTimeout(() => (showMajorDropdown = false), 200)}
-											type="text"
-											placeholder="Computer Science"
-											class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#0052CC] font-bold text-slate-900"
-										/>
-										{#if showMajorDropdown && majorSuggestions.length > 0}
-											<div
-												class="absolute top-full left-0 right-0 mt-1 bg-white border border-slate-200 rounded-lg shadow-lg z-50"
+							<!-- INPUTS COLUMN -->
+							<div class="md:col-span-2 space-y-6">
+								<!-- ACADEMIC CARD -->
+								<div class="bg-white rounded-3xl border border-slate-200 shadow-sm p-8">
+									<h3
+										class="text-sm font-bold text-slate-900 uppercase tracking-widest mb-6 border-b border-slate-100 pb-2"
+									>
+										Academic Profile
+									</h3>
+									<div class="grid grid-cols-2 gap-4">
+										<div>
+											<label class="block text-xs font-bold uppercase text-slate-500 mb-2"
+												>Unweighted GPA</label
 											>
-												{#each majorSuggestions as major}
-													<button
-														onclick={() => {
-															profile.major = major;
-															showMajorDropdown = false;
-														}}
-														class="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 font-medium"
+											<input
+												bind:value={profile.gpa_uw}
+												type="text"
+												placeholder="4.0"
+												class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#0052CC] font-bold text-slate-900"
+											/>
+										</div>
+										<div>
+											<label class="block text-xs font-bold uppercase text-slate-500 mb-2"
+												>Weighted GPA</label
+											>
+											<input
+												bind:value={profile.gpa_w}
+												type="text"
+												placeholder="4.5"
+												class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#0052CC] font-bold text-slate-900"
+											/>
+										</div>
+										<div>
+											<label class="block text-xs font-bold uppercase text-slate-500 mb-2"
+												>SAT / ACT</label
+											>
+											<input
+												bind:value={profile.testScore}
+												type="text"
+												placeholder="1500"
+												class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#0052CC] font-bold text-slate-900"
+											/>
+										</div>
+										<div>
+											<label class="block text-xs font-bold uppercase text-slate-500 mb-2"
+												>Course Rigor</label
+											>
+											<select
+												bind:value={profile.rigor}
+												class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#0052CC] font-bold text-slate-900"
+											>
+												<option>Regular</option>
+												<option>Honors</option>
+												<option>AP/IB</option>
+											</select>
+										</div>
+										<div class="relative col-span-2">
+											<label class="block text-xs font-bold uppercase text-slate-500 mb-2"
+												>Intended Major</label
+											>
+											<input
+												bind:value={profile.major}
+												onfocus={() => (showMajorDropdown = true)}
+												onblur={() => setTimeout(() => (showMajorDropdown = false), 200)}
+												type="text"
+												placeholder="Computer Science"
+												class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#0052CC] font-bold text-slate-900"
+											/>
+											{#if showMajorDropdown && majorSuggestions.length > 0}
+												<div
+													class="absolute top-full left-0 right-0 mt-1 bg-white border border-slate-200 rounded-lg shadow-lg z-50"
+												>
+													{#each majorSuggestions as major}
+														<button
+															onclick={() => {
+																profile.major = major;
+																showMajorDropdown = false;
+															}}
+															class="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 font-medium"
+														>
+															{major}
+														</button>
+													{/each}
+												</div>
+											{/if}
+										</div>
+									</div>
+								</div>
+
+								<!-- DEMOGRAPHICS CARD -->
+								<div class="bg-white rounded-3xl border border-slate-200 shadow-sm p-8">
+									<h3
+										class="text-sm font-bold text-slate-900 uppercase tracking-widest mb-6 border-b border-slate-100 pb-2"
+									>
+										Demographics & Preferences
+									</h3>
+									<div class="grid grid-cols-2 gap-4">
+										<div>
+											<label class="block text-xs font-bold uppercase text-slate-500 mb-2"
+												>State of Residence</label
+											>
+											<div class="relative">
+												<input
+													bind:value={profile.state}
+													onfocus={() => (showStateSuggestions = true)}
+													onblur={() => setTimeout(() => (showStateSuggestions = false), 200)}
+													type="text"
+													placeholder="e.g. California"
+													class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#0052CC] font-bold text-slate-900"
+												/>
+												{#if showStateSuggestions && filteredStates.length > 0}
+													<div
+														class="absolute top-full left-0 right-0 mt-1 bg-white border border-slate-200 rounded-lg shadow-lg z-50 max-h-60 overflow-y-auto"
 													>
-														{major}
+														{#each filteredStates as st}
+															<button
+																class="w-full text-left px-4 py-2 hover:bg-slate-50 font-medium text-slate-700 text-sm"
+																onclick={() => {
+																	profile.state = st;
+																	showStateSuggestions = false;
+																}}
+															>
+																{st}
+															</button>
+														{/each}
+													</div>
+												{/if}
+											</div>
+										</div>
+										<div>
+											<label class="block text-xs font-bold uppercase text-slate-500 mb-2"
+												>Environment</label
+											>
+											<select
+												bind:value={profile.environment}
+												class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#0052CC] font-bold text-slate-900"
+											>
+												<option>Urban</option>
+												<option>Suburban</option>
+												<option>Rural</option>
+											</select>
+										</div>
+										<div class="col-span-2">
+											<label class="block text-xs font-bold uppercase text-slate-500 mb-2"
+												>Living Preference</label
+											>
+											<div class="flex gap-2">
+												{#each ['On Campus', 'Off Campus', 'Commuter'] as opt}
+													<button
+														class="flex-1 py-2 text-xs font-bold rounded-lg border transition-all {profile.living ===
+														opt
+															? 'bg-[#0052CC] text-white border-[#0052CC]'
+															: 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100'}"
+														onclick={() =>
+															(profile.living = opt as 'On Campus' | 'Off Campus' | 'Commuter')}
+													>
+														{opt}
 													</button>
 												{/each}
 											</div>
-										{/if}
-									</div>
-									<div class="col-span-2 mt-2">
-										<label class="block text-xs font-bold uppercase text-slate-500 mb-2"
-											>Top Activities & Honors</label
-										>
-										<textarea
-											bind:value={profile.ecs}
-											rows="3"
-											placeholder="List your leadership, awards, and key activities..."
-											class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#0052CC] font-medium resize-none"
-										></textarea>
+										</div>
 									</div>
 								</div>
 							</div>
 
-							<!-- ACADEMIC INDEX CARD (Clean White) -->
-							<div
-								class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm flex flex-col justify-between"
-							>
-								<div>
-									<div class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">
-										Academic Index
-									</div>
-									<div class="flex items-baseline gap-2">
-										<div class="text-7xl font-black tracking-tighter text-slate-900 leading-none">
-											{academicIndex}
+							<!-- ACADEMIC INDEX CARD (Sticky) -->
+							<div class="md:col-span-1">
+								<div
+									class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm flex flex-col justify-between sticky top-8"
+								>
+									<div>
+										<div class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">
+											Academic Index
 										</div>
-										<div class="text-xl text-slate-400 font-medium mb-2">/240</div>
+										<div class="flex items-baseline gap-2">
+											<div class="text-7xl font-black tracking-tighter text-slate-900 leading-none">
+												{academicIndex}
+											</div>
+											<div class="text-xl text-slate-400 font-medium mb-2">/240</div>
+										</div>
+										<p class="text-[10px] text-slate-400 mt-3 leading-relaxed max-w-[200px]">
+											Calculated using the Ivy League formula (2/3 Test + 1/3 GPA).
+										</p>
 									</div>
-									<p class="text-[10px] text-slate-400 mt-3 leading-relaxed max-w-[200px]">
-										Calculated using the Ivy League formula (2/3 Test + 1/3 GPA).
-									</p>
-								</div>
 
-								<div class="mt-8 space-y-4">
-									<div
-										class="flex justify-between text-xs font-bold text-slate-500 border-b border-slate-100 pb-2"
-									>
-										<span>Holistic Rating</span>
-										<span class="text-slate-900"
-											>{Math.round(
-												((holisticMetrics.academics +
-													holisticMetrics.ecs +
-													holisticMetrics.personal) /
-													3) *
-													10
-											)}%</span
+									<div class="mt-8 space-y-4">
+										<div
+											class="flex justify-between text-xs font-bold text-slate-500 border-b border-slate-100 pb-2"
 										>
-									</div>
-									<!-- Mini Bars for Metrics -->
-									<div class="space-y-3">
-										<div class="flex items-center gap-3">
-											<span
-												class="text-[10px] w-12 text-slate-400 font-bold uppercase tracking-wide"
-												>Acad</span
+											<span>Holistic Rating</span>
+											<span class="text-slate-900"
+												>{Math.round(
+													((holisticMetrics.academics +
+														holisticMetrics.ecs +
+														holisticMetrics.personal) /
+														3) *
+														10
+												)}%</span
 											>
-											<div
-												class="flex-1 h-2 bg-slate-50 rounded-full overflow-hidden border border-slate-100"
-											>
-												<div
-													class="h-full bg-slate-800 rounded-full transition-all duration-500"
-													style="width: {holisticMetrics.academics * 10}%"
-												></div>
-											</div>
 										</div>
-										<div class="flex items-center gap-3">
-											<span
-												class="text-[10px] w-12 text-slate-400 font-bold uppercase tracking-wide"
-												>Extrac</span
-											>
-											<div
-												class="flex-1 h-2 bg-slate-50 rounded-full overflow-hidden border border-slate-100"
-											>
+										<!-- Mini Bars for Metrics -->
+										<div class="space-y-3">
+											<div class="flex items-center gap-3">
+												<span
+													class="text-[10px] w-12 text-slate-400 font-bold uppercase tracking-wide"
+													>Acad</span
+												>
 												<div
-													class="h-full bg-slate-800 rounded-full transition-all duration-500"
-													style="width: {holisticMetrics.ecs * 10}%"
-												></div>
+													class="flex-1 h-2 bg-slate-50 rounded-full overflow-hidden border border-slate-100"
+												>
+													<div
+														class="h-full bg-slate-800 rounded-full transition-all duration-500"
+														style="width: {holisticMetrics.academics * 10}%"
+													></div>
+												</div>
 											</div>
-										</div>
-										<div class="flex items-center gap-2">
-											<span
-												class="text-[10px] w-12 text-slate-400 font-bold uppercase tracking-wide"
-												>Pers</span
-											>
-											<div
-												class="flex-1 h-2 bg-slate-50 rounded-full overflow-hidden border border-slate-100"
-											>
-												<div class="h-full bg-slate-300 rounded-full" style="width: 50%"></div>
+											<div class="flex items-center gap-3">
+												<span
+													class="text-[10px] w-12 text-slate-400 font-bold uppercase tracking-wide"
+													>Extrac</span
+												>
+												<div
+													class="flex-1 h-2 bg-slate-50 rounded-full overflow-hidden border border-slate-100"
+												>
+													<div
+														class="h-full bg-slate-800 rounded-full transition-all duration-500"
+														style="width: {holisticMetrics.ecs * 10}%"
+													></div>
+												</div>
+											</div>
+											<div class="flex items-center gap-2">
+												<span
+													class="text-[10px] w-12 text-slate-400 font-bold uppercase tracking-wide"
+													>Pers</span
+												>
+												<div
+													class="flex-1 h-2 bg-slate-50 rounded-full overflow-hidden border border-slate-100"
+												>
+													<div class="h-full bg-slate-300 rounded-full" style="width: 50%"></div>
+												</div>
 											</div>
 										</div>
 									</div>
@@ -955,79 +1172,85 @@
 							</div>
 						</div>
 
-						<!-- University Map / List -->
-						<div class="space-y-4">
-							<div class="flex items-center justify-between">
-								<h2 class="text-2xl font-bold text-slate-900 flex items-center gap-2">
-									<svg
-										class="w-6 h-6 text-[#0052CC]"
-										fill="none"
-										viewBox="0 0 24 24"
-										stroke="currentColor"
-										><path d="M12 14l9-5-9-5-9 5 9 5z" /><path
-											d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"
-										/><path
+						<!-- ACTIVITIES LIST -->
+						<div class="bg-white rounded-3xl border border-slate-200 shadow-sm p-8">
+							<div class="flex items-center justify-between mb-6 border-b border-slate-100 pb-2">
+								<h3 class="text-sm font-bold text-slate-900 uppercase tracking-widest">
+									Activities & Honors
+								</h3>
+								<button
+									onclick={addActivity}
+									class="text-xs font-bold text-[#0052CC] hover:text-blue-700 flex items-center gap-1"
+								>
+									<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+										><path
 											stroke-linecap="round"
 											stroke-linejoin="round"
 											stroke-width="2"
-											d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"
+											d="M12 4v16m8-8H4"
 										/></svg
 									>
-									Your University List
-								</h2>
-								<!-- Removed Add Button -->
+									Add Activity
+								</button>
 							</div>
 
-							{#if addedSchoolSlugs.length === 0}
+							{#if profile.activities.length === 0}
 								<div
-									class="bg-slate-50 border-2 border-dashed border-slate-200 rounded-2xl p-12 text-center text-slate-400"
+									class="text-center py-8 text-slate-400 text-sm font-medium border-2 border-dashed border-slate-100 rounded-xl"
 								>
-									<p class="font-medium">No schools added yet.</p>
-									<p class="text-sm mt-1">
-										Add a school to see deadlines and start writing essays.
-									</p>
+									No activities added yet. Click "Add Activity" to start building your profile.
 								</div>
 							{:else}
-								<div class="grid md:grid-cols-2 gap-4">
-									{#each addedSchoolSlugs as slug}
-										{@const conf = schoolConfigs[slug]}
-										{@const odds = calculateAdmissionsOdds(slug)}
+								<div class="space-y-4">
+									{#each profile.activities as activity (activity.id)}
 										<div
-											class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:shadow-md transition-all"
+											class="flex gap-4 items-start p-4 bg-slate-50 rounded-xl border border-slate-100 group animate-in fade-in slide-in-from-bottom-2"
 										>
-											<div class="flex items-start justify-between mb-4">
-												<div>
-													<div
-														class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1"
+											<div class="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4">
+												<div class="md:col-span-1">
+													<label class="block text-[10px] font-bold uppercase text-slate-400 mb-1"
+														>Activity Name</label
 													>
-														{odds < 15 ? 'Reach' : odds < 40 ? 'Target' : 'Likely'}
-													</div>
-													<h3 class="font-bold text-slate-900">{conf.schoolName}</h3>
+													<input
+														bind:value={activity.name}
+														placeholder="e.g. Debate Club"
+														class="w-full bg-white px-3 py-1.5 rounded-lg border border-slate-200 text-sm font-bold text-slate-900 focus:outline-none focus:border-[#0052CC]"
+													/>
 												</div>
-												<!-- Dynamic Progress -->
-												<div
-													class="h-10 w-12 rounded-xl flex items-center justify-center text-sm font-black {getOddsColor(
-														odds
-													)}"
+												<div class="md:col-span-1">
+													<label class="block text-[10px] font-bold uppercase text-slate-400 mb-1"
+														>Role / Position</label
+													>
+													<input
+														bind:value={activity.role}
+														placeholder="e.g. Captain"
+														class="w-full bg-white px-3 py-1.5 rounded-lg border border-slate-200 text-sm font-medium text-slate-900 focus:outline-none focus:border-[#0052CC]"
+													/>
+												</div>
+												<div class="md:col-span-1 relative">
+													<label class="block text-[10px] font-bold uppercase text-slate-400 mb-1"
+														>Hours/Week</label
+													>
+													<input
+														bind:value={activity.hoursPerWeek}
+														placeholder="e.g. 5"
+														class="w-full bg-white px-3 py-1.5 rounded-lg border border-slate-200 text-sm font-medium text-slate-900 focus:outline-none focus:border-[#0052CC]"
+													/>
+												</div>
+											</div>
+											<button
+												onclick={() => removeActivity(activity.id)}
+												class="text-slate-300 hover:text-red-500 p-2 transition-colors mt-4"
+											>
+												<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+													><path
+														stroke-linecap="round"
+														stroke-linejoin="round"
+														stroke-width="2"
+														d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+													/></svg
 												>
-													{odds}%
-												</div>
-											</div>
-
-											<div class="space-y-3">
-												<div class="flex justify-between text-xs">
-													<span class="text-slate-500">Admissions Probability</span>
-													<span class="font-medium text-slate-900">Est. AI Impact</span>
-												</div>
-												<div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
-													<div
-														class="h-full rounded-full transition-all duration-1000 ease-out {getBarColor(
-															odds
-														)}"
-														style="width: {odds}%"
-													></div>
-												</div>
-											</div>
+											</button>
 										</div>
 									{/each}
 								</div>
@@ -1042,31 +1265,131 @@
 						class="h-16 px-8 flex items-center justify-between bg-white border-b border-slate-200 shadow-sm z-10"
 					>
 						<h2 class="text-xl font-bold text-slate-900">Application Mind Map</h2>
-						<button
-							onclick={analyzeMindMap}
-							disabled={isAnalyzingMindMap || mindMapNodes.length === 0}
-							class="px-4 py-2 bg-purple-600 text-white font-bold rounded-lg shadow-lg hover:bg-purple-700 disabled:opacity-50 transition-all flex items-center gap-2"
-						>
-							{#if isAnalyzingMindMap}
-								<svg class="animate-spin h-4 w-4" viewBox="0 0 24 24"
-									><circle
-										class="opacity-25"
-										cx="12"
-										cy="12"
-										r="10"
-										stroke="currentColor"
-										stroke-width="4"
-									></circle><path
-										class="opacity-75"
-										fill="currentColor"
-										d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-									></path></svg
+						<div class="flex items-center gap-2">
+							<button
+								onclick={resetMindMap}
+								class="px-3 py-2 text-slate-400 hover:text-rose-500 hover:bg-rose-50 rounded-lg text-sm font-bold transition-colors"
+								title="Reset Board"
+							>
+								<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+									><path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										stroke-width="2"
+										d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+									/></svg
 								>
-								Analyzing...
-							{:else}
-								Analyze Themes
-							{/if}
-						</button>
+							</button>
+							<div class="h-6 w-px bg-slate-200"></div>
+
+							<!-- AI Generator -->
+							<button
+								onclick={generateMindMap}
+								disabled={isGeneratingMindMap}
+								class="px-4 py-2 bg-indigo-50 text-indigo-600 font-bold rounded-lg hover:bg-indigo-100 disabled:opacity-50 transition-all flex items-center gap-2 text-sm"
+							>
+								{#if isGeneratingMindMap}
+									<svg class="animate-spin h-4 w-4" viewBox="0 0 24 24"
+										><circle
+											class="opacity-25"
+											cx="12"
+											cy="12"
+											r="10"
+											stroke="currentColor"
+											stroke-width="4"
+										></circle><path
+											class="opacity-75"
+											fill="currentColor"
+											d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+										></path></svg
+									>
+									<span>Brainstorming...</span>
+								{:else}
+									<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+										><path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											d="M13 10V3L4 14h7v7l9-11h-7z"
+										/></svg
+									>
+									<span>AI Brainstorm</span>
+								{/if}
+							</button>
+
+							<!-- Essay Drafter -->
+							<div
+								class="flex items-center gap-2 bg-slate-50 p-1 rounded-lg border border-slate-200"
+							>
+								<select
+									bind:value={selectedDraftSchool}
+									class="bg-transparent text-sm font-bold text-slate-600 border-none focus:ring-0 py-1 pl-2 pr-8 w-32"
+								>
+									<option value="" disabled selected>Draft Essay...</option>
+									<option value="General">General Personal Statement</option>
+									{#each Object.values(schoolConfigs) as s}
+										<option value={s.slug}>{s.schoolName}</option>
+									{/each}
+								</select>
+								<button
+									onclick={draftEssayFromMindMap}
+									disabled={isDraftingEssay || !selectedDraftSchool}
+									class="p-1.5 bg-slate-900 text-white rounded-md hover:bg-slate-700 disabled:opacity-50 transition-colors"
+								>
+									{#if isDraftingEssay}
+										<svg class="animate-spin h-3 w-3" viewBox="0 0 24 24"
+											><circle
+												class="opacity-25"
+												cx="12"
+												cy="12"
+												r="10"
+												stroke="currentColor"
+												stroke-width="4"
+											></circle><path
+												class="opacity-75"
+												fill="currentColor"
+												d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+											></path></svg
+										>
+									{:else}
+										<svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+											><path
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												stroke-width="2"
+												d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+											/></svg
+										>
+									{/if}
+								</button>
+							</div>
+
+							<button
+								onclick={analyzeMindMap}
+								disabled={isAnalyzingMindMap || mindMapNodes.length === 0}
+								class="px-4 py-2 bg-purple-600 text-white font-bold rounded-lg shadow-lg hover:bg-purple-700 disabled:opacity-50 transition-all flex items-center gap-2 text-sm"
+							>
+								{#if isAnalyzingMindMap}
+									<svg class="animate-spin h-4 w-4" viewBox="0 0 24 24"
+										><circle
+											class="opacity-25"
+											cx="12"
+											cy="12"
+											r="10"
+											stroke="currentColor"
+											stroke-width="4"
+										></circle><path
+											class="opacity-75"
+											fill="currentColor"
+											d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+										></path></svg
+									>
+									Analyzing...
+								{:else}
+									Analyze Themes
+								{/if}
+							</button>
+						</div>
 					</div>
 
 					<div
@@ -1101,7 +1424,7 @@
 						<!-- Nodes -->
 						{#each mindMapNodes as node}
 							<div
-								class="absolute transform -translate-x-1/2 -translate-y-1/2 min-w-[150px] bg-white rounded-xl shadow-lg border border-slate-200 p-3 z-10 node-input {draggingNodeId ===
+								class="absolute transform -translate-x-1/2 -translate-y-1/2 min-w-[150px] bg-white rounded-xl shadow-lg border border-slate-200 p-3 z-10 node-input group {draggingNodeId ===
 								node.id
 									? 'z-50 shadow-xl scale-105 cursor-grabbing'
 									: 'cursor-grab'}"
@@ -1112,6 +1435,22 @@
 								onkeydown={() => {}}
 								onmousedown={(e) => handleNodeMouseDown(e, node.id)}
 							>
+								<button
+									class="absolute -top-2 -right-2 w-5 h-5 bg-rose-500 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-sm z-50 hover:bg-rose-600"
+									onclick={(e) => {
+										e.stopPropagation();
+										removeMindMapNode(node.id);
+									}}
+								>
+									<svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+										><path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											d="M6 18L18 6M6 6l12 12"
+										/></svg
+									>
+								</button>
 								<textarea
 									bind:value={node.text}
 									placeholder="Idea..."
@@ -1135,6 +1474,257 @@
 						<div class="h-48 bg-purple-50 border-t border-purple-100 p-6 overflow-y-auto">
 							<h3 class="text-xs font-bold uppercase text-purple-600 mb-2">AI Analysis</h3>
 							<p class="text-sm text-slate-800 whitespace-pre-line">{mindMapAnalysis}</p>
+						</div>
+					{/if}
+				</div>
+			{:else if currentView === 'universities'}
+				<!-- UNIVERSITIES VIEW -->
+				<div class="flex-1 overflow-y-auto p-8 md:p-12 bg-slate-50 relative">
+					<div class="max-w-6xl mx-auto space-y-8">
+						<div class="flex items-end justify-between">
+							<div>
+								<h2 class="text-3xl font-black text-slate-900 tracking-tight">Top Universities</h2>
+								<div class="text-sm text-slate-500 font-medium mt-1">
+									Explore and analyze your fit for the Top 20 schools.
+								</div>
+							</div>
+						</div>
+
+						<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+							{#each Object.values(schoolConfigs) as config}
+								{@const odds = calculateAdmissionsOdds(config.slug)}
+								<div
+									class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all group relative overflow-hidden"
+								>
+									<!-- Header -->
+									<div class="flex items-start justify-between mb-4 relative z-10">
+										<div
+											class="w-12 h-12 rounded-xl flex items-center justify-center text-xl font-bold bg-slate-50 text-slate-700 border border-slate-100 shadow-sm"
+										>
+											{config.schoolName[0]}
+										</div>
+										<div class="flex flex-col items-end">
+											<span
+												class="text-[10px] font-bold uppercase tracking-wider {odds < 15
+													? 'text-rose-500'
+													: odds < 40
+														? 'text-amber-500'
+														: 'text-emerald-500'}"
+											>
+												{odds < 15 ? 'Reach' : odds < 40 ? 'Target' : 'Likely'}
+											</span>
+											<span class="text-2xl font-black text-slate-900">{odds}%</span>
+										</div>
+									</div>
+
+									<!-- Content -->
+									<div class="space-y-4 relative z-10">
+										<div>
+											<h3
+												class="font-bold text-slate-900 text-lg leading-tight group-hover:text-[#0052CC] transition-colors"
+											>
+												{config.schoolName}
+											</h3>
+											<p class="text-xs text-slate-400 mt-1 font-medium">
+												Acceptance Rate: {(config.baseRate * 100).toFixed(1)}%
+											</p>
+										</div>
+
+										<!-- Progress Bar -->
+										<div class="space-y-1.5">
+											<div
+												class="flex justify-between text-[10px] font-bold text-slate-400 uppercase tracking-wide"
+											>
+												<span>Match Strength</span>
+												<span>{odds}/100</span>
+											</div>
+											<div class="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
+												<div
+													class="h-full rounded-full transition-all duration-1000 ease-out {getBarColor(
+														odds
+													)}"
+													style="width: {odds}%"
+												></div>
+											</div>
+										</div>
+
+										<button
+											onclick={() => (selectedSchoolForDeepDive = config.slug)}
+											class="w-full py-2.5 rounded-lg border border-slate-200 text-sm font-bold text-slate-600 hover:bg-slate-50 hover:text-slate-900 hover:border-slate-300 transition-all flex items-center justify-center gap-2 mt-2"
+										>
+											Deep Dive Analysis
+											<svg
+												class="w-4 h-4 opacity-70"
+												fill="none"
+												viewBox="0 0 24 24"
+												stroke="currentColor"
+												><path
+													stroke-linecap="round"
+													stroke-linejoin="round"
+													stroke-width="2"
+													d="M14 5l7 7m0 0l-7 7m7-7H3"
+												/></svg
+											>
+										</button>
+									</div>
+								</div>
+							{/each}
+						</div>
+					</div>
+
+					<!-- DEEP DIVE MODAL -->
+					{#if selectedSchoolForDeepDive}
+						{@const deepConf = schoolConfigs[selectedSchoolForDeepDive]}
+						{@const deepOdds = calculateAdmissionsOdds(selectedSchoolForDeepDive)}
+						<div class="fixed inset-0 z-[100] flex items-center justify-center p-4">
+							<!-- Backdrop -->
+							<div
+								class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity"
+								onclick={() => (selectedSchoolForDeepDive = null)}
+								role="button"
+								tabindex="0"
+								onkeydown={(e) => e.key === 'Escape' && (selectedSchoolForDeepDive = null)}
+							></div>
+
+							<!-- Modal -->
+							<div
+								class="bg-white rounded-3xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto relative z-10 flex flex-col animate-in fade-in zoom-in-95 duration-200"
+							>
+								<!-- Modal Header -->
+								<div
+									class="p-8 border-b border-slate-100 flex items-start justify-between bg-slate-50/50"
+								>
+									<div class="flex items-center gap-4">
+										<div
+											class="w-16 h-16 rounded-2xl bg-white shadow-sm border border-slate-200 flex items-center justify-center text-3xl font-black text-slate-800"
+										>
+											{deepConf.schoolName[0]}
+										</div>
+										<div>
+											<h3 class="text-2xl font-black text-slate-900">{deepConf.schoolName}</h3>
+											<div class="flex items-center gap-2 mt-1">
+												<span
+													class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide bg-slate-200 text-slate-600"
+													>Difficulty: {deepConf.difficulty}/10</span
+												>
+												<span
+													class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide bg-slate-200 text-slate-600"
+													>Rate: {(deepConf.baseRate * 100).toFixed(1)}%</span
+												>
+											</div>
+										</div>
+									</div>
+									<button
+										onclick={() => (selectedSchoolForDeepDive = null)}
+										class="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-slate-500 hover:bg-slate-300 transition-colors"
+									>
+										<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+											><path
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												stroke-width="2"
+												d="M6 18L18 6M6 6l12 12"
+											/></svg
+										>
+									</button>
+								</div>
+
+								<!-- Modal Content -->
+								<div class="p-8 space-y-8">
+									<!-- AI Prediction Section -->
+									<div
+										class="bg-indigo-50 rounded-2xl p-6 border border-indigo-100 flex items-center gap-6"
+									>
+										<div class="flex-1">
+											<div class="text-xs font-bold uppercase tracking-widest text-indigo-400 mb-1">
+												Your Predicted Odds
+											</div>
+											<div class="text-4xl font-black text-indigo-900">{deepOdds}%</div>
+											<p class="text-sm text-indigo-800/70 mt-2 font-medium">
+												Based on your Academic Index ({academicIndex}) and holistic profile rating.
+											</p>
+										</div>
+										<div class="w-32 h-32 relative hidden md:block">
+											<!-- Simple visual circle -->
+											<svg class="w-full h-full transform -rotate-90">
+												<circle
+													cx="64"
+													cy="64"
+													r="56"
+													fill="none"
+													stroke="#E0E7FF"
+													stroke-width="12"
+												/>
+												<circle
+													cx="64"
+													cy="64"
+													r="56"
+													fill="none"
+													stroke="#4F46E5"
+													stroke-width="12"
+													stroke-dasharray="351"
+													stroke-dashoffset={351 - (351 * deepOdds) / 100}
+													stroke-linecap="round"
+												/>
+											</svg>
+											<div
+												class="absolute inset-0 flex items-center justify-center text-indigo-600 font-bold text-lg"
+											>
+												{deepOdds}%
+											</div>
+										</div>
+									</div>
+
+									<!-- Recommendations -->
+									<div class="space-y-4">
+										<h4 class="text-lg font-bold text-slate-900 border-l-4 border-slate-900 pl-3">
+											Strategy & Recommendations
+										</h4>
+										<div class="grid gap-4">
+											<div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
+												<div class="font-bold text-slate-900 text-sm mb-1">
+													Target AI Score: {130 + deepConf.difficulty * 10}
+												</div>
+												<p class="text-sm text-slate-500">
+													{academicIndex >= 130 + deepConf.difficulty * 10
+														? 'Your stats are competitive for this school. Focus on essays.'
+														: 'Your stats are slightly below the typical range. Exceptional essays and ECs are required.'}
+												</p>
+											</div>
+											<div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
+												<div class="font-bold text-slate-900 text-sm mb-1">Essay Strategy</div>
+												<p class="text-sm text-slate-500">
+													{deepConf.schoolName} values intellectual vitality and community impact. Ensure
+													your essays highlight specific contributions.
+												</p>
+											</div>
+										</div>
+									</div>
+
+									<!-- Action -->
+									<div class="flex justify-end pt-4">
+										<button
+											class="bg-slate-900 text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:bg-slate-800 transition-all flex items-center gap-2"
+											onclick={() => {
+												selectedSchoolForDeepDive = null;
+												// Ideally verify file exists or create it
+												// For now, assuming user will handle file creation via sidebar
+												currentView = 'editor';
+											}}
+										>
+											Start Drafting Essays
+											<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+												><path
+													stroke-linecap="round"
+													stroke-linejoin="round"
+													stroke-width="2"
+													d="M17 8l4 4m0 0l-4 4m4-4H3"
+												/></svg
+											>
+										</button>
+									</div>
+								</div>
+							</div>
 						</div>
 					{/if}
 				</div>
@@ -1163,7 +1753,7 @@
 				</div>
 
 				<!-- Editor Wrapper -->
-				<div class="flex-1 overflow-hidden flex relative">
+				<div class="flex-1 overflow-hidden flex relative mb-[12vh]">
 					<!-- Text Editor -->
 					<div class="flex-1 relative flex flex-col">
 						<div class="flex-1 relative overflow-y-auto custom-scrollbar p-8 space-y-12">
@@ -1211,7 +1801,9 @@
 										<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 										{@html getHighlightedContent(
 											activeFile.content,
-											analysisResult.essays?.[0]?.annotations
+											analysisResult.essays
+												? analysisResult.essays.flatMap((e: any) => e.annotations)
+												: []
 										)}
 									</div>
 								</div>
@@ -1358,74 +1950,117 @@
 									</div>
 								{:else if analysisResult}
 									<div class="space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-500">
-										<!-- SCORE CARD -->
-										<div
-											class="p-6 bg-[#F0F7FF] rounded-2xl border border-blue-100 text-center relative overflow-hidden"
-										>
-											<div class="relative z-10">
-												<div
-													class="text-sm font-bold text-slate-500 uppercase tracking-widest mb-1"
-												>
-													Institutional Score
-												</div>
-												<div class="text-5xl font-black text-[#0052CC] tracking-tighter">
-													{analysisResult.essays?.[0]?.average ?? 'N/A'}<span
-														class="text-xl text-blue-300">/10</span
-													>
-												</div>
-											</div>
-										</div>
+										<!-- GLOBAL SCORE SUMMARY (Optional, showing avg of first essay for now or we can avg all) -->
+										<!-- We will loop through essays below instead of a single top card if appropriate, 
+											 but preserving the top card for the *first* essay is a good default for single essays. 
+											 Let's iterate instead. -->
 
-										<!-- RADAR CHART -->
-										<!-- RADAR CHART -->
-										{#if radarData.length > 0}
-											<div class="flex justify-center my-12 transform scale-100">
-												<RadarChart data={radarData} size={280} max={100} color="text-[#0052CC]" />
-											</div>
-										{/if}
-
-										<!-- ANNOTATIONS LIST -->
-										{#if analysisResult.essays?.[0]?.annotations?.length}
-											<div class="space-y-3">
+										{#each analysisResult.essays as essay, essayIndex}
+											<div
+												class="border-b border-slate-100 pb-8 mb-8 last:border-0 last:mb-0 last:pb-0"
+											>
 												<h3
-													class="text-xs font-bold text-slate-900 uppercase tracking-widest border-b border-slate-100 pb-2"
+													class="font-bold text-slate-900 text-sm mb-4 uppercase tracking-widest bg-slate-100 inline-block px-2 py-1 rounded"
 												>
-													Line-by-Line Critique
+													{essay.prompt ? 'Essay ' + (essayIndex + 1) : 'Essay Analysis'}
 												</h3>
-												{#each analysisResult.essays[0].annotations as note, i}
-													<div
-														id={`annotation-${i}`}
-														class="p-3 rounded-lg bg-yellow-50 border border-yellow-100 text-xs space-y-1 hover:border-yellow-300 transition-all cursor-pointer group scroll-mt-20 {activeAnnotationIndex ===
-														i
-															? 'ring-2 ring-blue-400 bg-blue-50'
-															: ''}"
-													>
+
+												<!-- SCORE CARD -->
+												<div
+													class="p-6 bg-[#F0F7FF] rounded-2xl border border-blue-100 text-center relative overflow-hidden mb-8"
+												>
+													<div class="relative z-10">
 														<div
-															class="font-serif italic text-slate-600 border-l-2 border-yellow-400 pl-2"
+															class="text-sm font-bold text-slate-500 uppercase tracking-widest mb-1"
 														>
-															"{note.quote}"
+															Institutional Score
 														</div>
-														<div class="text-slate-800 font-medium">{note.comment}</div>
+														<div class="text-5xl font-black text-[#0052CC] tracking-tighter">
+															{essay.average ?? 'N/A'}<span class="text-xl text-blue-300">/10</span>
+														</div>
 													</div>
-												{/each}
-											</div>
-										{/if}
-
-										<!-- HARSH FEEDBACK -->
-										{#if analysisResult.essays?.[0]?.harsh_feedback}
-											<div class="space-y-3">
-												<h3
-													class="text-xs font-bold text-slate-900 uppercase tracking-widest border-b border-slate-100 pb-2 text-rose-600"
-												>
-													Brutal Honest Feedback
-												</h3>
-												<div
-													class="p-4 bg-rose-50 rounded-xl border border-rose-100 text-sm text-rose-900 leading-relaxed italic"
-												>
-													{analysisResult.essays[0].harsh_feedback}
 												</div>
+
+												<!-- RADAR CHART (Per Essay) -->
+												{#if essay.scores}
+													<div class="flex justify-center my-8 transform scale-100">
+														<RadarChart
+															data={Object.entries(essay.scores).map(([k, v]) => ({
+																label: k.replace(/([A-Z])/g, ' $1').trim(),
+																value: ((v as any).score || 0) * 10
+															}))}
+															size={280}
+															max={100}
+															color="text-[#0052CC]"
+														/>
+													</div>
+												{/if}
+
+												<!-- ANNOTATIONS LIST -->
+												{#if essay.annotations?.length}
+													<div class="space-y-3 mb-8">
+														<h3
+															class="text-xs font-bold text-slate-900 uppercase tracking-widest border-b border-slate-100 pb-2"
+														>
+															Critique
+														</h3>
+														{#each essay.annotations as note, i}
+															<!-- Use a composite ID or offset index if we want strict uniqueness in scroll, 
+																 but for now simplistic index is okay as long as we handle highlight click correctly. 
+																 Actually, we need unique IDs for global scrolling. 
+																 Let's just use a global index strategy in the backend or flatmap, 
+																 but simpler is just local index for list display. 
+																 BUT the editor highlights use data-idx. 
+																 We need to know the GLOBAL index of this annotation in the flat list.
+																 Let's just calculate it. -->
+															{@const globalIndex =
+																analysisResult.essays
+																	.slice(0, essayIndex)
+																	.reduce(
+																		(acc: number, e: any) => acc + (e.annotations?.length || 0),
+																		0
+																	) + i}
+															<div
+																id={`annotation-${globalIndex}`}
+																class="p-3 rounded-lg bg-yellow-50 border border-yellow-100 text-xs space-y-1 hover:border-yellow-300 transition-all cursor-pointer group scroll-mt-20 {activeAnnotationIndex ===
+																globalIndex
+																	? 'ring-2 ring-blue-400 bg-blue-50'
+																	: ''}"
+																onclick={() => handleAnnotationClick(globalIndex.toString())}
+																onkeydown={(e) =>
+																	e.key === 'Enter' &&
+																	handleAnnotationClick(globalIndex.toString())}
+																role="button"
+																tabindex="0"
+															>
+																<div
+																	class="font-serif italic text-slate-600 border-l-2 border-yellow-400 pl-2"
+																>
+																	"{note.quote}"
+																</div>
+																<div class="text-slate-800 font-medium">{note.comment}</div>
+															</div>
+														{/each}
+													</div>
+												{/if}
+
+												<!-- HARSH FEEDBACK -->
+												{#if essay.harsh_feedback}
+													<div class="space-y-3">
+														<h3
+															class="text-xs font-bold text-slate-900 uppercase tracking-widest border-b border-slate-100 pb-2 text-rose-600"
+														>
+															Brutal Honest Feedback
+														</h3>
+														<div
+															class="p-4 bg-rose-50 rounded-xl border border-rose-100 text-sm text-rose-900 leading-relaxed italic"
+														>
+															{essay.harsh_feedback}
+														</div>
+													</div>
+												{/if}
 											</div>
-										{/if}
+										{/each}
 									</div>
 								{:else}
 									<div
