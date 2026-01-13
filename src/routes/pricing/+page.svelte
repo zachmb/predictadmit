@@ -9,12 +9,12 @@
 	let errorMessage = '';
 	let isMonthly = false;
 
-	const tweenedPrice = tweened(29, {
+	const tweenedPrice = tweened(9, {
 		duration: 400,
 		easing: cubicOut
 	});
 
-	$: tweenedPrice.set(isMonthly ? 19 : 29);
+	$: tweenedPrice.set(isMonthly ? 5 : 9);
 
 	async function startCheckout() {
 		isLoading = true;
@@ -71,27 +71,35 @@
 
 		<!-- Toggle Switch -->
 		<div class="flex justify-center">
-			<div class="relative bg-slate-200/50 p-1.5 rounded-full flex items-center shadow-inner">
+			<div
+				class="relative bg-slate-200 p-1.5 rounded-full flex items-center shadow-inner w-64 h-12 cursor-pointer"
+				on:click={() => (isMonthly = !isMonthly)}
+				on:keydown={(e) => e.key === 'Enter' && (isMonthly = !isMonthly)}
+				role="button"
+				tabindex="0"
+			>
+				<!-- Sliding Background -->
+				<div
+					class="absolute top-1.5 bottom-1.5 bg-white rounded-full shadow-sm border border-slate-100 transition-all duration-500 cubic-bezier(0.23, 1, 0.32, 1) w-[calc(50%-6px)]"
+					style="left: 6px; transform: translateX({isMonthly ? '100%' : '0%'})"
+				></div>
+
 				<button
-					class="relative z-10 w-1/2 text-sm font-bold transition-colors duration-200 py-3 flex items-center justify-center {isMonthly
-						? 'text-slate-500 hover:text-slate-700'
-						: 'text-slate-900'}"
-					on:click={() => (isMonthly = false)}
+					class="relative z-10 w-1/2 text-sm font-bold transition-colors duration-300 {!isMonthly
+						? 'text-slate-900'
+						: 'text-slate-500'}"
+					on:click|stopPropagation={() => (isMonthly = false)}
 				>
-					Full App Cycle
+					Full Cycle
 				</button>
 				<button
-					class="relative z-10 w-1/2 text-sm font-bold transition-colors duration-200 py-3 flex items-center justify-center {isMonthly
+					class="relative z-10 w-1/2 text-sm font-bold transition-colors duration-300 {isMonthly
 						? 'text-slate-900'
-						: 'text-slate-500 hover:text-slate-700'}"
-					on:click={() => (isMonthly = true)}
+						: 'text-slate-500'}"
+					on:click|stopPropagation={() => (isMonthly = true)}
 				>
 					Monthly
 				</button>
-				<div
-					class="absolute top-1.5 bottom-1.5 bg-white rounded-full shadow-lg border border-slate-100 transition-transform duration-500 cubic-bezier(0.16, 1, 0.3, 1) w-[calc(50%-6px)]"
-					style="transform: translateX({isMonthly ? '100.5%' : '0%'}); left: 6px;"
-				></div>
 			</div>
 		</div>
 
@@ -274,6 +282,85 @@
 						>
 						Secure payment via Stripe
 					</p>
+				</div>
+			</div>
+		</section>
+
+		<!-- Stanford Comparison Section -->
+		<section class="max-w-xl mx-auto pt-16 pb-12 text-center">
+			<div class="relative p-8 bg-[#8C1515]/5 rounded-3xl border border-[#8C1515]/10">
+				<!-- Hand-drawn arrow pointing to price -->
+				<div class="absolute -top-12 -right-12 hidden md:block opacity-50 transform rotate-12">
+					<svg
+						width="100"
+						height="100"
+						viewBox="0 0 100 100"
+						fill="none"
+						stroke="currentColor"
+						class="text-slate-400"
+					>
+						<path d="M20,80 Q50,20 80,40" stroke-width="2" marker-end="url(#arrowhead)" />
+						<defs>
+							<marker
+								id="arrowhead"
+								markerWidth="10"
+								markerHeight="7"
+								refX="0"
+								refY="3.5"
+								orient="auto"
+							>
+								<polygon points="0 0, 10 3.5, 0 7" fill="currentColor" />
+							</marker>
+						</defs>
+					</svg>
+					<span
+						class="absolute top-0 right-0 text-sm font-handwriting transform rotate-12 text-slate-500"
+						>Only 9% of this!</span
+					>
+				</div>
+
+				<div class="flex flex-col items-center gap-6">
+					<div class="w-16 h-16 relative">
+						<!-- Stanford Tree (Simplified SVG representation) -->
+						<svg
+							viewBox="0 0 100 150"
+							fill="none"
+							xmlns="http://www.w3.org/2000/svg"
+							class="text-[#8C1515]"
+						>
+							<path d="M50 10 L80 120 H20 L50 10 Z" fill="currentColor" opacity="0.8" />
+							<path d="M50 0 L90 120 H10 L50 0 Z" stroke="currentColor" stroke-width="4" />
+							<rect x="40" y="120" width="20" height="30" fill="currentColor" />
+						</svg>
+					</div>
+
+					<div class="space-y-2">
+						<h3 class="text-2xl font-bold text-[#8C1515]">Stanford Application Fee</h3>
+						<div class="text-5xl font-black text-slate-900">$100</div>
+					</div>
+
+					<div class="relative">
+						<p class="text-lg text-slate-600 font-medium">
+							For just <span
+								class="text-[#8C1515] font-bold underline decoration-wavy decoration-from-font"
+								>$9</span
+							>, PredictAdmit Pro gives you unlimited feedback to crack the code.
+						</p>
+
+						<!-- Underline graphic -->
+						<svg
+							class="absolute w-full h-3 -bottom-2 text-[#8C1515] opacity-30"
+							viewBox="0 0 200 9"
+							fill="none"
+						>
+							<path
+								d="M2.00025 7.00003C52.8875 1.57962 136.082 -3.42539 198.001 5.99999"
+								stroke="currentColor"
+								stroke-width="3"
+								stroke-linecap="round"
+							/>
+						</svg>
+					</div>
 				</div>
 			</div>
 		</section>

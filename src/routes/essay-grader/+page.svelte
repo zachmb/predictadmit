@@ -39,18 +39,37 @@
 	let isAnalyzing = $state(false);
 	let results = $state<GradingResult | null>(null);
 	let currentEssayIndex = $state(0);
+	let analysisStep = $state('');
+	let progressPercent = $state(0);
 
 	// --- LOGIC ---
 	async function handleAnalyze() {
 		if (!content || !major) return;
 
 		isAnalyzing = true;
+		analysisStep = 'Initializing...';
+		progressPercent = 0;
+
 		try {
+			// Optimistic Progress Simulation
+			const progressInterval = setInterval(() => {
+				if (progressPercent < 90) progressPercent += 1;
+			}, 100);
+
+			analysisStep = 'Parsing Essay Structure...';
+			await new Promise((r) => setTimeout(r, 800));
+
+			analysisStep = 'Analyzing Institutional Alignment...';
+
 			const res = await fetch('/essay-grader', {
 				method: 'POST',
 				body: JSON.stringify({ major, selectedSchool, essayType, content }),
 				headers: { 'Content-Type': 'application/json' }
 			});
+
+			clearInterval(progressInterval);
+			progressPercent = 100;
+			analysisStep = 'Finalizing Report...';
 
 			if (!res.ok) throw new Error('Grading failed');
 			results = (await res.json()) as GradingResult;
@@ -381,13 +400,47 @@
 					></textarea>
 				</div>
 
-				<button
-					disabled={!major || !content || isAnalyzing}
-					onclick={handleAnalyze}
-					class="w-full bg-blue-600 text-white py-8 rounded-2xl font-black text-xl hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-xl shadow-blue-200"
-				>
-					{isAnalyzing ? 'Processing' : 'Analyze My Essays'}
-				</button>
+				{#if isAnalyzing}
+					<div class="py-8 text-center space-y-4">
+						<div class="relative h-24 w-24 mx-auto">
+							<svg class="h-full w-full transform -rotate-90">
+								<circle
+									class="text-slate-100"
+									stroke-width="8"
+									stroke="currentColor"
+									fill="transparent"
+									r="42"
+									cx="48"
+									cy="48"
+								/>
+								<circle
+									class="text-blue-600 transition-all duration-300 ease-out"
+									stroke-width="8"
+									stroke-dasharray={264}
+									stroke-dashoffset={264 - (264 * progressPercent) / 100}
+									stroke-linecap="round"
+									stroke="currentColor"
+									fill="transparent"
+									r="42"
+									cx="48"
+									cy="48"
+								/>
+							</svg>
+							<div class="absolute inset-0 flex items-center justify-center">
+								<span class="text-xl font-black text-slate-900">{progressPercent}%</span>
+							</div>
+						</div>
+						<p class="text-lg font-bold text-slate-900 animate-pulse">{analysisStep}</p>
+					</div>
+				{:else}
+					<button
+						disabled={!major || !content}
+						onclick={handleAnalyze}
+						class="w-full bg-blue-600 text-white py-8 rounded-2xl font-black text-xl hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-xl shadow-blue-200"
+					>
+						Analyze My Essays
+					</button>
+				{/if}
 			</Card>
 		</div>
 	{/if}

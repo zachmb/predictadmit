@@ -141,7 +141,7 @@
 			name: 'Common App Personal',
 			language: 'markdown',
 			content:
-				'# Personal Statement\n\n### Prompt\nSome students have a background, identity, interest, or talent that is so meaningful they believe their application would be incomplete without it. If this sounds like you, then please share your story.\n\nStart writing here...',
+				'# Personal Statement\n\n### Prompt\nSome students have a background, identity, interest, or talent that is so meaningful they believe their application would be incomplete without it. If this sounds like you, then please share your story.\n\n[Paste your essay here...]',
 			school: 'Common App',
 			isOpen: true,
 			isModified: false
@@ -149,9 +149,9 @@
 		...Object.values(schoolConfigs).map((config) => {
 			const prompts = schoolPrompts[config.slug] || [];
 			const promptsContent = prompts
-				.map((p) => `### ${p.title}\n${p.description}\n\nStart writing here...\n\n`)
+				.map((p) => `### ${p.title}\n${p.description}\n\n[Paste your essay here...]\n\n`)
 				.join('---\n\n');
-			const finalContent = `# ${config.schoolName} Supplement\n\n${promptsContent.length > 0 ? promptsContent : 'No specific prompts found. Start writing...'}`;
+			const finalContent = `# ${config.schoolName} Supplement\n\n${promptsContent.length > 0 ? promptsContent : '### Prompt\n[Paste prompt here]\n\n[Paste essay here]'}`;
 
 			return {
 				id: config.slug + '-supplement',
@@ -263,6 +263,31 @@
 	let analysisResult = $state<any>(null); // Store the grade result here
 	let showTerminal = $state(false); // Changed default to false to be cleaner
 	let activeTab = $state<'terminal' | 'output'>('output');
+
+	// New Progress State
+	let analysisStep = $state('');
+	let estimatedTime = $state('');
+	let progressPercent = $state(0);
+	let activeAnnotationIndex = $state<number | null>(null);
+
+	function handleAnnotationClick(idx: string) {
+		const index = parseInt(idx);
+		if (!isNaN(index)) {
+			activeAnnotationIndex = index;
+			showTerminal = true;
+			activeTab = 'output'; // Ensure we are on the results tab
+
+			// Scroll sidebar to item
+			setTimeout(() => {
+				const el = document.getElementById(`annotation-${index}`);
+				if (el) {
+					el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+					el.classList.add('bg-blue-50', 'ring-2', 'ring-blue-200');
+					setTimeout(() => el.classList.remove('bg-blue-50', 'ring-2', 'ring-blue-200'), 2000);
+				}
+			}, 100);
+		}
+	}
 
 	// --- PERSISTENCE LOGIC ---
 	onMount(() => {
@@ -469,7 +494,7 @@
 			name: 'New Supplement',
 			language: 'markdown',
 			content:
-				'# Supplemental Essay\n\n### Prompt\nPaste your prompt here...\n\nStart writing here...',
+				'# Supplemental Essay\n\n### Prompt\n[Paste your prompt here...]\n\n[Paste your essay here...]',
 			school: 'General',
 			isOpen: true,
 			isModified: false
@@ -478,120 +503,6 @@
 		activeFileIndex = files.length - 1;
 		currentView = 'editor';
 	}
-
-	// Editor Split View Logic
-	let parsedSections = $derived.by(() => {
-		if (!activeFile?.content) return [];
-		// 1. Split by '---' to get individual prompt blocks (for multi-prompt schools)
-		// Note: The Common App file also uses '---' to separate prompt from answer.
-		// We need a robust way. Let's rely on '---' as the delimiter between "Essay Units".
-		const units = activeFile.content.split(/\n---\n/);
-
-		return units.map((unit, idx) => {
-			// 2. Inside each unit, split Prompt vs Answer.
-			// We look for the magic string "Start writing here..." created by addSchool.
-			// If not found, we assume the top part is prompt or we just provide raw access.
-			const magicSplit = unit.split('Start writing here...');
-			let promptHtml = '';
-			let answer = '';
-
-			if (magicSplit.length > 1) {
-				promptHtml = magicSplit[0].trim();
-				answer = magicSplit.slice(1).join('Start writing here...').replace(/^\n+/, ''); // Remove leading newlines
-			} else {
-				// Fallback: If no magic string, treat lines starting with # as prompt?
-				// Or just treat entire thing as answer?
-				// Let's treat it as answer to be safe, but this breaks "unable to be edited" for prompt.
-				// Actually, if it's the specific format we generated, it matches.
-				answer = unit;
-			}
-
-			// Simple markdown-ish to HTML for prompt display
-			promptHtml = promptHtml
-				.replace(/^### (.*$)/gm, '<h3 class="text-lg font-bold text-slate-900 mb-2">$1</h3>')
-				.replace(/^# (.*$)/gm, '<h1 class="text-2xl font-black text-slate-900 mb-4">$1</h1>')
-				.replace(/\n/g, '<br/>');
-
-			return { promptHtml, answer };
-		});
-	});
-
-	function updateSectionAnswer(index: number, newAnswer: string) {
-		// Reconstruct the file content
-		const newUnits = parsedSections.map((s, i) => {
-			if (i === index) {
-				// Return original structure
-				// We strip HTML tags from promptHtml to get back markdown? No, we lost it.
-				// We shouldn't modify derived state. We need to rebuild from `activeFile.content`?
-				// Constructing from `s.promptHtml` is hard because it's compiled.
-				// Better approach: Don't use derived for the source of truth if we only edit answer.
-				// We need to store constraints.
-				// Simplest: Just regex replace the answer part in the *original* content string.
-				return { ...s, answer: newAnswer };
-			}
-			return s;
-		});
-
-		// Re-join
-		// We need the original prompt markdown.
-		// This means `parsedSections` must store rawPrompt too.
-		// Let's redo `parsedSections` to store `rawPrompt`.
-		return;
-	}
-
-	// Better Re-Implementation of Parser that keeps raw parts
-	function getSections(content: string) {
-		const units = content.split(/\n---\n/);
-		return units.map((unit) => {
-			const split = unit.split('Start writing here...');
-			const hasSplit = split.length > 1;
-			return {
-				rawPrompt: hasSplit ? split[0] + 'Start writing here...' : '',
-				answer: hasSplit ? split.slice(1).join('Start writing here...') : unit,
-				isSplit: hasSplit
-			};
-		});
-	}
-
-	function handleAnswerChange(sectionIndex: number, newVal: string) {
-		const sections = getSections(activeFile.content);
-		if (sections[sectionIndex]) {
-			// Update the answer of this section
-			// We need to preserve leading newlines if we stripped them?
-			// Ideally we just append newVal.
-			sections[sectionIndex].answer = '\n\n' + newVal.trim();
-		}
-
-		// Rebuild full content
-		const fullContent = sections
-			.map((s) => {
-				if (s.isSplit) return s.rawPrompt + s.answer;
-				return s.answer;
-			})
-			.join('\n---\n');
-
-		activeFile.content = fullContent;
-
-		// Auto-Scan Debounce
-		clearTimeout(autoScanTimer);
-		autoScanTimer = setTimeout(() => {
-			// Only auto-scan if enough content
-			if (newVal.length > 50) runBuild();
-		}, 3000);
-	}
-
-	let autoScanTimer: any;
-
-	// Derived for View (UI Only)
-	let uiSections = $derived(
-		getSections(activeFile.content).map((s) => ({
-			...s,
-			promptDisplay: s.rawPrompt
-				.replace('Start writing here...', '')
-				.replace(/^#{1,3} (.*$)/gm, '<div class="font-bold text-slate-900 text-lg mb-2">$1</div>')
-				.replace(/\n/g, '<br/>')
-		}))
-	);
 
 	async function runBuild() {
 		if (isBuilding) return;
@@ -603,18 +514,35 @@
 			'> Target: ' + activeFile.school
 		];
 		analysisResult = null;
+		progressPercent = 0;
+		analysisStep = 'Initializing...';
+		estimatedTime = 'Calculcating...';
 
-		// Simulate "build" steps
-		await new Promise((r) => setTimeout(r, 600));
+		// Stepped progress simulation
+
+		// Step 1: Parsing
+		analysisStep = 'Parsing Document Structure';
+		estimatedTime = '12s remaining';
+		progressPercent = 10;
+		await new Promise((r) => setTimeout(r, 800));
 		buildOutput = [...buildOutput, '> Parsing markdown...', '> Detecting essay structure...'];
 
-		await new Promise((r) => setTimeout(r, 800));
+		// Step 2: Identification
+		analysisStep = 'Identifying University Prompts';
+		estimatedTime = '9s remaining';
+		progressPercent = 30;
+		await new Promise((r) => setTimeout(r, 1200));
 		buildOutput = [
 			...buildOutput,
 			'> Integrating applicant profile...',
-			'> Integrating applicant profile...',
-			'> Handshake with PredictAdmit AI engine...'
+			'> Profile loaded: ' + profile.gpa_uw
 		];
+
+		// Step 3: Analysis
+		analysisStep = 'Analyzing Institutional Alignment';
+		estimatedTime = '5s remaining';
+		progressPercent = 60;
+		buildOutput = [...buildOutput, '> Handshake with PredictAdmit AI engine...'];
 
 		try {
 			// Re-use the existing essay-grader API logic
@@ -640,8 +568,14 @@
 			if (!res.ok) throw new Error('Grading failed');
 			const data = await res.json();
 
+			analysisStep = 'Generating Feedback';
+			estimatedTime = 'Almost done...';
+			progressPercent = 90;
+			await new Promise((r) => setTimeout(r, 800)); // Final polish wait
+
 			analysisResult = data;
 			buildOutput = [...buildOutput, '> Build Successful.', '> Analysis ready.'];
+			progressPercent = 100;
 
 			// Auto switch to result
 			setTimeout(() => {
@@ -654,6 +588,8 @@
 				'> Error: Build Failed.',
 				'> ' + (e.message || 'Unknown error')
 			];
+			analysisStep = 'Error';
+			estimatedTime = '';
 		} finally {
 			isBuilding = false;
 		}
@@ -675,11 +611,10 @@
 			const escapedQuote = quote.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 			const regex = new RegExp(`(${escapedQuote})`, 'i'); // Case insensitive match
 
-			// We use a specific class that interacts with the sidebar hover logic if needed,
-			// but for now simple visual highlight + tooltip title is MVP
+			// Interactive span with data-idx for event delegation
 			html = html.replace(
 				regex,
-				`<span class="bg-yellow-100 border-b-2 border-yellow-300 cursor-help relative group/highlight highlight-span" title="${ann.comment.replace(/"/g, '&quot;')}">$1</span>`
+				`<span class="bg-yellow-100 border-b-2 border-yellow-300 cursor-pointer hover:bg-yellow-200 transition-colors relative group/highlight highlight-span" data-idx="${idx}" title="${ann.comment.replace(/"/g, '&quot;')}">$1</span>`
 			);
 		});
 
@@ -1233,65 +1168,73 @@
 					<div class="flex-1 relative flex flex-col">
 						<div class="flex-1 relative overflow-y-auto custom-scrollbar p-8 space-y-12">
 							{#if analysisResult && activeTab === 'output'}
-								<!-- MODE: ANNOTATED VIEW (Read Only Highlight) -->
-								<!-- Click to dismiss -->
-								<div
-									class="w-full bg-slate-50 text-slate-800 font-serif text-lg leading-loose cursor-pointer hover:bg-slate-100/50 transition-colors p-2 rounded-xl"
-									onclick={() => {
-										activeTab = 'terminal';
-										analysisResult = null;
-										showTerminal = false;
-									}}
-									role="button"
-									tabindex="0"
-									onkeydown={() => {}}
-									title="Click to return to editing"
-								>
-									<!-- Interactive Highlight Render -->
-									<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-									{@html getHighlightedContent(
-										activeFile.content,
-										analysisResult.essays?.[0]?.annotations
-									)}
-								</div>
-							{:else}
-								<!-- MODE: SPLIT EDIT -->
-								{#each uiSections as section, idx}
-									<div class="space-y-4">
-										<!-- Read-Only Prompt -->
-										{#if section.promptDisplay}
-											<div
-												class="p-6 bg-slate-100/50 border border-slate-200 rounded-2xl select-text"
-											>
-												<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-												{@html section.promptDisplay}
-											</div>
-										{/if}
-
-										<!-- Writing Area -->
-										<div class="relative group">
-											<textarea
-												value={section.answer.trim()}
-												oninput={(e) => handleAnswerChange(idx, e.currentTarget.value)}
-												class="w-full bg-white text-slate-800 p-6 rounded-2xl border border-slate-200 focus:border-[#0052CC] focus:ring-4 focus:ring-blue-500/10 outline-none font-serif text-lg leading-relaxed shadow-sm transition-all min-h-[300px]"
-												placeholder="Paste your essay here..."
-												spellcheck="false"
-											></textarea>
-											<div
-												class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"
-											>
-												<span
-													class="text-[10px] font-bold text-slate-400 bg-slate-100 px-2 py-1 rounded"
-													>Auto-save & Scan</span
-												>
-											</div>
-										</div>
+								<!-- MODE: ANNOTATED VIEW (Interactive Highlight) -->
+								<div class="relative">
+									<!-- Exit Button -->
+									<div class="sticky top-0 z-20 flex justify-end mb-4">
+										<button
+											onclick={() => {
+												activeTab = 'terminal';
+												analysisResult = null;
+												showTerminal = false;
+											}}
+											class="bg-slate-900 text-white px-4 py-2 rounded-lg text-sm font-bold shadow-lg hover:bg-slate-800 transition-colors flex items-center gap-2"
+										>
+											<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+												<path
+													stroke-linecap="round"
+													stroke-linejoin="round"
+													stroke-width="2"
+													d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+												/>
+											</svg>
+											Back to Editor
+										</button>
 									</div>
 
-									{#if idx < uiSections.length - 1}
-										<div class="h-px bg-slate-200 my-8"></div>
-									{/if}
-								{/each}
+									<!-- Content Area -->
+									<div
+										class="w-full bg-slate-50 text-slate-800 font-serif text-lg leading-loose p-8 rounded-xl border border-slate-100"
+										onclick={(e) => {
+											// @ts-ignore
+											const span = e.target.closest('.highlight-span');
+											if (span && span instanceof HTMLElement) {
+												e.stopPropagation();
+												handleAnnotationClick(span.dataset.idx || '');
+											}
+										}}
+										role="button"
+										tabindex="0"
+										onkeydown={() => {}}
+									>
+										<!-- Interactive Highlight Render -->
+										<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+										{@html getHighlightedContent(
+											activeFile.content,
+											analysisResult.essays?.[0]?.annotations
+										)}
+									</div>
+								</div>
+							{:else}
+								<!-- MODE: SINGLE EDITOR -->
+								<div class="space-y-4 h-full flex flex-col">
+									<div class="relative group flex-1 flex flex-col">
+										<textarea
+											bind:value={activeFile.content}
+											class="w-full flex-1 bg-white text-slate-800 p-8 rounded-2xl border border-slate-200 focus:border-[#0052CC] focus:ring-4 focus:ring-blue-500/10 outline-none font-serif text-lg leading-loose shadow-sm transition-all resize-none"
+											placeholder="# Prompt\nPaste prompt here...\n\n# Response\nStart writing..."
+											spellcheck="false"
+										></textarea>
+										<div
+											class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"
+										>
+											<span
+												class="text-[10px] font-bold text-slate-400 bg-slate-100 px-2 py-1 rounded"
+												>Markdown Supported</span
+											>
+										</div>
+									</div>
+								</div>
 							{/if}
 						</div>
 
@@ -1371,14 +1314,45 @@
 
 							<div class="flex-1 overflow-y-auto p-6 bg-white custom-scrollbar pb-20">
 								{#if activeTab === 'terminal' && isBuilding}
-									<div class="space-y-4">
-										<div class="flex items-center gap-3 text-slate-500 text-sm">
-											<span class="h-2 w-2 rounded-full bg-[#0052CC] animate-ping"></span>
-											Connecting to PredictAdmit AI...
+									<div class="space-y-8 py-10">
+										<!-- Progress Circle -->
+										<div class="relative h-32 w-32 mx-auto">
+											<svg class="h-full w-full transform -rotate-90">
+												<circle
+													class="text-slate-100"
+													stroke-width="8"
+													stroke="currentColor"
+													fill="transparent"
+													r="58"
+													cx="64"
+													cy="64"
+												/>
+												<circle
+													class="text-[#0052CC] transition-all duration-500 ease-out"
+													stroke-width="8"
+													stroke-dasharray={365}
+													stroke-dashoffset={365 - (365 * progressPercent) / 100}
+													stroke-linecap="round"
+													stroke="currentColor"
+													fill="transparent"
+													r="58"
+													cx="64"
+													cy="64"
+												/>
+											</svg>
+											<div class="absolute inset-0 flex items-center justify-center flex-col">
+												<span class="text-2xl font-black text-slate-900">{progressPercent}%</span>
+											</div>
 										</div>
-										<div class="space-y-2 pl-5 border-l-2 border-slate-100">
-											{#each buildOutput as line}
-												<div class="text-xs text-slate-400 font-mono">{line}</div>
+
+										<div class="text-center space-y-2">
+											<h3 class="text-lg font-bold text-slate-900 animate-pulse">{analysisStep}</h3>
+											<p class="text-xs font-mono text-slate-400">{estimatedTime}</p>
+										</div>
+
+										<div class="space-y-1 pl-4 border-l-2 border-slate-100 opacity-60">
+											{#each buildOutput.slice(-3) as line}
+												<div class="text-[10px] text-slate-400 font-mono truncate">{line}</div>
 											{/each}
 										</div>
 									</div>
@@ -1418,9 +1392,13 @@
 												>
 													Line-by-Line Critique
 												</h3>
-												{#each analysisResult.essays[0].annotations as note}
+												{#each analysisResult.essays[0].annotations as note, i}
 													<div
-														class="p-3 rounded-lg bg-yellow-50 border border-yellow-100 text-xs space-y-1 hover:border-yellow-300 transition-colors cursor-pointer group"
+														id={`annotation-${i}`}
+														class="p-3 rounded-lg bg-yellow-50 border border-yellow-100 text-xs space-y-1 hover:border-yellow-300 transition-all cursor-pointer group scroll-mt-20 {activeAnnotationIndex ===
+														i
+															? 'ring-2 ring-blue-400 bg-blue-50'
+															: ''}"
 													>
 														<div
 															class="font-serif italic text-slate-600 border-l-2 border-yellow-400 pl-2"
@@ -1495,24 +1473,46 @@
 
 					<!-- TOGGLE -->
 					<div class="flex justify-center mt-8">
-						<div class="bg-slate-200 p-1 rounded-full flex relative">
+						<div
+							class="relative bg-slate-200/50 p-1.5 rounded-full flex items-center shadow-inner w-64 h-12 cursor-pointer"
+							onclick={() => (pricingMode = pricingMode === 'monthly' ? 'lifetime' : 'monthly')}
+							onkeydown={(e) =>
+								e.key === 'Enter' &&
+								(pricingMode = pricingMode === 'monthly' ? 'lifetime' : 'monthly')}
+							role="button"
+							tabindex="0"
+						>
+							<!-- Sliding Background -->
+							<div
+								class="absolute top-1.5 bottom-1.5 bg-white rounded-full shadow-lg border border-slate-100 transition-all duration-500 cubic-bezier(0.23, 1, 0.32, 1) w-[calc(50%-6px)]"
+								style="left: 6px; transform: translateX({pricingMode === 'monthly'
+									? '100%'
+									: '0%'})"
+							></div>
+
 							<button
-								onclick={() => (pricingMode = 'monthly')}
-								class="relative z-10 px-6 py-2 rounded-full text-sm font-bold transition-all {pricingMode ===
-								'monthly'
-									? 'text-[#0052CC] bg-white shadow-sm'
-									: 'text-slate-500 hover:text-slate-700'}"
+								onclick={(e) => {
+									e.stopPropagation();
+									pricingMode = 'lifetime';
+								}}
+								class="relative z-10 w-1/2 text-sm font-bold transition-colors duration-300 {pricingMode ===
+								'lifetime'
+									? 'text-slate-900'
+									: 'text-slate-500'}"
 							>
-								Monthly
+								Cycle Pass
 							</button>
 							<button
-								onclick={() => (pricingMode = 'lifetime')}
-								class="relative z-10 px-6 py-2 rounded-full text-sm font-bold transition-all {pricingMode ===
-								'lifetime'
-									? 'text-[#0052CC] bg-white shadow-sm'
-									: 'text-slate-500 hover:text-slate-700'}"
+								onclick={(e) => {
+									e.stopPropagation();
+									pricingMode = 'monthly';
+								}}
+								class="relative z-10 w-1/2 text-sm font-bold transition-colors duration-300 {pricingMode ===
+								'monthly'
+									? 'text-slate-900'
+									: 'text-slate-500'}"
 							>
-								Lifetime Pass
+								Monthly
 							</button>
 						</div>
 					</div>
