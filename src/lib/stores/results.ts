@@ -1,5 +1,5 @@
 import { writable, derived } from 'svelte/store';
-import { browser } from '$app/environment'; 
+import { browser } from '$app/environment';
 
 export type DecisionOutcome = 'admit' | 'deny' | 'waitlist' | 'defer';
 export let currentStoreVersion = 0;
@@ -28,8 +28,8 @@ export type AiResultsPayload = {
 function createResultsStore() {
   // 1. Initial Data: Check localStorage if in the browser
   const stored = browser ? localStorage.getItem('ai_results_cache') : null;
-  const initialValue: AiResultsPayload = stored 
-    ? JSON.parse(stored) 
+  const initialValue: AiResultsPayload = stored
+    ? JSON.parse(stored)
     : { decisions: [], raw: null };
 
   const { subscribe, set, update } = writable<AiResultsPayload>(initialValue);
@@ -68,8 +68,8 @@ function createResultsStore() {
 }
 
 export const aiResults = createResultsStore();
-export type OverrideMode = 'random' | 'accepted' | 'denied';
-export const manualOverrideMode = writable<OverrideMode>('random');
+export type OverrideMode = 'random' | 'accepted' | 'denied' | '';
+export const manualOverrideMode = writable<OverrideMode>('');
 
 // --- DERIVED LOOKUP MAPS ---
 

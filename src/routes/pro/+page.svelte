@@ -1525,13 +1525,13 @@
 						class="bg-white rounded-3xl border border-slate-200 p-8 shadow-sm hover:shadow-md transition-all relative overflow-hidden flex flex-col"
 					>
 						<div class="mb-6">
-							<h3 class="text-2xl font-bold text-slate-900">Candidate</h3>
+							<h3 class="text-2xl font-bold text-slate-900">Free Tier</h3>
 							<div class="flex items-baseline gap-1 mt-2">
 								<span class="text-4xl font-black text-slate-900">$0</span>
 								<span class="text-sm text-slate-500 font-medium">/ forever</span>
 							</div>
 							<p class="text-sm text-slate-400 mt-3 leading-relaxed">
-								Perfect for getting started with your list and basic simulations.
+								Perfect for fun simulations and testing your application.
 							</p>
 						</div>
 
@@ -1621,7 +1621,7 @@
 								<div class="flex justify-between items-start">
 									<div>
 										<h3 class="text-2xl font-bold text-slate-900">
-											Admit <span class="text-[#0052CC]">Pro</span>
+											PredictAdmit <span class="text-[#0052CC]">Pro</span>
 										</h3>
 										<div class="flex items-baseline gap-1 mt-2 h-10">
 											<div class="flex items-baseline gap-1">
