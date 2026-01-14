@@ -268,6 +268,7 @@
 		name: string;
 		role: string;
 		hoursPerWeek: string;
+		description: string;
 	};
 
 	let profile = $state({
@@ -292,7 +293,8 @@
 				id: Math.random().toString(36).substring(2, 9),
 				name: '',
 				role: '',
-				hoursPerWeek: ''
+				hoursPerWeek: '',
+				description: ''
 			}
 		];
 	}
@@ -316,7 +318,8 @@
 				id: Math.random().toString(36).substring(2, 9),
 				name: parts[0]?.trim() || 'Activity',
 				role: parts[1]?.trim() || 'Member',
-				hoursPerWeek: parts[2]?.trim() || '2' // Default assumption
+				hoursPerWeek: parts[2]?.trim() || '2', // Default assumption
+				description: ''
 			};
 		});
 
@@ -742,7 +745,8 @@
 			const legacyProfile = {
 				gpa: profile.gpa_uw + ' (UW) / ' + profile.gpa_w + ' (W)',
 				testScore: profile.testScore,
-				ecs: profile.ecs
+				ecs: profile.ecs,
+				activities: profile.activities
 			};
 
 			const res = await fetch('/essay-grader', {
@@ -1411,6 +1415,17 @@
 														placeholder="e.g. 5"
 														class="w-full bg-white px-3 py-1.5 rounded-lg border border-slate-200 text-sm font-medium text-slate-900 focus:outline-none focus:border-[#0052CC]"
 													/>
+												</div>
+												<div class="md:col-span-4 mt-2">
+													<label class="block text-[10px] font-bold uppercase text-slate-400 mb-1"
+														>Description / Details (Common App Style)</label
+													>
+													<textarea
+														bind:value={activity.description}
+														rows="2"
+														placeholder="Describe your responsibilities, achievements, and impact..."
+														class="w-full bg-white px-3 py-2 rounded-lg border border-slate-200 text-sm font-medium text-slate-900 focus:outline-none focus:border-[#0052CC] resize-none"
+													></textarea>
 												</div>
 											</div>
 											<button
