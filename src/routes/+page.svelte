@@ -333,12 +333,7 @@
 
 		// Auto-scroll to admit mail
 		setTimeout(() => {
-			const mailSection = document.getElementById('admit-mail-section');
-			if (mailSection) {
-				mailSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-			} else if (inboxSection) {
-				inboxSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-			}
+			window.scrollTo({ top: 0, behavior: 'smooth' });
 		}, 100);
 	};
 

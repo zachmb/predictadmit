@@ -32,8 +32,7 @@ const viewAnalysis = () => {
 
 <main class="min-h-screen bg-white text-gray-800 font-serif p-6">
   <div class="max-w-3xl mx-auto">
-    {#if !googleSignedIn || !$userProfile.usingAI}
-      {:else}
+    {#if googleSignedIn && $userProfile.usingAI}
     <div class="mb-6 flex justify-end">
       
       <button 

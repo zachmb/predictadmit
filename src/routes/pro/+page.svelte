@@ -225,6 +225,7 @@
 		school?: string; // If linked to a specific school's logic
 		isOpen: boolean;
 		isModified: boolean;
+		lastAnalysis?: any;
 	};
 
 	let files = $state<File[]>([
@@ -276,6 +277,8 @@
 		ecs: '', // Legacy string field, kept for compatibility if needed or migrated
 		activities: [] as Activity[],
 		rigor: 'Regular' as 'Regular' | 'Honors' | 'AP/IB',
+		gradeTrend: 'Steady' as 'Rising' | 'Steady' | 'Dipping',
+		lowestGrade: 'A' as 'A' | 'A-' | 'B+' | 'B' | 'B-' | 'C+' | 'C' | 'C-' | 'D' | 'F',
 		major: '',
 		state: '',
 		environment: 'Urban' as 'Urban' | 'Suburban' | 'Rural',
@@ -359,18 +362,37 @@
 		const effectiveGpa = gpaW > 0 ? Math.min(5.0, gpaW) : Math.min(4.0, gpaUw);
 
 		// 4.0 UW is typically ~75-80 depending on school profile.
-		// Let's say 4.0 = 75 pts base. +5 for Rigor.
-		let gpaScore = (effectiveGpa / 4.0) * 75;
+		// Let's say 4.0 = 70 pts base. Rigor & Trends add on top.
+		let gpaScore = (effectiveGpa / 4.0) * 70;
 
-		// Rigor Bonus
-		if (profile.rigor === 'AP/IB') gpaScore += 5;
-		else if (profile.rigor === 'Honors') gpaScore += 2;
+		// Rigor Bonus (More robust now)
+		if (profile.rigor === 'AP/IB') gpaScore += 8;
+		else if (profile.rigor === 'Honors') gpaScore += 4;
 
-		const gpaComponent = Math.min(80, gpaScore); // Cap at 80
+		// Grade Trend Adjustment
+		if (profile.gradeTrend === 'Rising') gpaScore += 3;
+		else if (profile.gradeTrend === 'Dipping') gpaScore -= 5;
+
+		// Lowest Grade Penalty (Red Flag Check)
+		const lowGrades = ['C', 'C-', 'D', 'F'];
+		const midGrades = ['B-', 'C+'];
+
+		if (lowGrades.includes(profile.lowestGrade)) {
+			// Significant penalty for C or lower
+			gpaScore -= 10;
+			if (profile.lowestGrade === 'D' || profile.lowestGrade === 'F') gpaScore -= 15; // Extra penalty
+		} else if (midGrades.includes(profile.lowestGrade)) {
+			gpaScore -= 3;
+		}
+
+		// Cap GPA component at 80 (perfect score)
+		// But allow exceptional candidates (5.0 GPA + AP + Rising) to hit it easily
+		const gpaComponent = Math.min(80, Math.max(0, gpaScore));
 
 		let total = testComponent + gpaComponent;
 
-		return Math.max(0, Math.round(total * 1.5)); // Scale to typical 240 index (80+80=160 -> *1.5 = 240)
+		// Scale to typical 240 index (80+80=160 -> *1.5 = 240)
+		return Math.max(0, Math.round(total * 1.5));
 	});
 
 	// Holistic Scores (Heuristics)
@@ -419,7 +441,7 @@
 	let buildOutput = $state<string[]>([]);
 	let analysisResult = $state<any>(null); // Store the grade result here
 	let showTerminal = $state(false); // Changed default to false to be cleaner
-	let activeTab = $state<'terminal' | 'output'>('output');
+	let activeTab = $state<'terminal' | 'output' | 'editor' | 'feedback'>('editor');
 
 	// New Progress State
 	let analysisStep = $state('');
@@ -488,7 +510,8 @@
 							...f,
 							content: saved.content,
 							isOpen: saved.isOpen,
-							isModified: saved.isModified
+							isModified: saved.isModified,
+							lastAnalysis: saved.lastAnalysis
 						};
 					return f;
 				});
@@ -639,8 +662,10 @@
 	// IDE Actions
 	function switchFile(index: number) {
 		activeFileIndex = index;
-		analysisResult = null; // Clear analysis on switch
-		showTerminal = false;
+		analysisResult = activeFile.lastAnalysis || null; // Restore analysis if exists
+		showTerminal = false; // Hide sidebar initially
+		// Default to editor, but if analysis exists, user might want to see it? Let's stick to editor.
+		activeTab = 'editor';
 		currentView = 'editor';
 	}
 
@@ -683,7 +708,7 @@
 		analysisResult = null;
 		progressPercent = 0;
 		analysisStep = 'Initializing...';
-		estimatedTime = 'Calculcating...';
+		estimatedTime = 'Calculating...';
 
 		// Stepped progress simulation
 
@@ -744,12 +769,19 @@
 			await new Promise((r) => setTimeout(r, 800)); // Final polish wait
 
 			analysisResult = data;
+
+			// Save analysis to file
+			const newFiles = [...files];
+			newFiles[activeFileIndex] = { ...activeFile, lastAnalysis: data };
+			files = newFiles;
+
 			buildOutput = [...buildOutput, '> Build Successful.', '> Analysis ready.'];
 			progressPercent = 100;
 
 			// Auto switch to result
 			setTimeout(() => {
-				activeTab = 'output';
+				activeTab = 'feedback';
+				showTerminal = true; // Show sidebar for details
 			}, 500);
 		} catch (e: any) {
 			console.error(e);
@@ -781,10 +813,10 @@
 			const escapedQuote = quote.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 			const regex = new RegExp(`(${escapedQuote})`, 'i'); // Case insensitive match
 
-			// Interactive span with data-idx for event delegation
+			// Interactive span (Highlight only, no tooltip)
 			html = html.replace(
 				regex,
-				`<span class="bg-yellow-100 border-b-2 border-yellow-300 cursor-pointer hover:bg-yellow-200 transition-colors relative group/highlight highlight-span" data-idx="${idx}" title="${ann.comment.replace(/"/g, '&quot;')}">$1</span>`
+				`<span class="bg-yellow-100 border-b-2 border-yellow-300 cursor-pointer hover:bg-yellow-200 transition-colors relative group/highlight highlight-span" data-idx="${idx}">$1</span>`
 			);
 		});
 
@@ -947,6 +979,25 @@
 					</button>
 				{/each}
 
+				<button
+					onclick={addNewSupplemental}
+					class="w-full text-left px-6 py-3 text-xs font-bold text-slate-400 hover:text-[#0052CC] hover:bg-slate-50 transition-all flex items-center gap-2 mt-2"
+				>
+					<div
+						class="w-5 h-5 rounded-full border border-dashed border-slate-300 flex items-center justify-center"
+					>
+						<svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M12 4v16m8-8H4"
+							/>
+						</svg>
+					</div>
+					<span>Add New Essay</span>
+				</button>
+
 				<!-- Import Modal -->
 				{#if showImportModal}
 					<div class="fixed inset-0 z-[200] flex items-center justify-center p-4">
@@ -1062,6 +1113,39 @@
 												<option>Regular</option>
 												<option>Honors</option>
 												<option>AP/IB</option>
+											</select>
+										</div>
+										<div>
+											<label class="block text-xs font-bold uppercase text-slate-500 mb-2"
+												>Grade Trend</label
+											>
+											<select
+												bind:value={profile.gradeTrend}
+												class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#0052CC] font-bold text-slate-900"
+											>
+												<option>Rising</option>
+												<option>Steady</option>
+												<option>Dipping</option>
+											</select>
+										</div>
+										<div>
+											<label class="block text-xs font-bold uppercase text-slate-500 mb-2"
+												>Lowest Grade</label
+											>
+											<select
+												bind:value={profile.lowestGrade}
+												class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#0052CC] font-bold text-slate-900"
+											>
+												<option>A</option>
+												<option>A-</option>
+												<option>B+</option>
+												<option>B</option>
+												<option>B-</option>
+												<option>C+</option>
+												<option>C</option>
+												<option>C-</option>
+												<option>D</option>
+												<option>F</option>
 											</select>
 										</div>
 										<div class="relative col-span-2">
@@ -1809,7 +1893,46 @@
 						<span class="text-slate-300">/</span>
 						<span class="font-bold text-slate-900">{activeFile.name.replace('.md', '')}</span>
 					</div>
-					<div class="flex items-center gap-3">
+					<div class="flex items-center gap-4">
+						<!-- View Toggles -->
+						<div class="flex bg-slate-100 p-1 rounded-lg">
+							<button
+								onclick={() => (activeTab = 'editor')}
+								class="px-4 py-1.5 text-xs font-bold rounded-md transition-all {activeTab ===
+								'editor'
+									? 'bg-white text-slate-900 shadow-sm'
+									: 'text-slate-500 hover:text-slate-700'}"
+							>
+								Write
+							</button>
+							<button
+								onclick={() => (activeTab = 'feedback')}
+								class="px-4 py-1.5 text-xs font-bold rounded-md transition-all flex items-center gap-2 {activeTab ===
+								'feedback'
+									? 'bg-white text-slate-900 shadow-sm'
+									: 'text-slate-500 hover:text-slate-700'}"
+								disabled={!analysisResult}
+							>
+								AI Feedback
+								{#if !analysisResult}
+									<svg
+										class="w-3 h-3 text-slate-400"
+										fill="none"
+										viewBox="0 0 24 24"
+										stroke="currentColor"
+										><path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+										/></svg
+									>
+								{/if}
+							</button>
+						</div>
+
+						<div class="w-px h-6 bg-slate-200"></div>
+
 						<span
 							class="text-xs font-medium {profile.gpa_uw ? 'text-emerald-500' : 'text-amber-500'}"
 						>
@@ -1841,16 +1964,16 @@
 					<!-- Text Editor -->
 					<div class="flex-1 relative flex flex-col">
 						<div class="flex-1 relative overflow-y-auto custom-scrollbar p-8 space-y-12">
-							{#if analysisResult && activeTab === 'output'}
+							{#if analysisResult && activeTab === 'feedback'}
 								<!-- MODE: ANNOTATED VIEW (Interactive Highlight) -->
 								<div class="relative">
 									<!-- Exit Button -->
 									<div class="sticky top-0 z-20 flex justify-end mb-4">
 										<button
 											onclick={() => {
-												activeTab = 'terminal';
-												analysisResult = null;
-												showTerminal = false;
+												activeTab = 'editor';
+												// Don't clear analysisResult, just switch tab
+												// showTerminal = false;
 											}}
 											class="bg-slate-900 text-white px-4 py-2 rounded-lg text-sm font-bold shadow-lg hover:bg-slate-800 transition-colors flex items-center gap-2"
 										>
@@ -2077,7 +2200,7 @@
 																label: k.replace(/([A-Z])/g, ' $1').trim(),
 																value: ((v as any).score || 0) * 10
 															}))}
-															size={280}
+															size={220}
 															max={100}
 															color="text-[#0052CC]"
 														/>
@@ -2124,21 +2247,58 @@
 													</div>
 												{/if}
 
-												<!-- HARSH FEEDBACK -->
-												{#if essay.harsh_feedback}
-													<div class="space-y-3">
-														<h3
-															class="text-xs font-bold text-slate-900 uppercase tracking-widest border-b border-slate-100 pb-2 text-rose-600"
-														>
-															Brutal Honest Feedback
-														</h3>
-														<div
-															class="p-4 bg-rose-50 rounded-xl border border-rose-100 text-sm text-rose-900 leading-relaxed italic"
-														>
-															{essay.harsh_feedback}
+												<!-- FEEDBACK SECTIONS -->
+												<div class="space-y-6 mb-8">
+													{#if essay.harsh_feedback}
+														<div class="p-5 bg-rose-50 rounded-xl border border-rose-100">
+															<h3
+																class="text-xs font-bold text-rose-700 uppercase tracking-widest mb-2 flex items-center gap-2"
+															>
+																<svg
+																	class="w-4 h-4"
+																	fill="none"
+																	viewBox="0 0 24 24"
+																	stroke="currentColor"
+																	><path
+																		stroke-linecap="round"
+																		stroke-linejoin="round"
+																		stroke-width="2"
+																		d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+																	/></svg
+																>
+																Brutal Feedback
+															</h3>
+															<p class="text-sm text-slate-700 leading-relaxed">
+																{essay.harsh_feedback}
+															</p>
 														</div>
-													</div>
-												{/if}
+													{/if}
+
+													{#if essay.honest_feedback}
+														<div class="p-5 bg-indigo-50 rounded-xl border border-indigo-100">
+															<h3
+																class="text-xs font-bold text-indigo-700 uppercase tracking-widest mb-2 flex items-center gap-2"
+															>
+																<svg
+																	class="w-4 h-4"
+																	fill="none"
+																	viewBox="0 0 24 24"
+																	stroke="currentColor"
+																	><path
+																		stroke-linecap="round"
+																		stroke-linejoin="round"
+																		stroke-width="2"
+																		d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+																	/></svg
+																>
+																Honest Feedback
+															</h3>
+															<p class="text-sm text-slate-700 leading-relaxed whitespace-pre-wrap">
+																{essay.honest_feedback}
+															</p>
+														</div>
+													{/if}
+												</div>
 											</div>
 										{/each}
 									</div>
@@ -2463,32 +2623,28 @@
 
 				<!-- Promo Code -->
 				<div class="text-center relative z-20">
-					{#if googleSignedIn}
-						<details class="group inline-block text-left">
-							<summary
-								class="text-xs text-slate-400 cursor-pointer hover:text-[#0052CC] transition-colors list-none select-none"
-								>Have a promo code?</summary
+					<details class="group inline-block text-left">
+						<summary
+							class="text-xs text-slate-400 cursor-pointer hover:text-[#0052CC] transition-colors list-none select-none"
+							>Have a promo code?</summary
+						>
+						<div
+							class="absolute left-1/2 -translate-x-1/2 mt-4 flex items-center justify-center gap-2 animate-in slide-in-from-top-2 duration-200 bg-white p-2 rounded-xl shadow-lg border border-slate-100 min-w-[300px]"
+						>
+							<input
+								type="text"
+								bind:value={promoCode}
+								placeholder="Enter code"
+								class="flex-1 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#0052CC]"
+							/>
+							<button
+								onclick={handlePromo}
+								class="px-4 py-2 bg-slate-100 text-slate-600 font-bold rounded-lg text-sm hover:bg-slate-200 transition-colors"
 							>
-							<div
-								class="absolute left-1/2 -translate-x-1/2 mt-4 flex items-center justify-center gap-2 animate-in slide-in-from-top-2 duration-200 bg-white p-2 rounded-xl shadow-lg border border-slate-100 min-w-[300px]"
-							>
-								<input
-									type="text"
-									bind:value={promoCode}
-									placeholder="Enter code"
-									class="flex-1 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#0052CC]"
-								/>
-								<button
-									onclick={handlePromo}
-									class="px-4 py-2 bg-slate-100 text-slate-600 font-bold rounded-lg text-sm hover:bg-slate-200 transition-colors"
-								>
-									Apply
-								</button>
-							</div>
-						</details>
-					{:else}
-						<p class="text-xs text-slate-400">Sign in to redeem promo codes.</p>
-					{/if}
+								Apply
+							</button>
+						</div>
+					</details>
 				</div>
 
 				<!-- FAQ Section -->
