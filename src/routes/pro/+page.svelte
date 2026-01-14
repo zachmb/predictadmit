@@ -271,12 +271,21 @@
 		description: string;
 	};
 
+	type Honor = {
+		id: string;
+		title: string;
+		gradeLevel: '9' | '10' | '11' | '12';
+		level: 'School' | 'State' | 'National' | 'International';
+		description: string;
+	};
+
 	let profile = $state({
 		gpa_uw: '',
 		gpa_w: '',
 		testScore: '',
 		ecs: '', // Legacy string field, kept for compatibility if needed or migrated
 		activities: [] as Activity[],
+		honors: [] as Honor[], // Added Honors
 		rigor: 'Regular' as 'Regular' | 'Honors' | 'AP/IB',
 		gradeTrend: 'Steady' as 'Rising' | 'Steady' | 'Dipping',
 		lowestGrade: 'A' as 'A' | 'A-' | 'B+' | 'B' | 'B-' | 'C+' | 'C' | 'C-' | 'D' | 'F',
@@ -301,6 +310,23 @@
 
 	function removeActivity(id: string) {
 		profile.activities = profile.activities.filter((a) => a.id !== id);
+	}
+
+	function addHonor() {
+		profile.honors = [
+			...profile.honors,
+			{
+				id: Math.random().toString(36).substring(2, 9),
+				title: '',
+				gradeLevel: '12',
+				level: 'School',
+				description: ''
+			}
+		];
+	}
+
+	function removeHonor(id: string) {
+		profile.honors = profile.honors.filter((h) => h.id !== id);
 	}
 
 	// Activities Import Logic
@@ -802,34 +828,53 @@
 	}
 
 	// Annotation Helper
-	function getHighlightedContent(content: string, annotations: any[]) {
-		if (!annotations || annotations.length === 0) return content;
+	function getHighlightedContent(
+		content: string,
+		annotations: any[],
+		activeIndex: number | null = null
+	) {
+		if (!annotations || annotations.length === 0) return content.replace(/\n/g, '<br/>');
 
-		// Very basic replace logic - in production use a robust token-based highlighter
-		// This just replaces the first occurrence safely
+		// 1. Escape HTML in the content first (so we match against the rendered text)
 		let html = content.replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
-		annotations.forEach((ann: any, idx: number) => {
+		// 2. Sort annotations by length (longest first) to prevent shorter sub-matches from breaking longer ones
+		// We make a copy to avoid mutating the original array if it matters (though flatMap created a new one)
+		const sortedanns = [...annotations]
+			.map((a, i) => ({ ...a, originalIndex: i }))
+			.sort((a, b) => b.quote.length - a.quote.length);
+
+		sortedanns.forEach((ann: any) => {
 			const quote = ann.quote.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-			if (quote.length < 5) return; // Skip too short quotes to avoid noise
+			if (quote.length < 5) return;
 
-			// Escape regex special chars
+			// Robust Match:
+			// 1. Escape regex characters in the quote
 			const escapedQuote = quote.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-			const regex = new RegExp(`(${escapedQuote})`, 'i'); // Case insensitive match
+			// 2. Allow any whitespace (newlines etc) where spaces are
+			const flexibleQuote = escapedQuote.replace(/\s+/g, '[\\s\\n\\r]+');
 
-			// Interactive span (Highlight only, no tooltip)
+			const regex = new RegExp(`(${flexibleQuote})`, 'i');
+
+			// Apply Active Class if index matches
+			const isActive = ann.originalIndex === activeIndex;
+			const activeClasses = isActive
+				? 'bg-yellow-300 border-yellow-500 ring-2 ring-yellow-400 z-10'
+				: 'bg-yellow-100 border-yellow-300 hover:bg-yellow-200';
+
+			// We use the ORIGINAL index for the data-idx so it matches the sidebar
 			html = html.replace(
 				regex,
-				`<span class="bg-yellow-100 border-b-2 border-yellow-300 cursor-pointer hover:bg-yellow-200 transition-colors relative group/highlight highlight-span" data-idx="${idx}">$1</span>`
+				`<span class="${activeClasses} border-b-2 cursor-pointer transition-colors relative group/highlight highlight-span" data-idx="${ann.originalIndex}">$1</span>`
 			);
 		});
 
-		// Preserve newlines
 		return html.replace(/\n/g, '<br/>');
 	}
 
 	// FAQ State
 	let openFaqIndex = $state<number | null>(null);
+	// ... kept faqs ...
 	const faqs = [
 		{
 			q: 'Does the simulation guarantee admission?',
@@ -1446,6 +1491,110 @@
 								</div>
 							{/if}
 						</div>
+
+						<!-- HONORS SECTION -->
+						<div class="bg-white rounded-3xl border border-slate-200 shadow-sm p-8 mt-6">
+							<div class="flex items-center justify-between mb-6 border-b border-slate-100 pb-2">
+								<h3 class="text-sm font-bold text-slate-900 uppercase tracking-widest">
+									Honors & Awards
+								</h3>
+								<button
+									onclick={addHonor}
+									class="text-xs font-bold text-[#0052CC] hover:text-blue-700 flex items-center gap-1"
+								>
+									<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+										><path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											d="M12 4v16m8-8H4"
+										/></svg
+									>
+									Add Honor
+								</button>
+							</div>
+
+							{#if profile.honors.length === 0}
+								<div
+									class="text-center py-8 text-slate-400 text-sm font-medium border-2 border-dashed border-slate-100 rounded-xl"
+								>
+									No honors added yet. Include academic awards or other recognitions.
+								</div>
+							{:else}
+								<div class="space-y-4">
+									{#each profile.honors as honor (honor.id)}
+										<div
+											class="flex gap-4 items-start p-4 bg-slate-50 rounded-xl border border-slate-100 group animate-in fade-in slide-in-from-bottom-2"
+										>
+											<div class="flex-1 grid grid-cols-1 md:grid-cols-4 gap-4">
+												<div class="md:col-span-2">
+													<label class="block text-[10px] font-bold uppercase text-slate-400 mb-1"
+														>Honor Title</label
+													>
+													<input
+														bind:value={honor.title}
+														placeholder="e.g. National Merit Finalist"
+														class="w-full bg-white px-3 py-1.5 rounded-lg border border-slate-200 text-sm font-bold text-slate-900 focus:outline-none focus:border-[#0052CC]"
+													/>
+												</div>
+												<div class="md:col-span-1">
+													<label class="block text-[10px] font-bold uppercase text-slate-400 mb-1"
+														>Grade Level</label
+													>
+													<select
+														bind:value={honor.gradeLevel}
+														class="w-full bg-white px-3 py-1.5 rounded-lg border border-slate-200 text-sm font-medium text-slate-900 focus:outline-none focus:border-[#0052CC]"
+													>
+														<option value="9">9th</option>
+														<option value="10">10th</option>
+														<option value="11">11th</option>
+														<option value="12">12th</option>
+													</select>
+												</div>
+												<div class="md:col-span-1">
+													<label class="block text-[10px] font-bold uppercase text-slate-400 mb-1"
+														>Level</label
+													>
+													<select
+														bind:value={honor.level}
+														class="w-full bg-white px-3 py-1.5 rounded-lg border border-slate-200 text-sm font-medium text-slate-900 focus:outline-none focus:border-[#0052CC]"
+													>
+														<option value="School">School</option>
+														<option value="State">State</option>
+														<option value="National">National</option>
+														<option value="International">International</option>
+													</select>
+												</div>
+												<div class="md:col-span-4 mt-2">
+													<label class="block text-[10px] font-bold uppercase text-slate-400 mb-1"
+														>Description / Explanation</label
+													>
+													<textarea
+														bind:value={honor.description}
+														rows="2"
+														placeholder="Briefly explain the significance of this award..."
+														class="w-full bg-white px-3 py-2 rounded-lg border border-slate-200 text-sm font-medium text-slate-900 focus:outline-none focus:border-[#0052CC] resize-none"
+													></textarea>
+												</div>
+											</div>
+											<button
+												onclick={() => removeHonor(honor.id)}
+												class="text-slate-300 hover:text-red-500 p-2 transition-colors mt-4"
+											>
+												<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+													><path
+														stroke-linecap="round"
+														stroke-linejoin="round"
+														stroke-width="2"
+														d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+													/></svg
+												>
+											</button>
+										</div>
+									{/each}
+								</div>
+							{/if}
+						</div>
 					</div>
 				</div>
 			{:else if currentView === 'mindmap'}
@@ -2025,7 +2174,8 @@
 											activeFile.content,
 											analysisResult.essays
 												? analysisResult.essays.flatMap((e: any) => e.annotations)
-												: []
+												: [],
+											activeAnnotationIndex
 										)}
 									</div>
 								</div>
@@ -2056,13 +2206,36 @@
 						<div
 							class="h-24 bg-white border-t border-slate-200 flex items-center justify-between px-8 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] z-50 pb-2"
 						>
-							<div class="text-xs text-slate-500 font-medium">
-								{analysisResult
-									? 'Viewing Analysis'
-									: profile.gpa_uw
-										? 'Profile Active'
-										: 'Update Stats in Dashboard for better results'}
+							<div class="flex items-center gap-6 flex-1">
+								<div class="text-xs text-slate-500 font-medium">
+									{analysisResult
+										? 'Viewing Analysis'
+										: profile.gpa_uw
+											? 'Profile Active'
+											: 'Update Stats in Dashboard for better results'}
+								</div>
+								<!-- Filler Content -->
+								<div class="h-8 w-px bg-slate-200"></div>
+								<div class="flex items-center gap-4">
+									<div class="flex flex-col">
+										<span class="text-[10px] uppercase font-bold text-slate-400 tracking-wider"
+											>Word Count</span
+										>
+										<span class="text-xs font-bold text-slate-700"
+											>{activeFile.content.length} chars</span
+										>
+									</div>
+									<div class="flex flex-col">
+										<span class="text-[10px] uppercase font-bold text-slate-400 tracking-wider"
+											>Reading Time</span
+										>
+										<span class="text-xs font-bold text-slate-700"
+											>~{Math.ceil(activeFile.content.split(' ').length / 200)} min</span
+										>
+									</div>
+								</div>
 							</div>
+
 							<div class="flex items-center gap-4">
 								<button
 									onclick={runBuild}
