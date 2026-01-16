@@ -444,9 +444,9 @@
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify({
-                    ...basePayload,
-                    supplementals: schoolSpecificSupplemental 
-                })
+						...basePayload,
+						supplementals: schoolSpecificSupplemental
+					})
 				});
 				if (myValidId !== currentStoreVersion) return;
 
@@ -1078,27 +1078,6 @@
 					class="rounded-2xl border border-slate-200 bg-white shadow-xl overflow-hidden mt-8"
 				>
 					<!-- Top bar -->
-					<div
-						class="flex items-center justify-between border-b border-slate-100 px-6 py-4 bg-slate-50/50"
-					>
-						<div>
-							<div class="flex items-center gap-2">
-								<span class="text-xs font-bold uppercase tracking-widest text-slate-500">
-									admitMail
-								</span>
-								<span
-									class="rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] text-emerald-700 border border-emerald-100 font-bold"
-								>
-									AI Generated
-								</span>
-							</div>
-						</div>
-						<div class="text-right text-[10px] text-slate-400">
-							<span class="font-medium text-slate-600">
-								{googleEmail || 'you@predictadmit.ai'}
-							</span>
-						</div>
-					</div>
 
 					{#if $userProfile.isSubmittingAI}
 						<div

@@ -1,318 +1,1059 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { fly } from 'svelte/transition';
-	import { cubicOut } from 'svelte/easing';
-
-	// Icons
-	import {
-		Play,
-		Check,
-		FileCheck,
-		Zap,
-		Layers,
-		Cpu,
-		Globe,
-		Crosshair,
-		FileText,
-		Smartphone
-	} from 'lucide-svelte';
-
-	// Config
-	// (Retaining logic imports to keep build clean if needed later, but they are unused in this layout)
+	import { get } from 'svelte/store';
 	import { schoolConfigs } from '$lib/config/schools';
+	import { onDestroy, onMount } from 'svelte';
+	import { goto } from '$app/navigation';
+	import { userProfile } from '$lib/stores/user';
+	import { aiResults, manualOverrideMode } from '$lib/stores/results';
+	import { type AiDecision, type DecisionOutcome } from '$lib/stores/results';
+	import SiteFooter from '$lib/components/layout/SiteFooter.svelte';
+	import AdmitMail from '$lib/components/AdmitMail.svelte';
+	import Card from '$lib/components/common/Card.svelte';
 
-	// Components
-	import CoralDrifters from '$lib/components/glass/CoralDrifters.svelte';
-	import DeepfakeChart from '$lib/components/glass/DeepfakeChart.svelte';
-	import BentoCard from '$lib/components/glass/BentoCard.svelte';
-	// DeepfakeChart and BentoCard are now used.
+	// --- Config & State Imports ---
+	import {
+		portals,
+		sentEmails,
+		calendarDates,
+		ED_DATE_LABEL,
+		RD_DATE_LABEL,
+		type PortalEmail,
+		type SentEmail,
+		type ApplicationPhase,
+		type PersistedState
+	} from '$lib/config/admitMail';
 
-	let scrollY = 0;
-	let activeTab = 'conversations';
+	// University search state
+	let searchQuery = '';
+	let showSearchResults = false;
+	let filteredUniversities: typeof portals = [];
+	let selectedIndex = -1;
 
-	const tabs = [
-		{ id: 'conversations', label: 'Conversations', icon: Smartphone },
-		{ id: 'documents', label: 'Documents', icon: FileCheck },
-		{ id: 'media', label: 'Images & Video', icon: Layers },
-		{ id: 'social', label: 'Social Media', icon: Globe }
-	];
-
-	function setActiveTab(id: string) {
-		activeTab = id;
+	// Filter universities as user types
+	$: {
+		const query = searchQuery.trim().toLowerCase();
+		if (query) {
+			filteredUniversities = portals
+				.filter((p) => p.name.toLowerCase().includes(query) || p.slug.toLowerCase().includes(query))
+				.slice(0, 5); // Show max 5 results
+			showSearchResults = filteredUniversities.length > 0;
+			selectedIndex = -1; // Reset selection on new search
+		} else {
+			filteredUniversities = [];
+			showSearchResults = false;
+			selectedIndex = -1;
+		}
 	}
 
-	// Simple scroll-based reveal helper
-	function reveal(node: HTMLElement) {
-		const observer = new IntersectionObserver(
-			(entries) => {
-				entries.forEach((entry) => {
-					if (entry.isIntersecting) {
-						node.classList.add('visible');
-						observer.unobserve(node);
-					}
-				});
-			},
-			{ threshold: 0.15 }
-		);
+	const handleKeydown = (e: KeyboardEvent) => {
+		if (!showSearchResults || filteredUniversities.length === 0) return;
 
-		observer.observe(node);
-		return {
-			destroy() {
-				observer.disconnect();
+		if (e.key === 'ArrowDown') {
+			e.preventDefault();
+			selectedIndex = (selectedIndex + 1) % filteredUniversities.length;
+		} else if (e.key === 'ArrowUp') {
+			e.preventDefault();
+			selectedIndex =
+				(selectedIndex - 1 + filteredUniversities.length) % filteredUniversities.length;
+		} else if (e.key === 'Enter') {
+			e.preventDefault();
+			if (selectedIndex >= 0 && selectedIndex < filteredUniversities.length) {
+				handleUniversitySelect(filteredUniversities[selectedIndex].slug);
+			} else if (filteredUniversities.length > 0) {
+				handleUniversitySelect(filteredUniversities[0].slug);
 			}
+		} else if (e.key === 'Escape') {
+			showSearchResults = false;
+		}
+	};
+
+	function handleUniversitySelect(slug: string) {
+		const mode = get(manualOverrideMode); // 'accepted' or 'denied'
+		const status: DecisionOutcome = mode === 'accepted' ? 'admit' : 'deny';
+		userProfile.update((u) => ({ ...u, usingAI: false }));
+
+		const currentResults = get(aiResults);
+		const schoolConfig = schoolConfigs[slug];
+		if (!schoolConfig) return;
+
+		const existingIndex = currentResults.decisions.findIndex((d) => d.slug === slug);
+		let updatedDecisions = [...currentResults.decisions];
+
+		if (existingIndex !== -1) {
+			updatedDecisions[existingIndex] = { ...updatedDecisions[existingIndex], outcome: status };
+		} else {
+			const newDecision: AiDecision = {
+				school: schoolConfig.schoolName,
+				slug: slug,
+				outcome: status,
+				academic_score: 0,
+				academic_explanation: 'N/A: random sim',
+				extracurricular_score: 0,
+				extracurricular_explanation: 'Manual Search Override',
+				fit_score: 0,
+				fit_explanation: 'Manual Search Override',
+				intellectual_score: 0,
+				intellectual_explanation: 'Manual Search Override',
+				character_score: 0,
+				character_explanation: 'Manual Search Override',
+				improvement_tips: ''
+			};
+			updatedDecisions.push(newDecision);
+		}
+
+		aiResults.setDecisions(updatedDecisions);
+		sessionStorage.setItem(`decision-${slug}`, status);
+		goto(`/portals/${slug}`);
+		searchQuery = '';
+		showSearchResults = false;
+	}
+
+	// --- State Variables (Existing Logic Kept) ---
+	let name = '';
+	let email = '';
+	let password = '';
+	let saveMessage = '';
+	let inboxSearchQuery = '';
+	let filteredPortals: PortalEmail[] = [];
+	let inboxSection: HTMLElement | null = null;
+	let hasAutoScrolledToInbox = false;
+	let sortedVisiblePortals: PortalEmail[] = [];
+	let selectedPortal: PortalEmail | null = null;
+	let selectedSent: SentEmail | null = null;
+	let activeFolder: 'inbox' | 'sent' = 'inbox';
+	let viewMode: 'inbox' | 'email' = 'inbox';
+	let readPortalSlugs: Set<string> = new Set();
+	let showAccountForm = false;
+	let showPassword = false;
+	let hasApplied = false;
+	let hasSavedProfile = false;
+	let visiblePortals: (PortalEmail & { outcome?: string })[] = [];
+	let isApplying = false;
+	let applicationPhase: ApplicationPhase = 'idle';
+	let calendarIndex = 0;
+	let calendarIntervalId: number | null = null;
+	let edChoiceSlug = '';
+	let currentEdPortal: PortalEmail | null = null;
+	let edEmailMustBeViewed = false;
+	let hasViewedEdEmail = false;
+	let edEmailRevealed = false;
+	let rdTimelineStarted = false;
+	let applyTimeoutIds: number[] = [];
+	let canApply = false;
+
+	const PERSIST_KEY = 'predictadmit_state_v1';
+
+	// --- Derived State ---
+	$: displayNameStr = name.trim() || 'Applicant';
+	$: displayEmailStr = email.trim() || 'you@example.com';
+	$: canApply = Boolean(name.trim() && email.trim() && password);
+
+	// --- Core Logic (Persistence, Calendar, Emails) ---
+	// (Collapsed for brevity - utilizing existing logic structure)
+	// ... [Persistence and Logic same as original file, ensuring app functionality remains] ...
+
+	const saveState = () => {
+		if (typeof localStorage === 'undefined') return;
+		const state: PersistedState = {
+			hasApplied,
+			hasSavedProfile,
+			calendarIndex,
+			applicationPhase,
+			edChoiceSlug,
+			currentEdSlug: currentEdPortal ? currentEdPortal.slug : null,
+			edEmailMustBeViewed,
+			hasViewedEdEmail,
+			edEmailRevealed,
+			rdTimelineStarted,
+			visiblePortalSlugs: visiblePortals.map((p) => p.slug),
+			readPortalSlugs: Array.from(readPortalSlugs)
 		};
+		try {
+			localStorage.setItem(PERSIST_KEY, JSON.stringify(state));
+		} catch (err) {
+			console.error(err);
+		}
+	};
+
+	const loadState = () => {
+		if (typeof localStorage === 'undefined') return;
+		const raw = localStorage.getItem(PERSIST_KEY);
+		if (!raw) return;
+		try {
+			const state = JSON.parse(raw) as Partial<PersistedState>;
+			hasApplied = !!state.hasApplied;
+			hasSavedProfile = !!state.hasSavedProfile;
+			if (typeof state.calendarIndex === 'number') calendarIndex = state.calendarIndex;
+			if (state.applicationPhase) applicationPhase = state.applicationPhase;
+			if (state.edChoiceSlug) edChoiceSlug = state.edChoiceSlug;
+			currentEdPortal = state.currentEdSlug
+				? (portals.find((p) => p.slug === state.currentEdSlug) ?? null)
+				: null;
+			edEmailMustBeViewed = !!state.edEmailMustBeViewed;
+			hasViewedEdEmail = !!state.hasViewedEdEmail;
+			edEmailRevealed = !!state.edEmailRevealed;
+			rdTimelineStarted = !!state.rdTimelineStarted;
+			if (state.visiblePortalSlugs)
+				visiblePortals = state.visiblePortalSlugs
+					.map((s) => portals.find((p) => p.slug === s))
+					.filter((p): p is PortalEmail => !!p) as any;
+			if (state.readPortalSlugs) readPortalSlugs = new Set(state.readPortalSlugs);
+			if (hasSavedProfile) showAccountForm = true;
+			if (rdTimelineStarted && visiblePortals.length < portals.length)
+				startRdEmailTimeline(currentEdPortal);
+		} catch (err) {
+			console.error(err);
+		}
+	};
+
+	onMount(() => {
+		loadState();
+		const savedIndex = localStorage.getItem('calendar_progress');
+		if (savedIndex !== null) {
+			calendarIndex = parseInt(savedIndex);
+			if (calendarIndex < calendarDates.length - 1) startCalendar();
+		}
+	});
+
+	// --- Handlers ---
+	const handleStartSimulationClick = () => {
+		// Scroll to account form or open modal
+		const el = document.getElementById('simulation-start');
+		el?.scrollIntoView({ behavior: 'smooth' });
+		showAccountForm = true;
+	};
+
+	// ... [Keeping existing helper functions: startCalendar, startRdEmailTimeline, formatTime, etc.] ...
+	const startCalendar = () => {
+		if (calendarIntervalId !== null) clearInterval(calendarIntervalId);
+		calendarIntervalId = window.setInterval(() => {
+			if (calendarIndex < calendarDates.length - 1) {
+				calendarIndex += 1;
+				localStorage.setItem('calendar_progress', calendarIndex.toString());
+			} else {
+				calendarIntervalId = null;
+				localStorage.removeItem('calendar_progress');
+			}
+		}, 700);
+	};
+
+	const startRdEmailTimeline = (edPortal: PortalEmail | null) => {
+		const rdPortals = edPortal ? portals.filter((p) => p.slug !== edPortal.slug) : portals;
+		rdPortals.forEach((portal, index) => {
+			const timeoutId = window.setTimeout(
+				() => {
+					if (!visiblePortals.some((vp) => vp.slug === portal.slug)) {
+						const decision = $aiResults.decisions.find((d) => d.slug === portal.slug);
+						const newPortalEntry = {
+							...portal,
+							outcome: decision?.outcome || 'deny',
+							received: getReceivedLabel(portal)
+						};
+						visiblePortals = [...visiblePortals, newPortalEntry as any];
+						if (index === rdPortals.length - 1) {
+							applicationPhase = 'finished';
+							userProfile.update((u) => ({ ...u, isSubmitting: false }));
+						}
+						saveState();
+					}
+				},
+				(index + 1) * 1000
+			);
+			applyTimeoutIds.push(timeoutId);
+		});
+	};
+
+	const formatTime = (h: number, m: number) => {
+		const suffix = h >= 12 ? 'PM' : 'AM';
+		const h12 = h > 12 ? h - 12 : h === 0 ? 12 : h;
+		return `${h12}:${m.toString().padStart(2, '0')} ${suffix}`;
+	};
+
+	const getReceivedLabel = (portal: PortalEmail): string => {
+		const idx = portals.findIndex((p) => p.slug === portal.slug);
+		if (currentEdPortal && portal.slug === currentEdPortal.slug) {
+			return `${ED_DATE_LABEL}, ${formatTime(16, 5 + idx * 2)}`;
+		}
+		return `${RD_DATE_LABEL}, ${formatTime(17, 1 + idx * 2)}`;
+	};
+
+	// --- App Flow Handlers ---
+
+	const generateFakeCredentials = () => {
+		name = 'Alex Smith';
+		email = 'alex.smith' + Math.floor(Math.random() * 9999) + '@example.com';
+		password = 'password123';
+	};
+
+	const handleApply = () => {
+		if (!canApply) return;
+		if (hasApplied) return;
+		userProfile.update((u) => ({ ...u, usingAI: false, isSubmitting: true }));
+		hasApplied = true;
+		aiResults.clear();
+		// Generate random decisions for this simulation mode
+		const randomDecisions = portals.map((p) => ({
+			school: p.name,
+			slug: p.slug,
+			outcome: Math.random() > 0.5 ? 'admit' : ('deny' as 'admit' | 'deny'),
+			academic_score: 0,
+			extracurricular_score: 0,
+			intellectual_score: 0,
+			fit_score: 0,
+			character_score: 0,
+			academic_explanation: 'Sim',
+			extracurricular_explanation: 'Sim',
+			fit_explanation: 'Sim',
+			intellectual_explanation: 'Sim',
+			character_explanation: 'Sim',
+			improvement_tips: 'Sim'
+		}));
+		aiResults.setDecisions(randomDecisions);
+
+		// Reset state
+		currentEdPortal = edChoiceSlug ? (portals.find((p) => p.slug === edChoiceSlug) ?? null) : null;
+		visiblePortals = [];
+		selectedPortal = null;
+		selectedSent = null;
+		readPortalSlugs = new Set();
+		inboxSearchQuery = '';
+		hasViewedEdEmail = false;
+		edEmailMustBeViewed = false;
+		edEmailRevealed = false;
+		rdTimelineStarted = false;
+		applyTimeoutIds.forEach((id) => clearTimeout(id));
+		applyTimeoutIds = [];
+		calendarIndex = 0;
+		startCalendar();
+
+		// Animation
+		isApplying = true;
+		applicationPhase = 'commonapp';
+		setTimeout(() => saveState(), 1000); // reduced to 1s as requested
+
+		// Auto-scroll to admit mail
+		setTimeout(() => {
+			window.scrollTo({ top: 0, behavior: 'smooth' });
+		}, 100);
+	};
+
+	const resetSimulation = () => {
+		applyTimeoutIds.forEach((id) => clearTimeout(id));
+		userProfile.update((u) => ({ ...u, isSubmitting: false }));
+		hasApplied = false;
+		hasSavedProfile = false;
+		showAccountForm = false;
+		visiblePortals = [];
+		calendarIndex = 0;
+		applicationPhase = 'idle';
+		if (typeof localStorage !== 'undefined') localStorage.removeItem(PERSIST_KEY);
+		// Reset local fields
+		name = '';
+		email = '';
+		password = '';
+	};
+
+	const startApplicationAnimation = () => {
+		/* ... kept simple in handleApply ... */
+	};
+
+	// --- Updates to visible portals ---
+	const handleSubmit = (event: SubmitEvent) => {
+		event.preventDefault();
+		const trimmedName = name.trim();
+		const trimmedEmail = email.trim();
+		userProfile.update((u) => ({
+			...u,
+			name: trimmedName,
+			email: trimmedEmail,
+			password // keep as typed
+		}));
+		hasSavedProfile = true;
+		saveMessage = 'Fake login saved.';
+		showAccountForm = true;
+		saveState();
+	};
+
+	$: if (hasApplied && applicationPhase === 'finished') {
+		sortedVisiblePortals = [...visiblePortals].sort(
+			(a, b) => new Date(b.received).getTime() - new Date(a.received).getTime()
+		);
+		if (inboxSection && !hasAutoScrolledToInbox) {
+			inboxSection.scrollIntoView({ behavior: 'smooth' });
+			hasAutoScrolledToInbox = true;
+		}
+	} else {
+		sortedVisiblePortals = [...visiblePortals];
+	}
+
+	$: filteredPortals = inboxSearchQuery.trim()
+		? sortedVisiblePortals.filter((p) =>
+				p.name.toLowerCase().includes(inboxSearchQuery.trim().toLowerCase())
+			)
+		: sortedVisiblePortals;
+
+	// --- View Handling ---
+	const handleSelectPortal = (p: PortalEmail) => {
+		selectedPortal = p;
+		viewMode = 'email';
+		readPortalSlugs.add(p.slug);
+		if (currentEdPortal && p.slug === currentEdPortal.slug) hasViewedEdEmail = true;
+		saveState();
+	};
+	const handleSelectSent = (s: SentEmail) => {
+		selectedSent = s;
+		viewMode = 'email';
+	};
+	const switchFolder = (f: 'inbox' | 'sent') => {
+		activeFolder = f;
+		viewMode = 'inbox';
+	};
+	const openInboxList = () => (viewMode = 'inbox');
+
+	// ED Reveal Logic
+	$: if (hasApplied) {
+		const d = calendarDates[calendarIndex];
+		if (currentEdPortal && !edEmailRevealed && d === ED_DATE_LABEL) {
+			visiblePortals = [currentEdPortal];
+			edEmailRevealed = true;
+			edEmailMustBeViewed = true;
+			if (calendarIntervalId) {
+				clearInterval(calendarIntervalId);
+				calendarIntervalId = null;
+			}
+		}
+		if (
+			currentEdPortal &&
+			edEmailRevealed &&
+			hasViewedEdEmail &&
+			viewMode === 'inbox' &&
+			!calendarIntervalId &&
+			!rdTimelineStarted &&
+			calendarIndex < calendarDates.length - 1
+		) {
+			startCalendar();
+		}
+		if (!rdTimelineStarted && d === RD_DATE_LABEL && (!currentEdPortal || hasViewedEdEmail)) {
+			rdTimelineStarted = true;
+			startRdEmailTimeline(currentEdPortal);
+			if (calendarIntervalId) {
+				clearInterval(calendarIntervalId);
+				calendarIntervalId = null;
+			}
+		}
+		saveState();
 	}
 </script>
 
-<svelte:window bind:scrollY />
-
 <svelte:head>
-	<title>GlassCoral - Clarity Starts Here</title>
-	<meta name="description" content="AI-powered fact-checking and media verification." />
+	<title>PredictAdmit - Admissions, Predicted.</title>
+	<meta
+		name="description"
+		content="Master your college application cycle with the world's most advanced admissions simulator."
+	/>
 </svelte:head>
 
-<CoralDrifters />
-
-<div class="relative z-10 w-full min-h-screen overflow-hidden">
-	<!-- SECTION 1: THE HERO -->
-	<section class="min-h-screen flex flex-col items-center justify-center text-center px-6 relative">
-		<div class="max-w-4xl space-y-8" in:fly={{ y: 30, duration: 1000, easing: cubicOut }}>
-			<h1 class="text-7xl md:text-8xl font-medium tracking-tight text-white leading-[1.1]">
-				<span class="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/50"
-					>Clarity</span
-				> starts here.
-			</h1>
-			<p class="text-xl text-white/60 max-w-2xl mx-auto font-light tracking-wide leading-relaxed">
-				AI-powered fact-checking and media verification from live meetings to articles, images, and
-				videos.
-			</p>
-
-			<div class="flex items-center justify-center gap-6 pt-4">
-				<button
-					class="px-8 py-4 rounded-full bg-living-coral text-white font-semibold shadow-[0_0_30px_-5px_rgba(255,140,105,0.4)] hover:scale-105 active:scale-95 transition-transform duration-300"
-				>
-					Get Early Access
-				</button>
-				<button
-					class="px-8 py-4 rounded-full bg-white/5 border border-white/10 text-white font-semibold backdrop-blur-md flex items-center gap-2 hover:bg-white/10 transition-colors"
-				>
-					Watch Demo <Play size={16} />
-				</button>
-			</div>
-		</div>
-	</section>
-
-	<!-- SECTION 2: INTERACTIVE TABS ("See through the Glass") -->
-	<section class="py-32 px-6 max-w-6xl mx-auto" use:reveal>
+<!-- MARKETING LANDING PAGE -->
+<main class="font-sans text-slate-900 bg-white selection:bg-blue-100 selection:text-blue-900">
+	<!-- HERO SECTION -->
+	<section class="relative pt-32 pb-24 md:pt-48 md:pb-32 overflow-hidden">
+		<!-- Background Decoration -->
 		<div
-			class="text-center mb-16 space-y-4 opacity-0 transition-all duration-1000 translate-y-8 reveal-target"
-		>
-			<h2 class="text-4xl md:text-5xl font-medium text-white tracking-tight">
-				See through the Glass
-			</h2>
-			<p class="text-lg text-white/50 max-w-2xl mx-auto">
-				Glass works in the background, scanning the world around you — text, images, audio, and
-				video — to separate fact from fiction in real time.
-			</p>
-		</div>
+			class="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-blue-50/50 rounded-[100%] blur-3xl -z-10 pointer-events-none"
+		></div>
 
-		<!-- Horizontal Tab Scroll -->
-		<div
-			class="flex justify-center gap-4 mb-12 flex-wrap opacity-0 transition-all duration-1000 delay-200 translate-y-8 reveal-target"
-		>
-			{#each tabs as tab}
-				<button
-					on:click={() => setActiveTab(tab.id)}
-					class="flex items-center gap-2 px-6 py-3 rounded-full border transition-all duration-300
-                           {activeTab === tab.id
-						? 'bg-white/10 border-white/20 text-white shadow-[0_0_20px_rgba(255,255,255,0.1)]'
-						: 'bg-white/[0.02] border-white/5 text-white/50 hover:bg-white/[0.05] hover:text-white/80'}"
-				>
-					<svelte:component this={tab.icon} size={16} />
-					<span class="font-medium text-sm">{tab.label}</span>
-				</button>
-			{/each}
-		</div>
-
-		<!-- Central Glass Pane Mockup -->
-		<div
-			class="relative w-full max-w-4xl mx-auto h-[500px] bg-black/40 rounded-3xl border border-white/10 backdrop-blur-xl overflow-hidden shadow-2xl opacity-0 transition-all duration-1000 delay-300 translate-y-8 reveal-target"
-		>
-			<div class="absolute inset-0 flex items-center justify-center text-white/20 font-mono">
-				<!-- Placeholder for dynamic image based on tab -->
-				Scanning: {activeTab.toUpperCase()}...
-			</div>
-
-			<!-- Scanning Line Animation -->
-			<div
-				class="absolute top-0 left-0 w-full h-[2px] bg-living-coral shadow-[0_0_20px_#FF8C69] animate-scan"
-			></div>
-		</div>
-	</section>
-
-	<!-- SECTION 3: DATA STORY (Holographic Chart) -->
-	<section class="py-32 px-6 max-w-5xl mx-auto" use:reveal>
-		<div class="grid md:grid-cols-2 gap-16 items-center">
-			<div class="space-y-6 opacity-0 transition-all duration-1000 translate-y-8 reveal-target">
-				<h2 class="text-4xl font-medium text-white tracking-tight">
-					The truth shouldn't be blurry.
-				</h2>
-				<p class="text-white/60 text-lg leading-relaxed">
-					Every day, fake news, AI-generated content, and distorted information flood our feeds.
-					It's harder than ever to know what's real and what's not. Glass gives you clarity.
+		<div class="max-w-[1200px] mx-auto px-6 text-center space-y-10 relative z-10">
+			<!-- Headline -->
+			<div class="space-y-6 max-w-4xl mx-auto">
+				<h1 class="text-5xl md:text-7xl font-[600] tracking-tight leading-[1.1] text-slate-900">
+					Simulate Any University Portal
+				</h1>
+				<p class="text-xl text-slate-500 max-w-2xl mx-auto leading-relaxed font-light">
+					Experience realistic college admission portals. Search for any university or run a full
+					simulation.
 				</p>
 			</div>
-			<div class="opacity-0 transition-all duration-1000 delay-200 translate-y-8 reveal-target">
-				<DeepfakeChart />
-			</div>
-		</div>
-	</section>
 
-	<!-- SECTION 4: BENTO GRID ("Why Glass") -->
-	<section class="py-32 px-6 max-w-6xl mx-auto" use:reveal>
-		<div
-			class="grid grid-cols-1 md:grid-cols-2 gap-6 opacity-0 transition-all duration-1000 translate-y-8 reveal-target"
-		>
-			<BentoCard
-				title="Sharp Accuracy"
-				description="Every claim, every source, every detail checked against the strongest signals. No fluff—just truth."
-			>
-				<div slot="icon"><Crosshair size={24} /></div>
-				<div slot="visual" class="h-2 flex items-center gap-1">
-					<div class="h-full w-20 bg-living-coral/50 rounded-full animate-pulse"></div>
-					<Check size={12} class="text-living-coral" />
+			<!-- Search Bar + Simulation Button -->
+			<!-- Search Bar + Simulation Button OR Simulation Interface -->
+			{#if !hasApplied}
+				<div class="max-w-xl mx-auto relative z-20">
+					<div
+						class="flex gap-2 p-1 bg-white rounded-2xl border border-slate-200 shadow-xl shadow-blue-100/50 relative"
+					>
+						<!-- Mode Selector (Accept/Deny) -->
+						<div class="relative flex-shrink-0">
+							<select
+								bind:value={$manualOverrideMode}
+								class="appearance-none h-full pl-4 pr-8 bg-slate-50 font-bold text-sm text-slate-900 rounded-xl border-none focus:ring-2 focus:ring-blue-500 outline-none cursor-pointer"
+							>
+								<option value="" disabled selected class="text-slate-500">Decision</option>
+								<option value="accepted">Accept</option>
+								<option value="denied">Reject</option>
+							</select>
+							<div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
+								<svg
+									class="w-3 h-3 text-slate-500"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke="currentColor"
+									><path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										stroke-width="2"
+										d="M19 9l-7 7-7-7"
+									/></svg
+								>
+							</div>
+						</div>
+
+						<!-- Search Input -->
+						<div class="flex-1 relative">
+							<input
+								type="text"
+								bind:value={searchQuery}
+								on:keydown={handleKeydown}
+								placeholder="Search university..."
+								class="w-full h-12 px-4 text-slate-900 placeholder:text-slate-400 font-medium outline-none bg-transparent"
+							/>
+							{#if searchQuery && showSearchResults}
+								<ul
+									class="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-xl border border-slate-100 overflow-hidden text-left z-50 animate-in fade-in slide-in-from-top-2 duration-200"
+								>
+									{#each filteredUniversities as university, i}
+										<li>
+											<button
+												class="w-full px-4 py-3 flex items-center justify-between hover:bg-blue-50 transition-colors {i ===
+												selectedIndex
+													? 'bg-blue-50'
+													: ''}"
+												on:click={() => handleUniversitySelect(university.slug)}
+											>
+												<span class="font-bold text-slate-900">{university.name}</span>
+												<span class="text-xs font-medium text-slate-400">View Portal &rarr;</span>
+											</button>
+										</li>
+									{/each}
+								</ul>
+							{/if}
+						</div>
+
+						<!-- Search Button Icon -->
+						<button
+							class="w-12 h-12 flex items-center justify-center bg-[#0052CC] text-white rounded-xl hover:bg-blue-700 transition-colors shadow-lg shadow-blue-200"
+						>
+							<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+								><path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2.5"
+									d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+								/></svg
+							>
+						</button>
+					</div>
+
+					<!-- Start Simulation Link (Secondary) -->
+					<div class="mt-6">
+						<button
+							on:click={handleStartSimulationClick}
+							class="text-sm font-bold text-slate-500 hover:text-[#0052CC] transition-colors underline decoration-slate-300 underline-offset-4 hover:decoration-[#0052CC]"
+						>
+							Or run a full cycle simulation &rarr;
+						</button>
+					</div>
 				</div>
-			</BentoCard>
-
-			<BentoCard
-				title="Transparent Proof"
-				description="We don't just say what's real—we show you why. Evidence, context, and reasoning you can trust."
-			>
-				<div slot="icon"><FileText size={24} /></div>
-				<div slot="visual" class="flex gap-2 opacity-50">
-					{#each [1, 2, 3] as i}
-						<div class="w-8 h-10 bg-white/10 border border-white/10 rounded"></div>
-					{/each}
-				</div>
-			</BentoCard>
-
-			<BentoCard
-				title="Built for Speed"
-				description="Get Answers in seconds. Forget hours of digging. Hit ⌘+/ to fact-check instantly—right where you are."
-			>
-				<div slot="icon"><Zap size={24} /></div>
+			{:else}
+				<!-- ACTIVE SIMULATION UI -->
 				<div
-					slot="visual"
-					class="flex items-center gap-2 font-mono text-xs text-white/40 border border-white/10 rounded px-2 py-1 w-fit bg-black/20"
+					class="max-w-4xl mx-auto relative z-20 mt-8 text-left animate-in fade-in slide-in-from-bottom-4 duration-500"
 				>
-					<span>⌘ + /</span>
-				</div>
-			</BentoCard>
+					<div class="flex items-center justify-between mb-4 px-2">
+						<h2 class="text-xl font-bold text-slate-900">Admissions Inbox</h2>
+						<button
+							on:click={resetSimulation}
+							class="text-sm text-red-600 hover:text-red-700 font-semibold bg-red-50 px-3 py-1 rounded-full"
+							>End Simulation</button
+						>
+					</div>
 
-			<BentoCard
-				title="Always With You"
-				description="Glass lives where you are—your browser, your chats, your workflow. No switching apps, no friction."
-			>
-				<div slot="icon"><Cpu size={24} /></div>
-				<div slot="visual" class="flex -space-x-2">
-					{#each [1, 2, 3, 4] as i}
+					<div class="bg-white rounded-xl shadow-2xl overflow-hidden border border-slate-200">
+						{#if visiblePortals.length === 0 && $userProfile.isSubmitting}
+							<div class="p-8 flex flex-col items-center justify-center gap-4">
+								<svg
+									class="w-12 h-12 text-blue-500 animate-spin"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke="currentColor"
+								>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										stroke-width="2"
+										d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+									/>
+								</svg>
+								<p class="text-slate-600 font-medium">Submitting your application...</p>
+							</div>
+						{:else}
+							<AdmitMail
+								bind:inboxSection
+								{viewMode}
+								{activeFolder}
+								searchQuery={inboxSearchQuery}
+								{filteredPortals}
+								{sortedVisiblePortals}
+								{visiblePortals}
+								{currentEdPortal}
+								{edEmailMustBeViewed}
+								{hasViewedEdEmail}
+								{readPortalSlugs}
+								{selectedPortal}
+								{selectedSent}
+								{sentEmails}
+								displayName={displayNameStr}
+								displayEmail={displayEmailStr}
+								{getReceivedLabel}
+								{resetSimulation}
+								selectPortal={handleSelectPortal}
+								selectSent={handleSelectSent}
+								{switchFolder}
+								{openInboxList}
+							/>{/if}
+					</div>
+				</div>
+			{/if}
+
+			<!-- Social Proof Ribbon -->
+			<div class="pt-8 flex items-center justify-center gap-6 opacity-80">
+				<div class="flex -space-x-3">
+					{#each Array(4) as _, i}
 						<div
-							class="w-8 h-8 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm"
-						></div>
+							class="w-10 h-10 rounded-full border-2 border-white bg-slate-200 relative overflow-hidden"
+						>
+							<img src={`https://i.pravatar.cc/150?img=${i + 10}`} alt="User" />
+						</div>
 					{/each}
 				</div>
-			</BentoCard>
+				<div class="flex flex-col items-start gap-0.5">
+					<div class="flex gap-1 text-[#0052CC]">
+						{#each Array(5) as _}
+							<svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"
+								><path
+									d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+								/></svg
+							>
+						{/each}
+					</div>
+					<span class="text-xs font-semibold text-slate-500">Trusted by 500 students</span>
+				</div>
+			</div>
 		</div>
 	</section>
 
-	<!-- SECTION 5: STEP FLOW ("How Glass Works") -->
-	<section class="py-32 px-6 max-w-6xl mx-auto" use:reveal>
-		<div class="grid md:grid-cols-2 gap-16">
-			<!-- Sticky Steps -->
-			<div class="space-y-12 opacity-0 transition-all duration-1000 translate-y-8 reveal-target">
-				<div>
-					<div class="text-living-coral font-medium mb-2">01. Overlay</div>
-					<h3 class="text-2xl text-white mb-2">Built for Speed.</h3>
-					<p class="text-white/50">Select text on any site, hit ⌘+/ (or Ctrl+/), get results.</p>
-				</div>
-				<div>
-					<div class="text-living-coral font-medium mb-2">02. Dashboard</div>
-					<h3 class="text-2xl text-white mb-2">Context on the go.</h3>
-					<p class="text-white/50">See fact-checks, source bias, credibility instantly.</p>
-				</div>
-				<div>
-					<div class="text-living-coral font-medium mb-2">03. Stay in flow</div>
-					<h3 class="text-2xl text-white mb-2">No tab-switching.</h3>
-					<p class="text-white/50">
-						Glass follows you around. Social posts, news articles, PDFs — if you can see it, you can
-						Glass it.
-					</p>
-				</div>
+	<!-- SECTION 1: FREE SIMULATOR -->
+	<section class="py-32 bg-slate-50 relative overflow-hidden">
+		<div class="max-w-[1200px] mx-auto px-6 relative z-10">
+			<!-- Headline -->
+			<div class="text-center max-w-2xl mx-auto mb-16 space-y-4">
+				<h2 class="text-4xl font-bold tracking-tight text-slate-900">
+					Free Portals & AI Simulations.
+				</h2>
+				<p class="text-lg text-slate-500">
+					Experience the rush of decision day without the risk. <span
+						class="text-[#0052CC] font-bold">100% Free.</span
+					>
+				</p>
 			</div>
 
-			<!-- Visual -->
-			<div
-				class="relative h-[400px] bg-white/[0.02] rounded-3xl border border-white/5 overflow-hidden opacity-0 transition-all duration-1000 delay-200 translate-y-8 reveal-target"
-			>
-				<div class="absolute inset-0 bg-gradient-to-b from-transparent to-abyss/50"></div>
+			<!-- Window-in-Window UI -->
+			<div class="relative max-w-5xl mx-auto">
+				<!-- Base Window: Browser -->
 				<div
-					class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white/10 font-bold text-6xl"
+					class="bg-white rounded-2xl shadow-2xl border border-slate-200/60 overflow-hidden relative z-10 select-none"
 				>
-					FLOW
+					<!-- Browser Bar -->
+					<div class="bg-slate-50 px-4 py-3 border-b border-slate-100 flex items-center gap-3">
+						<div class="flex gap-1.5">
+							<div class="w-3 h-3 rounded-full bg-red-400/80"></div>
+							<div class="w-3 h-3 rounded-full bg-amber-400/80"></div>
+							<div class="w-3 h-3 rounded-full bg-green-400/80"></div>
+						</div>
+						<div class="flex-1 text-center">
+							<div
+								class="bg-white border border-slate-200 rounded-md px-3 py-1 text-[10px] text-slate-400 inline-block w-64 shadow-sm"
+							>
+								portal.harvard.edu/status
+							</div>
+						</div>
+					</div>
+					<!-- Content: Portal -->
+					<div class="bg-white p-8 md:p-12 min-h-[450px] relative">
+						<!-- Header -->
+						<div class="flex items-center justify-between border-b border-slate-100 pb-6 mb-8">
+							<div class="flex items-center gap-3">
+								<div
+									class="w-10 h-10 bg-[#A51C30] text-white flex items-center justify-center font-serif font-bold text-xl rounded-md"
+								>
+									H
+								</div>
+								<span class="font-bold text-slate-900">Harvard College</span>
+							</div>
+							<div class="text-xs font-semibold text-slate-500">Applicant ID: 8900421</div>
+						</div>
+
+						<!-- Status Update Alert -->
+						<div
+							class="bg-blue-50 border border-blue-100 rounded-xl p-6 mb-8 flex items-start gap-4"
+						>
+							<div class="p-2 bg-blue-100 rounded-lg text-blue-600">
+								<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+									><path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										stroke-width="2"
+										d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+									/></svg
+								>
+							</div>
+							<div>
+								<h3 class="font-bold text-slate-900 text-sm">Status Update Available</h3>
+								<p class="text-xs text-slate-500 mt-1">
+									An update to your application was posted on March 27.
+								</p>
+								<div class="mt-3">
+									<span class="text-xs font-bold text-[#0052CC] hover:underline cursor-pointer"
+										>View Update &rarr;</span
+									>
+								</div>
+							</div>
+						</div>
+
+						<!-- Background elements -->
+						<div class="space-y-4 opacity-50 blur-[1px]">
+							<div class="h-4 bg-slate-100 rounded w-3/4"></div>
+							<div class="h-4 bg-slate-100 rounded w-1/2"></div>
+							<div class="h-32 bg-slate-50 rounded-xl border border-slate-100 w-full"></div>
+						</div>
+
+						<!-- CTA OVERLAY -->
+						<div class="absolute inset-0 flex items-center justify-center z-20">
+							<div
+								class="bg-white/80 backdrop-blur-md p-2 rounded-xl border border-white/20 shadow-xl"
+							>
+								<button
+									on:click={handleStartSimulationClick}
+									class="px-8 py-3 bg-slate-900 text-white font-bold rounded-lg hover:bg-black transition-all shadow-lg hover:scale-105 active:scale-95"
+								>
+									Start Simulation
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Glows -->
+				<div
+					class="absolute -top-10 -right-10 w-32 h-32 bg-blue-400 rounded-full blur-[80px] opacity-20"
+				></div>
+				<div
+					class="absolute -bottom-10 -left-10 w-40 h-40 bg-purple-400 rounded-full blur-[80px] opacity-20"
+				></div>
+			</div>
+		</div>
+	</section>
+
+	<!-- SECTION 2: PRO WORKSHOP -->
+	<section class="py-32 bg-white border-t border-slate-100">
+		<div class="max-w-[1100px] mx-auto px-6">
+			<div class="grid md:grid-cols-2 gap-16 items-center">
+				<!-- Text Content -->
+				<div class="space-y-8">
+					<span
+						class="inline-block px-3 py-1 bg-blue-50 text-[#0052CC] text-[10px] font-bold uppercase tracking-wider rounded-md"
+						>PredictAdmit Pro</span
+					>
+					<h2 class="text-4xl md:text-5xl font-black tracking-tight text-slate-900 leading-[1.1]">
+						Ivy League Essay Workshop.
+					</h2>
+					<p class="text-lg text-slate-600 leading-relaxed">
+						An advanced workshop, tailored per school, that takes in everything in your application
+						to help you craft essays perfectly tailored to you.
+					</p>
+
+					<ul class="space-y-4 pt-4">
+						{#each ['Institutional Archtype Analysis', 'Deep-Dive Essay Grading', 'Application Strategy Mapping'] as feature}
+							<li class="flex items-center gap-3 text-slate-700 font-medium">
+								<div
+									class="w-6 h-6 rounded-full bg-green-50 flex items-center justify-center text-green-600"
+								>
+									<svg
+										class="w-3.5 h-3.5"
+										fill="none"
+										viewBox="0 0 24 24"
+										stroke="currentColor"
+										stroke-width="3"
+										><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg
+									>
+								</div>
+								{feature}
+							</li>
+						{/each}
+					</ul>
+
+					<div class="pt-6">
+						<a
+							href="/pro"
+							class="inline-flex items-center gap-2 text-[#0052CC] font-bold hover:gap-3 transition-all"
+						>
+							Enter Workshop <span class="text-xl">&rarr;</span>
+						</a>
+					</div>
+				</div>
+
+				<!-- Visual: Pro Dashboard Mockup -->
+				<div class="relative group">
+					<div class="absolute inset-0 bg-blue-600 blur-[80px] opacity-20 rounded-full"></div>
+					<div
+						class="relative bg-white rounded-xl shadow-2xl border border-slate-200/60 overflow-hidden transform transition-all duration-500 hover:scale-[1.02] hover:shadow-blue-500/10"
+					>
+						<!-- Top Bar -->
+						<div
+							class="bg-white border-b border-slate-100 flex items-center px-4 py-3 justify-between"
+						>
+							<div class="flex items-center gap-2">
+								<div class="w-2.5 h-2.5 rounded-full bg-slate-200"></div>
+								<span class="text-xs font-bold text-slate-900 tracking-tight"
+									>Predict Admit Pro</span
+								>
+							</div>
+							<div class="flex items-center gap-2">
+								<div class="w-6 h-6 rounded-full bg-slate-100"></div>
+							</div>
+						</div>
+
+						<!-- Dashboard Layout -->
+						<div class="flex h-[320px]">
+							<!-- Sidebar -->
+							<div
+								class="w-32 bg-slate-50 border-r border-slate-100 p-3 hidden sm:flex flex-col gap-1"
+							>
+								<div class="p-2 rounded-lg bg-white border border-slate-200 shadow-sm mb-4">
+									<div class="h-1.5 w-12 bg-slate-200 rounded-full"></div>
+								</div>
+								{#each ['Dashboard', 'Essays', 'Mind Map', 'Schools'] as item, i}
+									<div
+										class="flex items-center gap-2 px-2 py-1.5 rounded-md {i === 0
+											? 'bg-blue-50 text-blue-600'
+											: 'text-slate-400'}"
+									>
+										<div
+											class="w-3 h-3 rounded-full {i === 0 ? 'bg-blue-400' : 'bg-slate-300'}"
+										></div>
+										<span class="text-[10px] font-bold">{item}</span>
+									</div>
+								{/each}
+							</div>
+
+							<!-- Main Content -->
+							<div class="flex-1 p-6 bg-slate-50/30 relative">
+								<!-- Header -->
+								<div class="mb-6">
+									<h4 class="text-lg font-bold text-slate-900">Admissions Overview</h4>
+									<p class="text-[10px] text-slate-400">Welcome back, Alex.</p>
+								</div>
+
+								<!-- Cards Grid -->
+								<div class="grid grid-cols-2 gap-3">
+									<!-- Analysis Card -->
+									<div
+										class="bg-white p-3 rounded-lg border border-slate-100 shadow-sm relative overflow-hidden"
+									>
+										<div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">
+											School Fit
+										</div>
+										<div class="flex items-end gap-1">
+											<span class="text-2xl font-black text-slate-900">92</span>
+											<span class="text-[10px] font-bold text-green-500 mb-1">High Match</span>
+										</div>
+										<!-- Mini Chart Visual -->
+										<div class="absolute bottom-0 right-0 p-2 opacity-20">
+											<svg class="w-12 h-12 text-blue-600" fill="currentColor" viewBox="0 0 20 20"
+												><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z" /><path
+													d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"
+												/></svg
+											>
+										</div>
+									</div>
+
+									<!-- Essay Status -->
+									<div class="bg-white p-3 rounded-lg border border-slate-100 shadow-sm">
+										<div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">
+											Essay Drafts
+										</div>
+										<div class="space-y-2">
+											<div class="flex items-center gap-2">
+												<div class="w-2 h-2 rounded-full bg-amber-400"></div>
+												<div class="h-1.5 w-16 bg-slate-100 rounded-full">
+													<div class="h-full w-3/4 bg-slate-200 rounded-full"></div>
+												</div>
+											</div>
+											<div class="flex items-center gap-2">
+												<div class="w-2 h-2 rounded-full bg-green-400"></div>
+												<div class="h-1.5 w-16 bg-slate-100 rounded-full">
+													<div class="h-full w-full bg-slate-200 rounded-full"></div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<!-- Alert Toast -->
+								<div
+									class="absolute bottom-4 left-6 right-6 bg-slate-900 text-white p-3 rounded-lg shadow-xl flex items-center gap-3 animate-bounce-slow"
+								>
+									<div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+									<div>
+										<div class="text-[10px] font-bold uppercase text-slate-400">
+											AI Notification
+										</div>
+										<div class="text-xs font-medium">Your Stanford analysis is ready.</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</section>
 
-	<!-- SECTION 6: TITAN FOOTER -->
-	<footer class="relative pt-32 pb-0 overflow-hidden text-center" use:reveal>
-		<div
-			class="opacity-0 transition-all duration-1000 translate-y-8 reveal-target relative z-10 mb-8 px-6"
-		>
-			<p class="text-white/40 text-sm max-w-md mx-auto">
-				AI-powered fact-checking and media verification — from live meetings to articles, images,
-				and videos.
-			</p>
-		</div>
+	<!-- START SIMULATION (APP ENTRY) -->
+	<section id="simulation-start" class="py-24 bg-white border-t border-slate-100">
+		<div class="max-w-[800px] mx-auto px-6 text-center space-y-8">
+			<div class="space-y-4">
+				<h2 class="text-3xl font-bold text-slate-900">Ready to begin?</h2>
+				<p class="text-slate-500">
+					Create a temporary profile to start your free simulation or upgrade for the full workshop.
+				</p>
+			</div>
 
-		<div
-			class="relative z-0 select-none pointer-events-none opacity-0 transition-all duration-1500 delay-300 translate-y-20 reveal-target leading-none"
-		>
-			<h1
-				class="text-[12rem] md:text-[20rem] font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white/10 to-transparent translate-y-[30%]"
+			<div
+				class="bg-white p-8 rounded-2xl shadow-xl border border-slate-200 text-left max-w-md mx-auto"
 			>
-				GLASSCORAL
-			</h1>
+				{#if showAccountForm}
+					<form on:submit={handleSubmit} class="space-y-5">
+						<div class="space-y-4">
+							<div>
+								<label for="name" class="block text-xs font-bold uppercase text-slate-500 mb-1"
+									>Applicant Name</label
+								>
+								<div class="flex gap-2">
+									<input
+										id="name"
+										type="text"
+										bind:value={name}
+										placeholder="e.g. Jordan Lee"
+										class="flex-1 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+									/>
+									<button
+										type="button"
+										on:click={generateFakeCredentials}
+										class="text-xs font-bold text-[#0052CC] hover:underline px-2">Auto-fill</button
+									>
+								</div>
+							</div>
+							<div>
+								<label for="email" class="block text-xs font-bold uppercase text-slate-500 mb-1"
+									>Fake Email</label
+								>
+								<input
+									id="email"
+									type="email"
+									bind:value={email}
+									placeholder="jordan.lee@example.com"
+									class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+								/>
+							</div>
+							<div class="relative">
+								<label for="password" class="block text-xs font-bold uppercase text-slate-500 mb-1"
+									>Fake Password</label
+								>
+								<input
+									id="password"
+									type={showPassword ? 'text' : 'password'}
+									bind:value={password}
+									placeholder="••••••••"
+									class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+								/>
+							</div>
+						</div>
+
+						<div class="pt-2">
+							<button
+								type="submit"
+								on:click={handleApply}
+								class="w-full py-3 bg-[#0052CC] text-white font-bold rounded-xl hover:bg-blue-700 transition-colors shadow-lg shadow-blue-200"
+							>
+								Start Application Cycle
+							</button>
+							<p class="text-[10px] text-center text-slate-400 mt-3">
+								By clicking Start, you agree to our terms. This is a simulation.
+							</p>
+						</div>
+					</form>
+				{:else}
+					<div class="text-center py-8 space-y-6">
+						<div
+							class="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto text-[#0052CC]"
+						>
+							<svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+								><path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M12 4v16m8-8H4"
+								/></svg
+							>
+						</div>
+						<p class="text-sm text-slate-600">
+							The Simulator is always free. We fund it through our Pro tools.
+						</p>
+						<button
+							on:click={() => (showAccountForm = true)}
+							class="w-full py-3 bg-slate-900 text-white font-bold rounded-xl hover:bg-slate-800 transition-colors"
+						>
+							Start Free Simulation
+						</button>
+					</div>
+				{/if}
+			</div>
 		</div>
-	</footer>
-</div>
+	</section>
 
-<style>
-	:global(.reveal-target) {
-		/* Initial state handled by utility classes in marker but overridden here via specificity if needed */
-	}
-	:global(.visible .reveal-target) {
-		opacity: 1 !important;
-		transform: translateY(0) !important;
-	}
+	<!-- TESTIMONIAL (NAVY) -->
+	<section class="py-24 bg-[#001F3F] text-white">
+		<div class="max-w-[1200px] mx-auto px-6 text-center">
+			<div class="max-w-3xl mx-auto space-y-8">
+				<div class="flex justify-center text-[#0052CC]">
+					{#each Array(5) as _}
+						<svg class="w-6 h-6 fill-current" viewBox="0 0 20 20"
+							><path
+								d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+							/></svg
+						>
+					{/each}
+				</div>
+				<blockquote class="text-2xl md:text-4xl font-serif leading-relaxed opacity-90">
+					"ts was lowkenuinely accurate"
+				</blockquote>
+				<div class="pt-4">
+					<div class="font-bold">Miao S.</div>
+					<div class="text-sm text-slate-400">Accepted to Northwestern '30</div>
+				</div>
+			</div>
+		</div>
+	</section>
 
-	@keyframes scan {
-		0% {
-			top: 0;
-			opacity: 0;
-		}
-		10% {
-			opacity: 1;
-		}
-		90% {
-			opacity: 1;
-		}
-		100% {
-			top: 100%;
-			opacity: 0;
-		}
-	}
-	.animate-scan {
-		animation: scan 3s ease-in-out infinite;
-	}
-</style>
+	<SiteFooter />
+</main>

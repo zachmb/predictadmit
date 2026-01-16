@@ -2525,13 +2525,13 @@
 			<div class="max-w-6xl w-full mx-auto space-y-16 relative z-10">
 				<!-- Header -->
 				<div class="text-center space-y-6 max-w-3xl mx-auto">
-					<h1 class="text-4xl md:text-5xl font-black tracking-tight text-slate-900 leading-tight">
-						Master your application. <br />
-						<span class="text-[#0052CC]">Predict your future.</span>
+					<h1 class="text-4xl md:text-6xl font-black tracking-tight text-slate-900 leading-tight">
+						Ivy League essays<br />
+						<span class="text-[#0052CC]">in 5 minutes.</span>
 					</h1>
-					<p class="text-lg text-slate-500 max-w-xl mx-auto leading-relaxed">
-						Join thousands of students using AI to craft the perfect application and estimate their
-						admissions chances.
+					<p class="text-lg text-slate-500 max-w-xl mx-auto leading-relaxed mt-6">
+						<span class="font-bold text-slate-900">PredictAdmit Pro:</span> the cheapest essay tool that
+						works. Got us into T10s. Northwestern, Yale, etc.
 					</p>
 
 					<!-- TOGGLE -->
@@ -2836,7 +2836,7 @@
 				</div>
 
 				<!-- FAQ Section -->
-				<div class="max-w-2xl mx-auto pt-12 space-y-8">
+				<div class="max-w-2xl mx-auto pt-24 space-y-8">
 					<div class="text-center">
 						<h2 class="text-2xl font-bold text-slate-900">Frequently Asked Questions</h2>
 					</div>
