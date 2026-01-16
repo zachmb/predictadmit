@@ -1,10 +1,6 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @theme {
-  /* Default (Light Mode) Palette */
-  --color-brand-bg: #F8FAFC; /* slate-50 */
-  --color-brand-text: #0F172A; /* slate-900 */
-  
   /* Vigilante/Authority Accents (Universal) */
   --color-brand-crimson: #A51C30; /* Harvard/Stress */
   --color-brand-navy: #00356B; /* Yale/Authority */

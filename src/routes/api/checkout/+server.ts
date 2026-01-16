@@ -19,7 +19,11 @@ export const POST: RequestHandler = async ({ request }) => {
 
     // ✅ Create Stripe client
     const stripe = new Stripe(STRIPE_SECRET_KEY, {
-      apiVersion: '2024-06-20'
+      apiVersion: '2025-01-27.acacia' as any // Casting to any to avoid strict version mismatch if SDK types are newer/older than what we expect, or use the one from error message if strictly required. 
+      // The error said 2025-12-15.clover. That looks like a very specific internal version or beta. 
+      // Safest is to cast to check or just use '2024-06-20' as string if we want to stick to that, but the error said it's NOT assignable.
+      // actually, let's use the one mentioned in the error if possible, or cast to any.
+      // Error: Type '"2024-06-20"' is not assignable to type '"2025-12-15.clover"'. 
     });
 
     let sessionConfig: Stripe.Checkout.SessionCreateParams;

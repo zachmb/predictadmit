@@ -1,5 +1,5 @@
 // src/lib/server/ocr.ts
-import { createWorker } from '@tesseract.js/node';
+import { createWorker } from 'tesseract.js';
 import type { Worker } from 'tesseract.js';
 import { Buffer } from 'node:buffer';
 

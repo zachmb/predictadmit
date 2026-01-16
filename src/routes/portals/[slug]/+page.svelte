@@ -56,7 +56,24 @@
 
 	// ----------------- STATE -----------------
 
-	let profile: UserProfile = { name: '', email: '', password: '' };
+	let profile: UserProfile = {
+		name: '',
+		email: '',
+		password: '',
+		isPro: false,
+		requestCount: 0,
+		applicationProfile: {
+			gpa: '',
+			essays: '',
+			activities: '',
+			awards: '',
+			rigor: ''
+		},
+		schoolList: [],
+		usingAI: false,
+		isSubmitting: false,
+		isSubmittingAI: false
+	};
 	let emailInput = '';
 	let passwordInput = '';
 	let error = '';
@@ -72,7 +89,7 @@
 
 	$: profile = $userProfile;
 
-	$: currentSlug = $page.params.slug;
+	$: currentSlug = $page.params.slug ?? '';
 
 	$: school = schoolConfigs[currentSlug];
 

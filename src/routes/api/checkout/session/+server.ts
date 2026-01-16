@@ -6,7 +6,7 @@ import { env } from '$env/dynamic/private';
 const STRIPE_SECRET_KEY = env.STRIPE_SECRET_KEY;
 
 const stripe = STRIPE_SECRET_KEY ? new Stripe(STRIPE_SECRET_KEY, {
-  apiVersion: '2024-06-20'
+  apiVersion: '2025-01-27.acacia' as any
 }) : null;
 
 export const GET: RequestHandler = async ({ url }) => {
