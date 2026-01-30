@@ -662,38 +662,56 @@
 	<title>PredictAdmit – AI Admissions Inbox</title>
 </svelte:head>
 
-<main class="relative min-h-screen bg-slate-50 text-slate-900 overflow-hidden font-sans">
+<main class="relative min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-slate-50 text-slate-900 overflow-hidden font-sans">
+	<!-- Decorative background elements -->
+	<div class="absolute inset-0 overflow-hidden pointer-events-none">
+		<div class="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-br from-blue-100/40 to-transparent rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
+		<div class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-to-tr from-emerald-100/30 to-transparent rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2"></div>
+	</div>
+
 	<!-- Main content wrapper -->
-	<div class="">
+	<div class="relative z-10">
 		<div class="max-w-[1000px] mx-auto px-6 py-24 space-y-16">
 			<!-- Hero -->
-			<header class="text-center space-y-4 max-w-2xl mx-auto">
-				<h1 class="text-5xl font-bold tracking-tight text-slate-900 drop-shadow-sm">
-					Predict Your College Results.
+			<header class="text-center space-y-6 max-w-2xl mx-auto">
+				<div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-600/10 to-emerald-600/10 border border-blue-200/50 backdrop-blur-sm">
+					<span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
+					<span class="text-xs font-bold text-blue-700 tracking-wide">AI-POWERED ADMISSIONS SIMULATOR</span>
+				</div>
+				
+				<h1 class="text-6xl font-black tracking-tight text-slate-900 leading-[1.1]">
+					Predict Your College<br/>
+					<span class="bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 bg-clip-text text-transparent">
+						Results
+					</span>
 				</h1>
-				<p class="text-lg text-slate-600 font-light max-w-xl mx-auto leading-relaxed">
-					Get <span class="font-semibold text-emerald-600">unlimited free AI simulations</span>.
-					Assesses in depth every aspect of your application — trained and tuned to real admissions
-					results.
+				
+				<p class="text-lg text-slate-600 font-normal max-w-xl mx-auto leading-relaxed">
+					Get <span class="font-bold text-emerald-600 relative">
+						unlimited free AI simulations
+						<svg class="absolute -bottom-1 left-0 w-full h-2" viewBox="0 0 100 10" preserveAspectRatio="none">
+							<path d="M0,7 Q25,3 50,7 T100,7" stroke="currentColor" stroke-width="2" fill="none" class="text-emerald-300"/>
+						</svg>
+					</span>.
+					Every aspect of your application analyzed in depth—trained on real admissions results.
 				</p>
 			</header>
 
 			<!-- Application builder + AI controls -->
 			<section class="max-w-2xl mx-auto">
 				<!-- Application card -->
-				<Card class="bg-white border border-slate-200 shadow-xl text-slate-900">
-					<div class="p-8">
+				<Card class="bg-white/80 backdrop-blur-xl border border-slate-200/60 shadow-2xl text-slate-900 rounded-3xl overflow-hidden">
+					<div class="p-8 md:p-10">
 						<!-- Google sign-in bar -->
-						<div
-							class="mb-8 flex flex-col items-center justify-between gap-4 border-b border-slate-700 pb-6 md:flex-row"
-						>
-							<div class="space-y-1">
-								<h2 class="font-bold text-slate-900">Applicant Context</h2>
+						<div class="mb-10 flex flex-col items-center justify-between gap-4 border-b border-slate-200 pb-8 md:flex-row">
+							<div class="space-y-1.5">
+								<h2 class="font-bold text-xl text-slate-900 tracking-tight">Applicant Context</h2>
+								<p class="text-xs text-slate-500">Your information stays private</p>
 							</div>
 
 							<div class="flex items-center gap-3">
 								{#if googleSignedIn}
-									<div class="text-xs text-right">
+									<div class="text-xs text-right bg-slate-50 rounded-xl px-4 py-3 border border-slate-200">
 										<div class="font-bold text-slate-900">
 											{googleName || 'Signed in'}
 										</div>
@@ -704,12 +722,18 @@
 								{:else}
 									<button
 										type="button"
-										class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-bold text-slate-900 hover:bg-slate-50"
+										class="group inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-bold text-slate-900 shadow-lg shadow-slate-900/5 border border-slate-200 hover:shadow-xl hover:border-slate-300 hover:-translate-y-0.5 transition-all duration-200"
 										onclick={() => {
 											saveToStore();
 											signIn('google', { callbackUrl: '/ai' });
 										}}
 									>
+										<svg class="w-4 h-4" viewBox="0 0 24 24">
+											<path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+											<path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+											<path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+											<path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+										</svg>
 										<span>Continue with Google</span>
 									</button>
 								{/if}
@@ -727,19 +751,27 @@
 						>
 							<!-- PDF info + OCR upload area -->
 							<div class="grid gap-6">
-								<div class="rounded-lg bg-slate-50 p-4 border border-slate-100">
-									<div class="flex items-center justify-between mb-3">
-										<h3 class="text-sm font-bold text-slate-900">Import from PDF</h3>
-										<span
-											class="text-[10px] uppercase font-bold tracking-wider text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full border border-emerald-100"
-											>OCR Beta</span
-										>
+								<div class="group rounded-2xl bg-gradient-to-br from-slate-50 to-blue-50/30 p-6 border border-slate-200/60 hover:border-blue-300/40 transition-all duration-300">
+									<div class="flex items-center justify-between mb-4">
+										<div class="flex items-center gap-3">
+											<div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-500/25">
+												<svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+													<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+												</svg>
+											</div>
+											<div>
+												<h3 class="text-sm font-bold text-slate-900">Import from PDF</h3>
+												<p class="text-xs text-slate-500 mt-0.5">Extract your Common App data instantly</p>
+											</div>
+										</div>
+										<span class="inline-flex items-center gap-1.5 text-[10px] uppercase font-bold tracking-wider text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-full border border-emerald-200/60 shadow-sm">
+											<span class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span>
+											OCR Beta
+										</span>
 									</div>
 
-									<label class="flex items-center gap-3 cursor-pointer group">
-										<div
-											class="bg-white border border-slate-300 text-slate-600 px-4 py-2 rounded-[var(--radius-btn)] text-xs font-semibold group-hover:bg-slate-50 transition-colors"
-										>
+									<label class="flex items-center gap-3 cursor-pointer group/button">
+										<div class="bg-white border-2 border-slate-300 text-slate-700 px-5 py-2.5 rounded-xl text-sm font-semibold group-hover/button:bg-slate-50 group-hover/button:border-blue-400 group-hover/button:text-blue-700 transition-all duration-200 shadow-sm">
 											Choose File
 										</div>
 										<input
@@ -748,54 +780,69 @@
 											class="hidden"
 											onchange={handleOcrChange}
 										/>
-										<span class="text-xs text-slate-400">
+										<span class="text-sm text-slate-500 font-medium">
 											{#if ocrUploading}
-												Extracting...
+												<span class="flex items-center gap-2">
+													<span class="h-3 w-3 animate-spin rounded-full border-2 border-slate-300 border-t-blue-600"></span>
+													Extracting...
+												</span>
 											{:else if ocrText}
-												Text extracted ready for essay.
+												<span class="text-emerald-600 flex items-center gap-1.5">
+													<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+														<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+													</svg>
+													Text extracted successfully
+												</span>
 											{:else}
-												Common App PDF only.
+												Common App PDF only
 											{/if}
 										</span>
 									</label>
 
 									{#if ocrError}
-										<p class="mt-2 text-xs text-rose-400">{ocrError}</p>
+										<div class="mt-3 flex items-start gap-2 p-3 rounded-lg bg-rose-50 border border-rose-200">
+											<svg class="w-4 h-4 text-rose-500 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+												<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+											</svg>
+											<p class="text-xs text-rose-700 font-medium">{ocrError}</p>
+										</div>
 									{/if}
 
 									{#if ocrText}
-										<div class="mt-3">
+										<div class="mt-4">
 											<button
 												type="button"
 												onclick={applyOcrToEssay}
-												class="text-xs font-bold text-cyan-400 hover:text-cyan-300 hover:underline"
+												class="inline-flex items-center gap-2 text-sm font-bold text-blue-600 hover:text-blue-700 hover:gap-3 transition-all duration-200 group/insert"
 											>
-												Insert extracted text into essay &darr;
+												<span>Insert extracted text into essay</span>
+												<svg class="w-4 h-4 group-hover/insert:translate-y-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+													<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+												</svg>
 											</button>
 										</div>
 									{/if}
 								</div>
 							</div>
 
-							<div class="space-y-6">
+							<div class="space-y-7">
 								<!-- Major -->
-								<div class="space-y-2">
-									<label for="major" class="block text-sm font-bold text-slate-900">
+								<div class="space-y-2.5 relative">
+									<label for="major" class="block text-sm font-bold text-slate-900 flex items-center gap-2">
+										<span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span>
 										Intended Major
 									</label>
 									<input
 										id="major"
 										type="text"
 										bind:value={major}
-										class="w-full rounded-md border border-slate-200 bg-white px-3 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all shadow-inner font-sans"
+										class="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 transition-all shadow-sm hover:border-slate-300 font-sans"
 										placeholder="e.g. Computer Science, Comparative Literature..."
 										onfocus={() => (showMajorDropdown = true)}
 										onblur={() => setTimeout(() => (showMajorDropdown = false), 200)}
 									/>
 									{#if showMajorDropdown && majorSuggestions.length > 0}
-										<div
-											class="absolute top-full left-0 right-0 mt-1 bg-white border border-slate-200 rounded-lg shadow-lg z-50"
-										>
+										<div class="absolute top-full left-0 right-0 mt-2 bg-white border border-slate-200 rounded-xl shadow-2xl z-50 overflow-hidden backdrop-blur-xl">
 											{#each majorSuggestions as m}
 												<button
 													type="button"
@@ -803,7 +850,7 @@
 														major = m;
 														showMajorDropdown = false;
 													}}
-													class="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 font-medium"
+													class="w-full text-left px-4 py-3 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-700 font-medium transition-colors border-b border-slate-100 last:border-0"
 												>
 													{m}
 												</button>
@@ -813,48 +860,52 @@
 								</div>
 
 								<!-- Essay -->
-								<div class="space-y-2">
-									<label for="essay" class="block text-sm font-bold text-slate-900">
+								<div class="space-y-2.5">
+									<label for="essay" class="block text-sm font-bold text-slate-900 flex items-center gap-2">
+										<span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span>
 										Personal Essay
 									</label>
 									<textarea
 										id="essay"
 										bind:value={essay}
 										rows="6"
-										class="w-full rounded-md border border-slate-200 bg-white px-3 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all shadow-inner font-sans"
+										class="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 transition-all shadow-sm hover:border-slate-300 font-sans resize-y"
 										placeholder="Paste your personal statement here..."
 									></textarea>
 								</div>
 
 								<!-- Supplements -->
-								<div class="space-y-4 bg-white p-4 rounded-lg">
-									<div class="flex items-center justify-between">
-										<h3 class="text-lg font-bold text-gray-900">Supplemental Essays</h3>
-										<span
-											class="text-[10px] bg-blue-50 text-blue-700 px-2 py-1 rounded-full font-bold border border-blue-100"
-										>
-											AI Extrapolates Fit
+								<div class="space-y-4 bg-gradient-to-br from-white to-slate-50/50 p-6 rounded-2xl border border-slate-200/60">
+									<div class="flex items-center justify-between gap-3">
+										<div class="flex items-center gap-2.5">
+											<span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span>
+											<h3 class="text-base font-bold text-slate-900">Supplemental Essays</h3>
+										</div>
+										<span class="inline-flex items-center gap-1.5 text-[10px] bg-blue-50 text-blue-700 px-3 py-1.5 rounded-full font-bold border border-blue-200/60 shadow-sm">
+											<svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+												<path d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 5.757a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zM8 16v-1h4v1a2 2 0 11-4 0zM12 14c.015-.34.208-.646.477-.859a4 4 0 10-4.954 0c.27.213.462.519.476.859h4.002z"/>
+											</svg>
+											AI Extrapolates
 										</span>
 									</div>
 
-									<p
-										class="text-xs text-slate-500 leading-relaxed italic border-l-2 border-blue-200 pl-3"
-									>
-										Note: The supplemental you provide here will be used as a "quality baseline" to
-										extrapolate your fit/why-us performance for <strong class="text-slate-700"
-											>all other schools</strong
-										>
-										in the simulation.
-									</p>
+									<div class="flex items-start gap-2 p-3 rounded-lg bg-blue-50/50 border border-blue-100">
+										<svg class="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+											<path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+										</svg>
+										<p class="text-xs text-blue-800 leading-relaxed">
+											The supplemental you provide will be used as a quality baseline to extrapolate your fit/why-us performance for <strong>all other schools</strong> in the simulation.
+										</p>
+									</div>
 
-									<div class="flex gap-2 overflow-x-auto pb-2">
+									<div class="flex gap-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-slate-100">
 										{#each SCHOOLS as { school, slug }}
 											<button
 												type="button"
-												class="px-3 py-1 rounded-full border transition-colors
+												class="px-4 py-2 rounded-full border-2 transition-all duration-200 font-medium text-sm whitespace-nowrap
                 {activeSupTab === slug
-													? 'bg-blue-600 text-white border-blue-600'
-													: 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'}"
+													? 'bg-blue-600 text-white border-blue-600 shadow-lg shadow-blue-600/25'
+													: 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50 hover:border-slate-300'}"
 												onclick={() => (activeSupTab = slug)}
 											>
 												{slug}
@@ -865,14 +916,15 @@
 									<textarea
 										bind:value={supplementals[activeSupTab]}
 										placeholder="Paste the supplemental for {activeSupTab} here..."
-										class="w-full h-48 bg-white border border-gray-300 rounded-md p-4 text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none shadow-sm font-sans"
+										class="w-full h-48 bg-white border-2 border-slate-200 rounded-xl p-4 text-sm text-slate-900 placeholder:text-slate-400 focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 outline-none shadow-sm hover:border-slate-300 transition-all font-sans resize-y"
 									></textarea>
 								</div>
 
 								<!-- Promo Code -->
-								<div class="space-y-2 border-t border-slate-200 pt-4">
-									<label for="promoCode" class="block text-sm font-bold text-slate-900">
-										Promo Code (Optional)
+								<div class="space-y-2.5 border-t-2 border-slate-100 pt-6">
+									<label for="promoCode" class="block text-sm font-bold text-slate-900 flex items-center gap-2">
+										<span class="w-1.5 h-1.5 bg-amber-500 rounded-full"></span>
+										Promo Code <span class="text-xs font-normal text-slate-500">(Optional)</span>
 									</label>
 									<div class="relative max-w-xs">
 										<input
@@ -880,141 +932,146 @@
 											type="text"
 											bind:value={promoCodeInput}
 											onkeydown={handlePromoCode}
-											placeholder="Type code and hit Enter..."
-											class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-amber-400 focus:border-amber-400 font-sans"
+											placeholder="Enter code and press Enter..."
+											class="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-amber-400/20 focus:border-amber-400 font-sans shadow-sm hover:border-slate-300 transition-all"
 										/>
 										{#if hasDeepDiveAccess}
-											<div
-												class="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-green-600 font-bold"
-											>
-												Active
+											<div class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
+												<span class="w-2 h-2 bg-emerald-500 rounded-full"></span>
+												<span class="text-xs text-emerald-600 font-bold">Active</span>
 											</div>
 										{/if}
 									</div>
-									<p class="text-xs text-slate-500">
-										Have a special access code? Type it above and press Enter to apply.
+									<p class="text-xs text-slate-500 flex items-center gap-1.5">
+										<svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+											<path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+										</svg>
+										Have a special access code? Enter it and press Enter to unlock premium features
 									</p>
 								</div>
 
 								<!-- Activities -->
-								<div class="space-y-2">
-									<div class="flex items-center justify-between gap-2">
-										<label for="activities" class="block text-sm font-bold text-slate-900">
-											Activities / Résumé
-										</label>
-									</div>
+								<div class="space-y-2.5">
+									<label for="activities" class="block text-sm font-bold text-slate-900 flex items-center gap-2">
+										<span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span>
+										Activities / Résumé
+									</label>
 									<textarea
 										id="activities"
 										bind:value={activities}
 										rows="4"
-										class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-cyan-400 focus:border-cyan-400 resize-y font-sans"
-										placeholder="Paste your activities list or résumé bullets here. If they’re in a PDF, copy–paste the text."
+										class="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 resize-y font-sans shadow-sm hover:border-slate-300 transition-all"
+										placeholder="Paste your activities list or résumé bullets. If in PDF, copy-paste the text."
 									></textarea>
 								</div>
 							</div>
 
-							<div class="grid gap-4 md:grid-cols-2">
+							<div class="grid gap-6 md:grid-cols-2">
 								<!-- Honors -->
-								<div class="space-y-2">
-									<div class="flex items-center justify-between gap-2">
-										<label for="honors" class="block text-sm font-bold text-slate-900">
-											Honors & Awards
-										</label>
-									</div>
+								<div class="space-y-2.5">
+									<label for="honors" class="block text-sm font-bold text-slate-900 flex items-center gap-2">
+										<span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span>
+										Honors & Awards
+									</label>
 									<textarea
 										id="honors"
 										bind:value={honors}
 										rows="3"
-										class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-cyan-400 focus:border-cyan-400 resize-y font-sans"
-										placeholder="List major competitions, scholarships, and distinctions. Copy–paste from your app if needed."
+										class="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 resize-y font-sans shadow-sm hover:border-slate-300 transition-all"
+										placeholder="List major competitions, scholarships, and distinctions..."
 									></textarea>
 								</div>
 
 								<!-- Transcript -->
-								<div class="space-y-2">
-									<div class="flex items-center justify-between gap-2">
-										<label for="transcript" class="block text-sm font-bold text-slate-900">
-											Transcript / GPA
-										</label>
-									</div>
+								<div class="space-y-2.5">
+									<label for="transcript" class="block text-sm font-bold text-slate-900 flex items-center gap-2">
+										<span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span>
+										Transcript / GPA
+									</label>
 									<textarea
 										id="transcript"
 										bind:value={transcript}
 										rows="3"
-										class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-cyan-400 focus:border-cyan-400 resize-y font-sans"
-										placeholder="Include GPA, course rigor, key grades, testing, and any school context. Copy–paste from your transcript if needed."
+										class="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 resize-y font-sans shadow-sm hover:border-slate-300 transition-all"
+										placeholder="Include GPA, course rigor, key grades, testing, and context..."
 									></textarea>
 								</div>
 							</div>
 
 							<!-- ED selection + privacy note -->
-							<div class="grid gap-6 md:grid-cols-2 items-start pt-6 border-t border-slate-100">
-								<div class="space-y-2">
-									<label for="edSchool" class="block text-sm font-bold text-slate-900">
-										Early Decision / REA (Optional)
+							<div class="grid gap-6 md:grid-cols-2 items-start pt-6 border-t-2 border-slate-100">
+								<div class="space-y-2.5">
+									<label for="edSchool" class="block text-sm font-bold text-slate-900 flex items-center gap-2">
+										<span class="w-1.5 h-1.5 bg-amber-500 rounded-full"></span>
+										Early Decision / REA <span class="text-xs font-normal text-slate-500">(Optional)</span>
 									</label>
 									<select
 										id="edSchool"
 										bind:value={edSlug}
-										class="w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent shadow-sm font-sans"
+										class="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 focus:outline-none focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 shadow-sm hover:border-slate-300 transition-all font-sans cursor-pointer"
 									>
 										<option value="">No ED selected (RD only)</option>
 										{#each ED_SCHOOLS as school}
 											<option value={school.slug}>{school.label}</option>
 										{/each}
 									</select>
-									<p class="text-xs text-slate-500">
-										Binding choice. Decisions will reflect ED acceptance rates.
+									<p class="text-xs text-slate-500 flex items-center gap-1.5">
+										<svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+											<path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
+										</svg>
+										Binding choice • Reflects actual ED acceptance rates
 									</p>
 								</div>
 
-								<div class="space-y-1 text-xs text-slate-500">
-									<p>
-										Your inputs are sent to the AI API for evaluation. We do not store your data.
-										Nothing is sent to colleges.
-									</p>
+								<div class="space-y-2 flex flex-col justify-end h-full">
+									<div class="flex items-start gap-2 p-4 rounded-xl bg-slate-50 border border-slate-200">
+										<svg class="w-4 h-4 text-slate-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+											<path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+										</svg>
+										<p class="text-xs text-slate-600 leading-relaxed">
+											Your inputs are sent to our AI API for evaluation. We <strong class="text-slate-900">do not store</strong> your data. Nothing is sent to colleges.
+										</p>
+									</div>
 								</div>
 							</div>
 
 							{#if aiError}
-								<p
-									class="text-sm font-bold text-red-600 bg-red-50 border border-red-100 rounded-md px-4 py-3"
-								>
-									{aiError}
-								</p>
+								<div class="flex items-start gap-3 p-4 rounded-xl bg-red-50 border-2 border-red-200">
+									<svg class="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+										<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+									</svg>
+									<p class="text-sm font-bold text-red-700">{aiError}</p>
+								</div>
 							{/if}
 
-							<!-- Apply controls -->
-							<div class="flex flex-col sm:flex-row items-center gap-4 pt-4">
+							<!-- Submit button -->
+							<div class="flex flex-col sm:flex-row items-center gap-4 pt-6">
 								<button
 									type={googleSignedIn ? 'submit' : 'button'}
 									disabled={$userProfile.isSubmittingAI}
 									onclick={!googleSignedIn
 										? () => signIn('google', { callbackUrl: '/ai' })
 										: undefined}
-									class="group relative w-full rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 active:scale-[0.98]"
+									class="group relative w-full rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed"
 								>
-									<!-- Border Beam (Spinning Gradient) - Visible on Hover -->
-									<div
-										class="absolute inset-[-200%] bg-[conic-gradient(from_90deg_at_50%_50%,#E2E8F0_0%,#3B82F6_50%,#E2E8F0_100%)] opacity-0 group-hover:opacity-100 animate-spin-slow transition-opacity duration-300 pointer-events-none"
-									></div>
+									<!-- Animated border gradient -->
+									<div class="absolute inset-[-200%] bg-[conic-gradient(from_90deg_at_50%_50%,#E2E8F0_0%,#3B82F6_50%,#8B5CF6_75%,#E2E8F0_100%)] opacity-0 group-hover:opacity-100 animate-spin-slow transition-opacity duration-300 pointer-events-none"></div>
 
-									<!-- Button Content Container -->
-									<div
-										class="relative m-[1px] rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-600 px-6 py-4 transition-all duration-300 group-hover:bg-slate-900"
-									>
-										<!-- Text Content -->
-										<div
-											class="text-base font-bold uppercase tracking-widest text-white flex items-center justify-center gap-2"
-										>
+									<!-- Button content -->
+									<div class="relative m-[2px] rounded-[calc(1rem-2px)] bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-600 px-8 py-5 transition-all duration-300">
+										<div class="text-base font-bold uppercase tracking-widest text-white flex items-center justify-center gap-3">
 											{#if !googleSignedIn}
+												<svg class="w-5 h-5" viewBox="0 0 24 24">
+													<path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+													<path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+													<path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+													<path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+												</svg>
 												<span>Sign in with Google to Simulate</span>
 											{:else if $userProfile.isSubmittingAI}
-												<span class="flex items-center gap-2">
-													<span
-														class="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white"
-													></span>
-													Admissions Officers are analyzing...
+												<span class="flex items-center gap-3">
+													<span class="h-5 w-5 animate-spin rounded-full border-3 border-white/30 border-t-white"></span>
+													<span>Admissions Officers Analyzing...</span>
 												</span>
 											{:else if hasUsedFreeSimulation && !hasDeepDiveAccess}
 												<span
@@ -1023,25 +1080,20 @@
 														e.stopPropagation();
 														goto('/pro');
 													}}
-													class="flex items-center gap-2"
+													class="flex items-center gap-2.5"
 												>
-													Upgrade to Pro (Unlimited Runs)
-													<svg
-														class="w-4 h-4 opacity-70"
-														fill="none"
-														viewBox="0 0 24 24"
-														stroke="currentColor"
-													>
-														<path
-															stroke-linecap="round"
-															stroke-linejoin="round"
-															stroke-width="2"
-															d="M13 10V3L4 14h7v7l9-11h-7z"
-														/>
+													<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+														<path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
 													</svg>
+													Upgrade to Pro (Unlimited Runs)
 												</span>
 											{:else}
-												<span>Submit Application</span>
+												<span class="flex items-center gap-2.5">
+													<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+														<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+													</svg>
+													Submit Application
+												</span>
 											{/if}
 										</div>
 									</div>
@@ -1049,7 +1101,7 @@
 
 								<button
 									type="button"
-									class="text-sm text-slate-400 hover:text-slate-600 underline decoration-dotted"
+									class="text-sm text-slate-400 hover:text-slate-600 underline decoration-dotted underline-offset-2 transition-colors whitespace-nowrap"
 									onclick={resetInboxState}
 								>
 									Clear AI inbox
@@ -1057,14 +1109,15 @@
 							</div>
 
 							{#if applicantSummary}
-								<details class="mt-4 text-xs text-slate-500">
-									<summary class="cursor-pointer font-semibold text-slate-700 hover:text-slate-900">
+								<details class="mt-6">
+									<summary class="cursor-pointer font-semibold text-sm text-slate-700 hover:text-slate-900 flex items-center gap-2 transition-colors">
+										<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+										</svg>
 										Preview extracted text
 									</summary>
-									<pre
-										class="mt-2 max-h-48 overflow-auto whitespace-pre-wrap text-[10px] text-slate-600 border border-slate-200 rounded-md p-3 bg-slate-50">
-                        {applicantSummary}
-                    </pre>
+									<pre class="mt-3 max-h-48 overflow-auto whitespace-pre-wrap text-xs text-slate-600 border-2 border-slate-200 rounded-xl p-4 bg-slate-50/50 font-mono">{applicantSummary}</pre>
 								</details>
 							{/if}
 						</form>
@@ -1072,23 +1125,16 @@
 				</Card>
 			</section>
 
-			<!-- AIMail Inbox (now powered by AdmitMail + portal-style status emails) -->
+			<!-- AIMail Inbox -->
 			{#if hasUsedFreeSimulation || $userProfile.isSubmittingAI}
-				<section
-					class="rounded-2xl border border-slate-200 bg-white shadow-xl overflow-hidden mt-8"
-				>
-					<!-- Top bar -->
-
+				<section class="rounded-3xl border-2 border-slate-200 bg-white/80 backdrop-blur-xl shadow-2xl overflow-hidden mt-12">
 					{#if $userProfile.isSubmittingAI}
-						<div
-							class="border-b border-slate-100 bg-slate-50 px-6 py-3 flex items-center gap-3 text-xs text-slate-600"
-						>
-							<span
-								class="h-3 w-3 animate-spin rounded-full border-2 border-slate-200 border-t-slate-600"
-							></span>
-							<span class="font-medium"> Simulating decision committee... </span>
+						<div class="border-b-2 border-slate-100 bg-gradient-to-r from-slate-50 to-blue-50/30 px-6 py-4 flex items-center gap-3 text-sm text-slate-700">
+							<span class="h-4 w-4 animate-spin rounded-full border-3 border-slate-300 border-t-blue-600"></span>
+							<span class="font-semibold">Simulating decision committee...</span>
 						</div>
 					{/if}
+					
 					{#if $userProfile.usingAI}
 						<div class="bg-white min-h-[400px]">
 							<BetterAdmitMail
@@ -1120,9 +1166,7 @@
 									const decision = aiDecisions.find(
 										(d) => d.slug === slug || d.school.toLowerCase().replace(/\s+/g, '-') === slug
 									);
-
 									if (decision) {
-										// uses your existing requestDeepDive(decision: AiDecision)
 										requestDeepDive(decision);
 									}
 								}}
@@ -1131,30 +1175,35 @@
 					{/if}
 
 					{#if deepDiveItems.length}
-						<!-- Deep Dive explanations, driven by AI -->
-						<div class="border-t border-slate-100 bg-slate-50 px-6 py-6 space-y-6">
+						<div class="border-t-2 border-slate-100 bg-gradient-to-br from-slate-50 to-blue-50/20 px-6 py-8 space-y-6">
 							<div class="flex items-center justify-between gap-3">
-								<div>
-									<p class="text-xs font-bold uppercase tracking-widest text-slate-900">
-										Decision Analysis
-									</p>
-									<p class="mt-1 text-xs text-slate-500 max-w-xl leading-relaxed">
-										Confidential adcom-style breakdown of why you were admitted, denied, or
-										waitlisted.
+								<div class="space-y-1.5">
+									<div class="flex items-center gap-2">
+										<div class="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-blue-600 flex items-center justify-center shadow-lg shadow-indigo-500/25">
+											<svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/>
+											</svg>
+										</div>
+										<p class="text-sm font-bold uppercase tracking-wider text-slate-900">
+											Decision Analysis
+										</p>
+									</div>
+									<p class="text-xs text-slate-600 max-w-xl leading-relaxed pl-10">
+										Confidential admissions committee breakdown explaining your admit, deny, or waitlist decision
 									</p>
 								</div>
 							</div>
 
 							<div class="space-y-4">
 								{#each deepDiveItems as item (item.slug)}
-									<article class="rounded-lg border border-slate-200 bg-white px-5 py-4 shadow-sm">
-										<div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+									<article class="group rounded-2xl border-2 border-slate-200 bg-white px-6 py-5 shadow-sm hover:shadow-lg hover:border-blue-300/50 transition-all duration-300">
+										<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
 											<div class="flex items-center gap-3">
-												<h3 class="text-sm font-bold text-slate-900">
+												<h3 class="text-base font-bold text-slate-900">
 													{item.school}
 												</h3>
 												<span
-													class={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide border ${
+													class={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-bold uppercase tracking-wide border-2 shadow-sm ${
 														item.outcome === 'admit'
 															? 'bg-emerald-50 text-emerald-700 border-emerald-200'
 															: item.outcome === 'deny'
@@ -1162,15 +1211,31 @@
 																: 'bg-amber-50 text-amber-700 border-amber-200'
 													}`}
 												>
+													{#if item.outcome === 'admit'}
+														<svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+															<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+														</svg>
+													{:else if item.outcome === 'deny'}
+														<svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+															<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+														</svg>
+													{:else}
+														<svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+															<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 000 2h6a1 1 0 100-2H7z" clip-rule="evenodd"/>
+														</svg>
+													{/if}
 													{outcomeLabel(item.outcome)}
 												</span>
 											</div>
-											<span class="text-[10px] font-medium text-slate-400"> AI Analysis </span>
+											<span class="inline-flex items-center gap-1.5 text-[10px] font-semibold text-slate-400 bg-slate-50 px-3 py-1 rounded-full border border-slate-200">
+												<svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+													<path d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 5.757a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zM8 16v-1h4v1a2 2 0 11-4 0zM12 14c.015-.34.208-.646.477-.859a4 4 0 10-4.954 0c.27.213.462.519.476.859h4.002z"/>
+												</svg>
+												AI Analysis
+											</span>
 										</div>
 
-										<div
-											class="text-sm leading-relaxed text-slate-700 whitespace-pre-wrap font-sans"
-										>
+										<div class="text-sm leading-relaxed text-slate-700 whitespace-pre-wrap font-sans bg-slate-50/50 rounded-xl p-4 border border-slate-100">
 											{item.explanation}
 										</div>
 									</article>
@@ -1184,120 +1249,151 @@
 	</div>
 
 	{#if showPaywallModal && paywallMode}
-		<!-- Paywall modal overlay -->
-		<div
-			class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-md"
-		>
-			<div
-				class="max-w-md w-full rounded-2xl border border-slate-200 bg-white px-8 py-8 shadow-2xl space-y-6"
-			>
-				<div class="flex items-center justify-between gap-3">
-					<div class="space-y-1">
-						<p class="text-[10px] uppercase tracking-widest font-bold text-emerald-600">
-							{#if paywallMode === 'deepDive'}
-								Locked · Deep Dive Explanation
-							{:else if paywallMode === 'simulation'}
-								Locked · Extra AI Simulations
-							{:else}
-								Locked · Extra PDF Uploads
-							{/if}
-						</p>
-						<h2 class="text-lg font-bold text-slate-900">
+		<!-- Paywall modal -->
+		<div class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-lg px-4">
+			<div class="max-w-md w-full rounded-3xl border-2 border-slate-200 bg-white px-8 py-8 shadow-2xl space-y-6 transform transition-all">
+				<div class="flex items-start justify-between gap-4">
+					<div class="space-y-2 flex-1">
+						<div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-emerald-50 to-blue-50 border border-emerald-200">
+							<svg class="w-3.5 h-3.5 text-emerald-600" fill="currentColor" viewBox="0 0 20 20">
+								<path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
+							</svg>
+							<span class="text-[10px] uppercase tracking-widest font-bold text-emerald-700">
+								{#if paywallMode === 'deepDive'}
+									Locked · Deep Dive
+								{:else if paywallMode === 'simulation'}
+									Locked · Extra Simulations
+								{:else}
+									Locked · Extra PDFs
+								{/if}
+							</span>
+						</div>
+						<h2 class="text-xl font-bold text-slate-900 leading-tight">
 							{#if paywallMode === 'deepDive' && paywallContextDecision}
-								You know the verdict. Now learn
-								<span class="text-emerald-600">why</span>.
+								You know the verdict.<br/>
+								Now learn <span class="bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent">why</span>.
 							{:else if paywallMode === 'simulation'}
-								One full HYPSM+ run is free. The rest are premium.
+								One full HYPSM+ run is free.<br/>
+								The rest are <span class="bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent">premium</span>.
 							{:else}
-								You’ve used your free Common App scan.
+								You've used your free<br/>
+								Common App scan.
 							{/if}
 						</h2>
 					</div>
 					<button
 						type="button"
-						class="h-8 w-8 rounded-full bg-slate-100 text-slate-500 text-sm flex items-center justify-center hover:bg-slate-200 transition-colors"
+						class="flex-shrink-0 w-9 h-9 rounded-full bg-slate-100 text-slate-500 text-lg flex items-center justify-center hover:bg-slate-200 hover:text-slate-700 transition-all"
 						onclick={closePaywall}
 					>
-						✕
+						×
 					</button>
 				</div>
 
-				<div class="space-y-4 text-sm text-slate-600 leading-relaxed text-left">
+				<div class="space-y-4 text-sm text-slate-600 leading-relaxed">
 					{#if paywallMode === 'deepDive' && paywallContextDecision}
-						<p>
-							Right now you’re staring at a single line —
-							<span class="font-bold text-slate-900"
-								>{outcomeLabel(paywallContextDecision.outcome)}</span
-							>
-							from <span class="font-bold text-slate-900">{paywallContextDecision.school}</span>.
-							That’s how real portals work: one word, no context.
+						<p class="flex items-start gap-2">
+							<svg class="w-4 h-4 text-slate-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+								<path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+							</svg>
+							<span>
+								Right now you're staring at a single line —
+								<strong class="text-slate-900 font-bold">{outcomeLabel(paywallContextDecision.outcome)}</strong>
+								from <strong class="text-slate-900 font-bold">{paywallContextDecision.school}</strong>.
+								That's how real portals work: one word, no context.
+							</span>
 						</p>
-						<p>
-							The Deep Dive turns that verdict into a full, adcom-style breakdown: what helped you,
-							what quietly hurt you, and what they’d need to see to flip this decision next cycle.
+						<p class="flex items-start gap-2">
+							<svg class="w-4 h-4 text-slate-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+								<path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
+								<path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/>
+							</svg>
+							<span>
+								The Deep Dive turns that verdict into a full, admissions committee breakdown: what helped, what hurt, and what they'd need to see to flip the decision.
+							</span>
 						</p>
-						<p>You’ve already used your free full HYPSM+ simulation on this device.</p>
-						<p>
-							To rerun with a new draft, different activities, or a rebalanced spike, you’ll need to
-							unlock PredictAdmit
-							<span class="font-bold text-emerald-600">Pro</span>.
-						</p>
-						<div class="mt-4">
-							<button
-								onclick={() => goto('/pro')}
-								class="w-full rounded-full bg-slate-900 px-4 py-3 text-sm font-bold text-white hover:bg-slate-800 transition-all"
-							>
-								Upgrade to Pro
-							</button>
-						</div>
 					{:else}
-						<p>
-							You get <span class="font-bold text-slate-900">one</span> free Common App PDF scan. You’ve
-							used it.
+						<p class="flex items-start gap-2">
+							<svg class="w-4 h-4 text-slate-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+								<path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+							</svg>
+							<span>
+								You get <strong class="text-slate-900 font-bold">one</strong> free {paywallMode === 'simulation' ? 'HYPSM+ simulation' : 'Common App PDF scan'}. You've used it.
+							</span>
 						</p>
-						<p>
-							To upload new versions, alternate essays, or a different Common App file, you’ll need
-							to unlock PredictAdmit
-							<span class="font-bold text-emerald-600">Pro</span>.
+						<p class="flex items-start gap-2">
+							<svg class="w-4 h-4 text-slate-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+								<path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+							</svg>
+							<span>
+								To {paywallMode === 'simulation' ? 'rerun with new drafts or activities' : 'upload new versions or alternate essays'}, unlock PredictAdmit
+								<strong class="bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent font-bold">Pro</strong>.
+							</span>
 						</p>
-						<div class="mt-4">
-							<button
-								onclick={() => goto('/pro')}
-								class="w-full rounded-full bg-slate-900 px-4 py-3 text-sm font-bold text-white hover:bg-slate-800 transition-all"
-							>
-								Upgrade to Pro
-							</button>
-						</div>
 					{/if}
 				</div>
 
 				<div class="space-y-3 pt-2">
 					<a
 						href="/pro"
-						class="inline-flex w-full items-center justify-center gap-2 rounded-full bg-slate-900 px-4 py-3 text-sm font-bold text-white shadow-lg hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-400 transition-all"
+						class="group inline-flex w-full items-center justify-center gap-2.5 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-4 text-sm font-bold text-white shadow-lg shadow-blue-600/25 hover:shadow-xl hover:shadow-blue-600/30 hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-4 focus:ring-blue-400/50 transition-all duration-200"
 					>
-						{#if paywallMode === 'deepDive'}
-							Unlock Deep Dive explanations
-						{:else if paywallMode === 'simulation'}
-							Unlock more HYPSM+ simulations
-						{:else}
-							Unlock more Common App uploads
-						{/if}
+						<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+							<path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+						</svg>
+						<span>
+							{#if paywallMode === 'deepDive'}
+								Unlock Deep Dive Explanations
+							{:else if paywallMode === 'simulation'}
+								Unlock Unlimited Simulations
+							{:else}
+								Unlock More PDF Uploads
+							{/if}
+						</span>
 					</a>
 					<button
 						type="button"
-						class="w-full rounded-full border border-slate-200 bg-white px-4 py-2.5 text-xs font-bold text-slate-500 hover:bg-slate-50 hover:text-slate-700 transition-colors"
+						class="w-full rounded-2xl border-2 border-slate-200 bg-white px-6 py-3 text-sm font-semibold text-slate-600 hover:bg-slate-50 hover:text-slate-800 hover:border-slate-300 transition-all"
 						onclick={closePaywall}
 					>
 						Not now · keep the free run
 					</button>
-					<p class="text-[10px] text-slate-400 text-center">
-						No real applications are affected. This is a training ground, not a crystal ball.
+					<p class="text-[10px] text-slate-400 text-center leading-relaxed flex items-center justify-center gap-1.5">
+						<svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+							<path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+						</svg>
+						No real applications affected. This is a training ground, not a crystal ball.
 					</p>
 				</div>
 			</div>
 		</div>
 	{/if}
+
+	<style>
+		@keyframes spin-slow {
+			from {
+				transform: rotate(0deg);
+			}
+			to {
+				transform: rotate(360deg);
+			}
+		}
+		.animate-spin-slow {
+			animation: spin-slow 3s linear infinite;
+		}
+
+		/* Custom scrollbar styling */
+		.scrollbar-thin {
+			scrollbar-width: thin;
+		}
+		.scrollbar-thumb-slate-300::-webkit-scrollbar-thumb {
+			background-color: rgb(203 213 225);
+			border-radius: 9999px;
+		}
+		.scrollbar-track-slate-100::-webkit-scrollbar-track {
+			background-color: rgb(241 245 249);
+		}
+	</style>
 </main>
 
 <SiteFooter />
