@@ -446,7 +446,7 @@
 </script>
 
 <svelte:head>
-	<title>PredictAdmit - Admissions, Predicted.</title>
+	<title>PredictAdmit - T20 Admissions Simulator.</title>
 	<meta
 		name="description"
 		content="Master your college application cycle with the world's most advanced admissions simulator."
