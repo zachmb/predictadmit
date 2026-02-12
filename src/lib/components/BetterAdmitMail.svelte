@@ -53,537 +53,443 @@
 	export let requestDeepDiveForSlug: (slug: string) => void = () => {};
 </script>
 
-<section
-	id="inboxSection"
-	class="rounded-2xl border border-slate-200 bg-white shadow-xl text-slate-900 text-[11px]"
-	bind:this={inboxSection}
->
-	<!-- HEADER -->
+<section id="inboxSection" bind:this={inboxSection} class="scroll-mt-24 font-sans">
 	<div
-		class="border-b border-slate-200 bg-slate-50/80 px-4 py-3 flex items-center justify-between gap-4"
+		class="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden flex flex-col md:h-[700px] h-[600px]"
 	>
-		<div class="space-y-1">
-			<div class="flex items-center gap-2">
-				<span class="text-sm font-bold tracking-tight text-slate-900"> AIMail </span>
-			</div>
-			<p class="text-[10px] text-slate-500 max-w-md">
-				Simulated college decisions inbox. Click a subject to open the email, then
-				<span class="text-cyan-700 font-semibold">View Status</span> to jump into that school’s portal.
-			</p>
-		</div>
-		<div class="hidden md:flex flex-col items-end text-[10px] text-slate-500 gap-1">
-			<div>
-				Signed in as:
-				<span class="font-semibold text-slate-900">{displayEmail}</span>
-			</div>
-			<button
-				type="button"
-				class="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-white px-3 py-1 text-[10px] text-slate-700 hover:bg-slate-50 hover:border-slate-300"
-				on:click={resetSimulation}
-			>
-				<span class="h-1.5 w-1.5 rounded-full bg-rose-500"></span>
-				Restart simulation
-			</button>
-		</div>
-	</div>
-
-	{#if viewMode === 'inbox'}
-		<!-- SEARCH / META BAR -->
-		<div
-			class="px-4 py-2 border-b border-slate-200 bg-slate-50/50 flex items-center justify-between gap-3"
+		<!-- Header -->
+		<header
+			class="bg-white border-b border-slate-100 flex items-center justify-between px-6 py-4 z-20"
 		>
-			<p class="text-[10px] text-slate-500">
-				Showing
-				<span class="font-semibold text-slate-900">{filteredPortals.length}</span>
-				of
-				<span class="font-semibold text-slate-900">{sortedVisiblePortals.length}</span>
-				schools
-			</p>
-			<div class="flex-1 flex justify-end">
-				<div class="relative w-full max-w-xs">
-					<span
-						class="pointer-events-none absolute left-2 top-1.5 h-3 w-3 rounded-full border border-slate-400/70"
-					></span>
-					<input
-						type="text"
-						class="w-full rounded-full border border-slate-200 bg-white px-7 py-1 text-[11px] text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-cyan-500 focus:border-cyan-500 shadow-sm"
-						placeholder="Search schools…"
-						bind:value={searchQuery}
-					/>
+			<div class="flex items-center gap-3">
+				<div
+					class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center shadow-lg shadow-blue-200"
+				>
+					<svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+						/>
+					</svg>
+				</div>
+				<div>
+					<h2 class="text-lg font-bold text-slate-900 leading-none">AIMail</h2>
+					<p class="text-xs text-slate-500 font-medium">AI Simulation Inbox</p>
 				</div>
 			</div>
-		</div>
 
-		<!-- INBOX VIEW -->
-		<div class="flex text-[11px]">
-			<!-- LEFT SIDEBAR -->
-			<aside class="w-52 border-r border-slate-200 bg-slate-50 py-3 flex flex-col gap-3">
-				<!-- Compose pill (non-functional, just for UI parity) -->
-				<div class="px-3">
-					<button
-						type="button"
-						class="w-full inline-flex items-center justify-center gap-2 rounded-full border border-cyan-600/30 bg-white px-3 py-1.5 text-[11px] font-semibold text-cyan-700 hover:bg-cyan-50"
-					>
-						<span class="h-1.5 w-1.5 rounded-full bg-cyan-500"></span>
-						Compose
-					</button>
+			<div class="flex items-center gap-4">
+				<div class="hidden md:block text-right">
+					<div class="text-xs font-bold text-slate-900">{displayEmail}</div>
+					<div class="text-[10px] text-slate-500">Connected</div>
 				</div>
+				<button
+					type="button"
+					class="p-2 hover:bg-slate-100 rounded-full text-slate-400 hover:text-red-500 transition-colors"
+					title="Restart Simulation"
+					on:click={resetSimulation}
+				>
+					<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+						/>
+					</svg>
+				</button>
+			</div>
+		</header>
 
-				<!-- Folders -->
-				<nav class="px-1 text-[11px] text-slate-600 space-y-0.5">
+		<div class="flex flex-1 overflow-hidden relative">
+			<!-- Sidebar -->
+			<aside
+				class="w-64 bg-slate-50 border-r border-slate-200 flex flex-col py-6 px-4 gap-6 hidden md:flex"
+			>
+				<button
+					class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 px-4 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 transform active:scale-95"
+				>
+					<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M12 4v16m8-8H4"
+						/>
+					</svg>
+					<span>Compose</span>
+				</button>
+
+				<nav class="space-y-1">
 					<button
-						type="button"
-						class={`w-full flex items-center justify-between rounded-r-full px-3 py-1 transition ${
-							activeFolder === 'inbox'
-								? 'bg-blue-100/50 text-blue-900 font-semibold'
-								: 'hover:bg-slate-200/50 text-slate-600'
-						}`}
 						on:click={() => switchFolder('inbox')}
+						class={`w-full flex items-center justify-between px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${activeFolder === 'inbox' ? 'bg-white text-blue-600 shadow-sm ring-1 ring-slate-200' : 'text-slate-600 hover:bg-slate-100'}`}
 					>
-						<span>Inbox</span>
-						<span class="text-slate-500 text-[10px]">
-							{visiblePortals.length}
-						</span>
+						<div class="flex items-center gap-3">
+							<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+								/>
+							</svg>
+							<span>Inbox</span>
+						</div>
+						{#if visiblePortals.length > 0}
+							<span class="text-xs font-bold bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full"
+								>{visiblePortals.length}</span
+							>
+						{/if}
 					</button>
+
 					<button
-						type="button"
-						class="w-full text-left px-3 py-1 rounded-r-full text-slate-500 hover:bg-slate-900/80"
+						class="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100 transition-colors"
 					>
-						Starred
+						<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
+							/>
+						</svg>
+						<span>Starred</span>
 					</button>
+
 					<button
-						type="button"
-						class={`w-full text-left px-3 py-1 rounded-r-full transition ${
-							activeFolder === 'sent'
-								? 'bg-slate-800/80 text-slate-50 font-semibold'
-								: 'hover:bg-slate-900/80 text-slate-300'
-						}`}
 						on:click={() => switchFolder('sent')}
+						class={`w-full flex items-center justify-between px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${activeFolder === 'sent' ? 'bg-white text-blue-600 shadow-sm ring-1 ring-slate-200' : 'text-slate-600 hover:bg-slate-100'}`}
 					>
-						Sent
+						<div class="flex items-center gap-3">
+							<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+								/>
+							</svg>
+							<span>Sent</span>
+						</div>
 					</button>
+
 					<button
-						type="button"
-						class="w-full text-left px-3 py-1 rounded-r-full text-slate-500 hover:bg-slate-900/80"
+						class="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100 transition-colors"
 					>
-						Drafts
-					</button>
-					<button
-						type="button"
-						class="w-full text-left px-3 py-1 rounded-r-full text-slate-500 hover:bg-slate-900/80"
-					>
-						All Mail
-					</button>
-					<button
-						type="button"
-						class="w-full text-left px-3 py-1 rounded-r-full text-slate-500 hover:bg-slate-200/50"
-					>
-						Trash
+						<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+							/>
+						</svg>
+						<span>Trash</span>
 					</button>
 				</nav>
 			</aside>
 
-			<!-- MAIN PANE (LIST) -->
-			<div class="flex-1 flex flex-col bg-white">
-				<!-- ED ALERT -->
-				{#if currentEdPortal && edEmailMustBeViewed && !hasViewedEdEmail}
+			<!-- Mobile Nav Overlay (implied/simplified) -->
+
+			<!-- Main Content Area -->
+			<main class="flex-1 flex flex-col relative bg-white min-w-0">
+				{#if viewMode === 'inbox'}
+					<!-- INBOX VIEW -->
+
+					<!-- Toolbar -->
 					<div
-						class="px-4 py-2 bg-rose-950/70 border-b border-rose-600/60 text-[11px] text-rose-100 flex items-center justify-between"
+						class="h-16 border-b border-slate-100 flex items-center justify-between px-6 bg-white z-10"
 					>
-						<div class="font-semibold">
-							Early Decision / REA decision available for {currentEdPortal.name}.
+						<div class="relative max-w-md w-full">
+							<svg
+								class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2"
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke="currentColor"
+							>
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+								/>
+							</svg>
+							<input
+								type="text"
+								bind:value={searchQuery}
+								placeholder="Search mail..."
+								class="w-full pl-10 pr-4 py-2 bg-slate-50 border-none rounded-xl text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-blue-500/20 focus:bg-white transition-all"
+							/>
 						</div>
-						<button
-							type="button"
-							class="text-[10px] font-semibold border border-rose-500 bg-rose-600/90 px-3 py-1 rounded-full hover:bg-rose-500"
-							on:click={() => selectPortal(currentEdPortal)}
-						>
-							Open decision
-						</button>
 					</div>
-				{/if}
 
-				<!-- CATEGORY TABS -->
-				<div class="border-b border-slate-200 bg-slate-50/50 flex text-[11px]">
-					<button
-						type="button"
-						class="px-4 py-2 border-b-2 border-cyan-500 font-semibold text-slate-900"
-					>
-						Primary
-					</button>
-					<button type="button" class="px-4 py-2 text-slate-500 hover:bg-slate-900/80">
-						Updates
-					</button>
-					<button type="button" class="px-4 py-2 text-slate-500 hover:bg-slate-900/80">
-						Promotions
-					</button>
-				</div>
-
-				<!-- LIST CONTENT -->
-				<div class="flex-1 overflow-x-auto">
-					{#if activeFolder === 'inbox'}
-						{#if visiblePortals.length === 0}
-							<div class="px-4 py-6 text-[11px] text-slate-400">
-								Your first decision email will appear here when the calendar reaches your decision
-								date.
+					<!-- ED Alert -->
+					{#if currentEdPortal && edEmailMustBeViewed && !hasViewedEdEmail}
+						<div
+							class="bg-rose-50 border-b border-rose-100 px-6 py-3 flex items-center justify-between animate-in slide-in-from-top-2"
+						>
+							<div class="flex items-center gap-3">
+								<div class="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></div>
+								<span class="text-xs font-bold text-rose-700"
+									>Priority Decision: {currentEdPortal.name}</span
+								>
 							</div>
-						{:else}
-							<table class="w-full text-[11px]">
-								<tbody>
-									{#if filteredPortals.length === 0}
-										<tr>
-											<td colspan="4" class="px-4 py-6 text-[11px] text-slate-500">
-												No schools match “{searchQuery}”. Try another name or leave the search box
-												empty to see all decisions.
-											</td>
-										</tr>
-									{:else}
-										{#each filteredPortals as portal (portal.slug)}
-											<tr
-												class={`cursor-pointer border-b border-slate-100 transition ${
-													currentEdPortal &&
-													portal.slug === currentEdPortal.slug &&
-													!hasViewedEdEmail
-														? 'bg-rose-50 hover:bg-rose-100'
-														: readPortalSlugs.has(portal.slug)
-															? 'bg-slate-50 hover:bg-slate-100 text-slate-500'
-															: 'bg-white hover:bg-slate-50'
-												}`}
-												on:click={() => selectPortal(portal)}
-											>
-												<td class="px-3 py-3 align-top text-slate-400 w-10">
-													<input
-														type="checkbox"
-														class="align-middle mr-1 h-3 w-3 rounded border border-slate-300 bg-white text-cyan-600"
-													/>
-												</td>
-												<td class="px-2 py-3 align-top whitespace-nowrap w-56">
+							<button
+								on:click={() => selectPortal(currentEdPortal)}
+								class="text-xs font-bold text-white bg-rose-600 hover:bg-rose-700 px-3 py-1.5 rounded-lg transition-colors cursor-pointer"
+							>
+								View Decision
+							</button>
+						</div>
+					{/if}
+
+					<!-- List -->
+					<div class="flex-1 overflow-y-auto">
+						{#if activeFolder === 'inbox'}
+							{#if visiblePortals.length === 0}
+								<div class="flex flex-col items-center justify-center h-full text-center p-8">
+									<div
+										class="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mb-4"
+									>
+										<svg
+											class="w-8 h-8 text-slate-300"
+											fill="none"
+											viewBox="0 0 24 24"
+											stroke="currentColor"
+										>
+											<path
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												stroke-width="2"
+												d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+											/>
+										</svg>
+									</div>
+									<h3 class="text-slate-900 font-bold mb-1">Inbox Empty</h3>
+									<p class="text-slate-500 text-sm max-w-xs">
+										Decisions will arrive here automatically as the simulation progresses.
+									</p>
+								</div>
+							{:else}
+								{#each filteredPortals as portal (portal.slug)}
+									<button
+										on:click={() => selectPortal(portal)}
+										class={`w-full text-left px-6 py-4 border-b border-slate-50 hover:bg-slate-50 transition-colors flex items-start gap-4 group ${readPortalSlugs.has(portal.slug) ? 'opacity-80' : 'bg-white'}`}
+									>
+										<!-- Avatar/Icon -->
+										<div
+											class={`w-10 h-10 rounded-full flex-shrink-0 flex items-center justify-center text-xs font-bold ${readPortalSlugs.has(portal.slug) ? 'bg-slate-100 text-slate-500' : 'bg-blue-100 text-blue-600'}`}
+										>
+											{portal.name[0]}
+										</div>
+
+										<div class="flex-1 min-w-0">
+											<div class="flex justify-between items-baseline mb-1">
+												<span
+													class={`text-sm truncate pr-2 ${readPortalSlugs.has(portal.slug) ? 'font-medium text-slate-900' : 'font-bold text-slate-900'}`}
+												>
+													{portal.name}
+												</span>
+												<span class="text-xs text-slate-400 font-medium whitespace-nowrap">
+													{getReceivedLabel(portal)}
+												</span>
+											</div>
+											<div class="text-sm text-slate-600 truncate flex items-center gap-2">
+												<div>
 													<span
 														class={readPortalSlugs.has(portal.slug)
-															? 'text-slate-500'
-															: 'font-semibold text-slate-900'}
+															? ''
+															: 'font-semibold text-slate-800'}>{portal.subject}</span
 													>
-														{portal.name}
+													<span class="text-slate-400 mx-1">–</span>
+													<span class="text-slate-500"
+														>A status update is available in your application portal.</span
+													>
+												</div>
+												{#if deepDiveItems && deepDiveItems.some((d) => d.slug === portal.slug)}
+													<span
+														class="shrink-0 inline-flex items-center gap-1 rounded-full border border-violet-200 bg-violet-50 px-2 py-[1px] text-[9px] text-violet-700"
+													>
+														<span class="h-1.5 w-1.5 rounded-full bg-violet-500"></span>
+														Deep Dive
 													</span>
-												</td>
-												<td class="px-2 py-3 align-top">
-													<div class="flex items-baseline justify-between gap-2">
-														<div class="min-w-0">
-															<span
-																class={`truncate ${
-																	currentEdPortal &&
-																	portal.slug === currentEdPortal.slug &&
-																	!hasViewedEdEmail
-																		? 'font-semibold text-rose-700'
-																		: readPortalSlugs.has(portal.slug)
-																			? 'text-slate-500'
-																			: 'font-semibold text-slate-900'
-																}`}
-															>
-																{portal.subject}
-															</span>
-															<span class="text-slate-500">
-																&nbsp;– A status update is available in your application portal.
-															</span>
-														</div>
-
-														{#if deepDiveItems && deepDiveItems.some((d) => d.slug === portal.slug)}
-															<span
-																class="shrink-0 inline-flex items-center gap-1 rounded-full border border-violet-200 bg-violet-50 px-2 py-[1px] text-[9px] text-violet-700"
-															>
-																<span class="h-1.5 w-1.5 rounded-full bg-violet-500"></span>
-																Deep dive
-															</span>
-														{/if}
-													</div>
-												</td>
-												<td
-													class="px-3 py-3 align-top text-right text-slate-500 whitespace-nowrap w-40"
-												>
-													{getReceivedLabel(portal)}
-												</td>
-											</tr>
-										{/each}
-									{/if}
-								</tbody>
-							</table>
-						{/if}
-					{:else}
-						<!-- SENT MAIL -->
-						<table class="w-full text-[11px]">
-							<tbody>
-								{#each sentEmails as message (message.id)}
-									<tr
-										class="cursor-pointer border-b border-slate-100 bg-white hover:bg-slate-50 transition"
-										on:click={() => selectSent(message)}
-									>
-										<td class="px-3 py-3 align-top text-slate-400 w-10">
-											<input
-												type="checkbox"
-												class="align-middle mr-1 h-3 w-3 rounded border border-slate-300 bg-white text-cyan-600"
-											/>
-										</td>
-										<td class="px-2 py-3 align-top whitespace-nowrap w-56 text-slate-900">
-											To: {message.to}
-										</td>
-										<td class="px-2 py-3 align-top">
-											<span class="font-semibold text-slate-900">
-												{message.subject}
-											</span>
-											<span class="text-slate-500">
-												&nbsp;– {message.preview}
-											</span>
-										</td>
-										<td
-											class="px-3 py-3 align-top text-right text-slate-500 whitespace-nowrap w-32"
-										>
-											{message.sent}
-										</td>
-									</tr>
+												{/if}
+											</div>
+										</div>
+									</button>
 								{/each}
-							</tbody>
-						</table>
-					{/if}
-				</div>
-			</div>
-		</div>
-	{:else}
-		<!-- EMAIL VIEW -->
-		<div class="flex text-[11px]">
-			<!-- LEFT SIDEBAR (same as inbox) -->
-			<aside class="w-52 border-r border-slate-200 bg-slate-50 py-3 flex flex-col gap-3">
-				<div class="px-3">
-					<button
-						type="button"
-						class="w-full inline-flex items-center justify-center gap-2 rounded-full border border-cyan-500/60 bg-cyan-500/10 px-3 py-1.5 text-[11px] font-semibold text-cyan-200 hover:bg-cyan-500/20"
-					>
-						<span class="h-1.5 w-1.5 rounded-full bg-cyan-400"></span>
-						Compose
-					</button>
-				</div>
-				<nav class="px-1 text-[11px] text-slate-300 space-y-0.5">
-					<button
-						type="button"
-						class={`w-full flex items-center justify-between rounded-r-full px-3 py-1 transition ${
-							activeFolder === 'inbox'
-								? 'bg-slate-800/80 text-slate-50 font-semibold'
-								: 'hover:bg-slate-900/80 text-slate-300'
-						}`}
-						on:click={() => switchFolder('inbox')}
-					>
-						<span>Inbox</span>
-						<span class="text-slate-500 text-[10px]">
-							{visiblePortals.length}
-						</span>
-					</button>
-					<button
-						type="button"
-						class="w-full text-left px-3 py-1 rounded-r-full text-slate-500 hover:bg-slate-900/80"
-					>
-						Starred
-					</button>
-					<button
-						type="button"
-						class={`w-full text-left px-3 py-1 rounded-r-full transition ${
-							activeFolder === 'sent'
-								? 'bg-slate-800/80 text-slate-50 font-semibold'
-								: 'hover:bg-slate-900/80 text-slate-300'
-						}`}
-						on:click={() => switchFolder('sent')}
-					>
-						Sent
-					</button>
-					<button
-						type="button"
-						class="w-full text-left px-3 py-1 rounded-r-full text-slate-500 hover:bg-slate-900/80"
-					>
-						Drafts
-					</button>
-					<button
-						type="button"
-						class="w-full text-left px-3 py-1 rounded-r-full text-slate-500 hover:bg-slate-900/80"
-					>
-						All Mail
-					</button>
-					<button
-						type="button"
-						class="w-full text-left px-3 py-1 rounded-r-full text-slate-500 hover:bg-slate-900/80"
-					>
-						Trash
-					</button>
-				</nav>
-			</aside>
-
-			<!-- EMAIL CONTENT -->
-			<div class="flex-1 flex flex-col bg-white">
-				<!-- TOP CONTROLS -->
-				<div
-					class="border-b border-slate-200 bg-slate-50/50 px-3 py-2 flex items-center justify-between"
-				>
-					<div class="flex items-center gap-2">
-						<button
-							type="button"
-							class="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-white px-3 py-1 text-[10px] text-slate-600 hover:bg-slate-50"
-							on:click={openInboxList}
-						>
-							← Back to inbox
-						</button>
-						<div class="hidden sm:flex items-center gap-1">
-							<button
-								type="button"
-								class="rounded-full border border-slate-200 bg-white px-2 py-1 text-[10px] text-slate-500 hover:bg-slate-50"
-							>
-								Archive
-							</button>
-							<button
-								type="button"
-								class="rounded-full border border-slate-200 bg-white px-2 py-1 text-[10px] text-slate-500 hover:bg-slate-50"
-							>
-								Report spam
-							</button>
-							<button
-								type="button"
-								class="rounded-full border border-rose-200 bg-rose-50 px-2 py-1 text-[10px] text-rose-700 hover:bg-rose-100"
-							>
-								Delete
-							</button>
-						</div>
-					</div>
-					<div class="text-slate-500 text-[10px]">
-						1 of {visiblePortals.length}
-					</div>
-				</div>
-
-				<!-- BODY -->
-				<div class="px-4 py-4">
-					{#if activeFolder === 'inbox' && selectedPortal}
-						<div class="max-w-3xl text-[12px] leading-relaxed text-slate-900">
-							<h3 class="text-sm font-semibold mb-2 text-slate-900">
-								{selectedPortal.subject}
-							</h3>
-							<div
-								class="text-[11px] text-slate-500 mb-3 border-b border-slate-200 pb-2 space-y-0.5"
-							>
-								<div>
-									<span class="font-semibold text-slate-700">From:</span>
-									<span class="text-slate-600"> {selectedPortal.from}</span>
-								</div>
-								<div>
-									<span class="font-semibold text-slate-700">To:</span>
-									<span class="text-slate-600">
-										{' '}
-										{displayName} &lt;{displayEmail}&gt;
-									</span>
-								</div>
-								<div>
-									<span class="font-semibold text-slate-700">Date:</span>
-									<span class="text-slate-600"> {getReceivedLabel(selectedPortal)}</span>
-								</div>
-							</div>
-
-							<p class="mb-2 text-slate-900">
-								Dear {displayName},
-							</p>
-							<p class="mb-2 text-slate-700">
-								This email is to notify you that there has been an update to your application status
-								for <span class="font-semibold"> {selectedPortal.name}</span>. For security reasons,
-								we do not release admission decisions via email.
-							</p>
-							<p class="mb-2 text-slate-700">
-								Please log in to your applicant portal using the credentials you created when you
-								first applied. Once you have signed in, you will be able to view your official
-								admission decision and any related next steps.
-							</p>
-							<p class="mb-3 text-slate-700">To view your status, click the link below:</p>
-
-							<!-- CTA + Deep Dive flag row -->
-							<div class="mb-4 flex flex-wrap items-center gap-2">
-								<a
-									href={`/portals/${selectedPortal.slug}`}
-									class="inline-flex items-center justify-center gap-2 rounded-full border border-cyan-300 bg-cyan-100 text-[11px] font-semibold px-4 py-2 no-underline text-cyan-900 hover:bg-cyan-200"
+							{/if}
+						{:else if activeFolder === 'sent'}
+							{#each sentEmails as message (message.id)}
+								<button
+									on:click={() => selectSent(message)}
+									class="w-full text-left px-6 py-4 border-b border-slate-50 hover:bg-slate-50 transition-colors flex items-start gap-4 group"
 								>
-									View Status
-								</a>
-
-								{#if deepDiveItems && deepDiveItems.some((d) => d.slug === selectedPortal.slug)}
-									<button
-										type="button"
-										class="inline-flex items-center gap-2 rounded-full border border-violet-200 bg-violet-50 px-3 py-1.5 text-[10px] font-medium text-violet-700 cursor-default"
+									<div
+										class="w-10 h-10 rounded-full bg-slate-100 text-slate-500 flex-shrink-0 flex items-center justify-center text-xs font-bold"
 									>
-										<span class="h-1.5 w-1.5 rounded-full bg-violet-500"></span>
-										Deep dive saved for this school
-									</button>
-								{:else if deepDiveLoadingSlug === selectedPortal.slug}
-									<button
-										type="button"
-										class="inline-flex items-center gap-2 rounded-full border border-violet-200 bg-violet-50 px-3 py-1.5 text-[10px] font-medium text-violet-700 cursor-wait"
-										disabled
-									>
-										<span
-											class="h-3 w-3 animate-spin rounded-full border border-violet-300 border-t-transparent"
-										></span>
-										Generating deep dive…
-									</button>
-								{:else}
-									<button
-										type="button"
-										class="inline-flex items-center gap-2 rounded-full border border-violet-200 bg-white px-3 py-1.5 text-[10px] font-medium text-violet-700 hover:bg-violet-50"
-										on:click={() => requestDeepDiveForSlug(selectedPortal.slug)}
-									>
-										<span class="h-1.5 w-1.5 rounded-full bg-violet-500"></span>
-										Flag for deep dive
-									</button>
-								{/if}
-							</div>
-
-							<p class="mb-2 text-slate-500">
-								If you experience any difficulty accessing your portal, please ensure that you are
-								using the same email address you used when you applied and that your password is
-								entered correctly.
-							</p>
-
-							<p class="mt-4 text-slate-700">
-								Sincerely,<br />
-								<span class="font-semibold">Office of Undergraduate Admissions</span><br />
-								{selectedPortal.name}
-							</p>
+										Me
+									</div>
+									<div class="flex-1 min-w-0">
+										<div class="flex justify-between items-baseline mb-1">
+											<span class="text-sm font-bold text-slate-900 truncate pr-2"
+												>To: {message.to}</span
+											>
+											<span class="text-xs text-slate-400 font-medium whitespace-nowrap"
+												>{message.sent}</span
+											>
+										</div>
+										<div class="text-sm text-slate-600 truncate">
+											<span class="font-medium text-slate-800">{message.subject}</span>
+											<span class="text-slate-400 mx-1">–</span>
+											<span class="text-slate-500">{message.preview}</span>
+										</div>
+									</div>
+								</button>
+							{/each}
+						{/if}
+					</div>
+				{:else}
+					<!-- EMAIL DETAIL VIEW -->
+					<div
+						class="h-16 border-b border-slate-100 flex items-center justify-between px-6 bg-white z-10 sticky top-0"
+					>
+						<button
+							on:click={openInboxList}
+							class="flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-slate-900 transition-colors"
+						>
+							<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M10 19l-7-7m0 0l7-7m-7 7h18"
+								/>
+							</svg>
+							Back
+						</button>
+						<div class="flex items-center gap-2">
+							<button class="p-2 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-100">
+								<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										stroke-width="2"
+										d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+									/>
+								</svg>
+							</button>
 						</div>
-					{:else if activeFolder === 'sent' && selectedSent}
-						<div class="max-w-3xl text-[12px] leading-relaxed text-slate-900">
-							<h3 class="text-sm font-semibold mb-2 text-slate-900">
-								{selectedSent.subject}
-							</h3>
-							<div
-								class="text-[11px] text-slate-500 mb-3 border-b border-slate-200 pb-2 space-y-0.5"
-							>
-								<div>
-									<span class="font-semibold text-slate-700">From:</span>
-									<span class="text-slate-600">
-										{' '}
-										{displayName} &lt;{displayEmail}&gt;
-									</span>
+					</div>
+
+					<div class="flex-1 overflow-y-auto p-8 bg-white">
+						{#if activeFolder === 'inbox' && selectedPortal}
+							<div class="max-w-2xl mx-auto">
+								<h1 class="text-2xl font-bold text-slate-900 mb-6">{selectedPortal.subject}</h1>
+
+								<div class="flex items-center gap-4 mb-8 pb-8 border-b border-slate-100">
+									<div
+										class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-lg font-bold text-blue-600"
+									>
+										{selectedPortal.name[0]}
+									</div>
+									<div class="flex-1">
+										<div class="flex justify-between items-baseline">
+											<span class="font-bold text-slate-900">{selectedPortal.from}</span>
+											<span
+												class="text-xs text-slate-500 bg-slate-50 px-2 py-1 rounded-full border border-slate-100"
+												>{getReceivedLabel(selectedPortal)}</span
+											>
+										</div>
+										<div class="text-xs text-slate-500">to me</div>
+									</div>
 								</div>
-								<div>
-									<span class="font-semibold text-slate-700">To:</span>
-									<span class="text-slate-600"> {selectedSent.to}</span>
-								</div>
-								<div>
-									<span class="font-semibold text-slate-700">Date:</span>
-									<span class="text-slate-600"> {selectedSent.sent}</span>
+
+								<div class="prose prose-sm prose-slate max-w-none">
+									<p>Dear {displayName},</p>
+									<p>
+										This email is to notify you that there has been an update to your application
+										status for <strong>{selectedPortal.name}</strong>. For security reasons, we do
+										not release admission decisions via email.
+									</p>
+									<p>
+										Please log in to your applicant portal using the credentials you created when
+										you first applied.
+									</p>
+
+									<div class="my-8 flex flex-wrap items-center gap-3">
+										<a
+											href={`/portals/${selectedPortal.slug}`}
+											class="inline-flex items-center justify-center px-6 py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition-all shadow-lg shadow-blue-200 no-underline"
+										>
+											View Decision
+										</a>
+
+										{#if deepDiveItems && deepDiveItems.some((d) => d.slug === selectedPortal.slug)}
+											<button
+												type="button"
+												class="inline-flex items-center gap-2 rounded-xl border border-violet-200 bg-violet-50 px-4 py-3 text-sm font-medium text-violet-700 cursor-default"
+											>
+												<span class="h-1.5 w-1.5 rounded-full bg-violet-500"></span>
+												Deep dive saved
+											</button>
+										{:else if deepDiveLoadingSlug === selectedPortal.slug}
+											<button
+												type="button"
+												class="inline-flex items-center gap-2 rounded-xl border border-violet-200 bg-violet-50 px-4 py-3 text-sm font-medium text-violet-700 cursor-wait"
+												disabled
+											>
+												<span
+													class="h-3 w-3 animate-spin rounded-full border border-violet-300 border-t-transparent"
+												></span>
+												Generating...
+											</button>
+										{:else}
+											<button
+												type="button"
+												class="inline-flex items-center gap-2 rounded-xl border border-violet-200 bg-white px-4 py-3 text-sm font-medium text-violet-700 hover:bg-violet-50 transition-colors"
+												on:click={() => requestDeepDiveForSlug(selectedPortal.slug)}
+											>
+												<span class="h-1.5 w-1.5 rounded-full bg-violet-500"></span>
+												Flag for Deep Dive
+											</button>
+										{/if}
+									</div>
+
+									<p class="text-slate-500 text-xs mt-8 pt-8 border-t border-slate-100">
+										Sincerely,<br />
+										Office of Undergraduate Admissions<br />
+										{selectedPortal.name}
+									</p>
 								</div>
 							</div>
-
-							<pre class="whitespace-pre-wrap text-[12px] leading-relaxed text-slate-700 mb-2">
-{selectedSent.body}
-              </pre>
-						</div>
-					{:else}
-						<p class="text-[11px] text-slate-500">
-							No email selected. Use “Back to inbox” to choose a message.
-						</p>
-					{/if}
-				</div>
-			</div>
+						{:else if activeFolder === 'sent' && selectedSent}
+							<div class="max-w-2xl mx-auto">
+								<h1 class="text-2xl font-bold text-slate-900 mb-6">{selectedSent.subject}</h1>
+								<div class="flex items-center gap-4 mb-8 pb-8 border-b border-slate-100">
+									<div
+										class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center text-lg font-bold text-slate-500"
+									>
+										Me
+									</div>
+									<div class="flex-1">
+										<div class="flex justify-between items-baseline">
+											<span class="font-bold text-slate-900">To: {selectedSent.to}</span>
+											<span class="text-xs text-slate-500">{selectedSent.sent}</span>
+										</div>
+									</div>
+								</div>
+								<div class="prose prose-sm prose-slate max-w-none whitespace-pre-wrap">
+									{selectedSent.body}
+								</div>
+							</div>
+						{/if}
+					</div>
+				{/if}
+			</main>
 		</div>
-	{/if}
+	</div>
 </section>
