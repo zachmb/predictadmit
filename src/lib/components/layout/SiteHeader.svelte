@@ -10,6 +10,7 @@
 	let timer: ReturnType<typeof setTimeout>;
 
 	$: session = $page.data.session;
+	$: isLandingPage = $page.url.pathname === '/';
 
 	$: {
 		if (isPortal) {
@@ -32,62 +33,78 @@
 </script>
 
 {#if showHeader}
+	{#if !isLandingPage && !isPortal}
+		<!-- Placeholder to prevent content overlap on inner pages without animating height -->
+		<div class="w-full h-16 transition-none"></div>
+	{/if}
+
 	<header
-		class="sticky top-0 z-[9999] border-b border-slate-200/50 bg-white/95 backdrop-blur-md transition-all h-[64px] flex items-center shadow-sm"
+		class="fixed left-1/2 -translate-x-1/2 z-[9999] bg-white/80 backdrop-blur-xl transition-all duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden
+		{isLandingPage
+			? 'top-6 h-14 border border-slate-200/80 rounded-full px-2'
+			: 'top-0 h-16 border-b border-transparent lg:border-slate-200/80 rounded-none px-4'}"
+		style="width: {isLandingPage ? 'calc(100% - 32px)' : '100%'}; max-width: {isLandingPage
+			? '900px'
+			: '100%'};"
 	>
-		<div class="max-w-[1200px] w-full mx-auto px-6 h-full flex items-center justify-between">
-			<a href="/" class="text-xl font-bold tracking-tight text-[var(--color-brand-primary)]">
-				predictadmit<span class="text-blue-900">.com</span>
-			</a>
+		<div
+			class="w-full h-full flex items-center justify-between mx-auto transition-all duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
+			style="max-width: {isLandingPage ? '100%' : '1200px'};"
+		>
+			<div class="pl-4">
+				<a href="/" class="text-lg font-[700] tracking-tight text-slate-900 transition-colors">
+					predictadmit<span class="text-slate-400">.com</span>
+				</a>
+			</div>
 
 			<!-- CENTERED NAVIGATION -->
-			<nav class="hidden md:flex items-center gap-2 absolute left-1/2 -translate-x-1/2">
+			<nav class="hidden md:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
 				<a
 					href="/portals"
-					class="text-base font-bold text-slate-600 hover:text-white hover:bg-[#0052CC] px-5 py-2.5 rounded-full transition-all duration-200"
+					class="text-[13px] font-semibold text-slate-500 hover:text-slate-900 hover:bg-slate-100 px-4 py-2 rounded-full transition-all duration-200"
 					>Portals</a
 				>
 				<a
 					href="/ai"
-					class="text-base font-bold text-slate-600 hover:text-white hover:bg-[#0052CC] px-5 py-2.5 rounded-full transition-all duration-200"
+					class="text-[13px] font-semibold text-slate-500 hover:text-slate-900 hover:bg-slate-100 px-4 py-2 rounded-full transition-all duration-200"
 					>Predict</a
 				>
 				<a
 					href="/pro"
-					class="text-base font-bold text-slate-600 hover:text-white hover:bg-[#0052CC] px-5 py-2.5 rounded-full transition-all duration-200"
+					class="text-[13px] font-semibold text-slate-500 hover:text-slate-900 hover:bg-slate-100 px-4 py-2 rounded-full transition-all duration-200"
 					>Pro</a
 				>
 				<a
 					href="/about"
-					class="text-base font-bold text-slate-600 hover:text-white hover:bg-[#0052CC] px-5 py-2.5 rounded-full transition-all duration-200"
+					class="text-[13px] font-semibold text-slate-500 hover:text-slate-900 hover:bg-slate-100 px-4 py-2 rounded-full transition-all duration-200"
 					>About</a
 				>
 			</nav>
 
-			<div class="flex items-center gap-3">
+			<div class="flex items-center pr-1">
 				<a
 					href="/account"
-					class="inline-flex items-center gap-2 bg-white border-2 border-slate-300 text-slate-700 px-4 py-2 rounded-lg hover:bg-slate-50 transition-colors font-semibold text-sm"
+					class="inline-flex items-center gap-2 bg-slate-900 text-white px-4 py-2 rounded-full hover:bg-black transition-colors font-semibold text-sm shadow-sm"
 				>
 					{#if session}
 						{#if session.user?.image}
 							<img
 								src={session.user.image}
 								alt={session.user.name}
-								class="w-5 h-5 rounded-full border border-slate-200"
+								class="w-5 h-5 rounded-full border border-slate-700"
 							/>
 						{:else}
 							<div
-								class="w-5 h-5 bg-blue-100 rounded-full flex items-center justify-center text-[10px] text-blue-600"
+								class="w-5 h-5 bg-slate-800 rounded-full flex items-center justify-center text-[10px] text-white"
 							>
 								{session.user?.name?.charAt(0) || 'U'}
 							</div>
 						{/if}
-						<span class="max-w-[100px] overflow-hidden text-ellipsis whitespace-nowrap">
+						<span class="max-w-[80px] overflow-hidden text-ellipsis whitespace-nowrap text-xs">
 							{session.user?.name || 'Account'}
 						</span>
 					{:else}
-						<svg class="w-4 h-4" viewBox="0 0 24 24">
+						<svg class="w-3.5 h-3.5" viewBox="0 0 24 24">
 							<path
 								fill="#4285F4"
 								d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -105,7 +122,7 @@
 								d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
 							/>
 						</svg>
-						Sign in
+						<span class="text-xs">Sign in</span>
 					{/if}
 				</a>
 			</div>

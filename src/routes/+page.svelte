@@ -456,36 +456,37 @@
 <!-- MARKETING LANDING PAGE -->
 <main class="font-sans text-slate-900 bg-white selection:bg-blue-100 selection:text-blue-900">
 	<!-- HERO SECTION -->
-	<section class="relative pt-32 pb-24 md:pt-48 md:pb-32 overflow-hidden">
-		<!-- Background Decoration -->
-		<div
-			class="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-blue-50/50 rounded-[100%] blur-3xl -z-10 pointer-events-none"
-		></div>
-
-		<div class="max-w-[1200px] mx-auto px-6 text-center space-y-10 relative z-10">
+	<section class="relative pt-32 pb-24 md:pt-48 md:pb-32 overflow-hidden bg-[#FAFAFA]">
+		<div class="max-w-[1200px] mx-auto px-6 text-center relative z-10 flex flex-col items-center">
 			<!-- Headline -->
-			<div class="space-y-6 max-w-4xl mx-auto">
-				<h1 class="text-5xl md:text-7xl font-[600] tracking-tight leading-[1.1] text-slate-900">
-					Simulate Any University Portal
+			<div class="space-y-6 max-w-4xl mx-auto mb-12">
+				<h1
+					class="text-6xl md:text-[5.5rem] font-bold tracking-tighter leading-[0.95] text-slate-900 animate-in fade-in slide-in-from-bottom-6 duration-1000 fill-mode-both"
+				>
+					Simulate Any <br class="hidden md:block" /> University Portal.
 				</h1>
-				<p class="text-xl text-slate-500 max-w-2xl mx-auto leading-relaxed font-light">
-					Experience realistic college admission portals. Search for any university or run a full
-					simulation.
+				<p
+					class="text-xl md:text-2xl text-slate-500 max-w-2xl mx-auto leading-snug tracking-tight font-medium mt-6 animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-[200ms] fill-mode-both"
+				>
+					Experience perfectly realistic college admission portals. Search for your university or
+					run a full cycle.
 				</p>
 			</div>
 
 			<!-- Search Bar + Simulation Button -->
 			<!-- Search Bar + Simulation Button OR Simulation Interface -->
 			{#if !hasApplied}
-				<div class="max-w-xl mx-auto relative z-20">
+				<div
+					class="w-full max-w-xl mx-auto relative z-20 animate-in fade-in slide-in-from-bottom-5 duration-700 delay-150 fill-mode-both"
+				>
 					<div
-						class="flex gap-2 p-1 bg-white rounded-2xl border border-slate-200 shadow-xl shadow-blue-100/50 relative"
+						class="flex items-center gap-2 p-1.5 bg-white rounded-full border border-slate-200 shadow-sm relative transition-all focus-within:ring-4 focus-within:ring-slate-100 focus-within:border-slate-300"
 					>
 						<!-- Mode Selector (Accept/Deny) -->
-						<div class="relative flex-shrink-0">
+						<div class="relative flex-shrink-0 h-12">
 							<select
 								bind:value={$manualOverrideMode}
-								class="appearance-none h-full pl-4 pr-8 bg-slate-50 font-bold text-sm text-slate-900 rounded-xl border-none focus:ring-2 focus:ring-blue-500 outline-none cursor-pointer"
+								class="appearance-none h-full pl-5 pr-9 bg-slate-50 font-bold text-sm text-slate-900 rounded-full border border-slate-100 hover:border-slate-200 transition-colors focus:outline-none cursor-pointer"
 							>
 								<option value="" disabled selected class="text-slate-500">Decision</option>
 								<option value="accepted">Accept</option>
@@ -540,7 +541,8 @@
 
 						<!-- Search Button Icon -->
 						<button
-							class="w-12 h-12 flex items-center justify-center bg-[#0052CC] text-white rounded-xl hover:bg-blue-700 transition-colors shadow-lg shadow-blue-200"
+							aria-label="Search"
+							class="w-12 h-12 flex-shrink-0 flex items-center justify-center bg-slate-900 text-white rounded-full hover:bg-black transition-all shadow-sm transform active:scale-95"
 						>
 							<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"
 								><path
@@ -554,12 +556,14 @@
 					</div>
 
 					<!-- Start Simulation Link (Secondary) -->
-					<div class="mt-6">
+					<div class="mt-8">
 						<button
 							on:click={handleStartSimulationClick}
-							class="text-sm font-bold text-slate-500 hover:text-[#0052CC] transition-colors underline decoration-slate-300 underline-offset-4 hover:decoration-[#0052CC]"
+							class="inline-flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-slate-900 transition-colors group"
 						>
-							Or run a full cycle simulation &rarr;
+							Or run a full cycle simulation <span
+								class="group-hover:translate-x-1 transition-transform">&rarr;</span
+							>
 						</button>
 					</div>
 				</div>
@@ -568,7 +572,7 @@
 				<div
 					class="max-w-4xl mx-auto relative z-20 mt-8 text-left animate-in fade-in slide-in-from-bottom-4 duration-500"
 				>
-					<div class="flex items-center justify-between mb-4 px-2">
+					<div class="flex items-center justify-between gap-4 mb-8 md:mb-12 px-2">
 						<h2 class="text-xl font-bold text-slate-900">Admissions Inbox</h2>
 						<button
 							on:click={resetSimulation}
@@ -577,7 +581,7 @@
 						>
 					</div>
 
-					<div class="bg-white rounded-xl shadow-2xl overflow-hidden border border-slate-200">
+					<div class="bg-white rounded-xl shadow-lg overflow-hidden border border-slate-200/80">
 						{#if visiblePortals.length === 0 && $userProfile.isSubmitting}
 							<div class="p-8 flex flex-col items-center justify-center gap-4">
 								<svg
@@ -625,39 +629,70 @@
 			{/if}
 
 			<!-- Social Proof Ribbon -->
-			<div class="pt-8 flex items-center justify-center gap-6 opacity-80">
-				<div class="flex -space-x-3">
-					{#each Array(4) as _, i}
-						<div
-							class="w-10 h-10 rounded-full border-2 border-white bg-slate-200 relative overflow-hidden"
-						>
-							<img src={`https://i.pravatar.cc/150?img=${i + 10}`} alt="User" />
-						</div>
-					{/each}
+			<div
+				class="pt-12 flex flex-col md:flex-row items-center justify-center gap-4 md:gap-5 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300 fill-mode-both"
+			>
+				<div class="flex -space-x-2">
+					<div
+						class="w-8 h-8 rounded-full border-2 border-white bg-[#B2D8C9] relative overflow-hidden shadow-sm transition-transform hover:-translate-y-1 hover:z-10"
+					>
+						<img
+							src="/apple_memoji_1.png"
+							alt="Student 1"
+							class="w-full h-full object-cover scale-[1.35] mt-0.5"
+						/>
+					</div>
+					<div
+						class="w-8 h-8 rounded-full border-2 border-white bg-[#E3A5A5] relative overflow-hidden shadow-sm transition-transform hover:-translate-y-1 hover:z-10"
+					>
+						<img
+							src="/apple_memoji_2.png"
+							alt="Student 2"
+							class="w-full h-full object-cover scale-[1.35] mt-0.5"
+						/>
+					</div>
+					<div
+						class="w-8 h-8 rounded-full border-2 border-white bg-[#E9B681] relative overflow-hidden shadow-sm transition-transform hover:-translate-y-1 hover:z-10"
+					>
+						<img
+							src="/apple_memoji_3.png"
+							alt="Student 3"
+							class="w-full h-full object-cover scale-[1.35] mt-0.5"
+						/>
+					</div>
+					<div
+						class="w-8 h-8 rounded-full border-2 border-white bg-[#A7BCE6] relative overflow-hidden shadow-sm transition-transform hover:-translate-y-1 hover:z-10"
+					>
+						<img
+							src="/apple_memoji_4.png"
+							alt="Student 4"
+							class="w-full h-full object-cover scale-[1.35] mt-0.5"
+						/>
+					</div>
 				</div>
-				<div class="flex flex-col items-start gap-0.5">
+				<div class="flex flex-col items-center md:items-start justify-center gap-0.5 mt-2 md:mt-0">
 					<div class="flex gap-1 text-[#0052CC]">
 						{#each Array(5) as _}
-							<svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"
-								><path
+							<svg class="w-4 h-4 fill-current drop-shadow-sm" viewBox="0 0 20 20">
+								<path
 									d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-								/></svg
-							>
+								/>
+							</svg>
 						{/each}
 					</div>
-					<span class="text-xs font-semibold text-slate-500">Trusted by 500 students</span>
+					<span class="text-xs font-semibold text-slate-500">Trusted by 500+</span>
 				</div>
 			</div>
 		</div>
 	</section>
 
 	<!-- SECTION 1: FREE SIMULATOR -->
-	<section class="py-32 bg-slate-50 relative overflow-hidden">
+	<section class="py-32 bg-white relative overflow-hidden">
 		<div class="max-w-[1200px] mx-auto px-6 relative z-10">
 			<!-- Headline -->
-			<div class="text-center max-w-2xl mx-auto mb-16 space-y-4">
-				<h2 class="text-4xl font-bold tracking-tight text-slate-900">
-					Free Portals & AI Simulations.
+			<div class="text-center max-w-2xl mx-auto mb-20 space-y-6">
+				<h2 class="text-5xl md:text-6xl font-bold tracking-tighter text-slate-900 leading-[1.05]">
+					Free Portals. <br /> AI Simulations.
 				</h2>
 				<p class="text-lg text-slate-500">
 					Experience the rush of decision day without the risk. <span
@@ -667,21 +702,23 @@
 			</div>
 
 			<!-- Window-in-Window UI -->
-			<div class="relative max-w-5xl mx-auto">
+			<div class="relative max-w-5xl mx-auto group perspective-1000">
 				<!-- Base Window: Browser -->
 				<div
-					class="bg-white rounded-2xl shadow-2xl border border-slate-200/60 overflow-hidden relative z-10 select-none"
+					class="bg-white rounded-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] border border-slate-200/60 overflow-hidden relative z-10 select-none animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-150 fill-mode-both transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] hover:-translate-y-2 hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.15)]"
 				>
 					<!-- Browser Bar -->
-					<div class="bg-slate-50 px-4 py-3 border-b border-slate-100 flex items-center gap-3">
+					<div
+						class="bg-slate-50/50 px-4 py-3 flex items-center gap-3 border-b border-slate-100/50"
+					>
 						<div class="flex gap-1.5">
-							<div class="w-3 h-3 rounded-full bg-red-400/80"></div>
-							<div class="w-3 h-3 rounded-full bg-amber-400/80"></div>
-							<div class="w-3 h-3 rounded-full bg-green-400/80"></div>
+							<div class="w-3 h-3 rounded-full bg-slate-300"></div>
+							<div class="w-3 h-3 rounded-full bg-slate-300"></div>
+							<div class="w-3 h-3 rounded-full bg-slate-300"></div>
 						</div>
 						<div class="flex-1 text-center">
 							<div
-								class="bg-white border border-slate-200 rounded-md px-3 py-1 text-[10px] text-slate-400 inline-block w-64 shadow-sm"
+								class="bg-white border border-slate-200/60 rounded-md px-4 py-1.5 text-[11px] font-medium text-slate-400 inline-block w-64 shadow-sm"
 							>
 								portal.harvard.edu/status
 							</div>
@@ -691,22 +728,24 @@
 					<div class="bg-white p-8 md:p-12 min-h-[450px] relative">
 						<!-- Header -->
 						<div class="flex items-center justify-between border-b border-slate-100 pb-6 mb-8">
-							<div class="flex items-center gap-3">
+							<div class="flex items-center gap-4">
 								<div
-									class="w-10 h-10 bg-[#A51C30] text-white flex items-center justify-center font-serif font-bold text-xl rounded-md"
+									class="w-12 h-12 bg-[#A51C30] text-white flex items-center justify-center font-serif font-bold text-2xl rounded-lg shadow-sm"
 								>
 									H
 								</div>
-								<span class="font-bold text-slate-900">Harvard College</span>
+								<span class="font-bold tracking-tight text-xl text-slate-900">Harvard College</span>
 							</div>
-							<div class="text-xs font-semibold text-slate-500">Applicant ID: 8900421</div>
+							<div class="text-xs font-semibold uppercase tracking-wider text-slate-400">
+								Applicant ID: 8900421
+							</div>
 						</div>
 
 						<!-- Status Update Alert -->
 						<div
-							class="bg-blue-50 border border-blue-100 rounded-xl p-6 mb-8 flex items-start gap-4"
+							class="bg-slate-50 border border-slate-200 rounded-2xl p-6 mb-8 flex items-start gap-4"
 						>
-							<div class="p-2 bg-blue-100 rounded-lg text-blue-600">
+							<div class="p-2 bg-white border border-slate-200 shadow-sm rounded-xl text-slate-600">
 								<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"
 									><path
 										stroke-linecap="round"
@@ -717,12 +756,13 @@
 								>
 							</div>
 							<div>
-								<h3 class="font-bold text-slate-900 text-sm">Status Update Available</h3>
-								<p class="text-xs text-slate-500 mt-1">
+								<h3 class="font-bold tracking-tight text-slate-900">Status Update Available</h3>
+								<p class="text-sm text-slate-500 mt-1">
 									An update to your application was posted on March 27.
 								</p>
 								<div class="mt-3">
-									<span class="text-xs font-bold text-[#0052CC] hover:underline cursor-pointer"
+									<span
+										class="text-xs font-bold uppercase tracking-widest text-[#0052CC] hover:text-blue-700 cursor-pointer"
 										>View Update &rarr;</span
 									>
 								</div>
@@ -730,20 +770,20 @@
 						</div>
 
 						<!-- Background elements -->
-						<div class="space-y-4 opacity-50 blur-[1px]">
-							<div class="h-4 bg-slate-100 rounded w-3/4"></div>
-							<div class="h-4 bg-slate-100 rounded w-1/2"></div>
-							<div class="h-32 bg-slate-50 rounded-xl border border-slate-100 w-full"></div>
+						<div class="space-y-4 opacity-40">
+							<div class="h-4 bg-slate-100 rounded-full w-3/4"></div>
+							<div class="h-4 bg-slate-100 rounded-full w-1/2"></div>
+							<div class="h-32 bg-slate-50 rounded-2xl border border-slate-100 w-full mt-8"></div>
 						</div>
 
 						<!-- CTA OVERLAY -->
-						<div class="absolute inset-0 flex items-center justify-center z-20">
-							<div
-								class="bg-white/80 backdrop-blur-md p-2 rounded-xl border border-white/20 shadow-xl"
-							>
+						<div
+							class="absolute inset-0 flex items-center justify-center z-20 bg-white/40 backdrop-blur-[2px]"
+						>
+							<div class="bg-white p-3 rounded-3xl border border-slate-200/80 shadow-2xl">
 								<button
 									on:click={handleStartSimulationClick}
-									class="px-8 py-3 bg-slate-900 text-white font-bold rounded-lg hover:bg-black transition-all shadow-lg hover:scale-105 active:scale-95"
+									class="px-8 py-4 bg-slate-900 text-white text-sm tracking-wide font-bold rounded-full hover:bg-black transition-all shadow-md active:scale-95"
 								>
 									Start Simulation
 								</button>
@@ -752,40 +792,34 @@
 					</div>
 				</div>
 
-				<!-- Glows -->
-				<div
-					class="absolute -top-10 -right-10 w-32 h-32 bg-blue-400 rounded-full blur-[80px] opacity-20"
-				></div>
-				<div
-					class="absolute -bottom-10 -left-10 w-40 h-40 bg-purple-400 rounded-full blur-[80px] opacity-20"
-				></div>
+				<!-- Glows removed entirely -->
 			</div>
 		</div>
 	</section>
 
 	<!-- SECTION 2: PRO WORKSHOP -->
 	<section class="py-32 bg-white border-t border-slate-100">
-		<div class="max-w-[1100px] mx-auto px-6">
-			<div class="grid md:grid-cols-2 gap-16 items-center">
+		<div class="max-w-[1200px] mx-auto px-6">
+			<div class="grid lg:grid-cols-2 gap-20 items-center">
 				<!-- Text Content -->
-				<div class="space-y-8">
+				<div class="space-y-8 max-w-xl">
 					<span
-						class="inline-block px-3 py-1 bg-blue-50 text-[#0052CC] text-[10px] font-bold uppercase tracking-wider rounded-md"
+						class="inline-block px-3 py-1 bg-slate-50 border border-slate-200 text-slate-600 text-[10px] font-bold uppercase tracking-widest rounded-full"
 						>PredictAdmit Pro</span
 					>
-					<h2 class="text-4xl md:text-5xl font-black tracking-tight text-slate-900 leading-[1.1]">
-						Ivy League Essay Workshop.
+					<h2 class="text-4xl md:text-5xl font-bold tracking-tighter text-slate-900 leading-[1.05]">
+						Ivy League Essay <br /> Workshop.
 					</h2>
-					<p class="text-lg text-slate-600 leading-relaxed">
+					<p class="text-lg text-slate-500 leading-relaxed font-medium tracking-tight">
 						An advanced workshop, tailored per school, that takes in everything in your application
 						to help you craft essays perfectly tailored to you.
 					</p>
 
-					<ul class="space-y-4 pt-4">
+					<ul class="space-y-5 pt-4">
 						{#each ['Institutional Archtype Analysis', 'Deep-Dive Essay Grading', 'Application Strategy Mapping'] as feature}
-							<li class="flex items-center gap-3 text-slate-700 font-medium">
+							<li class="flex items-center gap-3 text-slate-700 font-medium tracking-tight">
 								<div
-									class="w-6 h-6 rounded-full bg-green-50 flex items-center justify-center text-green-600"
+									class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-900 border border-slate-200/60"
 								>
 									<svg
 										class="w-3.5 h-3.5"
@@ -801,10 +835,10 @@
 						{/each}
 					</ul>
 
-					<div class="pt-6">
+					<div class="pt-8">
 						<a
 							href="/pro"
-							class="inline-flex items-center gap-2 text-[#0052CC] font-bold hover:gap-3 transition-all"
+							class="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-[#0052CC] hover:text-blue-700 hover:gap-3 transition-all"
 						>
 							Enter Workshop <span class="text-xl">&rarr;</span>
 						</a>
@@ -812,10 +846,13 @@
 				</div>
 
 				<!-- Visual: Pro Dashboard Mockup -->
-				<div class="relative group">
-					<div class="absolute inset-0 bg-blue-600 blur-[80px] opacity-20 rounded-full"></div>
+				<div class="relative group perspective-1000">
+					<!-- Glow effect on hover -->
 					<div
-						class="relative bg-white rounded-xl shadow-2xl border border-slate-200/60 overflow-hidden transform transition-all duration-500 hover:scale-[1.02] hover:shadow-blue-500/10"
+						class="absolute -inset-1 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-[2rem] blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+					></div>
+					<div
+						class="relative bg-white rounded-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] border border-slate-200/60 overflow-hidden transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:-translate-y-2 group-hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.15)]"
 					>
 						<!-- Top Bar -->
 						<div
@@ -828,96 +865,102 @@
 								>
 							</div>
 							<div class="flex items-center gap-2">
+								<div
+									class="px-2 py-1 rounded bg-slate-50 border border-slate-200 text-[10px] font-bold text-slate-500"
+								>
+									Edit Profile
+								</div>
 								<div class="w-6 h-6 rounded-full bg-slate-100"></div>
 							</div>
 						</div>
 
 						<!-- Dashboard Layout -->
-						<div class="flex h-[320px]">
-							<!-- Sidebar -->
-							<div
-								class="w-32 bg-slate-50 border-r border-slate-100 p-3 hidden sm:flex flex-col gap-1"
-							>
-								<div class="p-2 rounded-lg bg-white border border-slate-200 shadow-sm mb-4">
-									<div class="h-1.5 w-12 bg-slate-200 rounded-full"></div>
-								</div>
-								{#each ['Dashboard', 'Essays', 'Mind Map', 'Schools'] as item, i}
-									<div
-										class="flex items-center gap-2 px-2 py-1.5 rounded-md {i === 0
-											? 'bg-blue-50 text-blue-600'
-											: 'text-slate-400'}"
-									>
-										<div
-											class="w-3 h-3 rounded-full {i === 0 ? 'bg-blue-400' : 'bg-slate-300'}"
-										></div>
-										<span class="text-[10px] font-bold">{item}</span>
+						<div class="flex h-[320px] bg-slate-50">
+							<!-- Main Content -->
+							<div class="flex-1 p-4 flex flex-col gap-4 overflow-hidden relative">
+								<!-- Get Started Row -->
+								<div>
+									<div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">
+										Get Started
 									</div>
-								{/each}
+									<div class="flex gap-2">
+										<div
+											class="flex-1 bg-white border border-slate-200 rounded-lg p-3 h-20 relative overflow-hidden"
+										>
+											<div class="text-[11px] font-bold text-slate-800">Complete Profile</div>
+											<div class="text-[9px] text-slate-400 mb-2">Enter GPA & test scores</div>
+											<div class="flex gap-1 absolute bottom-3 w-full pr-6 opacity-40">
+												<div class="h-2 w-1/3 bg-slate-200 rounded"></div>
+												<div class="h-2 w-1/2 bg-slate-200 rounded"></div>
+											</div>
+										</div>
+										<div
+											class="flex-1 bg-white border border-slate-200 rounded-lg p-3 h-20 relative overflow-hidden"
+										>
+											<div class="text-[11px] font-bold text-slate-800">Import Activities</div>
+											<div class="text-[9px] text-slate-400 mb-2">Add your extracurriculars</div>
+											<div
+												class="absolute bottom-3 left-3 right-3 h-4 border border-dashed border-slate-300 rounded flex items-center justify-center bg-slate-50 opacity-60"
+											>
+												<div class="h-1 w-8 bg-slate-300 rounded"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<!-- Explore Row -->
+								<div>
+									<div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">
+										Explore Features
+									</div>
+									<div class="flex gap-2">
+										<div class="flex-1 bg-blue-50/50 border border-blue-100 rounded-lg p-3 h-20">
+											<div class="text-[11px] font-bold text-blue-900 mt-2">Outcome Predictor</div>
+											<div class="text-[9px] text-blue-700/60 mt-0.5">See your chances</div>
+										</div>
+										<div
+											class="flex-1 bg-purple-50/50 border border-purple-100 rounded-lg p-3 h-20"
+										>
+											<div class="text-[11px] font-bold text-purple-900 mt-2">Mind Map</div>
+											<div class="text-[9px] text-purple-700/60 mt-0.5">Brainstorm topics</div>
+										</div>
+									</div>
+								</div>
 							</div>
 
-							<!-- Main Content -->
-							<div class="flex-1 p-6 bg-slate-50/30 relative">
-								<!-- Header -->
-								<div class="mb-6">
-									<h4 class="text-lg font-bold text-slate-900">Admissions Overview</h4>
-									<p class="text-[10px] text-slate-400">Welcome back, Alex.</p>
-								</div>
-
-								<!-- Cards Grid -->
-								<div class="grid grid-cols-2 gap-3">
-									<!-- Analysis Card -->
+							<!-- Right Sidebar -->
+							<div class="w-32 bg-slate-50 border-l border-slate-200 p-4 flex flex-col gap-4">
+								<div class="bg-white border border-slate-200 rounded-md p-3 shadow-sm">
 									<div
-										class="bg-white p-3 rounded-lg border border-slate-100 shadow-sm relative overflow-hidden"
+										class="text-[8px] font-bold uppercase tracking-widest text-slate-400 mb-1 border-b border-slate-100 pb-1"
 									>
-										<div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">
-											School Fit
-										</div>
-										<div class="flex items-end gap-1">
-											<span class="text-2xl font-black text-slate-900">92</span>
-											<span class="text-[10px] font-bold text-green-500 mb-1">High Match</span>
-										</div>
-										<!-- Mini Chart Visual -->
-										<div class="absolute bottom-0 right-0 p-2 opacity-20">
-											<svg class="w-12 h-12 text-blue-600" fill="currentColor" viewBox="0 0 20 20"
-												><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z" /><path
-													d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"
-												/></svg
-											>
-										</div>
+										Acad. Index
 									</div>
-
-									<!-- Essay Status -->
-									<div class="bg-white p-3 rounded-lg border border-slate-100 shadow-sm">
-										<div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">
-											Essay Drafts
-										</div>
-										<div class="space-y-2">
-											<div class="flex items-center gap-2">
-												<div class="w-2 h-2 rounded-full bg-amber-400"></div>
-												<div class="h-1.5 w-16 bg-slate-100 rounded-full">
-													<div class="h-full w-3/4 bg-slate-200 rounded-full"></div>
-												</div>
-											</div>
-											<div class="flex items-center gap-2">
-												<div class="w-2 h-2 rounded-full bg-green-400"></div>
-												<div class="h-1.5 w-16 bg-slate-100 rounded-full">
-													<div class="h-full w-full bg-slate-200 rounded-full"></div>
-												</div>
-											</div>
-										</div>
+									<div class="text-xl font-black text-[#0052CC] leading-none mt-2">214</div>
+									<div class="w-full bg-slate-100 h-1 rounded-full mt-2 overflow-hidden">
+										<div class="bg-[#0052CC] h-full" style="width: 89%"></div>
 									</div>
 								</div>
 
-								<!-- Alert Toast -->
-								<div
-									class="absolute bottom-4 left-6 right-6 bg-slate-900 text-white p-3 rounded-lg shadow-xl flex items-center gap-3 animate-bounce-slow"
-								>
-									<div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-									<div>
-										<div class="text-[10px] font-bold uppercase text-slate-400">
-											AI Notification
+								<div class="bg-white border border-slate-200 rounded-md p-3 shadow-sm">
+									<div
+										class="text-[8px] font-bold uppercase tracking-widest text-slate-400 mb-2 border-b border-slate-100 pb-1"
+									>
+										Holistic
+									</div>
+									<div class="space-y-1.5 mt-2">
+										<div class="flex items-center gap-1">
+											<div class="w-3 text-[8px] text-slate-400">A</div>
+											<div class="flex-1 h-1 bg-blue-500 rounded-full"></div>
 										</div>
-										<div class="text-xs font-medium">Your Stanford analysis is ready.</div>
+										<div class="flex items-center gap-1">
+											<div class="w-3 text-[8px] text-slate-400">E</div>
+											<div class="flex-1 h-1 bg-purple-500 rounded-full w-3/4"></div>
+										</div>
+										<div class="flex items-center gap-1">
+											<div class="w-3 text-[8px] text-slate-400">P</div>
+											<div class="flex-1 h-1 bg-amber-400 rounded-full w-1/2"></div>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -939,32 +982,37 @@
 			</div>
 
 			<div
-				class="bg-white p-8 rounded-2xl shadow-xl border border-slate-200 text-left max-w-md mx-auto"
+				class="bg-white p-10 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-slate-200/80 text-left max-w-md mx-auto"
 			>
 				{#if showAccountForm}
-					<form on:submit={handleSubmit} class="space-y-5">
-						<div class="space-y-4">
+					<form on:submit={handleSubmit} class="space-y-6">
+						<div class="space-y-5">
 							<div>
-								<label for="name" class="block text-xs font-bold uppercase text-slate-500 mb-1"
+								<label
+									for="name"
+									class="block text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2"
 									>Applicant Name</label
 								>
-								<div class="flex gap-2">
+								<div class="flex gap-2 relative">
 									<input
 										id="name"
 										type="text"
 										bind:value={name}
 										placeholder="e.g. Jordan Lee"
-										class="flex-1 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+										class="w-full bg-slate-50/50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-slate-300 focus:border-slate-400 transition-all font-medium placeholder:text-slate-400"
 									/>
 									<button
 										type="button"
 										on:click={generateFakeCredentials}
-										class="text-xs font-bold text-[#0052CC] hover:underline px-2">Auto-fill</button
+										class="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-bold uppercase tracking-wider text-slate-400 hover:text-slate-900 bg-white border border-slate-200 px-2 py-1 rounded-md shadow-sm transition-colors"
+										>Auto-fill</button
 									>
 								</div>
 							</div>
 							<div>
-								<label for="email" class="block text-xs font-bold uppercase text-slate-500 mb-1"
+								<label
+									for="email"
+									class="block text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2"
 									>Fake Email</label
 								>
 								<input
@@ -972,11 +1020,13 @@
 									type="email"
 									bind:value={email}
 									placeholder="jordan.lee@example.com"
-									class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+									class="w-full bg-slate-50/50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-slate-300 focus:border-slate-400 transition-all font-medium placeholder:text-slate-400"
 								/>
 							</div>
 							<div class="relative">
-								<label for="password" class="block text-xs font-bold uppercase text-slate-500 mb-1"
+								<label
+									for="password"
+									class="block text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2"
 									>Fake Password</label
 								>
 								<input
@@ -984,16 +1034,16 @@
 									type={showPassword ? 'text' : 'password'}
 									bind:value={password}
 									placeholder="••••••••"
-									class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+									class="w-full bg-slate-50/50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-slate-300 focus:border-slate-400 transition-all font-medium placeholder:text-slate-400"
 								/>
 							</div>
 						</div>
 
-						<div class="pt-2">
+						<div class="pt-4">
 							<button
 								type="submit"
 								on:click={handleApply}
-								class="w-full py-3 bg-[#0052CC] text-white font-bold rounded-xl hover:bg-blue-700 transition-colors shadow-lg shadow-blue-200"
+								class="w-full py-3.5 bg-slate-900 text-white text-sm font-bold uppercase tracking-wide rounded-full hover:bg-black transition-all shadow-sm active:scale-95"
 							>
 								Start Application Cycle
 							</button>
@@ -1003,11 +1053,11 @@
 						</div>
 					</form>
 				{:else}
-					<div class="text-center py-8 space-y-6">
+					<div class="text-center py-6 space-y-6">
 						<div
-							class="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto text-[#0052CC]"
+							class="w-16 h-16 bg-slate-50 border border-slate-200 rounded-full flex items-center justify-center mx-auto text-slate-600 shadow-sm"
 						>
-							<svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+							<svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"
 								><path
 									stroke-linecap="round"
 									stroke-linejoin="round"
@@ -1016,12 +1066,12 @@
 								/></svg
 							>
 						</div>
-						<p class="text-sm text-slate-600">
+						<p class="text-sm text-slate-500 font-medium">
 							The Simulator is always free. We fund it through our Pro tools.
 						</p>
 						<button
 							on:click={() => (showAccountForm = true)}
-							class="w-full py-3 bg-slate-900 text-white font-bold rounded-xl hover:bg-slate-800 transition-colors"
+							class="w-full py-3.5 bg-slate-900 text-white text-sm font-bold uppercase tracking-wide rounded-full hover:bg-black transition-all shadow-sm active:scale-95"
 						>
 							Start Free Simulation
 						</button>

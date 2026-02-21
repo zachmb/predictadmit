@@ -1,4 +1,4 @@
-import type { Session } from "@auth/core/types";
+import type { Session } from '@auth/core/types';
 
 declare global {
 	namespace App {
@@ -14,4 +14,4 @@ declare global {
 	}
 }
 
-export { };
+export {};

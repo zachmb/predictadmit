@@ -1,109 +1,112 @@
 <script lang="ts">
-    import { goto } from '$app/navigation';
-    import { get } from 'svelte/store';
-    import SiteFooter from '$lib/components/layout/SiteFooter.svelte';
+	import { goto } from '$app/navigation';
+	import { get } from 'svelte/store';
+	import SiteFooter from '$lib/components/layout/SiteFooter.svelte';
 	import { userProfile } from '$lib/stores/user';
 
-    import { 
-        aiResults, 
-        decisionsBySlug, 
-        manualOverrideMode,
-        type DecisionOutcome,
-        type AiDecision 
-    } from '$lib/stores/results';
-    import { schoolConfigs } from '$lib/config/schools';
+	import {
+		aiResults,
+		decisionsBySlug,
+		manualOverrideMode,
+		type DecisionOutcome,
+		type AiDecision
+	} from '$lib/stores/results';
+	import { schoolConfigs } from '$lib/config/schools';
 
-    type DecisionMode = 'random' | 'accepted' | 'denied' | 'waitlisted' | 'deferred';
+	type DecisionMode = 'random' | 'accepted' | 'denied' | 'waitlisted' | 'deferred';
 
-    const initialPortals = Object.values(schoolConfigs)
-        .map((s) => ({
-            name: s.schoolName,
-            slug: s.slug,
-            color: s.primaryColor,
-            decision: 'random' as DecisionMode
-        }))
-        .sort((a, b) => a.name.localeCompare(b.name));
+	const initialPortals = Object.values(schoolConfigs)
+		.map((s) => ({
+			name: s.schoolName,
+			slug: s.slug,
+			color: s.primaryColor,
+			decision: 'random' as DecisionMode
+		}))
+		.sort((a, b) => a.name.localeCompare(b.name));
 
-    let portals = $state([...initialPortals]);
+	let portals = $state([...initialPortals]);
 
-    // This runs ONLY to keep the UI (the cards) synced with whatever is in the store
-    $effect(() => {
-        const decisions = $decisionsBySlug;
-        portals = initialPortals.map((p) => {
-            const outcome = decisions[p.slug];
-            if (outcome) {
-                const mappedMode: DecisionMode = outcome === 'admit' ? 'accepted' : 'denied';
-                return { ...p, decision: mappedMode };
-            }
-            return { ...p, decision: 'random' };
-        });
-    });
+	// This runs ONLY to keep the UI (the cards) synced with whatever is in the store
+	$effect(() => {
+		const decisions = $decisionsBySlug;
+		portals = initialPortals.map((p) => {
+			const outcome = decisions[p.slug];
+			if (outcome) {
+				const mappedMode: DecisionMode = outcome === 'admit' ? 'accepted' : 'denied';
+				return { ...p, decision: mappedMode };
+			}
+			return { ...p, decision: 'random' };
+		});
+	});
 
-    // NEW: The explicit trigger
-    const handleModeChange = (event: Event) => {
-        const target = event.target as HTMLSelectElement;
-        const newMode = target.value as 'accepted' | 'denied' | 'random';
-        
-        // Update the mode store
-        manualOverrideMode.set(newMode);
+	// NEW: The explicit trigger
+	const handleModeChange = (event: Event) => {
+		const target = event.target as HTMLSelectElement;
+		const newMode = target.value as 'accepted' | 'denied' | 'random';
 
-        if (newMode === 'accepted' || newMode === 'denied') {
+		// Update the mode store
+		manualOverrideMode.set(newMode);
+
+		if (newMode === 'accepted' || newMode === 'denied') {
 			userProfile.update((u) => ({ ...u, usingAI: false }));
 
-            const status: DecisionOutcome = newMode === 'accepted' ? 'admit' : 'deny';
-            const currentResults = get(aiResults);
-            
-            let updatedDecisions: AiDecision[] = [];
+			const status: DecisionOutcome = newMode === 'accepted' ? 'admit' : 'deny';
+			const currentResults = get(aiResults);
 
-            // If empty, generate dummy data; otherwise, map existing
-            if (currentResults.decisions.length === 0) {
-                updatedDecisions = initialPortals.map(p => ({
-                    school: p.name,
-                    slug: p.slug,
-                    outcome: status,
-                    academic_score: 0,
-                    academic_explanation: 'N/A: random sim',
-                    extracurricular_score: 0,
-                    extracurricular_explanation: 'Forced via selector',
-                    fit_score: 0,
-                    fit_explanation: 'Forced via selector',
-                    intellectual_score: 0,
-                    intellectual_explanation: 'Forced via selector',
-                    character_score: 0,
-                    character_explanation: 'Forced via selector',
-                    improvement_tips: ''
-                }));
-            } else {
-                updatedDecisions = currentResults.decisions.map(d => ({
-                    ...d,
-                    outcome: status
-                }));
-            }
-            
-            aiResults.setDecisions(updatedDecisions);
-        }
-    };
+			let updatedDecisions: AiDecision[] = [];
 
-    const handlePortalClick = (slug: string, currentDecision: DecisionMode) => {
-        const mode = get(manualOverrideMode);
-        const status = mode === 'accepted' ? 'admit' : (mode === 'denied' ? 'deny' : currentDecision);
-        sessionStorage.setItem(`decision-${slug}`, status);
-        goto(`/portals/${slug}`);
-    };
+			// If empty, generate dummy data; otherwise, map existing
+			if (currentResults.decisions.length === 0) {
+				updatedDecisions = initialPortals.map((p) => ({
+					school: p.name,
+					slug: p.slug,
+					outcome: status,
+					academic_score: 0,
+					academic_explanation: 'N/A: random sim',
+					extracurricular_score: 0,
+					extracurricular_explanation: 'Forced via selector',
+					fit_score: 0,
+					fit_explanation: 'Forced via selector',
+					intellectual_score: 0,
+					intellectual_explanation: 'Forced via selector',
+					character_score: 0,
+					character_explanation: 'Forced via selector',
+					improvement_tips: ''
+				}));
+			} else {
+				updatedDecisions = currentResults.decisions.map((d) => ({
+					...d,
+					outcome: status
+				}));
+			}
 
-    const getDecisionLabel = (decision: DecisionMode) => {
-        if (decision === 'accepted') return 'Accepted';
-        if (decision === 'denied') return 'Denied';
-        return '';
-    };
+			aiResults.setDecisions(updatedDecisions);
+		}
+	};
 
-    const getDecisionColor = (decision: DecisionMode) => {
-        switch (decision) {
-            case 'accepted': return 'text-green-600 bg-green-50 border-green-200';
-            case 'denied': return 'text-red-600 bg-red-50 border-red-200';
-            default: return 'text-slate-600 bg-slate-50 border-slate-200';
-        }
-    };
+	const handlePortalClick = (slug: string, currentDecision: DecisionMode) => {
+		const mode = get(manualOverrideMode);
+		const status = mode === 'accepted' ? 'admit' : mode === 'denied' ? 'deny' : currentDecision;
+		sessionStorage.setItem(`decision-${slug}`, status);
+		goto(`/portals/${slug}`);
+	};
+
+	const getDecisionLabel = (decision: DecisionMode) => {
+		if (decision === 'accepted') return 'Accepted';
+		if (decision === 'denied') return 'Denied';
+		return '';
+	};
+
+	const getDecisionColor = (decision: DecisionMode) => {
+		switch (decision) {
+			case 'accepted':
+				return 'text-green-600 bg-green-50 border-green-200';
+			case 'denied':
+				return 'text-red-600 bg-red-50 border-red-200';
+			default:
+				return 'text-slate-600 bg-slate-50 border-slate-200';
+		}
+	};
 </script>
 
 <svelte:head>
@@ -124,7 +127,9 @@
 					</p>
 
 					<div class="mt-4 flex items-center gap-3">
-						<span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Simulate Mode:</span>
+						<span class="text-xs font-bold text-slate-500 uppercase tracking-wider"
+							>Simulate Mode:</span
+						>
 						<select
 							value={$manualOverrideMode}
 							on:change={handleModeChange}

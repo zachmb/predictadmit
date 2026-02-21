@@ -9,12 +9,12 @@ const AUTH_SECRET = env.AUTH_SECRET;
 
 // New API: destructure `handle` from SvelteKitAuth(...)
 export const { handle } = SvelteKitAuth({
-  providers: [
-    Google({
-      clientId: GOOGLE_ID,
-      clientSecret: GOOGLE_SECRET
-    })
-  ],
-  trustHost: true,
-  secret: AUTH_SECRET
+	providers: [
+		Google({
+			clientId: GOOGLE_ID,
+			clientSecret: GOOGLE_SECRET
+		})
+	],
+	trustHost: true,
+	secret: AUTH_SECRET
 });

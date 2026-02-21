@@ -17,12 +17,6 @@
 	// --- RUNES STATE ---
 	let { data } = $props();
 
-	// State Autofill logic
-	let showStateSuggestions = $state(false);
-	let filteredStates = $derived(
-		states.filter((s) => s.toLowerCase().includes((profile.state || '').toLowerCase()))
-	);
-
 	// Mind Map AI State
 	let isGeneratingMindMap = $state(false);
 	let isDraftingEssay = $state(false);
@@ -295,6 +289,12 @@
 		living: 'On Campus' as 'On Campus' | 'Off Campus' | 'Commuter'
 	});
 
+	// State Autofill logic
+	let showStateSuggestions = $state(false);
+	let filteredStates = $derived(
+		states.filter((s) => s.toLowerCase().includes((profile.state || '').toLowerCase()))
+	);
+
 	function addActivity() {
 		profile.activities = [
 			...profile.activities,
@@ -477,6 +477,7 @@
 	let estimatedTime = $state('');
 	let progressPercent = $state(0);
 	let activeAnnotationIndex = $state<number | null>(null);
+	let showProfileEditor = $state(false);
 
 	function handleAnnotationClick(idx: string) {
 		const index = parseInt(idx);
@@ -907,9 +908,7 @@
 	<!-- PREDICTADMIT PRO INTERFACE -->
 	<div class="flex h-screen w-screen bg-slate-50 text-slate-900 font-sans overflow-hidden">
 		<!-- SIDEBAR NAVIGATION -->
-		<aside
-			class="w-64 flex flex-col border-r border-slate-200 bg-white z-50 shadow-[4px_0_24px_rgba(0,0,0,0.02)]"
-		>
+		<aside class="w-64 flex flex-col border-r border-slate-200 bg-white z-50 shadow-sm">
 			<!-- Branding -->
 			<div class="p-6 border-b border-slate-100">
 				<div class="flex items-center gap-2 text-[#0052CC]">
@@ -1103,21 +1102,327 @@
 		<!-- MAIN AREA -->
 		<main class="flex-1 flex flex-col min-w-0 bg-slate-50 relative">
 			{#if currentView === 'dashboard'}
-				<!-- DASHBOARD VIEW -->
-				<div class="flex-1 overflow-y-auto p-8 md:p-12">
-					<div class="max-w-5xl mx-auto space-y-8">
-						<!-- ACADEMIC & DEMOGRAPHICS GRID -->
-						<div class="grid md:grid-cols-3 gap-6">
-							<!-- INPUTS COLUMN -->
-							<div class="md:col-span-2 space-y-6">
+				<!-- DASHBOARD HEADER -->
+				<header
+					class="bg-white border-b border-slate-200 px-8 py-4 flex items-center justify-between sticky top-0 z-40 shadow-sm"
+				>
+					<div>
+						<h1 class="text-2xl font-semibold text-slate-800 tracking-tight">Home</h1>
+					</div>
+					<div class="flex items-center gap-4">
+						<button
+							onclick={() => (showProfileEditor = true)}
+							class="text-sm font-medium text-slate-600 hover:text-slate-900 bg-slate-50 hover:bg-slate-100 px-4 py-2 rounded-md transition-colors border border-slate-200"
+						>
+							Edit Profile
+						</button>
+					</div>
+				</header>
+
+				<!-- DASHBOARD CONTENT -->
+				<div class="flex-1 overflow-y-auto p-8 relative">
+					<div class="max-w-6xl mx-auto flex flex-col xl:flex-row gap-6">
+						<!-- MAIN COLUMN -->
+						<div class="flex-1 space-y-8">
+							<!-- GET STARTED SECTION -->
+							<section>
+								<h2 class="text-sm font-semibold text-slate-700 uppercase tracking-widest mb-4">
+									Get Started
+								</h2>
+
+								<div class="grid md:grid-cols-2 gap-4">
+									<!-- Card 1 -->
+									<button
+										onclick={() => (showProfileEditor = true)}
+										class="text-left bg-white border border-slate-200 rounded-lg p-6 hover:shadow-md transition-shadow group flex flex-col relative overflow-hidden h-48"
+									>
+										<div class="flex justify-between items-start mb-2">
+											<h3
+												class="text-lg font-semibold text-slate-800 group-hover:text-[#0052CC] transition-colors"
+											>
+												Complete Applicant Profile
+											</h3>
+											<span
+												class="text-slate-400 group-hover:translate-x-1 group-hover:text-[#0052CC] transition-all"
+												>&rarr;</span
+											>
+										</div>
+										<p class="text-sm text-slate-500 mb-6">
+											Enter your GPA, test scores, and demographics to unlock accurate predictions.
+										</p>
+
+										<!-- Mini visual representation of form -->
+										<div class="mt-auto flex gap-2 w-full opacity-60">
+											<div class="h-6 w-1/3 bg-slate-100 rounded border border-slate-200"></div>
+											<div class="h-6 w-2/3 bg-slate-100 rounded border border-slate-200"></div>
+										</div>
+									</button>
+
+									<!-- Card 2 -->
+									<button
+										onclick={() => (showImportModal = true)}
+										class="text-left bg-white border border-slate-200 rounded-lg p-6 hover:shadow-md transition-shadow group flex flex-col relative overflow-hidden h-48"
+									>
+										<div class="flex justify-between items-start mb-2">
+											<h3
+												class="text-lg font-semibold text-slate-800 group-hover:text-[#0052CC] transition-colors"
+											>
+												Import Activities
+											</h3>
+											<span
+												class="text-slate-400 group-hover:translate-x-1 group-hover:text-[#0052CC] transition-all"
+												>&rarr;</span
+											>
+										</div>
+										<p class="text-sm text-slate-500 mb-6">
+											Quickly add your extracurriculars to get a holistic application review.
+										</p>
+
+										<!-- Mini visual representation of list -->
+										<div class="mt-auto space-y-2 w-full opacity-60">
+											<div
+												class="h-8 w-full border border-dashed border-slate-300 rounded-md flex items-center justify-center bg-slate-50"
+											>
+												<span class="text-xs font-semibold text-slate-400">+ Add Activity</span>
+											</div>
+										</div>
+									</button>
+								</div>
+
+								<!-- Secondary Actions Bar -->
+								<div class="grid md:grid-cols-2 gap-4 mt-4">
+									<div
+										class="bg-white border border-slate-200 rounded-lg p-4 flex items-center justify-between hover:bg-slate-50 cursor-pointer group"
+									>
+										<div class="flex items-center gap-3">
+											<div
+												class="w-8 h-8 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center"
+											>
+												<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+													><path
+														stroke-linecap="round"
+														stroke-linejoin="round"
+														stroke-width="2"
+														d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"
+													/></svg
+												>
+											</div>
+											<span class="font-medium text-slate-700">Connect Common App</span>
+										</div>
+										<span class="text-slate-400 group-hover:translate-x-1 transition-transform"
+											>&rarr;</span
+										>
+									</div>
+									<div
+										class="bg-white border border-slate-200 rounded-lg p-4 flex items-center justify-between hover:bg-slate-50 cursor-pointer group"
+									>
+										<div class="flex items-center gap-3">
+											<div
+												class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center"
+											>
+												<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+													><path
+														stroke-linecap="round"
+														stroke-linejoin="round"
+														stroke-width="2"
+														d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+													/></svg
+												>
+											</div>
+											<span class="font-medium text-slate-700">Upload Transcripts</span>
+										</div>
+										<span class="text-slate-400 group-hover:translate-x-1 transition-transform"
+											>&rarr;</span
+										>
+									</div>
+								</div>
+							</section>
+
+							<!-- EXPLORE FEATURES SECTION -->
+							<section>
+								<h2 class="text-sm font-semibold text-slate-700 uppercase tracking-widest mb-4">
+									Explore Features
+								</h2>
+
+								<div class="grid md:grid-cols-3 gap-4">
+									<button
+										onclick={() => (currentView = 'universities')}
+										class="text-left bg-white border border-slate-200 rounded-lg p-5 hover:border-blue-400 hover:shadow-sm transition-all relative overflow-hidden h-36"
+									>
+										<div
+											class="absolute top-4 right-4 bg-slate-100 text-slate-500 text-[10px] font-bold px-2 py-0.5 rounded-md"
+										>
+											Core
+										</div>
+										<h3 class="font-semibold text-blue-900 mt-8">Outcome Predictor</h3>
+										<p class="text-[13px] text-blue-700/80 mt-1">See your chances at T-20s</p>
+									</button>
+
+									<button
+										onclick={() => (currentView = 'mindmap')}
+										class="text-left bg-white border border-slate-200 rounded-lg p-5 hover:border-purple-400 hover:shadow-sm transition-all relative overflow-hidden h-36"
+									>
+										<h3 class="font-semibold text-slate-800 mt-8">Mind Map / Inspo</h3>
+										<p class="text-[13px] text-slate-500 mt-1">Brainstorm essay topics</p>
+									</button>
+
+									<button
+										onclick={addNewSupplemental}
+										class="text-left bg-white border border-slate-200 rounded-lg p-5 hover:border-slate-400 hover:shadow-sm transition-all relative overflow-hidden h-36"
+									>
+										<h3 class="font-semibold text-slate-800 mt-8">Essay Grader</h3>
+										<p class="text-[13px] text-slate-500 mt-1">AI institutional feedback</p>
+									</button>
+								</div>
+							</section>
+						</div>
+
+						<!-- RIGHT SIDEBAR (STATS) -->
+						<div class="w-full xl:w-80 space-y-6">
+							<!-- Overall Academic Index -->
+							<div class="bg-white border border-slate-200 rounded-lg p-6 shadow-sm">
+								<div
+									class="text-[11px] font-bold uppercase tracking-widest text-slate-400 mb-2 border-b border-slate-100 pb-2"
+								>
+									Academic Index
+								</div>
+								<div class="flex items-baseline gap-2 mt-4">
+									<div class="text-5xl font-mono tracking-tight text-slate-900 leading-none">
+										{academicIndex}
+									</div>
+									<div class="text-lg text-slate-400 font-mono mb-1">/240</div>
+								</div>
+								<!-- Mini Progress Bar -->
+								<div class="w-full bg-slate-100 h-1 mt-4 overflow-hidden">
+									<div
+										class="bg-slate-900 h-full transition-all duration-1000"
+										style="width: {(academicIndex / 240) * 100}%"
+									></div>
+								</div>
+								<p class="text-[11px] text-slate-500 mt-3 leading-relaxed">
+									Calculated using the standard 2/3 Test + 1/3 GPA formula with rigor adjustments.
+								</p>
+							</div>
+
+							<!-- Holistic Rating -->
+							<div class="bg-white border border-slate-200 rounded-lg p-6 shadow-sm">
+								<div
+									class="text-[11px] font-bold uppercase tracking-widest text-slate-400 mb-4 border-b border-slate-100 pb-2"
+								>
+									Holistic Rating Overview
+								</div>
+								<div class="space-y-4">
+									<div class="flex items-center gap-3">
+										<span class="text-[10px] uppercase font-mono w-16 text-slate-500 tracking-wider"
+											>Academics</span
+										>
+										<div class="flex-1 h-1 bg-slate-100 overflow-hidden">
+											<div
+												class="h-full bg-slate-900 transition-all"
+												style="width: {holisticMetrics.academics * 10}%"
+											></div>
+										</div>
+									</div>
+									<div class="flex items-center gap-3">
+										<span class="text-[10px] uppercase font-mono w-16 text-slate-500 tracking-wider"
+											>Extracur.</span
+										>
+										<div class="flex-1 h-1 bg-slate-100 overflow-hidden">
+											<div
+												class="h-full bg-slate-600 transition-all"
+												style="width: {holisticMetrics.ecs * 10}%"
+											></div>
+										</div>
+									</div>
+									<div class="flex items-center gap-3">
+										<span class="text-[10px] uppercase font-mono w-16 text-slate-500 tracking-wider"
+											>Personal</span
+										>
+										<div class="flex-1 h-1 bg-slate-100 overflow-hidden">
+											<div class="h-full bg-slate-400 transition-all" style="width: 50%"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<!-- Links -->
+							<div class="bg-white border border-slate-200 rounded-lg p-6 shadow-sm">
+								<div class="text-[11px] font-bold uppercase tracking-widest text-slate-400 mb-3">
+									Questions?
+								</div>
+								<ul class="space-y-3">
+									<li>
+										<a
+											href="#"
+											class="flex items-center gap-2 text-sm font-medium text-slate-700 hover:text-[#0052CC]"
+										>
+											<span
+												class="w-4 h-4 rounded bg-indigo-100 flex items-center justify-center text-[10px]"
+												>🌐</span
+											> Community
+										</a>
+									</li>
+									<li>
+										<a
+											href="#"
+											class="flex items-center gap-2 text-sm font-medium text-slate-700 hover:text-[#0052CC]"
+										>
+											<span
+												class="w-4 h-4 rounded bg-slate-100 flex items-center justify-center text-[10px]"
+												>❓</span
+											> PredictAdmit FAQs
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- PROFILE EDITOR MODAL / SLIDE-OVER -->
+				{#if showProfileEditor}
+					<div class="fixed inset-0 z-50 flex justify-end">
+						<div
+							class="absolute inset-0 bg-slate-900/60 transition-opacity"
+							onclick={() => (showProfileEditor = false)}
+						></div>
+
+						<div
+							class="w-full max-w-3xl bg-slate-50 h-full shadow-2xl relative flex flex-col border-l border-slate-200 animate-in slide-in-from-right duration-300"
+						>
+							<div class="flex items-center justify-between p-6 bg-white border-b border-slate-200">
+								<div>
+									<h2 class="text-xl font-bold text-slate-900">Applicant Profile</h2>
+									<p class="text-sm text-slate-500">
+										Update your stats to improve prediction accuracy.
+									</p>
+								</div>
+								<button
+									onclick={() => (showProfileEditor = false)}
+									class="p-2 hover:bg-slate-100 rounded-full text-slate-500"
+								>
+									<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+										><path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											d="M6 18L18 6M6 6l12 12"
+										/></svg
+									>
+								</button>
+							</div>
+
+							<div class="flex-1 overflow-y-auto p-6 space-y-8">
+								<!-- Paste existing Profile Form contents here -->
 								<!-- ACADEMIC CARD -->
-								<div class="bg-white rounded-3xl border border-slate-200 shadow-sm p-8">
+								<div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
 									<h3
-										class="text-sm font-bold text-slate-900 uppercase tracking-widest mb-6 border-b border-slate-100 pb-2"
+										class="text-sm font-bold text-slate-900 uppercase tracking-widest mb-4 border-b border-slate-100 pb-2"
 									>
 										Academic Profile
 									</h3>
 									<div class="grid grid-cols-2 gap-4">
+										<!-- ... form fields from previous line 1120-1229 ... -->
 										<div>
 											<label class="block text-xs font-bold uppercase text-slate-500 mb-2"
 												>Unweighted GPA</label
@@ -1159,9 +1464,7 @@
 												bind:value={profile.rigor}
 												class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#0052CC] font-bold text-slate-900"
 											>
-												<option>Regular</option>
-												<option>Honors</option>
-												<option>AP/IB</option>
+												<option>Regular</option><option>Honors</option><option>AP/IB</option>
 											</select>
 										</div>
 										<div>
@@ -1172,9 +1475,7 @@
 												bind:value={profile.gradeTrend}
 												class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#0052CC] font-bold text-slate-900"
 											>
-												<option>Rising</option>
-												<option>Steady</option>
-												<option>Dipping</option>
+												<option>Rising</option><option>Steady</option><option>Dipping</option>
 											</select>
 										</div>
 										<div>
@@ -1185,16 +1486,9 @@
 												bind:value={profile.lowestGrade}
 												class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#0052CC] font-bold text-slate-900"
 											>
-												<option>A</option>
-												<option>A-</option>
-												<option>B+</option>
-												<option>B</option>
-												<option>B-</option>
-												<option>C+</option>
-												<option>C</option>
-												<option>C-</option>
-												<option>D</option>
-												<option>F</option>
+												<option>A</option><option>A-</option><option>B+</option><option>B</option
+												><option>B-</option><option>C+</option><option>C</option><option>C-</option
+												><option>D</option><option>F</option>
 											</select>
 										</div>
 										<div class="relative col-span-2">
@@ -1220,9 +1514,8 @@
 																showMajorDropdown = false;
 															}}
 															class="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 font-medium"
+															>{major}</button
 														>
-															{major}
-														</button>
 													{/each}
 												</div>
 											{/if}
@@ -1231,11 +1524,11 @@
 								</div>
 
 								<!-- DEMOGRAPHICS CARD -->
-								<div class="bg-white rounded-3xl border border-slate-200 shadow-sm p-8">
+								<div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
 									<h3
-										class="text-sm font-bold text-slate-900 uppercase tracking-widest mb-6 border-b border-slate-100 pb-2"
+										class="text-sm font-bold text-slate-900 uppercase tracking-widest mb-4 border-b border-slate-100 pb-2"
 									>
-										Demographics & Preferences
+										Demographics
 									</h3>
 									<div class="grid grid-cols-2 gap-4">
 										<div>
@@ -1261,10 +1554,8 @@
 																onclick={() => {
 																	profile.state = st;
 																	showStateSuggestions = false;
-																}}
+																}}>{st}</button
 															>
-																{st}
-															</button>
 														{/each}
 													</div>
 												{/if}
@@ -1278,9 +1569,7 @@
 												bind:value={profile.environment}
 												class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#0052CC] font-bold text-slate-900"
 											>
-												<option>Urban</option>
-												<option>Suburban</option>
-												<option>Rural</option>
+												<option>Urban</option><option>Suburban</option><option>Rural</option>
 											</select>
 										</div>
 										<div class="col-span-2">
@@ -1296,307 +1585,124 @@
 															: 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100'}"
 														onclick={() =>
 															(profile.living = opt as 'On Campus' | 'Off Campus' | 'Commuter')}
+														>{opt}</button
 													>
-														{opt}
-													</button>
 												{/each}
 											</div>
 										</div>
 									</div>
 								</div>
-							</div>
 
-							<!-- ACADEMIC INDEX CARD (Sticky) -->
-							<div class="md:col-span-1">
-								<div
-									class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm flex flex-col justify-between sticky top-8"
-								>
-									<div>
-										<div class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">
-											Academic Index
-										</div>
-										<div class="flex items-baseline gap-2">
-											<div class="text-7xl font-black tracking-tighter text-slate-900 leading-none">
-												{academicIndex}
-											</div>
-											<div class="text-xl text-slate-400 font-medium mb-2">/240</div>
-										</div>
-										<p class="text-[10px] text-slate-400 mt-3 leading-relaxed max-w-[200px]">
-											Calculated using the Ivy League formula (2/3 Test + 1/3 GPA).
-										</p>
-									</div>
-
-									<div class="mt-8 space-y-4">
-										<div
-											class="flex justify-between text-xs font-bold text-slate-500 border-b border-slate-100 pb-2"
-										>
-											<span>Holistic Rating</span>
-											<span class="text-slate-900"
-												>{Math.round(
-													((holisticMetrics.academics +
-														holisticMetrics.ecs +
-														holisticMetrics.personal) /
-														3) *
-														10
-												)}%</span
+								<!-- ACTIVITIES / HONORS -->
+								<div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 mt-6">
+									<div
+										class="flex items-center justify-between mb-4 border-b border-slate-100 pb-2"
+									>
+										<h3 class="text-sm font-bold text-slate-900 uppercase tracking-widest">
+											Activities & Honors
+										</h3>
+										<div class="flex gap-2">
+											<button
+												onclick={() => (showImportModal = true)}
+												class="text-xs font-bold text-slate-500 hover:text-slate-900">Import</button
+											>
+											<button onclick={addActivity} class="text-xs font-bold text-[#0052CC]"
+												>+ Actv.</button
+											>
+											<button onclick={addHonor} class="text-xs font-bold text-purple-600"
+												>+ Honor</button
 											>
 										</div>
-										<!-- Mini Bars for Metrics -->
-										<div class="space-y-3">
-											<div class="flex items-center gap-3">
-												<span
-													class="text-[10px] w-12 text-slate-400 font-bold uppercase tracking-wide"
-													>Acad</span
-												>
-												<div
-													class="flex-1 h-2 bg-slate-50 rounded-full overflow-hidden border border-slate-100"
-												>
-													<div
-														class="h-full bg-slate-800 rounded-full transition-all duration-500"
-														style="width: {holisticMetrics.academics * 10}%"
-													></div>
-												</div>
-											</div>
-											<div class="flex items-center gap-3">
-												<span
-													class="text-[10px] w-12 text-slate-400 font-bold uppercase tracking-wide"
-													>Extrac</span
-												>
-												<div
-													class="flex-1 h-2 bg-slate-50 rounded-full overflow-hidden border border-slate-100"
-												>
-													<div
-														class="h-full bg-slate-800 rounded-full transition-all duration-500"
-														style="width: {holisticMetrics.ecs * 10}%"
-													></div>
-												</div>
-											</div>
-											<div class="flex items-center gap-2">
-												<span
-													class="text-[10px] w-12 text-slate-400 font-bold uppercase tracking-wide"
-													>Pers</span
-												>
-												<div
-													class="flex-1 h-2 bg-slate-50 rounded-full overflow-hidden border border-slate-100"
-												>
-													<div class="h-full bg-slate-300 rounded-full" style="width: 50%"></div>
-												</div>
-											</div>
-										</div>
 									</div>
-								</div>
-							</div>
-						</div>
 
-						<!-- ACTIVITIES LIST -->
-						<div class="bg-white rounded-3xl border border-slate-200 shadow-sm p-8">
-							<div class="flex items-center justify-between mb-6 border-b border-slate-100 pb-2">
-								<h3 class="text-sm font-bold text-slate-900 uppercase tracking-widest">
-									Activities & Honors
-								</h3>
-								<div class="flex gap-2">
-									<button
-										onclick={() => (showImportModal = true)}
-										class="text-xs font-bold text-slate-500 hover:text-slate-900 transition-colors"
-									>
-										Import
-									</button>
-									<button
-										onclick={addActivity}
-										class="text-xs font-bold text-[#0052CC] hover:text-blue-700 flex items-center gap-1"
-									>
-										<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-											><path
-												stroke-linecap="round"
-												stroke-linejoin="round"
-												stroke-width="2"
-												d="M12 4v16m8-8H4"
-											/></svg
-										>
-										Add Activity
-									</button>
-								</div>
-							</div>
-
-							{#if profile.activities.length === 0}
-								<div
-									class="text-center py-8 text-slate-400 text-sm font-medium border-2 border-dashed border-slate-100 rounded-xl"
-								>
-									No activities added yet. Click "Add Activity" to start building your profile.
-								</div>
-							{:else}
-								<div class="space-y-4">
-									{#each profile.activities as activity (activity.id)}
-										<div
-											class="flex gap-4 items-start p-4 bg-slate-50 rounded-xl border border-slate-100 group animate-in fade-in slide-in-from-bottom-2"
-										>
-											<div class="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4">
-												<div class="md:col-span-1">
-													<label class="block text-[10px] font-bold uppercase text-slate-400 mb-1"
-														>Activity Name</label
-													>
-													<input
-														bind:value={activity.name}
-														placeholder="e.g. Debate Club"
-														class="w-full bg-white px-3 py-1.5 rounded-lg border border-slate-200 text-sm font-bold text-slate-900 focus:outline-none focus:border-[#0052CC]"
-													/>
-												</div>
-												<div class="md:col-span-1">
-													<label class="block text-[10px] font-bold uppercase text-slate-400 mb-1"
-														>Role / Position</label
-													>
-													<input
-														bind:value={activity.role}
-														placeholder="e.g. Captain"
-														class="w-full bg-white px-3 py-1.5 rounded-lg border border-slate-200 text-sm font-medium text-slate-900 focus:outline-none focus:border-[#0052CC]"
-													/>
-												</div>
-												<div class="md:col-span-1 relative">
-													<label class="block text-[10px] font-bold uppercase text-slate-400 mb-1"
-														>Hours/Week</label
-													>
-													<input
-														bind:value={activity.hoursPerWeek}
-														placeholder="e.g. 5"
-														class="w-full bg-white px-3 py-1.5 rounded-lg border border-slate-200 text-sm font-medium text-slate-900 focus:outline-none focus:border-[#0052CC]"
-													/>
-												</div>
-												<div class="md:col-span-4 mt-2">
-													<label class="block text-[10px] font-bold uppercase text-slate-400 mb-1"
-														>Description / Details (Common App Style)</label
-													>
+									<div class="space-y-4">
+										{#each profile.activities as activity (activity.id)}
+											<!-- Minimized Activity rendering for space -->
+											<div
+												class="flex gap-2 items-start p-3 bg-slate-50 rounded-lg border border-slate-200"
+											>
+												<div class="flex-1 space-y-2">
+													<div class="flex gap-2">
+														<input
+															bind:value={activity.name}
+															placeholder="Name"
+															class="w-1/2 px-2 py-1 text-sm border rounded"
+														/>
+														<input
+															bind:value={activity.role}
+															placeholder="Role"
+															class="w-1/3 px-2 py-1 text-sm border rounded"
+														/>
+														<input
+															bind:value={activity.hoursPerWeek}
+															placeholder="Hrs"
+															class="w-1/6 px-2 py-1 text-sm border rounded"
+														/>
+													</div>
 													<textarea
 														bind:value={activity.description}
-														rows="2"
-														placeholder="Describe your responsibilities, achievements, and impact..."
-														class="w-full bg-white px-3 py-2 rounded-lg border border-slate-200 text-sm font-medium text-slate-900 focus:outline-none focus:border-[#0052CC] resize-none"
+														rows="1"
+														placeholder="Description"
+														class="w-full px-2 py-1 text-sm border rounded resize-none"
 													></textarea>
 												</div>
-											</div>
-											<button
-												onclick={() => removeActivity(activity.id)}
-												class="text-slate-300 hover:text-red-500 p-2 transition-colors mt-4"
-											>
-												<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-													><path
-														stroke-linecap="round"
-														stroke-linejoin="round"
-														stroke-width="2"
-														d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-													/></svg
+												<button onclick={() => removeActivity(activity.id)} class="text-red-400 p-1"
+													>&times;</button
 												>
-											</button>
-										</div>
-									{/each}
-								</div>
-							{/if}
-						</div>
-
-						<!-- HONORS SECTION -->
-						<div class="bg-white rounded-3xl border border-slate-200 shadow-sm p-8 mt-6">
-							<div class="flex items-center justify-between mb-6 border-b border-slate-100 pb-2">
-								<h3 class="text-sm font-bold text-slate-900 uppercase tracking-widest">
-									Honors & Awards
-								</h3>
-								<button
-									onclick={addHonor}
-									class="text-xs font-bold text-[#0052CC] hover:text-blue-700 flex items-center gap-1"
-								>
-									<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-										><path
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											stroke-width="2"
-											d="M12 4v16m8-8H4"
-										/></svg
-									>
-									Add Honor
-								</button>
-							</div>
-
-							{#if profile.honors.length === 0}
-								<div
-									class="text-center py-8 text-slate-400 text-sm font-medium border-2 border-dashed border-slate-100 rounded-xl"
-								>
-									No honors added yet. Include academic awards or other recognitions.
-								</div>
-							{:else}
-								<div class="space-y-4">
-									{#each profile.honors as honor (honor.id)}
-										<div
-											class="flex gap-4 items-start p-4 bg-slate-50 rounded-xl border border-slate-100 group animate-in fade-in slide-in-from-bottom-2"
-										>
-											<div class="flex-1 grid grid-cols-1 md:grid-cols-4 gap-4">
-												<div class="md:col-span-2">
-													<label class="block text-[10px] font-bold uppercase text-slate-400 mb-1"
-														>Honor Title</label
-													>
-													<input
-														bind:value={honor.title}
-														placeholder="e.g. National Merit Finalist"
-														class="w-full bg-white px-3 py-1.5 rounded-lg border border-slate-200 text-sm font-bold text-slate-900 focus:outline-none focus:border-[#0052CC]"
-													/>
-												</div>
-												<div class="md:col-span-1">
-													<label class="block text-[10px] font-bold uppercase text-slate-400 mb-1"
-														>Grade Level</label
-													>
-													<select
-														bind:value={honor.gradeLevel}
-														class="w-full bg-white px-3 py-1.5 rounded-lg border border-slate-200 text-sm font-medium text-slate-900 focus:outline-none focus:border-[#0052CC]"
-													>
-														<option value="9">9th</option>
-														<option value="10">10th</option>
-														<option value="11">11th</option>
-														<option value="12">12th</option>
-													</select>
-												</div>
-												<div class="md:col-span-1">
-													<label class="block text-[10px] font-bold uppercase text-slate-400 mb-1"
-														>Level</label
-													>
-													<select
-														bind:value={honor.level}
-														class="w-full bg-white px-3 py-1.5 rounded-lg border border-slate-200 text-sm font-medium text-slate-900 focus:outline-none focus:border-[#0052CC]"
-													>
-														<option value="School">School</option>
-														<option value="State">State</option>
-														<option value="National">National</option>
-														<option value="International">International</option>
-													</select>
-												</div>
-												<div class="md:col-span-4 mt-2">
-													<label class="block text-[10px] font-bold uppercase text-slate-400 mb-1"
-														>Description / Explanation</label
-													>
+											</div>
+										{/each}
+										{#each profile.honors as honor (honor.id)}
+											<div
+												class="flex gap-2 items-start p-3 bg-slate-50 rounded-lg border border-slate-200 border-l-purple-400 border-l-4"
+											>
+												<div class="flex-1 space-y-2">
+													<div class="flex gap-2">
+														<input
+															bind:value={honor.title}
+															placeholder="Honor Title"
+															class="w-1/2 px-2 py-1 text-sm border rounded"
+														/>
+														<select
+															bind:value={honor.level}
+															class="w-1/4 px-2 py-1 text-sm border rounded"
+															><option>School</option><option>State</option><option>National</option
+															></select
+														>
+														<select
+															bind:value={honor.gradeLevel}
+															class="w-1/4 px-2 py-1 text-sm border rounded"
+															><option>9</option><option>10</option><option>11</option><option
+																>12</option
+															></select
+														>
+													</div>
 													<textarea
 														bind:value={honor.description}
-														rows="2"
-														placeholder="Briefly explain the significance of this award..."
-														class="w-full bg-white px-3 py-2 rounded-lg border border-slate-200 text-sm font-medium text-slate-900 focus:outline-none focus:border-[#0052CC] resize-none"
+														rows="1"
+														placeholder="Description"
+														class="w-full px-2 py-1 text-sm border rounded resize-none"
 													></textarea>
 												</div>
-											</div>
-											<button
-												onclick={() => removeHonor(honor.id)}
-												class="text-slate-300 hover:text-red-500 p-2 transition-colors mt-4"
-											>
-												<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-													><path
-														stroke-linecap="round"
-														stroke-linejoin="round"
-														stroke-width="2"
-														d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-													/></svg
+												<button onclick={() => removeHonor(honor.id)} class="text-red-400 p-1"
+													>&times;</button
 												>
-											</button>
-										</div>
-									{/each}
+											</div>
+										{/each}
+									</div>
 								</div>
-							{/if}
+							</div>
+
+							<div class="p-6 bg-slate-50 border-t border-slate-200 flex justify-end">
+								<button
+									onclick={() => (showProfileEditor = false)}
+									class="bg-[#0052CC] hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-md transition-colors shadow-sm"
+								>
+									Done
+								</button>
+							</div>
 						</div>
 					</div>
-				</div>
+				{/if}
 			{:else if currentView === 'mindmap'}
 				<!-- MIND MAP VIEW -->
 				<div class="flex-1 bg-slate-50 relative overflow-hidden flex flex-col">
@@ -2374,8 +2480,9 @@
 														>
 															Institutional Score
 														</div>
-														<div class="text-5xl font-black text-[#0052CC] tracking-tighter">
-															{essay.average ?? 'N/A'}<span class="text-xl text-blue-300">/10</span>
+														<div class="text-5xl font-mono text-slate-900 tracking-tight">
+															{essay.average ?? 'N/A'}<span class="text-xl text-slate-400">/10</span
+															>
 														</div>
 													</div>
 												</div>
@@ -2670,16 +2777,10 @@
 						</div>
 					</div>
 
-					<!-- CARD B: Pro / Admit -->
 					<div
-						class="bg-[#0052CC] rounded-3xl p-1 shadow-2xl relative overflow-hidden flex flex-col"
+						class="bg-slate-900 rounded-3xl p-px shadow-2xl relative overflow-hidden flex flex-col"
 					>
-						<div class="bg-white rounded-[20px] h-full p-8 flex flex-col relative overflow-hidden">
-							<!-- Background Decoration -->
-							<div
-								class="absolute top-0 right-0 w-64 h-64 bg-blue-50 rounded-full blur-3xl opacity-50 -mr-16 -mt-16 pointer-events-none"
-							></div>
-
+						<div class="bg-white rounded-[23px] h-full p-8 flex flex-col relative overflow-hidden">
 							<div class="mb-6 relative z-10">
 								<div class="flex justify-between items-start">
 									<div>
@@ -2794,7 +2895,7 @@
 								<button
 									onclick={() => handleCheckout(pricingMode)}
 									disabled={isProcessing}
-									class="w-full py-4 rounded-xl font-bold bg-[#0052CC] text-white hover:bg-blue-700 transition-all shadow-lg shadow-blue-200 transform active:scale-95"
+									class="w-full py-4 rounded-xl font-bold bg-slate-900 text-white hover:bg-slate-800 transition-all shadow-sm transform active:scale-95"
 								>
 									{googleSignedIn
 										? pricingMode === 'monthly'
