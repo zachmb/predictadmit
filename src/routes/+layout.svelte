@@ -3,6 +3,7 @@
 	import favicon from '$lib/assets/favicon.ico';
 	import SiteHeader from '$lib/components/layout/SiteHeader.svelte';
 	import { page } from '$app/stores';
+	import { userProfile } from '$lib/stores/user';
 	import { portalDecisionViewed, headerVisible } from '$lib/stores/ui';
 
 	let { children } = $props();
@@ -12,6 +13,19 @@
 		if ($page.url.pathname) {
 			portalDecisionViewed.set(false);
 			headerVisible.set(true);
+		}
+	});
+
+	// Automatically grant Pro status to signed-in users
+	$effect(() => {
+		const session = $page.data.session;
+		if (session?.user) {
+			userProfile.update((u) => {
+				if (!u.isPro) {
+					return { ...u, isPro: true };
+				}
+				return u;
+			});
 		}
 	});
 </script>

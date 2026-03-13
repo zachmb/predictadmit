@@ -194,6 +194,13 @@ export const portals: PortalEmail[] = [
 		from: 'UC Berkeley Office of Undergraduate Admissions <admissions@berkeley.edu>',
 		subject: 'Berkeley application status notification',
 		received: 'Mar 20, 2026, 5:03 PM'
+	},
+	{
+		name: 'Western Washington University',
+		slug: 'wwu',
+		from: 'WWU Admissions <admissions@wwu.edu>',
+		subject: 'Western Washington University admission portal update',
+		received: 'Mar 20, 2026, 5:05 PM'
 	}
 ];
 

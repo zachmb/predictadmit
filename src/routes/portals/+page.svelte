@@ -132,7 +132,7 @@
 						>
 						<select
 							value={$manualOverrideMode}
-							on:change={handleModeChange}
+							onchange={handleModeChange}
 							class="bg-white border border-slate-300 text-slate-700 text-xs font-semibold px-3 py-1.5 rounded-md outline-none cursor-pointer hover:border-slate-400 transition-colors"
 						>
 							<option value="random">Random / As Simulated</option>
@@ -151,7 +151,7 @@
 								<button
 									type="button"
 									class="w-full p-4 text-left"
-									on:click={() => handlePortalClick(portal.slug, portal.decision)}
+									onclick={() => handlePortalClick(portal.slug, portal.decision)}
 								>
 									<div class="flex items-center gap-3 mb-2">
 										<div

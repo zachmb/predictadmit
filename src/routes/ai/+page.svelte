@@ -514,12 +514,8 @@
 		}
 	}
 
-	// 🔒 Deep Dive is fully paywalled – no API call until they upgrade
+	// 🔒 Deep Dive is now fully free for signed-in users
 	async function requestDeepDive(decision: AiDecision) {
-		if (!hasDeepDiveAccess) {
-			openPaywall('deepDive', decision);
-			return;
-		}
 
 		if (!applicantSummary) {
 			applicantSummary = [
@@ -596,13 +592,7 @@
 
 		if (!file) return;
 
-		// 🔒 Free tier: one Common App PDF OCR per browser (unless Pro)
-		if (hasUsedFreePdfOcr && !hasDeepDiveAccess) {
-			openPaywall('ocr');
-			// reset file input so they can pick again later if they upgrade
-			target.value = '';
-			return;
-		}
+		// PDF OCR is now free for signed-in users
 
 		// Guard: only PDFs
 		if (file.type !== 'application/pdf') {
@@ -1495,194 +1485,6 @@
 		</div>
 	</div>
 
-	{#if showPaywallModal && paywallMode}
-		<!-- Paywall modal -->
-		<div
-			class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-lg px-4"
-		>
-			<div
-				class="max-w-md w-full rounded-3xl border-2 border-slate-200 bg-white px-8 py-8 shadow-2xl space-y-6 transform transition-all"
-			>
-				<div class="flex items-start justify-between gap-4">
-					<div class="space-y-2 flex-1">
-						<div
-							class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-emerald-50 to-blue-50 border border-emerald-200"
-						>
-							<svg class="w-3.5 h-3.5 text-emerald-600" fill="currentColor" viewBox="0 0 20 20">
-								<path
-									fill-rule="evenodd"
-									d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
-									clip-rule="evenodd"
-								/>
-							</svg>
-							<span class="text-[10px] uppercase tracking-widest font-bold text-emerald-700">
-								{#if paywallMode === 'deepDive'}
-									Locked · Deep Dive
-								{:else if paywallMode === 'simulation'}
-									Locked · Extra Simulations
-								{:else}
-									Locked · Extra PDFs
-								{/if}
-							</span>
-						</div>
-						<h2 class="text-xl font-bold text-slate-900 leading-tight">
-							{#if paywallMode === 'deepDive' && paywallContextDecision}
-								You know the verdict.<br />
-								Now learn
-								<span
-									class="bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent"
-									>why</span
-								>.
-							{:else if paywallMode === 'simulation'}
-								One full HYPSM+ run is free.<br />
-								The rest are
-								<span
-									class="bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent"
-									>premium</span
-								>.
-							{:else}
-								You've used your free<br />
-								Common App scan.
-							{/if}
-						</h2>
-					</div>
-					<button
-						type="button"
-						class="flex-shrink-0 w-9 h-9 rounded-full bg-slate-100 text-slate-500 text-lg flex items-center justify-center hover:bg-slate-200 hover:text-slate-700 transition-all"
-						onclick={closePaywall}
-					>
-						×
-					</button>
-				</div>
-
-				<div class="space-y-4 text-sm text-slate-600 leading-relaxed">
-					{#if paywallMode === 'deepDive' && paywallContextDecision}
-						<p class="flex items-start gap-2">
-							<svg
-								class="w-4 h-4 text-slate-400 mt-0.5 flex-shrink-0"
-								fill="currentColor"
-								viewBox="0 0 20 20"
-							>
-								<path
-									fill-rule="evenodd"
-									d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-									clip-rule="evenodd"
-								/>
-							</svg>
-							<span>
-								Right now you're staring at a single line —
-								<strong class="text-slate-900 font-bold"
-									>{outcomeLabel(paywallContextDecision.outcome)}</strong
-								>
-								from
-								<strong class="text-slate-900 font-bold">{paywallContextDecision.school}</strong>.
-								That's how real portals work: one word, no context.
-							</span>
-						</p>
-						<p class="flex items-start gap-2">
-							<svg
-								class="w-4 h-4 text-slate-400 mt-0.5 flex-shrink-0"
-								fill="currentColor"
-								viewBox="0 0 20 20"
-							>
-								<path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
-								<path
-									fill-rule="evenodd"
-									d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z"
-									clip-rule="evenodd"
-								/>
-							</svg>
-							<span>
-								The Deep Dive turns that verdict into a full, admissions committee breakdown: what
-								helped, what hurt, and what they'd need to see to flip the decision.
-							</span>
-						</p>
-					{:else}
-						<p class="flex items-start gap-2">
-							<svg
-								class="w-4 h-4 text-slate-400 mt-0.5 flex-shrink-0"
-								fill="currentColor"
-								viewBox="0 0 20 20"
-							>
-								<path
-									fill-rule="evenodd"
-									d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-									clip-rule="evenodd"
-								/>
-							</svg>
-							<span>
-								You get <strong class="text-slate-900 font-bold">one</strong> free {paywallMode ===
-								'simulation'
-									? 'HYPSM+ simulation'
-									: 'Common App PDF scan'}. You've used it.
-							</span>
-						</p>
-						<p class="flex items-start gap-2">
-							<svg
-								class="w-4 h-4 text-slate-400 mt-0.5 flex-shrink-0"
-								fill="currentColor"
-								viewBox="0 0 20 20"
-							>
-								<path
-									d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-								/>
-							</svg>
-							<span>
-								To {paywallMode === 'simulation'
-									? 'rerun with new drafts or activities'
-									: 'upload new versions or alternate essays'}, unlock PredictAdmit
-								<strong
-									class="bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent font-bold"
-									>Pro</strong
-								>.
-							</span>
-						</p>
-					{/if}
-				</div>
-
-				<div class="space-y-3 pt-2">
-					<a
-						href="/pro"
-						class="group inline-flex w-full items-center justify-center gap-2.5 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-4 text-sm font-bold text-white shadow-lg shadow-blue-600/25 hover:shadow-xl hover:shadow-blue-600/30 hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-4 focus:ring-blue-400/50 transition-all duration-200"
-					>
-						<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-							<path
-								d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-							/>
-						</svg>
-						<span>
-							{#if paywallMode === 'deepDive'}
-								Unlock Deep Dive Explanations
-							{:else if paywallMode === 'simulation'}
-								Unlock Unlimited Simulations
-							{:else}
-								Unlock More PDF Uploads
-							{/if}
-						</span>
-					</a>
-					<button
-						type="button"
-						class="w-full rounded-2xl border-2 border-slate-200 bg-white px-6 py-3 text-sm font-semibold text-slate-600 hover:bg-slate-50 hover:text-slate-800 hover:border-slate-300 transition-all"
-						onclick={closePaywall}
-					>
-						Not now · keep the free run
-					</button>
-					<p
-						class="text-[10px] text-slate-400 text-center leading-relaxed flex items-center justify-center gap-1.5"
-					>
-						<svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-							<path
-								fill-rule="evenodd"
-								d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-								clip-rule="evenodd"
-							/>
-						</svg>
-						No real applications affected. This is a training ground, not a crystal ball.
-					</p>
-				</div>
-			</div>
-		</div>
-	{/if}
 
 	<style>
 		@keyframes spin-slow {

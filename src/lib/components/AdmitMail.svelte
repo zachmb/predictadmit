@@ -13,7 +13,6 @@
 	// search + lists
 	export let searchQuery: string;
 	export let filteredPortals: PortalEmail[];
-	export let sortedVisiblePortals: PortalEmail[];
 	export let visiblePortals: PortalEmail[];
 
 	// ED / RD state
@@ -351,7 +350,10 @@
 							Back
 						</button>
 						<div class="flex items-center gap-2">
-							<button class="p-2 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-100">
+							<button
+								aria-label="Options"
+								class="p-2 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-100"
+							>
 								<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 									<path
 										stroke-linecap="round"

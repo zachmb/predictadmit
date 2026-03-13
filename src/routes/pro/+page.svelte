@@ -904,7 +904,7 @@
 	<title>PredictAdmit Pro</title>
 </svelte:head>
 
-{#if googleSignedIn && isPro}
+{#if googleSignedIn}
 	<!-- PREDICTADMIT PRO INTERFACE -->
 	<div class="flex h-screen w-screen bg-slate-50 text-slate-900 font-sans overflow-hidden">
 		<!-- SIDEBAR NAVIGATION -->
@@ -2626,360 +2626,116 @@
 		</main>
 	</div>
 {:else}
-	<!-- SALES PAGE -->
-	<main class="min-h-screen bg-slate-50 font-sans text-slate-900 flex flex-col">
-		<div class="flex-1 flex flex-col items-center pt-24 pb-24 px-6 relative overflow-hidden">
-			<div class="max-w-6xl w-full mx-auto space-y-16 relative z-10">
-				<!-- Header -->
-				<div class="text-center space-y-6 max-w-3xl mx-auto">
-					<h1 class="text-4xl md:text-6xl font-black tracking-tight text-slate-900 leading-tight">
-						Ivy League essays<br />
-						<span class="text-[#0052CC]">in 5 minutes.</span>
-					</h1>
-					<p class="text-lg text-slate-500 max-w-xl mx-auto leading-relaxed mt-6">
-						<span class="font-bold text-slate-900">PredictAdmit Pro:</span> the cheapest essay tool that
-						works. Got us into T10s. Northwestern, Yale, etc.
-					</p>
-
-					<!-- TOGGLE -->
-					<div class="flex justify-center mt-8">
-						<div
-							class="relative bg-slate-200/50 p-1.5 rounded-full flex items-center shadow-inner w-64 h-12 cursor-pointer"
-							onclick={() => (pricingMode = pricingMode === 'monthly' ? 'lifetime' : 'monthly')}
-							onkeydown={(e) =>
-								e.key === 'Enter' &&
-								(pricingMode = pricingMode === 'monthly' ? 'lifetime' : 'monthly')}
-							role="button"
-							tabindex="0"
-						>
-							<!-- Sliding Background -->
-							<div
-								class="absolute top-1.5 bottom-1.5 bg-white rounded-full shadow-lg border border-slate-100 transition-all duration-500 cubic-bezier(0.23, 1, 0.32, 1) w-[calc(50%-6px)]"
-								style="left: 6px; transform: translateX({pricingMode === 'monthly'
-									? '100%'
-									: '0%'})"
-							></div>
-
-							<button
-								onclick={(e) => {
-									e.stopPropagation();
-									pricingMode = 'lifetime';
-								}}
-								class="relative z-10 w-1/2 text-sm font-bold transition-colors duration-300 {pricingMode ===
-								'lifetime'
-									? 'text-slate-900'
-									: 'text-slate-500'}"
-							>
-								Cycle Pass
-							</button>
-							<button
-								onclick={(e) => {
-									e.stopPropagation();
-									pricingMode = 'monthly';
-								}}
-								class="relative z-10 w-1/2 text-sm font-bold transition-colors duration-300 {pricingMode ===
-								'monthly'
-									? 'text-slate-900'
-									: 'text-slate-500'}"
-							>
-								Monthly
-							</button>
-						</div>
-					</div>
+	<!-- SIGN IN PROMPT -->
+	<main class="min-h-screen bg-slate-50 font-sans text-slate-900 flex flex-col items-center pt-24 pb-24 px-6 relative overflow-hidden">
+		<div class="max-w-4xl w-full mx-auto space-y-16 relative z-10">
+			<!-- Hero Header -->
+			<div class="text-center space-y-6 max-w-3xl mx-auto">
+				<div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-50 border border-emerald-100 backdrop-blur-sm mb-4">
+					<span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
+					<span class="text-xs font-bold text-emerald-700 tracking-wide uppercase">Now Completely Free</span>
 				</div>
+				<h1 class="text-4xl md:text-6xl font-black tracking-tight text-slate-900 leading-tight">
+					PredictAdmit <span class="text-[#0052CC]">Pro</span><br />
+					<span class="text-slate-500">Free for Everyone.</span>
+				</h1>
+				<p class="text-lg text-slate-500 max-w-xl mx-auto leading-relaxed mt-6">
+					We've unlocked all our premium tools. No subscriptions, no one-time fees. Just sign in to start building your elite application.
+				</p>
+			</div>
 
-				<!-- Pricing Cards Container -->
-				<div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto items-stretch">
-					<!-- CARD A: Free / Candidate -->
-					<div
-						class="bg-white rounded-3xl border border-slate-200 p-8 shadow-sm hover:shadow-md transition-all relative overflow-hidden flex flex-col"
-					>
-						<div class="mb-6">
-							<h3 class="text-2xl font-bold text-slate-900">Free Tier</h3>
-							<div class="flex items-baseline gap-1 mt-2">
-								<span class="text-4xl font-black text-slate-900">$0</span>
-								<span class="text-sm text-slate-500 font-medium">/ forever</span>
-							</div>
-							<p class="text-sm text-slate-400 mt-3 leading-relaxed">
-								Perfect for fun simulations and testing your application.
-							</p>
+			<!-- Main Content Grid -->
+			<div class="grid md:grid-cols-2 gap-12 items-center">
+				<!-- Sign In Card -->
+				<div class="relative group group/card perspective-1000">
+					<div class="relative rounded-[2rem] bg-white p-10 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.1)] border border-slate-100 space-y-8">
+						<div class="space-y-4 text-center md:text-left">
+							<h2 class="text-2xl font-bold text-slate-900">Get Started Instantly</h2>
+							<p class="text-slate-500">Sign in with Google to access the full Pro suite for free.</p>
 						</div>
 
-						<div class="space-y-4 pt-6 border-t border-slate-100 flex-1">
-							<ul class="space-y-4">
-								<li class="flex items-start gap-3 text-sm text-slate-600">
-									<div
-										class="w-5 h-5 rounded-full bg-slate-100 flex items-center justify-center flex-shrink-0 mt-0.5"
-									>
-										<svg
-											class="w-3 h-3 text-slate-600"
-											fill="none"
-											viewBox="0 0 24 24"
-											stroke="currentColor"
-											stroke-width="3"
-											><path
-												stroke-linecap="round"
-												stroke-linejoin="round"
-												d="M5 13l4 4L19 7"
-											/></svg
-										>
-									</div>
-									<span class="font-bold text-slate-900">Unlimited Simulations</span>
-								</li>
-								<li class="flex items-start gap-3 text-sm text-slate-600">
-									<div
-										class="w-5 h-5 rounded-full bg-slate-100 flex items-center justify-center flex-shrink-0 mt-0.5"
-									>
-										<svg
-											class="w-3 h-3 text-slate-600"
-											fill="none"
-											viewBox="0 0 24 24"
-											stroke="currentColor"
-											stroke-width="3"
-											><path
-												stroke-linecap="round"
-												stroke-linejoin="round"
-												d="M5 13l4 4L19 7"
-											/></svg
-										>
-									</div>
-									<span>Basic Decision Dates</span>
-								</li>
-								<li class="flex items-start gap-3 text-sm text-slate-600">
-									<div
-										class="w-5 h-5 rounded-full bg-slate-100 flex items-center justify-center flex-shrink-0 mt-0.5"
-									>
-										<svg
-											class="w-3 h-3 text-slate-600"
-											fill="none"
-											viewBox="0 0 24 24"
-											stroke="currentColor"
-											stroke-width="3"
-											><path
-												stroke-linecap="round"
-												stroke-linejoin="round"
-												d="M5 13l4 4L19 7"
-											/></svg
-										>
-									</div>
-									<span>Community Access</span>
-								</li>
-							</ul>
-						</div>
+						<button
+							onclick={() => signIn('google', { callbackUrl: '/pro' })}
+							class="w-full flex items-center justify-center gap-3 rounded-2xl bg-slate-900 px-6 py-5 text-lg font-bold text-white shadow-xl hover:bg-black hover:scale-[1.02] transition-all duration-300"
+						>
+							<svg class="w-6 h-6" viewBox="0 0 24 24">
+								<path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+								<path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+								<path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
+								<path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+							</svg>
+							<span>Continue with Google</span>
+						</button>
 
-						<div class="mt-8">
-							<a
-								href="/"
-								class="block w-full text-center py-4 rounded-xl font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all"
-							>
-								Start Free
-							</a>
-						</div>
-					</div>
-
-					<div
-						class="bg-slate-900 rounded-3xl p-px shadow-2xl relative overflow-hidden flex flex-col"
-					>
-						<div class="bg-white rounded-[23px] h-full p-8 flex flex-col relative overflow-hidden">
-							<div class="mb-6 relative z-10">
-								<div class="flex justify-between items-start">
-									<div>
-										<h3 class="text-2xl font-bold text-slate-900">
-											PredictAdmit <span class="text-[#0052CC]">Pro</span>
-										</h3>
-										<div class="flex items-baseline gap-1 mt-2 h-10">
-											<div class="flex items-baseline gap-1">
-												<span class="text-4xl font-black text-[#0052CC]">
-													${Math.round($displayedPrice)}
-												</span>
-												<span class="text-sm text-slate-500 font-medium">
-													{pricingMode === 'monthly' ? '/ month' : '/ one-time'}
-												</span>
-											</div>
-										</div>
-									</div>
-									{#if pricingMode === 'lifetime'}
-										<div
-											class="bg-blue-100 text-[#0052CC] px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide"
-										>
-											Most Popular
-										</div>
-									{/if}
-								</div>
-								<p class="text-sm text-slate-400 mt-3 leading-relaxed">
-									{pricingMode === 'monthly'
-										? 'Cancel anytime. Flexible access.'
-										: pricingMode === 'lifetime'
-											? 'One-time payment. Forever access.'
-											: 'Access for the full application cycle.'}
-								</p>
+						<div class="pt-6 border-t border-slate-50 flex items-center justify-center gap-6 opacity-60">
+							<div class="flex flex-col items-center">
+								<span class="text-xl font-bold text-slate-900">$0</span>
+								<span class="text-[10px] uppercase font-bold text-slate-400">Setup</span>
 							</div>
-
-							<!-- IDE TEASER VISUAL -->
-							<div
-								class="my-6 relative rounded-xl border border-slate-200 bg-slate-50 shadow-inner overflow-hidden h-40 group"
-							>
-								<!-- Mock Sidebar -->
-								<div
-									class="absolute left-0 top-0 bottom-0 w-12 border-r border-slate-200 bg-white flex flex-col items-center py-3 gap-2"
-								>
-									<div class="w-6 h-6 rounded-md bg-blue-100"></div>
-									<div class="w-4 h-4 rounded-full bg-slate-100"></div>
-									<div class="w-4 h-4 rounded-full bg-slate-100"></div>
-								</div>
-								<!-- Mock Header -->
-								<div
-									class="absolute left-12 top-0 right-0 h-8 border-b border-slate-200 bg-white flex items-center px-3 gap-2"
-								>
-									<div class="w-20 h-2 rounded-full bg-slate-100"></div>
-								</div>
-								<!-- Mock Content -->
-								<div class="absolute left-12 top-8 right-0 bottom-0 p-3 space-y-2">
-									<div class="w-3/4 h-2 rounded-full bg-slate-200"></div>
-									<div class="w-full h-2 rounded-full bg-slate-100"></div>
-									<div class="w-5/6 h-2 rounded-full bg-slate-100"></div>
-									<!-- Creating an animated cursor/typing effect -->
-									<div class="w-1/2 h-2 rounded-full bg-slate-100 relative">
-										<div
-											class="absolute right-0 -mr-1 top-0 bottom-0 w-0.5 bg-[#0052CC] animate-pulse"
-										></div>
-									</div>
-								</div>
-								<!-- Mock Floating Action Button -->
-								<div
-									class="absolute bottom-3 right-3 bg-[#0052CC] text-white text-[10px] font-bold px-3 py-1.5 rounded-lg shadow-lg flex items-center gap-1"
-								>
-									<span>AI Feedback</span>
-								</div>
-
-								<!-- Overlay Label -->
-								<div
-									class="absolute inset-0 bg-slate-900/5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-								>
-									<span
-										class="bg-white px-3 py-1 rounded-full text-xs font-bold text-slate-700 shadow-sm"
-									>
-										Included
-									</span>
-								</div>
+							<div class="w-px h-8 bg-slate-100"></div>
+							<div class="flex flex-col items-center">
+								<span class="text-xl font-bold text-slate-900">$0</span>
+								<span class="text-[10px] uppercase font-bold text-slate-400">Monthly</span>
 							</div>
-							<!-- END TEASER -->
-
-							<div class="space-y-4 flex-1">
-								<ul class="space-y-3">
-									{#each ['Unlimited AI Essay Grading', 'Deep Dive Application Analysis', 'Smart Extracurricular Optimizer', 'Ivy-League Style Feedback'] as feature}
-										<li class="flex items-start gap-3 text-sm text-slate-600">
-											<div
-												class="w-5 h-5 rounded-full bg-blue-50 flex items-center justify-center flex-shrink-0 mt-0.5"
-											>
-												<svg
-													class="w-3 h-3 text-[#0052CC]"
-													fill="none"
-													viewBox="0 0 24 24"
-													stroke="currentColor"
-													stroke-width="3"
-													><path
-														stroke-linecap="round"
-														stroke-linejoin="round"
-														d="M5 13l4 4L19 7"
-													/></svg
-												>
-											</div>
-											<span>{feature}</span>
-										</li>
-									{/each}
-								</ul>
-							</div>
-
-							<div class="mt-8">
-								<button
-									onclick={() => handleCheckout(pricingMode)}
-									disabled={isProcessing}
-									class="w-full py-4 rounded-xl font-bold bg-slate-900 text-white hover:bg-slate-800 transition-all shadow-sm transform active:scale-95"
-								>
-									{googleSignedIn
-										? pricingMode === 'monthly'
-											? 'Start Monthly Plan'
-											: pricingMode === 'lifetime'
-												? 'Get Lifetime Access'
-												: 'Get Cycle Pass'
-										: 'Sign in to Upgrade'}
-								</button>
+							<div class="w-px h-8 bg-slate-100"></div>
+							<div class="flex flex-col items-center">
+								<span class="text-xl font-bold text-slate-900">∞</span>
+								<span class="text-[10px] uppercase font-bold text-slate-400">Access</span>
 							</div>
 						</div>
 					</div>
 				</div>
 
-				<!-- Promo Code -->
-				<div class="text-center relative z-20">
-					<details class="group inline-block text-left">
-						<summary
-							class="text-xs text-slate-400 cursor-pointer hover:text-[#0052CC] transition-colors list-none select-none"
-							>Have a promo code?</summary
-						>
-						<div
-							class="absolute left-1/2 -translate-x-1/2 mt-4 flex items-center justify-center gap-2 animate-in slide-in-from-top-2 duration-200 bg-white p-2 rounded-xl shadow-lg border border-slate-100 min-w-[300px]"
-						>
-							<input
-								type="text"
-								bind:value={promoCode}
-								placeholder="Enter code"
-								class="flex-1 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#0052CC]"
-							/>
-							<button
-								onclick={handlePromo}
-								class="px-4 py-2 bg-slate-100 text-slate-600 font-bold rounded-lg text-sm hover:bg-slate-200 transition-colors"
-							>
-								Apply
-							</button>
+				<!-- Features List -->
+				<div class="space-y-8">
+					<h3 class="text-2xl font-bold text-slate-900">What's Unlocked?</h3>
+					<div class="grid gap-6">
+						<!-- Feature item -->
+						<div class="flex items-start gap-4">
+							<div class="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center shrink-0">
+								<svg class="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.989-2.386l-.548-.547z" /></svg>
+							</div>
+							<div>
+								<p class="font-bold text-slate-900">AI Narrative Mind Map</p>
+								<p class="text-sm text-slate-500">Brainstorm and connect your life experiences into a cohesive application theme.</p>
+							</div>
 						</div>
-					</details>
-				</div>
+						
+						<div class="flex items-start gap-4">
+							<div class="w-10 h-10 rounded-xl bg-indigo-100 flex items-center justify-center shrink-0">
+								<svg class="w-5 h-5 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
+							</div>
+							<div>
+								<p class="font-bold text-slate-900">AI Essay Drafting & IDE</p>
+								<p class="text-sm text-slate-500">Write, edit, and analyze your essays with built-in institutional intelligence.</p>
+							</div>
+						</div>
 
-				<!-- FAQ Section -->
-				<div class="max-w-2xl mx-auto pt-24 space-y-8">
-					<div class="text-center">
-						<h2 class="text-2xl font-bold text-slate-900">Frequently Asked Questions</h2>
-					</div>
-
-					<div
-						class="rounded-2xl border border-slate-200 bg-[#F9FCFF] overflow-hidden divide-y divide-[#F3F4F6]"
-					>
-						{#each faqs as faq, i}
-							<button
-								onclick={() => toggleFaq(i)}
-								class="w-full text-left p-6 flex items-start justify-between gap-4 hover:bg-white transition-colors"
-							>
-								<span class="font-bold text-sm text-slate-800">{faq.q}</span>
-								<span
-									class="text-slate-400 transition-transform duration-200 {openFaqIndex === i
-										? 'rotate-45'
-										: ''}"
-								>
-									<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-										><path
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											stroke-width="2"
-											d="M12 4v16m8-8H4"
-										/></svg
-									>
-								</span>
-							</button>
-							{#if openFaqIndex === i}
-								<div
-									transition:slide={{ duration: 200 }}
-									class="p-6 pt-0 text-sm text-slate-500 bg-white leading-relaxed"
-								>
-									{faq.a}
-								</div>
-							{/if}
-						{/each}
+						<div class="flex items-start gap-4">
+							<div class="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center shrink-0">
+								<svg class="w-5 h-5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+							</div>
+							<div>
+								<p class="font-bold text-slate-900">University Strategy Database</p>
+								<p class="text-sm text-slate-500">Unlock specific admissions strategies for the top 50+ universities.</p>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
+
+			<!-- Vision Section -->
+			<div class="pt-16 border-t border-slate-200">
+				<div class="bg-blue-900 rounded-[2.5rem] p-12 text-center text-white space-y-6">
+					<h3 class="text-3xl font-bold">The Vision for Free Pro</h3>
+					<p class="text-blue-100 text-lg max-w-2xl mx-auto leading-relaxed">
+						We believe the price of admissions advice should not determine the quality of your education. 
+						By making PredictAdmit Pro free for everyone, we're giving thousands of students the same 
+						advantages once reserved for those with expensive consultants.
+					</p>
+				</div>
+			</div>
 		</div>
-		<SiteFooter />
 	</main>
 {/if}
 

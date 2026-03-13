@@ -1,8 +1,5 @@
 <script lang="ts">
 	export let applicantName: string;
-	export let schoolName: string; //just so the portal doesn't get mad
-	export let primaryColor: string;
-	export let footerDomain: string;
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { userProfile } from '$lib/stores/user';

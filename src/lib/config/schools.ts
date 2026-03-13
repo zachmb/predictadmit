@@ -372,5 +372,22 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		footerDomain: 'berkeley.edu',
 		difficulty: 8.7,
 		baseRate: 0.11
+	},
+	wwu: {
+		slug: 'wwu',
+		schoolName: 'Western Washington University',
+		logoPrimary: 'Western',
+		logoSecondary: 'ADMISSIONS',
+		primaryColor: '#003F87',
+		admissionsId: 'WWU-2026-112233',
+		financialAidId: 'FA-WWU-445566',
+		bannerText: 'Thank you for applying to Western Washington University.',
+		noticeText: 'Your admission decision is now available in your portal.',
+		statusLastPosted: 'March 15, 2026',
+		statusLinkLabel: 'View Decision >>',
+		decision: 'admit',
+		footerDomain: 'wwu.edu',
+		difficulty: 4.0,
+		baseRate: 0.85
 	}
 };

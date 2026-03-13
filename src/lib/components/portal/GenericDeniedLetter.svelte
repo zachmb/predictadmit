@@ -84,19 +84,4 @@
 </div>
 
 <style>
-	.fade-in-button {
-		opacity: 0;
-		animation: fade-in-button 0.6s ease-out 0.2s forwards;
-	}
-
-	@keyframes fade-in-button {
-		from {
-			opacity: 0;
-			transform: translateY(-4px);
-		}
-		to {
-			opacity: 1;
-			transform: translateY(0);
-		}
-	}
 </style>

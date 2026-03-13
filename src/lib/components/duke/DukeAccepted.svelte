@@ -1,9 +1,7 @@
 <script lang="ts">
 	// Props passed from the main portal page
 	export let applicantName: string;
-	export let schoolName: string;
 	export let primaryColor: string; // Duke Blue: #003366
-	export let footerDomain: string;
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { userProfile } from '$lib/stores/user';
