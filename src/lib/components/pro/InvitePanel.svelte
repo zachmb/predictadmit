@@ -38,7 +38,7 @@
 	}
 
 	async function shareLink() {
-		const shareText = `Chart your college admissions odds with PredictAdmit — join me and earn +${INVITE_REWARD.credits} credits.`;
+		const shareText = `Chart your college admissions odds with PredictAdmit — join me and earn +${INVITE_REWARD.points} points.`;
 		if (typeof navigator !== 'undefined' && typeof navigator.share === 'function') {
 			try {
 				await navigator.share({ title: 'PredictAdmit', text: shareText, url: referralLink });
@@ -77,11 +77,11 @@
 				class="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-semibold text-white"
 				style="background-color:#0052CC;"
 			>
-				+{INVITE_REWARD.credits}
+				+{INVITE_REWARD.points}
 			</span>
 		</div>
 		<p class="mt-3 text-sm font-semibold text-slate-900">
-			Invite friends, earn +{INVITE_REWARD.credits} credits
+			Invite friends, earn +{INVITE_REWARD.points} points
 		</p>
 		<p class="mt-1 text-xs leading-snug text-slate-500">
 			Share your link — you both get rewarded when they join.

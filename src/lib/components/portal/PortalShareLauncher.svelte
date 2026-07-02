@@ -15,8 +15,11 @@
 
 	const school = $derived(slug ? schoolConfigs[slug] : undefined);
 
-	// Only surface the launcher on a valid portal page after the decision is viewed.
-	const active = $derived(!!slug && !!school && $portalDecisionViewed);
+	// Only surface the launcher for AI-simulation decisions (usingAI), not the
+	// manual portal sim, after the decision is viewed on a valid portal page.
+	const active = $derived(
+		!!slug && !!school && $portalDecisionViewed && $userProfile.usingAI
+	);
 
 	const outcome = $derived.by(() => {
 		if (!slug || !school) return 'deny';

@@ -3,8 +3,8 @@
 
 export const DISCORD_URL = 'https://discord.gg/predictadmit';
 
-// Reward shown for successful invites (cosmetic — mirrors Appybara's "+30 +1").
-export const INVITE_REWARD = { credits: 30, energy: 1 };
+// Reward shown for successful invites (cosmetic).
+export const INVITE_REWARD = { points: 30 };
 
 /** Build a referral link that tags the inviter. Safe on server (falls back to prod origin). */
 export function buildReferralLink(code: string, origin?: string): string {

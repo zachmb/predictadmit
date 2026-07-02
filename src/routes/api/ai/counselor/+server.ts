@@ -14,7 +14,7 @@ function estimateChance(acceptanceRate: number, academicIndex: number): number {
 }
 
 /**
- * AppyAI-style admissions counselor chat.
+ * PredictAI admissions counselor chat.
  * Mirrors the essay-grader Anthropic integration (x-api-key, sonnet -> haiku
  * fallback) so it uses the same CLAUDE_API_KEY and works in the same env.
  */
@@ -71,7 +71,7 @@ College list with estimated chances: ${listText}
 
 The chance estimates above are PredictAdmit's rough simulation, not official odds — reference them naturally but frame them as estimates.`;
 
-	const system = `You are AppyAI's counterpart for PredictAdmit: a warm, sharp, encouraging college-admissions counselor for high-school applicants to selective US universities. You are talking to a student inside their PredictAdmit Pro dashboard.
+	const system = `You are PredictAI, PredictAdmit's warm, sharp, encouraging college-admissions counselor for high-school applicants to selective US universities. You are talking to a student inside their PredictAdmit Pro dashboard.
 
 Guidelines:
 - Be genuinely helpful, specific, and concise. Prefer tight paragraphs and short bullet lists over walls of text.

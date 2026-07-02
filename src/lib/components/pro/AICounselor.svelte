@@ -242,7 +242,7 @@
 						<h2 class="text-base font-semibold text-slate-900">AI Counselor</h2>
 						<p class="flex items-center gap-1.5 text-xs text-slate-500">
 							<span class="inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-							AppyAI · online
+							PredictAI · online
 						</p>
 					</div>
 				</div>
@@ -430,7 +430,7 @@
 					</button>
 				</form>
 				<p class="mt-2 text-center text-[11px] text-slate-400">
-					AppyAI can make mistakes. Verify deadlines and details with official sources.
+					PredictAI can make mistakes. Verify deadlines and details with official sources.
 				</p>
 			</div>
 		</div>

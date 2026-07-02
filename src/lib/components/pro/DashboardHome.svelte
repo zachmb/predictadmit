@@ -181,7 +181,7 @@
 						onclick={() => setView('counselor')}
 						class="mt-6 inline-flex items-center gap-2 rounded-xl bg-white px-5 py-2.5 text-sm font-semibold text-[#0052CC] shadow-sm transition hover:bg-slate-100 active:scale-[0.98]"
 					>
-						Chat with AppyAI
+						Chat with PredictAI
 						<svg
 							viewBox="0 0 24 24"
 							fill="none"

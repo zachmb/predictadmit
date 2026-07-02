@@ -126,7 +126,27 @@
 						simulation run.
 					</p>
 
-					<div class="mt-4 flex items-center gap-3">
+					<div class="mt-4 flex flex-wrap items-center gap-3">
+						<label
+							for="applicant-name"
+							class="text-xs font-bold text-slate-500 uppercase tracking-wider">Your name:</label
+						>
+						<input
+							id="applicant-name"
+							type="text"
+							placeholder="Enter your name"
+							value={$userProfile.name}
+							oninput={(e) =>
+								userProfile.update((u) => ({
+									...u,
+									name: (e.currentTarget as HTMLInputElement).value
+								}))}
+							class="bg-white border border-slate-300 text-slate-800 text-xs font-semibold px-3 py-1.5 rounded-md outline-none w-56 focus:border-blue-400 focus:ring-1 focus:ring-blue-200 transition-colors"
+						/>
+						<span class="text-[11px] text-slate-400">Personalizes every portal &amp; letter</span>
+					</div>
+
+					<div class="mt-3 flex items-center gap-3">
 						<span class="text-xs font-bold text-slate-500 uppercase tracking-wider"
 							>Simulate Mode:</span
 						>

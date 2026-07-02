@@ -1086,7 +1086,7 @@
 							d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 10-4-4 4 4 0 004 4zm6-2a3 3 0 10-3-3M6 11a3 3 0 10-3-3"
 						/></svg
 					>
-					<span>Community</span>
+					<span>Human Counselors</span>
 				</button>
 
 				<div

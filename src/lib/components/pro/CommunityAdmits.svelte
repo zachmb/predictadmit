@@ -169,9 +169,9 @@
 
 		<!-- Header -->
 		<header class="mb-6">
-			<h1 class="text-2xl font-bold tracking-tight text-slate-900">Community Admits</h1>
+			<h1 class="text-2xl font-bold tracking-tight text-slate-900">Human Counselors</h1>
 			<p class="mt-1 text-slate-500">
-				See how real students built their applications — and where they got in.
+				Learn from real admitted students and mentors who've been exactly where you are.
 			</p>
 			<div class="mt-3 flex items-center gap-2 text-sm font-medium text-slate-500">
 				<span class="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1 shadow-sm ring-1 ring-slate-200">
