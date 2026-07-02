@@ -2,6 +2,7 @@
 	import './layout.css';
 	import favicon from '$lib/assets/favicon.ico';
 	import SiteHeader from '$lib/components/layout/SiteHeader.svelte';
+	import PortalShareLauncher from '$lib/components/portal/PortalShareLauncher.svelte';
 	import { page } from '$app/stores';
 	import { userProfile } from '$lib/stores/user';
 	import { portalDecisionViewed, headerVisible } from '$lib/stores/ui';
@@ -39,3 +40,5 @@
 <div class="relative z-10 min-h-screen">
 	{@render children()}
 </div>
+
+<PortalShareLauncher />

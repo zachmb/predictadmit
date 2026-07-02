@@ -13,6 +13,12 @@
 	import { majors } from '$lib/config/majors';
 	import { states } from '$lib/config/states';
 	import { onMount } from 'svelte';
+	import DashboardHome from '$lib/components/pro/DashboardHome.svelte';
+	import AICounselor from '$lib/components/pro/AICounselor.svelte';
+	import SchoolsExplorer from '$lib/components/pro/SchoolsExplorer.svelte';
+	import ChanceMeProfile from '$lib/components/pro/ChanceMeProfile.svelte';
+	import SettingsView from '$lib/components/pro/SettingsView.svelte';
+	import CommunityAdmits from '$lib/components/pro/CommunityAdmits.svelte';
 
 	// --- RUNES STATE ---
 	let { data } = $props();
@@ -128,7 +134,17 @@
 	let isProcessing = $state(false);
 
 	// VIEW STATE
-	let currentView = $state<'dashboard' | 'editor' | 'mindmap' | 'universities'>('dashboard');
+	let currentView = $state<
+		| 'dashboard'
+		| 'editor'
+		| 'mindmap'
+		| 'universities'
+		| 'counselor'
+		| 'schools'
+		| 'chanceme'
+		| 'community'
+		| 'settings'
+	>('dashboard');
 
 	// Mind Map State
 	type MindMapNode = {
@@ -992,6 +1008,87 @@
 					<span>Universities</span>
 				</button>
 
+				<!-- AI COUNSELOR TAB -->
+				<button
+					onclick={() => (currentView = 'counselor')}
+					class="w-full text-left px-6 py-3 text-sm font-bold flex items-center gap-3 transition-all border-l-4 {currentView ===
+					'counselor'
+						? 'bg-blue-50 text-[#0052CC] border-[#0052CC]'
+						: 'text-slate-500 border-transparent hover:text-slate-900 hover:bg-slate-50'}"
+				>
+					<svg class="w-5 h-5 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+						><path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 3v-3z"
+						/></svg
+					>
+					<span>AI Counselor</span>
+				</button>
+
+				<!-- SCHOOLS TAB -->
+				<button
+					onclick={() => (currentView = 'schools')}
+					class="w-full text-left px-6 py-3 text-sm font-bold flex items-center gap-3 transition-all border-l-4 {currentView ===
+					'schools'
+						? 'bg-blue-50 text-[#0052CC] border-[#0052CC]'
+						: 'text-slate-500 border-transparent hover:text-slate-900 hover:bg-slate-50'}"
+				>
+					<svg class="w-5 h-5 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+						><path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M12 14l9-5-9-5-9 5 9 5z"
+						/><path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M12 14l6.16-3.422A12.083 12.083 0 0121 12.11c0 .93-.14 1.83-.4 2.68L12 21l-8.6-6.21A11.98 11.98 0 013 12.11c0-.9.14-1.79.4-2.63L12 14z"
+						/></svg
+					>
+					<span>Schools</span>
+				</button>
+
+				<!-- CHANCE ME TAB -->
+				<button
+					onclick={() => (currentView = 'chanceme')}
+					class="w-full text-left px-6 py-3 text-sm font-bold flex items-center gap-3 transition-all border-l-4 {currentView ===
+					'chanceme'
+						? 'bg-blue-50 text-[#0052CC] border-[#0052CC]'
+						: 'text-slate-500 border-transparent hover:text-slate-900 hover:bg-slate-50'}"
+				>
+					<svg class="w-5 h-5 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+						><path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+						/></svg
+					>
+					<span>Chance Me</span>
+				</button>
+
+				<!-- COMMUNITY TAB -->
+				<button
+					onclick={() => (currentView = 'community')}
+					class="w-full text-left px-6 py-3 text-sm font-bold flex items-center gap-3 transition-all border-l-4 {currentView ===
+					'community'
+						? 'bg-blue-50 text-[#0052CC] border-[#0052CC]'
+						: 'text-slate-500 border-transparent hover:text-slate-900 hover:bg-slate-50'}"
+				>
+					<svg class="w-5 h-5 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+						><path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 10-4-4 4 4 0 004 4zm6-2a3 3 0 10-3-3M6 11a3 3 0 10-3-3"
+						/></svg
+					>
+					<span>Community</span>
+				</button>
+
 				<div
 					class="mt-4 px-6 pb-2 text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center justify-between group"
 				>
@@ -1083,18 +1180,34 @@
 			<!-- User Menu -->
 			<div class="p-4 border-t border-slate-100 bg-slate-50/50">
 				<button
-					onclick={() => goto('/account')}
-					class="flex items-center gap-3 w-full p-2 rounded-xl hover:bg-white hover:shadow-sm transition-all border border-transparent hover:border-slate-200"
+					onclick={() => (currentView = 'settings')}
+					class="flex items-center gap-3 w-full p-2 rounded-xl hover:bg-white hover:shadow-sm transition-all border {currentView ===
+					'settings'
+						? 'bg-white shadow-sm border-slate-200'
+						: 'border-transparent hover:border-slate-200'}"
 				>
 					<div
 						class="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-xs text-indigo-700 font-bold border border-indigo-200"
 					>
 						{session?.user?.name?.[0] || 'U'}
 					</div>
-					<div class="text-left">
-						<div class="text-xs font-bold text-slate-900">{session?.user?.name}</div>
-						<div class="text-[10px] text-slate-500">Pro Member</div>
+					<div class="text-left flex-1 min-w-0">
+						<div class="text-xs font-bold text-slate-900 truncate">{session?.user?.name}</div>
+						<div class="text-[10px] text-slate-500">View settings</div>
 					</div>
+					<svg class="w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+						><path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+						/><path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+						/></svg
+					>
 				</button>
 			</div>
 		</aside>
@@ -1102,282 +1215,7 @@
 		<!-- MAIN AREA -->
 		<main class="flex-1 flex flex-col min-w-0 bg-slate-50 relative">
 			{#if currentView === 'dashboard'}
-				<!-- DASHBOARD HEADER -->
-				<header
-					class="bg-white border-b border-slate-200 px-8 py-4 flex items-center justify-between sticky top-0 z-40 shadow-sm"
-				>
-					<div>
-						<h1 class="text-2xl font-semibold text-slate-800 tracking-tight">Home</h1>
-					</div>
-					<div class="flex items-center gap-4">
-						<button
-							onclick={() => (showProfileEditor = true)}
-							class="text-sm font-medium text-slate-600 hover:text-slate-900 bg-slate-50 hover:bg-slate-100 px-4 py-2 rounded-md transition-colors border border-slate-200"
-						>
-							Edit Profile
-						</button>
-					</div>
-				</header>
-
-				<!-- DASHBOARD CONTENT -->
-				<div class="flex-1 overflow-y-auto p-8 relative">
-					<div class="max-w-6xl mx-auto flex flex-col xl:flex-row gap-6">
-						<!-- MAIN COLUMN -->
-						<div class="flex-1 space-y-8">
-							<!-- GET STARTED SECTION -->
-							<section>
-								<h2 class="text-sm font-semibold text-slate-700 uppercase tracking-widest mb-4">
-									Get Started
-								</h2>
-
-								<div class="grid md:grid-cols-2 gap-4">
-									<!-- Card 1 -->
-									<button
-										onclick={() => (showProfileEditor = true)}
-										class="text-left bg-white border border-slate-200 rounded-lg p-6 hover:shadow-md transition-shadow group flex flex-col relative overflow-hidden h-48"
-									>
-										<div class="flex justify-between items-start mb-2">
-											<h3
-												class="text-lg font-semibold text-slate-800 group-hover:text-[#0052CC] transition-colors"
-											>
-												Complete Applicant Profile
-											</h3>
-											<span
-												class="text-slate-400 group-hover:translate-x-1 group-hover:text-[#0052CC] transition-all"
-												>&rarr;</span
-											>
-										</div>
-										<p class="text-sm text-slate-500 mb-6">
-											Enter your GPA, test scores, and demographics to unlock accurate predictions.
-										</p>
-
-										<!-- Mini visual representation of form -->
-										<div class="mt-auto flex gap-2 w-full opacity-60">
-											<div class="h-6 w-1/3 bg-slate-100 rounded border border-slate-200"></div>
-											<div class="h-6 w-2/3 bg-slate-100 rounded border border-slate-200"></div>
-										</div>
-									</button>
-
-									<!-- Card 2 -->
-									<button
-										onclick={() => (showImportModal = true)}
-										class="text-left bg-white border border-slate-200 rounded-lg p-6 hover:shadow-md transition-shadow group flex flex-col relative overflow-hidden h-48"
-									>
-										<div class="flex justify-between items-start mb-2">
-											<h3
-												class="text-lg font-semibold text-slate-800 group-hover:text-[#0052CC] transition-colors"
-											>
-												Import Activities
-											</h3>
-											<span
-												class="text-slate-400 group-hover:translate-x-1 group-hover:text-[#0052CC] transition-all"
-												>&rarr;</span
-											>
-										</div>
-										<p class="text-sm text-slate-500 mb-6">
-											Quickly add your extracurriculars to get a holistic application review.
-										</p>
-
-										<!-- Mini visual representation of list -->
-										<div class="mt-auto space-y-2 w-full opacity-60">
-											<div
-												class="h-8 w-full border border-dashed border-slate-300 rounded-md flex items-center justify-center bg-slate-50"
-											>
-												<span class="text-xs font-semibold text-slate-400">+ Add Activity</span>
-											</div>
-										</div>
-									</button>
-								</div>
-
-								<!-- Secondary Actions Bar -->
-								<div class="grid md:grid-cols-2 gap-4 mt-4">
-									<div
-										class="bg-white border border-slate-200 rounded-lg p-4 flex items-center justify-between hover:bg-slate-50 cursor-pointer group"
-									>
-										<div class="flex items-center gap-3">
-											<div
-												class="w-8 h-8 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center"
-											>
-												<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-													><path
-														stroke-linecap="round"
-														stroke-linejoin="round"
-														stroke-width="2"
-														d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"
-													/></svg
-												>
-											</div>
-											<span class="font-medium text-slate-700">Connect Common App</span>
-										</div>
-										<span class="text-slate-400 group-hover:translate-x-1 transition-transform"
-											>&rarr;</span
-										>
-									</div>
-									<div
-										class="bg-white border border-slate-200 rounded-lg p-4 flex items-center justify-between hover:bg-slate-50 cursor-pointer group"
-									>
-										<div class="flex items-center gap-3">
-											<div
-												class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center"
-											>
-												<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-													><path
-														stroke-linecap="round"
-														stroke-linejoin="round"
-														stroke-width="2"
-														d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-													/></svg
-												>
-											</div>
-											<span class="font-medium text-slate-700">Upload Transcripts</span>
-										</div>
-										<span class="text-slate-400 group-hover:translate-x-1 transition-transform"
-											>&rarr;</span
-										>
-									</div>
-								</div>
-							</section>
-
-							<!-- EXPLORE FEATURES SECTION -->
-							<section>
-								<h2 class="text-sm font-semibold text-slate-700 uppercase tracking-widest mb-4">
-									Explore Features
-								</h2>
-
-								<div class="grid md:grid-cols-3 gap-4">
-									<button
-										onclick={() => (currentView = 'universities')}
-										class="text-left bg-white border border-slate-200 rounded-lg p-5 hover:border-blue-400 hover:shadow-sm transition-all relative overflow-hidden h-36"
-									>
-										<div
-											class="absolute top-4 right-4 bg-slate-100 text-slate-500 text-[10px] font-bold px-2 py-0.5 rounded-md"
-										>
-											Core
-										</div>
-										<h3 class="font-semibold text-blue-900 mt-8">Outcome Predictor</h3>
-										<p class="text-[13px] text-blue-700/80 mt-1">See your chances at T-20s</p>
-									</button>
-
-									<button
-										onclick={() => (currentView = 'mindmap')}
-										class="text-left bg-white border border-slate-200 rounded-lg p-5 hover:border-purple-400 hover:shadow-sm transition-all relative overflow-hidden h-36"
-									>
-										<h3 class="font-semibold text-slate-800 mt-8">Mind Map / Inspo</h3>
-										<p class="text-[13px] text-slate-500 mt-1">Brainstorm essay topics</p>
-									</button>
-
-									<button
-										onclick={addNewSupplemental}
-										class="text-left bg-white border border-slate-200 rounded-lg p-5 hover:border-slate-400 hover:shadow-sm transition-all relative overflow-hidden h-36"
-									>
-										<h3 class="font-semibold text-slate-800 mt-8">Essay Grader</h3>
-										<p class="text-[13px] text-slate-500 mt-1">AI institutional feedback</p>
-									</button>
-								</div>
-							</section>
-						</div>
-
-						<!-- RIGHT SIDEBAR (STATS) -->
-						<div class="w-full xl:w-80 space-y-6">
-							<!-- Overall Academic Index -->
-							<div class="bg-white border border-slate-200 rounded-lg p-6 shadow-sm">
-								<div
-									class="text-[11px] font-bold uppercase tracking-widest text-slate-400 mb-2 border-b border-slate-100 pb-2"
-								>
-									Academic Index
-								</div>
-								<div class="flex items-baseline gap-2 mt-4">
-									<div class="text-5xl font-mono tracking-tight text-slate-900 leading-none">
-										{academicIndex}
-									</div>
-									<div class="text-lg text-slate-400 font-mono mb-1">/240</div>
-								</div>
-								<!-- Mini Progress Bar -->
-								<div class="w-full bg-slate-100 h-1 mt-4 overflow-hidden">
-									<div
-										class="bg-slate-900 h-full transition-all duration-1000"
-										style="width: {(academicIndex / 240) * 100}%"
-									></div>
-								</div>
-								<p class="text-[11px] text-slate-500 mt-3 leading-relaxed">
-									Calculated using the standard 2/3 Test + 1/3 GPA formula with rigor adjustments.
-								</p>
-							</div>
-
-							<!-- Holistic Rating -->
-							<div class="bg-white border border-slate-200 rounded-lg p-6 shadow-sm">
-								<div
-									class="text-[11px] font-bold uppercase tracking-widest text-slate-400 mb-4 border-b border-slate-100 pb-2"
-								>
-									Holistic Rating Overview
-								</div>
-								<div class="space-y-4">
-									<div class="flex items-center gap-3">
-										<span class="text-[10px] uppercase font-mono w-16 text-slate-500 tracking-wider"
-											>Academics</span
-										>
-										<div class="flex-1 h-1 bg-slate-100 overflow-hidden">
-											<div
-												class="h-full bg-slate-900 transition-all"
-												style="width: {holisticMetrics.academics * 10}%"
-											></div>
-										</div>
-									</div>
-									<div class="flex items-center gap-3">
-										<span class="text-[10px] uppercase font-mono w-16 text-slate-500 tracking-wider"
-											>Extracur.</span
-										>
-										<div class="flex-1 h-1 bg-slate-100 overflow-hidden">
-											<div
-												class="h-full bg-slate-600 transition-all"
-												style="width: {holisticMetrics.ecs * 10}%"
-											></div>
-										</div>
-									</div>
-									<div class="flex items-center gap-3">
-										<span class="text-[10px] uppercase font-mono w-16 text-slate-500 tracking-wider"
-											>Personal</span
-										>
-										<div class="flex-1 h-1 bg-slate-100 overflow-hidden">
-											<div class="h-full bg-slate-400 transition-all" style="width: 50%"></div>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<!-- Links -->
-							<div class="bg-white border border-slate-200 rounded-lg p-6 shadow-sm">
-								<div class="text-[11px] font-bold uppercase tracking-widest text-slate-400 mb-3">
-									Questions?
-								</div>
-								<ul class="space-y-3">
-									<li>
-										<a
-											href="#"
-											class="flex items-center gap-2 text-sm font-medium text-slate-700 hover:text-[#0052CC]"
-										>
-											<span
-												class="w-4 h-4 rounded bg-indigo-100 flex items-center justify-center text-[10px]"
-												>🌐</span
-											> Community
-										</a>
-									</li>
-									<li>
-										<a
-											href="#"
-											class="flex items-center gap-2 text-sm font-medium text-slate-700 hover:text-[#0052CC]"
-										>
-											<span
-												class="w-4 h-4 rounded bg-slate-100 flex items-center justify-center text-[10px]"
-												>❓</span
-											> PredictAdmit FAQs
-										</a>
-									</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-				</div>
+					<DashboardHome setView={(v) => (currentView = v as typeof currentView)} />
 
 				<!-- PROFILE EDITOR MODAL / SLIDE-OVER -->
 				{#if showProfileEditor}
@@ -2622,6 +2460,16 @@
 						</div>
 					{/if}
 				</div>
+				{:else if currentView === 'counselor'}
+					<AICounselor />
+				{:else if currentView === 'schools'}
+					<SchoolsExplorer />
+				{:else if currentView === 'chanceme'}
+					<ChanceMeProfile />
+				{:else if currentView === 'community'}
+					<CommunityAdmits />
+				{:else if currentView === 'settings'}
+					<SettingsView />
 			{/if}
 		</main>
 	</div>
