@@ -3,33 +3,45 @@
 	import { userProfile, defaultProfile } from '$lib/stores/user';
 	import type { UserProfile } from '$lib/stores/user';
 	import { decisionsBySlug } from '$lib/stores/results';
-
-	// Shared Components and Configuration
-	import { schoolConfigs } from '$lib/config/schools';
 	import { portalDecisionViewed } from '$lib/stores/ui';
 
 	// School-Specific Components (Decision Letters)
 	import StanfordAccepted from '$lib/components/stanford/StanfordAccepted.svelte';
-	import StanfordDenied from '$lib/components/stanford/StanfordDenied.svelte'; // --- Component Configuration ---
-	const SCHOOL_DATA = schoolConfigs.stanford;
-	// Stanford Cardinal Color
-	const STANFORD_RED = '#8C1515';
+	import StanfordDenied from '$lib/components/stanford/StanfordDenied.svelte';
 
-	// --- State Variables (Authentication Logic) ---
+	// --- Component Configuration ---
+	const SLUG = 'stanford';
+	const school = {
+		schoolName: 'Stanford University',
+		primaryColor: '#8C1515',
+		footerDomain: 'stanford.edu',
+		statusLastPosted: 'March 14, 2026',
+		round: 'Regular Decision',
+		referenceNumber: '20260012'
+	};
+
+	// --- State Variables ---
 	let profile: UserProfile = { ...defaultProfile };
 	let emailInput = '';
 	let passwordInput = '';
 	let error = '';
 	let authenticated = false;
 	let hasViewedUpdate = false;
+	let activeTab = 'Admissions Status';
 
 	// Subscribe to the global user profile store
 	$: profile = $userProfile;
 
-	const applicantName = () => profile.name || 'Applicant'; // HANDLERS
+	// Dynamic Data Helpers
+	const applicantName = () => profile.name || 'Applicant';
+
+	// Default decision when the prediction store has no entry for this slug:
+	const DEFAULT_DECISION = 'deny';
+	$: shownDecision = $decisionsBySlug[SLUG] ?? DEFAULT_DECISION;
+
+	// --- Handlers ---
 	const handleLoadSavedLogin = () => {
 		if (!profile.email || !profile.password) {
-			// Use default John Doe credentials if user hasn't set up their own
 			userProfile.update((u) => ({
 				...u,
 				name: u.name || 'John Doe',
@@ -37,26 +49,17 @@
 				password: u.password || 'password123'
 			}));
 		}
-		// Directly authenticate
 		authenticated = true;
 		error = '';
 	};
 
 	const handleLogin = (event: SubmitEvent) => {
 		event.preventDefault();
-
-		if (!SCHOOL_DATA) {
-			error = 'Unknown portal.';
-			authenticated = false;
-			return;
-		}
-
 		if (!profile.email || !profile.password) {
 			error = 'Please set your PredictAdmit email and password on the main page.';
 			authenticated = false;
 			return;
 		}
-
 		if (emailInput.trim() === profile.email && passwordInput === profile.password) {
 			authenticated = true;
 			error = '';
@@ -73,290 +76,236 @@
 </script>
 
 <svelte:head>
-	<title>{SCHOOL_DATA.schoolName} Admissions Portal</title>
+	<title>Applicant Status Portal</title>
 </svelte:head>
 
-<div
-	class="bg-slate-200 text-slate-900 font-serif flex flex-col {authenticated ? 'min-h-screen' : ''}"
->
+<div class="min-h-screen bg-white text-[#2e2d29] font-sans flex flex-col">
+	<!-- Stanford red brand header (shared across all states) -->
+	<header style="background-color: {school.primaryColor};" class="w-full">
+		<div class="max-w-5xl mx-auto px-6 py-3 flex items-center">
+			<span class="text-white text-2xl font-serif tracking-tight">Stanford</span>
+			<span class="mx-3 text-white/50 text-2xl font-light">|</span>
+			<span class="text-white/90 text-lg font-light">Undergraduate Admission</span>
+		</div>
+	</header>
+
+	<!-- Secondary nav bar -->
+	<nav class="w-full bg-[#f4f4f2] border-b border-gray-300">
+		<div class="max-w-5xl mx-auto px-6 py-2 flex items-center gap-6 text-sm font-semibold">
+			<a href="/disclaimer" class="text-gray-800 hover:text-[#8C1515]">Plan</a>
+			<a href="/disclaimer" class="text-gray-800 hover:text-[#8C1515]">Afford</a>
+			<a href="/disclaimer" class="text-gray-800 hover:text-[#8C1515]">Engage</a>
+			<a href="/disclaimer" class="text-[#8C1515] underline">Apply</a>
+		</div>
+	</nav>
+
 	{#if !authenticated}
-		<div class="bg-white">
-			<header class="bg-white border-b border-slate-300">
-				<div class="max-w-5xl mx-auto px-6 pt-6 pb-4 flex items-center justify-between">
-					<div class="flex items-baseline gap-3">
-						<span class="text-3xl font-serif" style={`color: ${SCHOOL_DATA.primaryColor};`}>
-							{SCHOOL_DATA.logoPrimary}
-						</span>
-						<span class="text-[11px] tracking-[0.18em] uppercase text-slate-700">
-							{SCHOOL_DATA.logoSecondary}
-						</span>
-					</div>
-					<div class="text-[11px] text-slate-700">
-						{applicantName()}
-					</div>
+		<!-- ===================== LOGIN ===================== -->
+		<main class="flex-grow max-w-5xl w-full mx-auto px-6 py-10">
+			<h1 class="text-5xl font-bold text-[#2e2d29] mb-6">Login</h1>
+
+			<div
+				class="border-l-4 border-[#4b8a08] bg-[#eef7e3] px-4 py-2 mb-8 text-sm text-[#2e2d29] max-w-2xl"
+			>
+				To log in, please enter your email address and password.
+			</div>
+
+			<form class="space-y-3 max-w-xl" on:submit={handleLogin}>
+				{#if error}
+					<p
+						class="text-xs text-red-800 border border-red-300 bg-red-50 px-3 py-2 mb-2 max-w-md"
+						role="alert"
+					>
+						{error}
+					</p>
+				{/if}
+
+				<div class="flex items-center gap-4">
+					<label for="portal-email" class="text-[13px] text-[#2e2d29] w-28">Email Address</label>
+					<input
+						id="portal-email"
+						type="email"
+						class="border border-gray-400 bg-white px-2 py-1 text-[13px] w-64 shadow-inner"
+						bind:value={emailInput}
+						autocomplete="email"
+					/>
 				</div>
-				<div class="h-8" style={`background-color: ${SCHOOL_DATA.primaryColor};`}></div>
-			</header>
 
-			<section class="bg-white">
-				<div class="max-w-5xl mx-auto px-10 py-10">
-					<h1 class="text-3xl font-normal mb-6">Login</h1>
+				<div class="flex items-center gap-4">
+					<label for="portal-password" class="text-[13px] text-[#2e2d29] w-28">Password</label>
+					<input
+						id="portal-password"
+						type="password"
+						class="border border-gray-400 bg-white px-2 py-1 text-[13px] w-64 shadow-inner"
+						bind:value={passwordInput}
+						autocomplete="current-password"
+					/>
+					<a href="/disclaimer" class="text-[13px] text-[#8C1515] underline hover:no-underline">
+						Forgot Your Password?
+					</a>
+				</div>
 
-					<div class="border border-lime-700 bg-lime-100 px-4 py-3 mb-8 text-[12px] text-slate-900">
-						To log in, please enter your email address and password.
-					</div>
+				<div class="flex items-center gap-3 pt-2 pl-32">
+					<button
+						type="submit"
+						class="border border-gray-500 bg-gray-200 px-5 py-1 text-[13px] font-semibold text-gray-800 hover:bg-gray-300"
+					>
+						Login
+					</button>
+					<button
+						type="button"
+						class="border border-gray-400 bg-gray-100 px-3 py-1 text-[12px] text-gray-700 hover:bg-gray-200"
+						on:click={handleLoadSavedLogin}
+					>
+						Load saved PredictAdmit login
+					</button>
+				</div>
 
-					<form class="space-y-4 text-sm" on:submit={handleLogin}>
-						{#if error}
-							<p
-								class="text-xs text-red-800 border border-red-300 bg-red-50 px-3 py-2 mb-2"
-								role="alert"
-							>
-								{error}
-							</p>
-						{/if}
+				<p class="pt-6 text-[11px] leading-relaxed text-gray-500 max-w-lg">
+					For this simulation, use the same email address and password that you saved on the
+					PredictAdmit.com home page. No real application data is used, and all information is stored
+					only in your browser.
+				</p>
+			</form>
+		</main>
+	{:else if authenticated && !hasViewedUpdate}
+		<!-- ===================== PORTAL ===================== -->
+		<div class="flex-grow max-w-5xl w-full mx-auto px-6 py-6">
+			<div class="flex justify-end text-[11px] text-gray-600 mb-4">
+				<span>{applicantName()}</span>
+				<a href="/disclaimer" class="ml-2 text-gray-500 hover:underline">Logout</a>
+			</div>
 
-						<div class="flex items-center gap-4">
-							<label
-								for="portal-email"
-								class="w-32 text-[12px] font-semibold text-slate-900 text-right"
-							>
-								Email Address
-							</label>
-							<input
-								id="portal-email"
-								type="email"
-								class="border border-slate-500 bg-white px-2 py-1 text-[13px] w-80"
-								bind:value={emailInput}
-								autocomplete="email"
-							/>
-						</div>
+			<h1 class="text-6xl font-serif text-[#8C1515] mb-4">Stanford</h1>
 
-						<div class="flex items-center gap-4">
-							<label
-								for="portal-password"
-								class="w-32 text-[12px] font-semibold text-slate-900 text-right"
-							>
-								Password
-							</label>
-							<input
-								id="portal-password"
-								type="password"
-								class="border border-slate-500 bg-white px-2 py-1 text-[13px] w-80"
-								bind:value={passwordInput}
-								autocomplete="current-password"
-							/>
-							<a href="/disclaimer" class="text-[12px] text-blue-800 underline hover:no-underline">
-								Forgot Your Password?
-							</a>
-						</div>
+			<p class="text-base text-[#2e2d29] mb-8">Application Status for {applicantName()}</p>
 
-						<div class="flex items-center gap-4 pt-4">
-							<div class="w-32"></div>
-							<div class="flex flex-wrap items-center gap-3">
-								<button
-									type="submit"
-									class="border border-slate-500 bg-slate-300 px-4 py-1 text-[12px] font-semibold hover:bg-slate-400 active:bg-slate-500"
-								>
-									Login
-								</button>
-								<button
-									type="button"
-									class="border border-slate-400 bg-slate-100 px-3 py-1 text-[11px] hover:bg-slate-200 active:bg-slate-300"
-									on:click={handleLoadSavedLogin}
-								>
-									Load saved PredictAdmit login
-								</button>
-							</div>
-						</div>
+			<!-- Status Update -->
+			<section class="mb-8">
+				<h2 class="text-lg font-semibold text-[#8C1515] mb-1">Status Update</h2>
+				<p class="text-sm text-[#2e2d29] mb-3">
+					An update to your application was last posted {school.statusLastPosted}.
+				</p>
+				<button
+					on:click={handleViewUpdate}
+					class="text-sm font-bold text-[#8C1515] underline hover:no-underline"
+				>
+					View Update &gt;&gt;
+				</button>
+			</section>
 
-						<p class="pt-4 text-[10px] leading-relaxed text-slate-600 max-w-xl">
-							For this simulation, use the same email address and password that you saved on the
-							PredictAdmit.com home page. No real application data is used, and all information is
-							stored only in your browser.
-						</p>
-					</form>
+			<!-- Your Account -->
+			<section class="mb-8">
+				<h2 class="text-lg font-semibold text-[#8C1515] mb-2">Your Account</h2>
+				<p class="text-sm text-[#2e2d29] leading-relaxed">
+					{applicantName()}<br />
+					{profile.email || 'applicant@example.com'}<br />
+					Date of Birth: February 19, 2008
+				</p>
+				<div class="text-sm mt-3 space-y-1">
+					<a href="/disclaimer" class="block text-[#8C1515] underline hover:no-underline"
+						>Change Email</a
+					>
+					<a href="/disclaimer" class="block text-[#8C1515] underline hover:no-underline"
+						>Change Account Password</a
+					>
 				</div>
 			</section>
 		</div>
+	{:else if shownDecision === 'admit'}
+		<StanfordAccepted
+			applicantName={applicantName()}
+			schoolName={school.schoolName}
+			primaryColor={school.primaryColor}
+			footerDomain={school.footerDomain}
+		/>
+	{:else}
+		<StanfordDenied
+			applicantName={applicantName()}
+			schoolName={school.schoolName}
+			primaryColor={school.primaryColor}
+			footerDomain={school.footerDomain}
+		/>
+	{/if}
 
-		<footer>
-			<div class="h-10 flex items-center" style={`background-color: ${SCHOOL_DATA.primaryColor};`}>
-				<div
-					class="max-w-5xl mx-auto px-6 w-full flex items-center justify-between text-[11px] text-white"
-				>
-					<span>&copy; {SCHOOL_DATA.footerDomain} 2019</span>
-					<span class="opacity-80">
-						PredictAdmit.com simulation · Not affiliated with {SCHOOL_DATA.schoolName}
-					</span>
+	{#if !authenticated || (authenticated && !hasViewedUpdate)}
+		<!-- Shared Stanford footer -->
+		<footer class="mt-auto">
+			<div class="bg-[#f2f1eb] border-t border-gray-300 py-8">
+				<div class="max-w-5xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-6 text-[13px]">
+					<div>
+						<h3 class="text-[#8C1515] font-bold uppercase text-xs tracking-wide mb-3">
+							Engage with Us
+						</h3>
+						<div class="flex gap-2">
+							<span
+								class="w-6 h-6 rounded-full bg-[#8C1515] inline-flex items-center justify-center text-white text-[10px]"
+								>IG</span
+							>
+							<span
+								class="w-6 h-6 rounded-full bg-[#3b7fb8] inline-flex items-center justify-center text-white text-[10px]"
+								>TW</span
+							>
+							<span
+								class="w-6 h-6 rounded-full bg-[#c4302b] inline-flex items-center justify-center text-white text-[10px]"
+								>YT</span
+							>
+						</div>
+					</div>
+					<div>
+						<h3 class="text-[#8C1515] font-bold uppercase text-xs tracking-wide mb-3">Programs</h3>
+						<a href="/disclaimer" class="text-gray-700 hover:underline"
+							>Admission Forums, Student Programs, and Special Events</a
+						>
+					</div>
+					<div>
+						<h3 class="text-[#8C1515] font-bold uppercase text-xs tracking-wide mb-3">
+							Publications
+						</h3>
+						<a href="/disclaimer" class="block text-gray-700 hover:underline">Stanford Preview</a>
+						<a href="/disclaimer" class="block text-gray-700 hover:underline">Stanford Viewbook</a>
+					</div>
+					<div class="space-y-2">
+						<a href="/disclaimer" class="block bg-[#d9d7cd] text-gray-700 px-3 py-2"
+							>Join the Mailing List</a
+						>
+						<a href="/disclaimer" class="block bg-[#d9d7cd] text-gray-700 px-3 py-2">Contact Us</a>
+						<a href="/disclaimer" class="block bg-[#d9d7cd] text-gray-700 px-3 py-2"
+							>University Policies</a
+						>
+					</div>
+				</div>
+				<p class="max-w-5xl mx-auto px-6 text-center text-[11px] text-gray-500 mt-6">
+					Stanford complies with the Jeanne Clery Act and publishes crime statistics for the most
+					recent three-year period.
+					<a href="/disclaimer" class="underline">View the full report</a>.
+				</p>
+			</div>
+
+			<div style="background-color: {school.primaryColor};" class="text-white py-5">
+				<div class="max-w-5xl mx-auto px-6 flex flex-col md:flex-row md:items-center gap-3">
+					<div class="font-serif text-lg leading-tight">
+						Stanford<br /><span class="text-xs font-sans tracking-widest uppercase">University</span>
+					</div>
+					<div class="flex-grow text-[12px]">
+						<div class="flex flex-wrap gap-x-4 gap-y-1 font-semibold">
+							<a href="/disclaimer" class="hover:underline">Stanford Home</a>
+							<a href="/disclaimer" class="hover:underline">Maps &amp; Directions</a>
+							<a href="/disclaimer" class="hover:underline">Search Stanford</a>
+							<a href="/disclaimer" class="hover:underline">Emergency Info</a>
+						</div>
+						<div class="flex flex-wrap gap-x-3 gap-y-1 mt-1 text-white/90">
+							<a href="/disclaimer" class="hover:underline">Terms of Use</a>
+							<a href="/disclaimer" class="hover:underline">Privacy</a>
+							<a href="/disclaimer" class="hover:underline">Copyright</a>
+							<a href="/disclaimer" class="hover:underline">Trademarks</a>
+							<a href="/disclaimer" class="hover:underline">Non-Discrimination</a>
+							<a href="/disclaimer" class="hover:underline">Accessibility</a>
+						</div>
+						<p class="mt-1 text-white/90">&copy; Stanford University. Stanford, California 94305.</p>
+					</div>
 				</div>
 			</div>
 		</footer>
-	{:else if !hasViewedUpdate}
-		<div class="flex-grow flex flex-col min-h-screen bg-white">
-			<header class="bg-white">
-				<div class="bg-red-900 text-white font-sans">
-					<div class="max-w-7xl mx-auto px-6 py-2 flex items-center justify-between">
-						<div class="flex items-center space-x-1">
-							<span class="font-bold text-lg font-serif">Stanford</span>
-							<span class="text-xs uppercase tracking-wider opacity-90"
-								>Undergraduate Admission</span
-							>
-						</div>
-						<nav class="flex space-x-4 text-xs font-semibold uppercase">
-							<a href="#" class="hover:underline">Discover</a>
-							<a href="#" class="hover:underline">Apply</a>
-							<a href="#" class="hover:underline">Afford</a>
-							<a href="#" class="hover:underline">Visit</a>
-						</nav>
-					</div>
-				</div>
-
-				<div
-					class="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center text-[10px] font-semibold uppercase tracking-wider text-red-900"
-				>
-					<nav class="flex space-x-4">
-						<a href="#" class="hover:underline">ADMISSION VOLUNTEERS</a>
-						<a href="#" class="hover:underline">COUNSELORS</a>
-						<a href="#" class="hover:underline">PARENTS</a>
-					</nav>
-					<span class="text-slate-700">
-						{applicantName()} <a href="/" class="hover:underline">Logout</a>
-					</span>
-				</div>
-			</header>
-
-			<main class="max-w-4xl mx-auto px-6 pt-10 pb-16 flex-1">
-				<h1 class="text-6xl font-serif text-red-900 font-normal mb-2">Stanford</h1>
-				<p class="text-sm italic text-red-900 mb-8">Thank you for applying to Stanford!</p>
-
-				<p class="text-sm font-semibold text-slate-700 mb-6">
-					Application Status for {applicantName()}
-				</p>
-
-				<div class="p-3 mb-8 bg-yellow-100 border border-yellow-300 text-sm">
-					<p class="font-bold text-sm text-slate-900 mb-1">Status Update</p>
-					<p class="text-sm text-slate-800">
-						{SCHOOL_DATA.bannerText}
-					</p>
-					<button
-						on:click={handleViewUpdate}
-						class="mt-1 text-sm text-red-700 hover:underline font-bold"
-					>
-						{SCHOOL_DATA.statusLinkLabel}
-					</button>
-				</div>
-				<section class="text-sm text-slate-800 leading-relaxed">
-					<h2 class="font-bold mb-2">Your Account</h2>
-					<div class="grid grid-cols-2 gap-x-8">
-						<div>
-							<p>{applicantName()}</p>
-							<p>{profile.email}</p>
-							<p>Date of Birth: July 1, 2002</p>
-							<p>
-								<a href="#" class="text-blue-800 underline hover:no-underline text-xs"
-									>Change Email</a
-								>
-							</p>
-							<p>
-								<a href="#" class="text-blue-800 underline hover:no-underline text-xs"
-									>Change Account Password</a
-								>
-							</p>
-						</div>
-						<div>
-							<p class="font-bold mb-1">Permanent Address</p>
-							<p>123 Collegeway</p>
-							<p>Pasadena CA, 91001</p>
-							<p>United States</p>
-							<p class="font-bold mt-4 mb-1">Mailing Address</p>
-						</div>
-					</div>
-					<p class="mt-4">
-						<a href="#" class="text-blue-800 underline hover:no-underline text-xs">Edit Addresses</a
-						>
-					</p>
-				</section>
-			</main>
-			<div class="border-t border-slate-300 bg-gray-50 text-xs text-slate-800">
-				<div class="max-w-7xl mx-auto px-6 py-6 flex justify-between">
-					<div class="flex space-x-12">
-						<div>
-							<h3 class="font-bold mb-2 uppercase">Engage With Us</h3>
-							<div class="flex space-x-2">
-								<span
-									class="w-5 h-5 bg-blue-500 rounded-full text-white flex items-center justify-center text-[10px]"
-									>F</span
-								>
-								<span
-									class="w-5 h-5 bg-blue-700 rounded-full text-white flex items-center justify-center text-[10px]"
-									>T</span
-								>
-								<span
-									class="w-5 h-5 bg-red-600 rounded-full text-white flex items-center justify-center text-[10px]"
-									>Y</span
-								>
-							</div>
-						</div>
-						<div>
-							<h3 class="font-bold mb-2 uppercase">Programs</h3>
-							<a href="#" class="block hover:underline">Stanford in Your Area</a>
-							<a href="#" class="block hover:underline">Discover Stanford</a>
-						</div>
-						<div>
-							<h3 class="font-bold mb-2 uppercase">Publications</h3>
-							<a href="#" class="block hover:underline">Stanford Preview</a>
-							<a href="#" class="block hover:underline">Stanford Viewbook</a>
-						</div>
-					</div>
-
-					<div class="space-y-2">
-						<button class="bg-gray-300 hover:bg-gray-400 text-slate-800 py-1 px-4 w-40 text-left"
-							>Join the Mailing List</button
-						>
-						<button class="bg-gray-300 hover:bg-gray-400 text-slate-800 py-1 px-4 w-40 text-left"
-							>FAQs</button
-						>
-						<button class="bg-gray-300 hover:bg-gray-400 text-slate-800 py-1 px-4 w-40 text-left"
-							>Contact Us</button
-						>
-					</div>
-				</div>
-
-				<div
-					class="max-w-7xl mx-auto px-6 pt-4 pb-6 text-center text-[10px] text-slate-600 border-t border-slate-300"
-				>
-					Stanford complies with the Jeanne Clery Act and publishes crime statistics for the most
-					recent three-year period. View the full report.
-				</div>
-			</div>
-			<footer class="bg-red-900 text-white text-[11px] py-4 mt-auto">
-				<div class="max-w-7xl mx-auto px-6 flex items-center space-x-6">
-					<span class="font-bold text-xl font-serif"
-						>Stanford <span class="block text-[8px] tracking-widest uppercase">University</span
-						></span
-					>
-					<nav class="flex space-x-3">
-						<a href="#" class="hover:underline">Stanford Home</a>
-						<a href="#" class="hover:underline">Maps & Directions</a>
-						<a href="#" class="hover:underline">Search Stanford</a>
-						<a href="#" class="hover:underline">Emergency Info</a>
-						<a href="#" class="hover:underline">Terms of Use</a>
-						<a href="#" class="hover:underline">Privacy</a>
-						<a href="#" class="hover:underline">Copyright</a>
-						<a href="#" class="hover:underline">Trademarks</a>
-						<a href="#" class="hover:underline">Non-Discrimination</a>
-						<a href="#" class="hover:underline">Accessibility</a>
-					</nav>
-					<span class="ml-auto opacity-80">
-						&copy; Stanford University, Stanford, California 94305.
-					</span>
-				</div>
-			</footer>
-		</div>
-	{:else if $decisionsBySlug['stanford'] === 'admit'}
-		<StanfordAccepted applicantName={applicantName()} />
-	{:else}
-		<StanfordDenied applicantName={applicantName()} />
 	{/if}
 </div>

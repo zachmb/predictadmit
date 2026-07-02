@@ -1,8 +1,10 @@
 <script lang="ts">
+	// The parent component passes these props
 	export let applicantName: string;
 	export let schoolName: string = 'Johns Hopkins University';
 	export let primaryColor: string = '#002D72'; // JHU Blue
 	export let footerDomain: string = 'jhu.edu';
+
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { userProfile } from '$lib/stores/user';
@@ -10,144 +12,146 @@
 	$: session = $page.data.session;
 
 	let googleSignedIn = false;
-	let googleEmail = '';
-	let googleName = '';
 
-	$: {
-		googleSignedIn = !!session?.user;
-		googleEmail = (session?.user?.email as string) ?? '';
-		googleName = (session?.user?.name as string) ?? '';
-	}
+	$: googleSignedIn = !!session?.user;
+
 	import { decisionsBySlug } from '$lib/stores/results';
 	const viewAnalysis = () => {
 		goto('/results/jhu');
 	};
-
-	const currentDate = new Date().toLocaleDateString('en-US', {
-		year: 'numeric',
-		month: 'long',
-		day: 'numeric'
-	});
 </script>
 
 <svelte:head>
-	<title>Johns Hopkins University - Admission Decision</title>
+	<title>{schoolName} - Admission Decision</title>
 </svelte:head>
 
-<main class="min-h-screen bg-white text-gray-800 font-serif p-6">
-	<div class="max-w-3xl mx-auto mt-10">
+<main class="min-h-screen bg-white text-gray-800 font-serif">
+	<!-- Brand header bar -->
+	<header class="border-b border-gray-200 bg-white">
+		<div class="max-w-3xl mx-auto px-6 py-4 flex items-center font-sans">
+			<div class="flex items-center gap-3 pr-6">
+				<div
+					class="w-9 h-11 flex items-center justify-center text-white text-[10px] font-serif font-bold"
+					style="background-color: {primaryColor}; clip-path: polygon(0 0, 100% 0, 100% 70%, 50% 100%, 0 70%);"
+				>
+					JHU
+				</div>
+				<div class="leading-tight">
+					<div class="font-serif text-xl font-bold" style="color: {primaryColor};">
+						Johns Hopkins
+					</div>
+					<div class="text-[10px] tracking-[0.35em] text-gray-600 uppercase">University</div>
+				</div>
+			</div>
+			<div class="border-l border-gray-300 pl-6 hidden sm:block">
+				<div class="text-[11px] font-bold tracking-wider text-[#0074d9] uppercase leading-tight">
+					Undergraduate<br />Admissions
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<div class="max-w-3xl mx-auto px-6 pt-10 pb-16">
 		{#if googleSignedIn && $userProfile.usingAI}
-			<div class="mb-6 flex justify-end">
+			<div class="mb-6 flex justify-end font-sans">
 				<button
 					on:click={viewAnalysis}
-					class="group flex items-center px-4 py-2 bg-[#003262] text-white rounded-lg text-sm font-sans font-bold hover:bg-slate-800 transition-all shadow-md active:scale-95"
+					class="group flex items-center px-4 py-2 text-white rounded-lg text-sm font-bold transition-all shadow-md active:scale-95"
+					style="background-color: {primaryColor};"
 				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						class="w-4 h-4 transition-transform group-hover:-translate-x-1"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
-					>
-					</svg>
 					Deep Dive: Why did I get {$decisionsBySlug['jhu']}?
 				</button>
 			</div>
 		{/if}
-		<div class="border-b-2 pb-4 mb-8" style="border-color: {primaryColor};">
-			<div class="flex items-center">
-				<div
-					class="w-16 h-16 text-white flex items-center justify-center font-bold text-2xl mr-4"
-					style="background-color: {primaryColor};"
-				>
-					JHU
-				</div>
+
+		<div class="text-sm text-gray-800 mb-8 font-sans font-bold">March 18, 2026</div>
+
+		<div class="mb-4">
+			<div class="text-base">Dear {applicantName || 'Applicant'},</div>
+		</div>
+
+		<div class="space-y-4 mb-8 leading-relaxed">
+			<p>
+				Thank you for your interest in Johns Hopkins University. After a thorough review of your
+				application, we regret to inform you that we are not able to offer you admission.
+			</p>
+
+			<p>
+				Every year we receive a large number of applications from talented students, making admission
+				to Hopkins a highly selective process. For answers to some common questions, please see the
+				<a href="/disclaimer" class="hover:underline" style="color: {primaryColor};">FAQ</a> below.
+			</p>
+
+			<p>We wish you the best with your future educational and personal goals.</p>
+		</div>
+
+		<div class="mb-10">
+			<div class="mb-1">Sincerely,</div>
+			<div>Office of Undergraduate Admissions</div>
+			<div>Johns Hopkins University</div>
+		</div>
+
+		<hr class="border-gray-300 mb-8" />
+
+		<!-- FAQ -->
+		<div class="mb-10">
+			<h2 class="text-lg font-bold mb-5 font-sans" style="color: {primaryColor};">FAQ</h2>
+
+			<div class="space-y-6 text-[15px] leading-relaxed">
 				<div>
-					<h1 class="text-2xl font-bold" style="color: {primaryColor};">
-						JOHNS HOPKINS UNIVERSITY
-					</h1>
-					<div class="text-sm text-gray-600">
-						Office of Undergraduate Admissions<br />
-						3400 N. Charles St., Baltimore, Maryland 21218<br />
-						Telephone (410) 516-8171 • Fax (410) 516-6585
-					</div>
+					<div class="font-bold mb-1">Can I appeal my decision?</div>
+					<p>
+						Johns Hopkins University does not accept appeals of admissions decisions, nor will we
+						re-evaluate applications with new information. The decisions of the admissions committee
+						are final and are based on the information provided by the application deadline.
+					</p>
+				</div>
+
+				<div>
+					<div class="font-bold mb-1">Can I find out why I was denied?</div>
+					<p>
+						We are not able to discuss the specific factors that go into the final decisions nor
+						provide students with a detailed analysis of their specific application evaluation.
+					</p>
+				</div>
+
+				<div>
+					<div class="font-bold mb-1">Can I apply again?</div>
+					<p>Yes, you may apply again during next year's admissions cycle.</p>
 				</div>
 			</div>
 		</div>
 
-		<div class="mb-8">
-			<div class="text-right text-sm text-gray-600 mb-2">
-				{currentDate}
-			</div>
-			<div class="space-y-1">
-				<div>{applicantName || 'Applicant'}</div>
-				<div>100 Blue Jay Way</div>
-				<div>Baltimore, MD 21218</div>
-			</div>
-		</div>
+		<hr class="border-gray-300 mb-8" />
 
-		<div class="mb-6">
-			<div class="text-lg font-bold" style="color: {primaryColor};">
-				Decision of the Admissions Committee
-			</div>
-		</div>
-
-		<div class="space-y-4 mb-8">
-			<p>
-				Thank you for submitting your application for admission to Johns Hopkins University. The
-				Admissions Committee has completed its thorough and careful review of your materials.
-			</p>
-
-			<p>
-				This year, we received a substantial number of applications from exceptional candidates for
-				a limited number of spaces in the incoming class. Due to the highly selective nature of our
-				admissions process, we regret to inform you that we are unable to offer you admission to
-				Johns Hopkins University at this time.
-			</p>
-
-			<p>
-				We understand this news is disappointing, and we want to assure you that this decision
-				reflects the intensity of the competition this year, not a lack of confidence in your
-				considerable accomplishments and future promise.
-			</p>
-
-			<p>
-				We wish you the very best as you finalize your college plans. We are confident that you will
-				achieve great success in your academic career wherever you choose to enroll.
-			</p>
-		</div>
-
-		<div class="mt-12">
-			<div
-				class="h-12 mb-2 w-40 bg-gray-100 flex items-center justify-center text-xs text-slate-500"
+		<div class="text-center mb-4 font-sans">
+			<a
+				href="/disclaimer"
+				class="text-sm font-bold tracking-wider uppercase hover:underline"
+				style="color: {primaryColor};">Log Out</a
 			>
-				[Dean's Signature Placeholder]
-			</div>
-			<div class="font-bold">Dean Robert Johnson</div>
-			<div class="text-sm text-gray-600">
-				Dean of Undergraduate Admissions<br />
-				Johns Hopkins University
-			</div>
 		</div>
 
-		<div class="mt-16 pt-8 border-t border-gray-200 text-xs text-gray-500">
+		<div class="mt-12 pt-8 border-t border-gray-200 text-xs text-gray-500 font-sans">
 			<div class="grid grid-cols-2 gap-8">
 				<div>
-					<strong>Johns Hopkins Mission:</strong><br />
-					The mission of The Johns Hopkins University is to educate its students and cultivate their capacity
-					for life-long learning, and to advance the frontiers of knowledge and discovery through research.
+					<strong>Mail Only Correspondence:</strong><br />
+					Office of Undergraduate Admissions<br />
+					Johns Hopkins University<br />
+					3400 N. Charles St., Mason Hall<br />
+					Baltimore, MD 21218-2683 USA
 				</div>
 				<div>
 					<strong>Contact Information:</strong><br />
-					Email: gotojhu@{footerDomain}<br />
-					Phone: (410) 516-8171<br />
+					Email:
+					<a href="/disclaimer" class="hover:underline">gotojhu@jhu.edu</a><br />
 					Website:
-					<a href="http://apply.jhu.edu" class="text-blue-600 hover:underline">apply.jhu.edu</a>
+					<a href={`https://apply.${footerDomain}`} class="hover:underline">apply.{footerDomain}</a>
 				</div>
 			</div>
 		</div>
 
-		<div class="mt-8 p-4 bg-amber-50 border border-amber-200 rounded text-sm text-amber-800">
+		<div class="mt-8 p-4 bg-amber-50 border border-amber-200 rounded text-sm text-amber-800 font-sans">
 			<strong>Note:</strong> This is a simulated admission letter for entertainment purposes only. This
 			is not a real admission decision from Johns Hopkins University.
 		</div>

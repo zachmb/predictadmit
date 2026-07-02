@@ -5,40 +5,43 @@
 	import { decisionsBySlug } from '$lib/stores/results';
 	import { portalDecisionViewed } from '$lib/stores/ui';
 
-	// Shared Components and Configuration
-	import { schoolConfigs } from '$lib/config/schools';
-
-	// School-Specific Components (Decision Letters are the only allowed imports outside of config/template)
+	// School-Specific Components (Decision Letters)
 	import PrincetonAccepted from '$lib/components/princeton/PrincetonAccepted.svelte';
 	import PrincetonDenied from '$lib/components/princeton/PrincetonDenied.svelte';
 
-	// NOTE: AdmissionsPortalTemplate is not used in the authenticated block,
-	// but typically should be imported if the authenticated view is meant to be consistent.
-	// I will not add it back since the user's authenticated block is custom, but mention it.
-	// import AdmissionsPortalTemplate from '$lib/components/portal/AdmissionsPortalTemplate.svelte';
-
 	// --- Component Configuration ---
-	const SCHOOL_DATA = schoolConfigs.princeton;
-	const PRINCETON_ORANGE = '#F58025'; // Kept as a helper variable
+	const SLUG = 'princeton';
+	const school = {
+		schoolName: 'Princeton University',
+		primaryColor: '#FF8F00', // Princeton orange (accent black #000000)
+		footerDomain: 'princeton.edu',
+		statusLastPosted: 'March 12, 2026',
+		round: 'Regular Decision',
+		referenceNumber: '365599560'
+	};
 
-	// --- State Variables (Authentication Logic) ---
+	// --- State Variables ---
 	let profile: UserProfile = { ...defaultProfile };
 	let emailInput = '';
 	let passwordInput = '';
 	let error = '';
 	let authenticated = false;
 	let hasViewedUpdate = false;
+	let activeTab = 'Admissions Status';
 
 	// Subscribe to the global user profile store
 	$: profile = $userProfile;
 
+	// Dynamic Data Helpers
 	const applicantName = () => profile.name || 'Applicant';
 
-	// HANDLERS from the Generic Dynamic Page
+	// Default decision when the prediction store has no entry for this slug:
+	const DEFAULT_DECISION = 'deny';
+	$: shownDecision = $decisionsBySlug[SLUG] ?? DEFAULT_DECISION;
 
+	// --- Handlers ---
 	const handleLoadSavedLogin = () => {
 		if (!profile.email || !profile.password) {
-			// Use default John Doe credentials if user hasn't set up their own
 			userProfile.update((u) => ({
 				...u,
 				name: u.name || 'John Doe',
@@ -46,27 +49,17 @@
 				password: u.password || 'password123'
 			}));
 		}
-		// Directly authenticate
 		authenticated = true;
 		error = '';
 	};
 
 	const handleLogin = (event: SubmitEvent) => {
 		event.preventDefault();
-
-		if (!SCHOOL_DATA) {
-			// Use SCHOOL_DATA instead of 'school'
-			error = 'Unknown portal.';
-			authenticated = false;
-			return;
-		}
-
 		if (!profile.email || !profile.password) {
 			error = 'Please set your PredictAdmit email and password on the main page.';
 			authenticated = false;
 			return;
 		}
-
 		if (emailInput.trim() === profile.email && passwordInput === profile.password) {
 			authenticated = true;
 			error = '';
@@ -83,217 +76,284 @@
 </script>
 
 <svelte:head>
-	<title>{SCHOOL_DATA.schoolName} Admissions Portal</title>
+	<title>{school.schoolName} · Applicant Portal</title>
 </svelte:head>
 
-<main class="min-h-screen bg-slate-200 text-slate-900 font-serif">
+<div class="min-h-screen font-sans bg-white text-gray-900">
 	{#if !authenticated}
-		<div class="min-h-screen bg-slate-200 text-slate-900 font-serif">
-			<header class="bg-white border-b border-slate-300">
-				<div class="max-w-5xl mx-auto px-6 pt-6 pb-4 flex items-center justify-between">
-					<div class="flex items-baseline gap-3">
-						<span class="text-3xl font-serif" style={`color: ${SCHOOL_DATA.primaryColor};`}>
-							{SCHOOL_DATA.logoPrimary}
-						</span>
-						<span class="text-[11px] tracking-[0.18em] uppercase text-slate-700">
-							{SCHOOL_DATA.logoSecondary}
-						</span>
-					</div>
-					<div class="text-[11px] text-slate-700">
-						{applicantName()}
-					</div>
-				</div>
-				<div class="h-8" style={`background-color: ${SCHOOL_DATA.primaryColor};`}></div>
-			</header>
-
-			<section class="bg-white">
-				<div class="max-w-5xl mx-auto px-10 py-10">
-					<h1 class="text-3xl font-normal mb-6">Login</h1>
-
-					<div class="border border-lime-700 bg-lime-100 px-4 py-3 mb-8 text-[12px] text-slate-900">
-						To log in, please enter your email address and password.
-					</div>
-
-					<form class="space-y-4 text-sm" on:submit={handleLogin}>
-						{#if error}
-							<p
-								class="text-xs text-red-800 border border-red-300 bg-red-50 px-3 py-2 mb-2"
-								role="alert"
-							>
-								{error}
-							</p>
-						{/if}
-
-						<div class="flex items-center gap-4">
-							<label
-								for="portal-email"
-								class="w-32 text-[12px] font-semibold text-slate-900 text-right"
-							>
-								Email Address
-							</label>
-							<input
-								id="portal-email"
-								type="email"
-								class="border border-slate-500 bg-white px-2 py-1 text-[13px] w-80"
-								bind:value={emailInput}
-								autocomplete="email"
-							/>
-						</div>
-
-						<div class="flex items-center gap-4">
-							<label
-								for="portal-password"
-								class="w-32 text-[12px] font-semibold text-slate-900 text-right"
-							>
-								Password
-							</label>
-							<input
-								id="portal-password"
-								type="password"
-								class="border border-slate-500 bg-white px-2 py-1 text-[13px] w-80"
-								bind:value={passwordInput}
-								autocomplete="current-password"
-							/>
-							<a href="/disclaimer" class="text-[12px] text-blue-800 underline hover:no-underline">
-								Forgot Your Password?
-							</a>
-						</div>
-
-						<div class="flex items-center gap-4 pt-4">
-							<div class="w-32"></div>
-							<div class="flex flex-wrap items-center gap-3">
-								<button
-									type="submit"
-									class="border border-slate-500 bg-slate-300 px-4 py-1 text-[12px] font-semibold hover:bg-slate-400 active:bg-slate-500"
-								>
-									Login
-								</button>
-								<button
-									type="button"
-									class="border border-slate-400 bg-slate-100 px-3 py-1 text-[11px] hover:bg-slate-200 active:bg-slate-300"
-									on:click={handleLoadSavedLogin}
-								>
-									Load saved PredictAdmit login
-								</button>
-							</div>
-						</div>
-
-						<p class="pt-4 text-[10px] leading-relaxed text-slate-600 max-w-xl">
-							For this simulation, use the same email address and password that you saved on the
-							PredictAdmit.com home page. No real application data is used, and all information is
-							stored only in your browser.
-						</p>
-					</form>
-				</div>
-			</section>
-
-			<footer class="mt-8">
-				<div
-					class="h-10 flex items-center"
-					style={`background-color: ${SCHOOL_DATA.primaryColor};`}
-				>
-					<div
-						class="max-w-5xl mx-auto px-6 w-full flex items-center justify-between text-[11px] text-white"
+		<!-- ============ LOGIN PAGE ============ -->
+		<header class="bg-black text-white">
+			<div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+				<div class="flex items-center gap-3">
+					<span
+						class="w-9 h-9 flex items-center justify-center font-serif font-bold text-lg"
+						style="background-color: {school.primaryColor}; color: #000;"
 					>
-						<span>&copy; {SCHOOL_DATA.footerDomain} 2019</span>
-						<span class="opacity-80">
-							PredictAdmit.com simulation · Not affiliated with {SCHOOL_DATA.schoolName}
-						</span>
+						P
+					</span>
+					<div class="leading-tight">
+						<div class="font-serif text-lg tracking-wide">Princeton University</div>
+						<div class="text-[10px] uppercase tracking-[0.2em] text-gray-300">
+							Office of Undergraduate Admission
+						</div>
 					</div>
 				</div>
-			</footer>
-		</div>
-	{:else if !hasViewedUpdate}
-		<div class="border-b border-gray-300 shadow-sm bg-white">
-			<div class="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center text-sm">
-				<div class="flex items-center space-x-2 text-gray-800 tracking-wide">
-					<span style="color: {PRINCETON_ORANGE}; font-size: 1.5rem; font-weight: 900;"
-						>&#9660;</span
-					>
-					<span class="text-xl font-serif font-bold">PRINCETON UNIVERSITY</span>
-					<span class="text-xs font-light tracking-widest text-gray-700"
-						>Undergraduate Admission</span
-					>
-				</div>
-				<nav class="flex space-x-4 text-gray-600 font-semibold text-xs uppercase tracking-wide">
-					<a href="#">How to Apply</a>
-					<a href="#">Cost & Aid</a>
-					<a href="#">Academics</a>
-					<a href="#">Campus Life</a>
-					<a href="#">Visit Us</a>
-					<a href="#">Blog</a>
-					<a href="#">Contact Us</a>
-					<a href="#">LN ESPAÑOL</a>
-				</nav>
+				<span class="font-serif text-sm text-gray-300">1746</span>
 			</div>
-		</div>
+		</header>
 
-		<div class="max-w-7xl mx-auto px-6 pt-3 pb-6 flex justify-end">
-			<div class="text-xs text-gray-700">
-				{applicantName()} | 
-				<a href="/" class="text-blue-600 hover:underline ml-1">Logout</a>
-			</div>
-		</div>
+		<div style="background-color: {school.primaryColor};" class="h-2"></div>
 
-		<div class="max-w-4xl mx-auto px-6 pb-20">
-			<h1 class="text-3xl font-light text-gray-800 mb-6 border-b border-gray-200 pb-3">
-				Application Status for {applicantName()}
-			</h1>
+		<main class="bg-white min-h-[520px] py-20">
+			<div class="max-w-md mx-auto px-6">
+				<h1 class="text-3xl font-serif font-normal mb-2 text-gray-900">Applicant Portal</h1>
+				<p class="text-sm text-gray-600 mb-8">
+					Sign in to view the status of your application to Princeton University.
+				</p>
 
-			<div
-				class="p-3 mb-6 text-sm bg-yellow-100 border border-yellow-300 font-medium text-gray-800"
-			>
-				<p class="font-bold mb-1">Status Update</p>
-				{SCHOOL_DATA.bannerText}
-				<button on:click={handleViewUpdate} class="ml-2 text-orange-600 hover:underline font-bold">
-					{SCHOOL_DATA.statusLinkLabel}
-				</button>
-			</div>
-
-			<div class="text-xs text-center my-10">
-				Account Tools: 
-				<a href="#" class="text-blue-600 hover:underline">Change Password</a> | 
-				<a href="#" class="text-blue-600 hover:underline">Logout</a>
-			</div>
-		</div>
-
-		<footer class="bg-gray-800 text-white mt-auto py-10">
-			<div class="max-w-7xl mx-auto px-6 grid grid-cols-4 gap-8 text-xs">
-				<div>
-					<div class="flex items-center space-x-2 mb-4">
-						<span class="text-3xl font-bold font-serif" style="color: {PRINCETON_ORANGE};"
-							>&#9660;</span
+				<form class="space-y-5" on:submit={handleLogin}>
+					{#if error}
+						<p
+							class="text-xs text-red-800 border border-red-300 bg-red-50 px-3 py-2"
+							role="alert"
 						>
-						<span class="text-xl font-serif font-bold">PRINCETON UNIVERSITY</span>
+							{error}
+						</p>
+					{/if}
+
+					<div>
+						<label for="portal-email" class="block text-[13px] font-semibold text-gray-800 mb-1">
+							Email Address
+						</label>
+						<input
+							id="portal-email"
+							type="email"
+							class="border border-gray-400 bg-white px-3 py-2 text-sm w-full focus:outline-none focus:border-black focus:ring-1 focus:ring-black"
+							bind:value={emailInput}
+							autocomplete="email"
+						/>
 					</div>
-					<p class="text-gray-400 font-light">Undergraduate Admission</p>
-				</div>
-				<div class="space-y-2 text-gray-300">
-					<p class="font-bold">Admissions Publications</p>
-					<a href="#" class="block hover:underline">Contact Us</a>
-					<a href="#" class="block hover:underline">FAQs</a>
-					<a href="#" class="block hover:underline">Request Information</a>
-					<a href="#" class="block hover:underline">Privacy Notice</a>
-				</div>
-				<div class="space-y-2">
-					<p class="font-bold text-gray-300">#PrincetonU</p>
-					<div class="flex space-x-2">
-						<span class="w-4 h-4 bg-white text-gray-800 flex items-center justify-center">F</span>
-						<span class="w-4 h-4 bg-white text-gray-800 flex items-center justify-center">T</span>
-						<span class="w-4 h-4 bg-white text-gray-800 flex items-center justify-center">I</span>
-						<span class="w-4 h-4 bg-white text-gray-800 flex items-center justify-center">Y</span>
+
+					<div>
+						<label for="portal-password" class="block text-[13px] font-semibold text-gray-800 mb-1">
+							Password
+						</label>
+						<input
+							id="portal-password"
+							type="password"
+							class="border border-gray-400 bg-white px-3 py-2 text-sm w-full focus:outline-none focus:border-black focus:ring-1 focus:ring-black"
+							bind:value={passwordInput}
+							autocomplete="current-password"
+						/>
+						<a href="/disclaimer" class="inline-block mt-2 text-[12px] text-blue-800 hover:underline">
+							Forgot your password?
+						</a>
 					</div>
+
+					<div class="flex flex-wrap items-center gap-3 pt-2">
+						<button
+							type="submit"
+							class="px-6 py-2 text-sm font-semibold text-black border border-black hover:opacity-90"
+							style="background-color: {school.primaryColor};"
+						>
+							Login
+						</button>
+						<button
+							type="button"
+							class="px-4 py-2 text-[12px] text-gray-700 border border-gray-400 bg-gray-100 hover:bg-gray-200"
+							on:click={handleLoadSavedLogin}
+						>
+							Load saved PredictAdmit login
+						</button>
+					</div>
+
+					<p class="pt-6 text-[11px] leading-relaxed text-gray-500">
+						For this simulation, use the same email address and password that you saved on the
+						PredictAdmit.com home page. No real application data is used, and all information is
+						stored only in your browser.
+					</p>
+				</form>
+			</div>
+		</main>
+
+		<footer class="bg-black text-gray-300 py-6 text-[11px]">
+			<div class="max-w-6xl mx-auto px-6 flex flex-wrap items-center justify-between gap-3">
+				<div class="flex flex-wrap gap-4 uppercase tracking-wide text-[10px]">
+					<a href="/disclaimer" class="hover:text-white">Admission</a>
+					<a href="/disclaimer" class="hover:text-white">Accessibility</a>
+					<a href="/disclaimer" class="hover:text-white">Blog</a>
+					<a href="/disclaimer" class="hover:text-white">Contact</a>
+					<a href="/disclaimer" class="hover:text-white">Counselors</a>
+					<a href="/disclaimer" class="hover:text-white">Request Info</a>
 				</div>
-				<div class="space-y-2 text-[11px] text-gray-400">
-					<p>The Office of Admission serves under the Office of the Dean of the College.</p>
-					<p>©2019 The Trustees of Princeton University</p>
-					<p class="mt-4 text-center font-serif text-lg">Est. 1746</p>
-				</div>
+				<span>PredictAdmit Simulation — Not affiliated with Princeton University</span>
 			</div>
 		</footer>
-	{:else if $decisionsBySlug['princeton'] === 'admit'}
-		<PrincetonAccepted applicantName={applicantName()} />
+	{:else if authenticated && !hasViewedUpdate}
+		<!-- ============ PORTAL / STATUS PAGE ============ -->
+		<header class="bg-black text-white">
+			<div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+				<div class="flex items-center gap-3">
+					<span
+						class="w-9 h-9 flex items-center justify-center font-serif font-bold text-lg"
+						style="background-color: {school.primaryColor}; color: #000;"
+					>
+						P
+					</span>
+					<div class="leading-tight">
+						<div class="font-serif text-lg tracking-wide">Princeton University</div>
+						<div class="text-[10px] uppercase tracking-[0.2em] text-gray-300">
+							Office of Undergraduate Admission
+						</div>
+					</div>
+				</div>
+				<div class="flex items-center gap-4 text-[13px]">
+					<span class="font-serif text-gray-300">1746</span>
+					<span class="text-gray-200">{applicantName()}</span>
+					<a
+						href="/disclaimer"
+						class="text-gray-300 hover:text-white uppercase text-[11px] tracking-wide">Logout</a
+					>
+				</div>
+			</div>
+		</header>
+
+		<nav style="background-color: {school.primaryColor};" class="text-black">
+			<div class="max-w-6xl mx-auto px-6 flex flex-wrap gap-6 text-[12px] font-semibold uppercase tracking-wide">
+				{#each ['Apply', 'Cost & Aid', 'Academics', 'Community', 'Diversity'] as item}
+					<a href="/disclaimer" class="py-2 hover:underline">{item}</a>
+				{/each}
+			</div>
+		</nav>
+
+		<main class="max-w-4xl mx-auto px-6 py-12">
+			<h1 class="text-3xl font-serif text-gray-900 mb-2">
+				Application Status for {applicantName()}
+			</h1>
+			<p class="text-sm text-gray-600 mb-8">
+				If you need to contact us regarding your application, provide your name and this reference
+				number: <strong>{school.referenceNumber}</strong>.
+			</p>
+
+			<div class="flex gap-10">
+				<aside class="w-1/4 hidden md:block">
+					<nav class="text-sm">
+						<a
+							href="/disclaimer"
+							class="block py-2 px-3 font-semibold border-l-4 bg-gray-50 text-gray-900"
+							style="border-color: {school.primaryColor};"
+						>
+							Status Update
+						</a>
+						<a
+							href="/disclaimer"
+							class="block py-2 px-3 text-gray-700 hover:bg-gray-50 border-l-4 border-transparent"
+							>Application Checklist</a
+						>
+						<a
+							href="/disclaimer"
+							class="block py-2 px-3 text-gray-700 hover:bg-gray-50 border-l-4 border-transparent"
+							>Financial Aid</a
+						>
+						<a
+							href="/disclaimer"
+							class="block py-2 px-3 text-gray-700 hover:bg-gray-50 border-l-4 border-transparent"
+							>Update Contact Info</a
+						>
+					</nav>
+				</aside>
+
+				<section class="flex-1">
+					<h2 class="text-xl font-serif text-gray-900 mb-4">Status Update</h2>
+					<div class="border-l-4 bg-gray-50 p-5" style="border-color: {school.primaryColor};">
+						<p class="text-base text-gray-800 mb-4">
+							An update to your application was last posted
+							<strong>{school.statusLastPosted}</strong>.
+						</p>
+						<button
+							on:click={handleViewUpdate}
+							class="text-sm font-semibold px-5 py-2 text-black border border-black hover:opacity-90"
+							style="background-color: {school.primaryColor};"
+						>
+							View Update &raquo;
+						</button>
+					</div>
+
+					<div class="mt-10">
+						<h2 class="text-xl font-serif text-gray-900 mb-4">Application Checklist</h2>
+						<table class="w-full text-sm text-left border border-gray-200">
+							<thead class="bg-gray-100 text-gray-700">
+								<tr>
+									<th class="px-4 py-2 font-semibold">Item</th>
+									<th class="px-4 py-2 font-semibold">Status</th>
+									<th class="px-4 py-2 font-semibold">Date</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr class="border-t border-gray-200">
+									<td class="px-4 py-2">Common / Coalition Application</td>
+									<td class="px-4 py-2 text-green-700 font-semibold">Received</td>
+									<td class="px-4 py-2">01/01/2026</td>
+								</tr>
+								<tr class="border-t border-gray-200">
+									<td class="px-4 py-2">Princeton Supplement</td>
+									<td class="px-4 py-2 text-green-700 font-semibold">Received</td>
+									<td class="px-4 py-2">01/01/2026</td>
+								</tr>
+								<tr class="border-t border-gray-200">
+									<td class="px-4 py-2">Graded Written Paper</td>
+									<td class="px-4 py-2 text-green-700 font-semibold">Received</td>
+									<td class="px-4 py-2">01/03/2026</td>
+								</tr>
+								<tr class="border-t border-gray-200">
+									<td class="px-4 py-2">Secondary School Report &amp; Transcript</td>
+									<td class="px-4 py-2 text-green-700 font-semibold">Received</td>
+									<td class="px-4 py-2">01/05/2026</td>
+								</tr>
+								<tr class="border-t border-gray-200">
+									<td class="px-4 py-2">Two Teacher Recommendations</td>
+									<td class="px-4 py-2 text-green-700 font-semibold">Received</td>
+									<td class="px-4 py-2">01/06/2026</td>
+								</tr>
+								<tr class="border-t border-gray-200">
+									<td class="px-4 py-2">Optional Arts Supplement</td>
+									<td class="px-4 py-2 text-gray-500 font-semibold">Not Submitted</td>
+									<td class="px-4 py-2">&mdash;</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</section>
+			</div>
+		</main>
+
+		<footer class="bg-black text-gray-300 py-6 text-[11px] mt-12">
+			<div class="max-w-6xl mx-auto px-6 flex flex-wrap items-center justify-between gap-3">
+				<div class="flex flex-wrap gap-4 uppercase tracking-wide text-[10px]">
+					<a href="/disclaimer" class="hover:text-white">Admission</a>
+					<a href="/disclaimer" class="hover:text-white">Accessibility</a>
+					<a href="/disclaimer" class="hover:text-white">Blog</a>
+					<a href="/disclaimer" class="hover:text-white">Contact</a>
+					<a href="/disclaimer" class="hover:text-white">Counselors</a>
+					<a href="/disclaimer" class="hover:text-white">Podcast</a>
+					<a href="/disclaimer" class="hover:text-white">Request Info</a>
+				</div>
+				<span>&copy; The Trustees of Princeton University</span>
+			</div>
+		</footer>
+	{:else if shownDecision === 'admit'}
+		<PrincetonAccepted
+			applicantName={applicantName()}
+			schoolName={school.schoolName}
+			primaryColor={school.primaryColor}
+			footerDomain={school.footerDomain}
+		/>
 	{:else}
-		<PrincetonDenied applicantName={applicantName()} />
+		<PrincetonDenied
+			applicantName={applicantName()}
+			schoolName={school.schoolName}
+			primaryColor={school.primaryColor}
+			footerDomain={school.footerDomain}
+		/>
 	{/if}
-</main>
+</div>

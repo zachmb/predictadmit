@@ -1,156 +1,179 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
-	import { decisionsBySlug } from '$lib/stores/results';
-	import { signIn } from '@auth/sveltekit/client';
+	// The parent component passes these props
+	export let applicantName: string;
+	export let schoolName: string = 'University of California, Berkeley';
+	export let primaryColor: string = '#003262';
+	export let footerDomain: string = 'berkeley.edu';
 
-	import { userProfile } from '$lib/stores/user';
+	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
+	import { userProfile } from '$lib/stores/user';
+	import { decisionsBySlug } from '$lib/stores/results';
+
+	const accent = '#FDB515';
 
 	$: session = $page.data.session;
 
-	let googleSignedIn = true;
-	let googleEmail = '';
-	let googleName = '';
+	let googleSignedIn = false;
+	$: googleSignedIn = !!session?.user;
 
-	$: {
-		googleSignedIn = !!session?.user;
-		googleEmail = (session?.user?.email as string) ?? '';
-		googleName = (session?.user?.name as string) ?? '';
-	}
-	export let applicantName: string = 'Applicant';
 	const viewAnalysis = () => {
 		goto('/results/ucberkeley');
 	};
 </script>
 
-<div class="min-h-screen bg-white p-8 font-serif">
-	<div class="max-w-2xl mx-auto">
+<svelte:head>
+	<title>{schoolName} - Admission Decision</title>
+</svelte:head>
+
+<main class="min-h-screen bg-[#f4f4f4] font-serif text-slate-800">
+	<!-- Top navy utility bar -->
+	<div class="bg-[#003262] text-white">
+		<div class="mx-auto flex max-w-5xl items-center justify-between px-6 py-2">
+			<div class="text-[13px] font-semibold">UC Berkeley</div>
+			<div class="flex items-center gap-5 text-[11px]">
+				<a href="/disclaimer" class="hover:underline">MAP@Berkeley</a>
+				<a href="/disclaimer" class="hover:underline">Sign up for our email list</a>
+				<a href="/disclaimer" class="hover:underline">Contact Us</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="mx-auto max-w-3xl px-6 py-10">
 		{#if googleSignedIn && $userProfile.usingAI}
 			<div class="mb-6 flex justify-end">
 				<button
 					on:click={viewAnalysis}
-					class="group flex items-center px-4 py-2 bg-[#003262] text-white rounded-lg text-sm font-sans font-bold hover:bg-slate-800 transition-all shadow-md active:scale-95"
+					class="flex items-center gap-2 rounded-lg bg-[#003262] px-4 py-2 font-sans text-sm font-bold text-white shadow-md transition-all hover:bg-slate-800 active:scale-95"
 				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						class="w-4 h-4 transition-transform group-hover:-translate-x-1"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
-					>
-					</svg>
 					Deep Dive: Why did I get {$decisionsBySlug['ucberkeley']}?
 				</button>
 			</div>
 		{/if}
-		<!-- Letterhead - UC Berkeley Blue and Gold -->
-		<div class="border-b-4 border-[#003262] pb-4 mb-8">
-			<div class="flex items-center mb-4">
-				<!-- Berkeley "Cal" Logo -->
-				<div
-					class="w-12 h-12 bg-[#003262] text-[#FDB515] rounded mr-4 flex items-center justify-center"
-				>
-					<span class="text-xl font-bold">Cal</span>
+
+		<!-- Date + gold rule -->
+		<div class="mb-0 text-[13px] font-semibold text-slate-700">March 20, 2026</div>
+		<div class="mt-2 mb-6 border-t-4" style="border-color: {accent};"></div>
+
+		<!-- Letter card -->
+		<div class="bg-white px-10 py-10 shadow-sm">
+			<!-- Letterhead: circular seal + office line -->
+			<div class="mb-6 flex flex-col items-center gap-3 text-center">
+				<svg viewBox="0 0 100 100" class="h-16 w-16" aria-hidden="true">
+					<circle cx="50" cy="50" r="48" fill={primaryColor} />
+					<circle cx="50" cy="50" r="38" fill={accent} />
+					<circle cx="50" cy="50" r="30" fill="#fff" />
+					<path d="M50 34 l4 9 h9 l-7 6 3 9 -9 -5 -9 5 3 -9 -7 -6 h9 z" fill={primaryColor} />
+				</svg>
+				<div class="leading-tight">
+					<div class="font-serif text-[15px] font-bold tracking-[0.05em] text-[#003262]">
+						University of California, Berkeley
+					</div>
+					<div class="text-[11px] italic text-slate-500">Office of Undergraduate Admissions</div>
+				</div>
+			</div>
+
+			<div class="mb-1 text-[11px] leading-snug tracking-wide text-slate-500">
+				OFFICE OF UNDERGRADUATE ADMISSIONS &middot; 103 SPROUL HALL &middot; BERKELEY, CA 94720 &middot;
+				ADMISSIONS.{footerDomain.toUpperCase()}
+			</div>
+			<div class="mb-6 border-t border-slate-200"></div>
+
+			<div class="mb-6 text-[15px] text-slate-900">Dear {applicantName || 'Applicant'},</div>
+
+			<div class="space-y-4 text-[14px] leading-relaxed text-slate-800">
+				<p>
+					Congratulations, and welcome to the University of California, Berkeley! We are pleased to
+					offer you admission to the College of Letters and Science, through the Fall Program for First
+					Semester.
+				</p>
+				<p>
+					{applicantName || 'Applicant'}, your remarkable achievements both inside and outside the
+					classroom made you stand tall amongst more than 133,000 applicants to the nation's leading
+					public university. You, your loved ones, and supporters along the way have every reason to be
+					proud of your success!
+				</p>
+				<p>
+					At UC Berkeley, you'll have the opportunity to learn and discover within a welcoming and
+					dynamic community united by our mission: education, research, and service to the greater
+					good. Our community includes distinguished faculty and scholars &mdash; Nobel laureates,
+					MacArthur fellows, and pioneering experts across every field of inquiry. We will encourage
+					you to challenge yourself to reach your full potential through the extensive opportunities
+					and resources that UC Berkeley provides.
+				</p>
+				<p>
+					All the details of your offer, including your Conditions of Admission, Frequently Asked
+					Questions, and more, are below.
+				</p>
+				<p>
+					Our community celebrates you and your unique contributions, and we hope you will join us this
+					Fall. Accept your offer of admission in your MAP@Berkeley portal by 11:59 p.m. (Pacific time)
+					on May 1, 2026.
+				</p>
+				<p>Welcome to UC Berkeley.</p>
+				<p class="font-semibold text-[#003262]">Go Bears!</p>
+			</div>
+
+			<div class="mt-8 text-[14px] text-slate-800">Sincerely,</div>
+
+			<div class="mt-4 space-y-6">
+				<div>
+					<div
+						class="text-2xl italic text-slate-800"
+						style="font-family: 'Segoe Script', 'Brush Script MT', cursive;"
+					>
+						John Marfield
+					</div>
+					<div class="mt-1 text-[14px] font-semibold text-slate-900">John Marfield, Ph.D.</div>
+					<div class="text-[13px] text-slate-600">Assistant Vice Chancellor</div>
+					<div class="text-[13px] text-slate-600">Director of Undergraduate Admissions</div>
+					<div class="text-[13px] text-slate-600">University of California, Berkeley</div>
 				</div>
 				<div>
-					<h1 class="text-2xl font-bold text-[#003262]">University of California, Berkeley</h1>
-					<p class="text-[#FDB515] text-sm font-medium">Office of Undergraduate Admissions</p>
+					<div
+						class="text-2xl italic text-slate-800"
+						style="font-family: 'Segoe Script', 'Brush Script MT', cursive;"
+					>
+						Olufemi Ogundele
+					</div>
+					<div class="mt-1 text-[14px] font-semibold text-slate-900">Olufemi Ogundele, Ed.D.</div>
+					<div class="text-[13px] text-slate-600">Associate Vice Chancellor of Enrollment</div>
+					<div class="text-[13px] text-slate-600">Dean of Undergraduate Admissions</div>
+					<div class="text-[13px] text-slate-600">University of California, Berkeley</div>
 				</div>
 			</div>
-			<div class="text-sm text-gray-600">
-				<p>110 Sproul Hall #5800</p>
-				<p>Berkeley, California 94720</p>
-				<p>Tel: 510-642-3175</p>
-			</div>
-		</div>
 
-		<!-- Date -->
-		<p class="mb-8 text-gray-700">
-			{new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
-		</p>
-
-		<!-- Applicant Info -->
-		<div class="mb-8">
-			<p class="text-lg font-medium text-gray-800">{applicantName}</p>
-			<p class="text-gray-600">Freshman Applicant</p>
-			<p class="text-sm text-gray-500">College of Letters and Science</p>
-		</div>
-
-		<!-- Letter Body -->
-		<div class="mb-8 leading-relaxed text-gray-800">
-			<p class="mb-4">Dear {applicantName},</p>
-
-			<p class="mb-4">
-				On behalf of the University of California, Berkeley, I am delighted to offer you admission
-				to the Fall 2024 entering class. Congratulations and welcome to the Cal community!
-			</p>
-
-			<p class="mb-4">
-				Your application was evaluated within an exceptionally competitive pool of more than 125,000
-				candidates from around the world. The Admissions Committee was impressed by your academic
-				achievements, intellectual curiosity, and demonstrated commitment to both scholarship and
-				community engagement. Your unique perspective and potential align perfectly with Berkeley's
-				mission as the world's premier public university.
-			</p>
-
-			<div class="my-8 p-6 bg-blue-50 border-l-4 border-[#FDB515] italic">
-				<p class="mb-2 font-semibold text-[#003262]">Welcome to UC Berkeley</p>
-				<p class="text-gray-700">
-					At Berkeley, you will join a diverse, dynamic community of scholars, innovators, and
-					activists. You'll have the opportunity to learn from Nobel laureates, Pulitzer Prize
-					winners, and groundbreaking researchers while engaging with the vibrant culture of the San
-					Francisco Bay Area. As a public university, we are committed to providing an accessible,
-					world-class education.
-				</p>
-			</div>
-
-			<p class="mb-4">
-				As an admitted student, you will receive comprehensive information about next steps,
-				including details about Cal Day (our admitted student program), housing in the residence
-				halls, course registration, and financial aid (if applicable). You can also expect to hear
-				directly from current students, faculty, and alumni who are eager to welcome you to campus.
-			</p>
-
-			<p class="mb-4">
-				This offer of admission is contingent upon your successful completion of the current
-				academic year. We expect that you will maintain the high standards of achievement and
-				personal conduct that characterized your secondary school record.
-			</p>
-
-			<p class="mb-4">
-				Please take time to celebrate this significant achievement with your family, teachers, and
-				friends who have supported you throughout this process. We look forward to welcoming you to
-				Berkeley this fall.
-			</p>
-		</div>
-
-		<!-- Signature -->
-		<div class="mt-12">
-			<p class="mb-1">Sincerely,</p>
-			<div class="mb-8">
-				<div class="h-12 mb-2 flex items-center">
-					<div class="w-16 h-8 bg-[#003262] mr-2"></div>
-					<div class="w-16 h-8 bg-[#FDB515]"></div>
+			<!-- Contact letterhead block -->
+			<div class="mt-12 flex items-start gap-3 border-t border-slate-200 pt-6">
+				<svg viewBox="0 0 100 100" class="h-10 w-10 shrink-0" aria-hidden="true">
+					<circle cx="50" cy="50" r="48" fill={primaryColor} />
+					<circle cx="50" cy="50" r="38" fill={accent} />
+					<circle cx="50" cy="50" r="30" fill="#fff" />
+					<path d="M50 34 l4 9 h9 l-7 6 3 9 -9 -5 -9 5 3 -9 -7 -6 h9 z" fill={primaryColor} />
+				</svg>
+				<div class="text-[11px] leading-relaxed text-slate-500">
+					<div class="text-[12px] font-bold tracking-[0.05em] text-slate-800">
+						UNIVERSITY OF CALIFORNIA, BERKELEY
+					</div>
+					<div class="italic">Office of Undergraduate Admissions</div>
+					<div class="mt-2">
+						103 Sproul Hall, Berkeley, CA 94720<br />
+						admissions.{footerDomain}
+					</div>
 				</div>
-				<p class="font-semibold text-[#003262]">Olufemi Ogundele</p>
-				<p class="text-sm text-[#FDB515]">
-					Associate Vice Chancellor and Director of Undergraduate Admissions
-				</p>
-				<p class="text-sm text-gray-600">University of California, Berkeley</p>
 			</div>
 
-			<div class="mt-12 p-6 bg-blue-50 rounded-lg border border-blue-200">
-				<p class="text-sm text-gray-700 mb-2">
-					<strong class="text-[#003262]">Next Steps:</strong> Your official admission packet will arrive
-					by mail within 7-10 business days. Please log into your UC Berkeley Applicant Portal to view
-					your financial aid award (if applicable) and to confirm your enrollment by May 1.
-				</p>
-				<p class="text-sm text-gray-700">
-					<strong class="text-[#FDB515]">Important:</strong> Admitted students are invited to attend
-					<em>Cal Day</em>, our admitted student program, on Saturday, April 13, 2024. Registration
-					information will be available in your portal.
-				</p>
+			<!-- Simulated-letter disclaimer -->
+			<div class="mt-8 rounded border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800">
+				<strong>Note:</strong> This is a simulated admission letter for entertainment purposes only.
+				This is not a real admission decision from the University of California, Berkeley.
 			</div>
+		</div>
+
+		<div class="mt-8 text-center">
+			<a href="/disclaimer" class="text-[13px] underline" style="color: {primaryColor};"
+				>Return to Application Status</a
+			>
 		</div>
 	</div>
-</div>
+</main>

@@ -1,154 +1,130 @@
 <script lang="ts">
-	export let applicantName: string = 'Applicant';
+	// The parent component passes these props
+	export let applicantName: string;
+	export let schoolName: string = 'University of California, Los Angeles';
+	export let primaryColor: string = '#2774AE';
+	export let footerDomain: string = 'ucla.edu';
+
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { userProfile } from '$lib/stores/user';
+	import { decisionsBySlug } from '$lib/stores/results';
 
 	$: session = $page.data.session;
 
 	let googleSignedIn = false;
-	let googleEmail = '';
-	let googleName = '';
+	$: googleSignedIn = !!session?.user;
 
-	$: {
-		googleSignedIn = !!session?.user;
-		googleEmail = (session?.user?.email as string) ?? '';
-		googleName = (session?.user?.name as string) ?? '';
-	}
-	import { decisionsBySlug } from '$lib/stores/results';
 	const viewAnalysis = () => {
 		goto('/results/ucla');
 	};
 </script>
 
-<div class="min-h-screen bg-white p-8 font-serif">
-	<div class="max-w-2xl mx-auto">
+<svelte:head>
+	<title>{schoolName} - Admission Decision</title>
+</svelte:head>
+
+<main class="min-h-screen bg-[#f4f4f4] font-serif text-gray-800">
+	<div class="mx-auto max-w-3xl px-6 py-10">
 		{#if googleSignedIn && $userProfile.usingAI}
 			<div class="mb-6 flex justify-end">
 				<button
 					on:click={viewAnalysis}
-					class="group flex items-center px-4 py-2 bg-[#003262] text-white rounded-lg text-sm font-sans font-bold hover:bg-slate-800 transition-all shadow-md active:scale-95"
+					class="flex items-center gap-2 rounded-lg px-4 py-2 font-sans text-sm font-bold text-white shadow-md transition-all hover:opacity-90 active:scale-95"
+					style="background-color: {primaryColor};"
 				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						class="w-4 h-4 transition-transform group-hover:-translate-x-1"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
-					>
-					</svg>
 					Deep Dive: Why did I get {$decisionsBySlug['ucla']}?
 				</button>
 			</div>
 		{/if}
-		<!-- Letterhead - UCLA Blue and Gold -->
-		<div class="border-b-4 border-[#2774AE] pb-4 mb-8">
-			<div class="flex items-center mb-4">
-				<!-- UCLA Logo -->
+
+		<!-- Date + blue rule -->
+		<div class="mb-0 text-[13px] font-semibold text-gray-700">March 20, 2026</div>
+		<div class="mt-2 mb-6 border-t-2" style="border-color: {primaryColor};"></div>
+
+		<!-- Letter card -->
+		<div class="bg-white px-10 py-10 shadow-sm">
+			<!-- Letterhead -->
+			<div class="mb-8 flex items-center gap-3">
+				<span class="text-4xl font-extrabold italic tracking-tight" style="color: {primaryColor};">UCLA</span>
+				<div class="leading-tight">
+					<div class="text-sm font-bold tracking-[0.1em] text-gray-900">UCLA</div>
+					<div class="text-[11px] italic text-gray-500">Office of Undergraduate Admission</div>
+				</div>
+			</div>
+
+			<div class="mb-6 text-[14px] leading-relaxed text-gray-900">
+				{applicantName || 'Applicant'}<br />
+				Fall 2026 First-Year Applicant
+			</div>
+
+			<div class="mb-6 text-[15px] text-gray-900">Dear {applicantName || 'Applicant'},</div>
+
+			<div class="space-y-4 text-[14px] leading-relaxed text-gray-800">
+				<p>
+					Congratulations! It is with tremendous pleasure that I offer you admission to the University
+					of California, Los Angeles, for Fall 2026. On behalf of the entire campus community, welcome
+					to the Bruin family. This is a distinction you have truly earned.
+				</p>
+				<p>
+					For Fall 2026, UCLA received over 146,000 first-year applications and was able to admit fewer
+					than one in ten. Every application is read at least twice, with consideration given to
+					accomplishments both in and outside of the classroom. Your record of achievement,
+					intellectual curiosity, and the strength of character evident throughout your application
+					distinguished you within an exceptionally talented pool. We are confident that you will
+					thrive here and contribute meaningfully to the life of our university.
+				</p>
+				<p>
+					In the coming weeks you will receive detailed information regarding your financial aid,
+					housing, orientation, and next steps for enrollment through your applicant portal. We
+					encourage you to explore all that UCLA has to offer and to join us for Bruin Day, our program
+					for admitted students, to experience firsthand the academic and vibrant campus life that
+					await you in Westwood.
+				</p>
+				<p>
+					To reserve your place in the Fall 2026 class, please submit your Statement of Intent to
+					Register (SIR) through your applicant portal by <strong>May 1, 2026</strong>. We very much
+					hope you will choose to become a Bruin, and we look forward to welcoming you to campus this
+					fall.
+				</p>
+			</div>
+
+			<div class="mt-8 text-[14px] text-gray-800">Sincerely,</div>
+			<div class="mt-3">
 				<div
-					class="w-12 h-12 bg-[#2774AE] text-[#FFD100] rounded mr-4 flex items-center justify-center"
+					class="text-3xl italic text-gray-800"
+					style="font-family: 'Segoe Script', 'Brush Script MT', cursive;"
 				>
-					<span class="text-xl font-bold">UCLA</span>
+					Ffiona Rees
 				</div>
-				<div>
-					<h1 class="text-2xl font-bold text-[#2774AE]">University of California, Los Angeles</h1>
-					<p class="text-[#FFD100] text-sm font-medium">Office of Undergraduate Admissions</p>
+				<div class="mt-2 text-[14px] font-semibold text-gray-900">Ffiona Rees</div>
+				<div class="text-[13px] text-gray-600">Executive Director, Undergraduate Admission</div>
+			</div>
+
+			<!-- Contact letterhead block -->
+			<div class="mt-12 flex items-start gap-3 border-t border-gray-200 pt-6">
+				<span class="shrink-0 text-3xl font-extrabold italic tracking-tight" style="color: {primaryColor};">UCLA</span>
+				<div class="text-[11px] leading-relaxed text-gray-500">
+					<div class="text-[12px] font-bold tracking-[0.1em] text-gray-800">UCLA Undergraduate Admission</div>
+					<div class="mt-2">
+						1147 Murphy Hall, Box 951436<br />
+						Los Angeles, CA 90095-1436<br />
+						admission.{footerDomain}
+					</div>
 				</div>
 			</div>
-			<div class="text-sm text-gray-600">
-				<p>1147 Murphy Hall, Box 951436</p>
-				<p>Los Angeles, California 90095</p>
-				<p>Tel: 310-825-3101</p>
+
+			<!-- Simulated-letter disclaimer -->
+			<div class="mt-8 rounded border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800">
+				<strong>Note:</strong> This is a simulated admission letter for entertainment purposes only.
+				This is not a real admission decision from the University of California, Los Angeles.
 			</div>
 		</div>
 
-		<!-- Date -->
-		<p class="mb-8 text-gray-700">
-			{new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
-		</p>
-
-		<!-- Applicant Info -->
-		<div class="mb-8">
-			<p class="text-lg font-medium text-gray-800">{applicantName}</p>
-			<p class="text-gray-600">Freshman Applicant</p>
-			<p class="text-sm text-gray-500">College of Letters and Science</p>
-		</div>
-
-		<!-- Letter Body -->
-		<div class="mb-8 leading-relaxed text-gray-800">
-			<p class="mb-4">Dear {applicantName},</p>
-
-			<p class="mb-4">
-				On behalf of the University of California, Los Angeles, I am delighted to offer you
-				admission to the Fall 2024 entering class. Congratulations and welcome to the Bruin family!
-			</p>
-
-			<p class="mb-4">
-				Your application was evaluated within an exceptionally competitive pool of more than 146,000
-				candidates from around the world—the most applications received by any four-year university
-				in the United States. The Admissions Committee was impressed by your academic achievements,
-				intellectual curiosity, and demonstrated commitment to both scholarship and community
-				engagement. Your unique perspective and potential align perfectly with UCLA's mission as a
-				leading public research university.
-			</p>
-
-			<div class="my-8 p-6 bg-blue-50 border-l-4 border-[#FFD100] italic">
-				<p class="mb-2 font-semibold text-[#2774AE]">Welcome to UCLA</p>
-				<p class="text-gray-700">
-					At UCLA, you will join a diverse, dynamic community of scholars, innovators, and leaders
-					in the heart of Los Angeles. You'll have the opportunity to learn from world-renowned
-					faculty, engage in cutting-edge research, and experience the vibrant culture of Southern
-					California while pursuing academic excellence at one of the world's top public
-					universities.
-				</p>
-			</div>
-
-			<p class="mb-4">
-				As an admitted student, you will receive comprehensive information about next steps,
-				including details about Bruin Day (our admitted student program), housing in the Hill,
-				course registration through MyUCLA, and financial aid (if applicable). You can also expect
-				to hear directly from current students, faculty, and alumni who are eager to welcome you to
-				Westwood.
-			</p>
-
-			<p class="mb-4">
-				This offer of admission is contingent upon your successful completion of the current
-				academic year. We expect that you will maintain the high standards of achievement and
-				personal conduct that characterized your secondary school record.
-			</p>
-
-			<p class="mb-4">
-				Please take time to celebrate this significant achievement with your family, teachers, and
-				friends who have supported you throughout this process. We look forward to welcoming you to
-				UCLA this fall.
-			</p>
-		</div>
-
-		<!-- Signature -->
-		<div class="mt-12">
-			<p class="mb-1">Sincerely,</p>
-			<div class="mb-8">
-				<div class="h-12 mb-2 flex items-center">
-					<div class="w-16 h-8 bg-[#2774AE] mr-2"></div>
-					<div class="w-16 h-8 bg-[#FFD100]"></div>
-				</div>
-				<p class="font-semibold text-[#2774AE]">Youlonda Copeland-Morgan</p>
-				<p class="text-sm text-[#FFD100]">Vice Provost for Enrollment Management</p>
-				<p class="text-sm text-gray-600">University of California, Los Angeles</p>
-			</div>
-
-			<div class="mt-12 p-6 bg-blue-50 rounded-lg border border-blue-200">
-				<p class="text-sm text-gray-700 mb-2">
-					<strong class="text-[#2774AE]">Next Steps:</strong> Your official admission packet will arrive
-					by mail within 7-10 business days. Please log into your UCLA Applicant Portal to view your financial
-					aid award (if applicable) and to confirm your enrollment by May 1.
-				</p>
-				<p class="text-sm text-gray-700">
-					<strong class="text-[#FFD100]">Important:</strong> Admitted students are invited to attend
-					<em>Bruin Day</em>, our admitted student program, on Saturday, April 20, 2024.
-					Registration information will be available in your portal.
-				</p>
-			</div>
+		<div class="mt-8 text-center">
+			<a href="/disclaimer" class="text-[13px] underline" style="color: {primaryColor};"
+				>Return to Application Status</a
+			>
 		</div>
 	</div>
-</div>
+</main>

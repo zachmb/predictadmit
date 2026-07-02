@@ -1,50 +1,50 @@
 <script lang="ts">
+	// Svelte Stores and Types
 	import { userProfile, defaultProfile } from '$lib/stores/user';
 	import type { UserProfile } from '$lib/stores/user';
 	import { decisionsBySlug } from '$lib/stores/results';
 	import { portalDecisionViewed } from '$lib/stores/ui';
 
-	// School Config
-	import { schoolConfigs } from '$lib/config/schools';
-
-	// --- CORRECT IMPORTS ---
+	// School-Specific Components (Decision Letters)
 	import ColumbiaAccepted from '$lib/components/columbia/ColumbiaAccepted.svelte';
 	import ColumbiaDenied from '$lib/components/columbia/ColumbiaDenied.svelte';
 
-	// ----------------- CONFIGURATION -----------------
-
+	// --- Component Configuration ---
 	const SLUG = 'columbia';
-	// Simulated config based on screenshot and standard Columbia branding
 	const school = {
 		schoolName: 'Columbia University',
-		admissionsId: '094598420', // From screenshot
-		statusLastPosted: 'March 25th, 2020', // From screenshot
-		primaryColor: '#0039A6', // Dark Columbia Blue/Navy
-		secondaryColor: '#99CCFF', // Light Blue/Sky Blue (for gradient)
-		// Placeholder decision for simulation
-		decision: schoolConfigs[SLUG]?.decision || 'admit',
-		footerDomain: 'columbia.edu'
+		primaryColor: '#003D6B',
+		footerDomain: 'columbia.edu',
+		statusLastPosted: 'March 13, 2026',
+		round: 'Regular Decision',
+		referenceNumber: '20260012'
 	};
 
-	// ----------------- STATE -----------------
+	// Columbia Blue light accent
+	const COLUMBIA_BLUE = '#B9D9EB';
 
+	// --- State Variables ---
 	let profile: UserProfile = { ...defaultProfile };
 	let emailInput = '';
 	let passwordInput = '';
 	let error = '';
 	let authenticated = false;
 	let hasViewedUpdate = false;
+	let activeTab = 'Admissions Status';
 
-	// ----------------- REACTIVE DERIVATIONS -----------------
-
+	// Subscribe to the global user profile store
 	$: profile = $userProfile;
-	const applicantName = () => profile.name || 'John Doe';
 
-	// ----------------- HANDLERS -----------------
+	// Dynamic Data Helpers
+	const applicantName = () => profile.name || 'Applicant';
 
+	// Default decision when the prediction store has no entry for this slug:
+	const DEFAULT_DECISION = 'admit';
+	$: shownDecision = $decisionsBySlug[SLUG] ?? DEFAULT_DECISION;
+
+	// --- Handlers ---
 	const handleLoadSavedLogin = () => {
 		if (!profile.email || !profile.password) {
-			// Use default John Doe credentials if user hasn't set up their own
 			userProfile.update((u) => ({
 				...u,
 				name: u.name || 'John Doe',
@@ -52,7 +52,6 @@
 				password: u.password || 'password123'
 			}));
 		}
-		// Directly authenticate
 		authenticated = true;
 		error = '';
 	};
@@ -77,379 +76,349 @@
 		hasViewedUpdate = true;
 		portalDecisionViewed.set(true);
 	};
+
+	// --- Application Checklist Data ---
+	const checklistData = [
+		{ status: 'Received', detail: 'Coalition / Common Application', date: '01/01/2026', received: true },
+		{ status: 'Received', detail: 'Columbia-Specific Questions', date: '01/01/2026', received: true },
+		{ status: 'Received', detail: 'Secondary School Report & Transcript', date: '01/04/2026', received: true },
+		{ status: 'Received', detail: 'Counselor Recommendation', date: '01/04/2026', received: true },
+		{ status: 'Received', detail: 'Two Teacher Evaluations', date: '01/06/2026', received: true },
+		{ status: 'Received', detail: 'Mid-Year School Report', date: '02/12/2026', received: true },
+		{ status: 'Optional', detail: 'Creative / Academic Supplement', date: '—', received: false }
+	];
+
+	const navLinks = ['Life at Columbia', 'How to Apply', 'Affordability & Aid', 'Academics', 'Visit'];
 </script>
 
 <svelte:head>
-	<title>{school.schoolName} Undergraduate Admissions Portal</title>
+	<title>{school.schoolName} — Undergraduate Admissions</title>
 </svelte:head>
 
-<div class="min-h-screen font-sans text-slate-800 bg-white">
+<div class="min-h-screen bg-white text-slate-900" style="font-family: Georgia, 'Times New Roman', serif;">
 	{#if !authenticated}
-		<header class="bg-white border-b border-slate-300">
-			<div
-				class="h-16"
-				style="background-image: linear-gradient(to bottom, {school.secondaryColor}, {school.primaryColor}00);"
-			>
-				<div class="max-w-7xl mx-auto px-6 h-full flex items-center justify-between">
-					<div class="flex items-center gap-3">
-						<span class="text-xl font-serif font-extrabold" style="color: {school.primaryColor};"
-							>COLUMBIA</span
-						>
-						<span
-							class="text-sm font-light uppercase tracking-wider"
-							style="color: {school.primaryColor};">Undergraduate Admissions</span
-						>
-					</div>
-					<span class="text-xs font-light" style="color: {school.primaryColor};"
-						>Login to your applicant status page</span
-					>
-				</div>
-			</div>
-		</header>
-
-		<main class="bg-white min-h-[500px] py-20">
-			<div class="max-w-xl mx-auto px-6 text-base">
-				<h1 class="text-3xl font-normal mb-8 text-slate-900">Applicant Portal Login</h1>
-
+		<!-- ===================== LOGIN ===================== -->
+		<header class="border-b border-slate-200">
+			<div class="max-w-6xl mx-auto px-6">
+				<!-- Top utility links -->
 				<div
-					class="border border-blue-700 bg-blue-50 px-4 py-3 mb-6 text-[13px] text-slate-900 font-normal max-w-full"
+					class="flex justify-end items-center gap-5 pt-3 text-[12px] text-slate-700"
+					style="font-family: Arial, Helvetica, sans-serif;"
 				>
-					To access your status page, please enter your registered email address and password.
+					<a href="/disclaimer" class="hover:underline">News &amp; Updates</a>
+					<a href="/disclaimer" class="hover:underline">FAQ</a>
 				</div>
-
-				<form class="space-y-4 max-w-[500px]" on:submit={handleLogin}>
-					{#if error}
-						<p
-							class="text-xs text-red-800 border border-red-300 bg-red-50 px-3 py-2 mb-2"
-							role="alert"
-						>
-							{error}
-						</p>
-					{/if}
-
-					<div class="flex items-center gap-2">
-						<label
-							for="portal-email"
-							class="text-[13px] font-normal text-slate-900 w-32 text-right"
-						>
-							Email Address
-						</label>
-						<input
-							id="portal-email"
-							type="email"
-							class="border border-slate-400 bg-white px-2 py-1 text-[13px] w-64 shadow-inner"
-							bind:value={emailInput}
-							autocomplete="email"
-						/>
+				<!-- Main brand + nav -->
+				<div class="flex items-center justify-between pb-4 pt-1">
+					<div class="flex items-center gap-3">
+						<!-- Columbia Crown -->
+						<svg viewBox="0 0 60 46" class="w-9 h-8" aria-hidden="true">
+							<path d="M4 40 L6 16 L18 26 L30 6 L42 26 L54 16 L56 40 Z" fill={COLUMBIA_BLUE} />
+							<rect x="4" y="40" width="52" height="5" fill={COLUMBIA_BLUE} />
+							<circle cx="6" cy="14" r="3" fill={COLUMBIA_BLUE} />
+							<circle cx="30" cy="4" r="3.5" fill={COLUMBIA_BLUE} />
+							<circle cx="54" cy="14" r="3" fill={COLUMBIA_BLUE} />
+						</svg>
+						<div class="leading-tight">
+							<div class="text-[19px] font-bold text-slate-900" style="font-family: Georgia, serif;">
+								Columbia
+							</div>
+							<div class="text-[13px] text-slate-500 -mt-0.5" style="font-family: Georgia, serif;">
+								Undergraduate Admissions
+							</div>
+						</div>
 					</div>
-
-					<div class="flex items-center gap-2">
-						<label
-							for="portal-password"
-							class="text-[13px] font-normal text-slate-900 w-32 text-right"
-						>
-							Password
-						</label>
-						<input
-							id="portal-password"
-							type="password"
-							class="border border-slate-400 bg-white px-2 py-1 text-[13px] w-32 shadow-inner"
-							bind:value={passwordInput}
-							autocomplete="current-password"
-						/>
-						<a
-							href="/disclaimer"
-							class="text-[12px] text-blue-800 hover:underline ml-4 whitespace-nowrap"
-						>
-							Forgot Your Password?
-						</a>
-					</div>
-
-					<div class="flex items-center gap-3 pt-3">
-						<div class="w-32"></div>
-
-						<button
-							type="submit"
-							class="border border-slate-600 bg-slate-300 px-4 py-1 text-[12px] font-semibold text-black
-									shadow-[2px_2px_0px_0px_rgba(0,0,0,0.5)] active:shadow-none active:translate-x-[2px] active:translate-y-[2px]"
-						>
-							Login
-						</button>
-						<button
-							type="button"
-							class="border border-slate-400 bg-slate-100 px-3 py-1 text-[11px] text-slate-700
-									shadow-[1px_1px_0px_0px_rgba(0,0,0,0.3)] hover:bg-slate-200 active:shadow-none active:translate-x-[1px] active:translate-y-[1px]"
-							on:click={handleLoadSavedLogin}
-						>
-							Load saved PredictAdmit login
-						</button>
-					</div>
-
-					<p class="pt-6 text-[11px] leading-relaxed text-slate-600">
-						for this simulation, use the same email address and password that you saved on the
-						PredictAdmit.com home page. No real application data is used, and all information is
-						stored only in your browser.
-					</p>
-				</form>
-			</div>
-		</main>
-
-		<footer
-			class="bg-[#0039A6] h-8 flex items-center justify-center text-white text-[11px] font-normal"
-		>
-			<div class="max-w-4xl mx-auto flex justify-between w-full px-10">
-				<span>&copy; 2020</span>
-				<span>PredictAdmit Simulation - Not affiliated with Columbia University</span>
-			</div>
-		</footer>
-	{:else if !hasViewedUpdate}
-		<header
-			class="text-slate-800 border-b border-slate-300"
-			style="background-image: linear-gradient(to bottom, {school.secondaryColor}, {school.primaryColor}00);"
-		>
-			<div class="max-w-7xl mx-auto px-6 h-12 flex items-center justify-between">
-				<div class="flex items-center gap-3">
-					<span class="text-xl font-serif font-extrabold" style="color: {school.primaryColor};"
-						>COLUMBIA</span
+					<nav
+						class="hidden md:flex items-center gap-6 text-[14px] font-bold text-slate-900"
+						style="font-family: Arial, Helvetica, sans-serif;"
 					>
-					<span
-						class="text-sm font-light uppercase tracking-wider"
-						style="color: {school.primaryColor};">Undergraduate Admissions</span
-					>
+						{#each navLinks as link}
+							<a href="/disclaimer" class="hover:text-slate-600">{link}</a>
+						{/each}
+						<a href="/disclaimer" aria-label="Search" class="text-slate-900">&#128269;</a>
+						<a href="/disclaimer" aria-label="Menu" class="text-slate-900 text-lg leading-none">&#9776;</a>
+					</nav>
 				</div>
-				<div class="text-[11px] text-slate-600">Search Status Log-out</div>
 			</div>
-
-			<nav class="max-w-7xl mx-auto px-6 pb-2 pt-1 flex justify-between items-end">
-				<ul class="flex gap-4 text-sm font-normal">
-					<li>
-						<a
-							href="/disclaimer"
-							class="hover:underline text-slate-800 border-b-2 border-transparent hover:border-slate-800 pb-1"
-							>Explore</a
-						>
-					</li>
-					<li>
-						<a
-							href="/disclaimer"
-							class="hover:underline text-slate-800 border-b-2 border-transparent hover:border-slate-800 pb-1"
-							>Learn</a
-						>
-					</li>
-					<li>
-						<a
-							href="/disclaimer"
-							class="hover:underline text-slate-800 border-b-2 border-transparent hover:border-slate-800 pb-1"
-							>Visit</a
-						>
-					</li>
-					<li>
-						<a
-							href="/disclaimer"
-							class="hover:underline text-slate-800 border-b-2 border-transparent hover:border-slate-800 pb-1"
-							>Apply</a
-						>
-					</li>
-					<li>
-						<a
-							href="/disclaimer"
-							class="hover:underline text-slate-800 border-b-2 border-transparent hover:border-slate-800 pb-1"
-							>Ask</a
-						>
-					</li>
-					<li>
-						<a
-							href="/disclaimer"
-							class="hover:underline text-slate-800 border-b-2 border-transparent hover:border-slate-800 pb-1"
-							>Financial Aid</a
-						>
-					</li>
-				</ul>
-				<div class="text-[11px] font-semibold flex gap-3 text-slate-600">
-					<span class="border border-slate-400 px-2 py-0.5 bg-gray-100">HOME</span>
-					<span>MORT NETS</span>
-					<span>FDR KSNK SHCS</span>
-					<span>AD AMRSH</span>
-				</div>
-			</nav>
 		</header>
 
-		<main class="bg-white py-8 min-h-[500px]">
-			<div class="max-w-7xl mx-auto px-6">
-				<div class="grid grid-cols-3 gap-3 mb-8">
-					<div class="h-40 bg-gray-200 flex items-center justify-center text-sm text-slate-500">
-						[Image: Students on campus]
-					</div>
-					<div class="h-40 bg-gray-200 flex items-center justify-center text-sm text-slate-500">
-						[Image: Columbia Lion statue]
-					</div>
-					<div class="h-40 bg-gray-200 flex items-center justify-center text-sm text-slate-500">
-						[Image: Library Interior]
-					</div>
-				</div>
+		<main class="max-w-6xl mx-auto px-6 min-h-[420px]">
+			<h1 class="text-[34px] font-bold text-slate-900 mt-8 mb-5" style="font-family: Georgia, serif;">
+				Login
+			</h1>
 
-				<div class="max-w-3xl mx-auto">
-					<h2 class="font-normal text-2xl mb-2 text-slate-900">
-						Welcome to your applicant status page, {applicantName()}!
-					</h2>
-
-					<p class="text-sm text-slate-600 mb-6">
-						Columbia ID: {school.admissionsId}
-						<span class="float-right font-bold text-slate-800"
-							>2020 First-Year Regular Decision - Columbia Engineering</span
-						>
-					</p>
-
-					<p class="text-sm text-slate-700 mb-6 max-w-2xl">
-						Thank you for submitting your application to Columbia University in the City of New
-						York. Please use this status page to provide us with application updates and to explore
-						more about Columbia's application process.
-					</p>
-
-					<div
-						class="bg-[#FFFFE0] p-4 text-sm text-slate-800 border-t border-b border-yellow-300 mb-6 max-w-xl"
-					>
-						<h3 class="font-bold text-md mb-1 text-slate-800">Status Update:</h3>
-						<p class="mb-2 text-black">
-							New updates to your application were posted {school.statusLastPosted}.
-						</p>
-						<button on:click={handleViewUpdate} class="text-red-700 text-sm hover:underline">
-							View Update>>
-						</button>
-					</div>
-
-					<h3 class="font-bold text-md mb-2 text-slate-800 border-b border-gray-300 pb-1">
-						Verify Address
-					</h3>
-					<p class="text-sm text-slate-700 mb-4">We have your address(es) listed as follows:</p>
-
-					<div class="grid grid-cols-3 gap-8 text-[12px] max-w-3xl mb-4">
-						<div class="space-y-0.5">
-							<h4 class="font-bold">Permanent Address</h4>
-							<p>John Doe's Residence</p>
-							<p>123 Fake Street</p>
-							<p>New York, NY 10025</p>
-							<p>United States</p>
-						</div>
-						<div class="space-y-0.5">
-							<h4 class="font-bold">Mailing Address</h4>
-							<p>c/o John's Relative</p>
-							<p>23-13 Some</p>
-							<p>Nonexistent Town, 00000</p>
-							<p>United States</p>
-						</div>
-						<div class="space-y-0.5">
-							<h4 class="font-bold">Billing Address</h4>
-							<p>Same as Mailing Address</p>
-							<p>23-13 Some</p>
-							<p>Nonexistent Town, 00000</p>
-							<p>United States</p>
-						</div>
-					</div>
-
-					<a href="/disclaimer" class="text-blue-600 text-[13px] hover:underline block mb-8">
-						Edit Address(es)
-					</a>
-
-					<div class="mt-4 border-t border-gray-300 pt-4">
-						<span class="font-bold text-[13px] text-slate-800">Account Tools:</span>
-						<a href="/disclaimer" class="text-blue-600 text-[13px] hover:underline ml-2"
-							>Change Email Address</a
-						>
-						<span class="text-slate-400 mx-1">|</span>
-						<a href="/disclaimer" class="text-blue-600 text-[13px] hover:underline"
-							>Change Password</a
-						>
-						<span class="text-slate-400 mx-1">|</span>
-						<a href="/disclaimer" class="text-blue-600 text-[13px] hover:underline">Logout</a>
-					</div>
-				</div>
+			<!-- Green info banner -->
+			<div
+				class="border-l-4 border-[#7ab648] bg-[#e4f0cd] px-4 py-3 mb-8 text-[14px] text-slate-800"
+				style="font-family: Arial, Helvetica, sans-serif;"
+			>
+				To log in, please enter your email address and password.
 			</div>
-		</main>
 
-		<footer
-			class="text-slate-700 py-10 font-sans text-sm"
-			style="background-image: linear-gradient(to top, {school.secondaryColor}, {school.primaryColor}00);"
-		>
-			<div class="max-w-7xl mx-auto px-6 flex justify-between">
-				<div class="w-1/3">
-					<h4 class="font-bold text-slate-800 mb-2">Contact Us</h4>
-					<div class="text-[12px] leading-relaxed">
-						<p>Columbia Undergraduate Admissions</p>
-						<p>212 Hamilton Hall, Mail Code 2807</p>
-						<p>New York, NY 10027</p>
-						<p>212-854-2522</p>
-						<p class="mt-2">
-							<a href="mailto:ugrad-ask@columbia.edu" class="text-blue-600 hover:underline"
-								>ugrad-ask@columbia.edu</a
-							>
-						</p>
-						<p>
-							<a href="/disclaimer" class="text-blue-600 hover:underline"
-								>About Admissions & Contact Info</a
-							>
-						</p>
-					</div>
+			<form on:submit={handleLogin} style="font-family: Arial, Helvetica, sans-serif;">
+				{#if error}
+					<p
+						class="text-[13px] text-red-800 border border-red-300 bg-red-50 px-3 py-2 mb-4 max-w-md"
+						role="alert"
+					>
+						{error}
+					</p>
+				{/if}
+
+				<div class="flex items-center gap-3 mb-3">
+					<label for="portal-email" class="text-[14px] text-slate-800 w-28">Email Address</label>
+					<input
+						id="portal-email"
+						type="email"
+						class="border border-slate-400 bg-white px-2 py-[3px] text-[14px] w-64"
+						bind:value={emailInput}
+						autocomplete="email"
+					/>
 				</div>
 
-				<div class="w-1/3">
-					<h4 class="font-bold text-slate-800 mb-2">Related Websites</h4>
-					<div class="flex flex-col gap-1 text-[12px]">
-						<a href="/disclaimer" class="text-blue-600 hover:underline">Columbia College</a>
-						<a href="/disclaimer" class="text-blue-600 hover:underline"
-							>The Fu Foundation School of Engineering and Applied Science</a
-						>
-						<a href="/disclaimer" class="text-blue-600 hover:underline">Columbia University Home</a>
-					</div>
-					<div class="mt-4">
-						<input
-							type="text"
-							placeholder="Search"
-							class="border border-slate-400 p-1 text-[12px] w-64 block mb-1"
-						/>
-						<input
-							type="text"
-							placeholder="Directory"
-							class="border border-slate-400 p-1 text-[12px] w-64 block mb-1"
-						/>
-						<button
-							class="bg-slate-200 text-slate-700 text-[12px] px-3 py-1 mt-2 border border-slate-400"
-							>Logout</button
-						>
-					</div>
+				<div class="flex items-center gap-3 mb-6">
+					<label for="portal-password" class="text-[14px] text-slate-800 w-28">Password</label>
+					<input
+						id="portal-password"
+						type="password"
+						class="border border-slate-400 bg-white px-2 py-[3px] text-[14px] w-64"
+						bind:value={passwordInput}
+						autocomplete="current-password"
+					/>
+					<a
+						href="/disclaimer"
+						class="text-[14px] text-[#1a5b9e] underline ml-3 whitespace-nowrap">Forgot Your Password?</a
+					>
 				</div>
 
-				<div class="w-1/3 text-right">
-					<h4 class="font-bold text-slate-800 mb-2">Take a Virtual Tour</h4>
-					<div class="flex justify-end gap-1 mb-4">
-						<div class="w-4 h-4 bg-red-600 border border-slate-400"></div>
-						<div class="w-4 h-4 bg-blue-600 border border-slate-400"></div>
-						<div class="w-4 h-4 bg-pink-600 border border-slate-400"></div>
-						<div class="w-4 h-4 bg-black border border-slate-400"></div>
-					</div>
-					<button class="bg-slate-700 text-white text-[13px] px-4 py-2 hover:bg-slate-800">
-						Take a Virtual Tour
+				<div class="flex items-center gap-4 pl-[124px] mb-6">
+					<button
+						type="submit"
+						class="border border-slate-400 bg-gradient-to-b from-slate-100 to-slate-300 px-4 py-[3px] text-[13px] font-bold text-slate-800 rounded-[2px] hover:from-slate-200 hover:to-slate-400"
+					>
+						Login
+					</button>
+					<button
+						type="button"
+						on:click={handleLoadSavedLogin}
+						class="border border-slate-300 bg-slate-50 px-3 py-[3px] text-[12px] text-slate-600 rounded-[2px] hover:bg-slate-100"
+					>
+						Load saved PredictAdmit login
 					</button>
 				</div>
-			</div>
 
-			<div
-				class="max-w-7xl mx-auto px-6 mt-8 text-center text-[10px] text-slate-600 border-t border-slate-400 pt-2"
-			>
-				<a href="/disclaimer" class="hover:underline mx-2">Privacy Policy</a>
-				<span class="mx-1">|</span>
-				<a href="/disclaimer" class="hover:underline mx-2">Terms of Use</a>
-				<span class="mx-1">|</span>
-				<a href="/disclaimer" class="hover:underline mx-2">Accessibility</a>
-				<span class="mx-1">|</span>
-				<a href="/disclaimer" class="hover:underline mx-2"
-					>Copyright &copy; 2019 Columbia University</a
-				>
-				<span class="mx-1">|</span>
-				<a href="/disclaimer" class="hover:underline mx-2">Policies</a>
+				<p class="text-[12px] text-slate-500 leading-relaxed max-w-2xl">
+					For this simulation, use the same email address and password that you saved on the
+					PredictAdmit.com home page. No real application data is used, and all information is stored
+					only in your browser.
+				</p>
+			</form>
+		</main>
+
+		<!-- Footer -->
+		<footer
+			class="mt-20 border-t border-slate-200 pt-10 pb-12"
+			style="font-family: Arial, Helvetica, sans-serif;"
+		>
+			<div class="max-w-6xl mx-auto px-6">
+				<h2 class="text-[28px] mb-8 text-slate-900" style="font-family: Georgia, serif;">
+					<span class="font-bold">Columbia</span>
+					<span class="text-slate-500">Undergraduate Admissions</span>
+				</h2>
+				<div class="grid grid-cols-2 md:grid-cols-5 gap-6 text-[13px] text-[#1a5b9e]">
+					<div class="space-y-2">
+						<a href="/disclaimer" class="block hover:underline">Life at Columbia</a>
+						<a href="/disclaimer" class="block hover:underline">How to Apply</a>
+						<a href="/disclaimer" class="block hover:underline">Affordability &amp; Aid</a>
+						<a href="/disclaimer" class="block hover:underline">Academics</a>
+						<a href="/disclaimer" class="block hover:underline">Visit</a>
+					</div>
+					<div class="space-y-2">
+						<a href="/disclaimer" class="block hover:underline">News &amp; Updates</a>
+						<a href="/disclaimer" class="block hover:underline">FAQ</a>
+						<a href="/disclaimer" class="block hover:underline">For Parents &amp; Guardians</a>
+						<a href="/disclaimer" class="block hover:underline">For Counselors</a>
+					</div>
+					<div class="space-y-2">
+						<a href="/disclaimer" class="block hover:underline">Privacy Policy</a>
+						<a href="/disclaimer" class="block hover:underline">Terms of Use</a>
+						<a href="/disclaimer" class="block hover:underline">Accessibility</a>
+						<a href="/disclaimer" class="block hover:underline">University Policies</a>
+					</div>
+					<div class="text-[13px] text-slate-600 leading-relaxed">
+						212 Hamilton Hall<br />
+						Mail Code 2807<br />
+						1130 Amsterdam Avenue<br />
+						New York, NY 10027<br />
+						212-854-2522<br />
+						<a href="/disclaimer" class="text-[#1a5b9e] hover:underline">ugrad-ask@columbia.edu</a>
+					</div>
+					<div class="space-y-2 text-slate-700 font-bold">
+						<div>Columbia College</div>
+						<div>Columbia Engineering</div>
+						<div>Columbia University</div>
+					</div>
+				</div>
+				<div class="flex gap-4 mt-8 text-slate-700 text-lg">
+					<a href="/disclaimer" aria-label="Instagram">&#9673;</a>
+					<a href="/disclaimer" aria-label="Twitter">&#9673;</a>
+					<a href="/disclaimer" aria-label="Facebook">&#9673;</a>
+					<a href="/disclaimer" aria-label="YouTube">&#9673;</a>
+				</div>
+				<div class="mt-6 text-[11px] text-slate-400">
+					PredictAdmit Simulation — Not affiliated with Columbia University.
+				</div>
 			</div>
 		</footer>
-	{:else if $decisionsBySlug[SLUG] === 'admit'}
+	{:else if authenticated && !hasViewedUpdate}
+		<!-- ===================== PORTAL ===================== -->
+		<header class="border-b border-slate-200">
+			<div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+				<div class="flex items-center gap-3">
+					<svg viewBox="0 0 60 46" class="w-8 h-7" aria-hidden="true">
+						<path d="M4 40 L6 16 L18 26 L30 6 L42 26 L54 16 L56 40 Z" fill={COLUMBIA_BLUE} />
+						<rect x="4" y="40" width="52" height="5" fill={COLUMBIA_BLUE} />
+						<circle cx="6" cy="14" r="3" fill={COLUMBIA_BLUE} />
+						<circle cx="30" cy="4" r="3.5" fill={COLUMBIA_BLUE} />
+						<circle cx="54" cy="14" r="3" fill={COLUMBIA_BLUE} />
+					</svg>
+					<div class="leading-tight">
+						<div class="text-[17px] font-bold text-slate-900" style="font-family: Georgia, serif;">
+							Columbia
+						</div>
+						<div class="text-[12px] text-slate-500 -mt-0.5" style="font-family: Georgia, serif;">
+							Undergraduate Admissions
+						</div>
+					</div>
+				</div>
+				<div class="text-[12px] text-slate-600" style="font-family: Arial, Helvetica, sans-serif;">
+					Signed in as {applicantName()}
+				</div>
+			</div>
+		</header>
+
+		<main class="max-w-6xl mx-auto px-6 py-8" style="font-family: Arial, Helvetica, sans-serif;">
+			<div class="flex flex-wrap justify-between items-end border-b border-slate-200 pb-3 mb-6">
+				<h1 class="text-[30px] text-slate-900" style="font-family: Georgia, serif;">Applicant Status</h1>
+				<div class="text-[12px] text-slate-600 flex flex-wrap gap-x-6 gap-y-1">
+					<span><strong>Applicant:</strong> {applicantName()}</span>
+					<span><strong>Round:</strong> {school.round}</span>
+					<span><strong>Reference #:</strong> {school.referenceNumber}</span>
+				</div>
+			</div>
+
+			<!-- Tabs -->
+			<nav class="flex gap-1 border-b border-slate-200 mb-6 text-[13px] font-bold">
+				{#each ['Admissions Status', 'Application', 'Financial Aid', 'Profile'] as tab}
+					<button
+						on:click={() => (activeTab = tab)}
+						class="px-4 py-2 border-t border-l border-r rounded-t-sm -mb-px transition-colors"
+						class:bg-white={activeTab === tab}
+						class:text-slate-900={activeTab === tab}
+						class:border-slate-200={activeTab === tab}
+						class:bg-slate-50={activeTab !== tab}
+						class:text-slate-500={activeTab !== tab}
+						class:border-transparent={activeTab !== tab}
+					>
+						{tab}
+					</button>
+				{/each}
+			</nav>
+
+			{#if activeTab === 'Admissions Status'}
+				<!-- Status update card -->
+				<section class="mb-8">
+					<div
+						class="border-l-4 p-5"
+						style="border-color: {school.primaryColor}; background-color: {COLUMBIA_BLUE}33;"
+					>
+						<h2
+							class="text-[18px] font-bold mb-1"
+							style="color: {school.primaryColor}; font-family: Georgia, serif;"
+						>
+							A Decision Has Been Posted
+						</h2>
+						<p class="text-[14px] text-slate-700 mb-4">
+							An update to your application was last posted on <strong>{school.statusLastPosted}</strong
+							>. Please view your admissions decision below.
+						</p>
+						<button
+							on:click={handleViewUpdate}
+							class="text-[14px] font-bold px-5 py-2 text-white rounded-sm shadow hover:opacity-90"
+							style="background-color: {school.primaryColor};"
+						>
+							View Update &raquo;
+						</button>
+					</div>
+				</section>
+
+				<!-- Checklist -->
+				<section class="mb-8">
+					<h2 class="text-[18px] font-bold text-slate-800 mb-3" style="font-family: Georgia, serif;">
+						Application Checklist
+					</h2>
+					<table class="w-full text-[13px] text-left border border-slate-200">
+						<thead class="bg-slate-50 text-slate-700">
+							<tr>
+								<th class="px-4 py-2 font-bold w-32">Status</th>
+								<th class="px-4 py-2 font-bold">Item</th>
+								<th class="px-4 py-2 font-bold w-40">Date Received</th>
+							</tr>
+						</thead>
+						<tbody>
+							{#each checklistData as item}
+								<tr class="border-t border-slate-100">
+									<td
+										class="px-4 py-2 font-bold"
+										class:text-green-700={item.received}
+										class:text-slate-500={!item.received}
+									>
+										{item.received ? '✓ ' : ''}{item.status}
+									</td>
+									<td class="px-4 py-2 text-slate-700">{item.detail}</td>
+									<td class="px-4 py-2 text-slate-600">{item.date}</td>
+								</tr>
+							{/each}
+						</tbody>
+					</table>
+				</section>
+
+				<section class="mb-4">
+					<h2 class="text-[18px] font-bold text-slate-800 mb-2" style="font-family: Georgia, serif;">
+						Interview
+					</h2>
+					<div class="border border-slate-200 bg-slate-50 p-4 text-[13px] text-slate-700">
+						Your application has been reviewed by the Admissions Committee. Interviews with Columbia
+						alumni representatives are offered on a limited basis; not all applicants are contacted.
+					</div>
+				</section>
+			{:else if activeTab === 'Application'}
+				<div class="border border-slate-200 bg-slate-50 p-6 text-[14px] text-slate-600">
+					Your submitted application materials, essays, and Columbia-specific responses are available
+					here.
+				</div>
+			{:else if activeTab === 'Financial Aid'}
+				<div class="border border-slate-200 bg-slate-50 p-6 text-[14px] text-slate-600">
+					Columbia meets 100% of demonstrated financial need. Your financial aid award, if applicable,
+					will be posted here following an admission offer.
+				</div>
+			{:else}
+				<div class="border border-slate-200 bg-slate-50 p-6 text-[14px] text-slate-600">
+					Review and update your contact details and biographical information.
+				</div>
+			{/if}
+		</main>
+
+		<footer
+			class="border-t border-slate-200 mt-12 py-6"
+			style="font-family: Arial, Helvetica, sans-serif;"
+		>
+			<div class="max-w-6xl mx-auto px-6 flex flex-wrap justify-between text-[11px] text-slate-500">
+				<span>&copy; 2026 Columbia University in the City of New York.</span>
+				<span>PredictAdmit Simulation — Not affiliated with Columbia University.</span>
+			</div>
+		</footer>
+	{:else if shownDecision === 'admit'}
 		<ColumbiaAccepted
 			applicantName={applicantName()}
 			schoolName={school.schoolName}

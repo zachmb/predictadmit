@@ -5,18 +5,23 @@
 	import { decisionsBySlug } from '$lib/stores/results';
 	import { portalDecisionViewed } from '$lib/stores/ui';
 
-	// Shared Components and Configuration
-	import { schoolConfigs } from '$lib/config/schools';
-
 	// School-Specific Components (Decision Letters)
-	// NOTE: These components must exist in $lib/components/brown/
 	import BrownAccepted from '$lib/components/brown/BrownAccepted.svelte';
-	import BrownDenied from '$lib/components/brown/BrownDenied.svelte'; // --- Component Configuration ---
-	const SCHOOL_DATA = schoolConfigs.brown;
-	// Brown's primary color
-	const BROWN_RED = '#4E2A2A';
+	import BrownDenied from '$lib/components/brown/BrownDenied.svelte';
 
-	// --- State Variables (Authentication Logic) ---
+	// --- Component Configuration ---
+	const SLUG = 'brown';
+	const school = {
+		schoolName: 'Brown University',
+		primaryColor: '#4E3629',
+		accentColor: '#ED1C24',
+		footerDomain: 'brown.edu',
+		statusLastPosted: 'March 15, 2026',
+		round: 'Regular Decision',
+		referenceNumber: '112579138'
+	};
+
+	// --- State Variables ---
 	let profile: UserProfile = { ...defaultProfile };
 	let emailInput = '';
 	let passwordInput = '';
@@ -27,15 +32,17 @@
 	// Subscribe to the global user profile store
 	$: profile = $userProfile;
 
-	// Helper functions for dynamic data
+	// Dynamic Data Helpers
 	const applicantName = () => profile.name || 'Applicant';
-	const applicantFirstName = () => profile.name.split(' ')[0] || 'John';
-	const applicantLastName = () => profile.name.split(' ').slice(-1).join(' ') || 'Doe';
-	const applicantEmail = () => profile.email || '1234@notanemail.com'; // HANDLERS
-	// NOTE: Assuming default placeholder for fields not in userProfile store (DOB, Address)
+	const applicantEmail = () => profile.email || 'applicant@example.com';
+
+	// Default decision when the prediction store has no entry for this slug:
+	const DEFAULT_DECISION = 'deny';
+	$: shownDecision = $decisionsBySlug[SLUG] ?? DEFAULT_DECISION;
+
+	// --- Handlers ---
 	const handleLoadSavedLogin = () => {
 		if (!profile.email || !profile.password) {
-			// Use default John Doe credentials if user hasn't set up their own
 			userProfile.update((u) => ({
 				...u,
 				name: u.name || 'John Doe',
@@ -43,26 +50,17 @@
 				password: u.password || 'password123'
 			}));
 		}
-		// Directly authenticate
 		authenticated = true;
 		error = '';
 	};
 
 	const handleLogin = (event: SubmitEvent) => {
 		event.preventDefault();
-
-		if (!SCHOOL_DATA) {
-			error = 'Unknown portal.';
-			authenticated = false;
-			return;
-		}
-
 		if (!profile.email || !profile.password) {
 			error = 'Please set your PredictAdmit email and password on the main page.';
 			authenticated = false;
 			return;
 		}
-
 		if (emailInput.trim() === profile.email && passwordInput === profile.password) {
 			authenticated = true;
 			error = '';
@@ -79,257 +77,263 @@
 </script>
 
 <svelte:head>
-	<title>{SCHOOL_DATA.schoolName} Admissions Portal</title>
+	<title>{school.schoolName}</title>
 </svelte:head>
 
-<div
-	class="bg-slate-200 text-slate-900 font-serif flex flex-col {authenticated ? 'min-h-screen' : ''}"
->
+<div class="min-h-screen bg-white font-serif text-gray-900">
 	{#if !authenticated}
-		<div class="bg-white">
-			<header class="bg-white border-b border-slate-300">
-				<div class="max-w-5xl mx-auto px-6 pt-6 pb-4 flex items-center justify-between">
-					<div class="flex items-baseline gap-3">
-						<span class="text-3xl font-serif" style={`color: ${SCHOOL_DATA.primaryColor};`}>
-							{SCHOOL_DATA.logoPrimary}
-						</span>
-						<span class="text-[11px] tracking-[0.18em] uppercase text-slate-700">
-							{SCHOOL_DATA.logoSecondary}
-						</span>
+		<!-- ============================ LOGIN ============================ -->
+		<div class="h-1.5 w-full" style="background-color: {school.accentColor};"></div>
+		<header class="border-b border-gray-200 bg-white">
+			<div class="mx-auto flex h-20 max-w-6xl items-center justify-between px-6">
+				<a href="/disclaimer" class="flex items-center gap-3">
+					<svg viewBox="0 0 100 100" class="h-11 w-11" aria-hidden="true">
+						<circle cx="50" cy="50" r="48" fill={school.primaryColor} />
+						<circle cx="50" cy="50" r="40" fill="none" stroke="#ffffff" stroke-width="1.5" />
+						<path d="M26 58 C36 50 46 50 50 54 C54 50 64 50 74 58 L74 44 C64 38 54 38 50 42 C46 38 36 38 26 44 Z" fill="#ffffff" />
+						<line x1="50" y1="42" x2="50" y2="54" stroke={school.primaryColor} stroke-width="1.2" />
+						<g stroke="#ffffff" stroke-width="1.4">
+							<line x1="50" y1="20" x2="50" y2="30" />
+							<line x1="34" y1="24" x2="38" y2="32" />
+							<line x1="66" y1="24" x2="62" y2="32" />
+						</g>
+						<circle cx="50" cy="30" r="4" fill="#ffffff" />
+					</svg>
+					<div class="leading-none">
+						<div class="text-2xl font-bold tracking-tight" style="color: {school.primaryColor};">Brown</div>
+						<div class="text-[10px] tracking-[0.28em] text-gray-500">UNIVERSITY</div>
 					</div>
-					<div class="text-[11px] text-slate-700">
-						{applicantName()}
-					</div>
-				</div>
-				<div class="h-8" style={`background-color: ${SCHOOL_DATA.primaryColor};`}></div>
-			</header>
+				</a>
+				<nav class="hidden items-center gap-7 text-[15px] text-gray-800 md:flex">
+					<a href="/disclaimer" class="hover:opacity-70">Explore Brown</a>
+					<a href="/disclaimer" class="hover:opacity-70">Admission &amp; Aid</a>
+					<a href="/disclaimer" class="hover:opacity-70">Academics</a>
+					<a href="/disclaimer" class="hover:opacity-70">Campus Life</a>
+				</nav>
+			</div>
+		</header>
 
-			<section class="bg-white">
-				<div class="max-w-5xl mx-auto px-10 py-10">
-					<h1 class="text-3xl font-normal mb-6">Login</h1>
+		<main class="mx-auto min-h-[520px] max-w-6xl px-6 py-14">
+			<h1 class="mb-8 text-5xl font-normal text-gray-900">Login</h1>
 
-					<div class="border border-lime-700 bg-lime-100 px-4 py-3 mb-8 text-[12px] text-slate-900">
-						To log in, please enter your email address and password.
-					</div>
-
-					<form class="space-y-4 text-sm" on:submit={handleLogin}>
-						{#if error}
-							<p
-								class="text-xs text-red-800 border border-red-300 bg-red-50 px-3 py-2 mb-2"
-								role="alert"
-							>
-								{error}
-							</p>
-						{/if}
-
-						<div class="flex items-center gap-4">
-							<label
-								for="portal-email"
-								class="w-32 text-[12px] font-semibold text-slate-900 text-right"
-							>
-								Email Address
-							</label>
-							<input
-								id="portal-email"
-								type="email"
-								class="border border-slate-500 bg-white px-2 py-1 text-[13px] w-80"
-								bind:value={emailInput}
-								autocomplete="email"
-							/>
-						</div>
-
-						<div class="flex items-center gap-4">
-							<label
-								for="portal-password"
-								class="w-32 text-[12px] font-semibold text-slate-900 text-right"
-							>
-								Password
-							</label>
-							<input
-								id="portal-password"
-								type="password"
-								class="border border-slate-500 bg-white px-2 py-1 text-[13px] w-80"
-								bind:value={passwordInput}
-								autocomplete="current-password"
-							/>
-							<a href="/disclaimer" class="text-[12px] text-blue-800 underline hover:no-underline">
-								Forgot Your Password?
-							</a>
-						</div>
-
-						<div class="flex items-center gap-4 pt-4">
-							<div class="w-32"></div>
-							<div class="flex flex-wrap items-center gap-3">
-								<button
-									type="submit"
-									class="border border-slate-500 bg-slate-300 px-4 py-1 text-[12px] font-semibold hover:bg-slate-400 active:bg-slate-500"
-								>
-									Login
-								</button>
-								<button
-									type="button"
-									class="border border-slate-400 bg-slate-100 px-3 py-1 text-[11px] hover:bg-slate-200 active:bg-slate-300"
-									on:click={handleLoadSavedLogin}
-								>
-									Load saved PredictAdmit login
-								</button>
-							</div>
-						</div>
-
-						<p class="pt-4 text-[10px] leading-relaxed text-slate-600 max-w-xl">
-							For this simulation, use the same email address and password that you saved on the
-							PredictAdmit.com home page. No real application data is used, and all information is
-							stored only in your browser.
-						</p>
-					</form>
-				</div>
-			</section>
-		</div>
-
-		<footer>
-			<div class="h-10 flex items-center" style={`background-color: ${SCHOOL_DATA.primaryColor};`}>
+			<div class="max-w-3xl">
 				<div
-					class="max-w-5xl mx-auto px-6 w-full flex items-center justify-between text-[11px] text-white"
+					class="mb-8 border-l-4 px-4 py-3 text-[13px] text-gray-800"
+					style="border-color: {school.accentColor}; background-color: #f7ecdf;"
 				>
-					<span>&copy; {SCHOOL_DATA.footerDomain} 2019</span>
-					<span class="opacity-80">
-						PredictAdmit.com simulation · Not affiliated with {SCHOOL_DATA.schoolName}
-					</span>
+					To log in, please enter your email address and password.
+				</div>
+
+				<form class="space-y-5" on:submit={handleLogin}>
+					{#if error}
+						<p
+							class="border border-red-300 bg-red-50 px-3 py-2 text-xs text-red-800"
+							role="alert"
+						>
+							{error}
+						</p>
+					{/if}
+
+					<div class="flex items-center gap-6">
+						<label for="portal-email" class="w-32 text-[13px] font-bold text-gray-900">
+							Email Address
+						</label>
+						<input
+							id="portal-email"
+							type="email"
+							class="w-72 border border-gray-300 bg-[#f2f2f2] px-2 py-1.5 text-[13px]"
+							bind:value={emailInput}
+							autocomplete="email"
+						/>
+					</div>
+
+					<div class="flex items-center gap-6">
+						<label for="portal-password" class="w-32 text-[13px] font-bold text-gray-900">
+							Password
+						</label>
+						<input
+							id="portal-password"
+							type="password"
+							class="w-72 border border-gray-300 bg-[#f2f2f2] px-2 py-1.5 text-[13px]"
+							bind:value={passwordInput}
+							autocomplete="current-password"
+						/>
+						<a href="/disclaimer" class="text-[13px] text-gray-700 underline hover:text-gray-900">
+							Forgot Your Password?
+						</a>
+					</div>
+
+					<div class="flex items-center gap-4 pt-3 pl-[152px]">
+						<button
+							type="submit"
+							class="px-5 py-2 text-[13px] font-medium text-white hover:opacity-90"
+							style="background-color: {school.primaryColor};"
+						>
+							Login
+						</button>
+						<button
+							type="button"
+							class="border border-gray-400 bg-gray-100 px-3 py-2 text-[12px] text-gray-700 hover:bg-gray-200"
+							on:click={handleLoadSavedLogin}
+						>
+							Load saved PredictAdmit login
+						</button>
+					</div>
+
+					<p class="max-w-2xl pl-[152px] pt-4 text-[11px] leading-relaxed text-gray-500">
+						For this simulation, use the same email address and password that you saved on the
+						PredictAdmit.com home page. No real application data is used, and all information is
+						stored only in your browser.
+					</p>
+				</form>
+			</div>
+		</main>
+
+		<!-- Footer -->
+		<footer class="text-gray-200" style="background-color: {school.primaryColor};">
+			<div class="mx-auto max-w-6xl px-6 py-10">
+				<div class="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
+					<div class="text-[13px] leading-relaxed">
+						<div class="mb-2 text-base font-semibold text-white">Office of College Admission</div>
+						Brown University<br />
+						Box 1876<br />
+						Providence, RI 02912<br />
+						Phone: 401-863-2378<br />
+						Fax: 401-863-9300
+					</div>
+					<div class="flex items-center gap-4">
+						<a href="/disclaimer" aria-label="Twitter"><svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23 4.9c-.8.4-1.7.6-2.6.8a4.5 4.5 0 0 0 2-2.5c-.9.5-1.9.9-2.9 1.1a4.5 4.5 0 0 0-7.7 4.1A12.8 12.8 0 0 1 2.5 3.7a4.5 4.5 0 0 0 1.4 6 4.4 4.4 0 0 1-2-.6v.1a4.5 4.5 0 0 0 3.6 4.4 4.5 4.5 0 0 1-2 .1 4.5 4.5 0 0 0 4.2 3.1A9 9 0 0 1 1 18.6a12.7 12.7 0 0 0 6.9 2c8.3 0 12.8-6.9 12.8-12.8v-.6c.9-.6 1.6-1.4 2.3-2.3z"/></svg></a>
+						<a href="/disclaimer" aria-label="Facebook"><svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.3-1.5 1.6-1.5h1.7V3.6c-.3 0-1.3-.1-2.4-.1-2.4 0-4 1.5-4 4.1v2.3H7.6V13h2.8v8h3.1z"/></svg></a>
+						<a href="/disclaimer" aria-label="Instagram"><svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.3 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.3 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .3-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.3-2.2-.4a3.7 3.7 0 0 1-1.4-.9 3.7 3.7 0 0 1-.9-1.4c-.2-.4-.3-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.3-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.3 2.2-.4C8.4 2.2 8.8 2.2 12 2.2z"/></svg></a>
+					</div>
+				</div>
+				<div class="mt-8 border-t border-white/20 pt-4 text-[12px] text-gray-300">
+					&copy; 2026 Brown University
 				</div>
 			</div>
 		</footer>
-	{:else if !hasViewedUpdate}
-		<div class="flex-grow flex flex-col min-h-screen bg-white">
-			<header class="bg-white border-b border-gray-300">
-				<div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-					<span class="text-2xl font-serif text-slate-900 font-normal tracking-wide">BROWN</span>
-
-					<div class="text-xs text-slate-700">
-						{applicantName()} <a href="/" class="text-blue-800 hover:underline">Logout</a>
+	{:else if authenticated && !hasViewedUpdate}
+		<!-- ============================ PORTAL ============================ -->
+		<div class="h-1.5 w-full" style="background-color: {school.accentColor};"></div>
+		<header class="text-white" style="background-color: {school.primaryColor};">
+			<div class="mx-auto flex h-20 max-w-6xl items-center justify-between px-6">
+				<div class="flex items-center gap-3">
+					<svg viewBox="0 0 100 100" class="h-11 w-11" aria-hidden="true">
+						<circle cx="50" cy="50" r="48" fill="#ffffff" fill-opacity="0.1" stroke="#ffffff" stroke-width="1.5" />
+						<path d="M26 58 C36 50 46 50 50 54 C54 50 64 50 74 58 L74 44 C64 38 54 38 50 42 C46 38 36 38 26 44 Z" fill="#ffffff" />
+						<line x1="50" y1="42" x2="50" y2="54" stroke={school.primaryColor} stroke-width="1.2" />
+						<circle cx="50" cy="30" r="4" fill="#ffffff" />
+					</svg>
+					<div class="leading-none">
+						<div class="text-2xl font-bold tracking-tight text-white">Brown</div>
+						<div class="text-[10px] tracking-[0.28em] text-gray-300">UNIVERSITY</div>
 					</div>
 				</div>
-			</header>
+				<div class="text-[12px] text-gray-200">admission.{school.footerDomain}</div>
+			</div>
+		</header>
 
-			<main class="max-w-7xl mx-auto px-6 pt-6 pb-10 flex-1 text-sm text-slate-800">
-				<p class="mb-4 text-base font-normal">
-					{applicantFirstName()}, thank you for applying to Brown University!
-				</p>
-				<p class="mb-8 text-xs text-slate-600 leading-relaxed max-w-2xl">
-					It is important that, since releasing the regular admission decision on March 26, 2020,
-					you check your Brown portal regularly for updates and below.
-				</p>
-
-				<div class="grid grid-cols-2 gap-x-12">
-					<div class="space-y-6">
-						<h2 class="text-base font-bold mb-2">Your Information</h2>
-						<p class="text-xs">Reference ID: 123456789</p>
-						<p class="text-xs">First: {applicantFirstName()}</p>
-						<p class="text-xs">Last: {applicantLastName()}</p>
-
-						<h2 class="text-base font-bold pt-4 mb-2">Portal Tools</h2>
-						<p class="text-xs max-w-sm leading-relaxed">
-							Update financial aid to-do list, change your email address, or update your academic
-							record. If you need to update the address you listed on your Common Application,
-							please
-							<a href="#" class="text-red-700 underline hover:no-underline">email us.</a>
-						</p>
-
-						<p class="text-xs max-w-sm leading-relaxed">
-							To view your Financial Aid application status, please visit the Brown Financial Aid
-							Portal. For technical assistance, please contact the IT Service Center at (401)
-							863-HELP. Office hours can be found <a
-								href="#"
-								class="text-red-700 underline hover:no-underline">here.</a
-							>
-						</p>
-					</div>
-
-					<div class="space-y-6">
-						<div class="border border-yellow-500 bg-yellow-100 p-3 text-xs">
-							<h3 class="font-bold mb-1">Status Update</h3>
-							<p>An update to your application was last posted December 17, 2019.</p>
-						</div>
-
-						<button
-							on:click={handleViewUpdate}
-							class="block w-full border border-gray-400 bg-gray-50 p-3 text-sm text-center font-bold text-slate-900 hover:bg-gray-200 active:bg-gray-300 transition duration-150 ease-in-out"
-						>
-							View Your Admissions Decision
-						</button>
-
-						<h3 class="text-base font-bold pt-4 mb-2">Upload Materials</h3>
-						<p class="text-xs max-w-md leading-relaxed">
-							**Supplementary Materials:** While not expected, applicants to the College may submit
-							supplementary materials for consideration. This inquiry into status admitted is sheer
-							**do not submit** restricted materials. We allow the opportunity to do so in an effort
-							to accommodate students who wish to share additional information when it is
-							supplementary matter.
-						</p>
-
-						<h3 class="text-base font-bold pt-4 mb-2">Academic Paper/Research Abstract</h3>
-						<p class="text-xs max-w-md leading-relaxed">
-							If you have completed an academic paper or significant research project, you may
-							upload this document to your application below. Please submit a real paper/abstract,
-							and be sure to title your work, for example: My research project for the state science
-							fair 2018 (if you won, you are the most amazing). We want to read your work and
-							anything else you want us to know.
-						</p>
-
-						<h3 class="text-base font-bold pt-4 mb-2">Test Scores</h3>
-						<p class="text-xs max-w-md leading-relaxed">
-							You may <a href="#" class="text-red-700 underline hover:no-underline">self-report</a>
-							test scores that were not included in your Common Application. You can view our testing
-							requirements on our
-							<a href="#" class="text-red-700 underline hover:no-underline">website.</a>
-						</p>
-					</div>
-				</div>
-
-				<h3 class="text-base font-bold mt-10 mb-3">Take a Virtual Tour of Brown</h3>
-				<div
-					class="border border-gray-300 w-[300px] h-[200px] bg-gray-100 flex flex-col justify-end p-2 text-white"
-					style="background-image: url('placeholder-image.jpg'); background-size: cover;"
-				>
-					<span class="font-bold text-lg">Explore Our Campus Now</span>
-				</div>
-			</main>
-			<div class="mt-auto bg-white border-t border-gray-300 pt-6 pb-12 text-xs text-slate-800">
-				<div class="max-w-7xl mx-auto px-6 flex items-start justify-between">
-					<div>
-						<p class="text-base font-bold mb-2">Office of College Admission</p>
-						<p>Brown University</p>
-						<p>Box 1876</p>
-						<p>Providence, RI 02912, USA</p>
-					</div>
-
-					<div class="space-y-1">
-						<p>U: (401) 863-9800</p>
-						<p>F: (401) 863-9300</p>
-						<p>
-							<a href="mailto:admission@brown.edu" class="text-blue-800 hover:underline"
-								>admission@brown.edu</a
-							>
-						</p>
-					</div>
-
-					<div class="space-y-1">
-						<p><a href="#" class="text-blue-800 hover:underline">Facebook</a></p>
-						<p><a href="#" class="text-blue-800 hover:underline">Twitter</a></p>
-						<p><a href="#" class="text-blue-800 hover:underline">Instagram</a></p>
-						<p><a href="#" class="text-blue-800 hover:underline">YouTube</a></p>
-					</div>
+		<main class="mx-auto max-w-4xl px-6 pb-16">
+			<div class="flex flex-wrap items-start justify-between gap-4 pt-10 pb-6">
+				<h1 class="text-3xl font-normal text-gray-900">Applicant Status Portal</h1>
+				<div class="text-right text-[13px] text-gray-700">
+					<div class="font-semibold text-gray-900">{applicantName()}</div>
+					<a
+						href="/disclaimer"
+						class="mt-1 inline-block font-semibold"
+						style="color: {school.accentColor};">Logout</a
+					>
 				</div>
 			</div>
 
-			<footer class="h-8 flex items-center" style={`background-color: ${BROWN_RED};`}>
-				<div class="max-w-7xl mx-auto px-6 w-full text-[10px] text-white">
-					&copy; 2020 Brown University. All rights reserved.
+			<!-- Status Update -->
+			<section class="mb-8 border border-gray-200">
+				<div
+					class="border-b-2 px-5 py-3 text-lg font-semibold text-white"
+					style="background-color: {school.primaryColor}; border-color: {school.accentColor};"
+				>
+					Status Update
 				</div>
-			</footer>
-		</div>
-	{:else if $decisionsBySlug['brown'] === 'admit'}
-		<BrownAccepted applicantName={applicantName()} />
+				<div class="px-5 py-6">
+					<p class="text-[15px] text-gray-700">
+						An update to your application was last posted {school.statusLastPosted}.
+					</p>
+					<button
+						on:click={handleViewUpdate}
+						class="mt-5 inline-flex items-center gap-2 px-5 py-2.5 font-sans text-sm font-semibold text-white shadow-sm transition-opacity hover:opacity-90"
+						style="background-color: {school.accentColor};"
+					>
+						Your Admission Decision &gt;&gt;
+					</button>
+				</div>
+			</section>
+
+			<!-- Your Information -->
+			<section class="mb-8 border border-gray-200">
+				<div
+					class="border-b border-gray-200 bg-gray-100 px-5 py-3 text-lg font-semibold text-gray-800"
+				>
+					Your Information
+				</div>
+				<div class="px-5 py-5 text-[14px] text-gray-700">
+					<dl class="space-y-2">
+						<div class="flex gap-2">
+							<dt class="w-32 font-semibold text-gray-900">Reference ID:</dt>
+							<dd>{school.referenceNumber}</dd>
+						</div>
+						<div class="flex gap-2">
+							<dt class="w-32 font-semibold text-gray-900">Name:</dt>
+							<dd>{applicantName()}</dd>
+						</div>
+						<div class="flex gap-2">
+							<dt class="w-32 font-semibold text-gray-900">Email:</dt>
+							<dd>{applicantEmail()}</dd>
+						</div>
+						<div class="flex gap-2">
+							<dt class="w-32 font-semibold text-gray-900">Round:</dt>
+							<dd>{school.round}</dd>
+						</div>
+					</dl>
+				</div>
+			</section>
+		</main>
+
+		<!-- Footer -->
+		<footer class="text-gray-200" style="background-color: {school.primaryColor};">
+			<div class="mx-auto max-w-6xl px-6 py-10">
+				<div class="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
+					<div class="text-[13px] leading-relaxed">
+						<div class="mb-2 text-base font-semibold text-white">Office of College Admission</div>
+						Brown University<br />
+						Box 1876<br />
+						Providence, RI 02912<br />
+						Phone: 401-863-2378<br />
+						Fax: 401-863-9300
+					</div>
+					<div class="flex items-center gap-4">
+						<a href="/disclaimer" aria-label="Twitter"><svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23 4.9c-.8.4-1.7.6-2.6.8a4.5 4.5 0 0 0 2-2.5c-.9.5-1.9.9-2.9 1.1a4.5 4.5 0 0 0-7.7 4.1A12.8 12.8 0 0 1 2.5 3.7a4.5 4.5 0 0 0 1.4 6 4.4 4.4 0 0 1-2-.6v.1a4.5 4.5 0 0 0 3.6 4.4 4.5 4.5 0 0 1-2 .1 4.5 4.5 0 0 0 4.2 3.1A9 9 0 0 1 1 18.6a12.7 12.7 0 0 0 6.9 2c8.3 0 12.8-6.9 12.8-12.8v-.6c.9-.6 1.6-1.4 2.3-2.3z"/></svg></a>
+						<a href="/disclaimer" aria-label="Facebook"><svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.3-1.5 1.6-1.5h1.7V3.6c-.3 0-1.3-.1-2.4-.1-2.4 0-4 1.5-4 4.1v2.3H7.6V13h2.8v8h3.1z"/></svg></a>
+						<a href="/disclaimer" aria-label="Instagram"><svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.3 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.3 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .3-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.3-2.2-.4a3.7 3.7 0 0 1-1.4-.9 3.7 3.7 0 0 1-.9-1.4c-.2-.4-.3-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.3-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.3 2.2-.4C8.4 2.2 8.8 2.2 12 2.2z"/></svg></a>
+					</div>
+				</div>
+				<div class="mt-8 border-t border-white/20 pt-4 text-[12px] text-gray-300">
+					&copy; 2026 Brown University
+				</div>
+			</div>
+		</footer>
+	{:else if shownDecision === 'admit'}
+		<BrownAccepted
+			applicantName={applicantName()}
+			schoolName={school.schoolName}
+			primaryColor={school.primaryColor}
+			footerDomain={school.footerDomain}
+		/>
 	{:else}
-		<BrownDenied applicantName={applicantName()} />
+		<BrownDenied
+			applicantName={applicantName()}
+			schoolName={school.schoolName}
+			primaryColor={school.primaryColor}
+			footerDomain={school.footerDomain}
+		/>
 	{/if}
 </div>

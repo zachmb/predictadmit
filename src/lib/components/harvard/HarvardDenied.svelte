@@ -1,25 +1,20 @@
 <script lang="ts">
 	// The parent component passes these props
 	export let applicantName: string;
-	export let schoolName: string = 'Harvard College'; // Default
-	export let primaryColor: string = '#A41034'; // Default Harvard Crimson
-	export let footerDomain: string = 'harvard.edu'; // Default
+	export let schoolName: string = 'Harvard College';
+	export let primaryColor: string = '#A51C30';
+	export let footerDomain: string = 'harvard.edu';
+
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { userProfile } from '$lib/stores/user';
+	import { decisionsBySlug } from '$lib/stores/results';
 
 	$: session = $page.data.session;
 
 	let googleSignedIn = false;
-	let googleEmail = '';
-	let googleName = '';
+	$: googleSignedIn = !!session?.user;
 
-	$: {
-		googleSignedIn = !!session?.user;
-		googleEmail = (session?.user?.email as string) ?? '';
-		googleName = (session?.user?.name as string) ?? '';
-	}
-	import { decisionsBySlug } from '$lib/stores/results';
 	const viewAnalysis = () => {
 		goto('/results/harvard');
 	};
@@ -29,130 +24,116 @@
 	<title>{schoolName} - Admission Decision</title>
 </svelte:head>
 
-<main class="min-h-screen bg-white text-gray-800 font-serif p-6">
-	<div class="max-w-3xl mx-auto mt-10">
+<main class="min-h-screen bg-[#f4f4f4] font-serif text-gray-800">
+	<div class="mx-auto max-w-3xl px-6 py-10">
 		{#if googleSignedIn && $userProfile.usingAI}
 			<div class="mb-6 flex justify-end">
 				<button
 					on:click={viewAnalysis}
-					class="group flex items-center px-4 py-2 bg-[#003262] text-white rounded-lg text-sm font-sans font-bold hover:bg-slate-800 transition-all shadow-md active:scale-95"
+					class="flex items-center gap-2 rounded-lg bg-[#003262] px-4 py-2 font-sans text-sm font-bold text-white shadow-md transition-all hover:bg-slate-800 active:scale-95"
 				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						class="w-4 h-4 transition-transform group-hover:-translate-x-1"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
-					>
-					</svg>
 					Deep Dive: Why did I get {$decisionsBySlug['harvard']}?
 				</button>
 			</div>
 		{/if}
-		<div class="border-b-2 pb-4 mb-8" style="border-color: {primaryColor};">
-			<div class="flex items-center">
-				<div
-					class="w-16 h-16 text-white flex items-center justify-center font-bold text-2xl mr-4"
-					style="background-color: {primaryColor};"
-				>
-					H
+
+		<!-- Date + crimson rule -->
+		<div class="mb-0 text-[13px] font-semibold text-gray-700">March 26, 2026</div>
+		<div class="mt-2 mb-6 border-t-2" style="border-color: {primaryColor};"></div>
+
+		<!-- Letter card -->
+		<div class="bg-white px-10 py-10 shadow-sm">
+			<!-- Letterhead -->
+			<div class="mb-8 flex items-center gap-3">
+				<svg viewBox="0 0 100 112" class="h-12 w-12" aria-hidden="true">
+					<path d="M6 4 H94 V64 C94 88 74 102 50 110 C26 102 6 88 6 64 Z" fill={primaryColor} />
+					<rect x="18" y="26" width="18" height="14" rx="1.5" fill="white" />
+					<rect x="41" y="26" width="18" height="14" rx="1.5" fill="white" />
+					<rect x="64" y="26" width="18" height="14" rx="1.5" fill="white" />
+					<text x="27" y="36" font-size="8" text-anchor="middle" fill={primaryColor} font-family="serif">VE</text>
+					<text x="50" y="36" font-size="8" text-anchor="middle" fill={primaryColor} font-family="serif">RI</text>
+					<text x="73" y="36" font-size="7" text-anchor="middle" fill={primaryColor} font-family="serif">TAS</text>
+				</svg>
+				<div class="leading-tight">
+					<div class="text-sm font-bold tracking-[0.15em] text-gray-900">HARVARD COLLEGE</div>
+					<div class="text-[11px] italic text-gray-500">Admissions and Financial Aid</div>
 				</div>
-				<div>
-					<h1 class="text-2xl font-bold" style="color: {primaryColor};">HARVARD COLLEGE</h1>
-					<div class="text-sm text-gray-600">
-						Office of Admissions and Financial Aid<br />
-						86 Brattle Street, Cambridge, Massachusetts 02138<br />
-						Telephone 617-495-1551 • Fax 617-495-8821
+			</div>
+
+			<div class="mb-6 text-[15px] text-gray-900">Dear {applicantName || 'Applicant'},</div>
+
+			<div class="space-y-4 text-[14px] leading-relaxed text-gray-800">
+				<p>
+					The Committee on Admissions has completed its meetings, and I am very sorry to inform you
+					that we cannot offer you admission to the Class of 2030. I wish that a different decision
+					had been possible, but I hope that receiving this final decision now will be helpful to you
+					as you make your college plans.
+				</p>
+				<p>
+					In recent years, the Committee has been faced with increasingly difficult decisions; many
+					thousands of students now apply for the sixteen hundred and fifty places in the first-year
+					class, and the great majority of our applicants could be successful here academically. In
+					addition, most candidates present strong co-curricular credentials. The Committee has,
+					therefore, been faced with the necessity of choosing a first-year class from a great many
+					more talented and highly qualified students than it has room to admit.
+				</p>
+				<p>
+					We wish we could admit more of our fine applicants, and we understand how difficult the
+					college application process can be for students and their families. While the Committee
+					conducted its deliberations with the utmost care, we know that no one can predict with
+					certainty what an individual will accomplish during college or beyond. Experience suggests
+					that the particular college a student attends is far less important than developing the
+					strengths and talents that a student brings to campus over the next four years.
+				</p>
+				<p>
+					We very much appreciate the interest you have shown in Harvard, and we hope you will accept
+					the best wishes of the Committee for success in all your future endeavors.
+				</p>
+			</div>
+
+			<div class="mt-8 text-[14px] text-gray-800">Sincerely,</div>
+			<div class="mt-3">
+				<div
+					class="text-3xl italic text-gray-800"
+					style="font-family: 'Segoe Script', 'Brush Script MT', cursive;"
+				>
+					William R. Fitzsimmons
+				</div>
+				<div class="mt-2 text-[14px] font-semibold text-gray-900">William R. Fitzsimmons</div>
+				<div class="text-[13px] text-gray-600">Dean of Admissions and Financial Aid</div>
+			</div>
+
+			<!-- Contact letterhead block -->
+			<div class="mt-12 flex items-start gap-3 border-t border-gray-200 pt-6">
+				<svg viewBox="0 0 100 112" class="h-10 w-10 shrink-0" aria-hidden="true">
+					<path d="M6 4 H94 V64 C94 88 74 102 50 110 C26 102 6 88 6 64 Z" fill={primaryColor} />
+					<rect x="18" y="26" width="18" height="14" rx="1.5" fill="white" />
+					<rect x="41" y="26" width="18" height="14" rx="1.5" fill="white" />
+					<rect x="64" y="26" width="18" height="14" rx="1.5" fill="white" />
+				</svg>
+				<div class="text-[11px] leading-relaxed text-gray-500">
+					<div class="text-[12px] font-bold tracking-[0.15em] text-gray-800">HARVARD COLLEGE</div>
+					<div class="italic">Admissions and Financial Aid</div>
+					<div class="mt-2">
+						86 Brattle Street, Cambridge, MA 02138<br />
+						(617) 495-1551 &middot; Office of Admissions<br />
+						(617) 495-1581 &middot; Griffin Financial Aid Office<br />
+						college.{footerDomain}
 					</div>
 				</div>
 			</div>
-		</div>
 
-		<div class="mb-8">
-			<div class="text-right text-sm text-gray-600 mb-2">March 26, 2020</div>
-			<div class="space-y-1">
-				<div>{applicantName || 'Applicant'}</div>
-				<div>1600 Massachusetts Ave</div>
-				<div>Cambridge, MA 02138</div>
+			<!-- Simulated-letter disclaimer -->
+			<div class="mt-8 rounded border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800">
+				<strong>Note:</strong> This is a simulated admission letter for entertainment purposes only.
+				This is not a real admission decision from Harvard University.
 			</div>
 		</div>
 
-		<div class="mb-6">
-			<div class="text-xl font-bold" style="color: {primaryColor};">
-				Dear {applicantName || 'Applicant'},
-			</div>
-		</div>
-
-		<div class="space-y-4 mb-8">
-			<p>
-				Thank you for your interest in {schoolName} and for your competitive application to the Class
-				of 2024. This year, we received a deeply impressive pool of applications from students around
-				the world. The review process was exceptionally rigorous, reflecting the extraordinary caliber
-				of the applicant pool.
-			</p>
-
-			<p>
-				The Committee reviewed your credentials with great care and attention, but due to the
-				overwhelming number of highly qualified candidates and the limited capacity of our
-				first-year class, we regret to inform you that we are unable to offer you admission to {schoolName}.
-			</p>
-
-			<p>
-				We recognize the tremendous effort and achievement represented by your application, and we
-				know that this decision will be disappointing. Please know that this decision reflects only
-				the competitive realities of our selection process, and not a lack of confidence in your
-				abilities or potential for future success.
-			</p>
-
-			<p>
-				We wish you the very best as you pursue your education and future endeavors at another
-				outstanding institution. You should take great pride in the accomplishments you have already
-				achieved.
-			</p>
-
-			<p>Thank you once again for considering Harvard College.</p>
-		</div>
-
-		<div class="mt-12">
-			<div class="mb-2">
-				<img
-					src="/signature-placeholder.png"
-					alt="Signature"
-					class="h-12"
-					style="filter: invert(15%) sepia(85%) saturate(1500%) hue-rotate(330deg) brightness(30%) contrast(100%);"
-				/>
-			</div>
-			<div class="font-bold">William R. Fitzsimmons</div>
-			<div class="text-sm text-gray-600">
-				Dean of Admissions and Financial Aid<br />
-				{schoolName}
-			</div>
-		</div>
-
-		<div class="mt-16 pt-8 border-t border-gray-200 text-xs text-gray-500">
-			<div class="grid grid-cols-2 gap-8">
-				<div>
-					<strong>The Harvard Mission:</strong><br />
-					To educate the citizens and citizen-leaders for our society. We do this through our commitment
-					to the transformative power of a liberal arts and sciences education.
-				</div>
-				<div>
-					<strong>Contact Information:</strong><br />
-					Email:
-					<a href="mailto:admissions@harvard.edu" class="hover:underline">admissions@harvard.edu</a
-					><br />
-					Phone: 617-495-1551<br />
-					Website:
-					<a href={`https://college.${footerDomain}`} class="hover:underline"
-						>college.{footerDomain}</a
-					>
-				</div>
-			</div>
-		</div>
-
-		<div class="mt-8 p-4 bg-amber-50 border border-amber-200 rounded text-sm text-amber-800">
-			<strong>Note:</strong> This is a simulated admission letter for entertainment purposes only. This
-			is not a real admission decision from Harvard University.
+		<div class="mt-8 text-center">
+			<a href="/disclaimer" class="text-[13px] underline" style="color: {primaryColor};"
+				>Return to Application Status</a
+			>
 		</div>
 	</div>
 </main>

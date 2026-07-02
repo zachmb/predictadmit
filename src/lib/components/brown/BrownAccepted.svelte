@@ -1,5 +1,8 @@
 <script lang="ts">
 	export let applicantName: string = 'Applicant';
+	export let schoolName: string = 'Brown University';
+	export let primaryColor: string = '#4E3629';
+	export let footerDomain: string = 'brown.edu';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { userProfile } from '$lib/stores/user';

@@ -1,5 +1,8 @@
 <script lang="ts">
 	export let applicantName: string = 'Applicant';
+	export let schoolName: string = 'Dartmouth College';
+	export let primaryColor: string = '#00693E';
+	export let footerDomain: string = 'dartmouth.edu';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { userProfile } from '$lib/stores/user';

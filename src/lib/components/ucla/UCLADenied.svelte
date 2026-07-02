@@ -1,129 +1,132 @@
 <script lang="ts">
-	export let applicantName: string = 'Applicant';
+	// The parent component passes these props
+	export let applicantName: string;
+	export let schoolName: string = 'University of California, Los Angeles';
+	export let primaryColor: string = '#2774AE';
+	export let footerDomain: string = 'ucla.edu';
+
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { userProfile } from '$lib/stores/user';
+	import { decisionsBySlug } from '$lib/stores/results';
 
 	$: session = $page.data.session;
 
 	let googleSignedIn = false;
-	let googleEmail = '';
-	let googleName = '';
+	$: googleSignedIn = !!session?.user;
 
-	$: {
-		googleSignedIn = !!session?.user;
-		googleEmail = (session?.user?.email as string) ?? '';
-		googleName = (session?.user?.name as string) ?? '';
-	}
-	import { decisionsBySlug } from '$lib/stores/results';
 	const viewAnalysis = () => {
 		goto('/results/ucla');
 	};
 </script>
 
-<div class="min-h-screen bg-white p-8 font-serif">
-	<div class="max-w-2xl mx-auto">
+<svelte:head>
+	<title>{schoolName} - Admission Decision</title>
+</svelte:head>
+
+<main class="min-h-screen bg-[#f4f4f4] font-serif text-gray-800">
+	<div class="mx-auto max-w-3xl px-6 py-10">
 		{#if googleSignedIn && $userProfile.usingAI}
 			<div class="mb-6 flex justify-end">
 				<button
 					on:click={viewAnalysis}
-					class="group flex items-center px-4 py-2 bg-[#003262] text-white rounded-lg text-sm font-sans font-bold hover:bg-slate-800 transition-all shadow-md active:scale-95"
+					class="flex items-center gap-2 rounded-lg px-4 py-2 font-sans text-sm font-bold text-white shadow-md transition-all hover:opacity-90 active:scale-95"
+					style="background-color: {primaryColor};"
 				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						class="w-4 h-4 transition-transform group-hover:-translate-x-1"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
-					>
-					</svg>
 					Deep Dive: Why did I get {$decisionsBySlug['ucla']}?
 				</button>
 			</div>
 		{/if}
-		<!-- Letterhead -->
-		<div class="border-b-2 border-gray-300 pb-4 mb-8">
-			<div class="flex items-center mb-4">
-				<div class="w-12 h-12 bg-gray-300 rounded mr-4 flex items-center justify-center">
-					<span class="text-white text-xl font-bold">UCLA</span>
-				</div>
-				<div>
-					<h1 class="text-2xl font-bold text-gray-700">University of California, Los Angeles</h1>
-					<p class="text-gray-600 text-sm">Office of Undergraduate Admissions</p>
+
+		<!-- Date + blue rule -->
+		<div class="mb-0 text-[13px] font-semibold text-gray-700">March 20, 2026</div>
+		<div class="mt-2 mb-6 border-t-2" style="border-color: {primaryColor};"></div>
+
+		<!-- Letter card -->
+		<div class="bg-white px-10 py-10 shadow-sm">
+			<!-- Letterhead -->
+			<div class="mb-8 flex items-center gap-3">
+				<span class="text-4xl font-extrabold italic tracking-tight" style="color: {primaryColor};">UCLA</span>
+				<div class="leading-tight">
+					<div class="text-sm font-bold tracking-[0.1em] text-gray-900">UCLA</div>
+					<div class="text-[11px] italic text-gray-500">Office of Undergraduate Admission</div>
 				</div>
 			</div>
-			<div class="text-sm text-gray-600">
-				<p>1147 Murphy Hall, Box 951436</p>
-				<p>Los Angeles, California 90095</p>
+
+			<div class="mb-6 text-[14px] leading-relaxed text-gray-900">
+				{applicantName || 'Applicant'}<br />
+				Fall 2026 First-Year Applicant
 			</div>
-		</div>
 
-		<!-- Date -->
-		<p class="mb-8 text-gray-700">
-			{new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
-		</p>
+			<div class="mb-6 text-[15px] text-gray-900">Dear {applicantName || 'Applicant'},</div>
 
-		<!-- Applicant Info -->
-		<div class="mb-8">
-			<p class="text-gray-800">{applicantName}</p>
-			<p class="text-gray-600">Freshman Applicant</p>
-		</div>
-
-		<!-- Letter Body -->
-		<div class="mb-8 leading-relaxed text-gray-800">
-			<p class="mb-4">Dear {applicantName},</p>
-
-			<p class="mb-4">
-				Thank you for your application to the University of California, Los Angeles. After careful
-				consideration by our Admissions Committee, I regret to inform you that we are unable to
-				offer you admission to the Fall 2024 entering class.
-			</p>
-
-			<p class="mb-4">
-				This year, UCLA reviewed applications from an exceptionally accomplished pool of more than
-				146,000 candidates—the most applications received by any four-year university in the United
-				States. Each application was evaluated holistically, considering academic achievement,
-				personal qualities, extracurricular involvement, and potential contributions to our diverse
-				campus community in Los Angeles.
-			</p>
-
-			<div class="my-8 p-6 bg-gray-50 border-l-4 border-[#2774AE] italic">
-				<p class="mb-2 font-semibold text-gray-700">About Our Selection Process</p>
-				<p class="text-gray-600">
-					As one of the world's top public universities, UCLA seeks students who demonstrate
-					exceptional academic ability, intellectual curiosity, and a commitment to community
-					engagement. While you have clearly demonstrated significant accomplishments, the
-					limitations of our enrollment capacity prevent us from admitting many outstanding students
-					who would undoubtedly thrive at UCLA.
+			<div class="space-y-4 text-[14px] leading-relaxed text-gray-800">
+				<p>
+					After careful review of your application for admission, we regret to inform you that we are
+					unable to offer you admission for Fall 2026. UCLA continues to receive far more applications
+					for admission than we can accommodate in our first-year class. For Fall 2026, we received
+					over 146,000 first-year applications and were able to admit fewer than one in ten. Our
+					challenge lies not only in our volume of applications but in the quality of the students who
+					choose to apply to our campus.
+				</p>
+				<p>
+					Each application is unique, and each student presents wonderful attributes and potential. Our
+					work is challenging but our commitment to being thorough in our review process is sincere.
+					Every application is read at least twice with consideration given to accomplishments both in
+					and outside of the classroom and we are mindful of the opportunities and challenges students
+					face while achieving so much in their schools and communities. Ultimately, no single
+					attribute or achievement guarantees admission&mdash;there are simply too many well-qualified,
+					accomplished, and capable applicants for the number of first-year spaces available at UCLA.
+				</p>
+				<p>
+					If attending UCLA remains your ambition, you should know that there is another opportunity for
+					admission later in your academic career: applying as a junior-level transfer student. You can
+					learn more about the transfer option at
+					<a href="/disclaimer" class="underline" style="color: {primaryColor};">www.admission.ucla.edu/transfer</a>.
+				</p>
+				<p>
+					While no language in a decision letter can lessen the disappointment you may feel, please know
+					that we understand the emotional investment you have made in this process and take this
+					responsibility very seriously. We wish you all the best in your collegiate experience.
 				</p>
 			</div>
 
-			<p class="mb-4">
-				Please know that this decision reflects the extraordinary selectivity of our applicant pool
-				rather than any deficiency in your abilities or potential. We encourage you to consider the
-				many other excellent institutions within the University of California system and beyond.
-			</p>
+			<div class="mt-8 text-[14px] text-gray-800">Sincerely,</div>
+			<div class="mt-3">
+				<div
+					class="text-3xl italic text-gray-800"
+					style="font-family: 'Segoe Script', 'Brush Script MT', cursive;"
+				>
+					Ffiona Rees
+				</div>
+				<div class="mt-2 text-[14px] font-semibold text-gray-900">Ffiona Rees</div>
+				<div class="text-[13px] text-gray-600">Executive Director, Undergraduate Admission</div>
+			</div>
 
-			<p class="mb-4">
-				We appreciate the time and effort you dedicated to your application and wish you all the
-				best in your future academic endeavors.
-			</p>
+			<!-- Contact letterhead block -->
+			<div class="mt-12 flex items-start gap-3 border-t border-gray-200 pt-6">
+				<span class="shrink-0 text-3xl font-extrabold italic tracking-tight" style="color: {primaryColor};">UCLA</span>
+				<div class="text-[11px] leading-relaxed text-gray-500">
+					<div class="text-[12px] font-bold tracking-[0.1em] text-gray-800">UCLA Undergraduate Admission</div>
+					<div class="mt-2">
+						1147 Murphy Hall, Box 951436<br />
+						Los Angeles, CA 90095-1436<br />
+						admission.{footerDomain}
+					</div>
+				</div>
+			</div>
+
+			<!-- Simulated-letter disclaimer -->
+			<div class="mt-8 rounded border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800">
+				<strong>Note:</strong> This is a simulated admission letter for entertainment purposes only.
+				This is not a real admission decision from the University of California, Los Angeles.
+			</div>
 		</div>
 
-		<!-- Signature -->
-		<div class="mt-12">
-			<p class="mb-1">Sincerely,</p>
-			<div class="mb-8">
-				<p class="font-semibold text-gray-700">Office of Undergraduate Admissions</p>
-				<p class="text-sm text-gray-600">University of California, Los Angeles</p>
-			</div>
-
-			<div class="mt-12 p-6 bg-gray-50 rounded-lg border border-gray-300 text-sm">
-				<p class="text-gray-700 mb-2">
-					This decision is final for the 2024-2025 application cycle. We encourage you to explore
-					other excellent institutions where your talents will be valued and nurtured.
-				</p>
-			</div>
+		<div class="mt-8 text-center">
+			<a href="/disclaimer" class="text-[13px] underline" style="color: {primaryColor};"
+				>Return to Application Status</a
+			>
 		</div>
 	</div>
-</div>
+</main>

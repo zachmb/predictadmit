@@ -1,130 +1,214 @@
 <script lang="ts">
-	export let applicantName: string = 'Applicant';
-	export let schoolName: string; //just so the portal doesn't get mad
-	export let primaryColor: string;
-	export let footerDomain: string;
+	// The parent component passes these props
+	export let applicantName: string;
+	export let schoolName: string = 'Northwestern University';
+	export let primaryColor: string = '#4E2A84';
+	export let footerDomain: string = 'northwestern.edu';
+
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { userProfile } from '$lib/stores/user';
+	import { decisionsBySlug } from '$lib/stores/results';
 
 	$: session = $page.data.session;
 
 	let googleSignedIn = false;
-	let googleEmail = '';
-	let googleName = '';
+	$: googleSignedIn = !!session?.user;
 
-	$: {
-		googleSignedIn = !!session?.user;
-		googleEmail = (session?.user?.email as string) ?? '';
-		googleName = (session?.user?.name as string) ?? '';
-	}
-	import { decisionsBySlug } from '$lib/stores/results';
+	const firstName = () => (applicantName || 'Applicant').split(' ')[0];
+
 	const viewAnalysis = () => {
 		goto('/results/northwestern');
 	};
 </script>
 
-<div class="min-h-screen bg-white p-8 font-serif">
-	<div class="max-w-2xl mx-auto">
+<svelte:head>
+	<title>{schoolName} - Admission Decision</title>
+</svelte:head>
+
+<main class="min-h-screen bg-white font-sans text-gray-800">
+	<!-- Purple wordmark bar -->
+	<div style="background-color: {primaryColor};">
+		<div class="mx-auto max-w-6xl px-6 py-3">
+			<span class="font-serif text-lg text-white">Northwestern</span>
+		</div>
+	</div>
+
+	<!-- White header -->
+	<header class="border-b border-gray-200 bg-white">
+		<div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
+			<div class="text-2xl font-normal tracking-wide" style="color: {primaryColor};">
+				UNDERGRADUATE ADMISSIONS
+			</div>
+			<div class="flex items-center gap-2 border-b border-gray-300 pb-1 text-gray-400">
+				<span class="text-[12px]">Search this site</span>
+				<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<circle cx="11" cy="11" r="7" stroke-width="2" />
+					<path d="M21 21l-4.3-4.3" stroke-width="2" stroke-linecap="round" />
+				</svg>
+			</div>
+		</div>
+		<div class="border-t border-gray-200">
+			<nav
+				class="mx-auto flex max-w-6xl flex-wrap items-center gap-8 px-6 py-4 text-[15px] font-semibold"
+				style="color: {primaryColor};"
+			>
+				{#each ['Academics', 'Student Life', 'Student Success', 'Cost and Aid', 'Visit and Engage', 'Apply', 'FAQs'] as item}
+					<a href="/disclaimer" class="hover:underline">{item}</a>
+				{/each}
+			</nav>
+		</div>
+	</header>
+
+	<div class="mx-auto max-w-3xl px-6 py-10">
 		{#if googleSignedIn && $userProfile.usingAI}
 			<div class="mb-6 flex justify-end">
 				<button
 					on:click={viewAnalysis}
-					class="group flex items-center px-4 py-2 bg-[#003262] text-white rounded-lg text-sm font-sans font-bold hover:bg-slate-800 transition-all shadow-md active:scale-95"
+					class="flex items-center gap-2 rounded-lg px-4 py-2 font-sans text-sm font-bold text-white shadow-md transition-all hover:opacity-90 active:scale-95"
+					style="background-color: {primaryColor};"
 				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						class="w-4 h-4 transition-transform group-hover:-translate-x-1"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
-					>
-					</svg>
 					Deep Dive: Why did I get {$decisionsBySlug['northwestern']}?
 				</button>
 			</div>
 		{/if}
-		<!-- Letterhead -->
-		<div class="border-b-2 border-gray-300 pb-4 mb-8">
-			<div class="flex items-center mb-4">
-				<div class="w-12 h-12 bg-gray-300 rounded mr-4 flex items-center justify-center">
-					<span class="text-white text-xl font-bold">N</span>
+
+		<!-- Date + Download PDF -->
+		<div class="flex items-center justify-between">
+			<div class="text-[13px] text-gray-700">March 17, 2026</div>
+			<a
+				href="/disclaimer"
+				class="text-[13px] font-semibold hover:underline"
+				style="color: {primaryColor};">Download PDF</a
+			>
+		</div>
+
+		<!-- Letterhead title -->
+		<h1 class="mt-6 font-serif text-4xl font-normal" style="color: {primaryColor};">
+			Northwestern University
+		</h1>
+
+		<div class="mt-8 text-[14px] text-gray-900">Dear {firstName()}:</div>
+
+		<div class="mt-4 space-y-4 text-[14px] leading-relaxed text-gray-800">
+			<p>
+				The admission committee has concluded its evaluation of applicants to Northwestern.
+				Unfortunately, we are unable to offer you a place in the first-year class.
+			</p>
+			<p>
+				Given the size and strength of our applicant pool relative to the limited spots in our
+				incoming class, we cannot admit all qualified students who apply to Northwestern. You should
+				not feel our decision reflects negatively on you or your potential as a college student. We
+				simply are unable to admit every candidate who presents a solid record of achievement.
+			</p>
+			<p>
+				Our admission committee reviews applications carefully in our efforts to shape an incoming
+				class. Unfortunately, we cannot provide explanations about individual admission decisions;
+				however,
+				<a href="/disclaimer" class="italic underline" style="color: {primaryColor};"
+					>A Statement from the Vice President of Enrollment</a
+				>, linked to this letter, may answer some of your questions about our admission process.
+			</p>
+			<p>
+				The admission committee appreciates the time and effort you put into applying to
+				Northwestern. We wish you every success as you pursue your education.
+			</p>
+		</div>
+
+		<div class="mt-8 text-[14px] text-gray-800">Sincerely,</div>
+
+		<div class="mt-6 flex flex-wrap gap-16">
+			<div>
+				<div
+					class="text-2xl italic text-gray-800"
+					style="font-family: 'Segoe Script', 'Brush Script MT', cursive;"
+				>
+					Stacey Kostell
 				</div>
-				<div>
-					<h1 class="text-2xl font-bold text-gray-700">Northwestern University</h1>
-					<p class="text-gray-600 text-sm">Office of Undergraduate Admission</p>
+				<div class="mt-2 text-[13px] text-gray-900">Stacey Kostell</div>
+				<div class="text-[13px] text-gray-600">Vice President of Enrollment</div>
+			</div>
+			<div>
+				<div
+					class="text-2xl italic text-gray-800"
+					style="font-family: 'Segoe Script', 'Brush Script MT', cursive;"
+				>
+					Elisabeth Kinsley
 				</div>
-			</div>
-			<div class="text-sm text-gray-600">
-				<p>1801 Hinman Avenue</p>
-				<p>Evanston, Illinois 60208</p>
+				<div class="mt-2 text-[13px] text-gray-900">Elisabeth Kinsley</div>
+				<div class="text-[13px] text-gray-600">Dean of Undergraduate Admission</div>
 			</div>
 		</div>
 
-		<!-- Date -->
-		<p class="mb-8 text-gray-700">
-			{new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
-		</p>
-
-		<!-- Applicant Info -->
-		<div class="mb-8">
-			<p class="text-gray-800">{applicantName}</p>
-			<p class="text-gray-600">Regular Decision Applicant</p>
+		<!-- Simulated-letter disclaimer -->
+		<div class="mt-10 rounded border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800">
+			<strong>Note:</strong> This is a simulated admission letter for entertainment purposes only. This
+			is not a real admission decision from Northwestern University.
 		</div>
 
-		<!-- Letter Body -->
-		<div class="mb-8 leading-relaxed text-gray-800">
-			<p class="mb-4">Dear {applicantName},</p>
-
-			<p class="mb-4">
-				Thank you for your application to Northwestern University. After careful consideration by
-				our Admissions Committee, I regret to inform you that we are unable to offer you admission
-				to the Class of 2028.
-			</p>
-
-			<p class="mb-4">
-				This year, Northwestern reviewed applications from an exceptionally accomplished pool of
-				more than 52,000 candidates. Each application was evaluated holistically, considering
-				academic achievement, personal qualities, extracurricular involvement, and potential
-				contributions to our vibrant campus community.
-			</p>
-
-			<div class="my-8 p-6 bg-gray-50 border-l-4 border-[#4E2A84] italic">
-				<p class="mb-2 font-semibold text-gray-700">About Our Selection Process</p>
-				<p class="text-gray-600">
-					Northwestern seeks students who demonstrate exceptional academic ability, intellectual
-					curiosity, and a commitment to personal growth. While you have clearly demonstrated
-					significant accomplishments, the limitations of our class size prevent us from admitting
-					many outstanding students who would undoubtedly thrive at Northwestern.
-				</p>
-			</div>
-
-			<p class="mb-4">
-				Please know that this decision reflects the extraordinary selectivity of our applicant pool
-				rather than any deficiency in your abilities or potential. We have every confidence that you
-				will find success and make meaningful contributions at another excellent institution.
-			</p>
-
-			<p class="mb-4">
-				We appreciate the time and effort you dedicated to your application and wish you all the
-				best in your future academic endeavors.
-			</p>
-		</div>
-
-		<!-- Signature -->
-		<div class="mt-12">
-			<p class="mb-1">Sincerely,</p>
-			<div class="mb-8">
-				<p class="font-semibold text-gray-700">Office of Undergraduate Admission</p>
-				<p class="text-sm text-gray-600">Northwestern University</p>
-			</div>
-
-			<div class="mt-12 p-6 bg-gray-50 rounded-lg border border-gray-300 text-sm">
-				<p class="text-gray-700 mb-2">
-					This decision is final for the 2024-2025 application cycle. We encourage you to explore
-					other excellent institutions where your talents will be valued and nurtured.
-				</p>
-			</div>
+		<div class="mt-8 text-right">
+			<a href="/disclaimer" class="text-[13px] font-semibold hover:underline" style="color: {primaryColor};"
+				>Return to Application Status</a
+			>
 		</div>
 	</div>
-</div>
+
+	<!-- Dark footer -->
+	<footer class="bg-[#1c1319] text-gray-300">
+		<div class="mx-auto max-w-6xl px-6 py-12">
+			<div class="grid gap-10 md:grid-cols-3">
+				<div>
+					<div class="font-serif text-2xl text-white">Northwestern University</div>
+					<div class="mt-2 text-[15px] font-semibold text-gray-200">
+						Office of Undergraduate Admission
+					</div>
+					<div class="mt-6 space-y-2 text-[13px] text-gray-400">
+						<div>1801 Hinman Avenue<br />Evanston, IL 60208</div>
+						<div>(847) 491-7271</div>
+						<a href="/disclaimer" class="underline">ug-admission@{footerDomain}</a>
+					</div>
+				</div>
+				<div>
+					<div class="text-[13px] font-bold tracking-wide text-white">Connect</div>
+					<div class="mt-4 flex items-center gap-3">
+						{#each ['YouTube', 'Instagram', 'TikTok', 'Facebook'] as social}
+							<a
+								href="/disclaimer"
+								aria-label={social}
+								class="flex h-9 w-9 items-center justify-center rounded-full"
+								style="background-color: {primaryColor};"
+							>
+								<span class="text-[10px] font-bold text-white">{social[0]}</span>
+							</a>
+						{/each}
+					</div>
+					<a
+						href="/disclaimer"
+						class="mt-6 inline-flex items-center border border-gray-500 px-4 py-2 text-[12px] font-semibold uppercase tracking-wide text-white hover:bg-white/10"
+					>
+						Request Information &rarr;
+					</a>
+				</div>
+				<div>
+					<div class="text-[13px] font-bold tracking-wide text-white">Northwestern Resources</div>
+					<div class="mt-4 space-y-2 text-[13px] text-gray-300">
+						<a href="/disclaimer" class="block underline">Building Access</a>
+						<a href="/disclaimer" class="block underline">Campus Emergency Information</a>
+						<a href="/disclaimer" class="block underline">Careers</a>
+						<a href="/disclaimer" class="block underline">Contact Northwestern University</a>
+						<a href="/disclaimer" class="block underline">University Policies</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div style="background-color: {primaryColor};">
+			<div class="mx-auto flex max-w-6xl flex-wrap items-center gap-4 px-6 py-3 text-[12px] text-gray-200">
+				<span>&copy; 2026 Northwestern University</span>
+				<a href="/disclaimer" class="font-semibold underline">Accessibility</a>
+				<a href="/disclaimer" class="font-semibold underline">Disclaimer</a>
+				<a href="/disclaimer" class="font-semibold underline">Privacy Statement</a>
+				<a href="/disclaimer" class="font-semibold underline">Report a Concern</a>
+			</div>
+		</div>
+	</footer>
+</main>

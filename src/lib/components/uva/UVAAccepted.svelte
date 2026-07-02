@@ -1,0 +1,149 @@
+<script lang="ts">
+	// The parent component passes these props
+	export let applicantName: string;
+	export let schoolName: string = 'University of Virginia';
+	export let primaryColor: string = '#232D4B'; // UVA Jefferson Blue
+	export let footerDomain: string = 'virginia.edu';
+	const accentColor = '#E57200'; // UVA Rotunda Orange
+
+	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
+	import { userProfile } from '$lib/stores/user';
+	import { decisionsBySlug } from '$lib/stores/results';
+
+	$: session = $page.data.session;
+
+	let googleSignedIn = false;
+	$: googleSignedIn = !!session?.user;
+
+	const viewAnalysis = () => {
+		goto('/results/uva');
+	};
+</script>
+
+<svelte:head>
+	<title>{schoolName} - Admission Decision</title>
+</svelte:head>
+
+<main class="min-h-screen bg-white text-slate-800 font-serif p-6">
+	<div class="max-w-3xl mx-auto mt-10">
+		{#if googleSignedIn && $userProfile.usingAI}
+			<div class="mb-6 flex justify-end">
+				<button
+					on:click={viewAnalysis}
+					class="group flex items-center px-4 py-2 text-white rounded-lg text-sm font-sans font-bold hover:opacity-90 transition-all shadow-md active:scale-95"
+					style="background-color: {primaryColor};"
+				>
+					Deep Dive: Why did I get {$decisionsBySlug['uva']}?
+				</button>
+			</div>
+		{/if}
+
+		<!-- Letterhead -->
+		<div class="border-b-4 pb-4 mb-8" style="border-color: {accentColor};">
+			<div class="flex items-center">
+				<div
+					class="w-16 h-16 text-white flex items-center justify-center font-bold text-3xl mr-4 rounded-sm"
+					style="background-color: {accentColor};"
+				>
+					V
+				</div>
+				<div>
+					<h1 class="text-2xl font-bold tracking-wide" style="color: {primaryColor};">
+						UNIVERSITY OF VIRGINIA
+					</h1>
+					<div class="text-sm text-slate-600">
+						Office of Undergraduate Admission<br />
+						190 McCormick Road, P.O. Box 400160, Charlottesville, VA 22904<br />
+						Telephone (434) 982-5300
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="mb-8">
+			<div class="text-right text-sm text-slate-600 mb-2">March 21, 2026</div>
+			<div class="space-y-1">
+				<div>{applicantName || 'Applicant'}</div>
+			</div>
+		</div>
+
+		<div class="mb-6">
+			<div class="text-xl font-bold" style="color: {primaryColor};">
+				Dear {applicantName || 'Applicant'},
+			</div>
+		</div>
+
+		<div class="space-y-4 mb-8 leading-relaxed">
+			<p>
+				It is my great pleasure to offer you admission to the University of Virginia. On behalf of
+				the entire Office of Undergraduate Admission, congratulations. Your application stood out in
+				an extraordinarily talented and accomplished pool, and we are genuinely excited about all
+				that you will bring to Grounds.
+			</p>
+
+			<p>
+				We read every application with great care, looking not only at academic achievement but at
+				character, curiosity, and the ways a student might contribute to and grow within our
+				community. Your record of accomplishment and the person we came to know through your
+				application convinced us that you belong here. We believe you will thrive at UVA and help
+				make this University an even better place.
+			</p>
+
+			<p>
+				We hope you will join us this spring for <strong>Days on the Lawn</strong>, our celebration
+				for admitted students. It is the best way to experience the academic life, traditions, and
+				community of the University firsthand, to meet faculty and current students, and to picture
+				yourself as a Wahoo. Details and registration are available in your MyUVA Application Portal.
+			</p>
+
+			<p>
+				To reserve your place in the entering class, please submit your enrollment decision through
+				your applicant portal by <strong>May 1, 2026</strong>. If you applied for financial aid,
+				Student Financial Services will share your award package separately; please do not let cost
+				stand between you and this opportunity before speaking with our office.
+			</p>
+
+			<p>
+				Congratulations once again. We are honored that you considered the University of Virginia,
+				and we very much hope to welcome you to Mr. Jefferson's University this fall.
+			</p>
+		</div>
+
+		<div class="mt-12">
+			<div class="font-bold" style="color: {primaryColor};">Greg W. Roberts</div>
+			<div class="text-sm text-slate-600">
+				Associate Vice Provost of Enrollment and<br />
+				Dean of Admission<br />
+				{schoolName}
+			</div>
+		</div>
+
+		<div class="mt-16 pt-8 border-t border-slate-200 text-xs text-slate-500">
+			<div class="grid grid-cols-2 gap-8">
+				<div>
+					<strong>The University's Purpose:</strong><br />
+					To advance human knowledge, educate leaders, and cultivate an informed citizenry founded on
+					the belief that ideas can change the world for the better.
+				</div>
+				<div>
+					<strong>Contact Information:</strong><br />
+					Email:
+					<a href="mailto:undergradadmission@virginia.edu" class="hover:underline"
+						>undergradadmission@{footerDomain}</a
+					><br />
+					Phone: (434) 982-5300<br />
+					Website:
+					<a href={`https://admission.${footerDomain}`} class="hover:underline"
+						>admission.{footerDomain}</a
+					>
+				</div>
+			</div>
+		</div>
+
+		<div class="mt-8 p-4 bg-amber-50 border border-amber-200 rounded text-sm text-amber-800">
+			<strong>Note:</strong> This is a simulated admission letter for entertainment purposes only. This
+			is not a real admission decision from the University of Virginia.
+		</div>
+	</div>
+</main>

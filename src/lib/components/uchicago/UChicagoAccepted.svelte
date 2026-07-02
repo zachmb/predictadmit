@@ -1,5 +1,9 @@
 <script lang="ts">
-	export let applicantName: string = 'Applicant';
+	// The parent component passes these props
+	export let applicantName: string;
+	export let schoolName: string = 'The University of Chicago';
+	export let primaryColor: string = '#800000'; // UChicago maroon
+	export let footerDomain: string = 'uchicago.edu';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { userProfile } from '$lib/stores/user';
@@ -21,129 +25,134 @@
 	};
 </script>
 
-<div class="min-h-screen bg-white p-8 font-serif">
-	<div class="max-w-2xl mx-auto">
+<svelte:head>
+	<title>{schoolName} - Admission Decision</title>
+</svelte:head>
+
+<main class="min-h-screen bg-white text-gray-800 font-serif p-6">
+	<div class="max-w-3xl mx-auto mt-10">
 		{#if googleSignedIn && $userProfile.usingAI}
 			<div class="mb-6 flex justify-end">
 				<button
 					on:click={viewAnalysis}
-					class="group flex items-center px-4 py-2 bg-[#003262] text-white rounded-lg text-sm font-sans font-bold hover:bg-slate-800 transition-all shadow-md active:scale-95"
+					class="group flex items-center px-4 py-2 text-white rounded-lg text-sm font-sans font-bold hover:opacity-90 transition-all shadow-md active:scale-95"
+					style="background-color: {primaryColor};"
 				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						class="w-4 h-4 transition-transform group-hover:-translate-x-1"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
-					>
-					</svg>
 					Deep Dive: Why did I get {$decisionsBySlug['uchicago']}?
 				</button>
 			</div>
 		{/if}
-		<!-- Letterhead - UChicago Maroon -->
-		<div class="border-b-4 border-[#800000] pb-4 mb-8">
-			<div class="flex items-center mb-4">
-				<!-- UChicago Phoenix Logo -->
-				<div class="w-12 h-12 bg-[#800000] rounded-full mr-4 flex items-center justify-center">
-					<span class="text-white text-xl font-bold">C</span>
+
+		<div class="border-b-2 pb-4 mb-8" style="border-color: {primaryColor};">
+			<div class="flex items-center">
+				<div
+					class="w-16 h-16 text-white flex items-center justify-center font-bold text-3xl mr-4 font-serif"
+					style="background-color: {primaryColor};"
+				>
+					UC
 				</div>
 				<div>
-					<h1 class="text-2xl font-bold text-[#800000]">The University of Chicago</h1>
-					<p class="text-gray-700 text-sm">Office of College Admissions</p>
+					<h1 class="text-2xl font-bold" style="color: {primaryColor};">THE UNIVERSITY OF CHICAGO</h1>
+					<div class="text-sm text-gray-600">
+						Office of College Admissions<br />
+						1101 East 58th Street, Rosenwald Hall 105, Chicago, Illinois 60637<br />
+						Telephone 773.702.8650 &bull; collegeadmissions@uchicago.edu
+					</div>
 				</div>
-			</div>
-			<div class="text-sm text-gray-600">
-				<p>1101 E. 58th Street</p>
-				<p>Rosenwald Hall, Suite 105</p>
-				<p>Chicago, Illinois 60637</p>
-				<p>Tel: 773-702-8650</p>
 			</div>
 		</div>
 
-		<!-- Date -->
-		<p class="mb-8 text-gray-700">
-			{new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
-		</p>
-
-		<!-- Applicant Info -->
 		<div class="mb-8">
-			<p class="text-lg font-medium text-gray-800">{applicantName}</p>
-			<p class="text-gray-600">Regular Decision Applicant</p>
-		</div>
-
-		<!-- Letter Body -->
-		<div class="mb-8 leading-relaxed text-gray-800">
-			<p class="mb-4">Dear {applicantName},</p>
-
-			<p class="mb-4">
-				It is with great pleasure that we offer you admission to the College of the University of
-				Chicago, Class of 2028. Welcome to the life of the mind.
-			</p>
-
-			<p class="mb-4">
-				Your application was evaluated within an exceptionally thoughtful and intellectually curious
-				applicant pool. The Admissions Committee was impressed by your distinctive approach to
-				learning, your willingness to engage with unconventional ideas, and your demonstrated
-				commitment to rigorous inquiry—qualities that align perfectly with the University of
-				Chicago's distinctive academic culture.
-			</p>
-
-			<div class="my-8 p-6 bg-red-50 border-l-4 border-[#800000] italic">
-				<p class="mb-2 font-semibold text-[#800000]">Welcome to the Life of the Mind</p>
-				<p class="text-gray-700">
-					At Chicago, you will join a community of scholars who value rigorous debate, intellectual
-					curiosity, and the pursuit of knowledge for its own sake. You'll engage with our unique
-					Core Curriculum, work closely with world-renowned faculty, and participate in the vibrant
-					intellectual life of our Hyde Park campus.
-				</p>
+			<div class="text-right text-sm text-gray-600 mb-2">March 16, 2026</div>
+			<div class="space-y-1">
+				<div>{applicantName || 'Applicant'}</div>
+				<div>2550 Waterview Dr, Unit 347</div>
+				<div>Northbrook, IL 60062</div>
 			</div>
+		</div>
 
-			<p class="mb-4">
-				As an admitted student, you will receive comprehensive information about next steps,
-				including details about UChicago's admitted student programs, housing, course registration,
-				and financial aid (if applicable). You can also expect to hear directly from current
-				students, faculty, and alumni who are eager to welcome you to our intellectual community.
+		<div class="mb-6">
+			<div class="text-xl font-bold" style="color: {primaryColor};">
+				Dear {applicantName || 'Applicant'},
+			</div>
+		</div>
+
+		<div class="space-y-4 mb-8">
+			<p>
+				Congratulations! It is with tremendous enthusiasm that I write to offer you admission to the
+				College of the University of Chicago as a member of the Class of 2030. On behalf of the
+				Committee on Admissions, I want to be the first to welcome you to our community of scholars.
 			</p>
 
-			<p class="mb-4">
-				This offer of admission is contingent upon your successful completion of the current
-				academic year. We expect that you will maintain the high standards of academic achievement
-				and personal conduct that characterized your secondary school record.
+			<p>
+				This year we reviewed one of the largest and most talented applicant pools in the history of
+				the University. Your candidacy stood out for its intellectual daring, your genuine love of
+				ideas, and the distinctive way you engaged the questions we posed. The Committee was
+				especially struck by the originality of your thinking &mdash; the very quality that defines
+				life on our campus, where inquiry is relentless and no idea is taken for granted.
 			</p>
 
-			<p class="mb-4">
-				Please take time to celebrate this significant achievement with your family, teachers, and
-				friends who have supported you throughout this process. We look forward to welcoming you to
-				the University of Chicago this fall.
+			<p>
+				At UChicago you will join faculty and classmates who share your curiosity and who will
+				challenge you to sharpen every argument, question every assumption, and pursue knowledge for
+				its own sake. From the Core to the seminar table to late nights in the Reg, this is a place
+				built for people who cannot stop asking &ldquo;why.&rdquo;
+			</p>
+
+			<p>
+				To learn more about your enrollment, financial aid, and the many opportunities that await
+				you, please visit your UChicago Account. We invite you to join us for our admitted students
+				program this spring to experience the life of the mind firsthand. Your reply and enrollment
+				deposit are due by <strong>May 1, 2026</strong>.
+			</p>
+
+			<p>
+				Congratulations once again on this remarkable achievement. We cannot wait to see what you
+				will make of your time in Hyde Park.
 			</p>
 		</div>
 
-		<!-- Signature -->
 		<div class="mt-12">
-			<p class="mb-1">Sincerely,</p>
-			<div class="mb-8">
-				<div class="h-12 mb-2 flex items-center text-[#800000] font-bold">
-					The University of Chicago
-				</div>
-				<p class="font-semibold text-[#800000]">James G. Nondorf</p>
-				<p class="text-sm text-gray-700">Vice President for Enrollment and Dean of Admissions</p>
-				<p class="text-sm text-gray-600">The University of Chicago</p>
+			<div class="mb-2">
+				<img
+					src="/signature-placeholder.png"
+					alt="Signature"
+					class="h-12"
+					style="filter: invert(15%) sepia(85%) saturate(1500%) hue-rotate(330deg) brightness(30%) contrast(100%);"
+				/>
 			</div>
+			<div class="font-bold">James G. Nondorf</div>
+			<div class="text-sm text-gray-600">
+				Vice President and Dean of Admissions and Financial Aid<br />
+				{schoolName}
+			</div>
+		</div>
 
-			<div class="mt-12 p-6 bg-red-50 rounded-lg border border-red-200">
-				<p class="text-sm text-gray-700 mb-2">
-					<strong class="text-[#800000]">Next Steps:</strong> Your official admission packet will arrive
-					by mail within 7-10 business days. Please log into your UChicago Account to view your financial
-					aid award (if applicable) and to confirm your enrollment by May 1.
-				</p>
-				<p class="text-sm text-gray-700">
-					<strong class="text-[#800000]">UChicago Tradition:</strong> Admitted students are invited
-					to attend
-					<em>Destination UChicago</em>, our admitted student program, in April. Registration
-					information will be available in your portal.
-				</p>
+		<div class="mt-16 pt-8 border-t border-gray-200 text-xs text-gray-500">
+			<div class="grid grid-cols-2 gap-8">
+				<div>
+					<strong>Crescat scientia; vita excolatur.</strong><br />
+					&ldquo;Let knowledge grow from more to more; and so be human life enriched.&rdquo; The
+					motto of the University of Chicago.
+				</div>
+				<div>
+					<strong>Contact Information:</strong><br />
+					Email:
+					<a href="mailto:collegeadmissions@uchicago.edu" class="hover:underline"
+						>collegeadmissions@uchicago.edu</a
+					><br />
+					Phone: 773.702.8650<br />
+					Website:
+					<a href={`https://collegeadmissions.${footerDomain}`} class="hover:underline"
+						>collegeadmissions.{footerDomain}</a
+					>
+				</div>
 			</div>
+		</div>
+
+		<div class="mt-8 p-4 bg-amber-50 border border-amber-200 rounded text-sm text-amber-800">
+			<strong>Note:</strong> This is a simulated admission letter for entertainment purposes only. This
+			is not a real admission decision from The University of Chicago.
 		</div>
 	</div>
-</div>
+</main>

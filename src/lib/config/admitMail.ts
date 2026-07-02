@@ -201,6 +201,139 @@ export const portals: PortalEmail[] = [
 		from: 'WWU Admissions <admissions@wwu.edu>',
 		subject: 'Western Washington University admission portal update',
 		received: 'Mar 20, 2026, 5:05 PM'
+	},
+	{
+		name: 'Georgia Institute of Technology',
+		slug: 'georgiatech',
+		from: 'Georgia Tech Admission <admission@gatech.edu>',
+		subject: 'A decision has been posted to your Georgia Tech status page',
+		received: 'Mar 20, 2026, 5:07 PM'
+	},
+	{
+		name: 'New York University',
+		slug: 'nyu',
+		from: 'NYU Admissions <admissions@nyu.edu>',
+		subject: 'Your NYU application decision is now available',
+		received: 'Mar 20, 2026, 5:09 PM'
+	},
+	{
+		name: 'University of Southern California',
+		slug: 'usc',
+		from: 'USC Undergraduate Admission <admission@usc.edu>',
+		subject: 'Your USC admission decision is available in your portal',
+		received: 'Mar 20, 2026, 5:11 PM'
+	},
+	{
+		name: 'Georgetown University',
+		slug: 'georgetown',
+		from: 'Georgetown Admissions <undergraduate@georgetown.edu>',
+		subject: 'Your Georgetown application status has been updated',
+		received: 'Mar 20, 2026, 5:13 PM'
+	},
+	{
+		name: 'University of Notre Dame',
+		slug: 'notredame',
+		from: 'Notre Dame Admissions <admissions@nd.edu>',
+		subject: 'A decision has been posted to your Notre Dame portal',
+		received: 'Mar 20, 2026, 5:15 PM'
+	},
+	{
+		name: 'Emory University',
+		slug: 'emory',
+		from: 'Emory Admission <admission@emory.edu>',
+		subject: 'Your Emory admission decision is now available',
+		received: 'Mar 20, 2026, 5:17 PM'
+	},
+	{
+		name: 'University of Virginia',
+		slug: 'uva',
+		from: 'UVA Admission <undergradadmission@virginia.edu>',
+		subject: 'Your UVA admission decision is available in MyUVA',
+		received: 'Mar 20, 2026, 5:19 PM'
+	},
+	{
+		name: 'Carnegie Mellon University',
+		slug: 'cmu',
+		from: 'Carnegie Mellon Admission <undergraduate-admissions@andrew.cmu.edu>',
+		subject: 'Your Carnegie Mellon admission decision is now available',
+		received: 'Mar 20, 2026, 5:21 PM'
+	},
+	{
+		name: 'University of Michigan',
+		slug: 'umich',
+		from: 'U-M Admissions <admissions@umich.edu>',
+		subject: 'Your University of Michigan decision is now available',
+		received: 'Mar 20, 2026, 5:23 PM'
+	},
+	{
+		name: 'University of North Carolina at Chapel Hill',
+		slug: 'unc',
+		from: 'UNC Admissions <admissions@unc.edu>',
+		subject: 'A decision has been posted to your UNC portal',
+		received: 'Mar 20, 2026, 5:25 PM'
+	},
+	{
+		name: 'University of California, San Diego',
+		slug: 'ucsd',
+		from: 'UC San Diego Admissions <admissions@ucsd.edu>',
+		subject: 'Your UC San Diego admission decision is now available',
+		received: 'Mar 20, 2026, 5:27 PM'
+	},
+	{
+		name: 'University of California, Irvine',
+		slug: 'uci',
+		from: 'UC Irvine Admissions <admissions@uci.edu>',
+		subject: 'Your UC Irvine admission decision is now available',
+		received: 'Mar 20, 2026, 5:29 PM'
+	},
+	{
+		name: 'University of California, Davis',
+		slug: 'ucdavis',
+		from: 'UC Davis Admissions <undergraduateadmissions@ucdavis.edu>',
+		subject: 'Your UC Davis admission decision is now available',
+		received: 'Mar 20, 2026, 5:31 PM'
+	},
+	{
+		name: 'Wake Forest University',
+		slug: 'wakeforest',
+		from: 'Wake Forest Admissions <admissions@wfu.edu>',
+		subject: 'Your Wake Forest admission decision is now available',
+		received: 'Mar 20, 2026, 5:33 PM'
+	},
+	{
+		name: 'University of Florida',
+		slug: 'uf',
+		from: 'UF Admissions <freshman@admissions.ufl.edu>',
+		subject: 'Your University of Florida admission decision is available',
+		received: 'Mar 20, 2026, 5:35 PM'
+	},
+	{
+		name: 'University of Illinois Urbana-Champaign',
+		slug: 'uiuc',
+		from: 'Illinois Admissions <admissions@illinois.edu>',
+		subject: 'Your University of Illinois admission decision is available',
+		received: 'Mar 20, 2026, 5:37 PM'
+	},
+	{
+		name: 'University of Wisconsin-Madison',
+		slug: 'wisconsin',
+		from: 'UW-Madison Admissions <onwisconsin@admissions.wisc.edu>',
+		subject: 'Your UW-Madison admission decision is now available',
+		received: 'Mar 20, 2026, 5:39 PM'
+	},
+	{
+		name: 'Purdue University',
+		slug: 'purdue',
+		from: 'Purdue Admissions <admissions@purdue.edu>',
+		subject: 'Your Purdue admission decision is now available',
+		received: 'Mar 20, 2026, 5:41 PM'
+	},
+	{
+		name: 'The Ohio State University',
+		slug: 'osu',
+		from: 'Ohio State Admissions <askabuckeye@osu.edu>',
+		subject: 'Your Ohio State admission decision is now available',
+		received: 'Mar 20, 2026, 5:43 PM'
 	}
 ];
 

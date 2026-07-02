@@ -5,17 +5,20 @@
 	import { decisionsBySlug } from '$lib/stores/results';
 	import { portalDecisionViewed } from '$lib/stores/ui';
 
-	// Shared Components and Configuration
-	import { schoolConfigs } from '$lib/config/schools';
-
 	// School-Specific Components (Decision Letters)
 	import DartmouthAccepted from '$lib/components/dartmouth/DartmouthAccepted.svelte';
 	import DartmouthDenied from '$lib/components/dartmouth/DartmouthDenied.svelte';
 
 	// --- Component Configuration ---
-	const SCHOOL_DATA = schoolConfigs.dartmouth; // Ensure 'dartmouth' exists in your config
-	const DARTMOUTH_GREEN = '#00693E';
-	const DARK_FOOTER_BG = '#1e2023'; // Deep green/black for the footer
+	const SLUG = 'dartmouth';
+	const school = {
+		schoolName: 'Dartmouth College',
+		primaryColor: '#00693E',
+		footerDomain: 'dartmouth.edu',
+		statusLastPosted: 'March 16, 2026',
+		round: 'Regular Decision',
+		referenceNumber: '20260012'
+	};
 
 	// --- State Variables ---
 	let profile: UserProfile = { ...defaultProfile };
@@ -24,13 +27,18 @@
 	let error = '';
 	let authenticated = false;
 	let hasViewedUpdate = false;
+	let activeTab = 'Home';
 
 	// Subscribe to the global user profile store
 	$: profile = $userProfile;
 
 	// Dynamic Data Helpers
 	const applicantName = () => profile.name || 'Applicant';
-	const applicantEmail = () => profile.email || 'applicant@email.com';
+	const firstName = () => (profile.name ? profile.name.split(' ')[0] : 'Applicant');
+
+	// Default decision when the prediction store has no entry for this slug:
+	const DEFAULT_DECISION = 'admit';
+	$: shownDecision = $decisionsBySlug[SLUG] ?? DEFAULT_DECISION;
 
 	// --- Handlers ---
 	const handleLoadSavedLogin = () => {
@@ -50,11 +58,6 @@
 
 	const handleLogin = (event: SubmitEvent) => {
 		event.preventDefault();
-		if (!SCHOOL_DATA) {
-			error = 'Unknown portal.';
-			authenticated = false;
-			return;
-		}
 		if (!profile.email || !profile.password) {
 			error = 'Please set your PredictAdmit email and password on the main page.';
 			authenticated = false;
@@ -73,427 +76,379 @@
 		hasViewedUpdate = true;
 		portalDecisionViewed.set(true);
 	};
+
+	const navItems = ['About', 'Academics', 'Life at Dartmouth', 'Visit', 'Apply', 'Afford', 'Follow'];
 </script>
 
 <svelte:head>
-	<title>{SCHOOL_DATA.schoolName} Admissions Portal</title>
+	<title>{school.schoolName}</title>
 </svelte:head>
 
-<div class="bg-white text-slate-900 font-sans flex flex-col {authenticated ? 'min-h-screen' : ''}">
+<div class="min-h-screen bg-white font-serif text-gray-900">
 	{#if !authenticated}
-		<div class="bg-white">
-			<header class="bg-white border-b border-slate-300">
-				<div class="max-w-5xl mx-auto px-6 pt-6 pb-4 flex items-center justify-between">
-					<div class="flex items-baseline gap-3">
-						<span class="text-3xl font-serif" style={`color: ${SCHOOL_DATA.primaryColor};`}>
-							{SCHOOL_DATA.logoPrimary}
-						</span>
-						<span class="text-[11px] tracking-[0.18em] uppercase text-slate-700">
-							{SCHOOL_DATA.logoSecondary}
-						</span>
+		<!-- ============================ LOGIN ============================ -->
+		<header class="border-b-4" style="border-color: {school.primaryColor};">
+			<div class="mx-auto flex max-w-6xl items-center px-6 py-5">
+				<a href="/disclaimer" class="flex items-center gap-3">
+					<svg viewBox="0 0 40 48" class="h-11 w-11" aria-hidden="true">
+						<path
+							d="M20 2 L27 16 L23 16 L29 27 L24.5 27 L31 39 L9 39 L15.5 27 L11 27 L17 16 L13 16 Z"
+							fill={school.primaryColor}
+						/>
+						<rect x="18" y="39" width="4" height="7" fill={school.primaryColor} />
+					</svg>
+					<div class="text-3xl font-bold tracking-tight" style="color: {school.primaryColor};">
+						Dartmouth
 					</div>
-					<div class="text-[11px] text-slate-700">
-						{applicantName()}
-					</div>
+				</a>
+			</div>
+			<div class="border-t border-gray-200 bg-[#00693E] text-white">
+				<div class="mx-auto flex max-w-6xl flex-wrap items-center gap-x-7 gap-y-1 px-6 py-3">
+					<span class="mr-2 text-lg font-semibold tracking-wide">Undergraduate Admissions</span>
+					<nav class="hidden flex-wrap items-center gap-x-6 text-[14px] font-medium md:flex">
+						{#each navItems as item}
+							<a href="/disclaimer" class="text-white/90 hover:text-white">{item}</a>
+						{/each}
+					</nav>
 				</div>
-				<div class="h-8" style={`background-color: ${SCHOOL_DATA.primaryColor};`}></div>
-			</header>
+			</div>
+		</header>
 
-			<section class="bg-white">
-				<div class="max-w-5xl mx-auto px-10 py-10">
-					<h1 class="text-3xl font-normal mb-6">Login</h1>
+		<main class="mx-auto min-h-[520px] max-w-4xl px-6 py-12">
+			<h1 class="mb-4 text-4xl font-normal text-gray-900">Login</h1>
+			<p class="mb-6 text-lg font-bold text-gray-900">
+				Welcome to Dartmouth's Application Management System.
+			</p>
 
-					<div class="border border-lime-700 bg-lime-100 px-4 py-3 mb-8 text-[12px] text-slate-900">
-						To log in, please enter your email address and password.
-					</div>
-
-					<form class="space-y-4 text-sm" on:submit={handleLogin}>
-						{#if error}
-							<p
-								class="text-xs text-red-800 border border-red-300 bg-red-50 px-3 py-2 mb-2"
-								role="alert"
-							>
-								{error}
-							</p>
-						{/if}
-
-						<div class="flex items-center gap-4">
-							<label
-								for="portal-email"
-								class="w-32 text-[12px] font-semibold text-slate-900 text-right"
-								>Email Address</label
-							>
-							<input
-								id="portal-email"
-								type="email"
-								class="border border-slate-500 bg-white px-2 py-1 text-[13px] w-80"
-								bind:value={emailInput}
-								autocomplete="email"
-							/>
-						</div>
-
-						<div class="flex items-center gap-4">
-							<label
-								for="portal-password"
-								class="w-32 text-[12px] font-semibold text-slate-900 text-right">Password</label
-							>
-							<input
-								id="portal-password"
-								type="password"
-								class="border border-slate-500 bg-white px-2 py-1 text-[13px] w-80"
-								bind:value={passwordInput}
-								autocomplete="current-password"
-							/>
-							<a href="/disclaimer" class="text-[12px] text-blue-800 underline hover:no-underline"
-								>Forgot Your Password?</a
-							>
-						</div>
-
-						<div class="flex items-center gap-4 pt-4">
-							<div class="w-32"></div>
-							<div class="flex flex-wrap items-center gap-3">
-								<button
-									type="submit"
-									class="border border-slate-500 bg-slate-300 px-4 py-1 text-[12px] font-semibold hover:bg-slate-400 active:bg-slate-500"
-									>Login</button
-								>
-								<button
-									type="button"
-									class="border border-slate-400 bg-slate-100 px-3 py-1 text-[11px] hover:bg-slate-200 active:bg-slate-300"
-									on:click={handleLoadSavedLogin}>Load saved PredictAdmit login</button
-								>
-							</div>
-						</div>
-
-						<p class="pt-4 text-[10px] leading-relaxed text-slate-600 max-w-xl">
-							For this simulation, use the same email address and password that you saved on the
-							PredictAdmit.com home page. No real application data is used, and all information is
-							stored only in your browser.
-						</p>
-					</form>
-				</div>
-			</section>
-		</div>
-
-		<footer class="mt-8">
-			<div class="h-10 flex items-center" style={`background-color: ${SCHOOL_DATA.primaryColor};`}>
+			<div class="max-w-2xl">
 				<div
-					class="max-w-5xl mx-auto px-6 w-full flex items-center justify-between text-[11px] text-white"
+					class="mb-8 border-l-4 bg-[#e5f2ea] px-4 py-3 text-[14px] text-gray-800"
+					style="border-color: {school.primaryColor};"
 				>
-					<span>&copy; {SCHOOL_DATA.footerDomain} 2019</span>
-					<span class="opacity-80"
-						>PredictAdmit.com simulation · Not affiliated with {SCHOOL_DATA.schoolName}</span
+					To log in, please enter your email address and password.
+				</div>
+
+				<form class="space-y-5" on:submit={handleLogin}>
+					{#if error}
+						<p
+							class="border border-red-300 bg-red-50 px-3 py-2 text-xs text-red-800"
+							role="alert"
+						>
+							{error}
+						</p>
+					{/if}
+
+					<div class="flex items-center gap-6">
+						<label for="portal-email" class="w-36 text-[14px] font-bold text-gray-900">
+							Email Address
+						</label>
+						<input
+							id="portal-email"
+							type="email"
+							class="w-64 border border-gray-400 px-2 py-1.5 text-[14px]"
+							bind:value={emailInput}
+							autocomplete="email"
+						/>
+					</div>
+
+					<div class="flex items-center gap-6">
+						<label for="portal-password" class="w-36 text-[14px] font-bold text-gray-900">
+							Password
+						</label>
+						<input
+							id="portal-password"
+							type="password"
+							class="w-64 border border-gray-400 px-2 py-1.5 text-[14px]"
+							bind:value={passwordInput}
+							autocomplete="current-password"
+						/>
+						<a href="/disclaimer" class="text-[14px] underline" style="color: {school.primaryColor};">
+							Forgot Your Password?
+						</a>
+					</div>
+
+					<div class="flex items-center gap-4 pt-3 pl-[168px]">
+						<button
+							type="submit"
+							class="px-6 py-2 text-[14px] font-semibold text-white shadow-sm transition-opacity hover:opacity-90"
+							style="background-color: {school.primaryColor};"
+						>
+							Login
+						</button>
+						<button
+							type="button"
+							class="border border-gray-400 bg-gray-100 px-3 py-2 text-[12px] text-gray-700 hover:bg-gray-200"
+							on:click={handleLoadSavedLogin}
+						>
+							Load saved PredictAdmit login
+						</button>
+					</div>
+
+					<p class="pl-[168px] pt-6 text-[14px] font-bold text-gray-900">
+						If you are having trouble logging in, please
+						<a href="/disclaimer" class="underline" style="color: {school.primaryColor};">contact us</a>.
+					</p>
+
+					<p class="max-w-xl pl-[168px] pt-4 text-[11px] leading-relaxed text-gray-500">
+						For this simulation, use the same email address and password that you saved on the
+						PredictAdmit.com home page. No real application data is used, and all information is
+						stored only in your browser.
+					</p>
+				</form>
+			</div>
+		</main>
+
+		<!-- Footer -->
+		<footer class="border-t border-gray-200 bg-[#f4f4f4]">
+			<div class="mx-auto max-w-6xl px-6 py-10">
+				<div class="grid grid-cols-2 gap-8 md:grid-cols-4">
+					<div>
+						<h3 class="mb-2 font-sans text-sm font-bold text-gray-900">My Dartmouth</h3>
+						<ul class="space-y-1 font-sans text-[13px] text-gray-600">
+							<li><a href="/disclaimer" class="hover:underline">Students</a></li>
+							<li><a href="/disclaimer" class="hover:underline">Faculty</a></li>
+							<li><a href="/disclaimer" class="hover:underline">Staff</a></li>
+							<li><a href="/disclaimer" class="hover:underline">Alumni</a></li>
+							<li><a href="/disclaimer" class="hover:underline">Families</a></li>
+						</ul>
+					</div>
+					<div>
+						<h3 class="mb-2 font-sans text-sm font-bold text-gray-900">Find it Fast</h3>
+						<ul class="space-y-1 font-sans text-[13px] text-gray-600">
+							<li><a href="/disclaimer" class="hover:underline">Campus Map</a></li>
+							<li><a href="/disclaimer" class="hover:underline">Directory</a></li>
+							<li><a href="/disclaimer" class="hover:underline">Events</a></li>
+							<li><a href="/disclaimer" class="hover:underline">News</a></li>
+							<li><a href="/disclaimer" class="hover:underline">Visit</a></li>
+						</ul>
+					</div>
+					<div>
+						<h3 class="mb-2 font-sans text-sm font-bold text-gray-900">Resources</h3>
+						<ul class="space-y-1 font-sans text-[13px] text-gray-600">
+							<li><a href="/disclaimer" class="hover:underline">Dartmouth at a Glance</a></li>
+							<li><a href="/disclaimer" class="hover:underline">Accessibility</a></li>
+							<li><a href="/disclaimer" class="hover:underline">Administrative Offices</a></li>
+							<li><a href="/disclaimer" class="hover:underline">Careers</a></li>
+						</ul>
+					</div>
+					<div>
+						<h3 class="mb-2 font-sans text-sm font-bold text-gray-900">Connect With Us</h3>
+						<ul class="space-y-1 font-sans text-[13px] text-gray-600">
+							<li><a href="/disclaimer" class="hover:underline">Facebook</a></li>
+							<li><a href="/disclaimer" class="hover:underline">Instagram</a></li>
+							<li><a href="/disclaimer" class="hover:underline">Twitter</a></li>
+							<li><a href="/disclaimer" class="hover:underline">YouTube</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="border-t border-gray-200 bg-[#00693E] text-white">
+				<div
+					class="mx-auto flex max-w-6xl flex-wrap items-center gap-x-3 gap-y-1 px-6 py-4 font-sans text-[12px]"
+				>
+					<a href="/disclaimer" class="hover:underline"
+						>Copyright &copy; 2026 Trustees of Dartmouth College</a
 					>
+					<span aria-hidden="true">&bull;</span>
+					<a href="/disclaimer" class="hover:underline">Privacy</a>
+					<span aria-hidden="true">&bull;</span>
+					<a href="/disclaimer" class="hover:underline">A-Z Index</a>
+					<span aria-hidden="true">&bull;</span>
+					<a href="/disclaimer" class="hover:underline">Contact</a>
 				</div>
 			</div>
 		</footer>
-	{:else if !hasViewedUpdate}
-		<div class="flex-grow flex flex-col min-h-screen bg-white">
-			<header class="w-full">
-				<div
-					class="w-full py-3 text-center text-white font-bold tracking-wide text-sm"
-					style={`background-color: ${DARTMOUTH_GREEN};`}
-				>
-					Undergraduate Admissions
-				</div>
-				<div class="w-full border-b border-gray-200 py-3">
-					<nav
-						class="max-w-6xl mx-auto flex justify-center space-x-8 text-[11px] font-bold text-green-800 uppercase tracking-wider"
-					>
-						<a href="#" class="hover:underline">About</a>
-						<a href="#" class="hover:underline">Academics</a>
-						<a href="#" class="hover:underline">Life at Dartmouth</a>
-						<a href="#" class="hover:underline">Visit</a>
-						<a href="#" class="hover:underline">Apply</a>
-						<a href="#" class="hover:underline">Afford</a>
-						<a href="#" class="hover:underline">Follow</a>
-					</nav>
-				</div>
-			</header>
-
-			<main class="max-w-5xl mx-auto px-6 py-8 w-full flex-1">
-				<div class="flex justify-end text-[10px] text-gray-600 mb-6">
-					{applicantName()} <a href="/" class="text-green-700 ml-1 hover:underline">Logout</a>
-				</div>
-
-				<h1 class="text-3xl font-bold text-black mb-6">Welcome, {applicantName()}</h1>
-
-				<div class="mb-8">
-					<h2 class="text-lg font-bold text-black mb-2">Verify Address</h2>
-					<p class="text-xs text-gray-800 mb-3">We have your address listed as follows:</p>
-					<div class="text-xs text-gray-800 mb-3">
-						<p class="font-bold">Permanent Address</p>
-						<p>123 College Way</p>
-						<p>Pasadena, CA 91101</p>
-						<p>United States</p>
+	{:else if authenticated && !hasViewedUpdate}
+		<!-- ============================ PORTAL ============================ -->
+		<header class="border-b-4" style="border-color: {school.primaryColor};">
+			<div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
+				<div class="flex items-center gap-3">
+					<svg viewBox="0 0 40 48" class="h-11 w-11" aria-hidden="true">
+						<path
+							d="M20 2 L27 16 L23 16 L29 27 L24.5 27 L31 39 L9 39 L15.5 27 L11 27 L17 16 L13 16 Z"
+							fill={school.primaryColor}
+						/>
+						<rect x="18" y="39" width="4" height="7" fill={school.primaryColor} />
+					</svg>
+					<div class="text-3xl font-bold tracking-tight" style="color: {school.primaryColor};">
+						Dartmouth
 					</div>
-					<a href="#" class="text-xs text-green-700 hover:underline">Edit Addresses</a>
 				</div>
+				<div class="text-[13px] text-gray-600">
+					{firstName()}
+					<a
+						href="/disclaimer"
+						class="ml-2 text-[11px] underline"
+						style="color: {school.primaryColor};">Logout</a
+					>
+				</div>
+			</div>
+			<div class="border-t border-gray-200 bg-[#00693E] text-white">
+				<div class="mx-auto flex max-w-6xl flex-wrap items-center gap-x-7 gap-y-1 px-6 py-3">
+					<span class="mr-2 text-lg font-semibold tracking-wide">Undergraduate Admissions</span>
+				</div>
+			</div>
+		</header>
 
-				<div class="mb-8">
-					<h2 class="text-lg font-bold text-black mb-2">Status Update</h2>
-					<div class="bg-yellow-100 p-4 border border-yellow-200">
-						<p class="text-xs font-bold text-black mb-1">
-							New updates to your application were posted March 26th, 2020
+		<main class="mx-auto max-w-4xl px-6 pb-16">
+			<!-- Subtabs -->
+			<nav class="mt-8 flex flex-wrap gap-1 border-b border-gray-200">
+				{#each ['Home', 'Financial Aid', 'Address Verification', 'Testing'] as tab}
+					<button
+						on:click={() => (activeTab = tab)}
+						class="px-4 py-2 font-sans text-[14px] font-medium transition-colors"
+						style={activeTab === tab
+							? `background-color: ${school.primaryColor}; color: #fff;`
+							: 'background-color: #a5d75f; color: #fff;'}
+					>
+						{tab}
+					</button>
+				{/each}
+			</nav>
+
+			<div class="py-8">
+				<h2 class="text-2xl font-normal text-gray-900">Welcome,&nbsp;{firstName()}</h2>
+
+				{#if activeTab === 'Home'}
+					<div class="mt-8">
+						<h3 class="text-xl font-normal text-gray-900">Status Update</h3>
+						<p class="mt-3 text-[15px] text-gray-700">
+							An update to your application was last posted {school.statusLastPosted}.
 						</p>
-						<p class="text-xs text-black mb-3">
-							View your admission decision. If applicable, your financial aid award is located below
-							your admission letter.
+						<p class="mt-3">
+							<button
+								on:click={handleViewUpdate}
+								class="font-sans text-[15px] font-bold underline"
+								style="color: {school.primaryColor};"
+							>
+								View your admission decision letter.
+							</button>
 						</p>
-						<button
-							on:click={handleViewUpdate}
-							class="bg-gray-100 border border-gray-300 text-black text-xs font-bold px-3 py-1 shadow-sm hover:bg-gray-200"
+					</div>
+
+					<!-- Upload Materials -->
+					<div class="mt-12">
+						<h3 class="text-xl font-normal text-gray-900">Upload Materials</h3>
+						<p class="mt-3 text-[15px] text-gray-700">
+							If you wish to update your admissions application, you may upload additional material
+							here.
+						</p>
+						<div class="mt-4 flex flex-wrap items-center gap-4">
+							<select
+								class="border border-gray-400 px-2 py-1.5 font-sans text-[14px] text-gray-700"
+								disabled
+							>
+								<option>Post Decision Application Update</option>
+							</select>
+							<a
+								href="/disclaimer"
+								class="px-4 py-1.5 font-sans text-[14px] font-semibold text-white"
+								style="background-color: {school.primaryColor};">Upload</a
+							>
+						</div>
+					</div>
+
+					<!-- Account Tools -->
+					<div
+						class="mt-12 border-t border-b border-gray-900 py-3 text-center font-sans text-[13px] text-gray-700"
+					>
+						<strong>Account Tools:</strong>
+						<a href="/disclaimer" class="mx-3 underline" style="color: {school.primaryColor};"
+							>Change Email Address</a
 						>
-							View Update >>
-						</button>
+						<a href="/disclaimer" class="mx-3 underline" style="color: {school.primaryColor};"
+							>Change Password</a
+						>
+						<a href="/disclaimer" class="mx-3 underline" style="color: {school.primaryColor};"
+							>Contact Us</a
+						>
+						<a href="/disclaimer" class="mx-3 underline" style="color: {school.primaryColor};"
+							>Logout</a
+						>
+					</div>
+				{:else}
+					<div class="mt-8 border border-gray-200 bg-gray-50 p-6">
+						<p class="font-sans text-sm text-gray-600">
+							This section of your applicant portal is not available in this simulation.
+						</p>
+					</div>
+				{/if}
+			</div>
+		</main>
+
+		<!-- Footer -->
+		<footer class="border-t border-gray-200 bg-[#f4f4f4]">
+			<div class="mx-auto max-w-6xl px-6 py-10">
+				<div class="grid grid-cols-2 gap-8 md:grid-cols-4">
+					<div>
+						<h3 class="mb-2 font-sans text-sm font-bold text-gray-900">My Dartmouth</h3>
+						<ul class="space-y-1 font-sans text-[13px] text-gray-600">
+							<li><a href="/disclaimer" class="hover:underline">Students</a></li>
+							<li><a href="/disclaimer" class="hover:underline">Faculty</a></li>
+							<li><a href="/disclaimer" class="hover:underline">Staff</a></li>
+							<li><a href="/disclaimer" class="hover:underline">Alumni</a></li>
+							<li><a href="/disclaimer" class="hover:underline">Families</a></li>
+						</ul>
+					</div>
+					<div>
+						<h3 class="mb-2 font-sans text-sm font-bold text-gray-900">Find it Fast</h3>
+						<ul class="space-y-1 font-sans text-[13px] text-gray-600">
+							<li><a href="/disclaimer" class="hover:underline">Campus Map</a></li>
+							<li><a href="/disclaimer" class="hover:underline">Directory</a></li>
+							<li><a href="/disclaimer" class="hover:underline">Events</a></li>
+							<li><a href="/disclaimer" class="hover:underline">News</a></li>
+							<li><a href="/disclaimer" class="hover:underline">Visit</a></li>
+						</ul>
+					</div>
+					<div>
+						<h3 class="mb-2 font-sans text-sm font-bold text-gray-900">Resources</h3>
+						<ul class="space-y-1 font-sans text-[13px] text-gray-600">
+							<li><a href="/disclaimer" class="hover:underline">Dartmouth at a Glance</a></li>
+							<li><a href="/disclaimer" class="hover:underline">Accessibility</a></li>
+							<li><a href="/disclaimer" class="hover:underline">Administrative Offices</a></li>
+							<li><a href="/disclaimer" class="hover:underline">Careers</a></li>
+						</ul>
+					</div>
+					<div>
+						<h3 class="mb-2 font-sans text-sm font-bold text-gray-900">Connect With Us</h3>
+						<ul class="space-y-1 font-sans text-[13px] text-gray-600">
+							<li><a href="/disclaimer" class="hover:underline">Facebook</a></li>
+							<li><a href="/disclaimer" class="hover:underline">Instagram</a></li>
+							<li><a href="/disclaimer" class="hover:underline">Twitter</a></li>
+							<li><a href="/disclaimer" class="hover:underline">YouTube</a></li>
+						</ul>
 					</div>
 				</div>
-
-				<div class="flex space-x-1 mb-4">
-					<button
-						class="bg-gray-100 border border-gray-300 border-b-0 px-4 py-2 text-xs font-bold text-black"
-						>Admissions</button
+			</div>
+			<div class="border-t border-gray-200 bg-[#00693E] text-white">
+				<div
+					class="mx-auto flex max-w-6xl flex-wrap items-center gap-x-3 gap-y-1 px-6 py-4 font-sans text-[12px]"
+				>
+					<a href="/disclaimer" class="hover:underline"
+						>Copyright &copy; 2026 Trustees of Dartmouth College</a
 					>
-					<button
-						class="bg-white border-b border-gray-300 px-4 py-2 text-xs text-blue-600 hover:underline"
-						>Financial Aid</button
-					>
+					<span aria-hidden="true">&bull;</span>
+					<a href="/disclaimer" class="hover:underline">Privacy</a>
+					<span aria-hidden="true">&bull;</span>
+					<a href="/disclaimer" class="hover:underline">A-Z Index</a>
+					<span aria-hidden="true">&bull;</span>
+					<a href="/disclaimer" class="hover:underline">Contact</a>
 				</div>
-
-				<div class="mb-8">
-					<h2 class="text-lg font-bold text-black mb-2">Application Checklist</h2>
-					<table class="w-full text-xs text-left border-collapse">
-						<thead>
-							<tr class="border-b border-gray-300">
-								<th class="py-2 font-bold text-black">Status</th>
-								<th class="py-2 font-bold text-black">Details</th>
-								<th class="py-2 font-bold text-black text-right">Date</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr class="border-b border-gray-200"
-								><td class="py-2 text-green-600 font-bold">✓ Received</td><td class="py-2"
-									>Application Fee</td
-								><td class="py-2 text-right">01/03/2020</td></tr
-							>
-							<tr class="border-b border-gray-200"
-								><td class="py-2 text-green-600 font-bold">✓ Received</td><td class="py-2"
-									>Application</td
-								><td class="py-2 text-right">01/03/2020</td></tr
-							>
-							<tr class="border-b border-gray-200"
-								><td class="py-2 text-green-600 font-bold">✓ Received</td><td class="py-2"
-									>Mid-Year Grades</td
-								><td class="py-2 text-right">02/13/2020</td></tr
-							>
-							<tr class="border-b border-gray-200"
-								><td class="py-2 text-green-600 font-bold">✓ Received</td><td class="py-2"
-									>Writing Supplement</td
-								><td class="py-2 text-right">01/03/2020</td></tr
-							>
-							<tr class="border-b border-gray-200"
-								><td class="py-2 text-green-600 font-bold">✓ Received</td><td class="py-2"
-									>School Report</td
-								><td class="py-2 text-right">01/03/2020</td></tr
-							>
-							<tr class="border-b border-gray-200"
-								><td class="py-2 text-green-600 font-bold">✓ Received</td><td class="py-2"
-									>School Report Recommendation</td
-								><td class="py-2 text-right">01/03/2020</td></tr
-							>
-							<tr class="border-b border-gray-200"
-								><td class="py-2 text-green-600 font-bold">✓ Received</td><td class="py-2"
-									>School Report Transcript</td
-								><td class="py-2 text-right">01/03/2020</td></tr
-							>
-							<tr class="border-b border-gray-200"
-								><td class="py-2 text-green-600 font-bold">✓ Received</td><td class="py-2"
-									>SAT/ACT Test Scores</td
-								><td class="py-2 text-right">01/03/2020</td></tr
-							>
-							<tr class="border-b border-gray-200"
-								><td class="py-2">Optional</td><td class="py-2"
-									>SAT Subject Test Scores (Recommended)</td
-								><td class="py-2 text-right"></td></tr
-							>
-							<tr class="border-b border-gray-200"
-								><td class="py-2 text-green-600 font-bold">✓ Received</td><td class="py-2"
-									>Teacher Recommendation 1</td
-								><td class="py-2 text-right">01/03/2020</td></tr
-							>
-							<tr class="border-b border-gray-200"
-								><td class="py-2 text-green-600 font-bold">✓ Received</td><td class="py-2"
-									>Teacher Recommendation 2</td
-								><td class="py-2 text-right">01/03/2020</td></tr
-							>
-							<tr class="border-b border-gray-200"
-								><td class="py-2">Optional</td><td class="py-2"
-									>Peer Recommendation (Recommended)</td
-								><td class="py-2 text-right"></td></tr
-							>
-						</tbody>
-					</table>
-				</div>
-
-				<div class="mb-12">
-					<h2 class="text-lg font-bold text-black mb-2">Test Scores Received</h2>
-					<p class="text-xs text-gray-800 mb-4">
-						Below you will find all scores that have been received by our office and matched to your
-						record. Please note that the admissions committee will only evaluate your top score for
-						each type of test taken. Self-reported scores are permissible for admission purposes.
-						Official scores are required prior to enrollment.
-					</p>
-					<table class="w-full text-xs text-left border border-black">
-						<thead class="bg-gray-100 border-b border-black">
-							<tr>
-								<th class="py-1 px-2 border-r border-black font-normal">Test Date</th>
-								<th class="py-1 px-2 border-r border-black font-normal">Test Name</th>
-								<th class="py-1 px-2 border-r border-black font-normal">Test Score</th>
-								<th class="py-1 px-2 font-normal">Test Status</th>
-							</tr>
-						</thead>
-						<tbody class="divide-y divide-black">
-							<tr
-								><td class="py-1 px-2 border-r border-black">09/2019</td><td
-									class="py-1 px-2 border-r border-black">ACT</td
-								><td class="py-1 px-2 border-r border-black">34</td><td class="py-1 px-2"
-									>Official</td
-								></tr
-							>
-							<tr
-								><td class="py-1 px-2 border-r border-black">09/2019</td><td
-									class="py-1 px-2 border-r border-black">ACT</td
-								><td class="py-1 px-2 border-r border-black">34</td><td class="py-1 px-2"
-									>Self-Reported</td
-								></tr
-							>
-							<tr
-								><td class="py-1 px-2 border-r border-black">08/2019</td><td
-									class="py-1 px-2 border-r border-black">SAT II Physics</td
-								><td class="py-1 px-2 border-r border-black">800</td><td class="py-1 px-2"
-									>Official</td
-								></tr
-							>
-							<tr
-								><td class="py-1 px-2 border-r border-black">08/2019</td><td
-									class="py-1 px-2 border-r border-black">SAT II Physics</td
-								><td class="py-1 px-2 border-r border-black">800</td><td class="py-1 px-2"
-									>Self-Reported</td
-								></tr
-							>
-							<tr
-								><td class="py-1 px-2 border-r border-black">05/2019</td><td
-									class="py-1 px-2 border-r border-black">AP Macroeconomics</td
-								><td class="py-1 px-2 border-r border-black">5</td><td class="py-1 px-2"
-									>Self-Reported</td
-								></tr
-							>
-							<tr
-								><td class="py-1 px-2 border-r border-black">05/2019</td><td
-									class="py-1 px-2 border-r border-black">AP Calculus (AB)</td
-								><td class="py-1 px-2 border-r border-black">5</td><td class="py-1 px-2"
-									>Self-Reported</td
-								></tr
-							>
-							<tr
-								><td class="py-1 px-2 border-r border-black">05/2019</td><td
-									class="py-1 px-2 border-r border-black">AP Microeconomics</td
-								><td class="py-1 px-2 border-r border-black">5</td><td class="py-1 px-2"
-									>Self-Reported</td
-								></tr
-							>
-							<tr
-								><td class="py-1 px-2 border-r border-black">05/2019</td><td
-									class="py-1 px-2 border-r border-black">AP Physics 2</td
-								><td class="py-1 px-2 border-r border-black">4</td><td class="py-1 px-2"
-									>Self-Reported</td
-								></tr
-							>
-							<tr
-								><td class="py-1 px-2 border-r border-black">05/2019</td><td
-									class="py-1 px-2 border-r border-black">AP Physics 1</td
-								><td class="py-1 px-2 border-r border-black">4</td><td class="py-1 px-2"
-									>Self-Reported</td
-								></tr
-							>
-							<tr
-								><td class="py-1 px-2 border-r border-black">05/2018</td><td
-									class="py-1 px-2 border-r border-black">AP Computer Science (A)</td
-								><td class="py-1 px-2 border-r border-black">4</td><td class="py-1 px-2"
-									>Self-Reported</td
-								></tr
-							>
-						</tbody>
-					</table>
-				</div>
-			</main>
-
-			<footer
-				class="w-full text-white pt-10 mt-auto"
-				style={`background-color: ${DARK_FOOTER_BG};`}
-			>
-				<div class="max-w-6xl mx-auto px-6 grid grid-cols-2 sm:grid-cols-4 gap-8 text-xs pb-10">
-					<div>
-						<h3 class="font-bold mb-3 uppercase tracking-wider text-green-300">MY DARTMOUTH</h3>
-						<ul class="space-y-1">
-							<li><a href="#" class="hover:underline">Students</a></li>
-							<li><a href="#" class="hover:underline">Faculty</a></li>
-							<li><a href="#" class="hover:underline">Staff</a></li>
-							<li><a href="#" class="hover:underline">Alumni</a></li>
-							<li><a href="#" class="hover:underline">Families</a></li>
-						</ul>
-					</div>
-
-					<div>
-						<h3 class="font-bold mb-3 uppercase tracking-wider text-green-300">FIND IT FAST</h3>
-						<ul class="space-y-1">
-							<li><a href="#" class="hover:underline">Campus Map</a></li>
-							<li><a href="#" class="hover:underline">Directory</a></li>
-							<li><a href="#" class="hover:underline">Events</a></li>
-							<li><a href="#" class="hover:underline">News</a></li>
-							<li><a href="#" class="hover:underline">Visit</a></li>
-						</ul>
-					</div>
-
-					<div>
-						<h3 class="font-bold mb-3 uppercase tracking-wider text-green-300">RESOURCES</h3>
-						<ul class="space-y-1">
-							<li><a href="#" class="hover:underline">Dartmouth at a Glance</a></li>
-							<li><a href="#" class="hover:underline">Accessibility</a></li>
-							<li><a href="#" class="hover:underline">Administrative Offices</a></li>
-							<li><a href="#" class="hover:underline">Emergency Preparedness</a></li>
-							<li><a href="#" class="hover:underline">Careers</a></li>
-							<li><a href="#" class="hover:underline">Sexual Respect & Title IX</a></li>
-						</ul>
-					</div>
-
-					<div>
-						<h3 class="font-bold mb-3 uppercase tracking-wider text-green-300">CONNECT WITH US</h3>
-						<ul class="space-y-1">
-							<li><a href="#" class="hover:underline">facebook</a></li>
-							<li><a href="#" class="hover:underline">twitter</a></li>
-							<li><a href="#" class="hover:underline">flickr</a></li>
-							<li><a href="#" class="hover:underline">Instagram</a></li>
-							<li><a href="#" class="hover:underline">YouTube</a></li>
-						</ul>
-					</div>
-				</div>
-
-				<div class="border-t border-gray-700 py-3 text-center text-[10px] bg-slate-800">
-					&copy; Copyright 2022 **Dartmouth College** | <a href="#" class="hover:underline"
-						>Privacy</a
-					>
-					| <a href="#" class="hover:underline">A-Z Index</a> |
-					<a href="#" class="hover:underline">Contact</a>
-				</div>
-				<div class="py-1 text-center text-[9px] bg-slate-900">
-					PredictAdmit.com Simulation. Not affiliated with Dartmouth College.
-				</div>
-			</footer>
-		</div>
-	{:else if $decisionsBySlug['dartmouth'] === 'admit'}
-		<DartmouthAccepted applicantName={applicantName()} />
+			</div>
+		</footer>
+	{:else if shownDecision === 'admit'}
+		<DartmouthAccepted
+			applicantName={applicantName()}
+			schoolName={school.schoolName}
+			primaryColor={school.primaryColor}
+			footerDomain={school.footerDomain}
+		/>
 	{:else}
-		<DartmouthDenied applicantName={applicantName()} />
+		<DartmouthDenied
+			applicantName={applicantName()}
+			schoolName={school.schoolName}
+			primaryColor={school.primaryColor}
+			footerDomain={school.footerDomain}
+		/>
 	{/if}
 </div>

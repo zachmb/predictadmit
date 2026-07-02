@@ -1,5 +1,9 @@
 <script lang="ts">
+	// The parent component passes these props
 	export let applicantName: string;
+	export let schoolName: string = 'Yale College';
+	export let primaryColor: string = '#00356B';
+	export let footerDomain: string = 'yale.edu';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { userProfile } from '$lib/stores/user';
@@ -19,138 +23,106 @@
 	const viewAnalysis = () => {
 		goto('/results/yale');
 	};
+
+	$: firstName = (applicantName || 'Applicant').split(' ')[0];
 </script>
 
 <svelte:head>
-	<title>Yale College - Admission Decision</title>
+	<title>{schoolName} - Admission Decision</title>
 </svelte:head>
 
-<main class="min-h-screen bg-white text-gray-800 font-serif p-6">
-	<div class="max-w-3xl mx-auto mt-10">
+<main class="min-h-screen bg-white text-gray-900 font-serif">
+	<!-- Header -->
+	<header class="border-b-2 pb-2 pt-5 px-8" style="border-color: {primaryColor};">
+		<div class="flex items-end justify-between">
+			<span class="text-4xl font-serif" style="color: {primaryColor};">Yale</span>
+			<div class="text-[11px] text-gray-600 pb-1">
+				{applicantName || 'Applicant'}
+				<a href="/disclaimer" class="underline ml-1" style="color: {primaryColor};">Logout</a>
+			</div>
+		</div>
+	</header>
+
+	<div class="max-w-3xl mx-auto px-6 pt-10 text-[13px] leading-relaxed">
 		{#if googleSignedIn && $userProfile.usingAI}
-			<div class="mb-6 flex justify-end">
+			<div class="mb-6 flex justify-end font-sans">
 				<button
 					on:click={viewAnalysis}
-					class="group flex items-center px-4 py-2 bg-[#003262] text-white rounded-lg text-sm font-sans font-bold hover:bg-slate-800 transition-all shadow-md active:scale-95"
+					class="px-4 py-2 text-white rounded-lg text-sm font-bold hover:opacity-90 transition-all shadow-md active:scale-95"
+					style="background-color: {primaryColor};"
 				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						class="w-4 h-4 transition-transform group-hover:-translate-x-1"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
-					>
-					</svg>
 					Deep Dive: Why did I get {$decisionsBySlug['yale']}?
 				</button>
 			</div>
 		{/if}
-		<!-- Letterhead -->
-		<div class="border-b-2 border-[#00356B] pb-4 mb-8">
-			<div class="flex items-center">
-				<div
-					class="w-16 h-16 bg-[#00356B] text-white flex items-center justify-center font-bold text-2xl mr-4"
-				>
-					Y
-				</div>
-				<div>
-					<h1 class="text-2xl font-bold text-[#00356B]">YALE COLLEGE</h1>
-					<div class="text-sm text-gray-600">
-						Office of Undergraduate Admissions<br />
-						P.O. Box 208234, New Haven, Connecticut 06520-8234<br />
-						Telephone 203-432-9300 • Fax 203-432-9392
-					</div>
-				</div>
-			</div>
-		</div>
 
-		<!-- Date and Address -->
-		<div class="mb-8">
-			<div class="text-right text-sm text-gray-600 mb-2">March 26, 2020</div>
-			<div class="space-y-1">
-				<div>{applicantName || 'Applicant'}</div>
-				<div>1600 Pennsylvania Avenue NW</div>
-				<div>Washington, DC 20500</div>
-			</div>
-		</div>
+		<!-- Date -->
+		<div class="font-bold mb-6">March 26, 2026</div>
 
-		<!-- Greeting -->
-		<div class="mb-6">
-			<div class="text-lg font-bold text-[#00356B]">Congratulations!</div>
-		</div>
+		<!-- Salutation -->
+		<p class="mb-4">Dear {firstName},</p>
 
-		<!-- Letter Body -->
-		<div class="space-y-4 mb-8">
+		<div class="space-y-4">
 			<p>
-				On behalf of the Admissions Committee, I am delighted to inform you that you have been
-				admitted to the Yale College Class of 2024. Your application impressed us with its depth,
-				creativity, and intellectual promise, and we believe that you will contribute significantly
-				to the Yale community.
+				It is with great pleasure that I write on behalf of the Yale Admissions Committee to offer you
+				admission to the Yale College Class of 2030. Congratulations! From a pool of more than fifty
+				thousand exceptionally talented applicants, you distinguished yourself as one of the few whom
+				we are proud to welcome to Yale.
 			</p>
 
 			<p>
-				This year, Yale received over 35,000 applications for the 1,550 places in the first-year
-				class. Your admission is a tremendous accomplishment, and we hope you will join us next
-				fall. The diverse perspectives, talents, and experiences you bring will enrich our campus in
-				meaningful ways.
+				Our decision is the result of a deliberate and careful process. The Committee was drawn to the
+				intellectual curiosity, character, and promise evident throughout your application, and we are
+				confident that you will both contribute to and thrive within our community. We were impressed
+				not only by what you have already accomplished, but by the person you are becoming and the
+				energy you will bring to Yale's classrooms, residential colleges, and campus life.
 			</p>
 
 			<p>
-				You are invited to attend Bulldog Days, our admitted students program, from April 16-18,
-				2020. This program will give you the opportunity to experience life at Yale firsthand, meet
-				current students and faculty, and connect with your future classmates.
+				In the coming days you will receive further information about enrolling, including details
+				about your financial aid award, first-year advising, and Bulldog Days, our program for
+				admitted students held this April in New Haven. I encourage you to visit us and to picture
+				yourself as a member of the Yale community. To reserve your place in the Class of 2030, please
+				submit your reply through your applicant status portal by May 1, 2026.
 			</p>
 
 			<p>
-				To accept your offer of admission, please complete the reply form available in your
-				admissions portal by <strong>May 1, 2020</strong>. You will also find important information
-				about financial aid, housing, and next steps in your portal.
-			</p>
-
-			<p>
-				Again, congratulations on this outstanding achievement. We look forward to welcoming you to
-				New Haven in August.
+				On behalf of all of us in the Office of Undergraduate Admissions, congratulations once again.
+				We cannot wait to welcome you to Yale.
 			</p>
 		</div>
 
 		<!-- Signature -->
-		<div class="mt-12">
-			<div class="mb-2">
-				<img
-					src="/yale-signature.png"
-					alt="Signature"
-					class="h-12"
-					style="filter: invert(15%) sepia(85%) saturate(1500%) hue-rotate(200deg) brightness(30%) contrast(100%);"
-				/>
-			</div>
-			<div class="font-bold">Jeremiah Quinlan</div>
-			<div class="text-sm text-gray-600">
-				Dean of Undergraduate Admissions<br />
-				Yale College
-			</div>
+		<div class="mt-6">
+			<p class="mb-4">Sincerely,</p>
+			<p class="italic font-serif text-lg mb-1" style="color: {primaryColor};">Jeremiah Quinlan</p>
+			<p>Jeremiah Quinlan</p>
+			<p>Dean of Undergraduate Admissions and Financial Aid</p>
 		</div>
 
-		<!-- Footer -->
-		<div class="mt-16 pt-8 border-t border-gray-200 text-xs text-gray-500">
-			<div class="grid grid-cols-2 gap-8">
-				<div>
-					<strong>Yale College Mission:</strong><br />
-					Yale is committed to improving the world today and for future generations through outstanding
-					research and scholarship, education, preservation, and practice.
-				</div>
-				<div>
-					<strong>Contact Information:</strong><br />
-					Email: undergraduate.admissions@yale.edu<br />
-					Phone: 203-432-9300<br />
-					Website: admissions.yale.edu
-				</div>
-			</div>
+		<!-- Return link -->
+		<div class="text-center mt-10 mb-6">
+			<a href="/disclaimer" class="underline" style="color: {primaryColor};">
+				Return to Application Status
+			</a>
 		</div>
 
-		<!-- Simulation Note -->
-		<div class="mt-8 p-4 bg-amber-50 border border-amber-200 rounded text-sm text-amber-800">
+		<!-- Simulation disclaimer -->
+		<div class="mt-8 p-4 bg-amber-50 border border-amber-200 rounded text-sm text-amber-800 font-sans">
 			<strong>Note:</strong> This is a simulated admission letter for entertainment purposes only. This
 			is not a real admission decision from Yale University.
 		</div>
 	</div>
+
+	<!-- Footer -->
+	<footer class="px-8 mt-12">
+		<div class="border-t border-gray-200 pt-6 max-w-3xl mx-auto">
+			<div class="text-2xl leading-tight font-serif" style="color: {primaryColor};">
+				Yale College<br />Undergraduate<br />Admissions
+			</div>
+			<p class="mt-4 text-[11px] text-gray-500 pb-8">
+				Copyright &copy;2026 Yale University. All rights reserved
+			</p>
+		</div>
+	</footer>
 </main>

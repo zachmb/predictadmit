@@ -1,29 +1,48 @@
 <script lang="ts">
-	import { tick } from 'svelte';
+	// Svelte Stores and Types
 	import { userProfile, defaultProfile } from '$lib/stores/user';
 	import type { UserProfile } from '$lib/stores/user';
 	import { decisionsBySlug } from '$lib/stores/results';
-
-	import MITAccepted from '$lib/components/mit/MITAccepted.svelte';
-	import MITDenied from '$lib/components/mit/MITDenied.svelte';
 	import { portalDecisionViewed } from '$lib/stores/ui';
 
-	const DECISION: 'admit' | 'deny' = 'admit';
+	// School-Specific Components (Decision Letters)
+	import MITAccepted from '$lib/components/mit/MITAccepted.svelte';
+	import MITDenied from '$lib/components/mit/MITDenied.svelte';
 
+	// --- Component Configuration ---
+	const SLUG = 'mit';
+	const school = {
+		schoolName: 'Massachusetts Institute of Technology',
+		primaryColor: '#A31F34',
+		footerDomain: 'mit.edu',
+		statusLastPosted: 'March 14, 2026',
+		round: 'Regular Action',
+		referenceNumber: '558495774'
+	};
+
+	// --- State Variables ---
 	let profile: UserProfile = { ...defaultProfile };
 	let emailInput = '';
 	let passwordInput = '';
 	let error = '';
 	let authenticated = false;
 	let hasViewedUpdate = false;
+	let activeTab = 'Application';
 
+	// Subscribe to the global user profile store
 	$: profile = $userProfile;
 
+	// Dynamic Data Helpers
 	const applicantName = () => profile.name || 'Applicant';
+	const firstName = () => (profile.name || 'Applicant').split(' ')[0];
 
+	// Default decision when the prediction store has no entry for this slug:
+	const DEFAULT_DECISION = 'deny';
+	$: shownDecision = $decisionsBySlug[SLUG] ?? DEFAULT_DECISION;
+
+	// --- Handlers ---
 	const handleLoadSavedLogin = () => {
 		if (!profile.email || !profile.password) {
-			// Use default John Doe credentials if user hasn't set up their own
 			userProfile.update((u) => ({
 				...u,
 				name: u.name || 'John Doe',
@@ -31,20 +50,17 @@
 				password: u.password || 'password123'
 			}));
 		}
-		// Directly authenticate
 		authenticated = true;
 		error = '';
 	};
 
 	const handleLogin = (event: SubmitEvent) => {
 		event.preventDefault();
-
 		if (!profile.email || !profile.password) {
 			error = 'Please set your PredictAdmit email and password on the main page.';
 			authenticated = false;
 			return;
 		}
-
 		if (emailInput.trim() === profile.email && passwordInput === profile.password) {
 			authenticated = true;
 			error = '';
@@ -54,329 +70,363 @@
 		}
 	};
 
-	const handleViewUpdate = async () => {
+	const handleViewUpdate = () => {
 		hasViewedUpdate = true;
 		portalDecisionViewed.set(true);
-		await tick();
-		window.scrollTo(0, 0);
 	};
 </script>
 
 <svelte:head>
-	<title>MIT - MyMIT Portal</title>
+	<title>MIT Admissions</title>
 </svelte:head>
 
-{#if !authenticated}
-	<!-- MIT login screen -->
-	<div class="min-h-screen bg-slate-100">
-		<header class="bg-white border-b border-slate-300">
-			<div class="max-w-5xl mx-auto px-6 pt-6 pb-4 flex items-center justify-between">
-				<div class="flex items-baseline gap-3">
-					<span class="text-3xl font-serif text-[#A31F34]"> MIT </span>
-					<span class="text-[11px] tracking-[0.18em] uppercase text-slate-700">
-						Office of Admissions
-					</span>
-				</div>
-				<div class="text-[11px] text-slate-700">
-					{applicantName()}
-				</div>
+<div class="min-h-screen font-sans bg-white text-[#16283c] flex flex-col">
+	{#if !authenticated}
+		<!-- ===================== LOGIN ===================== -->
+		<div class="h-1 w-full bg-gradient-to-r from-[#7ab52b] via-[#39a7a0] to-[#2f6fb0]"></div>
+		<header class="border-b border-gray-200">
+			<div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+				<a href="/disclaimer" class="flex items-end gap-2 text-black">
+					<svg viewBox="0 0 64 32" class="h-6 w-auto" aria-label="MIT" fill="currentColor">
+						<rect x="0" y="0" width="5" height="32" />
+						<rect x="7" y="0" width="5" height="22" />
+						<rect x="14" y="0" width="5" height="32" />
+						<rect x="26" y="0" width="5" height="32" />
+						<rect x="37" y="0" width="27" height="5" />
+						<rect x="49" y="7" width="5" height="25" />
+					</svg>
+					<span class="text-[19px] font-semibold tracking-tight leading-none pb-[1px]">Admissions</span>
+				</a>
+				<nav class="hidden sm:flex items-center gap-6 text-[13px] font-semibold text-[#16283c]">
+					<a href="/disclaimer" class="hover:text-[#A31F34]">Discover</a>
+					<a href="/disclaimer" class="hover:text-[#A31F34]">Apply</a>
+					<a href="/disclaimer" class="hover:text-[#A31F34]">Afford</a>
+					<a href="/disclaimer" class="hover:text-[#A31F34]">Visit</a>
+					<a href="/disclaimer" class="hover:text-[#A31F34]">Help</a>
+					<a href="/disclaimer" class="hover:text-[#A31F34]">Blogs</a>
+				</nav>
 			</div>
-			<div class="h-8 bg-[#A31F34]"></div>
 		</header>
 
-		<section class="bg-white">
-			<div class="max-w-5xl mx-auto px-10 py-10">
-				<h1 class="text-3xl font-normal mb-6">Login</h1>
+		<main class="flex-grow max-w-6xl w-full mx-auto px-6 py-10">
+			<h1 class="text-[40px] font-bold text-[#16283c] mb-5">Login</h1>
 
-				<div class="border border-lime-700 bg-lime-100 px-4 py-3 mb-8 text-[12px] text-slate-900">
-					To log in, please enter your email address and password.
+			<div
+				class="bg-[#eaf1d6] border-l-4 border-[#7ab52b] px-4 py-2.5 mb-6 text-[13px] text-[#16283c]"
+			>
+				To log in, please enter your email address and password.
+			</div>
+
+			<form class="max-w-xl" on:submit={handleLogin}>
+				{#if error}
+					<p
+						class="text-xs text-red-800 border border-red-300 bg-red-50 px-3 py-2 mb-3"
+						role="alert"
+					>
+						{error}
+					</p>
+				{/if}
+
+				<div class="flex items-center mb-3">
+					<label for="portal-email" class="w-28 text-[13px] text-[#16283c]">Email Address</label>
+					<input
+						id="portal-email"
+						type="email"
+						class="border border-gray-400 bg-white px-2 py-[3px] text-[13px] w-56"
+						bind:value={emailInput}
+						autocomplete="email"
+					/>
 				</div>
 
-				<form class="space-y-4 text-sm" on:submit={handleLogin}>
-					{#if error}
-						<p
-							class="text-xs text-red-800 border border-red-300 bg-red-50 px-3 py-2 mb-2"
-							role="alert"
-						>
-							{error}
+				<div class="flex items-center mb-5">
+					<label for="portal-password" class="w-28 text-[13px] text-[#16283c]">Password</label>
+					<input
+						id="portal-password"
+						type="password"
+						class="border border-gray-400 bg-white px-2 py-[3px] text-[13px] w-56"
+						bind:value={passwordInput}
+						autocomplete="current-password"
+					/>
+					<a href="/disclaimer" class="text-[13px] text-[#16283c] underline ml-5 whitespace-nowrap">
+						Forgot Your Password?
+					</a>
+				</div>
+
+				<div class="flex items-center gap-3">
+					<button
+						type="submit"
+						class="border border-gray-400 bg-gray-200 px-4 py-[5px] text-[13px] text-[#16283c] hover:bg-gray-300"
+					>
+						Login
+					</button>
+					<button
+						type="button"
+						class="text-[12px] text-[#16283c] underline"
+						on:click={handleLoadSavedLogin}
+					>
+						Load saved PredictAdmit login
+					</button>
+				</div>
+
+				<p class="pt-6 text-[11px] leading-relaxed text-gray-500 max-w-lg">
+					For this simulation, use the same email address and password that you saved on the
+					PredictAdmit.com home page. No real application data is used, and all information is stored
+					only in your browser.
+				</p>
+			</form>
+		</main>
+
+		<!-- Shared MIT footer -->
+		<footer class="mt-auto">
+			<div class="bg-[#14243a] text-white">
+				<div class="max-w-6xl mx-auto px-6 py-8 flex items-start justify-between gap-8">
+					<div class="max-w-xl">
+						<h2 class="text-2xl font-bold mb-3">MIT Admissions</h2>
+						<p class="text-[12px] leading-relaxed text-gray-300">
+							At MIT Admissions, we recruit and enroll a talented and diverse class of undergraduates
+							who will learn to use science, technology, and other areas of scholarship to serve the
+							nation and the world in the 21st century.
 						</p>
-					{/if}
-
-					<div class="flex items-center gap-4">
-						<label for="mit-email" class="w-32 text-[12px] font-semibold text-slate-900 text-right">
-							Email Address
-						</label>
-						<input
-							id="mit-email"
-							type="email"
-							class="border border-slate-500 bg-white px-2 py-1 text-[13px] w-80"
-							bind:value={emailInput}
-							autocomplete="email"
-							required
-						/>
 					</div>
-
-					<div class="flex items-center gap-4">
-						<label
-							for="mit-password"
-							class="w-32 text-[12px] font-semibold text-slate-900 text-right"
-						>
-							Password
-						</label>
-						<input
-							id="mit-password"
-							type="password"
-							class="border border-slate-500 bg-white px-2 py-1 text-[13px] w-80"
-							bind:value={passwordInput}
-							autocomplete="current-password"
-							required
-						/>
-						<a href="/portals/mit" class="text-[12px] text-blue-800 underline hover:no-underline">
-							Forgot Your Password?
-						</a>
-					</div>
-
-					<div class="flex items-center gap-4 pt-4">
-						<div class="w-32"></div>
-						<div class="flex flex-wrap items-center gap-3">
-							<button
-								type="submit"
-								class="border border-slate-500 bg-slate-300 px-4 py-1 text-[12px] font-semibold hover:bg-slate-400 active:bg-slate-500"
-							>
-								Login
-							</button>
-							<button
-								type="button"
-								class="border border-slate-400 bg-slate-100 px-3 py-1 text-[11px] hover:bg-slate-200 active:bg-slate-300"
-								on:click={handleLoadSavedLogin}
-							>
-								Load saved PredictAdmit login
-							</button>
-						</div>
-					</div>
-
-					<p class="pt-4 text-[10px] leading-relaxed text-slate-600 max-w-xl">
-						For this simulation, use the same email address and password that you saved on the
-						PredictAdmit.com home page. No real application data is used, and all information is
-						stored only in your browser.
-					</p>
-				</form>
+					<svg
+						viewBox="0 0 140 70"
+						class="hidden md:block w-40 text-gray-200"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="1"
+					>
+						<path d="M20 60 Q70 20 120 60" />
+						<path d="M20 60 L120 60" />
+						<line x1="35" y1="60" x2="35" y2="48" />
+						<line x1="50" y1="60" x2="50" y2="42" />
+						<line x1="70" y1="60" x2="70" y2="38" />
+						<line x1="90" y1="60" x2="90" y2="42" />
+						<line x1="105" y1="60" x2="105" y2="48" />
+						<path d="M118 18 l1.5 3 3 .5 -2 2 .5 3 -3-1.5 -3 1.5 .5-3 -2-2 3-.5z" />
+						<path d="M100 10 l1 2 2 .3 -1.5 1.4 .4 2 -1.9-1 -1.9 1 .4-2 -1.5-1.4 2-.3z" />
+					</svg>
+				</div>
 			</div>
-		</section>
-
-		<footer class="mt-8">
-			<div class="h-10 flex items-center bg-[#A31F34]">
-				<div
-					class="max-w-5xl mx-auto px-6 w-full flex items-center justify-between text-[11px] text-white"
-				>
-					<span>&copy; mit.edu 2021</span>
-					<span class="opacity-80"> PredictAdmit.com simulation · Not affiliated with MIT </span>
+			<div class="bg-[#0f1c2e] text-gray-300 text-[11px]">
+				<div class="max-w-6xl mx-auto px-6 py-4 flex flex-wrap items-center justify-between gap-3">
+					<div class="flex items-center gap-2 text-white">
+						<svg viewBox="0 0 64 32" class="h-5 w-auto" aria-label="MIT" fill="currentColor">
+							<rect x="0" y="0" width="5" height="32" />
+							<rect x="7" y="0" width="5" height="22" />
+							<rect x="14" y="0" width="5" height="32" />
+							<rect x="26" y="0" width="5" height="32" />
+							<rect x="37" y="0" width="27" height="5" />
+							<rect x="49" y="7" width="5" height="25" />
+						</svg>
+						<span class="leading-tight text-[9px] font-semibold">
+							Massachusetts<br />Institute of<br />Technology
+						</span>
+					</div>
+					<div class="text-right">
+						MIT Admissions, 77 Massachusetts Avenue, Room E38-200, Cambridge, MA 02139 &middot; Tel:
+						617.253.3400 | <a href="/disclaimer" class="underline">About</a> |
+						<a href="/disclaimer" class="underline">Policies</a> |
+						<a href="/disclaimer" class="underline">En Español</a> |
+						<a href="/disclaimer" class="underline">Instagram</a>
+					</div>
 				</div>
 			</div>
 		</footer>
-	</div>
-{:else if !hasViewedUpdate}
-	<!-- MIT portal status page -->
-	<div class="min-h-screen bg-white">
-		<!-- Header with gradient -->
-		<div class="bg-gradient-to-r from-teal-500 via-blue-500 to-purple-500 h-3"></div>
-
-		<header class="bg-white border-b border-slate-200 py-4 px-6">
-			<div class="max-w-7xl mx-auto">
-				<div class="flex items-center justify-between mb-4">
-					<div class="flex items-center gap-8">
-						<h1 class="text-2xl font-bold text-[#A31F34]">mit</h1>
-					</div>
-					<div class="text-yellow-500 text-xl">{applicantName()}</div>
-				</div>
-
-				<!-- Breadcrumb navigation -->
-				<div class="text-xs text-slate-600">
-					<span class="hover:text-[#A31F34] cursor-pointer">MyMIT</span>
-					<span class="mx-2">›</span>
-					<span class="hover:text-[#A31F34] cursor-pointer">Application</span>
-					<span class="mx-2">›</span>
-					<span class="font-semibold">Decision Status</span>
-				</div>
+	{:else if authenticated && !hasViewedUpdate}
+		<!-- ===================== STATUS PAGE ===================== -->
+		<div class="h-1 w-full bg-gradient-to-r from-[#7ab52b] via-[#39a7a0] to-[#2f6fb0]"></div>
+		<header class="border-b border-gray-200">
+			<div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+				<a href="/disclaimer" class="flex items-end gap-2 text-black">
+					<svg viewBox="0 0 64 32" class="h-6 w-auto" aria-label="MIT" fill="currentColor">
+						<rect x="0" y="0" width="5" height="32" />
+						<rect x="7" y="0" width="5" height="22" />
+						<rect x="14" y="0" width="5" height="32" />
+						<rect x="26" y="0" width="5" height="32" />
+						<rect x="37" y="0" width="27" height="5" />
+						<rect x="49" y="7" width="5" height="25" />
+					</svg>
+					<span class="text-[19px] font-semibold tracking-tight leading-none pb-[1px]">Admissions</span>
+				</a>
+				<nav class="hidden sm:flex items-center gap-6 text-[13px] font-semibold text-[#16283c]">
+					<a href="/disclaimer" class="hover:text-[#A31F34]">Discover</a>
+					<a href="/disclaimer" class="hover:text-[#A31F34]">Apply</a>
+					<a href="/disclaimer" class="hover:text-[#A31F34]">Afford</a>
+					<a href="/disclaimer" class="hover:text-[#A31F34]">Visit</a>
+					<a href="/disclaimer" class="hover:text-[#A31F34]">Help</a>
+					<a href="/disclaimer" class="hover:text-[#A31F34]">Blogs</a>
+				</nav>
 			</div>
 		</header>
 
-		<!-- Main content -->
-		<main class="max-w-7xl mx-auto px-6 py-8 font-sans">
-			<!-- Page title and intro -->
-			<div class="mb-6">
-				<h1 class="text-2xl font-bold text-slate-900 mb-2">Application Status</h1>
-				<p class="text-xs text-slate-600">
-					View your application materials, decision updates, and next steps.
-				</p>
+		<main class="flex-grow max-w-6xl w-full mx-auto px-6 py-8">
+			<div class="text-right text-[12px] text-gray-600 mb-4">
+				{applicantName()} <a href="/disclaimer" class="underline ml-1">Logout</a>
 			</div>
 
-			<!-- Application summary cards -->
-			<div class="grid grid-cols-3 gap-3 mb-6">
-				<div class="bg-blue-50 p-3">
-					<div class="text-[10px] text-blue-700 font-bold mb-1 tracking-wide">APPLICATION ID</div>
-					<div class="text-base font-bold text-slate-900">
-						MIT-2025-{Math.floor(Math.random() * 90000) + 10000}
-					</div>
-				</div>
-				<div class="bg-green-50 p-3">
-					<div class="text-[10px] text-green-700 font-bold mb-1 tracking-wide">
-						APPLICATION TYPE
-					</div>
-					<div class="text-base font-bold text-slate-900">Regular Action</div>
-				</div>
-				<div class="bg-purple-50 p-3">
-					<div class="text-[10px] text-purple-700 font-bold mb-1 tracking-wide">DECISION DATE</div>
-					<div class="text-base font-bold text-slate-900">March 14, 2021</div>
-				</div>
-			</div>
+			<h1 class="text-[32px] font-bold text-[#16283c] mb-4">
+				Welcome to your status page, {firstName()}!
+			</h1>
 
-			<div class="bg-slate-50 shadow-md p-6">
-				<!-- Thank you message -->
-				<div class="mb-6">
-					<p class="text-[13px] text-slate-700 mb-3 leading-relaxed">
-						Thank you for applying to MIT! Our records indicate that you applied for First-Year
-						Admission in Regular Action.
-					</p>
+			<p class="text-[13px] text-[#16283c] mb-3">
+				Thank you for applying to MIT! Our records indicate that you applied for first-year admission
+				in {school.round}.
+			</p>
 
-					<h2 class="text-lg font-bold text-slate-900 mb-2">The waiting is over!</h2>
+			<p class="text-[13px] text-[#A31F34] font-semibold mb-6 max-w-3xl">
+				Please do not show your decision screen online, especially on social media and/or YouTube. We
+				want you to be protected and safe as possible, so make sure to keep your personal information
+				private.
+			</p>
 
-					<p class="text-[13px] text-slate-700 mb-3 leading-relaxed">
-						We're happy to report that admissions decisions are now available. There is no interim
-						"are you sure???" screen. Once you click View Update, you're going to know immediately
-						whether or not we are able to offer you a spot in MIT's Class of 2025.
-					</p>
-
-					<p class="text-[13px] text-slate-700 mb-4 leading-relaxed">
-						We've had a wonderful time getting to know each of you—your stories, your dreams, your
-						wishes for the future. Regardless of which letter awaits you, please know that we think
-						you're simply fantastic—and we can't wait to see how you change our world for the
-						better.
-					</p>
-
-					<p class="text-[13px] text-slate-700 mb-6">With that said, deep breath...</p>
-				</div>
-
-				<!-- Status Update section -->
-				<div class="bg-yellow-50 p-5 mb-6">
-					<h3 class="text-base font-bold text-slate-900 mb-2">Status Update</h3>
-					<p class="text-[13px] text-slate-700 mb-3">
-						New updates to your application were posted March 14, 2021.
+			<div class="flex flex-col md:flex-row gap-6">
+				<!-- Left / status column -->
+				<div class="flex-grow">
+					<h2 class="text-[15px] font-bold text-[#16283c] mb-1">Status Update</h2>
+					<p class="text-[13px] text-[#16283c] mb-1">
+						An update to your application was last posted {school.statusLastPosted}.
 					</p>
 					<button
 						on:click={handleViewUpdate}
-						class="text-[13px] font-bold text-green-700 hover:text-green-900 underline"
+						class="text-[13px] text-[#2f6fb0] underline hover:text-[#A31F34]"
 					>
 						View Update &gt;&gt;
 					</button>
+
+					<div class="mt-5 border border-gray-300">
+						<div class="flex bg-gray-100 border-b border-gray-300 text-[13px]">
+							<button
+								on:click={() => (activeTab = 'Application')}
+								class="px-4 py-1.5 border-r border-gray-300 font-semibold"
+								class:bg-white={activeTab === 'Application'}
+							>
+								Application
+							</button>
+						</div>
+						<div class="h-64 bg-white"></div>
+					</div>
 				</div>
 
-				<!-- Financial Aid section -->
-				<div class="mb-6">
-					<h3 class="text-base font-bold text-slate-900 mb-2">Financial Aid</h3>
-					<p class="text-[13px] text-slate-700 mb-3 leading-relaxed">
-						The MIT Online Financial Aid system will provide all the information you need about your
-						financial aid award, outstanding requirements for your financial aid, instructions for
-						your financial aid appeal, and understanding requirements as well as messages about your
-						aid can be found by clicking the button below.
-					</p>
-					<button class="bg-slate-200 px-4 py-2 text-[12px] font-bold hover:bg-slate-300">
-						Manage Financial Aid
-					</button>
+				<!-- Right / account column -->
+				<div class="w-full md:w-64 shrink-0 border border-gray-300 p-3">
+					<div class="text-[14px] font-bold text-[#16283c] leading-tight mb-3">
+						Application Reference #<br />{school.referenceNumber}
+					</div>
+					<div class="text-[14px] font-bold text-[#16283c] mb-1">Account Management</div>
+					<ul class="text-[12px] text-[#2f6fb0] list-disc list-inside space-y-0.5 mb-4">
+						<li><a href="/disclaimer" class="underline">Change your email address</a></li>
+						<li><a href="/disclaimer" class="underline">Change your password</a></li>
+						<li><a href="/disclaimer" class="underline">Logout</a></li>
+					</ul>
+					<div class="text-[9px] text-gray-500 mb-1">08/13/2020 7:00:03 PM</div>
+					<div class="border border-gray-200 p-2">
+						<div class="flex items-end gap-[3px] h-20">
+							<div class="w-2 bg-[#8ba3c7]" style="height:40%"></div>
+							<div class="w-2 bg-[#b16ba0]" style="height:75%"></div>
+							<div class="w-2 bg-[#c98f5a]" style="height:55%"></div>
+							<div class="w-2 bg-[#8ba3c7]" style="height:90%"></div>
+							<div class="w-2 bg-[#b16ba0]" style="height:60%"></div>
+							<div class="w-2 bg-[#c98f5a]" style="height:80%"></div>
+							<div class="w-2 bg-[#8ba3c7]" style="height:35%"></div>
+							<div class="w-2 bg-[#b16ba0]" style="height:70%"></div>
+							<div class="w-2 bg-[#c98f5a]" style="height:50%"></div>
+						</div>
+						<div class="text-[9px] text-gray-400 mt-1 text-right">art by @knightlivfieldlog</div>
+					</div>
 				</div>
+			</div>
 
-				<!-- Test Scores section -->
-				<div>
-					<h3 class="text-base font-bold text-slate-900 mb-2">Test Scores</h3>
-					<p class="text-[13px] text-slate-700 mb-3">
-						We have received the following test scores from you:
-					</p>
-					<table class="w-full max-w-xl border-collapse text-[12px]">
-						<thead>
-							<tr class="bg-slate-800 text-white">
-								<th class="px-3 py-2 text-left font-bold">TEST DATE</th>
-								<th class="px-3 py-2 text-left font-bold">TEST TYPE</th>
-								<th class="px-3 py-2 text-left font-bold">TEST TOTAL</th>
-							</tr>
-						</thead>
-						<tbody class="bg-white">
-							<tr>
-								<td class="px-3 py-2">2020-05-20</td>
-								<td class="px-3 py-2">AP</td>
-								<td class="px-3 py-2">5</td>
-							</tr>
-							<tr>
-								<td class="px-3 py-2">2020-05-15</td>
-								<td class="px-3 py-2">AP</td>
-								<td class="px-3 py-2">5</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
+			<div class="mt-10">
+				<h2 class="text-[15px] font-bold text-[#16283c] mb-2">Recent Activities</h2>
+				<table class="w-full text-[12px] text-left border border-gray-300">
+					<thead class="bg-[#14243a] text-white">
+						<tr>
+							<th class="px-3 py-1.5 font-semibold w-32">DATE</th>
+							<th class="px-3 py-1.5 font-semibold">DETAILS</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="border-b border-gray-200">
+							<td class="px-3 py-2 align-top">01/06/2026</td>
+							<td class="px-3 py-2">
+								Payment Received: 75.00 USD<br />
+								<span class="text-gray-600">Application Fee</span>
+							</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</main>
 
-		<!-- MIT Footer -->
-		<footer class="bg-slate-800 text-white mt-12">
-			<div class="max-w-7xl mx-auto px-6 py-8">
-				<div class="grid grid-cols-4 gap-8 mb-6">
-					<div>
-						<h4 class="text-[11px] font-bold mb-3 tracking-wider">ABOUT MIT</h4>
-						<ul class="space-y-2 text-[11px]">
-							<li><a href="/portals/mit" class="hover:text-[#A31F34]">Mission</a></li>
-							<li><a href="/portals/mit" class="hover:text-[#A31F34]">Leadership</a></li>
-							<li><a href="/portals/mit" class="hover:text-[#A31F34]">Facts & History</a></li>
-							<li><a href="/portals/mit" class="hover:text-[#A31F34]">Campus Map</a></li>
-						</ul>
+		<!-- Shared MIT footer -->
+		<footer class="mt-10">
+			<div class="bg-[#14243a] text-white">
+				<div class="max-w-6xl mx-auto px-6 py-8 flex items-start justify-between gap-8">
+					<div class="max-w-xl">
+						<h2 class="text-2xl font-bold mb-3">MIT Admissions</h2>
+						<p class="text-[12px] leading-relaxed text-gray-300">
+							At MIT Admissions, we recruit and enroll a talented and diverse class of undergraduates
+							who will learn to use science, technology, and other areas of scholarship to serve the
+							nation and the world in the 21st century.
+						</p>
 					</div>
-					<div>
-						<h4 class="text-[11px] font-bold mb-3 tracking-wider">ADMISSIONS</h4>
-						<ul class="space-y-2 text-[11px]">
-							<li><a href="/portals/mit" class="hover:text-[#A31F34]">Undergraduate</a></li>
-							<li><a href="/portals/mit" class="hover:text-[#A31F34]">Graduate</a></li>
-							<li><a href="/portals/mit" class="hover:text-[#A31F34]">Financial Aid</a></li>
-							<li><a href="/portals/mit" class="hover:text-[#A31F34]">Visit Campus</a></li>
-						</ul>
-					</div>
-					<div>
-						<h4 class="text-[11px] font-bold mb-3 tracking-wider">RESOURCES</h4>
-						<ul class="space-y-2 text-[11px]">
-							<li><a href="/portals/mit" class="hover:text-[#A31F34]">Libraries</a></li>
-							<li><a href="/portals/mit" class="hover:text-[#A31F34]">Career Services</a></li>
-							<li><a href="/portals/mit" class="hover:text-[#A31F34]">Student Life</a></li>
-							<li><a href="/portals/mit" class="hover:text-[#A31F34]">Athletics</a></li>
-						</ul>
-					</div>
-					<div>
-						<h4 class="text-[11px] font-bold mb-3 tracking-wider">CONTACT</h4>
-						<ul class="space-y-2 text-[11px]">
-							<li class="leading-relaxed">77 Massachusetts Avenue<br />Cambridge, MA 02139</li>
-							<li><a href="/portals/mit" class="hover:text-[#A31F34]">(617) 253-1000</a></li>
-							<li><a href="/portals/mit" class="hover:text-[#A31F34]">Contact MIT</a></li>
-						</ul>
-					</div>
+					<svg
+						viewBox="0 0 140 70"
+						class="hidden md:block w-40 text-gray-200"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="1"
+					>
+						<path d="M20 60 Q70 20 120 60" />
+						<path d="M20 60 L120 60" />
+						<line x1="35" y1="60" x2="35" y2="48" />
+						<line x1="50" y1="60" x2="50" y2="42" />
+						<line x1="70" y1="60" x2="70" y2="38" />
+						<line x1="90" y1="60" x2="90" y2="42" />
+						<line x1="105" y1="60" x2="105" y2="48" />
+						<path d="M118 18 l1.5 3 3 .5 -2 2 .5 3 -3-1.5 -3 1.5 .5-3 -2-2 3-.5z" />
+						<path d="M100 10 l1 2 2 .3 -1.5 1.4 .4 2 -1.9-1 -1.9 1 .4-2 -1.5-1.4 2-.3z" />
+					</svg>
 				</div>
-
-				<div class="border-t border-slate-600 pt-4">
-					<div class="flex items-center justify-between text-[10px]">
-						<div class="space-x-4">
-							<a href="/portals/mit" class="hover:text-[#A31F34]">Privacy</a>
-							<a href="/portals/mit" class="hover:text-[#A31F34]">Accessibility</a>
-							<a href="/portals/mit" class="hover:text-[#A31F34]">Terms of Use</a>
-						</div>
-						<div>
-							<span>© 2021 Massachusetts Institute of Technology</span>
-							<span class="ml-4 opacity-70"
-								>PredictAdmit.com simulation · Not affiliated with MIT</span
-							>
-						</div>
+			</div>
+			<div class="bg-[#0f1c2e] text-gray-300 text-[11px]">
+				<div class="max-w-6xl mx-auto px-6 py-4 flex flex-wrap items-center justify-between gap-3">
+					<div class="flex items-center gap-2 text-white">
+						<svg viewBox="0 0 64 32" class="h-5 w-auto" aria-label="MIT" fill="currentColor">
+							<rect x="0" y="0" width="5" height="32" />
+							<rect x="7" y="0" width="5" height="22" />
+							<rect x="14" y="0" width="5" height="32" />
+							<rect x="26" y="0" width="5" height="32" />
+							<rect x="37" y="0" width="27" height="5" />
+							<rect x="49" y="7" width="5" height="25" />
+						</svg>
+						<span class="leading-tight text-[9px] font-semibold">
+							Massachusetts<br />Institute of<br />Technology
+						</span>
+					</div>
+					<div class="text-right">
+						MIT Admissions, 77 Massachusetts Avenue, Room E38-200, Cambridge, MA 02139 &middot; Tel:
+						617.253.3400 | <a href="/disclaimer" class="underline">About</a> |
+						<a href="/disclaimer" class="underline">Policies</a> |
+						<a href="/disclaimer" class="underline">En Español</a> |
+						<a href="/disclaimer" class="underline">Instagram</a>
 					</div>
 				</div>
 			</div>
 		</footer>
-	</div>
-{:else if $decisionsBySlug['mit'] === 'admit'}
-	<MITAccepted applicantName={applicantName()} />
-{:else}
-	<MITDenied applicantName={applicantName()} />
-{/if}
+	{:else if shownDecision === 'admit'}
+		<MITAccepted
+			applicantName={applicantName()}
+			schoolName={school.schoolName}
+			primaryColor={school.primaryColor}
+			footerDomain={school.footerDomain}
+		/>
+	{:else}
+		<MITDenied
+			applicantName={applicantName()}
+			schoolName={school.schoolName}
+			primaryColor={school.primaryColor}
+			footerDomain={school.footerDomain}
+		/>
+	{/if}
+</div>

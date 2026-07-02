@@ -1,37 +1,45 @@
 <script lang="ts">
+	// Svelte Stores and Types
 	import { userProfile, defaultProfile } from '$lib/stores/user';
 	import type { UserProfile } from '$lib/stores/user';
 	import { decisionsBySlug } from '$lib/stores/results';
 	import { portalDecisionViewed } from '$lib/stores/ui';
 
-	// School Config
-	import { schoolConfigs } from '$lib/config/schools';
-
-	// Cornell Specific Components
+	// School-Specific Components (Decision Letters)
 	import CornellAccepted from '$lib/components/cornell/CornellAccepted.svelte';
 	import CornellDenied from '$lib/components/cornell/CornellDenied.svelte';
 
-	// ----------------- CONFIGURATION -----------------
-
+	// --- Component Configuration ---
 	const SLUG = 'cornell';
-	const school = schoolConfigs[SLUG];
+	const school = {
+		schoolName: 'Cornell University',
+		primaryColor: '#B31B1B',
+		footerDomain: 'cornell.edu',
+		statusLastPosted: 'March 15, 2026',
+		round: 'Regular Decision',
+		referenceNumber: '20260012'
+	};
 
-	// ----------------- STATE -----------------
-
+	// --- State Variables ---
 	let profile: UserProfile = { ...defaultProfile };
 	let emailInput = '';
 	let passwordInput = '';
 	let error = '';
 	let authenticated = false;
 	let hasViewedUpdate = false;
+	let activeTab = 'Admissions Status';
 
-	// ----------------- REACTIVE DERIVATIONS -----------------
-
+	// Subscribe to the global user profile store
 	$: profile = $userProfile;
+
+	// Dynamic Data Helpers
 	const applicantName = () => profile.name || 'Applicant';
 
-	// ----------------- HANDLERS -----------------
+	// Default decision when the prediction store has no entry for this slug:
+	const DEFAULT_DECISION = 'deny';
+	$: shownDecision = $decisionsBySlug[SLUG] ?? DEFAULT_DECISION;
 
+	// --- Handlers ---
 	const handleLoadSavedLogin = () => {
 		if (!profile.email || !profile.password) {
 			// Use default John Doe credentials if user hasn't set up their own
@@ -70,219 +78,329 @@
 </script>
 
 <svelte:head>
-	<title>{school.schoolName} Undergraduate Admissions Portal</title>
+	<title>{school.schoolName} Applicant Portal</title>
 </svelte:head>
 
-<div class="min-h-screen font-sans text-slate-900 bg-[#f7f7f7]">
+<div class="min-h-screen bg-white font-serif text-gray-900">
 	{#if !authenticated}
-		<header class="bg-white border-b border-slate-300">
-			<div class="max-w-4xl mx-auto px-6 pt-4 pb-2 flex items-baseline justify-between">
-				<div class="flex items-end gap-3">
-					<span class="text-3xl font-serif font-bold text-[#B31B1B]"> Cornell University </span>
-					<span class="text-[11px] tracking-[0.18em] uppercase text-slate-700 pb-[3px]">
-						Undergraduate Admissions
-					</span>
-				</div>
-				<div class="text-[11px] text-slate-700">
-					{applicantName()}
-				</div>
-			</div>
-			<div class="h-6 bg-[#B31B1B]"></div>
-		</header>
-
-		<section class="bg-white min-h-[500px] py-10">
-			<div class="max-w-4xl mx-auto px-10">
-				<div class="bg-white max-w-[450px] text-[13px]">
-					<h1 class="text-2xl font-normal mb-5 font-serif text-[#B31B1B]">Login</h1>
-
-					<div
-						class="border border-green-700 bg-[#E0FFE0] px-4 py-3 mb-6 text-[13px] text-slate-900 font-normal"
+		<!-- ============================ LOGIN ============================ -->
+		<header class="border-b border-gray-200 bg-white">
+			<!-- Utility nav -->
+			<div class="border-b border-gray-100 bg-[#f7f7f7]">
+				<div
+					class="mx-auto flex max-w-6xl items-center justify-end gap-6 px-6 py-2 font-sans text-[12px] text-gray-700"
+				>
+					<a
+						href="/disclaimer"
+						class="rounded px-3 py-1 font-semibold text-white"
+						style="background-color: {school.primaryColor};">Check Application Status</a
 					>
-						To log in, please enter your email address and password.
-					</div>
-
-					<form class="space-y-4" on:submit={handleLogin}>
-						{#if error}
-							<p
-								class="text-xs text-red-800 border border-red-300 bg-red-50 px-3 py-2 mb-2"
-								role="alert"
-							>
-								{error}
-							</p>
-						{/if}
-
-						<div class="flex flex-col gap-1">
-							<label for="portal-email" class="text-[13px] font-normal text-slate-900"
-								>Email Address
-							</label>
-							<input
-								id="portal-email"
-								type="email"
-								class="border border-slate-400 bg-white px-2 py-1 text-[13px] w-96 shadow-inner"
-								bind:value={emailInput}
-								autocomplete="email"
-							/>
-						</div>
-
-						<div class="flex flex-col gap-1">
-							<label for="portal-password" class="text-[13px] font-normal text-slate-900">
-								Password
-							</label>
-							<div class="flex items-center justify-between max-w-lg">
-								<input
-									id="portal-password"
-									type="password"
-									class="border border-slate-400 bg-white px-2 py-1 text-[13px] w-80 shadow-inner"
-									bind:value={passwordInput}
-									autocomplete="current-password"
-								/>
-								<a
-									href="/disclaimer"
-									class="text-[12px] text-blue-800 underline hover:no-underline ml-4 whitespace-nowrap"
-								>
-									Forgot Your Password?
-								</a>
-							</div>
-						</div>
-
-						<div class="flex items-center gap-3 pt-3">
-							<button
-								type="submit"
-								class="border border-slate-600 bg-slate-300 px-4 py-1 text-[12px] font-semibold text-black
-										shadow-[2px_2px_0px_0px_rgba(0,0,0,0.5)] active:shadow-none active:translate-x-[2px] active:translate-y-[2px]"
-							>
-								Login
-							</button>
-							<button
-								type="button"
-								class="border border-slate-400 bg-slate-100 px-3 py-1 text-[11px] text-slate-700
-										shadow-[1px_1px_0px_0px_rgba(0,0,0,0.3)] hover:bg-slate-200 active:shadow-none active:translate-x-[1px] active:translate-y-[1px]"
-								on:click={handleLoadSavedLogin}
-							>
-								Load saved PredictAdmit login
-							</button>
-						</div>
-
-						<p class="pt-6 text-[11px] leading-relaxed text-slate-600 max-w-xl">
-							For this simulation, use the same email address and password that you saved on the
-							PredictAdmit.com home page. No real application data is used, and all information is
-							stored only in your browser.
-						</p>
-					</form>
+					<a href="/disclaimer" class="hidden hover:underline sm:inline">Policies</a>
+					<a href="/disclaimer" class="hidden hover:underline sm:inline">Request Information</a>
+					<a href="/disclaimer" class="hidden hover:underline sm:inline">Contact Us</a>
 				</div>
 			</div>
-		</section>
-
-		<footer
-			class="bg-[#B31B1B] h-8 flex items-center justify-center text-white text-[11px] font-normal"
-		>
-			<div class="max-w-4xl mx-auto flex justify-between w-full px-10">
-				<span>&copy; 2017</span>
-				<span>PredictAdmit Simulation - Not affiliated with Cornell University</span>
-			</div>
-		</footer>
-	{:else if !hasViewedUpdate}
-		<header class="bg-[#B31B1B] text-white">
-			<div class="max-w-[960px] mx-auto px-4 pt-8 pb-4">
-				<div class="mb-4">
-					<div class="flex items-center gap-3">
-						<div
-							class="w-12 h-12 rounded-full border-2 border-white flex items-center justify-center font-serif font-bold text-lg leading-none"
-						>
-							CU
-						</div>
-						<span class="font-serif text-2xl tracking-wide">Cornell University</span>
-					</div>
-				</div>
-
-				<div class="flex items-end justify-between border-t border-white/20 pt-3 mt-4">
-					<h2 class="font-serif text-xl tracking-wide">Undergraduate Admissions</h2>
-
-					<nav>
-						<ul class="flex gap-6 text-[13px] font-bold">
-							<li><a href="/disclaimer" class="hover:underline text-white">Apply</a></li>
-							<li><a href="/disclaimer" class="hover:underline text-white">Costs & Aid</a></li>
-							<li><a href="/disclaimer" class="hover:underline text-white">Learn</a></li>
-							<li><a href="/disclaimer" class="hover:underline text-white">Living</a></li>
-							<li><a href="/disclaimer" class="hover:underline text-white">Facts</a></li>
-							<li><a href="/disclaimer" class="hover:underline text-white">Visit</a></li>
-							<li><a href="/disclaimer" class="hover:underline text-white">Contact</a></li>
-						</ul>
+			<!-- Main header -->
+			<div class="mx-auto flex h-20 max-w-6xl items-center justify-between px-6">
+				<a href="/disclaimer" class="flex items-center gap-3">
+					<h1 class="text-xl font-semibold text-gray-900 md:text-2xl">
+						Cornell Undergraduate Admissions
+					</h1>
+				</a>
+				<div class="flex items-center gap-7">
+					<nav class="hidden items-center gap-7 font-sans text-[15px] text-gray-800 md:flex">
+						<a href="/disclaimer" class="hover:text-[color:var(--carnelian)]" style="--carnelian: {school.primaryColor}">How to Apply</a>
+						<a href="/disclaimer" class="hover:text-[color:var(--carnelian)]" style="--carnelian: {school.primaryColor}">Visit &amp; Connect</a>
+						<a href="/disclaimer" class="hover:text-[color:var(--carnelian)]" style="--carnelian: {school.primaryColor}">Menu</a>
 					</nav>
+					<a href="https://www.cornell.edu" aria-label="Cornell University">
+						<svg viewBox="0 0 100 100" class="h-14 w-14" aria-hidden="true">
+							<circle cx="50" cy="50" r="48" fill={school.primaryColor} />
+							<circle cx="50" cy="50" r="43" fill="none" stroke="white" stroke-width="1.2" />
+							<circle cx="50" cy="50" r="33" fill="none" stroke="white" stroke-width="0.8" />
+							<path d="M50 38 L34 44 L34 60 L50 55 Z" fill="white" opacity="0.95" />
+							<path d="M50 38 L66 44 L66 60 L50 55 Z" fill="white" opacity="0.8" />
+							<line x1="50" y1="38" x2="50" y2="55" stroke={school.primaryColor} stroke-width="1.2" />
+							<text x="50" y="72" font-size="8" text-anchor="middle" fill="white" font-family="serif" letter-spacing="1">1865</text>
+						</svg>
+					</a>
 				</div>
 			</div>
 		</header>
 
-		<main class="bg-[#F8F8F8] py-10 min-h-[500px]">
-			<div class="max-w-[960px] mx-auto bg-white shadow-sm min-h-[400px] p-8 relative">
-				<div class="flex gap-6 items-start">
-					<div class="flex-grow bg-[#FFFFE0] p-6 text-sm text-slate-800">
-						<h3 class="font-bold text-[#555] text-lg mb-2">Status Update</h3>
-						<p class="mb-4 text-black">
-							New Updates to your application were posted {school.statusLastPosted}.
-						</p>
-						<button
-							on:click={handleViewUpdate}
-							class="text-[#B31B1B] font-bold text-sm hover:underline"
+		<main class="mx-auto min-h-[520px] max-w-6xl px-6 py-14">
+			<h1 class="mb-8 text-5xl font-normal text-gray-900">Login</h1>
+
+			<div class="max-w-3xl">
+				<div
+					class="mb-8 border-l-4 bg-[#f4e6e6] px-4 py-3 text-[13px] text-gray-800"
+					style="border-color: {school.primaryColor};"
+				>
+					To log in, please enter your email address and password.
+				</div>
+
+				<form class="space-y-5" on:submit={handleLogin}>
+					{#if error}
+						<p
+							class="border border-red-300 bg-red-50 px-3 py-2 text-xs text-red-800"
+							role="alert"
 						>
-							{school.statusLinkLabel}
+							{error}
+						</p>
+					{/if}
+
+					<div class="flex items-center gap-6">
+						<label for="portal-email" class="w-32 text-[13px] font-bold text-gray-900">
+							Email Address
+						</label>
+						<input
+							id="portal-email"
+							type="email"
+							class="w-72 border border-gray-300 bg-white px-2 py-1.5 text-[13px]"
+							bind:value={emailInput}
+							autocomplete="email"
+						/>
+					</div>
+
+					<div class="flex items-center gap-6">
+						<label for="portal-password" class="w-32 text-[13px] font-bold text-gray-900">
+							Password
+						</label>
+						<input
+							id="portal-password"
+							type="password"
+							class="w-72 border border-gray-300 bg-white px-2 py-1.5 text-[13px]"
+							bind:value={passwordInput}
+							autocomplete="current-password"
+						/>
+						<a href="/disclaimer" class="text-[13px] text-gray-700 underline hover:text-gray-900">
+							Forgot Your Password?
+						</a>
+					</div>
+
+					<div class="flex items-center gap-4 pt-3 pl-[152px]">
+						<button
+							type="submit"
+							class="px-6 py-2 font-sans text-[13px] font-semibold text-white transition-opacity hover:opacity-90"
+							style="background-color: {school.primaryColor};"
+						>
+							Login
+						</button>
+						<button
+							type="button"
+							class="border border-gray-400 bg-gray-100 px-3 py-2 font-sans text-[12px] text-gray-700 hover:bg-gray-200"
+							on:click={handleLoadSavedLogin}
+						>
+							Load saved PredictAdmit login
 						</button>
 					</div>
 
-					<div class="w-64 text-[12px] font-bold leading-snug text-black pt-1">
-						If you need to contact us regarding your application, provide your name and this
-						reference number: <span class="text-black">{school.admissionsId}</span>.
-					</div>
-				</div>
+					<p class="max-w-2xl pl-[152px] pt-4 text-[11px] leading-relaxed text-gray-500">
+						For this simulation, use the same email address and password that you saved on the
+						PredictAdmit.com home page. No real application data is used, and all information is
+						stored only in your browser.
+					</p>
+				</form>
 			</div>
 		</main>
 
-		<footer class="bg-[#403C3B] text-[#ccc] py-10 font-sans">
-			<div class="max-w-[960px] mx-auto px-4 grid grid-cols-2 gap-12">
+		<!-- Footer -->
+		<footer class="bg-[#222222] text-gray-300">
+			<div class="mx-auto grid max-w-6xl grid-cols-1 gap-8 px-6 py-10 md:grid-cols-3">
 				<div>
-					<h4 class="text-white font-bold text-lg mb-4">Contact Us</h4>
-					<p class="text-[13px] leading-relaxed mb-6">
-						From your first questions about Cornell to the completion of your application, the
-						Undergraduate Admissions Office can help you find the information you need.
+					<h2 class="mb-3 font-sans text-sm font-bold tracking-wide text-white">
+						Undergraduate Admissions Office
+					</h2>
+					<p class="text-[13px] leading-relaxed text-gray-400">
+						Cornell University<br />
+						410 Thurston Avenue<br />
+						Ithaca, NY 14850
 					</p>
-					<a
-						href="/disclaimer"
-						class="text-[13px] text-[#ccc] hover:text-white underline decoration-1 underline-offset-2"
-						>Website Feedback</a
-					>
+					<p class="mt-3 text-[13px] text-gray-400">
+						<a href="/disclaimer" class="hover:underline">engage@admissions.{school.footerDomain}</a><br />
+						607.255.5241
+					</p>
 				</div>
-
 				<div>
-					<h4 class="text-white font-bold text-[13px] mb-4">Undergraduate Admissions Office</h4>
-					<div class="text-[13px] grid grid-cols-2 gap-x-8 gap-y-1">
-						<span>Cornell University</span>
-						<span
-							><a href="mailto:admissions@cornell.edu" class="hover:text-white"
-								>admissions@cornell.edu</a
-							></span
-						>
-
-						<span>410 Thurston Avenue</span>
-						<span>Tel: 607.255.5241</span>
-
-						<span>Ithaca, NY 14850</span>
-						<span>Fax: 607.255.0659</span>
+					<h2 class="mb-3 font-sans text-sm font-bold tracking-wide text-white">Enrollment</h2>
+					<ul class="space-y-1 text-[13px] text-gray-400">
+						<li><a href="/disclaimer" class="hover:underline">Admissions</a></li>
+						<li><a href="/disclaimer" class="hover:underline">Financial Aid</a></li>
+						<li><a href="/disclaimer" class="hover:underline">Registrar</a></li>
+						<li><a href="/disclaimer" class="hover:underline">Student Employment</a></li>
+					</ul>
+				</div>
+				<div>
+					<h2 class="mb-3 font-sans text-sm font-bold tracking-wide text-white">Connect</h2>
+					<div class="flex gap-4 text-gray-300">
+						<a href="/disclaimer" aria-label="Instagram"><svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.3 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.3 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .3-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.3-2.2-.4a3.7 3.7 0 0 1-1.4-.9 3.7 3.7 0 0 1-.9-1.4c-.2-.4-.3-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.3-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.3 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 3.1a4.9 4.9 0 1 0 0 9.8 4.9 4.9 0 0 0 0-9.8zm0 8a3.1 3.1 0 1 1 0-6.2 3.1 3.1 0 0 1 0 6.2zm6.3-8.2a1.1 1.1 0 1 1-2.3 0 1.1 1.1 0 0 1 2.3 0z"/></svg></a>
+						<a href="/disclaimer" aria-label="YouTube"><svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23 7.5a3 3 0 0 0-2.1-2.1C19 4.9 12 4.9 12 4.9s-7 0-8.9.5A3 3 0 0 0 1 7.5 31 31 0 0 0 .5 12 31 31 0 0 0 1 16.5a3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1c.4-1.5.5-3 .5-4.5s-.1-3-.5-4.5zM9.8 15.3V8.7l5.7 3.3-5.7 3.3z"/></svg></a>
 					</div>
 				</div>
 			</div>
-
-			<div
-				class="max-w-[960px] mx-auto px-4 mt-12 pt-4 border-t border-[#555] flex justify-between text-[12px] text-[#999]"
-			>
-				<span>&copy; 2017 Cornell University</span>
-				<div class="flex gap-4">
-					<a href="/disclaimer" class="hover:text-white">Admissions</a>
-					<a href="/disclaimer" class="hover:text-white">Financial Aid</a>
-					<a href="/disclaimer" class="hover:text-white">Student Employment</a>
+			<div class="border-t border-gray-700">
+				<div class="mx-auto flex max-w-6xl flex-wrap gap-x-6 gap-y-2 px-6 py-5 font-sans text-[11px] text-gray-400">
+					<a href="/disclaimer" class="hover:underline">Annual Security and Fire Safety Reports</a>
+					<a href="/disclaimer" class="hover:underline">Land Acknowledgment</a>
+					<a href="/disclaimer" class="hover:underline">University Privacy</a>
+					<a href="/disclaimer" class="hover:underline">Web Accessibility Assistance</a>
 				</div>
 			</div>
 		</footer>
-	{:else if $decisionsBySlug[SLUG] === 'admit'}
+	{:else if authenticated && !hasViewedUpdate}
+		<!-- ============================ PORTAL ============================ -->
+		<header class="border-b border-gray-200 bg-white">
+			<div class="mx-auto flex h-20 max-w-6xl items-center justify-between px-6">
+				<div class="flex items-center gap-3">
+					<h1 class="text-xl font-semibold text-gray-900 md:text-2xl">
+						Cornell Undergraduate Admissions
+					</h1>
+				</div>
+				<svg viewBox="0 0 100 100" class="h-14 w-14" aria-hidden="true">
+					<circle cx="50" cy="50" r="48" fill={school.primaryColor} />
+					<circle cx="50" cy="50" r="43" fill="none" stroke="white" stroke-width="1.2" />
+					<circle cx="50" cy="50" r="33" fill="none" stroke="white" stroke-width="0.8" />
+					<path d="M50 38 L34 44 L34 60 L50 55 Z" fill="white" opacity="0.95" />
+					<path d="M50 38 L66 44 L66 60 L50 55 Z" fill="white" opacity="0.8" />
+					<line x1="50" y1="38" x2="50" y2="55" stroke={school.primaryColor} stroke-width="1.2" />
+					<text x="50" y="72" font-size="8" text-anchor="middle" fill="white" font-family="serif" letter-spacing="1">1865</text>
+				</svg>
+			</div>
+		</header>
+
+		<main class="mx-auto max-w-6xl px-6 pb-16">
+			<div class="flex flex-wrap items-start justify-between gap-4 pt-10 pb-5">
+				<h1 class="text-4xl font-normal text-gray-900">Applicant Portal</h1>
+				<div class="text-right text-[13px] text-gray-700">
+					<div class="flex flex-wrap justify-end gap-x-6 gap-y-1">
+						<span><strong>Applicant Name:</strong> {applicantName()}</span>
+						<span><strong>Round:</strong> {school.round}</span>
+						<span><strong>Reference Number:</strong> {school.referenceNumber}</span>
+					</div>
+					<a
+						href="/disclaimer"
+						class="mt-3 inline-block font-semibold"
+						style="color: {school.primaryColor};">Logout</a
+					>
+				</div>
+			</div>
+
+			<nav class="flex items-center gap-6 border-b border-gray-300 text-sm">
+				{#each ['Admissions Status', 'Application Information', 'Profile'] as tab}
+					<button
+						on:click={() => (activeTab = tab)}
+						class="-mb-px border-b-2 px-1 py-3 font-sans font-medium transition-colors"
+						class:border-transparent={activeTab !== tab}
+						class:text-gray-600={activeTab !== tab}
+						style={activeTab === tab
+							? `border-color: ${school.primaryColor}; color: ${school.primaryColor};`
+							: ''}
+					>
+						{tab}
+					</button>
+				{/each}
+				<a
+					href="/disclaimer"
+					class="ml-auto flex items-center gap-1 py-3 font-sans text-sm font-medium"
+					style="color: {school.primaryColor};"
+				>
+					<span
+						class="flex h-4 w-4 items-center justify-center rounded-full text-[10px] font-bold text-white"
+						style="background-color: {school.primaryColor};">?</span
+					>
+					Contact &amp; Resources
+				</a>
+			</nav>
+
+			<div class="flex flex-col gap-8 py-8 md:flex-row">
+				<aside class="w-full shrink-0 md:w-64">
+					<div class="border border-gray-200 bg-gray-100">
+						<div class="border-b border-gray-200 px-4 py-3 font-sans text-sm font-bold text-gray-800">
+							Admission Status
+						</div>
+						<a
+							href="/disclaimer"
+							class="block px-4 py-3 font-sans text-sm text-gray-600 hover:bg-gray-200"
+						>
+							Status Update
+						</a>
+					</div>
+				</aside>
+
+				<section class="flex-1">
+					{#if activeTab === 'Admissions Status'}
+						<h2 class="flex items-center gap-3 text-2xl text-gray-800">
+							<span
+								class="flex h-6 w-6 items-center justify-center rounded-full text-sm font-bold text-white"
+								style="background-color: {school.primaryColor};">!</span
+							>
+							Status Update
+						</h2>
+						<p class="mt-4 text-[15px] text-gray-700">
+							An update to your application was last posted {school.statusLastPosted}.
+						</p>
+						<button
+							on:click={handleViewUpdate}
+							class="mt-5 px-4 py-2 font-sans text-sm font-semibold text-white shadow-sm transition-opacity hover:opacity-90"
+							style="background-color: {school.primaryColor};"
+						>
+							View Update &gt;&gt;
+						</button>
+					{:else}
+						<div class="border border-gray-200 bg-gray-50 p-6">
+							<p class="font-sans text-sm text-gray-600">
+								This section of your applicant portal is not available in this simulation.
+							</p>
+						</div>
+					{/if}
+				</section>
+			</div>
+		</main>
+
+		<!-- Footer -->
+		<footer class="bg-[#222222] text-gray-300">
+			<div class="mx-auto grid max-w-6xl grid-cols-1 gap-8 px-6 py-10 md:grid-cols-3">
+				<div>
+					<h2 class="mb-3 font-sans text-sm font-bold tracking-wide text-white">
+						Undergraduate Admissions Office
+					</h2>
+					<p class="text-[13px] leading-relaxed text-gray-400">
+						Cornell University<br />
+						410 Thurston Avenue<br />
+						Ithaca, NY 14850
+					</p>
+					<p class="mt-3 text-[13px] text-gray-400">
+						<a href="/disclaimer" class="hover:underline">engage@admissions.{school.footerDomain}</a><br />
+						607.255.5241
+					</p>
+				</div>
+				<div>
+					<h2 class="mb-3 font-sans text-sm font-bold tracking-wide text-white">Enrollment</h2>
+					<ul class="space-y-1 text-[13px] text-gray-400">
+						<li><a href="/disclaimer" class="hover:underline">Admissions</a></li>
+						<li><a href="/disclaimer" class="hover:underline">Financial Aid</a></li>
+						<li><a href="/disclaimer" class="hover:underline">Registrar</a></li>
+						<li><a href="/disclaimer" class="hover:underline">Student Employment</a></li>
+					</ul>
+				</div>
+				<div>
+					<h2 class="mb-3 font-sans text-sm font-bold tracking-wide text-white">Connect</h2>
+					<div class="flex gap-4 text-gray-300">
+						<a href="/disclaimer" aria-label="Instagram"><svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.3 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.3 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .3-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.3-2.2-.4a3.7 3.7 0 0 1-1.4-.9 3.7 3.7 0 0 1-.9-1.4c-.2-.4-.3-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.3-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.3 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 3.1a4.9 4.9 0 1 0 0 9.8 4.9 4.9 0 0 0 0-9.8zm0 8a3.1 3.1 0 1 1 0-6.2 3.1 3.1 0 0 1 0 6.2zm6.3-8.2a1.1 1.1 0 1 1-2.3 0 1.1 1.1 0 0 1 2.3 0z"/></svg></a>
+						<a href="/disclaimer" aria-label="YouTube"><svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23 7.5a3 3 0 0 0-2.1-2.1C19 4.9 12 4.9 12 4.9s-7 0-8.9.5A3 3 0 0 0 1 7.5 31 31 0 0 0 .5 12 31 31 0 0 0 1 16.5a3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1c.4-1.5.5-3 .5-4.5s-.1-3-.5-4.5zM9.8 15.3V8.7l5.7 3.3-5.7 3.3z"/></svg></a>
+					</div>
+				</div>
+			</div>
+			<div class="border-t border-gray-700">
+				<div class="mx-auto flex max-w-6xl flex-wrap gap-x-6 gap-y-2 px-6 py-5 font-sans text-[11px] text-gray-400">
+					<a href="/disclaimer" class="hover:underline">Annual Security and Fire Safety Reports</a>
+					<a href="/disclaimer" class="hover:underline">Land Acknowledgment</a>
+					<a href="/disclaimer" class="hover:underline">University Privacy</a>
+					<a href="/disclaimer" class="hover:underline">Web Accessibility Assistance</a>
+				</div>
+			</div>
+		</footer>
+	{:else if shownDecision === 'admit'}
 		<CornellAccepted
 			applicantName={applicantName()}
 			schoolName={school.schoolName}

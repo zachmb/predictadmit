@@ -1,148 +1,128 @@
 <script lang="ts">
-	// Props passed from the main portal page
+	// The parent component passes these props
 	export let applicantName: string;
-	export let primaryColor: string; // Duke Blue: #003366
+	export let schoolName: string = 'Duke University';
+	export let primaryColor: string = '#00539B';
+	export let footerDomain: string = 'duke.edu';
+
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { userProfile } from '$lib/stores/user';
+	import { decisionsBySlug } from '$lib/stores/results';
 
 	$: session = $page.data.session;
 
 	let googleSignedIn = false;
-	let googleEmail = '';
-	let googleName = '';
+	$: googleSignedIn = !!session?.user;
 
-	$: {
-		googleSignedIn = !!session?.user;
-		googleEmail = (session?.user?.email as string) ?? '';
-		googleName = (session?.user?.name as string) ?? '';
-	}
-	import { decisionsBySlug } from '$lib/stores/results';
 	const viewAnalysis = () => {
 		goto('/results/duke');
 	};
-
-	// Duke-specific content
-	const DUKE_ACCENT_COLOR = '#99CCFF'; // Light Blue
 </script>
 
-<div class="min-h-screen bg-white text-gray-800 font-sans p-6">
-	<main class="max-w-3xl mx-auto mt-10">
+<svelte:head>
+	<title>{schoolName} — Admission Decision</title>
+</svelte:head>
+
+<main class="min-h-screen bg-[#eef1f5] font-serif text-gray-900">
+	<!-- Top brand bar -->
+	<div style="background-color: {primaryColor};" class="h-10 w-full"></div>
+
+	<div class="mx-auto max-w-3xl px-6 py-10">
 		{#if googleSignedIn && $userProfile.usingAI}
 			<div class="mb-6 flex justify-end">
 				<button
 					on:click={viewAnalysis}
-					class="group flex items-center px-4 py-2 bg-[#003262] text-white rounded-lg text-sm font-sans font-bold hover:bg-slate-800 transition-all shadow-md active:scale-95"
+					class="rounded-lg px-4 py-2 font-sans text-sm font-bold text-white shadow-md transition-all hover:opacity-90 active:scale-95"
+					style="background-color: {primaryColor};"
 				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						class="w-4 h-4 transition-transform group-hover:-translate-x-1"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
-					>
-					</svg>
 					Deep Dive: Why did I get {$decisionsBySlug['duke']}?
 				</button>
 			</div>
 		{/if}
-		<div class="border-b-2 pb-4 mb-8" style="border-color: {primaryColor};">
-			<div class="flex items-center">
-				<div
-					class="w-16 h-16 text-white flex items-center justify-center font-bold text-2xl mr-4"
-					style="background-color: {primaryColor};"
-				>
-					D
+
+		<div class="mb-2 text-[13px] font-bold text-gray-900">March 26, 2026</div>
+
+		<!-- Letter sheet -->
+		<div class="bg-white px-12 py-14 shadow-sm">
+			<!-- Letterhead -->
+			<div class="mb-6 text-center">
+				<div class="font-serif text-5xl font-bold tracking-tight" style="color: {primaryColor};">
+					Duke<span class="ml-2 align-middle text-[15px] font-semibold tracking-[0.35em]"
+						>UNIVERSITY</span
+					>
 				</div>
-				<div>
-					<h1 class="text-2xl font-bold" style="color: {primaryColor};">DUKE UNIVERSITY</h1>
-					<div class="text-sm text-gray-600">
-						Office of Undergraduate Admissions<br />
-						2138 Campus Drive, Durham, North Carolina 27708<br />
-						Telephone 919-684-3214 • Fax 919-684-8133
-					</div>
+				<div class="mt-4 text-[13px] font-bold uppercase tracking-wide text-gray-900">
+					Office of Undergraduate Admissions
 				</div>
+				<div class="text-[12px] text-gray-700">
+					2138 Campus Drive, Box 90586 &bull; Durham, North Carolina 27708-0586 &bull; (919) 684-3214
+				</div>
+			</div>
+
+			<div class="mb-6 text-[14px] leading-relaxed text-gray-900">
+				<p class="mb-5">Dear {applicantName || 'Applicant'},</p>
+
+				<p class="mb-5">
+					It is with great pleasure that I write to offer you admission to Duke University as a member
+					of the Class of 2030. On behalf of the Admissions Committee, congratulations. From a pool of
+					more than 61,000 applicants competing for just 1,775 places in the first-year class, you
+					distinguished yourself as one of the exceptionally accomplished and talented students we are
+					proud to welcome to Durham this fall.
+				</p>
+
+				<p class="mb-5">
+					My staff and I were genuinely impressed by the effort you have put forth both inside and
+					outside the classroom. Your record of achievement, intellectual curiosity, and the qualities
+					of character revealed throughout your application convinced us that you will thrive within
+					the vibrant, collaborative community of students and faculty that defines Duke.
+				</p>
+
+				<p class="mb-5">
+					In the coming days you will receive additional information through your applicant portal,
+					including details about your financial aid award, Blue Devil Days for admitted students, and
+					the steps to confirm your enrollment. To reserve your place in the class, please submit your
+					enrollment response and deposit through your online portal by May 1, 2026.
+				</p>
+
+				<p class="mb-8">
+					Congratulations once again on this well-earned achievement. We look forward to welcoming you
+					to Duke and to all that lies ahead.
+				</p>
+
+				<p class="mb-8">Sincerely,</p>
+
+				<div class="mb-1 font-[cursive] text-2xl italic text-gray-800">Kathy L. Phillips</div>
+				<div class="text-[14px] font-bold text-gray-900">Kathy L. Phillips</div>
+				<div class="text-[13px] text-gray-700">Interim Dean of Undergraduate Admissions</div>
 			</div>
 		</div>
 
-		<div class="mb-8">
-			<div class="text-right text-sm text-gray-600 mb-2">March 26, 2020</div>
-			<div class="space-y-1">
-				<div>{applicantName || 'Applicant'}</div>
-				<div>1600 Pennsylvania Avenue NW</div>
-				<div>Washington, DC 20500</div>
-			</div>
+		<div class="mt-8 text-center">
+			<a href="/disclaimer" class="text-[14px] hover:underline" style="color: {primaryColor};">
+				Return to Application Status
+			</a>
 		</div>
 
-		<div class="mb-6">
-			<div class="text-lg font-bold" style="color: {primaryColor};">Congratulations!</div>
-		</div>
-
-		<div class="space-y-4 mb-8">
-			<p>
-				On behalf of the Admissions Committee, I am delighted to inform you that you have been
-				admitted to the Duke University Class of 2024. Your application impressed us with its depth,
-				intellectual curiosity, and remarkable potential, and we are confident that you will
-				contribute significantly to the Duke community.
-			</p>
-
-			<p>
-				This year, Duke received over 45,000 applications for the approximately 1,740 places in the
-				first-year class. Your admission is a tremendous accomplishment, and we hope you will choose
-				to join us next fall. The diverse perspectives, talents, and experiences you bring will
-				enrich our campus in meaningful ways.
-			</p>
-
-			<p>
-				You are invited to attend Blue Devil Days, our admitted students program, from April 16-18,
-				2020. This program will give you the opportunity to experience life at Duke firsthand, meet
-				current students and faculty, and connect with your future classmates.
-			</p>
-
-			<p>
-				To accept your offer of admission, please complete the reply form available in your
-				admissions portal by <strong>May 1, 2020</strong>. You will also find important information
-				about financial aid, housing, and next steps in your portal.
-			</p>
-
-			<p>
-				Again, congratulations on this outstanding achievement. We look forward to welcoming you to
-				Durham. Go Blue Devils!
-			</p>
-		</div>
-
-		<div class="mt-12">
-			<div class="mb-2 h-12 flex items-end">
-				<div class="text-xl italic font-serif" style="color: {primaryColor};">
-					Christoph's Signature
-				</div>
-			</div>
-			<div class="font-bold">Christoph Guttentag</div>
-			<div class="text-sm text-gray-600">
-				Dean of Undergraduate Admissions<br />
-				Duke University
-			</div>
-		</div>
-
-		<div class="mt-16 pt-8 border-t border-gray-200 text-xs text-gray-500">
-			<div class="grid grid-cols-2 gap-8">
-				<div>
-					<strong>Duke University Mission:</strong><br />
-					To provide a superior liberal arts education, utilizing the best of the university's research
-					and scholarly resources to nurture the next generation of leaders in every sector of society.
-				</div>
-				<div>
-					<strong>Contact Information:</strong><br />
-					Email: undergraduate.admissions@duke.edu<br />
-					Phone: 919-684-3214<br />
-					Website: admissions.duke.edu
-				</div>
-			</div>
-		</div>
-
-		<div class="mt-8 p-4 bg-amber-50 border border-amber-200 rounded text-sm text-amber-800">
+		<!-- Disclaimer -->
+		<div class="mx-auto mt-8 max-w-2xl rounded border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800 font-sans">
 			<strong>Note:</strong> This is a simulated admission letter for entertainment purposes only. This
-			is not a real admission decision from Duke University.
+			is not a real admission decision from {schoolName}.
 		</div>
-	</main>
-</div>
+	</div>
+
+	<!-- Footer -->
+	<footer style="background-color: {primaryColor};" class="text-white">
+		<div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 text-[12px] font-sans">
+			<span class="font-bold uppercase tracking-wide">&copy; DUKE.EDU</span>
+			<nav class="flex gap-6">
+				<a href="/disclaimer" class="hover:underline">Counselors</a>
+				<a href="/disclaimer" class="hover:underline">Families</a>
+				<a href="/disclaimer" class="hover:underline">Resources</a>
+				<a href="/disclaimer" class="hover:underline">FAQs</a>
+				<a href="/disclaimer" class="hover:underline">Contact</a>
+			</nav>
+			<a href={`https://${footerDomain}`} class="hover:underline">{footerDomain}</a>
+		</div>
+	</footer>
+</main>

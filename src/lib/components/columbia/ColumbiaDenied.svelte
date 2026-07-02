@@ -1,38 +1,21 @@
 <script lang="ts">
+	// The parent component passes these props
+	export let applicantName: string;
+	export let schoolName: string = 'Columbia University';
+	export let primaryColor: string = '#003D6B';
+	export let footerDomain: string = 'columbia.edu';
+
 	import { goto } from '$app/navigation';
-	import { browser } from '$app/environment';
+	import { page } from '$app/stores';
 	import { userProfile } from '$lib/stores/user';
 	import { decisionsBySlug } from '$lib/stores/results';
-	import { page } from '$app/stores';
+
+	const COLUMBIA_BLUE = '#B9D9EB';
+
 	$: session = $page.data.session;
 
 	let googleSignedIn = false;
-	let googleEmail = '';
-	let googleName = '';
-
-	$: {
-		googleSignedIn = !!session?.user;
-		googleEmail = (session?.user?.email as string) ?? '';
-		googleName = (session?.user?.name as string) ?? '';
-	}
-
-	// 1. Props are defined using 'export let'
-	export let applicantName = '';
-	export let schoolName = '';
-	export let primaryColor = '';
-	export let footerDomain = '';
-
-	// 2. Derived/Reactive values use the '$:' label
-	// Note: Unlike runes, you don't use an arrow function here.
-	let firstName;
-	$: {
-		if (!applicantName) {
-			firstName = '';
-		} else {
-			const names = applicantName.split(' ');
-			firstName = names[0] || '';
-		}
-	}
+	$: googleSignedIn = !!session?.user;
 
 	const viewAnalysis = () => {
 		goto('/results/columbia');
@@ -40,160 +23,133 @@
 </script>
 
 <svelte:head>
-	<title>Columbia University - Admission Decision</title>
+	<title>{schoolName} — Admission Decision</title>
 </svelte:head>
 
-<main class="min-h-screen bg-white text-gray-800 font-serif p-6">
-	<div class="max-w-3xl mx-auto">
+<main class="min-h-screen bg-white text-gray-800 p-6" style="font-family: Georgia, 'Times New Roman', serif;">
+	<div class="max-w-3xl mx-auto mt-10">
 		{#if googleSignedIn && $userProfile.usingAI}
 			<div class="mb-6 flex justify-end">
 				<button
 					on:click={viewAnalysis}
-					class="group flex items-center px-4 py-2 bg-[#003262] text-white rounded-lg text-sm font-sans font-bold hover:bg-slate-800 transition-all shadow-md active:scale-95"
+					class="group flex items-center px-4 py-2 text-white rounded-lg text-sm font-sans font-bold hover:opacity-90 transition-all shadow-md active:scale-95"
+					style="background-color: {primaryColor};"
 				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						class="w-4 h-4 transition-transform group-hover:-translate-x-1"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
-					>
-					</svg>
 					Deep Dive: Why did I get {$decisionsBySlug['columbia']}?
 				</button>
 			</div>
 		{/if}
+
 		<!-- Letterhead -->
-		<div class="border-b-2 border-gray-400 pb-4 mb-8">
+		<div class="border-b-2 pb-4 mb-8" style="border-color: {primaryColor};">
 			<div class="flex items-center">
-				<div
-					class="w-16 h-16 bg-gray-400 text-white flex items-center justify-center font-bold text-2xl mr-4"
-				>
-					C
+				<div class="w-16 h-16 flex items-center justify-center mr-4" style="background-color: {primaryColor};">
+					<svg viewBox="0 0 60 46" class="w-10 h-8" aria-hidden="true">
+						<path d="M4 40 L6 16 L18 26 L30 6 L42 26 L54 16 L56 40 Z" fill={COLUMBIA_BLUE} />
+						<rect x="4" y="40" width="52" height="5" fill={COLUMBIA_BLUE} />
+						<circle cx="6" cy="14" r="3" fill={COLUMBIA_BLUE} />
+						<circle cx="30" cy="4" r="3.5" fill={COLUMBIA_BLUE} />
+						<circle cx="54" cy="14" r="3" fill={COLUMBIA_BLUE} />
+					</svg>
 				</div>
 				<div>
-					<h1 class="text-2xl font-bold text-gray-700">COLUMBIA UNIVERSITY</h1>
+					<h1 class="text-2xl font-bold" style="color: {primaryColor};">COLUMBIA UNIVERSITY</h1>
 					<div class="text-sm text-gray-600">
-						Undergraduate Admissions<br />
-						New York, New York 10027
+						Office of Undergraduate Admissions<br />
+						212 Hamilton Hall, Mail Code 2807 · 1130 Amsterdam Avenue<br />
+						New York, New York 10027 · Telephone 212-854-2522
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<!-- Date and Address -->
+		<!-- Date + address -->
 		<div class="mb-8">
-			<div class="text-right text-sm text-gray-600 mb-2">March 25, 2020</div>
+			<div class="text-right text-sm text-gray-600 mb-2">March 13, 2026</div>
 			<div class="space-y-1">
 				<div>{applicantName || 'Applicant'}</div>
-				<div>F33 College Way</div>
-				<div>Pasadena, CA 91001</div>
-				<div>United States</div>
+				<div>Regular Decision Applicant</div>
+				<div>Columbia College</div>
 			</div>
 		</div>
 
-		<!-- Greeting -->
 		<div class="mb-6">
-			<div class="text-lg font-bold text-gray-700">Admissions Decision</div>
+			<div class="text-xl font-bold" style="color: {primaryColor};">
+				Dear {applicantName || 'Applicant'},
+			</div>
 		</div>
 
-		<!-- Letter Body -->
 		<div class="space-y-4 mb-8">
 			<p>
-				Thank you for applying to Columbia University. The Committee on Admissions has completed its
-				review of applications for the Class of 2024, and I regret to inform you that we are unable
-				to offer you admission.
+				Thank you for your application to Columbia University and for allowing us to consider you for
+				a place in the Class of 2030. I know how much thought and effort you invested in your
+				application, and the Committee on Admissions read it with genuine care and attention.
 			</p>
 
 			<p>
-				This year, Columbia received over 40,000 applications for approximately 1,400 places in the
-				first-year class. The selection process was exceptionally difficult due to the extraordinary
-				qualifications of our applicant pool. Please understand that our decision reflects the
-				competitive nature of our admissions process and is not a judgment of your abilities or
-				potential.
-			</p>
-
-			<div class="bg-gray-50 p-6 border border-gray-200 rounded my-4">
-				<h3 class="font-bold text-gray-700 mb-2">Columbia's Holistic Review Process</h3>
-				<p class="text-sm">
-					Columbia practices a holistic review, considering academic achievement, personal
-					qualities, extracurricular engagement, and potential to contribute to our campus
-					community. Each application is read by multiple committee members before final decisions
-					are made.
-				</p>
-			</div>
-
-			<p>
-				We recognize the considerable time and effort you devoted to your application, and we
-				appreciate your interest in Columbia University. We have no doubt that you will find a
-				college where you will thrive and make significant contributions.
+				This year we received one of the largest and most accomplished applicant pools in Columbia's
+				history for a very limited number of places. Because of this, we were forced to make many
+				difficult decisions among candidates of remarkable promise. After a thorough and thoughtful
+				review, I am sorry to tell you that we are unable to offer you admission.
 			</p>
 
 			<p>
-				Your application demonstrated many strengths, and we encourage you to take pride in your
-				accomplishments. The particular combination of talents and experiences we seek each year
-				varies, and the fact that you were not admitted does not diminish your achievements or
-				potential.
+				I want to be clear that this decision is not a judgment of your ability or your worth. Our
+				choices reflect the extraordinary competitiveness of this year's pool and the constraints of
+				our class size far more than any shortcoming in your candidacy. The accomplishments and
+				character evident throughout your application are real, and they will continue to open doors
+				for you.
 			</p>
 
 			<p>
-				We wish you every success in your future academic endeavors and hope that you will continue
-				to pursue your intellectual passions with the same dedication evident in your application.
+				Wherever you continue your education, I am confident you will bring energy, curiosity, and
+				distinction to that community. On behalf of the entire Committee, I thank you for your
+				interest in Columbia and wish you every success in the years ahead.
 			</p>
+
+			<p>With warm regards and best wishes,</p>
 		</div>
 
-		<!-- Next Steps -->
-		<div class="mt-8 p-6 bg-gray-50 border border-gray-200 rounded">
-			<h3 class="font-bold text-gray-700 mb-3">Next Steps & Resources</h3>
-			<ul class="space-y-2 text-sm">
-				<li>
-					• You may consider applying for transfer admission after completing one year of college
-					coursework.
-				</li>
-				<li>
-					• Columbia offers various summer programs and online courses through Columbia University
-					Summer Sessions.
-				</li>
-				<li>
-					• We encourage you to explore our virtual campus tours and admission resources at <a
-						href="https://undergrad.admissions.columbia.edu"
-						class="text-blue-600 hover:underline">undergrad.admissions.columbia.edu</a
-					>.
-				</li>
-			</ul>
-		</div>
-
-		<!-- Signature -->
 		<div class="mt-12">
 			<div class="mb-2">
-				<div class="h-1 w-32 bg-gray-400"></div>
+				<img
+					src="/signature-placeholder.png"
+					alt="Signature"
+					class="h-12"
+					style="filter: invert(15%) sepia(60%) saturate(1200%) hue-rotate(180deg) brightness(45%) contrast(100%);"
+				/>
 			</div>
 			<div class="font-bold">Jessica Marinaccio</div>
 			<div class="text-sm text-gray-600">
-				Dean of Undergraduate Admissions<br />
-				Columbia University
+				Dean of Undergraduate Admissions and Financial Aid<br />
+				{schoolName}
 			</div>
 		</div>
 
-		<!-- Footer -->
 		<div class="mt-16 pt-8 border-t border-gray-200 text-xs text-gray-500">
-			<p class="italic mb-4">
-				"Columbia's graduates are recognized for their intellectual rigor, their collaborative and
-				forward-thinking spirit, and their commitment to making a positive impact on the world."
-			</p>
-			<div>
-				<strong>Columbia University Admissions Office</strong><br />
-				212 Hamilton Hall, Mail Code 2807<br />
-				1130 Amsterdam Avenue<br />
-				New York, NY 10027<br />
-				Phone: 212-854-2522 • Email: ugrad-admiss@columbia.edu
+			<div class="grid grid-cols-2 gap-8">
+				<div>
+					<strong>Columbia's Mission:</strong><br />
+					To advance knowledge and learning at the highest level and to convey the products of its efforts
+					to the world, grounded in the shared intellectual experience of the Core Curriculum.
+				</div>
+				<div>
+					<strong>Contact Information:</strong><br />
+					Email:
+					<a href="mailto:ugrad-ask@columbia.edu" class="hover:underline">ugrad-ask@columbia.edu</a
+					><br />
+					Phone: 212-854-2522<br />
+					Website:
+					<a href={`https://undergrad.admissions.${footerDomain}`} class="hover:underline"
+						>undergrad.admissions.{footerDomain}</a
+					>
+				</div>
 			</div>
 		</div>
 
-		<!-- Simulation Note -->
 		<div class="mt-8 p-4 bg-amber-50 border border-amber-200 rounded text-sm text-amber-800">
-			<strong>Note:</strong> This is a simulated admission decision for entertainment purposes only. This
-			is not a real decision from Columbia University.
+			<strong>Note:</strong> This is a simulated admission letter for entertainment purposes only. This
+			is not a real admission decision from Columbia University.
 		</div>
 	</div>
 </main>

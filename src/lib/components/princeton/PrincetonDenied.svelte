@@ -1,9 +1,15 @@
 <script lang="ts">
+	// The parent component passes these props
+	export let applicantName: string;
+	export let schoolName: string = 'Princeton University';
+	export let primaryColor: string = '#FF8F00'; // Princeton orange
+	export let footerDomain: string = 'princeton.edu';
+
 	import { goto } from '$app/navigation';
-	import { browser } from '$app/environment';
+	import { page } from '$app/stores';
 	import { userProfile } from '$lib/stores/user';
 	import { decisionsBySlug } from '$lib/stores/results';
-	import { page } from '$app/stores';
+
 	$: session = $page.data.session;
 
 	let googleSignedIn = false;
@@ -16,23 +22,7 @@
 		googleName = (session?.user?.name as string) ?? '';
 	}
 
-	// 1. Props are defined using 'export let'
-	export let applicantName = '';
-	export let schoolName = '';
-	export let primaryColor = '';
-	export let footerDomain = '';
-
-	// 2. Derived/Reactive values use the '$:' label
-	// Note: Unlike runes, you don't use an arrow function here.
-	let firstName;
-	$: {
-		if (!applicantName) {
-			firstName = '';
-		} else {
-			const names = applicantName.split(' ');
-			firstName = names[0] || '';
-		}
-	}
+	$: firstName = applicantName ? applicantName.split(' ')[0] : '';
 
 	const viewAnalysis = () => {
 		goto('/results/princeton');
@@ -40,20 +30,20 @@
 </script>
 
 <svelte:head>
-	<title>Princeton University - Admission Decision</title>
+	<title>{schoolName} - Admission Decision</title>
 </svelte:head>
 
 <main class="min-h-screen bg-white text-gray-800 font-serif p-6">
-	<div class="max-w-3xl mx-auto">
+	<div class="max-w-3xl mx-auto mt-10">
 		{#if googleSignedIn && $userProfile.usingAI}
 			<div class="mb-6 flex justify-end">
 				<button
 					on:click={viewAnalysis}
-					class="group flex items-center px-4 py-2 bg-[#003262] text-white rounded-lg text-sm font-sans font-bold hover:bg-slate-800 transition-all shadow-md active:scale-95"
+					class="group flex items-center px-4 py-2 bg-black text-white rounded-lg text-sm font-sans font-bold hover:bg-gray-800 transition-all shadow-md active:scale-95"
 				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
-						class="w-4 h-4 transition-transform group-hover:-translate-x-1"
+						class="w-4 h-4 mr-2 transition-transform group-hover:-translate-x-1"
 						fill="none"
 						viewBox="0 0 24 24"
 						stroke="currentColor"
@@ -63,130 +53,114 @@
 				</button>
 			</div>
 		{/if}
+
 		<!-- Letterhead -->
-		<div class="border-b-2 border-gray-400 pb-4 mb-8">
+		<div class="border-b-2 pb-4 mb-8" style="border-color: {primaryColor};">
 			<div class="flex items-center">
 				<div
-					class="w-16 h-16 bg-gray-400 text-white flex items-center justify-center font-bold text-2xl mr-4 rounded-full"
+					class="w-16 h-16 flex items-center justify-center font-serif font-bold text-2xl mr-4 text-black"
+					style="background-color: {primaryColor};"
 				>
 					P
 				</div>
 				<div>
-					<h1 class="text-2xl font-bold text-gray-700">PRINCETON UNIVERSITY</h1>
+					<h1 class="text-2xl font-bold text-black">PRINCETON UNIVERSITY</h1>
 					<div class="text-sm text-gray-600">
 						Office of Undergraduate Admission<br />
-						Princeton, New Jersey 08544<br />
+						P.O. Box 430, Princeton, New Jersey 08542<br />
 						Telephone 609-258-3060
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<!-- Date and Address -->
+		<!-- Date -->
 		<div class="mb-8">
-			<div class="text-right text-sm text-gray-600 mb-2">March 26, 2020</div>
-			<div class="space-y-1">
-				<div>{applicantName || 'Applicant'}</div>
-				<div>1600 Pennsylvania Avenue NW</div>
-				<div>Washington, DC 20500</div>
-			</div>
+			<div class="text-sm text-gray-700 mb-6">March 12, 2026</div>
 		</div>
 
-		<!-- Greeting -->
+		<!-- Salutation -->
 		<div class="mb-6">
-			<div class="text-lg font-bold text-gray-700">Admissions Decision</div>
+			<div class="text-lg">Dear {firstName || applicantName || 'Applicant'},</div>
 		</div>
 
-		<!-- Letter Body -->
-		<div class="space-y-4 mb-8">
+		<!-- Letter Body (from the real Princeton denial letter) -->
+		<div class="space-y-4 mb-8 leading-relaxed">
 			<p>
-				Thank you for applying to Princeton University. The Admission Committee has completed its
-				review of applications for the Class of 2024, and I regret to inform you that we are unable
-				to offer you admission.
+				I am sorry to inform you that we are unable to admit you to Princeton University this year.
 			</p>
 
 			<p>
-				This year, Princeton received over 32,000 applications for approximately 1,300 places in the
-				first-year class. The selection process was exceptionally difficult due to the extraordinary
-				qualifications of our applicant pool. Please understand that our decision reflects the
-				competitive nature of our admissions process and is not a judgment of your abilities or
-				potential.
+				Our large and talented applicant pool contained many students who were in the admissible
+				range. Over the past several weeks, our admission officers reviewed files diligently,
+				thoughtfully and carefully. As we do each year, we made every effort to weigh each student's
+				achievements, talents and skills within the context of their secondary school setting. We
+				also took into consideration the vast differences among the various learning environments
+				represented in the pool.
 			</p>
 
 			<p>
-				We recognize the time and effort you devoted to your application, and we appreciate your
-				interest in Princeton. We have no doubt that you will find a college where you will thrive
-				and make significant contributions.
-			</p>
-
-			<div class="bg-gray-50 p-6 border border-gray-200 rounded my-4">
-				<h3 class="font-bold text-gray-700 mb-2">About Princeton's Holistic Review</h3>
-				<p class="text-sm">
-					Princeton practices a holistic admission process, considering academic achievement,
-					personal qualities, extracurricular contributions, and potential for contribution to our
-					campus community. Each application is read multiple times by different admission officers.
-				</p>
-			</div>
-
-			<p>
-				Your application demonstrated many strengths, and we encourage you to take pride in your
-				accomplishments. The particular combination of talents and experiences we seek each year
-				varies, and the fact that you were not admitted does not diminish your achievements or
-				potential.
+				The admission committee appreciated the time, care and effort you put into the materials you
+				submitted. Ultimately, the strength and size of this year's pool dictated our choices and
+				even candidates who had exceptional credentials could not be guaranteed a spot in the class.
 			</p>
 
 			<p>
-				We wish you every success in your future academic endeavors and hope that you will continue
-				to pursue your intellectual passions with the same dedication evident in your application.
+				I recognize that this is not the decision you wanted to receive. While all our decisions are
+				final and we do not consider appeals, nor can we offer individual feedback, please know that
+				the committee's conclusion does not at all reflect your ability to succeed in a rigorous
+				college environment.
 			</p>
-		</div>
 
-		<!-- Next Steps -->
-		<div class="mt-8 p-6 bg-gray-50 border border-gray-200 rounded">
-			<h3 class="font-bold text-gray-700 mb-3">Next Steps & Resources</h3>
-			<ul class="space-y-2 text-sm">
-				<li>
-					• You may consider applying for transfer admission after completing one year of college
-					coursework.
-				</li>
-				<li>• Princeton offers various summer programs and online courses open to all students.</li>
-				<li>
-					• We encourage you to explore our virtual campus tours and admission resources at <a
-						href="https://admission.princeton.edu"
-						class="text-blue-600 hover:underline">admission.princeton.edu</a
-					>.
-				</li>
-			</ul>
+			<p>
+				Thank you for your interest in Princeton and for giving us the opportunity to consider your
+				application.
+			</p>
 		</div>
 
 		<!-- Signature -->
 		<div class="mt-12">
+			<p class="mb-4">Best wishes,</p>
 			<div class="mb-2">
-				<div class="h-1 w-32 bg-gray-400"></div>
+				<div class="h-1 w-32" style="background-color: {primaryColor};"></div>
 			</div>
-			<div class="font-bold">Karen Richardson</div>
+			<div class="font-bold">Karen Richardson ’93</div>
 			<div class="text-sm text-gray-600">
-				Dean of Admission<br />
-				Princeton University
+				Dean of Admission and Financial Aid<br />
+				{schoolName}
 			</div>
 		</div>
 
 		<!-- Footer -->
 		<div class="mt-16 pt-8 border-t border-gray-200 text-xs text-gray-500">
 			<p class="italic mb-4">
-				"In the Nation's Service and the Service of Humanity" – Princeton University Motto
+				"In the Nation's Service and the Service of Humanity" — Princeton University
 			</p>
-			<div>
-				<strong>Princeton University Admissions Office</strong><br />
-				Princeton, New Jersey 08544<br />
-				Phone: 609-258-3060 • Email: uaoffice@princeton.edu
+			<div class="grid grid-cols-2 gap-8">
+				<div>
+					<strong>Princeton University Mission:</strong><br />
+					Princeton University advances learning through scholarship, research, and teaching of unsurpassed
+					quality, with an emphasis on undergraduate and doctoral education that is distinctive among the
+					world's great universities.
+				</div>
+				<div>
+					<strong>Contact Information:</strong><br />
+					Email:
+					<a href="mailto:uaoffice@princeton.edu" class="hover:underline">uaoffice@princeton.edu</a
+					><br />
+					Phone: 609-258-3060<br />
+					Website:
+					<a href={`https://admission.${footerDomain}`} class="hover:underline"
+						>admission.{footerDomain}</a
+					>
+				</div>
 			</div>
 		</div>
 
 		<!-- Simulation Note -->
 		<div class="mt-8 p-4 bg-amber-50 border border-amber-200 rounded text-sm text-amber-800">
-			<strong>Note:</strong> This is a simulated admission decision for entertainment purposes only. This
-			is not a real decision from Princeton University.
+			<strong>Note:</strong> This is a simulated admission letter for entertainment purposes only. This
+			is not a real admission decision from Princeton University.
 		</div>
 	</div>
 </main>

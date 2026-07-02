@@ -1,107 +1,139 @@
 <script lang="ts">
-	export let applicantName: string = 'Applicant';
+	export let applicantName: string;
+	export let schoolName: string = 'Georgia Institute of Technology';
+	export let primaryColor: string = '#003057';
+	export let footerDomain: string = 'gatech.edu';
 
-	const currentDate = new Date().toLocaleDateString('en-US', {
-		month: 'long',
-		day: 'numeric',
-		year: 'numeric'
-	});
+	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
+	import { userProfile } from '$lib/stores/user';
+	import { decisionsBySlug } from '$lib/stores/results';
+
+	const accent = '#B3A369';
+
+	$: session = $page.data.session;
+	let googleSignedIn = false;
+	$: googleSignedIn = !!session?.user;
+
+	$: firstName = applicantName ? applicantName.split(' ')[0] : 'Applicant';
+
+	const viewAnalysis = () => {
+		goto('/results/georgiatech');
+	};
 </script>
 
-<div class="min-h-screen bg-gray-50 py-12 px-4 font-serif">
-	<div class="max-w-3xl mx-auto bg-white border border-gray-300 shadow-sm">
-		<!-- Header -->
-		<div class="bg-[#00254C] text-white p-6 text-center">
-			<h1 class="text-2xl font-bold">GEORGIA INSTITUTE OF TECHNOLOGY</h1>
-			<p class="text-lg mt-1">Office of Undergraduate Admissions</p>
-		</div>
+<svelte:head>
+	<title>{schoolName} - Admission Decision</title>
+</svelte:head>
 
-		<!-- Content -->
-		<div class="p-8">
-			<!-- Date and Address -->
-			<div class="mb-8 text-sm text-gray-700">
-				<p>{currentDate}</p>
-				<p class="mt-2">{applicantName}</p>
-				<p>As provided in your application</p>
+<div class="min-h-screen bg-white font-sans text-slate-800 flex flex-col">
+	<!-- Gold masthead -->
+	<header class="bg-[#B3A369]">
+		<div class="max-w-4xl mx-auto px-6 h-14 flex items-center gap-3">
+			<span class="text-white font-black text-2xl tracking-tighter leading-none" style="font-family: Georgia, serif;">GT</span>
+			<span class="text-white text-xl font-semibold" style="font-family: Georgia, serif;">Georgia Tech</span>
+		</div>
+	</header>
+
+	<main class="flex-grow">
+		<div class="max-w-4xl mx-auto px-6 w-full">
+			<!-- Applicant / links row -->
+			<div class="flex justify-end items-center gap-2 py-2 text-[12px] text-slate-700">
+				<span>{applicantName || 'Applicant'}</span>
+				<a href="/disclaimer" class="text-[#003057] hover:underline">Logout</a>
 			</div>
 
-			<!-- Main Letter -->
-			<div class="space-y-6 text-gray-800">
-				<p>Dear {applicantName},</p>
+			<div class="flex justify-between items-start">
+				<h1 class="text-2xl font-normal text-[#003057]">Undergraduate Admission</h1>
+				<a href="/disclaimer" class="text-[13px] font-bold text-[#003057] underline hover:no-underline"
+					>Download PDF</a
+				>
+			</div>
 
-				<p>
-					Thank you for your application to the Georgia Institute of Technology. After careful
-					consideration by our admissions committee, I regret to inform you that we are unable to
-					offer you admission to the first-year class entering in Fall 2020.
-				</p>
-
-				<p>
-					This year, we received a record number of applications—over 45,000—for approximately 3,500
-					places in our entering class. The selection process was exceptionally competitive, and we
-					were faced with the difficult task of choosing from among many highly qualified
-					candidates.
-				</p>
-
-				<div class="bg-gray-50 border-l-4 border-gray-400 p-4 my-4">
-					<p class="font-semibold text-gray-700">Transfer Consideration</p>
-					<p class="text-sm mt-1">
-						Many successful Georgia Tech students begin their studies at other institutions. If you
-						remain interested in transferring to Georgia Tech, please visit our <a
-							href="#"
-							class="text-[#00254C] font-semibold hover:underline">transfer admission website</a
-						> for information about requirements and deadlines.
-					</p>
+			{#if googleSignedIn && $userProfile.usingAI}
+				<div class="mt-4 flex justify-end">
+					<button
+						on:click={viewAnalysis}
+						class="flex items-center px-4 py-2 bg-[#003057] text-white rounded-md text-sm font-bold hover:brightness-125 transition-all shadow-md active:scale-95"
+					>
+						Deep Dive: Why did I get {$decisionsBySlug['georgiatech'] ?? 'this decision'}?
+					</button>
 				</div>
+			{/if}
 
-				<p>
-					Please understand that this decision reflects the competitive nature of our applicant pool
-					and the limited number of spaces available, rather than a judgment of your abilities or
-					potential. Many students who are not admitted to Georgia Tech go on to achieve great
-					success at other excellent institutions.
-				</p>
-
-				<p>
-					We recognize the time and effort you invested in your application, and we appreciate your
-					interest in Georgia Tech. We wish you the very best in your future academic endeavors and
-					beyond.
-				</p>
-
-				<div class="mt-10">
-					<p>Sincerely,</p>
-					<div class="mt-6">
-						<p class="font-semibold">Rick Clark</p>
-						<p>Director of Undergraduate Admission</p>
-						<p>Georgia Institute of Technology</p>
-					</div>
+			<!-- Seal + wordmark -->
+			<div class="flex items-center justify-center gap-4 my-10">
+				<div
+					class="w-16 h-16 rounded-full border-2 flex items-center justify-center text-[10px] font-bold text-center leading-tight"
+					style="border-color: {accent}; color: {accent};"
+				>
+					GT<br />1885
+				</div>
+				<div class="text-2xl font-semibold text-[#003057] leading-tight" style="font-family: Georgia, serif;">
+					Georgia Institute<br />of Technology
 				</div>
 			</div>
-		</div>
 
-		<!-- Footer -->
-		<div class="bg-gray-100 border-t border-gray-300 p-6 text-center text-sm text-gray-600">
-			<p>Georgia Institute of Technology • North Avenue, Atlanta, GA 30332</p>
-			<p class="mt-1">404.894.2000 • admission.gatech.edu</p>
-			<p class="mt-2 text-xs">
-				This is a simulated admission decision for entertainment purposes only.
-			</p>
-		</div>
-	</div>
+			<!-- Letter body -->
+			<div class="max-w-2xl mx-auto text-[13px] leading-relaxed text-slate-800">
+				<p class="mb-6 font-semibold">January 30, 2026</p>
 
-	<!-- Back button -->
-	<div class="text-center mt-8">
-		<button
-			on:click={() => window.history.back()}
-			class="inline-flex items-center text-[#00254C] hover:underline font-medium"
-		>
-			<svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-				<path
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					stroke-width="2"
-					d="M10 19l-7-7m0 0l7-7m-7 7h18"
-				/>
-			</svg>
-			Return to Portal
-		</button>
-	</div>
+				<div class="mb-6">
+					<p>{applicantName || 'Applicant'}</p>
+					<p>1924 Smith Rd</p>
+					<p>Northbrook, IL 60062-5830</p>
+				</div>
+
+				<p class="mb-4">{firstName},</p>
+
+				<p class="mb-4">
+					Thank you for your application to the Georgia Institute of Technology. Due to the large
+					number of applications from highly qualified students, we are unable to offer you admission
+					to the incoming first-year class.
+				</p>
+
+				<p class="mb-4">
+					We work to make sure each application is holistically reviewed by multiple staff members.
+					Because of the competitive pool of applicants, we carefully evaluate the credentials of each
+					student on an individual and comparative basis to ensure a thorough process.
+				</p>
+
+				<p class="mb-6">
+					Again, we appreciate your interest in Georgia Tech and wish you success in the future.
+				</p>
+
+				<p class="mb-1">Sincerely,</p>
+				<p class="text-2xl mb-1" style="font-family: 'Brush Script MT', 'Segoe Script', cursive; color: {primaryColor};">
+					Mary Tipton Woolley
+				</p>
+				<p class="font-semibold">Mary Tipton Woolley</p>
+				<p class="text-slate-700">Executive Director | Undergraduate Admission</p>
+			</div>
+
+			<div class="text-center my-10">
+				<a href="/disclaimer" class="text-[13px] font-bold text-[#003057] underline hover:no-underline"
+					>Return to Application Status</a
+				>
+			</div>
+
+			<div class="max-w-2xl mx-auto mb-10 p-4 bg-amber-50 border border-amber-200 rounded text-sm text-amber-800">
+				<strong>Note:</strong> This is a simulated admission letter for entertainment purposes only. This
+				is not a real admission decision from the {schoolName}.
+			</div>
+		</div>
+	</main>
+
+	<!-- Gold footer -->
+	<footer class="bg-[#B3A369] text-white text-[11px]">
+		<div class="max-w-6xl mx-auto px-6 py-6 flex justify-between items-center">
+			<div>
+				<p class="font-semibold">Georgia Institute of Technology</p>
+				<p>North Avenue, Atlanta, GA 30332 · 404.894.2000</p>
+				<p><a href="/disclaimer" class="underline hover:no-underline">admission.{footerDomain}</a></p>
+			</div>
+			<span class="text-white/80 text-right"
+				>PredictAdmit simulation · Not affiliated with the Georgia Institute of Technology</span
+			>
+		</div>
+	</footer>
 </div>

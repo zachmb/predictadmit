@@ -1,128 +1,175 @@
 <script lang="ts">
-	export let applicantName: string = 'Applicant';
+	// The parent component passes these props
+	export let applicantName: string;
+	export let schoolName: string = 'Massachusetts Institute of Technology';
+	export let primaryColor: string = '#A31F34';
+	export let footerDomain: string = 'mit.edu';
+
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { userProfile } from '$lib/stores/user';
+	import { decisionsBySlug } from '$lib/stores/results';
 
 	$: session = $page.data.session;
 
 	let googleSignedIn = false;
-	let googleEmail = '';
-	let googleName = '';
+	$: googleSignedIn = !!session?.user;
 
-	$: {
-		googleSignedIn = !!session?.user;
-		googleEmail = (session?.user?.email as string) ?? '';
-		googleName = (session?.user?.name as string) ?? '';
-	}
-	import { decisionsBySlug } from '$lib/stores/results';
 	const viewAnalysis = () => {
 		goto('/results/mit');
 	};
 </script>
 
-<div class="min-h-screen bg-white p-8 font-sans">
-	<div class="max-w-2xl mx-auto">
+<svelte:head>
+	<title>MIT Admissions - Admission Decision</title>
+</svelte:head>
+
+<div class="min-h-screen font-sans bg-white text-[#16283c] flex flex-col">
+	<!-- MIT header -->
+	<div class="h-1 w-full bg-gradient-to-r from-[#7ab52b] via-[#39a7a0] to-[#2f6fb0]"></div>
+	<header class="border-b border-gray-200">
+		<div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+			<a href="/disclaimer" class="flex items-end gap-2 text-black">
+				<svg viewBox="0 0 64 32" class="h-6 w-auto" aria-label="MIT" fill="currentColor">
+					<rect x="0" y="0" width="5" height="32" />
+					<rect x="7" y="0" width="5" height="22" />
+					<rect x="14" y="0" width="5" height="32" />
+					<rect x="26" y="0" width="5" height="32" />
+					<rect x="37" y="0" width="27" height="5" />
+					<rect x="49" y="7" width="5" height="25" fill={primaryColor} />
+				</svg>
+				<span class="text-[19px] font-semibold tracking-tight leading-none pb-[1px]">Admissions</span>
+			</a>
+			<nav class="hidden sm:flex items-center gap-6 text-[13px] font-semibold text-[#16283c]">
+				<a href="/disclaimer" class="hover:text-[#A31F34]">Discover</a>
+				<a href="/disclaimer" class="hover:text-[#A31F34]">Apply</a>
+				<a href="/disclaimer" class="hover:text-[#A31F34]">Afford</a>
+				<a href="/disclaimer" class="hover:text-[#A31F34]">Visit</a>
+				<a href="/disclaimer" class="hover:text-[#A31F34]">Help</a>
+				<a href="/disclaimer" class="hover:text-[#A31F34]">Blogs</a>
+			</nav>
+		</div>
+	</header>
+
+	<main class="flex-grow max-w-4xl w-full mx-auto px-6 py-10">
+		<div class="text-right text-[12px] text-gray-600 mb-1">
+			{applicantName || 'Applicant'} <a href="/disclaimer" class="underline ml-1">Logout</a>
+		</div>
+		<div class="text-right mb-8">
+			<a href="/disclaimer" class="text-[13px] text-[#2f6fb0] underline">Download PDF</a>
+		</div>
+
 		{#if googleSignedIn && $userProfile.usingAI}
 			<div class="mb-6 flex justify-end">
 				<button
 					on:click={viewAnalysis}
-					class="group flex items-center px-4 py-2 bg-[#003262] text-white rounded-lg text-sm font-sans font-bold hover:bg-slate-800 transition-all shadow-md active:scale-95"
+					class="px-4 py-2 bg-[#14243a] text-white rounded text-sm font-semibold hover:bg-[#0f1c2e] transition-all shadow-md active:scale-95"
 				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						class="w-4 h-4 transition-transform group-hover:-translate-x-1"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
-					>
-					</svg>
 					Deep Dive: Why did I get {$decisionsBySlug['mit']}?
 				</button>
 			</div>
 		{/if}
-		<!-- Letterhead -->
-		<div class="border-b-2 border-gray-300 pb-4 mb-8">
-			<div class="flex items-center mb-4">
-				<div class="w-12 h-12 bg-gray-300 rounded-full mr-4 flex items-center justify-center">
-					<span class="text-white text-xl font-bold">MIT</span>
+
+		<div class="text-[15px] leading-relaxed text-[#16283c]">
+			<p class="font-bold mb-6">March 14, 2026</p>
+
+			<p class="mb-5">Dear {applicantName || 'Applicant'},</p>
+
+			<p class="mb-5">
+				The Admissions Committee has completed its review of your application. I am very sorry to tell
+				you that you were not admitted to the MIT Class of 2030.
+			</p>
+
+			<p class="mb-5">
+				Please understand that this is in no way a judgment of you as a student or as a person, since
+				our decision has more to do with the applicant pool than anything else—many of our applicants
+				are not offered admission simply because we don't have enough space in our entering class.
+				This year we had more than 28,000 candidates for fewer than 1,300 offers of admission. Since
+				all of our decisions are made at one time and all available spaces have been committed, all
+				decisions are final.
+			</p>
+
+			<p class="mb-8">
+				We truly appreciate your interest in MIT and wish you the best in all your future endeavors.
+			</p>
+
+			<p class="mb-2">Sincerely,</p>
+
+			<div class="mb-2 h-14" aria-hidden="true">
+				<svg viewBox="0 0 180 50" class="h-14" fill="none" stroke="#1f3d7a" stroke-width="2">
+					<path
+						d="M8 38 C 22 8, 30 8, 26 30 C 24 42, 34 20, 44 22 C 54 24, 46 40, 56 34 C 70 26, 62 10, 74 16 C 84 21, 78 40, 92 30 C 108 18, 120 40, 138 22 C 150 10, 160 30, 174 18"
+					/>
+				</svg>
+			</div>
+			<p class="font-semibold">Stuart Schmill</p>
+			<p class="text-[13px] text-gray-600">Dean of Admissions and Student Financial Services</p>
+		</div>
+
+		<div class="text-center mt-12 mb-4">
+			<a href="/disclaimer" class="text-[13px] text-[#2f6fb0] underline">Return to Application Status</a>
+		</div>
+
+		<div class="mt-6 p-4 bg-amber-50 border border-amber-200 rounded text-sm text-amber-800">
+			<strong>Note:</strong> This is a simulated admission letter for entertainment purposes only. This
+			is not a real admission decision from {schoolName}.
+		</div>
+	</main>
+
+	<!-- Shared MIT footer -->
+	<footer class="mt-10">
+		<div class="bg-[#14243a] text-white">
+			<div class="max-w-6xl mx-auto px-6 py-8 flex items-start justify-between gap-8">
+				<div class="max-w-xl">
+					<h2 class="text-2xl font-bold mb-3">MIT Admissions</h2>
+					<p class="text-[12px] leading-relaxed text-gray-300">
+						At MIT Admissions, we recruit and enroll a talented and diverse class of undergraduates who
+						will learn to use science, technology, and other areas of scholarship to serve the nation
+						and the world in the 21st century.
+					</p>
 				</div>
-				<div>
-					<h1 class="text-2xl font-bold text-gray-700">Massachusetts Institute of Technology</h1>
-					<p class="text-gray-600 text-sm">Office of Undergraduate Admissions</p>
+				<svg
+					viewBox="0 0 140 70"
+					class="hidden md:block w-40 text-gray-200"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="1"
+				>
+					<path d="M20 60 Q70 20 120 60" />
+					<path d="M20 60 L120 60" />
+					<line x1="35" y1="60" x2="35" y2="48" />
+					<line x1="50" y1="60" x2="50" y2="42" />
+					<line x1="70" y1="60" x2="70" y2="38" />
+					<line x1="90" y1="60" x2="90" y2="42" />
+					<line x1="105" y1="60" x2="105" y2="48" />
+					<path d="M118 18 l1.5 3 3 .5 -2 2 .5 3 -3-1.5 -3 1.5 .5-3 -2-2 3-.5z" />
+					<path d="M100 10 l1 2 2 .3 -1.5 1.4 .4 2 -1.9-1 -1.9 1 .4-2 -1.5-1.4 2-.3z" />
+				</svg>
+			</div>
+		</div>
+		<div class="bg-[#0f1c2e] text-gray-300 text-[11px]">
+			<div class="max-w-6xl mx-auto px-6 py-4 flex flex-wrap items-center justify-between gap-3">
+				<div class="flex items-center gap-2 text-white">
+					<svg viewBox="0 0 64 32" class="h-5 w-auto" aria-label="MIT" fill="currentColor">
+						<rect x="0" y="0" width="5" height="32" />
+						<rect x="7" y="0" width="5" height="22" />
+						<rect x="14" y="0" width="5" height="32" />
+						<rect x="26" y="0" width="5" height="32" />
+						<rect x="37" y="0" width="27" height="5" />
+						<rect x="49" y="7" width="5" height="25" />
+					</svg>
+					<span class="leading-tight text-[9px] font-semibold">
+						Massachusetts<br />Institute of<br />Technology
+					</span>
+				</div>
+				<div class="text-right">
+					MIT Admissions, 77 Massachusetts Avenue, Room E38-200, Cambridge, MA 02139 &middot; Tel:
+					617.253.3400 | <a href="/disclaimer" class="underline">About</a> |
+					<a href="/disclaimer" class="underline">Policies</a> |
+					<a href="/disclaimer" class="underline">En Español</a> |
+					<a href={`https://${footerDomain}`} class="underline">Instagram</a>
 				</div>
 			</div>
-			<div class="text-sm text-gray-600">
-				<p>77 Massachusetts Avenue</p>
-				<p>Room 10-100</p>
-				<p>Cambridge, Massachusetts 02139</p>
-			</div>
 		</div>
-
-		<!-- Date -->
-		<p class="mb-8 text-gray-700">
-			{new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
-		</p>
-
-		<!-- Applicant Info -->
-		<div class="mb-8">
-			<p class="text-gray-800">{applicantName}</p>
-			<p class="text-gray-600">Regular Action Applicant</p>
-		</div>
-
-		<!-- Letter Body -->
-		<div class="mb-8 leading-relaxed text-gray-800">
-			<p class="mb-4">Dear {applicantName},</p>
-
-			<p class="mb-4">
-				Thank you for your application to the Massachusetts Institute of Technology. After careful
-				consideration by our Admissions Committee, I regret to inform you that we are unable to
-				offer you admission to the Class of 2028.
-			</p>
-
-			<p class="mb-4">
-				This year, MIT reviewed applications from an exceptionally accomplished pool of more than
-				33,000 candidates. Each application was evaluated holistically, considering academic
-				achievement in mathematics and science, intellectual curiosity, hands-on experience, and
-				personal qualities that align with MIT's collaborative, problem-solving culture.
-			</p>
-
-			<div class="my-8 p-6 bg-gray-50 border-l-4 border-[#A31F34] italic">
-				<p class="mb-2 font-semibold text-gray-700">About Our Selection Process</p>
-				<p class="text-gray-600">
-					MIT seeks students who demonstrate extraordinary aptitude in mathematics and science,
-					combined with creativity, initiative, and a collaborative spirit. While you have clearly
-					demonstrated significant accomplishments, the limitations of our class size prevent us
-					from admitting many outstanding students who would undoubtedly thrive at MIT.
-				</p>
-			</div>
-
-			<p class="mb-4">
-				Please know that this decision reflects the extraordinary selectivity of our applicant pool
-				rather than any deficiency in your abilities or potential. We have every confidence that you
-				will find success and make meaningful contributions at another excellent institution.
-			</p>
-
-			<p class="mb-4">
-				We appreciate the time and effort you dedicated to your application and wish you all the
-				best in your future academic endeavors.
-			</p>
-		</div>
-
-		<!-- Signature -->
-		<div class="mt-12">
-			<p class="mb-1">Sincerely,</p>
-			<div class="mb-8">
-				<p class="font-semibold text-gray-700">Office of Undergraduate Admissions</p>
-				<p class="text-sm text-gray-600">Massachusetts Institute of Technology</p>
-			</div>
-
-			<div class="mt-12 p-6 bg-gray-50 rounded-lg border border-gray-300 text-sm">
-				<p class="text-gray-700 mb-2">
-					This decision is final for the 2024-2025 application cycle. We encourage you to explore
-					other excellent institutions where your talents will be valued and nurtured.
-				</p>
-			</div>
-		</div>
-	</div>
+	</footer>
 </div>

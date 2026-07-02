@@ -1,5 +1,9 @@
 <script lang="ts">
+	// The parent component passes these props
 	export let applicantName: string;
+	export let schoolName: string = 'Stanford University';
+	export let primaryColor: string = '#8C1515';
+	export let footerDomain: string = 'stanford.edu';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { userProfile } from '$lib/stores/user';
@@ -19,165 +23,122 @@
 	const viewAnalysis = () => {
 		goto('/results/stanford');
 	};
-	const dateOfBirth = 'July 1, 2002';
-	const permanentAddress = '123 Collegeway\nPasadena, CA 91001\nUnited States';
+
+	$: firstName = (applicantName || 'Applicant').split(' ')[0];
 </script>
 
 <svelte:head>
-	<title>Stanford University - Admission Decision</title>
+	<title>{schoolName} - Admission Decision</title>
 </svelte:head>
 
-<main class="min-h-screen bg-white text-gray-800 font-serif p-6">
-	<div class="max-w-4xl mx-auto">
+<main class="min-h-screen bg-white text-[#2e2d29] font-serif p-6">
+	<div class="max-w-3xl mx-auto mt-4">
 		{#if googleSignedIn && $userProfile.usingAI}
-			<div class="mb-6 flex justify-end">
+			<div class="mb-4 flex justify-end">
 				<button
 					on:click={viewAnalysis}
-					class="group flex items-center px-4 py-2 bg-[#003262] text-white rounded-lg text-sm font-sans font-bold hover:bg-slate-800 transition-all shadow-md active:scale-95"
+					class="group flex items-center px-4 py-2 text-white rounded-lg text-sm font-sans font-bold hover:opacity-90 transition-all shadow-md active:scale-95"
+					style="background-color: {primaryColor};"
 				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						class="w-4 h-4 transition-transform group-hover:-translate-x-1"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
-					>
-					</svg>
 					Deep Dive: Why did I get {$decisionsBySlug['stanford']}?
 				</button>
 			</div>
 		{/if}
-		<!-- Letterhead -->
-		<div class="border-b-2 border-gray-400 pb-4 mb-8">
-			<div class="flex justify-between items-start">
+
+		<!-- Date + Download row -->
+		<div class="flex justify-between items-center text-[11px] text-gray-600 mb-6">
+			<span class="font-bold">March 14, 2026</span>
+			<a href="/disclaimer" class="text-[#8C1515] underline hover:no-underline">Download PDF</a>
+		</div>
+
+		<!-- Letter card -->
+		<div class="border border-gray-400 px-10 py-8 max-w-2xl mx-auto">
+			<!-- Letterhead: seal + Stanford University -->
+			<div class="flex items-center gap-3 mb-6">
+				<div
+					class="w-9 h-9 rounded-full flex items-center justify-center text-white text-[10px] font-serif font-bold"
+					style="background-color: {primaryColor};"
+				>
+					SU
+				</div>
+				<span class="text-xl font-bold" style="color: {primaryColor};">Stanford University</span>
+			</div>
+
+			<div class="text-[13px] leading-relaxed space-y-4">
 				<div>
-					<h1 class="text-3xl font-bold text-gray-700">STANFORD</h1>
-					<div class="text-lg font-semibold text-gray-600">UNIVERSITY</div>
-					<div class="text-sm text-gray-600 mt-2">
-						Office of Undergraduate Admission<br />
-						355 Galvez Street, Stanford, CA 94305-6106
-					</div>
+					<div>{applicantName || 'Applicant'}</div>
+					<div>{$userProfile.email || 'applicant@example.com'}</div>
 				</div>
-				<div class="text-right">
-					<div class="text-sm text-gray-600">March 27, 2020</div>
-					<div class="mt-2 text-xs text-gray-500">
-						Application ID: SU20{Math.floor(10000 + Math.random() * 90000)}
-					</div>
-				</div>
-			</div>
-		</div>
 
-		<!-- Applicant Info -->
-		<div class="mb-8">
-			<div class="font-bold text-lg mb-2">{applicantName || 'Applicant'}</div>
-			<div class="text-sm text-gray-600">
-				<div>Date of Birth: {dateOfBirth}</div>
-				<div class="mt-2">Permanent Address: {permanentAddress.split('\n')[0]}</div>
-			</div>
-		</div>
+				<p>Dear {firstName},</p>
 
-		<!-- Decision Header -->
-		<div class="text-center py-6 mb-8 bg-gray-50 border border-gray-300 rounded">
-			<div class="text-2xl font-bold text-gray-700 mb-2">Admissions Decision</div>
-			<div class="text-lg text-gray-600">Stanford University Class of 2024</div>
-		</div>
-
-		<!-- Letter Body -->
-		<div class="space-y-6 mb-10">
-			<p class="text-lg">
-				Dear {applicantName || 'Applicant'},
-			</p>
-
-			<p>
-				Thank you for applying to Stanford University. The Admission Committee has completed its
-				review of applications for the Class of 2024, and I regret to inform you that we are unable
-				to offer you admission.
-			</p>
-
-			<p>
-				This year, Stanford received over 45,000 applications for approximately 1,700 places in the
-				first-year class. The selection process was exceptionally challenging due to the outstanding
-				qualifications of all our applicants. Please know that our decision reflects the competitive
-				nature of our admission process and is not a reflection of your abilities or potential.
-			</p>
-
-			<div class="bg-gray-50 p-6 border border-gray-300 rounded">
-				<h3 class="font-bold text-gray-700 mb-3">About Stanford's Admission Process:</h3>
-				<p class="text-sm mb-3">
-					Stanford practices a holistic review process, considering academic achievement, personal
-					context, extracurricular contributions, and intellectual vitality. With an admission rate
-					of less than 5%, many highly qualified applicants cannot be offered admission.
+				<p>
+					I am very sorry to let you know that we are unable to offer you admission to Stanford. This
+					decision in no way takes away from the thoughtfulness and care that we know went into your
+					application.
 				</p>
-				<p class="text-sm">
-					We encourage you to take pride in your accomplishments and to continue pursuing your
-					educational goals with the same determination that brought you to apply to Stanford.
+
+				<p>
+					We were inspired by the hopes and dreams your application represents. We were humbled by the
+					talent, commitment, and heart you bring to your academics, extracurricular activities, work,
+					and family responsibilities. Simply put, we wish that we had more space in the first-year
+					class.
 				</p>
-			</div>
 
-			<p>
-				Your application demonstrated many strengths, and we have no doubt that you will find a
-				college where you will excel and make meaningful contributions. The particular combination
-				of talents and experiences we seek each year varies, and the fact that you were not admitted
-				does not diminish your achievements or potential.
-			</p>
+				<p>
+					At every step in our process, from the moment we open an application to its eventual
+					presentation in the admission committee, we bring the highest level of consideration to our
+					decisions. Ultimately, these difficult decisions are made with conviction and clarity, and
+					we do not conduct an appeals process.
+				</p>
 
-			<p>
-				We appreciate the time and effort you devoted to your application, and we thank you for your
-				interest in Stanford University.
-			</p>
-		</div>
+				<p>
+					You can visit our page of <a href="/disclaimer" class="text-[#827252] underline"
+						>frequently asked questions</a
+					> for answers about our admission process. I also want to share a
+					<a href="/disclaimer" class="text-[#827252] underline">letter</a> to students and families.
+					In it, I reflect on admission decisions in the context of educational journeys that
+					encompass a lifetime.
+				</p>
 
-		<!-- Additional Resources -->
-		<div class="mt-8 p-6 bg-[#F9F2E8] border border-[#E4D5C0] rounded">
-			<h3 class="font-bold text-gray-700 mb-3">Other Ways to Engage with Stanford:</h3>
-			<div class="grid grid-cols-2 gap-4 text-sm">
+				<p>
+					Thank you for applying to Stanford. We enjoyed learning about you, and we know that you will
+					thrive wherever your education takes you.
+				</p>
+
+				<p>With very best wishes,</p>
+
 				<div>
-					<h4 class="font-semibold mb-1">Online Learning</h4>
-					<ul class="space-y-1">
-						<li>• Stanford Online (free courses)</li>
-						<li>• Summer Session (open enrollment)</li>
-						<li>• Stanford Pre-Collegiate Studies</li>
-					</ul>
+					<img
+						src="/signature-placeholder.png"
+						alt="Signature"
+						class="h-10"
+						style="filter: invert(12%) sepia(90%) saturate(2000%) hue-rotate(345deg) brightness(35%) contrast(95%);"
+					/>
+					<div class="mt-1">Richard H. Shaw</div>
+					<div>Dean of Admission and Financial Aid</div>
 				</div>
+			</div>
+
+			<!-- Letter footer -->
+			<div class="mt-8 pt-4 border-t border-gray-300 text-[10px] text-gray-600">
+				<div class="font-bold">Office of Undergraduate Admissions</div>
 				<div>
-					<h4 class="font-semibold mb-1">Campus Resources</h4>
-					<ul class="space-y-1">
-						<li>• Virtual campus tours</li>
-						<li>• Stanford Arts programs</li>
-						<li>• Public lecture series</li>
-					</ul>
+					Montag Hall &bull; 355 Galvez Street &bull; Stanford, CA 94305-6106 &bull; T 650.723.2091
+					&bull; F 650.725.2846
 				</div>
 			</div>
 		</div>
 
-		<!-- Signature -->
-		<div class="mt-12">
-			<div class="mb-4">
-				<div class="h-1 w-48 bg-gray-400"></div>
-			</div>
-			<div class="font-bold">Richard H. Shaw</div>
-			<div class="text-sm text-gray-600">
-				Dean of Admission and Financial Aid<br />
-				Stanford University
-			</div>
-		</div>
+		<p class="text-center text-[13px] mt-6">
+			<a href="/disclaimer" class="text-[#827252] underline hover:no-underline"
+				>Return to Application Status</a
+			>
+		</p>
 
-		<!-- Footer -->
-		<div class="mt-16 pt-8 border-t border-gray-300 text-center text-xs text-gray-500">
-			<p class="italic mb-4">
-				"The purpose of education is to replace an empty mind with an open one." – Malcolm Forbes
-			</p>
-			<p>
-				Office of Undergraduate Admission • Stanford University<br />
-				355 Galvez Street, Stanford, CA 94305-6106<br />
-				admission@stanford.edu • admission.stanford.edu
-			</p>
-		</div>
-
-		<!-- Simulation Note -->
-		<div class="mt-8 p-4 bg-amber-50 border border-amber-200 rounded text-sm text-amber-800">
-			<strong>Note:</strong> This is a simulated admission decision for entertainment purposes only. This
-			is not a real decision from Stanford University.
+		<div class="mt-8 p-4 bg-amber-50 border border-amber-200 rounded text-sm text-amber-800 font-sans">
+			<strong>Note:</strong> This is a simulated admission letter for entertainment purposes only. This
+			is not a real admission decision from {schoolName}.
 		</div>
 	</div>
 </main>

@@ -1,5 +1,9 @@
 <script lang="ts">
+	// The parent component passes these props
 	export let applicantName: string;
+	export let schoolName: string = 'Stanford University';
+	export let primaryColor: string = '#8C1515';
+	export let footerDomain: string = 'stanford.edu';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { userProfile } from '$lib/stores/user';
@@ -19,152 +23,135 @@
 	const viewAnalysis = () => {
 		goto('/results/stanford');
 	};
-	const dateOfBirth = 'July 1, 2002';
-	const permanentAddress = '123 Collegeway\nPasadena, CA 91001\nUnited States';
+
+	$: firstName = (applicantName || 'Applicant').split(' ')[0];
 </script>
 
 <svelte:head>
-	<title>Stanford University - Admission Decision</title>
+	<title>{schoolName} - Admission Decision</title>
 </svelte:head>
 
-<main class="min-h-screen bg-white text-gray-800 font-serif p-6">
-	<div class="max-w-4xl mx-auto">
+<main class="min-h-screen bg-white text-[#2e2d29] font-serif p-6">
+	<div class="max-w-3xl mx-auto mt-4">
 		{#if googleSignedIn && $userProfile.usingAI}
-			<div class="mb-6 flex justify-end">
+			<div class="mb-4 flex justify-end">
 				<button
 					on:click={viewAnalysis}
-					class="group flex items-center px-4 py-2 bg-[#003262] text-white rounded-lg text-sm font-sans font-bold hover:bg-slate-800 transition-all shadow-md active:scale-95"
+					class="group flex items-center px-4 py-2 text-white rounded-lg text-sm font-sans font-bold hover:opacity-90 transition-all shadow-md active:scale-95"
+					style="background-color: {primaryColor};"
 				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						class="w-4 h-4 transition-transform group-hover:-translate-x-1"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
-					>
-					</svg>
 					Deep Dive: Why did I get {$decisionsBySlug['stanford']}?
 				</button>
 			</div>
 		{/if}
-		<!-- Letterhead -->
-		<div class="border-b-2 border-[#8C1515] pb-4 mb-8">
-			<div class="flex justify-between items-start">
+
+		<!-- Date + Download row -->
+		<div class="flex justify-between items-center text-[11px] text-gray-600 mb-6">
+			<span class="font-bold">March 14, 2026</span>
+			<a href="/disclaimer" class="text-[#8C1515] underline hover:no-underline">Download PDF</a>
+		</div>
+
+		<!-- Letter card -->
+		<div class="border border-black px-10 py-8 max-w-2xl mx-auto">
+			<!-- Letterhead: seal + Stanford University -->
+			<div class="flex items-start justify-between mb-6">
+				<div class="flex items-center gap-3">
+					<div
+						class="w-9 h-9 rounded-full flex items-center justify-center text-white text-[10px] font-serif font-bold"
+						style="background-color: {primaryColor};"
+					>
+						SU
+					</div>
+					<span class="text-xl font-bold" style="color: {primaryColor};">Stanford University</span>
+				</div>
+			</div>
+
+			<div class="text-[13px] leading-relaxed space-y-4">
 				<div>
-					<h1 class="text-3xl font-bold text-[#8C1515]">STANFORD</h1>
-					<div class="text-lg font-semibold text-gray-700">UNIVERSITY</div>
-					<div class="text-sm text-gray-600 mt-2">
-						Office of Undergraduate Admission<br />
-						355 Galvez Street, Stanford, CA 94305-6106<br />
-						Telephone 650-723-2091 • Fax 650-725-2846
-					</div>
+					<div>{applicantName || 'Applicant'}</div>
+					<div>Stanford ID: 17552444</div>
 				</div>
-				<div class="text-right">
-					<div class="text-sm text-gray-600">March 27, 2020</div>
-					<div class="mt-2 text-xs text-gray-500">
-						Application ID: SU20{Math.floor(10000 + Math.random() * 90000)}
-					</div>
+
+				<p>Dear {firstName},</p>
+
+				<p class="font-bold">Congratulations! You have been admitted to the Stanford Class of 2030!</p>
+
+				<p>
+					The admission committee was inspired by your passion, determination, accomplishments, and
+					heart. We celebrate all that you have worked for with the good news this letter brings.
+				</p>
+
+				<p>
+					You are a fantastic match with Stanford. Here, you join a campus community with a shared
+					determination to make our world better. Indeed, Leland and Jane Stanford founded the
+					University &ldquo;to promote the public welfare by exercising an influence on behalf of
+					humanity and civilization.&rdquo; That influence begins in an academic community committed
+					to mastering the known and developing an intuitive capacity to imagine the unknown.
+				</p>
+
+				<p>
+					We are excited to share more about Stanford with you. Mark your calendar now for Admit
+					Weekend 2026, which will take place on campus April 23&ndash;25. In addition, Stanford
+					alumni are organizing gatherings for admitted students in many locations. Information about
+					these events will be sent to the same email address you use to log in to your Stanford
+					portal. You can learn more by visiting our
+					<a href="/disclaimer" class="text-[#827252] underline">Admitted Student Website</a>.
+				</p>
+
+				<p>
+					When you are ready to make a decision about your enrollment, please complete the
+					<a href="/disclaimer" class="text-[#827252] underline">Admission Response Form</a> at any time
+					on or before May 1, 2026. The Additional Background Information Form, located in your portal,
+					is also required. If you applied for financial aid by February 15, a reply from the Financial
+					Aid Office is below this letter.
+				</p>
+
+				<p>
+					In order to keep your place in the class, we expect you to maintain the quality of your
+					character and to return a strong performance in the academic courses reported in your
+					application. If you plan to make any changes to these courses, you must first submit the
+					Course Change Request Form in your portal. Any changes must be approved in advance by the
+					Office of Undergraduate Admission.
+				</p>
+
+				<p>
+					Please share this wonderful news with everyone whose love and support helped you reach this
+					moment. We are thrilled to offer you admission. Welcome to the Stanford family.
+				</p>
+
+				<p>With my congratulations and very best wishes,</p>
+
+				<div>
+					<img
+						src="/signature-placeholder.png"
+						alt="Signature"
+						class="h-10"
+						style="filter: invert(12%) sepia(90%) saturate(2000%) hue-rotate(345deg) brightness(35%) contrast(95%);"
+					/>
+					<div class="mt-1">Richard H. Shaw</div>
+					<div>Dean of Admission and Financial Aid</div>
+				</div>
+			</div>
+
+			<!-- Letter footer -->
+			<div class="mt-8 pt-4 border-t border-gray-300 text-[10px] text-gray-600">
+				<div class="font-bold">Office of Undergraduate Admissions</div>
+				<div>
+					Montag Hall &bull; 355 Galvez Street &bull; Stanford, CA 94305-6106 &bull; T 650.723.2091
+					&bull; F 650.725.2846
 				</div>
 			</div>
 		</div>
 
-		<!-- Applicant Info -->
-		<div class="mb-8 grid grid-cols-2 gap-8">
-			<div>
-				<div class="font-bold text-lg mb-2">{applicantName || 'Applicant'}</div>
-				<div class="text-sm text-gray-600">
-					<div>Date of Birth: {dateOfBirth}</div>
-					<div class="mt-4 font-medium">Permanent Address:</div>
-					<div class="whitespace-pre-line text-sm">{permanentAddress}</div>
-				</div>
-			</div>
-			<div class="text-right">
-				<div class="text-5xl text-[#8C1515] font-bold mb-4">🎉</div>
-				<div class="text-2xl font-bold text-[#8C1515]">Congratulations!</div>
-			</div>
-		</div>
+		<p class="text-center text-[13px] mt-6">
+			<a href="/disclaimer" class="text-[#827252] underline hover:no-underline"
+				>Return to Application Status</a
+			>
+		</p>
 
-		<!-- Letter Body -->
-		<div class="space-y-6 mb-10">
-			<div class="text-center py-4 bg-[#F9F2E8] border border-[#E4D5C0] rounded">
-				<h2 class="text-2xl font-bold text-[#8C1515] mb-2">You're In!</h2>
-				<p class="text-lg">Welcome to the Stanford University Class of 2024</p>
-			</div>
-
-			<p class="text-lg">
-				Dear {applicantName || 'Applicant'},
-			</p>
-
-			<p>
-				On behalf of the Admission Committee, I am thrilled to inform you that you have been
-				admitted to Stanford University as a member of the Class of 2024. Your application stood out
-				among more than 45,000 others for its intellectual vitality, creativity, and demonstrated
-				commitment to making a difference in the world.
-			</p>
-
-			<p>
-				We were particularly impressed by your potential to contribute to Stanford's culture of
-				innovation and discovery. Your unique perspective and experiences will enrich our campus
-				community, and we believe you will thrive in our collaborative, interdisciplinary
-				environment.
-			</p>
-
-			<div class="bg-[#F5F5F5] p-6 border-l-4 border-[#8C1515]">
-				<h3 class="font-bold text-[#8C1515] mb-2">Next Steps:</h3>
-				<ul class="space-y-2">
-					<li>• <strong>Admit Weekend:</strong> April 16-18, 2020 (Virtual options available)</li>
-					<li>• <strong>Reply Deadline:</strong> May 1, 2020</li>
-					<li>• <strong>Financial Aid:</strong> Your award letter is available in your portal</li>
-					<li>• <strong>Housing:</strong> Apply by May 15, 2020</li>
-				</ul>
-			</div>
-
-			<p>
-				Stanford offers an unmatched educational experience, combining world-class academics with a
-				vibrant campus life in the heart of Silicon Valley. We provide generous financial aid to
-				meet 100% of demonstrated need, and we encourage you to explore the many opportunities
-				available through our 650+ student organizations, research initiatives, and artistic
-				programs.
-			</p>
-
-			<p>
-				To accept your offer of admission, please complete the online reply form in your admission
-				portal by <strong>May 1, 2020</strong>. You'll also find detailed information about
-				orientation, course selection, and campus resources in your portal.
-			</p>
-
-			<p class="font-semibold">We can't wait to welcome you to the Farm this fall!</p>
-		</div>
-
-		<!-- Signature -->
-		<div class="mt-12">
-			<div class="mb-4">
-				<div class="h-1 w-48 bg-[#8C1515]"></div>
-			</div>
-			<div class="font-bold text-lg">Richard H. Shaw</div>
-			<div class="text-sm text-gray-600">
-				Dean of Admission and Financial Aid<br />
-				Stanford University
-			</div>
-		</div>
-
-		<!-- Stanford Seal -->
-		<div class="mt-16 pt-8 border-t border-gray-300 text-center">
-			<div class="inline-block p-4 border-2 border-[#8C1515] rounded-full">
-				<div class="text-[#8C1515] font-bold text-sm">STANFORD UNIVERSITY</div>
-				<div class="text-xs text-gray-600 mt-1">Founded 1891</div>
-			</div>
-			<div class="mt-4 text-xs text-gray-500">
-				<p>"Die Luft der Freiheit weht" – The wind of freedom blows</p>
-				<p class="mt-2">Office of Undergraduate Admission • Stanford University</p>
-				<p>admission@stanford.edu • 650-723-2091 • admission.stanford.edu</p>
-			</div>
-		</div>
-
-		<!-- Simulation Note -->
-		<div class="mt-8 p-4 bg-amber-50 border border-amber-200 rounded text-sm text-amber-800">
+		<div class="mt-8 p-4 bg-amber-50 border border-amber-200 rounded text-sm text-amber-800 font-sans">
 			<strong>Note:</strong> This is a simulated admission letter for entertainment purposes only. This
-			is not a real admission decision from Stanford University.
+			is not a real admission decision from {schoolName}.
 		</div>
 	</div>
 </main>

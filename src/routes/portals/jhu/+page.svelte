@@ -1,49 +1,48 @@
 <script lang="ts">
+	// Svelte Stores and Types
 	import { userProfile, defaultProfile } from '$lib/stores/user';
 	import type { UserProfile } from '$lib/stores/user';
 	import { decisionsBySlug } from '$lib/stores/results';
 	import { portalDecisionViewed } from '$lib/stores/ui';
 
-	// School Config
-	import { schoolConfigs } from '$lib/config/schools';
-
-	// --- CORRECT IMPORTS ---
+	// School-Specific Components (Decision Letters)
 	import JHUAccepted from '$lib/components/jhu/JHUAccepted.svelte';
 	import JHUDenied from '$lib/components/jhu/JHUDenied.svelte';
 
-	// ----------------- CONFIGURATION -----------------
-
+	// --- Component Configuration ---
 	const SLUG = 'jhu';
-	// Simulated config based on screenshot and standard JHU branding
+
 	const school = {
 		schoolName: 'Johns Hopkins University',
-		statusLastPosted: 'March 13, 2020', // From screenshot
-		primaryColor: '#002D72', // JHU Blue/Navy
-		// Placeholder decision for simulation
-		decision: schoolConfigs[SLUG]?.decision || 'admit',
+		primaryColor: '#002D72', // Hopkins Blue
 		footerDomain: 'jhu.edu',
-		applicantName: 'John Doe'
+		statusLastPosted: 'March 15, 2026',
+		round: 'Regular Decision',
+		referenceNumber: '20260012'
 	};
 
-	// ----------------- STATE -----------------
-
+	// --- State Variables ---
 	let profile: UserProfile = { ...defaultProfile };
 	let emailInput = '';
 	let passwordInput = '';
 	let error = '';
 	let authenticated = false;
 	let hasViewedUpdate = false;
+	let activeTab = 'Admissions Status';
 
-	// ----------------- REACTIVE DERIVATIONS -----------------
-
+	// Subscribe to the global user profile store
 	$: profile = $userProfile;
-	const applicantName = () => profile.name || school.applicantName;
 
-	// ----------------- HANDLERS -----------------
+	// Dynamic Data Helpers
+	const applicantName = () => profile.name || 'Applicant';
 
+	// Default decision when the prediction store has no entry for this slug:
+	const DEFAULT_DECISION = 'admit';
+	$: shownDecision = $decisionsBySlug[SLUG] ?? DEFAULT_DECISION;
+
+	// --- Handlers ---
 	const handleLoadSavedLogin = () => {
 		if (!profile.email || !profile.password) {
-			// Use default John Doe credentials if user hasn't set up their own
 			userProfile.update((u) => ({
 				...u,
 				name: u.name || 'John Doe',
@@ -51,7 +50,6 @@
 				password: u.password || 'password123'
 			}));
 		}
-		// Directly authenticate
 		authenticated = true;
 		error = '';
 	};
@@ -79,292 +77,349 @@
 </script>
 
 <svelte:head>
-	<title>{school.schoolName} Undergraduate Admissions Portal</title>
+	<title>{school.schoolName} | Undergraduate Admissions</title>
 </svelte:head>
 
-<div class="min-h-screen font-sans text-slate-800 bg-white">
+<div class="min-h-screen font-sans bg-white text-gray-800">
 	{#if !authenticated}
-		<header class="h-10 border-b border-gray-300">
+		<!-- ===================== LOGIN PAGE ===================== -->
+		<!-- Thin utility bar -->
+		<div class="bg-[#e8e8e8] h-8 text-[11px] text-gray-700">
 			<div class="max-w-6xl mx-auto px-6 h-full flex items-center justify-between">
-				<div class="flex items-center gap-3">
-					<span
-						class="text-xl font-serif font-extrabold tracking-wide"
-						style="color: {school.primaryColor};"
+				<span class="tracking-wide font-semibold">JHU.EDU</span>
+				<div class="flex items-stretch h-full">
+					<a
+						href="/disclaimer"
+						class="flex items-center px-3 bg-[#002D72] text-white text-[10px] font-bold tracking-wider uppercase hover:bg-[#00204f]"
 					>
-						JOHNS HOPKINS
-					</span>
-					<span
-						class="text-[10px] uppercase tracking-wider text-slate-600 border-l border-slate-300 pl-2"
+						Tours &amp; Events
+					</a>
+					<a
+						href="/disclaimer"
+						class="flex items-center px-3 bg-[#0074d9] text-white text-[10px] font-bold tracking-wider uppercase hover:bg-[#005fb0]"
 					>
-						UNDERGRADUATE ADMISSIONS
-					</span>
+						Connect
+					</a>
 				</div>
-				<div class="text-[11px] text-slate-600">
-					{applicantName()}
+			</div>
+		</div>
+
+		<!-- Main brand header -->
+		<header class="border-b border-gray-200 bg-white">
+			<div class="max-w-6xl mx-auto px-6 py-4 flex items-center">
+				<div class="flex items-center gap-3 pr-6">
+					<!-- Shield mark -->
+					<div
+						class="w-9 h-11 flex items-center justify-center text-white text-[10px] font-serif font-bold"
+						style="background-color: {school.primaryColor}; clip-path: polygon(0 0, 100% 0, 100% 70%, 50% 100%, 0 70%);"
+					>
+						JHU
+					</div>
+					<div class="leading-tight">
+						<div class="font-serif text-xl font-bold" style="color: {school.primaryColor};">
+							Johns Hopkins
+						</div>
+						<div class="text-[10px] tracking-[0.35em] text-gray-600 uppercase">University</div>
+					</div>
 				</div>
+				<div class="border-l border-gray-300 pl-6 hidden sm:block">
+					<div class="text-[11px] font-bold tracking-wider text-[#0074d9] uppercase leading-tight">
+						Undergraduate<br />Admissions
+					</div>
+				</div>
+				<nav class="ml-auto hidden md:flex items-center gap-6 text-[15px] text-gray-700">
+					<a href="/disclaimer" class="hover:text-[#002D72]">How to Apply</a>
+					<a href="/disclaimer" class="hover:text-[#002D72]">Tuition &amp; Aid</a>
+					<a href="/disclaimer" class="hover:text-[#002D72]">Academics</a>
+					<a href="/disclaimer" class="hover:text-[#002D72]">Life at Hopkins</a>
+				</nav>
 			</div>
 		</header>
 
-		<main class="bg-white min-h-[500px] py-20">
-			<div class="max-w-xl mx-auto px-6 text-base">
-				<h1 class="text-3xl font-normal mb-8 text-slate-900">Applicant Portal Login</h1>
+		<main class="bg-white min-h-[440px] py-12">
+			<div class="max-w-2xl mx-auto px-6">
+				<h1
+					class="text-2xl font-bold tracking-wide mb-6 uppercase"
+					style="color: {school.primaryColor};"
+				>
+					Johns Hopkins University
+				</h1>
 
 				<div
-					class="border border-green-700 bg-[#E0FFE0] px-4 py-3 mb-6 text-[13px] text-slate-900 font-normal max-w-full"
+					class="border-l-4 border-[#5cb8b2] bg-[#e2ddd7] px-4 py-3 mb-8 text-[14px] text-gray-800"
 				>
-					To access your status page, please enter your registered email address and password.
+					To log in, please enter your email address and password.
 				</div>
 
-				<form class="space-y-4 max-w-[500px]" on:submit={handleLogin}>
+				<form class="mb-8" on:submit={handleLogin}>
 					{#if error}
 						<p
-							class="text-xs text-red-800 border border-red-300 bg-red-50 px-3 py-2 mb-2"
+							class="text-xs text-red-800 border border-red-300 bg-red-50 px-3 py-2 mb-4"
 							role="alert"
 						>
 							{error}
 						</p>
 					{/if}
 
-					<div class="flex items-center gap-2">
-						<label
-							for="portal-email"
-							class="text-[13px] font-normal text-slate-900 w-32 text-right"
-						>
-							Email Address
-						</label>
+					<div class="flex items-center gap-3 mb-2">
+						<label for="portal-email" class="text-[14px] text-gray-800 w-28">Email Address</label>
 						<input
 							id="portal-email"
 							type="email"
-							class="border border-slate-400 bg-white px-2 py-1 text-[13px] w-64 shadow-inner"
+							class="border border-gray-400 bg-white px-2 py-1 text-[14px] w-56"
 							bind:value={emailInput}
 							autocomplete="email"
 						/>
 					</div>
 
-					<div class="flex items-center gap-2">
-						<label
-							for="portal-password"
-							class="text-[13px] font-normal text-slate-900 w-32 text-right"
-						>
-							Password
-						</label>
-						<input
-							id="portal-password"
-							type="password"
-							class="border border-slate-400 bg-white px-2 py-1 text-[13px] w-32 shadow-inner"
-							bind:value={passwordInput}
-							autocomplete="current-password"
-						/>
-						<a
-							href="/disclaimer"
-							class="text-[12px] text-blue-800 hover:underline ml-4 whitespace-nowrap"
-						>
-							Forgot Your Password?
-						</a>
+					<div class="flex items-start gap-3 mb-6">
+						<label for="portal-password" class="text-[14px] text-gray-800 w-28 pt-1">Password</label>
+						<div>
+							<input
+								id="portal-password"
+								type="password"
+								class="border border-gray-400 bg-white px-2 py-1 text-[14px] w-56 block"
+								bind:value={passwordInput}
+								autocomplete="current-password"
+							/>
+							<a href="/disclaimer" class="text-[13px] text-[#0074d9] underline hover:no-underline"
+								>Forgot Your Password?</a
+							>
+						</div>
 					</div>
 
-					<div class="flex items-center gap-3 pt-3">
-						<div class="w-32"></div>
-
+					<div class="flex items-center gap-3 ml-[124px]">
 						<button
 							type="submit"
-							class="border border-slate-600 bg-slate-300 px-4 py-1 text-[12px] font-semibold text-black
-									shadow-[2px_2px_0px_0px_rgba(0,0,0,0.5)] active:shadow-none active:translate-x-[2px] active:translate-y-[2px]"
+							class="border border-[#002D72] bg-white text-[#002D72] px-8 py-2 text-[13px] font-bold tracking-widest uppercase hover:bg-[#002D72] hover:text-white transition-colors"
 						>
 							Login
 						</button>
 						<button
 							type="button"
-							class="border border-slate-400 bg-slate-100 px-3 py-1 text-[11px] text-slate-700
-									shadow-[1px_1px_0px_0px_rgba(0,0,0,0.3)] hover:bg-slate-200 active:shadow-none active:translate-x-[1px] active:translate-y-[1px]"
+							class="border border-gray-400 bg-gray-100 px-3 py-2 text-[11px] text-gray-700 hover:bg-gray-200"
 							on:click={handleLoadSavedLogin}
 						>
 							Load saved PredictAdmit login
 						</button>
 					</div>
-
-					<p class="pt-6 text-[11px] leading-relaxed text-slate-600">
-						for this simulation, use the same email address and password that you saved on the
-						PredictAdmit.com home page. No real application data is used, and all information is
-						stored only in your browser.
-					</p>
 				</form>
-			</div>
-		</main>
 
-		<footer
-			class="bg-[#002D72] h-8 flex items-center justify-center text-white text-[11px] font-normal"
-		>
-			<div class="max-w-4xl mx-auto flex justify-between w-full px-10">
-				<span>&copy; 2020</span>
-				<span>PredictAdmit Simulation - Not affiliated with Johns Hopkins University</span>
-			</div>
-		</footer>
-	{:else if !hasViewedUpdate}
-		<header class="bg-white text-slate-800 border-b border-gray-300 pb-2">
-			<div class="max-w-6xl mx-auto px-6 h-12 flex items-center justify-between">
-				<div class="flex items-center gap-3">
-					<div class="w-6 h-6 bg-slate-600 rounded-full"></div>
-					<span class="text-xl font-serif font-extrabold" style="color: {school.primaryColor};"
-						>DISCOVER JHU</span
-					>
-					<span class="text-sm font-light uppercase tracking-wider text-slate-600"
-						>Undergraduate Admissions</span
-					>
-				</div>
-				<div class="text-[13px] font-normal flex gap-4 text-slate-600">
-					<a href="/disclaimer" class="hover:underline">Contact</a>
-					<a href="/disclaimer" class="hover:underline">FAQ</a>
-					<a
-						href="/disclaimer"
-						class="border border-slate-400 px-3 py-1 bg-gray-100 hover:bg-gray-200">APPLY</a
-					>
-					<a href="/disclaimer" class="hover:underline">Visit</a>
-				</div>
-			</div>
-
-			<nav class="max-w-6xl mx-auto px-6 pt-1">
-				<ul
-					class="flex gap-8 text-[13px] font-semibold tracking-wider border-b border-gray-300 pb-1"
-				>
-					<li>
-						<a
-							href="/disclaimer"
-							class="hover:underline border-b-2 border-transparent hover:border-slate-800 pb-1"
-							>DISCOVER JHU</a
-						>
-					</li>
-					<li>
-						<a
-							href="/disclaimer"
-							class="hover:underline border-b-2 border-transparent hover:border-slate-800 pb-1"
-							>EXPLORE ACADEMICS</a
-						>
-					</li>
-					<li>
-						<a
-							href="/disclaimer"
-							class="hover:underline border-b-2 border-transparent hover:border-slate-800 pb-1"
-							>AFFORDING HOPKINS</a
-						>
-					</li>
-					<li>
-						<a
-							href="/disclaimer"
-							class="hover:underline border-b-2 border-transparent hover:border-slate-800 pb-1"
-							>CAMPUS AND COMMUNITY</a
-						>
-					</li>
-					<li>
-						<a
-							href="/disclaimer"
-							class="hover:underline border-b-2 border-transparent hover:border-slate-800 pb-1"
-							>APPLICATION PROCESS</a
-						>
-					</li>
-				</ul>
-			</nav>
-		</header>
-
-		<main class="bg-white py-16 min-h-[300px]">
-			<div
-				class="max-w-3xl mx-auto px-6 text-center bg-yellow-100 border border-yellow-300 p-8 rounded shadow-md"
-			>
-				<h3 class="font-bold text-xl mb-4 text-slate-800 tracking-wider">Status Update</h3>
-
-				<p class="mb-4 text-sm text-black">
-					An update to your application was last posted {school.statusLastPosted}.
+				<p class="text-[14px] leading-relaxed text-gray-700 max-w-xl">
+					If you have questions or technical issues, email
+					<a href="/disclaimer" class="text-[#0074d9] underline hover:no-underline">gotojhu@jhu.edu</a
+					>. For technical emergencies or urgent support, text the admissions office at +1
+					443-743-3782. We'll respond to all requests during normal business hours, Monday–Friday
+					from 9 a.m. to 5 p.m. Eastern.
 				</p>
 
-				<button
-					on:click={handleViewUpdate}
-					class="text-blue-600 text-sm hover:underline font-semibold"
-				>
-					View your admissions decision.
-				</button>
-
-				<div class="mt-8">
-					<a
-						href="/disclaimer"
-						class="text-xs font-semibold text-slate-600 hover:underline tracking-widest">LOG OUT</a
-					>
-				</div>
+				<p class="pt-8 text-[11px] leading-relaxed text-gray-500 max-w-xl">
+					For this simulation, use the same email address and password that you saved on the
+					PredictAdmit.com home page. No real application data is used, and all information is stored
+					only in your browser.
+				</p>
 			</div>
 		</main>
 
-		<footer class="bg-[#002D72] text-white py-10 font-sans text-sm">
-			<div class="max-w-6xl mx-auto px-6 grid grid-cols-4 gap-8">
+		<!-- Footer -->
+		<footer class="bg-[#31261d] text-gray-300 pt-10 pb-6">
+			<div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8 text-[12px]">
 				<div>
-					<div class="flex items-center gap-2 mb-4">
-						<div class="w-8 h-8 bg-white rounded-full"></div>
-						<h4 class="font-bold text-white text-lg">JOHNS HOPKINS</h4>
+					<div class="flex items-center gap-3 mb-4">
+						<div
+							class="w-8 h-10 flex items-center justify-center text-[9px] font-serif font-bold text-[#31261d] bg-white"
+							style="clip-path: polygon(0 0, 100% 0, 100% 70%, 50% 100%, 0 70%);"
+						>
+							JHU
+						</div>
+						<div class="leading-tight">
+							<div class="font-serif text-lg font-bold text-white">Johns Hopkins</div>
+							<div class="text-[9px] tracking-[0.3em] text-gray-400 uppercase">University</div>
+						</div>
 					</div>
-
-					<h5 class="font-semibold text-white mb-2 text-md">Office of Undergraduate Admissions</h5>
-
-					<div class="text-[12px] leading-relaxed space-y-2">
-						<p>(Mail only correspondence):</p>
-						<p>Mason Hall / 3400 N. Charles St.</p>
-						<p>Baltimore, MD 21218 USA</p>
-					</div>
-
-					<div class="text-[12px] leading-relaxed space-y-2 mt-4">
-						<p>(UPS address; do not use for mail)</p>
-						<p>3701 Wyman Park Dr.</p>
-						<p>Baltimore, MD 21218</p>
-					</div>
-
-					<div class="text-[12px] leading-relaxed space-y-2 mt-4">
-						<p>Tel: +1 (410) 516-8171</p>
-						<p>Fax: +1 (410) 516-6585</p>
-						<p><a href="mailto:gotojhu@jhu.edu" class="hover:underline">gotojhu@jhu.edu</a></p>
+					<div class="font-bold text-white mb-3">Undergraduate Admissions</div>
+					<div class="flex gap-2">
+						<span class="w-7 h-7 rounded-full bg-[#009b8e] inline-block"></span>
+						<span class="w-7 h-7 rounded-full bg-[#009b8e] inline-block"></span>
+						<span class="w-7 h-7 rounded-full bg-[#009b8e] inline-block"></span>
 					</div>
 				</div>
-
 				<div>
-					<h4 class="font-bold text-white mb-3 pt-6">Contact</h4>
-					<div class="flex flex-col gap-1 text-[13px]">
-						<a href="/disclaimer" class="hover:underline">Contact</a>
-						<a href="/disclaimer" class="hover:underline">FAQ</a>
-						<a href="/disclaimer" class="hover:underline">Apply</a>
-						<a href="/disclaimer" class="hover:underline">Visit</a>
-						<a href="/disclaimer" class="hover:underline">Off-Campus Events</a>
-						<a href="/disclaimer" class="hover:underline">Virtual Tour</a>
+					<div class="text-[#5cb8b2] font-bold uppercase tracking-wide mb-2">
+						Mail Only Correspondence
+					</div>
+					<div class="leading-relaxed text-gray-400">
+						Office of Undergraduate Admissions<br />
+						Johns Hopkins University<br />
+						3400 N. Charles St., Mason Hall<br />
+						Baltimore, MD 21218-2683 USA
+					</div>
+					<div class="text-[#5cb8b2] font-bold uppercase tracking-wide mt-4 mb-2">
+						GPS Address – Do Not Use for Mail
+					</div>
+					<div class="leading-relaxed text-gray-400">
+						3101 Wyman Park Drive<br />
+						Baltimore, MD 21218
 					</div>
 				</div>
-
-				<div>
-					<h4 class="font-bold text-white mb-3 pt-6">Join our mailing list</h4>
-					<button class="bg-red-600 text-white font-bold text-lg px-8 py-2 mb-4 hover:bg-red-700">
-						SAY HELLO
-					</button>
-					<p class="text-[12px] leading-relaxed mb-4">
-						Sign up to receive emails for events, news, info sessions, and other admission-related
-						information.
-					</p>
-
-					<div class="flex gap-3 text-white">
-						<i class="fas fa-fw fa-facebook-f"></i>
-						<i class="fas fa-fw fa-twitter"></i>
-						<i class="fas fa-fw fa-instagram"></i>
-						<i class="fas fa-fw fa-youtube"></i>
-					</div>
-				</div>
-
-				<div class="pt-6">
-					<p class="text-[12px] mb-4">
-						&copy; 2014-2019 Johns Hopkins University. All rights reserved.
-					</p>
-					<div class="flex flex-col gap-1 text-[12px] text-white/80">
-						<a href="/disclaimer" class="hover:underline">Clery Notice of Availability</a>
-						<a href="/disclaimer" class="hover:underline">Privacy Policy</a>
-						<a href="/disclaimer" class="hover:underline">Report Issue</a>
-						<a href="/disclaimer" class="hover:underline">Emergency Info</a>
+				<div class="text-gray-400">
+					<div class="flex flex-col gap-2 mb-6">
+						<a href="/disclaimer" class="hover:text-white">Our Story</a>
+						<a href="/disclaimer" class="hover:text-white">Alumni Volunteers</a>
+						<a href="/disclaimer" class="hover:text-white">Administrative Offices</a>
+						<a href="/disclaimer" class="hover:text-white">Clery Notice of Availability</a>
+						<a href="/disclaimer" class="hover:text-white">Report Issue</a>
+						<a href="/disclaimer" class="hover:text-white">Emergency Info</a>
 					</div>
 				</div>
 			</div>
+			<div class="max-w-6xl mx-auto px-6 mt-8 pt-4 border-t border-gray-700 text-[11px] text-gray-500">
+				&copy; 2014–2026 Johns Hopkins University. All rights reserved.
+				<a href="/disclaimer" class="underline ml-1 hover:text-white">Policies</a>
+				<span class="ml-2"
+					>· PredictAdmit Simulation — Not affiliated with Johns Hopkins University</span
+				>
+			</div>
 		</footer>
-	{:else if $decisionsBySlug[SLUG] === 'admit'}
+	{:else if authenticated && !hasViewedUpdate}
+		<!-- ===================== PORTAL PAGE ===================== -->
+		<!-- Top utility bar -->
+		<div class="bg-[#1a1a1a] h-11 text-white">
+			<div class="max-w-6xl mx-auto px-6 h-full flex items-center justify-end gap-4">
+				<span class="text-[13px]">Hi, {applicantName()}</span>
+				<a
+					href="/disclaimer"
+					class="bg-[#0074d9] hover:bg-[#005fb0] text-white text-[12px] font-bold tracking-wider uppercase px-4 py-1.5"
+				>
+					Logout
+				</a>
+			</div>
+		</div>
+
+		<!-- Brand header -->
+		<header class="border-b border-gray-200 bg-white">
+			<div class="max-w-6xl mx-auto px-6 py-5 flex items-center">
+				<div class="flex items-center gap-3 pr-6">
+					<div
+						class="w-9 h-11 flex items-center justify-center text-white text-[10px] font-serif font-bold"
+						style="background-color: {school.primaryColor}; clip-path: polygon(0 0, 100% 0, 100% 70%, 50% 100%, 0 70%);"
+					>
+						JHU
+					</div>
+					<div class="leading-tight">
+						<div class="font-serif text-xl font-bold" style="color: {school.primaryColor};">
+							Johns Hopkins
+						</div>
+						<div class="text-[10px] tracking-[0.35em] text-gray-600 uppercase">University</div>
+					</div>
+				</div>
+				<div class="border-l border-gray-300 pl-6 hidden sm:block">
+					<div class="text-[11px] font-bold tracking-wider text-[#0074d9] uppercase leading-tight">
+						Undergraduate<br />Admissions Applicant<br />Portal
+					</div>
+				</div>
+				<nav class="ml-auto flex items-center text-[15px]">
+					<button
+						on:click={() => (activeTab = 'Admissions Status')}
+						class="text-[#0074d9] border-b-2 border-[#0074d9] pb-0.5"
+					>
+						My Application
+					</button>
+				</nav>
+			</div>
+		</header>
+
+		<!-- Content -->
+		<div class="bg-[#e9e9e9] min-h-[360px] py-10">
+			<div class="max-w-6xl mx-auto px-6">
+				<div class="bg-[#f3f3f3] border border-gray-200 p-8 max-w-md">
+					<button
+						on:click={handleViewUpdate}
+						class="text-2xl font-bold underline decoration-2 underline-offset-4 hover:no-underline block mb-4 text-left"
+						style="color: {school.primaryColor};"
+					>
+						Decision Letter
+					</button>
+					<p class="text-[14px] text-gray-700">
+						<span class="font-bold" style="color: {school.primaryColor};">READ</span>, Received
+						3/18/2026
+					</p>
+					<p class="mt-4 text-[12px] text-gray-500">
+						An update to your application was last posted {school.statusLastPosted}.
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<!-- Footer -->
+		<footer class="bg-[#31261d] text-gray-300 pt-10 pb-6">
+			<div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8 text-[12px]">
+				<div>
+					<div class="flex items-center gap-3 mb-4">
+						<div
+							class="w-8 h-10 flex items-center justify-center text-[9px] font-serif font-bold text-[#31261d] bg-white"
+							style="clip-path: polygon(0 0, 100% 0, 100% 70%, 50% 100%, 0 70%);"
+						>
+							JHU
+						</div>
+						<div class="leading-tight">
+							<div class="font-serif text-lg font-bold text-white">Johns Hopkins</div>
+							<div class="text-[9px] tracking-[0.3em] text-gray-400 uppercase">University</div>
+						</div>
+					</div>
+					<div class="font-bold text-white mb-1">Undergraduate Admissions</div>
+					<div class="font-bold text-white mb-3">Applicant Portal</div>
+					<div class="flex flex-col gap-1 text-[#c99a4e]">
+						<a href="/disclaimer" class="uppercase font-bold hover:text-white">Logout</a>
+						<a href="/disclaimer" class="uppercase font-bold hover:text-white"
+							>Change Email Address</a
+						>
+						<a href="/disclaimer" class="uppercase font-bold hover:text-white">Change Password</a>
+					</div>
+					<div class="flex gap-2 mt-4">
+						<span class="w-7 h-7 rounded-full bg-[#009b8e] inline-block"></span>
+						<span class="w-7 h-7 rounded-full bg-[#009b8e] inline-block"></span>
+						<span class="w-7 h-7 rounded-full bg-[#009b8e] inline-block"></span>
+					</div>
+				</div>
+				<div>
+					<div class="text-[#5cb8b2] font-bold uppercase tracking-wide mb-2">
+						Mail Only Correspondence
+					</div>
+					<div class="leading-relaxed text-gray-400">
+						Office of Undergraduate Admissions<br />
+						Johns Hopkins University<br />
+						3400 N. Charles St., Mason Hall<br />
+						Baltimore, MD 21218-2683 USA
+					</div>
+					<div class="text-[#5cb8b2] font-bold uppercase tracking-wide mt-4 mb-2">
+						GPS Address – Do Not Use for Mail
+					</div>
+					<div class="leading-relaxed text-gray-400">
+						3101 Wyman Park Drive<br />
+						Baltimore, MD 21218
+					</div>
+				</div>
+				<div class="text-gray-400">
+					<div class="flex flex-col gap-2 mb-6">
+						<a href="/disclaimer" class="hover:text-white">Our Story</a>
+						<a href="/disclaimer" class="hover:text-white">Alumni Volunteers</a>
+						<a href="/disclaimer" class="hover:text-white">Administrative Offices</a>
+						<a href="/disclaimer" class="hover:text-white">Clery Notice of Availability</a>
+						<a href="/disclaimer" class="hover:text-white">Report Issue</a>
+						<a href="/disclaimer" class="hover:text-white">Emergency Info</a>
+					</div>
+				</div>
+			</div>
+			<div class="max-w-6xl mx-auto px-6 mt-8 pt-4 border-t border-gray-700 text-[11px] text-gray-500">
+				&copy; 2014–2026 Johns Hopkins University. All rights reserved.
+				<a href="/disclaimer" class="underline ml-1 hover:text-white">Policies</a>
+				<span class="ml-2"
+					>· PredictAdmit Simulation — Not affiliated with Johns Hopkins University</span
+				>
+			</div>
+		</footer>
+	{:else if shownDecision === 'admit'}
 		<JHUAccepted
 			applicantName={applicantName()}
 			schoolName={school.schoolName}

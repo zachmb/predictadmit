@@ -1,5 +1,9 @@
 <script lang="ts">
+	// The parent component passes these props
 	export let applicantName: string;
+	export let schoolName: string = 'Yale College';
+	export let primaryColor: string = '#00356B';
+	export let footerDomain: string = 'yale.edu';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { userProfile } from '$lib/stores/user';
@@ -19,141 +23,106 @@
 	const viewAnalysis = () => {
 		goto('/results/yale');
 	};
+
+	$: firstName = (applicantName || 'Applicant').split(' ')[0];
 </script>
 
 <svelte:head>
-	<title>Yale College - Admission Decision</title>
+	<title>{schoolName} - Admission Decision</title>
 </svelte:head>
 
-<main class="min-h-screen bg-white text-gray-800 font-serif p-6">
-	<div class="max-w-3xl mx-auto">
+<main class="min-h-screen bg-white text-gray-900 font-serif">
+	<!-- Header -->
+	<header class="border-b-2 pb-2 pt-5 px-8" style="border-color: {primaryColor};">
+		<div class="flex items-end justify-between">
+			<span class="text-4xl font-serif" style="color: {primaryColor};">Yale</span>
+			<div class="text-[11px] text-gray-600 pb-1">
+				{applicantName || 'Applicant'}
+				<a href="/disclaimer" class="underline ml-1" style="color: {primaryColor};">Logout</a>
+			</div>
+		</div>
+	</header>
+
+	<div class="max-w-3xl mx-auto px-6 pt-10 text-[13px] leading-relaxed">
 		{#if googleSignedIn && $userProfile.usingAI}
-			<div class="mb-6 flex justify-end">
+			<div class="mb-6 flex justify-end font-sans">
 				<button
 					on:click={viewAnalysis}
-					class="group flex items-center px-4 py-2 bg-[#003262] text-white rounded-lg text-sm font-sans font-bold hover:bg-slate-800 transition-all shadow-md active:scale-95"
+					class="px-4 py-2 text-white rounded-lg text-sm font-bold hover:opacity-90 transition-all shadow-md active:scale-95"
+					style="background-color: {primaryColor};"
 				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						class="w-4 h-4 transition-transform group-hover:-translate-x-1"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
-					>
-					</svg>
 					Deep Dive: Why did I get {$decisionsBySlug['yale']}?
 				</button>
 			</div>
 		{/if}
-		<!-- Letterhead -->
-		<div class="border-b-2 border-gray-400 pb-4 mb-8">
-			<div class="flex items-center">
-				<div
-					class="w-16 h-16 bg-gray-400 text-white flex items-center justify-center font-bold text-2xl mr-4"
-				>
-					Y
-				</div>
-				<div>
-					<h1 class="text-2xl font-bold text-gray-700">YALE COLLEGE</h1>
-					<div class="text-sm text-gray-600">
-						Office of Undergraduate Admissions<br />
-						P.O. Box 208234, New Haven, Connecticut 06520-8234<br />
-						Telephone 203-432-9300 • Fax 203-432-9392
-					</div>
-				</div>
-			</div>
-		</div>
 
-		<!-- Date and Address -->
-		<div class="mb-8">
-			<div class="text-right text-sm text-gray-600 mb-2">March 26, 2020</div>
-			<div class="space-y-1">
-				<div>{applicantName || 'Applicant'}</div>
-				<div>1600 Pennsylvania Avenue NW</div>
-				<div>Washington, DC 20500</div>
-			</div>
-		</div>
+		<!-- Date -->
+		<div class="font-bold mb-6">March 26, 2026</div>
 
-		<!-- Greeting -->
-		<div class="mb-6">
-			<div class="text-lg font-bold text-gray-700">Admissions Decision</div>
-		</div>
+		<!-- Salutation -->
+		<p class="mb-4">Dear {firstName},</p>
 
-		<!-- Letter Body -->
-		<div class="space-y-4 mb-8">
+		<div class="space-y-4">
 			<p>
-				Thank you for applying to Yale College. The Admissions Committee has completed its review of
-				applications for the Class of 2024, and I regret to inform you that we are unable to offer
-				you admission.
+				The Yale Admissions Committee has completed its evaluation of this year's candidates, and I am
+				genuinely sorry that we are not able to offer you a place in the Class of 2030.
 			</p>
 
 			<p>
-				This year, Yale received over 35,000 applications for approximately 1,550 places in the
-				first-year class. The selection process was exceptionally difficult due to the extraordinary
-				qualifications of our applicant pool. Please understand that our decision reflects the
-				competitive nature of our admissions process and is not a judgment of your abilities or
-				potential.
+				I realize that this decision may come as a real disappointment. I hope you will understand
+				that the decision reflects the extraordinary range of talents represented in our applicant
+				pool and not a judgment about your own abilities or potential. Of the more than fifty
+				thousand individuals who applied to Yale this year, most are fully capable of doing
+				outstanding work and making a unique contribution to a campus community. It is painful to us
+				that we must turn away so many superbly talented students.
 			</p>
 
 			<p>
-				We recognize the time and effort you devoted to your application, and we appreciate your
-				interest in Yale. We have no doubt that you will find a college where you will thrive and
-				make significant contributions.
+				You may be tempted to ask what was lacking in your application. In truth, it is usually
+				difficult for us to point to obvious weaknesses when so many applicants have demonstrated real
+				achievement and potential for the future. Our decisions say far more about the small number of
+				spaces available and the difficult choices we make than they do about a candidate's personal
+				and academic promise.
 			</p>
 
 			<p>
-				We wish you every success in your future academic endeavors and hope that you will continue
-				to pursue your intellectual passions with the same dedication and enthusiasm evident in your
-				application.
+				I hope that the replies you receive from other colleges will soon erase any disappointment
+				regarding Yale's decision, and that you will go on to great success in your educational
+				pursuits.
 			</p>
-		</div>
-
-		<!-- Next Steps -->
-		<div class="mt-8 p-6 bg-gray-50 border border-gray-200 rounded">
-			<h3 class="font-bold text-gray-700 mb-3">Next Steps & Resources</h3>
-			<ul class="space-y-2 text-sm">
-				<li>
-					• You may reapply for transfer admission after completing at least one year of college
-					coursework.
-				</li>
-				<li>• Yale offers a variety of summer programs and online courses open to all students.</li>
-				<li>
-					• We encourage you to explore our virtual campus tours and online resources at <a
-						href="https://admissions.yale.edu"
-						class="text-blue-600 hover:underline">admissions.yale.edu</a
-					>.
-				</li>
-			</ul>
 		</div>
 
 		<!-- Signature -->
-		<div class="mt-12">
-			<div class="mb-2">
-				<div class="h-1 w-32 bg-gray-400"></div>
-			</div>
-			<div class="font-bold">Jeremiah Quinlan</div>
-			<div class="text-sm text-gray-600">
-				Dean of Undergraduate Admissions<br />
-				Yale College
-			</div>
+		<div class="mt-6">
+			<p class="mb-4">Sincerely,</p>
+			<p class="italic font-serif text-lg mb-1" style="color: {primaryColor};">Jeremiah Quinlan</p>
+			<p>Jeremiah Quinlan</p>
+			<p>Dean of Undergraduate Admissions and Financial Aid</p>
 		</div>
 
-		<!-- Footer -->
-		<div class="mt-16 pt-8 border-t border-gray-200 text-xs text-gray-500">
-			<p class="italic">
-				"The aim of education is not to fill a bucket but to light a fire." – William Butler Yeats
-			</p>
-			<div class="mt-4">
-				<strong>Yale College Admissions Office</strong><br />
-				P.O. Box 208234, New Haven, CT 06520-8234<br />
-				Phone: 203-432-9300 • Email: undergraduate.admissions@yale.edu
-			</div>
+		<!-- Return link -->
+		<div class="text-center mt-10 mb-6">
+			<a href="/disclaimer" class="underline" style="color: {primaryColor};">
+				Return to Application Status
+			</a>
 		</div>
 
-		<!-- Simulation Note -->
-		<div class="mt-8 p-4 bg-amber-50 border border-amber-200 rounded text-sm text-amber-800">
-			<strong>Note:</strong> This is a simulated admission decision for entertainment purposes only. This
-			is not a real decision from Yale University.
+		<!-- Simulation disclaimer -->
+		<div class="mt-8 p-4 bg-amber-50 border border-amber-200 rounded text-sm text-amber-800 font-sans">
+			<strong>Note:</strong> This is a simulated admission letter for entertainment purposes only. This
+			is not a real admission decision from Yale University.
 		</div>
 	</div>
+
+	<!-- Footer -->
+	<footer class="px-8 mt-12">
+		<div class="border-t border-gray-200 pt-6 max-w-3xl mx-auto">
+			<div class="text-2xl leading-tight font-serif" style="color: {primaryColor};">
+				Yale College<br />Undergraduate<br />Admissions
+			</div>
+			<p class="mt-4 text-[11px] text-gray-500 pb-8">
+				Copyright &copy;2026 Yale University. All rights reserved
+			</p>
+		</div>
+	</footer>
 </main>

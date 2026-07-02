@@ -606,7 +606,6 @@
 								{activeFolder}
 								searchQuery={inboxSearchQuery}
 								{filteredPortals}
-								{sortedVisiblePortals}
 								{visiblePortals}
 								{currentEdPortal}
 								{edEmailMustBeViewed}
@@ -680,7 +679,7 @@
 							</svg>
 						{/each}
 					</div>
-					<span class="text-xs font-semibold text-slate-500">Trusted by 500+</span>
+					<span class="text-xs font-semibold text-slate-500">Trusted by 5,000+</span>
 				</div>
 			</div>
 		</div>

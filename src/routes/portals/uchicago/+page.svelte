@@ -5,18 +5,23 @@
 	import { decisionsBySlug } from '$lib/stores/results';
 	import { portalDecisionViewed } from '$lib/stores/ui';
 
-	// Shared Components and Configuration
-	import { schoolConfigs } from '$lib/config/schools';
-
-	// School-Specific Components (Decision Letters - assuming they exist or will be created)
-	// NOTE: I am referencing UchicagoAccepted/Denied components. You will need to create these files.
+	// School-Specific Components (Decision Letters)
 	import UChicagoAccepted from '$lib/components/uchicago/UChicagoAccepted.svelte';
 	import UChicagoDenied from '$lib/components/uchicago/UChicagoDenied.svelte';
 
 	// --- Component Configuration ---
-	const SCHOOL_KEY = 'uchicago';
-	const SCHOOL_DATA = schoolConfigs[SCHOOL_KEY]; // Ensure 'uchicago' exists in your config
-	const UCHICAGO_MAROON = '#800000'; // UChicago main color
+	const SLUG = 'uchicago';
+	const UCHICAGO_MAROON = '#800000'; // UChicago maroon
+	const UCHICAGO_TEAL = '#155f83'; // Section header teal used throughout the real portal
+
+	const school = {
+		schoolName: 'The University of Chicago',
+		primaryColor: UCHICAGO_MAROON,
+		footerDomain: 'uchicago.edu',
+		statusLastPosted: 'March 16, 2026',
+		round: 'Regular Decision',
+		referenceNumber: '657368584'
+	};
 
 	// --- State Variables ---
 	let profile: UserProfile = { ...defaultProfile };
@@ -30,13 +35,15 @@
 	$: profile = $userProfile;
 
 	// Dynamic Data Helpers
-	const applicantName = () => profile.name || 'John Doe';
-	const applicantEmail = () => profile.email || 'johndoe@email.com';
+	const applicantName = () => profile.name || 'Applicant';
 
-	// --- Login Handlers (Using a standard login for consistency across portals) ---
+	// Default decision when the prediction store has no entry for this slug
+	const DEFAULT_DECISION = 'admit';
+	$: shownDecision = $decisionsBySlug[SLUG] ?? DEFAULT_DECISION;
+
+	// --- Handlers ---
 	const handleLoadSavedLogin = () => {
 		if (!profile.email || !profile.password) {
-			// Use default John Doe credentials if user hasn't set up their own
 			userProfile.update((u) => ({
 				...u,
 				name: u.name || 'John Doe',
@@ -44,24 +51,17 @@
 				password: u.password || 'password123'
 			}));
 		}
-		// Directly authenticate
 		authenticated = true;
 		error = '';
 	};
 
 	const handleLogin = (event: SubmitEvent) => {
 		event.preventDefault();
-		if (!SCHOOL_DATA) {
-			error = 'Unknown portal.';
-			authenticated = false;
-			return;
-		}
 		if (!profile.email || !profile.password) {
 			error = 'Please set your PredictAdmit email and password on the main page.';
 			authenticated = false;
 			return;
 		}
-		// Authenticate against the saved PredictAdmit credentials
 		if (emailInput.trim() === profile.email && passwordInput === profile.password) {
 			authenticated = true;
 			error = '';
@@ -75,371 +75,381 @@
 		hasViewedUpdate = true;
 		portalDecisionViewed.set(true);
 	};
+
+	// --- Main navigation (recreated from the real captures) ---
+	const mainNav = ['Apply', 'Visit', 'Academics', 'Student Life', 'After Graduation', 'Cost & Aid', 'Contact Us'];
+
+	// --- Financial Aid Checklist rows ---
+	const financialAid = [
+		{ detail: 'FAFSA - Free Application for Federal Student Aid', date: '01/08/2026' },
+		{ detail: "Parent's 2024 Federal Income Tax Return", date: '02/10/2026' },
+		{ detail: "Parent's W-2 Forms", date: '02/10/2026' },
+		{ detail: 'UChicago Financial Aid Worksheet', date: '02/10/2026' }
+	];
+
+	// --- Forms rows ---
+	const forms = [
+		{ received: false, detail: 'Schoolhouse.World Transcript Upload', date: '' },
+		{ received: true, detail: 'Self Reported Test Scores', date: '01/13/2026' },
+		{ received: true, detail: 'Student Early Decision Agreement', date: '01/13/2026' }
+	];
 </script>
 
 <svelte:head>
-	<title>{SCHOOL_DATA.schoolName} Admissions Portal</title>
+	<title>{school.schoolName}</title>
 </svelte:head>
 
-<div class="bg-white text-slate-900 font-sans flex flex-col {authenticated ? 'min-h-screen' : ''}">
+<div class="min-h-screen bg-white text-gray-800" style="font-family: Georgia, 'Times New Roman', serif;">
 	{#if !authenticated}
-		<div class="bg-white">
-			<header class="bg-white border-b border-slate-300">
-				<div class="max-w-5xl mx-auto px-6 pt-6 pb-4 flex items-center justify-between">
-					<div class="flex items-baseline gap-3">
-						<span class="text-3xl font-serif text-slate-900"> The University of Chicago </span>
-						<span class="text-[11px] tracking-[0.18em] uppercase text-slate-700">
-							College Admissions
-						</span>
-					</div>
-					<div class="text-[11px] text-slate-700">
-						{applicantName()}
-					</div>
-				</div>
-				<div class="h-8" style={`background-color: ${UCHICAGO_MAROON};`}></div>
-			</header>
-
-			<section class="bg-white">
-				<div class="max-w-5xl mx-auto px-10 py-10">
-					<h1 class="text-3xl font-normal mb-6">Application Status Login</h1>
-
-					<div class="border border-red-700 bg-red-100 px-4 py-3 mb-8 text-[12px] text-slate-900">
-						Please use your saved PredictAdmit credentials to log in to this simulated portal.
-					</div>
-
-					<form class="space-y-4 text-sm" on:submit={handleLogin}>
-						{#if error}
-							<p
-								class="text-xs text-red-800 border border-red-300 bg-red-50 px-3 py-2 mb-2"
-								role="alert"
-							>
-								{error}
-							</p>
-						{/if}
-
-						<div class="flex items-center gap-4">
-							<label
-								for="portal-email"
-								class="w-32 text-[12px] font-semibold text-slate-900 text-right"
-								>Email Address</label
-							>
-							<input
-								id="portal-email"
-								type="email"
-								class="border border-slate-500 bg-white px-2 py-1 text-[13px] w-80"
-								bind:value={emailInput}
-								autocomplete="email"
-							/>
-						</div>
-
-						<div class="flex items-center gap-4">
-							<label
-								for="portal-password"
-								class="w-32 text-[12px] font-semibold text-slate-900 text-right">Password</label
-							>
-							<input
-								id="portal-password"
-								type="password"
-								class="border border-slate-500 bg-white px-2 py-1 text-[13px] w-80"
-								bind:value={passwordInput}
-								autocomplete="current-password"
-							/>
-							<a href="/disclaimer" class="text-[12px] text-blue-800 underline hover:no-underline"
-								>Forgot Your Password?</a
-							>
-						</div>
-
-						<div class="flex items-center gap-4 pt-4">
-							<div class="w-32"></div>
-							<div class="flex flex-wrap items-center gap-3">
-								<button
-									type="submit"
-									class="border border-slate-500 bg-slate-300 px-4 py-1 text-[12px] font-semibold hover:bg-slate-400 active:bg-slate-500"
-									>Login</button
-								>
-								<button
-									type="button"
-									class="border border-slate-400 bg-slate-100 px-3 py-1 text-[11px] hover:bg-slate-200 active:bg-slate-300"
-									on:click={handleLoadSavedLogin}>Load saved PredictAdmit login</button
-								>
-							</div>
-						</div>
-
-						<p class="pt-4 text-[10px] leading-relaxed text-slate-600 max-w-xl">
-							This is a simulation. Use the same email and password saved on the PredictAdmit.com
-							home page.
-						</p>
-					</form>
-				</div>
-			</section>
-		</div>
-
-		<footer class="mt-8">
-			<div class="h-10 flex items-center" style={`background-color: ${UCHICAGO_MAROON};`}>
-				<div
-					class="max-w-5xl mx-auto px-6 w-full flex items-center justify-between text-[11px] text-white"
-				>
-					<span>&copy; {SCHOOL_DATA.footerDomain} 2019</span>
-					<span class="opacity-80"
-						>PredictAdmit.com simulation · Not affiliated with {SCHOOL_DATA.schoolName}</span
-					>
+		<!-- ============ LOGIN PAGE ============ -->
+		<header>
+			<div class="border-b border-gray-300 bg-white">
+				<div class="max-w-6xl mx-auto px-6 py-4 flex items-end justify-between">
+					<a href="/disclaimer" class="block text-3xl font-bold" style="color: {UCHICAGO_MAROON};">
+						College Admissions
+					</a>
+					<a href="/disclaimer" class="text-sm tracking-wide text-gray-600 uppercase">
+						University of Chicago
+					</a>
 				</div>
 			</div>
-		</footer>
-	{:else}
-		<div class="flex-grow flex flex-col min-h-screen bg-white">
-			<header class="w-full">
-				<div class="w-full py-2 text-white" style={`background-color: ${UCHICAGO_MAROON};`}>
-					<div class="max-w-6xl mx-auto px-6">
-						<div class="text-xs flex justify-end">
-							<a href="#" class="hover:underline">Login</a>
-							<span class="mx-1">|</span>
-							<a href="#" class="hover:underline">Account (App Status...)</a>
-						</div>
-					</div>
+			<nav style="background-color: {UCHICAGO_MAROON};" class="text-white">
+				<div class="max-w-6xl mx-auto px-6 flex items-center text-sm">
+					<a href="/disclaimer" class="px-3 py-3 hover:bg-black/20">&#8962;</a>
+					{#each mainNav as item}
+						<a href="/disclaimer" class="px-3 py-3 hover:bg-black/20 whitespace-nowrap">{item}</a>
+					{/each}
+				</div>
+			</nav>
+		</header>
+
+		<main class="min-h-[520px] py-12">
+			<div class="max-w-4xl mx-auto px-6">
+				<h1 class="text-4xl font-normal mb-6 text-gray-900 border-b border-gray-200 pb-3">Login</h1>
+
+				<div class="border border-green-700 bg-[#E6F4EA] px-4 py-3 mb-8 text-[14px] text-green-900">
+					To log in, please enter your email address and password.
 				</div>
 
-				<div class="w-full text-white pt-2 pb-0.5" style={`background-color: #A00000;`}>
-					<div class="max-w-6xl mx-auto px-6 flex justify-between items-end">
-						<h1 class="text-3xl font-serif font-bold tracking-wide">College Admissions</h1>
-						<nav class="text-[11px] font-bold uppercase tracking-wider space-x-4">
-							<a href="#" class="hover:underline">Apply</a>
-							<a href="#" class="hover:underline">Visit</a>
-							<a href="#" class="hover:underline">Academics</a>
-							<a href="#" class="hover:underline">Student Life</a>
-							<a href="#" class="hover:underline">New Graduates</a>
-							<a href="#" class="hover:underline">Cost & Aid</a>
-							<a href="#" class="hover:underline">Contact Us</a>
-						</nav>
-					</div>
-				</div>
-				<div class="border-t border-slate-700"></div>
-			</header>
-
-			<main class="max-w-6xl mx-auto px-6 py-8 w-full flex-1 flex">
-				<div class="w-3/4 pr-10">
-					{#if !hasViewedUpdate}
-						<div class="flex justify-between items-start mb-6">
-							<h2 class="text-xl font-bold">Welcome, {applicantName()}</h2>
-							<div class="text-[10px] text-red-700 font-bold flex flex-col items-end">
-								<a href="#" class="hover:underline text-blue-600">Print Job/Facebook</a>
-								<a href="#" class="hover:underline text-blue-600">Follow us on Twitter</a>
-							</div>
-						</div>
-
-						<p class="text-[11px] leading-relaxed mb-4">
-							Thank you for submitting an application to the College. We are pleased to provide you
-							with your name and reference number: **42004200**.
+				<form class="space-y-4 max-w-xl" on:submit={handleLogin}>
+					{#if error}
+						<p
+							class="text-xs text-red-800 border border-red-300 bg-red-50 px-3 py-2 mb-2"
+							role="alert"
+						>
+							{error}
 						</p>
-
-						<div class="border border-gray-300 p-4 mb-6">
-							<h3 class="text-xs font-bold text-red-700 mb-2">
-								Your UChicago Account is your resource to:
-							</h3>
-							<ul class="text-[11px] space-y-1 ml-4 list-disc text-gray-800">
-								<li>Complete and update your profile.</li>
-								<li>Change your <a href="#" class="text-blue-700 underline">password</a>.</li>
-								<li>Check your <a href="#" class="text-blue-700 underline">mailing status</a>.</li>
-								<li>Upload your institutional and additional resources.</li>
-								<li>View your admission decision letter.</li>
-							</ul>
-						</div>
-
-						<p class="text-[11px] leading-relaxed mb-4 text-gray-700">
-							You can always contact the <a href="#" class="text-blue-700 underline"
-								>Admissions Office</a
-							>
-							or your <a href="#" class="text-blue-700 underline">regional admissions manager</a> for
-							help or to change your decision plan, for logistical issues related to your application
-							process, or about the application itself.
-						</p>
-
-						<div class="border border-red-700 bg-red-50 p-4 mb-6">
-							<p class="text-[11px] italic leading-relaxed text-gray-800">
-								We want to take this moment to say thank thank you—you are ALL amazing. You have
-								invented new companies, contributed to the mysteries of the Divine, taken to stage,
-								etc. We can only imagine the difficulty our team faced in selecting a limited number
-								of qualified students to join us. We hope you're proud of your accomplishments, and
-								will continue to do great work wherever you go.
-							</p>
-							<p class="text-[10px] italic text-gray-700 mt-2">
-								**Sincerely,**<br />
-								**James G. Rosendorf**<br />
-								**Dean of Admissions & Financial Aid**
-							</p>
-						</div>
-
-						<div class="mb-6">
-							<div class="bg-blue-800 text-white font-bold p-2 text-xs mb-2">Status Update</div>
-							<p class="text-[11px] text-gray-700">
-								An update to your application was posted **March 15, 2020**
-							</p>
-							<button
-								on:click={handleViewUpdate}
-								class="text-red-700 font-bold text-xs mt-1 hover:underline"
-							>
-								View Update >>
-							</button>
-						</div>
-
-						<div class="mb-6">
-							<div class="bg-blue-800 text-white font-bold p-2 text-xs mb-2">Portfolio</div>
-							<div class="text-[11px] text-gray-700 mb-3">
-								<p>
-									In this section, you can upload all supplemental arts materials. Uploading
-									materials will automatically submit them to the admissions office. Please read the
-									instructions and file-type specifications. **We strongly encourage you to submit
-									all materials online if possible.**
-								</p>
-								<p class="mt-2">
-									For uploading the optional video profile, please edit the file after upload and
-									update the title to: **Optional Video Profile.**
-								</p>
-							</div>
-
-							<p class="text-[11px] text-gray-700 mb-2">
-								We have received the following portfolio submissions from you:
-							</p>
-							<div class="border border-gray-300 p-2 text-xs mb-3">
-								<table class="w-full text-left">
-									<thead>
-										<tr class="text-gray-600">
-											<th class="font-bold pb-1">Title</th>
-											<th class="font-bold pb-1">Format</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td class="pt-1">Optional Video Profile</td>
-											<td class="pt-1">video, 00:01:57</td>
-										</tr>
-									</tbody>
-								</table>
-								<a href="#" class="text-red-700 font-bold text-xs mt-2 inline-block hover:underline"
-									>Edit Portfolios</a
-								>
-							</div>
-						</div>
-
-						<div class="mb-6">
-							<div class="bg-blue-800 text-white font-bold p-2 text-xs mb-2">Forms</div>
-							<div class="flex items-center text-[11px] text-gray-700">
-								<span class="text-green-600 font-bold mr-2">✔</span> Delivered Student Response Form
-								- <a href="#" class="text-blue-700 underline ml-1">Display</a>
-							</div>
-						</div>
-
-						<div class="mb-6">
-							<div class="bg-blue-800 text-white font-bold p-2 text-xs mb-2">Upload Materials</div>
-							<p class="text-[11px] text-gray-700 mb-3">
-								If you need to upload additional forms for your application or financial aid, please
-								use the links below. Only *one* document can be uploaded at a time. Do not attempt
-								to upload materials already received, like your transcript.
-							</p>
-							<p class="text-[10px] text-gray-600 mb-3">
-								**NOTE:** Only documents that can be submitted through your UChicago Account will
-								appear here.
-							</p>
-
-							<div class="text-[10px] text-gray-800 space-y-1 mb-4">
-								<p>1/30/2019 12:12 AM - Financial Aid - Parents 2018 Federal Income Tax Return</p>
-								<p>1/30/2019 12:12 AM - Financial Aid - Student 2018 Federal Income Tax Return</p>
-								<p>2/25/2019 04:59 AM - College Supplement</p>
-							</div>
-
-							<div class="flex items-center space-x-4">
-								<input
-									type="file"
-									id="file-upload"
-									class="text-[11px] p-1 border border-gray-400"
-								/>
-								<button
-									class="bg-gray-200 border border-gray-400 text-xs px-4 py-1 hover:bg-gray-300"
-								>
-									Upload
-								</button>
-							</div>
-						</div>
-
-						<div class="mb-6">
-							<div class="bg-blue-800 text-white font-bold p-2 text-xs mb-2">Verify Address</div>
-							<div class="border border-gray-300 p-4 text-[11px] text-gray-700">
-								<div class="flex gap-8">
-									<div>
-										<p class="font-bold">Mailing Address</p>
-										<p>1600 Pennsylvania Ave</p>
-										<p>NW</p>
-										<p>Washington, DC 20500</p>
-										<p>United States</p>
-									</div>
-									<div>
-										<p class="font-bold">Permanent Address</p>
-										<p>1600 Pennsylvania Ave</p>
-										<p>NW</p>
-										<p>Washington, DC 20500</p>
-										<p>United States</p>
-									</div>
-								</div>
-								<a href="#" class="text-red-700 font-bold text-xs mt-2 inline-block hover:underline"
-									>Edit Addresses</a
-								>
-							</div>
-						</div>
-					{:else if $decisionsBySlug['uchicago'] === 'admit'}
-						<UChicagoAccepted applicantName={applicantName()} />
-					{:else}
-						<UChicagoDenied applicantName={applicantName()} />
 					{/if}
-				</div>
-				<div class="w-1/4 pt-10">
-					<div class="p-4 border border-gray-300 text-[11px] text-gray-700 bg-gray-50">
-						<p class="font-bold mb-2">UChicago Quick Links</p>
-						<ul class="space-y-1 list-disc ml-4">
-							<li><a href="#" class="text-blue-700 hover:underline">Campus Map</a></li>
-							<li><a href="#" class="text-blue-700 hover:underline">Financial Aid Policies</a></li>
-							<li><a href="#" class="text-blue-700 hover:underline">Student Life Blog</a></li>
-							<li><a href="#" class="text-blue-700 hover:underline">Academic Programs</a></li>
-						</ul>
+
+					<div class="flex items-center gap-3">
+						<label for="portal-email" class="text-[14px] text-gray-900 w-36 text-left font-semibold">
+							Email Address
+						</label>
+						<input
+							id="portal-email"
+							type="email"
+							class="border border-gray-400 bg-white px-2 py-1 text-[14px] w-64"
+							bind:value={emailInput}
+							autocomplete="email"
+						/>
 					</div>
 
-					<div class="p-4 border border-gray-300 text-[11px] text-gray-700 bg-gray-50 mt-4">
-						<p class="font-bold mb-2">Contact</p>
-						<p>College Admissions</p>
-						<p>123 Fake Street</p>
-						<p>Chicago, IL 60637</p>
-						<p>Phone: (773) 702-8650</p>
-					</div>
-				</div>
-			</main>
-
-			<footer class="w-full mt-8 bg-gray-700 text-white text-[11px] py-10">
-				<div class="max-w-6xl mx-auto px-6 grid grid-cols-4 gap-4">
-					<div class="col-span-1">
-						<p class="text-xs">&copy; 2018 The University of Chicago</p>
-					</div>
-
-					<div class="col-span-1 space-y-1">
-						<p class="font-bold">College Admissions</p>
-						<p>1101 E. 58th Street</p>
-						<p>Rosenwald Hall 105</p>
-						<p>Chicago, Illinois 60637</p>
-						<p>Phone: 773.702.8650</p>
+					<div class="flex items-center gap-3">
+						<label for="portal-password" class="text-[14px] text-gray-900 w-36 text-left font-semibold">
+							Password
+						</label>
+						<input
+							id="portal-password"
+							type="password"
+							class="border border-gray-400 bg-white px-2 py-1 text-[14px] w-64"
+							bind:value={passwordInput}
+							autocomplete="current-password"
+						/>
+						<a href="/disclaimer" class="text-[13px] hover:underline ml-1" style="color: {UCHICAGO_TEAL};">
+							Forgot Your Password?
+						</a>
 					</div>
 
-					<div class="col-span-2 grid grid-cols-2">
-						<div class="space-y-1">
-							<a href="#" class="block hover:underline">Apply Online</a>
-							<a href="#" class="block hover:underline">Request Information</a>
-							<a href="#" class="block hover:underline">Privacy Information</a>
-							<a href="#" class="block hover:underline">Non-Discrimination</a>
-						</div>
-						<div></div>
+					<div class="flex items-center gap-3 pt-3">
+						<div class="w-36"></div>
+						<button
+							type="submit"
+							class="text-white px-6 py-1.5 text-[14px] font-semibold hover:opacity-90"
+							style="background-color: {UCHICAGO_MAROON};"
+						>
+							Login
+						</button>
+						<button
+							type="button"
+							class="border border-gray-400 bg-gray-100 px-3 py-1.5 text-[13px] text-gray-700 hover:bg-gray-200"
+							on:click={handleLoadSavedLogin}
+						>
+							Load saved PredictAdmit login
+						</button>
+					</div>
+
+					<div class="pt-8 text-[13px] leading-relaxed text-gray-600 max-w-2xl">
+						If you do not know your password or have not set one up, please click the "Forgot Your
+						Password?" link to create a new password. For this simulation, use the same email address
+						and password that you saved on the PredictAdmit.com home page. No real application data is
+						used, and all information is stored only in your browser.
+					</div>
+				</form>
+			</div>
+		</main>
+
+		<!-- Footer -->
+		<footer class="border-t border-gray-300 bg-[#f4f4f2] text-gray-700 text-[13px] mt-8">
+			<div class="max-w-6xl mx-auto px-6 py-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+				<div>
+					<div class="text-lg font-bold" style="color: {UCHICAGO_MAROON};">The University of Chicago</div>
+					<p class="mt-2">&copy; 2026 The University of Chicago</p>
+				</div>
+				<div>
+					<a href="/disclaimer" class="font-semibold" style="color: {UCHICAGO_MAROON};">College Admissions</a>
+					<p class="mt-2">1101 E. 58th Street</p>
+					<p>Rosenwald Hall 105</p>
+					<p>Chicago, Illinois 60637</p>
+					<p>Phone: 773.702.8650</p>
+				</div>
+				<div class="space-y-1">
+					<a href="/disclaimer" class="block hover:underline">Apply Online</a>
+					<a href="/disclaimer" class="block hover:underline">Request Information</a>
+					<a href="/disclaimer" class="block hover:underline">Privacy Information</a>
+					<a href="/disclaimer" class="block hover:underline">Accessibility</a>
+					<a href="/disclaimer" class="block hover:underline">Non-Discrimination</a>
+				</div>
+			</div>
+			<div class="border-t border-gray-300 py-3 text-center text-[11px] text-gray-500">
+				PredictAdmit Simulation &mdash; Not affiliated with The University of Chicago
+			</div>
+		</footer>
+	{:else if authenticated && !hasViewedUpdate}
+		<!-- ============ APPLICANT PORTAL ============ -->
+		<header>
+			<div class="border-b border-gray-300 bg-white">
+				<div class="max-w-6xl mx-auto px-6 py-4 flex items-end justify-between">
+					<a href="/disclaimer" class="block text-3xl font-bold" style="color: {UCHICAGO_MAROON};">
+						College Admissions
+					</a>
+					<span class="text-sm tracking-wide text-gray-600 uppercase">University of Chicago</span>
+				</div>
+			</div>
+			<nav style="background-color: {UCHICAGO_MAROON};" class="text-white">
+				<div class="max-w-6xl mx-auto px-6 flex items-center text-sm">
+					<a href="/disclaimer" class="px-3 py-3 hover:bg-black/20">&#8962;</a>
+					{#each mainNav as item}
+						<a href="/disclaimer" class="px-3 py-3 hover:bg-black/20 whitespace-nowrap">{item}</a>
+					{/each}
+				</div>
+			</nav>
+		</header>
+
+		<div class="max-w-6xl mx-auto px-6 py-8 flex flex-col md:flex-row gap-8">
+			<!-- Main column -->
+			<div class="flex-1 min-w-0 space-y-8">
+				<!-- Welcome block -->
+				<div>
+					<p class="text-2xl mb-4" style="color: {UCHICAGO_MAROON};">Welcome, {applicantName()}</p>
+					<p class="text-[15px] leading-relaxed text-gray-800">
+						We are here to help! If you need assistance or additional information, please contact us.
+						Please provide us with your name and reference number: <strong>{school.referenceNumber}</strong>
+					</p>
+					<p class="text-[15px] mt-4 font-semibold text-gray-800">Your UChicago Account is your resource to:</p>
+					<ul class="list-disc ml-8 mt-2 text-[15px] text-gray-800 space-y-1">
+						<li>Complete and update your profile</li>
+						<li>Change your <a href="/disclaimer" class="underline" style="color: {UCHICAGO_TEAL};">password</a></li>
+						<li>Apply for financial aid</li>
+						<li>Upload and submit additional materials</li>
+						<li>View your admission decision</li>
+						<li>Upload and submit your 2 minute video profile</li>
+					</ul>
+				</div>
+
+				<!-- Congratulatory notice -->
+				<div class="p-4 border border-[#d6d6ce] bg-[#f4f4f2] text-[14px] leading-relaxed text-gray-800">
+					Thank you! With the release of admissions decisions, we want to take a moment to say thank
+					you &mdash; you are all extraordinary! You are among the most brilliant, ambitious, and
+					academically qualified students in the world. It is a privilege to have shared in your
+					ideas and accomplishments, and to have gotten to know you better.
+				</div>
+
+				<!-- Status Update -->
+				<div class="border border-[#d6d6ce] bg-[#f4f4f2] pt-8 px-6 pb-6 relative">
+					<h3
+						class="absolute -top-4 left-0 text-white text-[15px] font-semibold px-4 py-1"
+						style="background-color: {UCHICAGO_TEAL};"
+					>
+						Status Update
+					</h3>
+					<p class="text-[15px] text-gray-800 mb-4">
+						An update to your application was last posted {school.statusLastPosted}.
+					</p>
+					<button
+						on:click={handleViewUpdate}
+						class="text-[15px] font-bold hover:underline"
+						style="color: {UCHICAGO_TEAL};"
+					>
+						View Update &gt;&gt;
+					</button>
+				</div>
+
+				<!-- Financial Aid Checklist -->
+				<div class="border border-[#d6d6ce] bg-[#f4f4f2] pt-8 px-6 pb-6 relative">
+					<h3
+						class="absolute -top-4 left-0 text-white text-[15px] font-semibold px-4 py-1"
+						style="background-color: {UCHICAGO_TEAL};"
+					>
+						Financial Aid Checklist
+					</h3>
+					<a href="/disclaimer" class="text-[13px] underline" style="color: {UCHICAGO_TEAL};">
+						Click here for additional details
+					</a>
+					<table class="w-full text-[14px] text-left mt-3 bg-white border border-gray-200">
+						<thead>
+							<tr class="border-b border-gray-300">
+								<th class="px-3 py-2" colspan="2">Status</th>
+								<th class="px-3 py-2">Details</th>
+								<th class="px-3 py-2">Date</th>
+							</tr>
+						</thead>
+						<tbody>
+							{#each financialAid as row}
+								<tr class="border-b border-gray-100 align-top">
+									<td class="px-3 py-2 w-6 text-green-700 font-bold">&#10003;</td>
+									<td class="px-3 py-2 whitespace-nowrap">Received</td>
+									<td class="px-3 py-2">{row.detail}</td>
+									<td class="px-3 py-2 whitespace-nowrap">{row.date}</td>
+								</tr>
+							{/each}
+						</tbody>
+					</table>
+				</div>
+
+				<!-- Forms -->
+				<div class="border border-[#d6d6ce] bg-[#f4f4f2] pt-8 px-6 pb-6 relative">
+					<h3
+						class="absolute -top-4 left-0 text-white text-[15px] font-semibold px-4 py-1"
+						style="background-color: {UCHICAGO_TEAL};"
+					>
+						Forms
+					</h3>
+					<table class="w-full text-[14px] text-left bg-white border border-gray-200">
+						<tbody>
+							{#each forms as row}
+								<tr class="border-b border-gray-100 align-top">
+									<td class="px-3 py-2 w-6">
+										{#if row.received}
+											<span class="text-green-700 font-bold">&#10003;</span>
+										{/if}
+									</td>
+									<td class="px-3 py-2 whitespace-nowrap">
+										{#if row.received}
+											{row.date}
+										{:else}
+											<span class="text-gray-500">Optional</span>
+										{/if}
+									</td>
+									<td class="px-3 py-2">
+										{#if row.received}
+											{row.detail}
+											<a href="/disclaimer" class="ml-3 underline" style="color: {UCHICAGO_TEAL};">Display</a>
+										{:else}
+											<a href="/disclaimer" class="underline" style="color: {UCHICAGO_TEAL};">{row.detail}</a>
+										{/if}
+									</td>
+								</tr>
+							{/each}
+						</tbody>
+					</table>
+				</div>
+
+				<!-- Upload Materials -->
+				<div class="border border-[#d6d6ce] bg-[#f4f4f2] pt-8 px-6 pb-6 relative">
+					<h3
+						class="absolute -top-4 left-0 text-white text-[15px] font-semibold px-4 py-1"
+						style="background-color: {UCHICAGO_TEAL};"
+					>
+						Upload Materials
+					</h3>
+					<p class="text-[14px] leading-relaxed text-gray-800">
+						If you need to upload documents to complete your admissions or financial aid application,
+						please do so here. <strong>Video profiles, arts supplements, or other supplementary
+						materials can be uploaded in the "Portfolio" section below.</strong>
+					</p>
+					<p class="text-[14px] mt-3 text-gray-800">We have received the following documents from you:</p>
+					<ul class="list-disc ml-8 mt-2 text-[14px] text-gray-800 space-y-1">
+						<li>02/10/2026 10:40 PM - Financial Aid - Parents' 2024 Federal Income Tax Return</li>
+						<li>02/10/2026 10:41 PM - Financial Aid - W2 Form From Parent - 2024</li>
+						<li>01/06/2026 04:26 PM - Application Fee Waiver</li>
+					</ul>
+				</div>
+			</div>
+
+			<!-- Sidebar -->
+			<aside class="w-full md:w-64 flex-shrink-0 space-y-6">
+				<div>
+					<div class="text-white text-[16px] px-3 py-1.5" style="background-color: {UCHICAGO_TEAL};">
+						Name Details
+					</div>
+					<div class="border border-[#d6d6ce] border-t-0 bg-[#f4f4f2] p-3 text-[14px] text-gray-800">
+						<p><strong>Legal Name:</strong><br />{applicantName()}</p>
+						<p class="mt-3"><strong>Preferred Name:</strong><br />{applicantName()}</p>
+						<p class="mt-3"><strong>Reference Number:</strong><br />{school.referenceNumber}</p>
+						<p class="mt-3"><strong>Round:</strong><br />{school.round}</p>
 					</div>
 				</div>
-				<div class="max-w-6xl mx-auto px-6 text-[10px] text-center mt-4 opacity-70">
-					PredictAdmit.com simulation. Not affiliated with The University of Chicago.
+				<div>
+					<div class="text-white text-[16px] px-3 py-1.5" style="background-color: {UCHICAGO_TEAL};">
+						Social Media
+					</div>
+					<div class="border border-[#d6d6ce] border-t-0 bg-[#f4f4f2] p-3 text-[14px] space-y-2">
+						<a href="/disclaimer" class="block underline" style="color: {UCHICAGO_TEAL};">Find Us on Facebook</a>
+						<a href="/disclaimer" class="block underline" style="color: {UCHICAGO_TEAL};">Follow Us on Twitter</a>
+					</div>
 				</div>
-			</footer>
+			</aside>
 		</div>
+
+		<!-- Footer -->
+		<footer class="border-t border-gray-300 bg-[#f4f4f2] text-gray-700 text-[13px] mt-8">
+			<div class="max-w-6xl mx-auto px-6 py-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+				<div>
+					<div class="text-lg font-bold" style="color: {UCHICAGO_MAROON};">The University of Chicago</div>
+					<p class="mt-2">&copy; 2026 The University of Chicago</p>
+				</div>
+				<div>
+					<span class="font-semibold" style="color: {UCHICAGO_MAROON};">College Admissions</span>
+					<p class="mt-2">1101 E. 58th Street</p>
+					<p>Rosenwald Hall 105</p>
+					<p>Chicago, Illinois 60637</p>
+					<p>Phone: 773.702.8650</p>
+				</div>
+				<div class="space-y-1">
+					<a href="/disclaimer" class="block hover:underline">Apply Online</a>
+					<a href="/disclaimer" class="block hover:underline">Request Information</a>
+					<a href="/disclaimer" class="block hover:underline">Privacy Information</a>
+					<a href="/disclaimer" class="block hover:underline">Accessibility</a>
+					<a href="/disclaimer" class="block hover:underline">Non-Discrimination</a>
+				</div>
+			</div>
+			<div class="border-t border-gray-300 py-3 text-center text-[11px] text-gray-500">
+				PredictAdmit Simulation &mdash; Not affiliated with The University of Chicago
+			</div>
+		</footer>
+	{:else if shownDecision === 'admit'}
+		<UChicagoAccepted
+			applicantName={applicantName()}
+			schoolName={school.schoolName}
+			primaryColor={school.primaryColor}
+			footerDomain={school.footerDomain}
+		/>
+	{:else}
+		<UChicagoDenied
+			applicantName={applicantName()}
+			schoolName={school.schoolName}
+			primaryColor={school.primaryColor}
+			footerDomain={school.footerDomain}
+		/>
 	{/if}
 </div>

@@ -1,150 +1,143 @@
 <script lang="ts">
-	export let applicantName: string = 'Applicant';
+	// The parent component passes these props
+	export let applicantName: string;
+	export let schoolName: string = 'Rice University';
+	export let primaryColor: string = '#00205B';
+	export let footerDomain: string = 'rice.edu';
+
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { userProfile } from '$lib/stores/user';
+	import { decisionsBySlug } from '$lib/stores/results';
 
 	$: session = $page.data.session;
 
 	let googleSignedIn = false;
-	let googleEmail = '';
-	let googleName = '';
+	$: googleSignedIn = !!session?.user;
 
-	$: {
-		googleSignedIn = !!session?.user;
-		googleEmail = (session?.user?.email as string) ?? '';
-		googleName = (session?.user?.name as string) ?? '';
-	}
-	import { decisionsBySlug } from '$lib/stores/results';
+	$: firstName = (applicantName || 'Applicant').split(' ')[0];
+
 	const viewAnalysis = () => {
 		goto('/results/rice');
 	};
+
+	const shieldSvg = `
+		<svg viewBox="0 0 120 148" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+			<path d="M6 6 H114 V86 C114 118 88 136 60 146 C32 136 6 118 6 86 Z" fill="#1b2f66"/>
+			<path d="M22 84 L60 56 L98 84 L98 100 L60 72 L22 100 Z" fill="#ffffff"/>
+			<g fill="#ffffff">
+				<ellipse cx="30" cy="34" rx="9" ry="11"/>
+				<ellipse cx="90" cy="34" rx="9" ry="11"/>
+				<ellipse cx="60" cy="118" rx="9" ry="11"/>
+			</g>
+			<g fill="#1b2f66">
+				<circle cx="26" cy="32" r="2.2"/><circle cx="34" cy="32" r="2.2"/>
+				<circle cx="86" cy="32" r="2.2"/><circle cx="94" cy="32" r="2.2"/>
+				<circle cx="56" cy="116" r="2.2"/><circle cx="64" cy="116" r="2.2"/>
+			</g>
+		</svg>`;
 </script>
 
-<div class="min-h-screen bg-white p-8 font-serif">
-	<div class="max-w-2xl mx-auto">
+<svelte:head>
+	<title>{schoolName} - Admission Decision</title>
+</svelte:head>
+
+<main class="min-h-screen bg-[#f4f4f4] font-serif text-gray-800">
+	<div class="mx-auto max-w-3xl px-6 py-10">
 		{#if googleSignedIn && $userProfile.usingAI}
 			<div class="mb-6 flex justify-end">
 				<button
 					on:click={viewAnalysis}
-					class="group flex items-center px-4 py-2 bg-[#003262] text-white rounded-lg text-sm font-sans font-bold hover:bg-slate-800 transition-all shadow-md active:scale-95"
+					class="flex items-center gap-2 rounded-lg px-4 py-2 font-sans text-sm font-bold text-white shadow-md transition-all hover:opacity-90 active:scale-95"
+					style="background-color: {primaryColor};"
 				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						class="w-4 h-4 transition-transform group-hover:-translate-x-1"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
-					>
-					</svg>
 					Deep Dive: Why did I get {$decisionsBySlug['rice']}?
 				</button>
 			</div>
 		{/if}
-		<!-- Letterhead - Rice Blue -->
-		<div class="border-b-4 border-[#00205B] pb-4 mb-8">
-			<div class="flex items-center mb-4">
-				<!-- Rice Owl Logo -->
-				<div class="w-12 h-12 bg-[#00205B] rounded-full mr-4 flex items-center justify-center">
-					<span class="text-white text-xl font-bold">R</span>
+
+		<!-- Date + navy rule -->
+		<div class="mb-0 text-[13px] font-semibold text-gray-700">March 25, 2026</div>
+		<div class="mt-2 mb-6 border-t-2" style="border-color: {primaryColor};"></div>
+
+		<!-- Letter card -->
+		<div class="bg-white px-10 py-10 shadow-sm">
+			<!-- Letterhead -->
+			<div class="mb-10 flex items-start justify-between">
+				<div class="flex items-center gap-3">
+					<span class="h-12 w-10">{@html shieldSvg}</span>
+					<span class="text-3xl font-normal tracking-tight" style="color: {primaryColor};">RICE</span>
 				</div>
-				<div>
-					<h1 class="text-2xl font-bold text-[#00205B]">Rice University</h1>
-					<p class="text-gray-700 text-sm">Office of Admission</p>
-				</div>
+				<div class="pt-1 text-[11px] font-bold tracking-wide text-gray-700">Office of Enrollment</div>
 			</div>
-			<div class="text-sm text-gray-600">
-				<p>6100 Main Street, MS-17</p>
-				<p>Houston, Texas 77005</p>
-				<p>Tel: 713-348-7423</p>
+
+			<div class="mb-6 text-[13px] text-gray-700">March 25, 2026</div>
+
+			<div class="mb-6 text-[14px] leading-relaxed text-gray-900">
+				{applicantName || 'Applicant'}<br />
+				1924 Smith Rd<br />
+				Northbrook, IL 60062-5830
 			</div>
-		</div>
 
-		<!-- Date -->
-		<p class="mb-8 text-gray-700">
-			{new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
-		</p>
+			<div class="mb-6 text-[15px] text-gray-900">Dear {firstName},</div>
 
-		<!-- Applicant Info -->
-		<div class="mb-8">
-			<p class="text-lg font-medium text-gray-800">{applicantName}</p>
-			<p class="text-gray-600">Regular Decision Applicant</p>
-			<p class="text-sm text-gray-500">Proposed Major: Computer Science</p>
-		</div>
-
-		<!-- Letter Body -->
-		<div class="mb-8 leading-relaxed text-gray-800">
-			<p class="mb-4">Dear {applicantName},</p>
-
-			<p class="mb-4">
-				On behalf of Rice University, I am delighted to offer you admission to the Class of 2028.
-				Welcome to the Rice community!
-			</p>
-
-			<p class="mb-4">
-				Your application was evaluated within an exceptionally competitive pool of more than 31,000
-				candidates from around the world. The Admission Committee was impressed by your intellectual
-				curiosity, academic achievements, and demonstrated commitment to both academic excellence
-				and collaborative learning. Your unique perspective and potential align perfectly with
-				Rice's mission to nurture discovery and innovation in a residential college system.
-			</p>
-
-			<div class="my-8 p-6 bg-blue-50 border-l-4 border-[#00205B] italic">
-				<p class="mb-2 font-semibold text-[#00205B]">Welcome to the Residential College System</p>
-				<p class="text-gray-700">
-					At Rice, you will join one of our eleven residential colleges, each with its own
-					distinctive traditions, faculty associates, and close-knit community. You'll have the
-					opportunity to engage with world-renowned faculty in small classes, collaborate with peers
-					in a 6:1 student-to-faculty ratio environment, and benefit from our unique campus in the
-					heart of Houston's Museum District.
+			<div class="space-y-4 text-[14px] leading-relaxed text-gray-800">
+				<p>
+					Congratulations! It is my great pleasure to offer you admission to Rice University and to
+					welcome you to the Class of 2030. On behalf of the entire admission committee, I want you to
+					know how genuinely impressed we were by your accomplishments, your character, and the
+					distinct perspective you will bring to our residential colleges.
+				</p>
+				<p>
+					This year, Rice received over 38,000 applications from extraordinary students around the
+					world, and our decisions were extremely difficult. Your application stood out for its
+					curiosity, dedication, and resilience, along with a clear interest in driving positive
+					change. We are confident that you will not only thrive at Rice, but that you will make our
+					community stronger because you are part of it.
+				</p>
+				<p>
+					In the coming days you will receive information about your financial aid award, your
+					residential college assignment, and Owl Days, our celebration for admitted students. Please
+					take the time to review the enrollment materials in your applicant portal, and know that our
+					office is here to answer any questions as you make this important decision. We hope you will
+					choose to say yes to Rice.
+				</p>
+				<p>
+					Once again, congratulations on this well-earned achievement. We cannot wait to see all that
+					you will accomplish here, and we look forward to welcoming you to Houston.
 				</p>
 			</div>
 
-			<p class="mb-4">
-				As an admitted student, you will receive comprehensive information about next steps,
-				including details about Rice's admitted student programs (Rice Days), residential college
-				assignment, course registration, and financial aid (if applicable). You can also expect to
-				hear directly from current students, faculty, and alumni who are eager to welcome you to
-				campus.
-			</p>
+			<div class="mt-8 text-[14px] text-gray-800">Sincerely,</div>
+			<div class="mt-3">
+				<div
+					class="text-3xl italic text-gray-800"
+					style="font-family: 'Segoe Script', 'Brush Script MT', cursive;"
+				>
+					Yvonne Romero
+				</div>
+				<div class="mt-2 text-[14px] font-semibold text-gray-900">Dr. Yvonne M. Romero</div>
+				<div class="text-[13px] text-gray-600">Vice President for Enrollment</div>
+				<div class="text-[13px] text-gray-600">Dean of Admission and Financial Aid</div>
+			</div>
 
-			<p class="mb-4">
-				This offer of admission is contingent upon your successful completion of the current
-				academic year. We expect that you will maintain the high standards of achievement and
-				personal conduct that characterized your secondary school record.
-			</p>
+			<!-- Contact letterhead footer -->
+			<div class="mt-12 border-t border-gray-200 pt-4 text-center text-[10px] text-gray-500">
+				Rice University Office of Enrollment &middot; 6100 Main St. &middot; Houston, TX 77005-1892
+				&middot; www.{footerDomain}
+			</div>
 
-			<p class="mb-4">
-				Please take time to celebrate this significant achievement with your family, teachers, and
-				friends who have supported you throughout this process. We look forward to welcoming you to
-				Houston this fall.
-			</p>
+			<!-- Simulated-letter disclaimer -->
+			<div class="mt-8 rounded border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800">
+				<strong>Note:</strong> This is a simulated admission letter for entertainment purposes only.
+				This is not a real admission decision from Rice University.
+			</div>
 		</div>
 
-		<!-- Signature -->
-		<div class="mt-12">
-			<p class="mb-1">Sincerely,</p>
-			<div class="mb-8">
-				<div class="h-12 mb-2 flex items-center text-[#00205B] font-bold text-lg">
-					Rice University
-				</div>
-				<p class="font-semibold text-[#00205B]">Yvonne Romero da Silva</p>
-				<p class="text-sm text-gray-700">Vice President for Enrollment</p>
-				<p class="text-sm text-gray-600">Rice University</p>
-			</div>
-
-			<div class="mt-12 p-6 bg-blue-50 rounded-lg border border-blue-200">
-				<p class="text-sm text-gray-700 mb-2">
-					<strong class="text-[#00205B]">Next Steps:</strong> Your official admission packet will arrive
-					by mail within 7-10 business days. Please log into your Rice Admission Portal to view your financial
-					aid award (if applicable) and to confirm your enrollment by May 1.
-				</p>
-				<p class="text-sm text-gray-700">
-					<strong class="text-[#00205B]">Important:</strong> Admitted students are invited to attend
-					<em>Rice Days</em>, our admitted student program, in April. Registration information will
-					be available in your portal.
-				</p>
-			</div>
+		<div class="mt-8 text-center">
+			<a href="/disclaimer" class="text-[13px] underline" style="color: {primaryColor};"
+				>Return to Application Status</a
+			>
 		</div>
 	</div>
-</div>
+</main>

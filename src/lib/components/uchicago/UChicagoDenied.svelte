@@ -1,5 +1,9 @@
 <script lang="ts">
-	export let applicantName: string = 'Applicant';
+	// The parent component passes these props
+	export let applicantName: string;
+	export let schoolName: string = 'The University of Chicago';
+	export let primaryColor: string = '#800000'; // UChicago maroon
+	export let footerDomain: string = 'uchicago.edu';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { userProfile } from '$lib/stores/user';
@@ -21,109 +25,135 @@
 	};
 </script>
 
-<div class="min-h-screen bg-white p-8 font-serif">
-	<div class="max-w-2xl mx-auto">
+<svelte:head>
+	<title>{schoolName} - Admission Decision</title>
+</svelte:head>
+
+<main class="min-h-screen bg-white text-gray-800 font-serif p-6">
+	<div class="max-w-3xl mx-auto mt-10">
 		{#if googleSignedIn && $userProfile.usingAI}
 			<div class="mb-6 flex justify-end">
 				<button
 					on:click={viewAnalysis}
-					class="group flex items-center px-4 py-2 bg-[#003262] text-white rounded-lg text-sm font-sans font-bold hover:bg-slate-800 transition-all shadow-md active:scale-95"
+					class="group flex items-center px-4 py-2 text-white rounded-lg text-sm font-sans font-bold hover:opacity-90 transition-all shadow-md active:scale-95"
+					style="background-color: {primaryColor};"
 				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						class="w-4 h-4 transition-transform group-hover:-translate-x-1"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
-					>
-					</svg>
 					Deep Dive: Why did I get {$decisionsBySlug['uchicago']}?
 				</button>
 			</div>
 		{/if}
-		<!-- Letterhead -->
-		<div class="border-b-2 border-gray-300 pb-4 mb-8">
-			<div class="flex items-center mb-4">
-				<div class="w-12 h-12 bg-gray-300 rounded-full mr-4 flex items-center justify-center">
-					<span class="text-white text-xl font-bold">C</span>
+
+		<div class="border-b-2 pb-4 mb-8" style="border-color: {primaryColor};">
+			<div class="flex items-center">
+				<div
+					class="w-16 h-16 text-white flex items-center justify-center font-bold text-3xl mr-4 font-serif"
+					style="background-color: {primaryColor};"
+				>
+					UC
 				</div>
 				<div>
-					<h1 class="text-2xl font-bold text-gray-700">The University of Chicago</h1>
-					<p class="text-gray-600 text-sm">Office of College Admissions</p>
+					<h1 class="text-2xl font-bold" style="color: {primaryColor};">THE UNIVERSITY OF CHICAGO</h1>
+					<div class="text-sm text-gray-600">
+						Office of College Admissions<br />
+						1101 East 58th Street, Rosenwald Hall 105, Chicago, Illinois 60637<br />
+						Telephone 773.702.8650 &bull; collegeadmissions@uchicago.edu
+					</div>
 				</div>
 			</div>
-			<div class="text-sm text-gray-600">
-				<p>1101 E. 58th Street</p>
-				<p>Rosenwald Hall, Suite 105</p>
-				<p>Chicago, Illinois 60637</p>
-			</div>
 		</div>
 
-		<!-- Date -->
-		<p class="mb-8 text-gray-700">
-			{new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
-		</p>
-
-		<!-- Applicant Info -->
 		<div class="mb-8">
-			<p class="text-gray-800">{applicantName}</p>
-			<p class="text-gray-600">Regular Decision Applicant</p>
-		</div>
-
-		<!-- Letter Body -->
-		<div class="mb-8 leading-relaxed text-gray-800">
-			<p class="mb-4">Dear {applicantName},</p>
-
-			<p class="mb-4">
-				Thank you for your application to the College of the University of Chicago. After careful
-				consideration by our Admissions Committee, I regret to inform you that we are unable to
-				offer you admission to the Class of 2028.
-			</p>
-
-			<p class="mb-4">
-				This year, the University of Chicago reviewed applications from an exceptionally
-				accomplished and intellectually curious pool of candidates. Each application was evaluated
-				holistically, considering academic achievement, intellectual vitality, personal qualities,
-				and potential contributions to our distinctive academic community.
-			</p>
-
-			<div class="my-8 p-6 bg-gray-50 border-l-4 border-[#800000] italic">
-				<p class="mb-2 font-semibold text-gray-700">About Our Selection Process</p>
-				<p class="text-gray-600">
-					Our admissions process seeks students who will thrive in Chicago's unique academic
-					environment—one characterized by rigorous inquiry, intellectual debate, and a commitment
-					to the life of the mind. While you have clearly demonstrated significant accomplishments,
-					the limitations of our class size prevent us from admitting many outstanding students.
-				</p>
+			<div class="text-right text-sm text-gray-600 mb-2">March 16, 2026</div>
+			<div class="space-y-1">
+				<div>{applicantName || 'Applicant'}</div>
+				<div>2550 Waterview Dr, Unit 347</div>
+				<div>Northbrook, IL 60062</div>
 			</div>
+		</div>
 
-			<p class="mb-4">
-				Please know that this decision reflects the extraordinary selectivity of our applicant pool
-				rather than any deficiency in your intellectual abilities or potential. We have every
-				confidence that you will find success and make meaningful contributions at another excellent
-				institution.
+		<div class="mb-6">
+			<div class="text-xl font-bold" style="color: {primaryColor};">
+				Dear {applicantName || 'Applicant'},
+			</div>
+		</div>
+
+		<div class="space-y-4 mb-8">
+			<p>
+				Thank you for applying to the College of the University of Chicago and for sharing your
+				ideas and aspirations with our Committee on Admissions. I know how much thought and effort
+				you devoted to your application, and I want you to know that it received a careful, complete,
+				and genuinely appreciative reading.
 			</p>
 
-			<p class="mb-4">
-				We appreciate the thoughtfulness and effort you dedicated to your application and wish you
-				all the best in your future academic endeavors.
+			<p>
+				This year we received a truly extraordinary number of applications from remarkable students
+				around the world &mdash; far more than we could possibly admit to a single entering class.
+				After the most rigorous and difficult deliberations, I am sorry to tell you that we are
+				unable to offer you a place in the Class of 2030.
+			</p>
+
+			<p>
+				Please understand that a decision like this is never a judgment of your ability, your
+				character, or your promise. With so many outstanding candidates and so few seats, we were
+				forced to make painful choices among applicants we admire deeply. The strength of your
+				application speaks for itself, and it in no way diminishes what you have accomplished or
+				what lies ahead of you.
+			</p>
+
+			<p>
+				The qualities that drew our attention &mdash; your curiosity, your seriousness of purpose,
+				and your love of learning &mdash; will serve you extraordinarily well wherever you enroll.
+				We have every confidence that you will thrive and that you will find a community eager to
+				welcome all that you have to offer.
+			</p>
+
+			<p>
+				Thank you again for considering the University of Chicago. We wish you every success and
+				much happiness in the years to come.
 			</p>
 		</div>
 
-		<!-- Signature -->
 		<div class="mt-12">
-			<p class="mb-1">Sincerely,</p>
-			<div class="mb-8">
-				<p class="font-semibold text-gray-700">Office of College Admissions</p>
-				<p class="text-sm text-gray-600">The University of Chicago</p>
+			<div class="mb-2">
+				<img
+					src="/signature-placeholder.png"
+					alt="Signature"
+					class="h-12"
+					style="filter: invert(15%) sepia(85%) saturate(1500%) hue-rotate(330deg) brightness(30%) contrast(100%);"
+				/>
 			</div>
+			<div class="font-bold">James G. Nondorf</div>
+			<div class="text-sm text-gray-600">
+				Vice President and Dean of Admissions and Financial Aid<br />
+				{schoolName}
+			</div>
+		</div>
 
-			<div class="mt-12 p-6 bg-gray-50 rounded-lg border border-gray-300 text-sm">
-				<p class="text-gray-700 mb-2">
-					This decision is final for the 2024-2025 application cycle. We encourage you to explore
-					other excellent institutions where your talents will be valued and nurtured.
-				</p>
+		<div class="mt-16 pt-8 border-t border-gray-200 text-xs text-gray-500">
+			<div class="grid grid-cols-2 gap-8">
+				<div>
+					<strong>Crescat scientia; vita excolatur.</strong><br />
+					&ldquo;Let knowledge grow from more to more; and so be human life enriched.&rdquo; The
+					motto of the University of Chicago.
+				</div>
+				<div>
+					<strong>Contact Information:</strong><br />
+					Email:
+					<a href="mailto:collegeadmissions@uchicago.edu" class="hover:underline"
+						>collegeadmissions@uchicago.edu</a
+					><br />
+					Phone: 773.702.8650<br />
+					Website:
+					<a href={`https://collegeadmissions.${footerDomain}`} class="hover:underline"
+						>collegeadmissions.{footerDomain}</a
+					>
+				</div>
 			</div>
+		</div>
+
+		<div class="mt-8 p-4 bg-amber-50 border border-amber-200 rounded text-sm text-amber-800">
+			<strong>Note:</strong> This is a simulated admission letter for entertainment purposes only. This
+			is not a real admission decision from The University of Chicago.
 		</div>
 	</div>
-</div>
+</main>

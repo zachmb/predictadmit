@@ -1,8 +1,10 @@
 <script lang="ts">
-	export let applicantName: string = 'Applicant';
-	export let schoolName: string; //just so the portal doesn't get mad
-	export let primaryColor: string;
-	export let footerDomain: string;
+	// Props passed from the portal route
+	export let applicantName: string;
+	export let schoolName: string = 'University of Pennsylvania';
+	export let primaryColor: string = '#011F5B';
+	export let footerDomain: string = 'upenn.edu';
+
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { userProfile } from '$lib/stores/user';
@@ -10,148 +12,162 @@
 	$: session = $page.data.session;
 
 	let googleSignedIn = false;
-	let googleEmail = '';
-	let googleName = '';
+	$: googleSignedIn = !!session?.user;
 
-	$: {
-		googleSignedIn = !!session?.user;
-		googleEmail = (session?.user?.email as string) ?? '';
-		googleName = (session?.user?.name as string) ?? '';
-	}
 	import { decisionsBySlug } from '$lib/stores/results';
 	const viewAnalysis = () => {
 		goto('/results/upenn');
 	};
+
+	$: firstName = (applicantName || 'Applicant').trim().split(' ')[0];
 </script>
 
-<div class="min-h-screen bg-white p-8 font-serif">
-	<div class="max-w-2xl mx-auto">
-		{#if googleSignedIn && $userProfile.usingAI}
-			<div class="mb-6 flex justify-end">
-				<button
-					on:click={viewAnalysis}
-					class="group flex items-center px-4 py-2 bg-[#003262] text-white rounded-lg text-sm font-sans font-bold hover:bg-slate-800 transition-all shadow-md active:scale-95"
-				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						class="w-4 h-4 transition-transform group-hover:-translate-x-1"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
+<svelte:head>
+	<title>{schoolName} — Admission Decision</title>
+</svelte:head>
+
+<div class="min-h-screen bg-white font-sans text-slate-900 flex flex-col">
+	<!-- Header -->
+	<header class="bg-[#011F5B] text-white">
+		<div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+			<div class="flex items-center gap-3">
+				<svg viewBox="0 0 44 52" class="w-9 h-11 shrink-0" aria-hidden="true">
+					<path
+						d="M4 3 H40 V30 C40 42 22 49 22 49 C22 49 4 42 4 30 Z"
+						fill="#ffffff"
+						stroke="#011F5B"
+						stroke-width="1.5"
+					/>
+					<path d="M4 3 H40 V14 H4 Z" fill="#990000" />
+					<circle cx="13" cy="8.5" r="2.4" fill="#ffffff" />
+					<circle cx="22" cy="8.5" r="2.4" fill="#ffffff" />
+					<circle cx="31" cy="8.5" r="2.4" fill="#ffffff" />
+					<path d="M13 22 Q22 15 31 22 Q26 31 22 33 Q18 31 13 22 Z" fill="#011F5B" />
+				</svg>
+				<div class="leading-tight">
+					<div class="text-3xl font-serif tracking-wide">Penn</div>
+					<div class="text-lg font-serif tracking-wide -mt-1">Admissions</div>
+				</div>
+			</div>
+			<div class="text-right leading-tight">
+				<div class="text-sm font-semibold">{applicantName || 'Applicant'}</div>
+				<a href="/disclaimer" class="text-[11px] text-white/80 hover:underline">Logout</a>
+			</div>
+		</div>
+	</header>
+
+	<!-- Letter body -->
+	<main class="flex-grow bg-white">
+		<div class="max-w-3xl mx-auto px-6 py-12 text-[15px] leading-relaxed text-slate-800">
+			{#if googleSignedIn && $userProfile.usingAI}
+				<div class="mb-8 flex justify-end">
+					<button
+						on:click={viewAnalysis}
+						class="flex items-center px-4 py-2 bg-[#011F5B] text-white rounded-lg text-sm font-bold hover:bg-[#022a7a] transition-all shadow-md active:scale-95"
 					>
-					</svg>
-					Deep Dive: Why did I get {$decisionsBySlug['upenn']}?
-				</button>
-			</div>
-		{/if}
-		<!-- Letterhead - Penn Red and Blue -->
-		<div class="border-b-4 border-[#990000] pb-4 mb-8">
-			<div class="flex items-center mb-4">
-				<!-- Penn Shield Logo -->
-				<div
-					class="w-12 h-12 bg-[#990000] rounded mr-4 flex items-center justify-center relative overflow-hidden"
-				>
-					<div class="absolute inset-0 bg-[#011F5B] opacity-30"></div>
-					<span class="text-white text-xl font-bold z-10">P</span>
+						Deep Dive: Why did I get {$decisionsBySlug['upenn']}?
+					</button>
 				</div>
-				<div>
-					<h1 class="text-2xl font-bold text-[#011F5B]">University of Pennsylvania</h1>
-					<p class="text-[#990000] text-sm font-medium">Office of Undergraduate Admissions</p>
-				</div>
-			</div>
-			<div class="text-sm text-gray-600">
-				<p>1 College Hall, Room 100</p>
-				<p>Philadelphia, Pennsylvania 19104</p>
-				<p>Tel: 215-898-7507</p>
-			</div>
-		</div>
+			{/if}
 
-		<!-- Date -->
-		<p class="mb-8 text-gray-700">
-			{new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
-		</p>
+			<p class="font-bold mb-8">March 26, 2026</p>
 
-		<!-- Applicant Info -->
-		<div class="mb-8">
-			<p class="text-lg font-medium text-gray-800">{applicantName}</p>
-			<p class="text-gray-600">Regular Decision Applicant</p>
-			<p class="text-sm text-gray-500">Proposed School: The College of Arts and Sciences</p>
-		</div>
+			<p class="mb-6">Dear {firstName},</p>
 
-		<!-- Letter Body -->
-		<div class="mb-8 leading-relaxed text-gray-800">
-			<p class="mb-4">Dear {applicantName},</p>
-
-			<p class="mb-4">
-				On behalf of the University of Pennsylvania, I am delighted to offer you admission to the
-				Class of 2028. Welcome to Penn!
+			<p class="mb-6">
+				On behalf of the University of Pennsylvania, it is my great pleasure to offer you admission to
+				the Class of 2030. Congratulations, and welcome to Penn!
 			</p>
 
-			<p class="mb-4">
-				Your application was evaluated within an exceptionally competitive pool of more than 59,000
-				candidates from around the world. The Admissions Committee was impressed by your
-				intellectual curiosity, academic achievements, and commitment to making a difference in your
-				community. Your unique perspective and demonstrated leadership align perfectly with Penn's
-				mission to educate students who will become leaders in their fields and contribute
-				meaningfully to society.
+			<p class="mb-6">
+				Your application stood out within an exceptionally competitive and talented pool of
+				candidates from around the world. The Admissions Committee was genuinely impressed by your
+				intellectual curiosity, your accomplishments, and the character you brought to every part of
+				your application. We are confident that you will thrive here and contribute meaningfully to
+				our community.
 			</p>
 
-			<div class="my-8 p-6 bg-red-50 border-l-4 border-[#990000] italic">
-				<p class="mb-2 font-semibold text-[#011F5B]">Welcome to the Penn Community</p>
-				<p class="text-gray-700">
-					At Penn, you will join a vibrant, interdisciplinary community in the heart of
-					Philadelphia. You'll have the opportunity to engage with world-renowned faculty,
-					collaborate with peers from diverse backgrounds, and take advantage of our unique
-					integration of liberal arts education with professional preparation through our four
-					undergraduate schools.
-				</p>
-			</div>
-
-			<p class="mb-4">
-				As an admitted student, you will receive comprehensive information about next steps,
-				including details about Penn's admitted student programs (Quaker Days), housing, course
-				registration, and financial aid (if applicable). You can also expect to hear directly from
-				current students, faculty, and alumni who are eager to welcome you to campus.
+			<p class="mb-6">
+				In the coming days you will receive detailed information about your next steps, including
+				financial aid, our admitted student programming, and how to confirm your enrollment. We
+				encourage you to celebrate this achievement with the family, teachers, and friends who
+				supported you along the way.
 			</p>
 
-			<p class="mb-4">
-				This offer of admission is contingent upon your successful completion of the current
-				academic year. We expect that you will maintain the high standards of achievement and
-				personal conduct that characterized your secondary school record.
-			</p>
-
-			<p class="mb-4">
-				Please take time to celebrate this significant achievement with your family, teachers, and
-				friends who have supported you throughout this process. We look forward to welcoming you to
+			<p class="mb-8">
+				Thank you for including Penn in your college search. We cannot wait to welcome you to
 				Philadelphia this fall.
 			</p>
-		</div>
 
-		<!-- Signature -->
-		<div class="mt-12">
-			<p class="mb-1">Sincerely,</p>
-			<div class="mb-8">
-				<div class="h-12 mb-2 flex items-center">
-					<div class="w-16 h-8 bg-[#990000] mr-2"></div>
-					<div class="w-16 h-8 bg-[#011F5B]"></div>
+			<p class="mb-2">Sincerely,</p>
+
+			<!-- Signature -->
+			<div class="mb-1">
+				<span class="text-3xl italic text-slate-900" style="font-family: 'Segoe Script', 'Brush Script MT', cursive;">
+					E. Whitney Soule
+				</span>
+			</div>
+			<p class="font-semibold">E. Whitney Soule</p>
+			<p class="text-slate-700 mb-8">Vice Provost and Dean of Admissions</p>
+
+			<a href="/disclaimer" class="text-[#011F5B] font-medium hover:underline">
+				Next Steps & Admitted Student Information
+			</a>
+
+			<div class="text-center mt-12">
+				<a href="/disclaimer" class="text-[#011F5B] hover:underline">Return to Application Status</a>
+			</div>
+
+			<!-- Simulation disclaimer -->
+			<div class="mt-12 p-4 bg-amber-50 border border-amber-200 rounded text-sm text-amber-800">
+				<strong>Note:</strong> This is a simulated admission letter for entertainment purposes only.
+				This is not a real admission decision from the University of Pennsylvania.
+			</div>
+		</div>
+	</main>
+
+	<!-- Footer -->
+	<footer class="bg-[#011F5B] text-white">
+		<div class="max-w-6xl mx-auto px-6 py-6 flex items-center justify-between">
+			<div class="flex items-center gap-3">
+				<svg viewBox="0 0 44 52" class="w-9 h-11 shrink-0" aria-hidden="true">
+					<path
+						d="M4 3 H40 V30 C40 42 22 49 22 49 C22 49 4 42 4 30 Z"
+						fill="#ffffff"
+						stroke="#011F5B"
+						stroke-width="1.5"
+					/>
+					<path d="M4 3 H40 V14 H4 Z" fill="#990000" />
+					<circle cx="13" cy="8.5" r="2.4" fill="#ffffff" />
+					<circle cx="22" cy="8.5" r="2.4" fill="#ffffff" />
+					<circle cx="31" cy="8.5" r="2.4" fill="#ffffff" />
+					<path d="M13 22 Q22 15 31 22 Q26 31 22 33 Q18 31 13 22 Z" fill="#011F5B" />
+				</svg>
+				<div class="leading-tight">
+					<div class="text-2xl font-serif tracking-wide">Penn</div>
+					<div class="text-[9px] tracking-[0.15em] font-serif -mt-0.5">
+						UNIVERSITY of PENNSYLVANIA
+					</div>
 				</div>
-				<p class="font-semibold text-[#011F5B]">John J. McLaughlin</p>
-				<p class="text-sm text-[#990000]">Dean of Admissions</p>
-				<p class="text-sm text-gray-600">University of Pennsylvania</p>
 			</div>
-
-			<div class="mt-12 p-6 bg-blue-50 rounded-lg border border-blue-200">
-				<p class="text-sm text-gray-700 mb-2">
-					<strong class="text-[#011F5B]">Next Steps:</strong> Your official admission packet will arrive
-					by mail within 7-10 business days. Please log into your Penn Applicant Portal to view your financial
-					aid award (if applicable) and to confirm your enrollment by May 1.
-				</p>
-				<p class="text-sm text-gray-700">
-					<strong class="text-[#990000]">Important:</strong> Admitted students are invited to attend Quaker
-					Days (our admitted student program) in April. Registration information will be available in
-					your portal.
-				</p>
+			<div class="flex items-center gap-3">
+				{#each ['IG', 'TT', 'YT', 'f'] as icon}
+					<span
+						class="w-7 h-7 rounded-full border border-white/70 flex items-center justify-center text-[10px]"
+					>
+						{icon}
+					</span>
+				{/each}
 			</div>
 		</div>
-	</div>
+		<div class="border-t border-white/20">
+			<div class="max-w-6xl mx-auto px-6 py-3 flex flex-wrap gap-6 text-[13px]">
+				<a href="/disclaimer" class="hover:underline">Join the mailing list</a>
+				<a href="/disclaimer" class="hover:underline">Contact Us</a>
+				<a href="/disclaimer" class="hover:underline">Accessibility</a>
+				<a href="/disclaimer" class="hover:underline">Privacy Policy</a>
+				<a href="/disclaimer" class="hover:underline">NACAC Partnership Agreement</a>
+			</div>
+		</div>
+	</footer>
 </div>
