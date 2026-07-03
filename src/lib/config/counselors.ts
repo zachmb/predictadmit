@@ -34,8 +34,37 @@ export type Counselor = {
 	acceptedTo: string[]; // the trust proof
 	pricePerSession: number; // 60-min working session (USD)
 	packagePrice: number; // multi-session application package (USD)
-	verified: boolean;
+	verified: boolean; // current enrollment verified (the strong claim)
+	eduDomain: string; // school-issued email domain used to verify enrollment
+	verifiedOn: string; // ISO date enrollment was last verified
+	idVerified: boolean; // student ID + selfie identity check also passed
 };
+
+// Accredited-institution email domains we accept for enrollment verification.
+// A mentor claiming a school must verify a code sent to an address at its domain.
+export const mentorSchools: { name: string; domain: string }[] = [
+	{ name: 'Princeton', domain: 'princeton.edu' },
+	{ name: 'MIT', domain: 'mit.edu' },
+	{ name: 'Harvard', domain: 'college.harvard.edu' },
+	{ name: 'Stanford', domain: 'stanford.edu' },
+	{ name: 'Yale', domain: 'yale.edu' },
+	{ name: 'Penn (Wharton)', domain: 'upenn.edu' },
+	{ name: 'Penn', domain: 'upenn.edu' },
+	{ name: 'Duke', domain: 'duke.edu' },
+	{ name: 'Columbia', domain: 'columbia.edu' },
+	{ name: 'UChicago', domain: 'uchicago.edu' },
+	{ name: 'Brown', domain: 'brown.edu' },
+	{ name: 'Cornell', domain: 'cornell.edu' },
+	{ name: 'Northwestern', domain: 'u.northwestern.edu' },
+	{ name: 'Johns Hopkins', domain: 'jh.edu' },
+	{ name: 'Vanderbilt', domain: 'vanderbilt.edu' },
+	{ name: 'Rice', domain: 'rice.edu' },
+	{ name: 'Notre Dame', domain: 'nd.edu' }
+];
+
+export function eduDomainFor(school: string): string | null {
+	return mentorSchools.find((s) => s.name === school)?.domain ?? null;
+}
 
 export const counselors: Counselor[] = [
 	{
@@ -57,7 +86,10 @@ export const counselors: Counselor[] = [
 		acceptedTo: ['Princeton', 'Duke', 'Johns Hopkins', 'Cornell', 'UCLA', 'Rice'],
 		pricePerSession: 129,
 		packagePrice: 899,
-		verified: true
+		verified: true,
+		eduDomain: 'princeton.edu',
+		verifiedOn: '2025-09-14',
+		idVerified: true,
 	},
 	{
 		id: 'c-dev',
@@ -78,7 +110,10 @@ export const counselors: Counselor[] = [
 		acceptedTo: ['MIT', 'Georgia Tech', 'UC Berkeley', 'UIUC (CS)', 'UW'],
 		pricePerSession: 119,
 		packagePrice: 799,
-		verified: true
+		verified: true,
+		eduDomain: 'mit.edu',
+		verifiedOn: '2025-09-02',
+		idVerified: true,
 	},
 	{
 		id: 'c-aisha',
@@ -99,7 +134,10 @@ export const counselors: Counselor[] = [
 		acceptedTo: ['Harvard', 'Columbia', 'Georgetown', 'UVA', 'UNC Chapel Hill'],
 		pricePerSession: 149,
 		packagePrice: 1099,
-		verified: true
+		verified: true,
+		eduDomain: 'college.harvard.edu',
+		verifiedOn: '2025-10-01',
+		idVerified: false,
 	},
 	{
 		id: 'c-noah',
@@ -120,7 +158,10 @@ export const counselors: Counselor[] = [
 		acceptedTo: ['Penn (Wharton)', 'NYU (Stern)', 'Michigan (Ross)', 'USC'],
 		pricePerSession: 109,
 		packagePrice: 749,
-		verified: true
+		verified: true,
+		eduDomain: 'upenn.edu',
+		verifiedOn: '2025-08-21',
+		idVerified: true,
 	},
 	{
 		id: 'c-sofia',
@@ -141,7 +182,10 @@ export const counselors: Counselor[] = [
 		acceptedTo: ['Stanford', 'UChicago', 'UCLA', 'USC', 'UC Berkeley'],
 		pricePerSession: 129,
 		packagePrice: 899,
-		verified: true
+		verified: true,
+		eduDomain: 'stanford.edu',
+		verifiedOn: '2025-09-19',
+		idVerified: false,
 	},
 	{
 		id: 'c-elena',
@@ -162,7 +206,10 @@ export const counselors: Counselor[] = [
 		acceptedTo: ['Yale', 'Princeton', 'Brown', 'Georgetown'],
 		pricePerSession: 139,
 		packagePrice: 999,
-		verified: true
+		verified: true,
+		eduDomain: 'yale.edu',
+		verifiedOn: '2025-09-28',
+		idVerified: true,
 	},
 	{
 		id: 'c-priya',
@@ -183,7 +230,10 @@ export const counselors: Counselor[] = [
 		acceptedTo: ['Columbia', 'Cornell', 'Johns Hopkins', 'NYU', 'Rutgers (Honors)'],
 		pricePerSession: 109,
 		packagePrice: 769,
-		verified: true
+		verified: true,
+		eduDomain: 'columbia.edu',
+		verifiedOn: '2025-10-05',
+		idVerified: true,
 	},
 	{
 		id: 'c-james',
@@ -204,7 +254,10 @@ export const counselors: Counselor[] = [
 		acceptedTo: ['UChicago', 'Northwestern', 'Emory', 'WashU', 'Michigan'],
 		pricePerSession: 99,
 		packagePrice: 699,
-		verified: true
+		verified: true,
+		eduDomain: 'uchicago.edu',
+		verifiedOn: '2025-08-30',
+		idVerified: false,
 	}
 ];
 
