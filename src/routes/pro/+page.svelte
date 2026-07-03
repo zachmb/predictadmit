@@ -1808,7 +1808,7 @@
 				</div>
 
 				<!-- Editor Wrapper -->
-				<div class="flex-1 overflow-hidden flex relative mb-[12vh]">
+				<div class="flex-1 overflow-hidden flex relative">
 					<!-- Text Editor -->
 					<div class="flex-1 relative flex flex-col">
 						<div class="flex-1 relative overflow-y-auto custom-scrollbar p-8 space-y-12">
