@@ -194,6 +194,11 @@
 
 				<div class="text-sm leading-relaxed text-slate-600 max-w-4xl space-y-4 mt-10">
 					<p>
+						For this simulation, use the same email address and password that you saved on the
+						PredictAdmit.com home page. No real application data is used, and all information is
+						stored only in your browser.
+					</p>
+					<p>
 						If this is the first time you are logging into your portal, when asked for temporary pin,
 						use the password provided in the log-in instruction email. The most recent email address
 						you provided on your UC Application is used to authenticate your account. If you no longer

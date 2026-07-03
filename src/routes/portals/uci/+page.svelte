@@ -203,6 +203,12 @@
 									>View recent account activity</a
 								>
 							</div>
+
+							<p class="pt-3 text-[75%] leading-5 text-[#6c757d]">
+								For this simulation, use the same email address and password that you saved on
+								the PredictAdmit.com home page. No real application data is used, and all
+								information is stored only in your browser.
+							</p>
 						</form>
 					</div>
 				</div>

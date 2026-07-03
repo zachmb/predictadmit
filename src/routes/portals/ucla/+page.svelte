@@ -225,9 +225,9 @@
 					unauthorized access to applicant information will be prosecuted to the full extent of the law.
 				</p>
 				<p class="mt-3 max-w-xl text-[11px] leading-relaxed text-gray-500">
-					For this simulation, simply fill in any values for the fields above, or load your saved
-					PredictAdmit login. No real application data is used, and all information is stored only in
-					your browser.
+					For this simulation, use the same email address and password that you saved on the
+					PredictAdmit.com home page. No real application data is used, and all information is
+					stored only in your browser.
 				</p>
 			</div>
 		</main>

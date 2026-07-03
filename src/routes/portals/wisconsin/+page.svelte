@@ -225,7 +225,7 @@
 					</ul>
 					<p class="mt-6 text-[11px] leading-relaxed text-gray-500">
 						For this simulation, use the same email address and password that you saved on the
-						PredictAdmit.com home page as your NetID and password. No real application data is used,
+						PredictAdmit.com home page. No real application data is used,
 						and all information is stored only in your browser.
 					</p>
 				</div>

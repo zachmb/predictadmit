@@ -231,7 +231,7 @@
 			<div class="mb-3 inline-flex items-center gap-1.5 rounded-full bg-[#0052CC]/10 px-3 py-1 text-xs font-bold text-[#0052CC]">
 				<span class="h-1.5 w-1.5 rounded-full bg-[#0052CC]"></span> Human Counselors
 			</div>
-			<h1 class="max-w-2xl text-3xl font-black tracking-tight text-slate-900 md:text-4xl">
+			<h1 class="text-3xl font-black tracking-tight text-slate-900 md:text-4xl md:whitespace-nowrap">
 				Get matched with a mentor who <span class="text-[#0052CC]">just got in.</span>
 			</h1>
 			<p class="mt-3 max-w-2xl text-slate-600">

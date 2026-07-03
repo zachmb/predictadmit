@@ -67,6 +67,39 @@
 		}
 	};
 
+	// First-time simulation disclosure: shown once before the first portal visit
+	// launched from the home-page search, then remembered in localStorage.
+	const DISCLOSURE_ACK_KEY = 'predictadmit:simDisclosureAck';
+	let showSimDisclosure = false;
+	let pendingPortalSlug: string | null = null;
+
+	function hasAcknowledgedDisclosure(): boolean {
+		try {
+			return localStorage.getItem(DISCLOSURE_ACK_KEY) === '1';
+		} catch {
+			return true; // storage unavailable — don't trap the user in the modal
+		}
+	}
+
+	function acknowledgeSimDisclosure() {
+		try {
+			localStorage.setItem(DISCLOSURE_ACK_KEY, '1');
+		} catch {
+			// ignore — worst case the notice shows again next time
+		}
+		showSimDisclosure = false;
+		if (pendingPortalSlug) {
+			const slug = pendingPortalSlug;
+			pendingPortalSlug = null;
+			goto(`/portals/${slug}`);
+		}
+	}
+
+	function dismissSimDisclosure() {
+		showSimDisclosure = false;
+		pendingPortalSlug = null;
+	}
+
 	function handleUniversitySelect(slug: string) {
 		const mode = get(manualOverrideMode); // 'accepted' or 'denied'
 		const status: DecisionOutcome = mode === 'accepted' ? 'admit' : 'deny';
@@ -103,9 +136,15 @@
 
 		aiResults.setDecisions(updatedDecisions);
 		sessionStorage.setItem(`decision-${slug}`, status);
-		goto(`/portals/${slug}`);
 		searchQuery = '';
 		showSearchResults = false;
+
+		if (!hasAcknowledgedDisclosure()) {
+			pendingPortalSlug = slug;
+			showSimDisclosure = true;
+			return;
+		}
+		goto(`/portals/${slug}`);
 	}
 
 	// --- State Variables (Existing Logic Kept) ---
@@ -1106,3 +1145,53 @@
 
 	<SiteFooter />
 </main>
+
+{#if showSimDisclosure}
+	<div
+		class="fixed inset-0 z-[300] flex items-center justify-center p-4"
+		role="dialog"
+		aria-modal="true"
+		aria-labelledby="sim-disclosure-title"
+	>
+		<div class="absolute inset-0 bg-black/50 backdrop-blur-sm" on:click={dismissSimDisclosure}></div>
+		<div class="relative z-10 w-full max-w-xl rounded-2xl bg-white p-6 shadow-2xl md:p-8">
+			<p
+				id="sim-disclosure-title"
+				class="mb-3 text-xs font-bold uppercase tracking-wider text-slate-500"
+			>
+				Important disclosure — simulation only
+			</p>
+			<p class="text-[13px] leading-relaxed text-slate-600">
+				PredictAdmit is an independent educational tool and is <strong>not affiliated with,
+				endorsed by, sponsored by, or connected to</strong> any college or university shown on this
+				site. Every portal, status page, and decision letter here is a
+				<strong>fictional simulation</strong> created for practice and preparation. Nothing on this
+				page is an official communication from any institution, and no simulated outcome reflects,
+				predicts, or affects any real application or admission decision. University names and marks
+				are the property of their respective owners and are used solely to identify the institution
+				being simulated. PredictAdmit does not access, connect to, or interact with any
+				university's actual application systems or applicant data. If you represent an institution
+				and have questions or concerns, please
+				<a href="/contact" class="font-semibold text-[#0052CC] underline hover:text-[#003d99]"
+					>contact us</a
+				>.
+			</p>
+			<div class="mt-6 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+				<button
+					type="button"
+					on:click={dismissSimDisclosure}
+					class="rounded-lg border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-600 transition-colors hover:bg-slate-50"
+				>
+					Cancel
+				</button>
+				<button
+					type="button"
+					on:click={acknowledgeSimDisclosure}
+					class="rounded-lg bg-[#0052CC] px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-[#0052CC]/20 transition-colors hover:bg-[#003d99]"
+				>
+					I understand — view the simulation →
+				</button>
+			</div>
+		</div>
+	</div>
+{/if}

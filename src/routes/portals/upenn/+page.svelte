@@ -192,6 +192,11 @@
 							Supported browsers: Chrome, Firefox, Safari - If you have technical trouble and are
 							using Internet Explorer, please try another browser.
 						</p>
+						<p class="mt-1">
+							For this simulation, use the same email address and password that you saved on the
+							PredictAdmit.com home page. No real application data is used, and all information is
+							stored only in your browser.
+						</p>
 					</div>
 				</form>
 			</div>

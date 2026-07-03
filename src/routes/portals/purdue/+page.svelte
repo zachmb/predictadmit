@@ -214,7 +214,7 @@
 						<strong>
 							Your login email is most likely the student email you used to apply to Purdue or register
 							for a Purdue visit. The Forgot Your Password link will allow you to reset your password with
-							that email address. For this PredictAdmit simulation, use the same email address and password
+							that email address. For this simulation, use the same email address and password
 							that you saved on the PredictAdmit.com home page. No real application data is used, and all
 							information is stored only in your browser.
 						</strong>

@@ -297,6 +297,11 @@
 								> when finished. Login will remain in effect until you completely clear your browser or
 								several hours have elapsed.
 							</p>
+							<p>
+								<strong>For this simulation, use the same email address and password that you saved
+								on the PredictAdmit.com home page. No real application data is used, and all
+								information is stored only in your browser.</strong>
+							</p>
 						</div>
 					</div>
 				</div>
