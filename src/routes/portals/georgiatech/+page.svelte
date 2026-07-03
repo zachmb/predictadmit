@@ -107,12 +107,12 @@
 		<header class="bg-[#B3A369]">
 			<div class="max-w-6xl mx-auto px-6 h-14 flex items-center gap-3">
 				<span
-					class="inline-flex items-center justify-center text-white font-black text-2xl tracking-tighter leading-none"
+					class="inline-flex items-center justify-center text-[#003057] font-black text-2xl tracking-tighter leading-none"
 					style="font-family: Georgia, 'Times New Roman', serif;"
 				>
 					GT
 				</span>
-				<span class="text-white text-xl font-semibold" style="font-family: Georgia, serif;">
+				<span class="text-[#003057] text-xl font-semibold" style="font-family: Georgia, serif;">
 					Georgia Tech
 				</span>
 			</div>
@@ -188,9 +188,9 @@
 		</main>
 
 		<!-- Gold footer -->
-		<footer class="bg-[#B3A369] text-white text-[11px] mt-16">
+		<footer class="bg-[#B3A369] text-[#003057] text-[11px] mt-16">
 			<div class="max-w-6xl mx-auto px-6 py-8">
-				<div class="flex justify-end gap-3 mb-6 text-white/90 text-sm">
+				<div class="flex justify-end gap-3 mb-6 text-[#003057]/90 text-sm">
 					<span>f</span><span>◎</span><span>▶</span><span>◉</span><span>❦</span>
 				</div>
 				<div class="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -246,12 +246,12 @@
 		<header class="bg-[#B3A369]">
 			<div class="max-w-6xl mx-auto px-6 h-14 flex items-center gap-3">
 				<span
-					class="text-white font-black text-2xl tracking-tighter leading-none"
+					class="text-[#003057] font-black text-2xl tracking-tighter leading-none"
 					style="font-family: Georgia, serif;"
 				>
 					GT
 				</span>
-				<span class="text-white text-xl font-semibold" style="font-family: Georgia, serif;">
+				<span class="text-[#003057] text-xl font-semibold" style="font-family: Georgia, serif;">
 					Georgia Tech
 				</span>
 			</div>
@@ -271,7 +271,7 @@
 			>
 				<div class="flex items-center justify-between px-8 py-10">
 					<div>
-						<h1 class="text-4xl font-bold text-[#B3A369] mb-2" style="font-family: Georgia, serif;">
+						<h1 class="text-4xl font-bold text-[#857437] mb-2" style="font-family: Georgia, serif;">
 							Hi, {firstName()}!
 						</h1>
 						<p class="text-white text-sm mb-4">First-year 2026 &nbsp;|&nbsp; Computational Media</p>
@@ -319,7 +319,7 @@
 						</thead>
 						<tbody>
 							<tr class="border-b border-slate-200">
-								<td class="py-3 text-[#B3A369] text-lg text-center">✔</td>
+								<td class="py-3 text-[#857437] text-lg text-center">✔</td>
 								<td class="py-3">
 									<a href="/disclaimer" class="text-[#003057] font-semibold hover:underline"
 										>ACT or SAT Scores (Self-Reported)</a
@@ -328,7 +328,7 @@
 								<td class="py-3 text-right text-slate-600">11/02/2025</td>
 							</tr>
 							<tr>
-								<td class="py-3 text-[#B3A369] text-lg text-center">✔</td>
+								<td class="py-3 text-[#857437] text-lg text-center">✔</td>
 								<td class="py-3 text-slate-800">
 									High School Transcript (Glenbrook North High School)
 								</td>
@@ -376,10 +376,10 @@
 		</div>
 
 		<!-- Gold footer -->
-		<footer class="bg-[#B3A369] text-white text-[11px]">
+		<footer class="bg-[#B3A369] text-[#003057] text-[11px]">
 			<div class="max-w-6xl mx-auto px-6 py-6 flex justify-between items-center">
 				<span>&copy; 2026 Georgia Institute of Technology</span>
-				<span class="text-white/80"
+				<span class="text-[#003057]/80"
 					>PredictAdmit simulation · Not affiliated with the Georgia Institute of Technology</span
 				>
 			</div>

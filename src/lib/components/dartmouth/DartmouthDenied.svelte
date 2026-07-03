@@ -47,7 +47,7 @@
 		<!-- Letterhead -->
 		<div class="border-b-2 border-gray-300 pb-4 mb-8">
 			<div class="flex items-center mb-4">
-				<div class="w-12 h-12 bg-gray-300 rounded-full mr-4 flex items-center justify-center">
+				<div class="w-12 h-12 bg-[#00693E] rounded-full mr-4 flex items-center justify-center">
 					<span class="text-white text-xl font-bold">D</span>
 				</div>
 				<div>

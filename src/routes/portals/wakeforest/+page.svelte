@@ -241,8 +241,7 @@
 				<a href="/disclaimer" class="flex flex-col leading-none">
 					<span class="text-lg font-serif font-bold tracking-tight text-white">WAKE FOREST</span>
 					<span
-						class="text-[8px] font-semibold tracking-[0.25em] uppercase"
-						style="color: {school.primaryColor};"
+						class="text-[8px] font-semibold tracking-[0.25em] uppercase text-[#C9A85C]"
 					>
 						University
 					</span>
@@ -274,7 +273,7 @@
 					{/if}
 					<a
 						href="/disclaimer"
-						class="px-5 py-3 hover:bg-black hover:text-[#9E7E38] transition-colors duration-500"
+						class="px-5 py-3 hover:bg-black hover:text-[#C9A85C] transition-colors duration-500"
 						class:underline={i === 0}
 					>
 						{tab}
@@ -460,10 +459,10 @@
 				</div>
 			</div>
 			<div class="max-w-5xl mx-auto px-6 pb-6 flex flex-wrap gap-x-6 gap-y-2 text-[12px]">
-				<a href="/disclaimer" class="hover:underline" style="color: {school.primaryColor};">Change Email Address</a>
-				<a href="/disclaimer" class="hover:underline" style="color: {school.primaryColor};">Change Password</a>
-				<a href="/disclaimer" class="hover:underline" style="color: {school.primaryColor};">Withdraw Application</a>
-				<a href="/disclaimer" class="hover:underline" style="color: {school.primaryColor};">Logout</a>
+				<a href="/disclaimer" class="hover:underline text-[#C9A85C]">Change Email Address</a>
+				<a href="/disclaimer" class="hover:underline text-[#C9A85C]">Change Password</a>
+				<a href="/disclaimer" class="hover:underline text-[#C9A85C]">Withdraw Application</a>
+				<a href="/disclaimer" class="hover:underline text-[#C9A85C]">Logout</a>
 			</div>
 			<div class="max-w-5xl mx-auto px-6 pb-6 text-[11px] text-gray-500">
 				PredictAdmit Simulation &mdash; Not affiliated with Wake Forest University
