@@ -1,10 +1,9 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { portalDecisionViewed } from '$lib/stores/ui';
+	import { portalDecisionHeaderVisible } from '$lib/stores/ui';
 
-	// Show a persistent "simulation" badge whenever a decision letter is on screen,
-	// so a realistic letter can't be mistaken for (or passed off as) a real decision.
-	const show = $derived($page.url.pathname.startsWith('/portals/') && $portalDecisionViewed);
+	// Show the badge only once the delayed portal header has reappeared.
+	const show = $derived($page.url.pathname.startsWith('/portals/') && $portalDecisionHeaderVisible);
 </script>
 
 {#if show}

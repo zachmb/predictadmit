@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { userProfile } from '$lib/stores/user';
-	import { headerVisible, portalDecisionViewed } from '$lib/stores/ui';
+	import { headerVisible, portalDecisionHeaderVisible, portalDecisionViewed } from '$lib/stores/ui';
 	import { page } from '$app/stores';
-	import { onMount } from 'svelte';
+	import { onDestroy } from 'svelte';
 
 	$: isPortal = $page.url.pathname.startsWith('/portals/');
 
 	let showHeader = true;
-	let timer: ReturnType<typeof setTimeout>;
+	let timer: ReturnType<typeof setTimeout> | undefined;
 
 	$: session = $page.data.session;
 	$: isLandingPage = $page.url.pathname === '/';
@@ -17,19 +17,28 @@
 			if ($portalDecisionViewed) {
 				// When decision is viewed, wait 4 seconds then show
 				showHeader = false;
+				portalDecisionHeaderVisible.set(false);
 				clearTimeout(timer);
 				timer = setTimeout(() => {
 					showHeader = true;
+					portalDecisionHeaderVisible.set(true);
 				}, 4000);
 			} else {
 				// Hide header by default on portal login/wait pages
 				showHeader = false;
+				portalDecisionHeaderVisible.set(false);
 			}
 		} else {
 			// Always show on normal pages
 			showHeader = $headerVisible;
+			portalDecisionHeaderVisible.set(false);
 		}
 	}
+
+	onDestroy(() => {
+		clearTimeout(timer);
+		portalDecisionHeaderVisible.set(false);
+	});
 </script>
 
 {#if showHeader}

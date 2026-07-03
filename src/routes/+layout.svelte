@@ -6,7 +6,7 @@
 	import SimulationBadge from '$lib/components/portal/SimulationBadge.svelte';
 	import { page } from '$app/stores';
 	import { userProfile } from '$lib/stores/user';
-	import { portalDecisionViewed, headerVisible } from '$lib/stores/ui';
+	import { portalDecisionHeaderVisible, portalDecisionViewed, headerVisible } from '$lib/stores/ui';
 
 	let { children } = $props();
 
@@ -14,6 +14,7 @@
 	$effect(() => {
 		if ($page.url.pathname) {
 			portalDecisionViewed.set(false);
+			portalDecisionHeaderVisible.set(false);
 			headerVisible.set(true);
 		}
 	});
