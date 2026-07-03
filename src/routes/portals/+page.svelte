@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { onMount } from 'svelte';
 	import { get } from 'svelte/store';
 	import SiteFooter from '$lib/components/layout/SiteFooter.svelte';
 	import { userProfile } from '$lib/stores/user';
@@ -117,6 +118,33 @@
 		return '';
 	};
 
+	// Flash the card of the school whose decision letter was just viewed
+	// (recorded by the root layout in sessionStorage), green or red.
+	let flashSlug = $state<string | null>(null);
+	let flashOutcome = $state<'admit' | 'deny'>('deny');
+
+	onMount(() => {
+		let record;
+		try {
+			const raw = sessionStorage.getItem('predictadmit:lastDecision');
+			if (!raw) return;
+			sessionStorage.removeItem('predictadmit:lastDecision');
+			record = JSON.parse(raw);
+		} catch {
+			return;
+		}
+		if (!record?.slug || Date.now() - (record.at || 0) > 5 * 60_000) return;
+		flashSlug = record.slug;
+		flashOutcome = record.outcome === 'admit' ? 'admit' : 'deny';
+		requestAnimationFrame(() => {
+			document
+				.getElementById(`portal-card-${record.slug}`)
+				?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+		});
+		const timer = setTimeout(() => (flashSlug = null), 4000);
+		return () => clearTimeout(timer);
+	});
+
 	const getDecisionColor = (decision: DecisionMode) => {
 		switch (decision) {
 			case 'accepted':
@@ -203,7 +231,14 @@
 					<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
 						{#each portals as portal}
 							<div
-								class="border border-slate-300 rounded-md hover:border-slate-400 hover:shadow-md transition-all duration-200 bg-white"
+								id={`portal-card-${portal.slug}`}
+								class={`border rounded-md transition-all duration-700 ${
+									flashSlug === portal.slug
+										? flashOutcome === 'admit'
+											? 'decision-flash decision-flash-admit'
+											: 'decision-flash decision-flash-deny'
+										: 'border-slate-300 hover:border-slate-400 hover:shadow-md bg-white'
+								}`}
 							>
 								<button
 									type="button"
@@ -277,3 +312,57 @@
 
 	<SiteFooter />
 </main>
+
+<style>
+	.decision-flash {
+		animation: decision-pop 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+	}
+
+	.decision-flash-admit {
+		border-color: #16a34a;
+		background-color: #f0fdf4;
+		box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5);
+		animation:
+			decision-pop 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+			decision-pulse-admit 1.4s ease-out 2;
+	}
+
+	.decision-flash-deny {
+		border-color: #dc2626;
+		background-color: #fef2f2;
+		box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.5);
+		animation:
+			decision-pop 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+			decision-pulse-deny 1.4s ease-out 2;
+	}
+
+	@keyframes decision-pop {
+		0% {
+			transform: scale(1);
+		}
+		40% {
+			transform: scale(1.04);
+		}
+		100% {
+			transform: scale(1);
+		}
+	}
+
+	@keyframes decision-pulse-admit {
+		0% {
+			box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5);
+		}
+		100% {
+			box-shadow: 0 0 0 14px rgba(34, 197, 94, 0);
+		}
+	}
+
+	@keyframes decision-pulse-deny {
+		0% {
+			box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.5);
+		}
+		100% {
+			box-shadow: 0 0 0 14px rgba(239, 68, 68, 0);
+		}
+	}
+</style>

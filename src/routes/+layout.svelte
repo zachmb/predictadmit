@@ -7,6 +7,9 @@
 	import { page } from '$app/stores';
 	import { userProfile } from '$lib/stores/user';
 	import { portalDecisionHeaderVisible, portalDecisionViewed, headerVisible } from '$lib/stores/ui';
+	import { captureReferral, redeemReferralIfJoined } from '$lib/referral';
+	import { decisionsBySlug } from '$lib/stores/results';
+	import { schoolConfigs } from '$lib/config/schools';
 
 	let { children } = $props();
 
@@ -19,15 +22,51 @@
 		}
 	});
 
-	// Automatically grant Pro status to signed-in users
+	// Remember the decision the user just viewed so the /portals index can flash
+	// that school's card green/red on return. Outcome resolution mirrors
+	// PortalShareLauncher: store result, else the school's configured default.
+	$effect(() => {
+		if (!$portalDecisionViewed) return;
+		const match = $page.url.pathname.match(/^\/portals\/([^/]+)\/?$/);
+		const slug = match?.[1];
+		if (!slug) return;
+		const outcome = $decisionsBySlug[slug] ?? schoolConfigs[slug]?.decision ?? 'deny';
+		try {
+			sessionStorage.setItem(
+				'predictadmit:lastDecision',
+				JSON.stringify({ slug, outcome, at: Date.now() })
+			);
+		} catch {
+			/* ignore storage errors */
+		}
+	});
+
+	// Invite loop: remember which friend's ?ref= link brought this visitor here,
+	// then reward both sides once the visitor has an identity (signed in / named).
+	$effect(() => {
+		captureReferral($page.url);
+	});
+
+	$effect(() => {
+		const who = $page.data.session?.user?.email || $userProfile.email || $userProfile.name;
+		if (who) redeemReferralIfJoined(who);
+	});
+
+	// Signed-in users: grant Pro and adopt the Google account name/email as the
+	// display identity right away.
 	$effect(() => {
 		const session = $page.data.session;
 		if (session?.user) {
+			const name = session.user.name || '';
+			const email = session.user.email || '';
 			userProfile.update((u) => {
-				if (!u.isPro) {
-					return { ...u, isPro: true };
-				}
-				return u;
+				if (u.isPro && (!name || u.name === name) && (!email || u.email === email)) return u;
+				return {
+					...u,
+					isPro: true,
+					name: name || u.name,
+					email: email || u.email
+				};
 			});
 		}
 	});

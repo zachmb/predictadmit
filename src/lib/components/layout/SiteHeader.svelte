@@ -11,6 +11,9 @@
 
 	$: session = $page.data.session;
 	$: isLandingPage = $page.url.pathname === '/';
+	// Portal decision pages get the floating "dynamic island" pill (the header
+	// only ever shows there after a decision is viewed), matching the home page.
+	$: floatingIsland = isLandingPage || isPortal;
 
 	$: {
 		if (isPortal) {
@@ -49,20 +52,20 @@
 
 	<header
 		class="fixed left-1/2 -translate-x-1/2 z-[9999] bg-white/80 backdrop-blur-xl transition-all duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden
-		{isLandingPage
+		{floatingIsland
 			? 'top-6 h-14 border border-slate-200/80 rounded-full px-2'
 			: 'top-0 h-16 border-b border-transparent lg:border-slate-200/80 rounded-none px-4'}"
-		style="width: {isLandingPage ? 'calc(100% - 32px)' : '100%'}; max-width: {isLandingPage
+		style="width: {floatingIsland ? 'calc(100% - 32px)' : '100%'}; max-width: {floatingIsland
 			? '900px'
 			: '100%'};"
 	>
 		<div
 			class="w-full h-full flex items-center justify-between mx-auto transition-all duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
-			style="max-width: {isLandingPage ? '100%' : '1200px'};"
+			style="max-width: {floatingIsland ? '100%' : '1200px'};"
 		>
 			<div class="pl-4">
 				<a href="/" class="text-lg font-[700] tracking-tight text-slate-900 transition-colors">
-					predictadmit<span class="text-slate-400">.com</span>
+					predictadmit<span class="text-[#0052CC]">.com</span>
 				</a>
 			</div>
 

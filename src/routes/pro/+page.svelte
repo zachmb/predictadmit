@@ -19,6 +19,7 @@
 	import ChanceMeProfile from '$lib/components/pro/ChanceMeProfile.svelte';
 	import SettingsView from '$lib/components/pro/SettingsView.svelte';
 	import HumanCounselors from '$lib/components/pro/HumanCounselors.svelte';
+	import { Users } from 'lucide-svelte';
 
 	// --- RUNES STATE ---
 	let { data } = $props();
@@ -1054,14 +1055,7 @@
 						? 'bg-blue-50 text-[#0052CC] border-[#0052CC]'
 						: 'text-slate-500 border-transparent hover:text-slate-900 hover:bg-slate-50'}"
 				>
-					<svg class="w-5 h-5 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-						><path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 10-4-4 4 4 0 004 4zm6-2a3 3 0 10-3-3M6 11a3 3 0 10-3-3"
-						/></svg
-					>
+					<Users class="w-5 h-5 opacity-70" strokeWidth={2} />
 					<span>Human Counselors</span>
 				</button>
 
@@ -1153,8 +1147,8 @@
 				{/if}
 			</div>
 
-			<!-- User Menu -->
-			<div class="p-4 border-t border-slate-100 bg-slate-50/50">
+			<!-- User Menu — h-24 to line up with the essay editor's bottom action bar -->
+			<div class="h-24 px-4 border-t border-slate-100 bg-slate-50/50 flex items-center">
 				<button
 					onclick={() => (currentView = 'settings')}
 					class="flex items-center gap-3 w-full p-2 rounded-xl hover:bg-white hover:shadow-sm transition-all border {currentView ===
@@ -1892,9 +1886,9 @@
 							{/if}
 						</div>
 
-						<!-- Bottom Action Bar -->
+						<!-- Bottom Action Bar — h-24 to line up with the sidebar user menu -->
 						<div
-							class="h-24 bg-white border-t border-slate-200 flex items-center justify-between px-8 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] z-50 pb-2"
+							class="h-24 bg-white border-t border-slate-200 flex items-center justify-between px-8 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] z-50"
 						>
 							<div class="flex items-center gap-6 flex-1">
 								<div class="text-xs text-slate-500 font-medium">
