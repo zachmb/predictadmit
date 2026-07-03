@@ -136,14 +136,31 @@
 							type="text"
 							placeholder="Enter your name"
 							value={$userProfile.name}
-							oninput={(e) =>
+							oninput={(e) => {
+								const v = (e.currentTarget as HTMLInputElement).value;
+								const slug = v
+									.trim()
+									.toLowerCase()
+									.replace(/[^a-z0-9\s]/g, '')
+									.replace(/\s+/g, '.');
 								userProfile.update((u) => ({
 									...u,
-									name: (e.currentTarget as HTMLInputElement).value
-								}))}
+									name: v,
+									// Derive the fake-login email from the name so it matches on every portal.
+									email: slug ? `${slug}@gmail.com` : u.email,
+									// Ensure a password exists so auto-login uses the derived email.
+									password: u.password || 'password123'
+								}));
+							}}
 							class="bg-white border border-slate-300 text-slate-800 text-xs font-semibold px-3 py-1.5 rounded-md outline-none w-56 focus:border-blue-400 focus:ring-1 focus:ring-blue-200 transition-colors"
 						/>
-						<span class="text-[11px] text-slate-400">Personalizes every portal &amp; letter</span>
+						{#if $userProfile.email}
+							<span class="text-[11px] text-slate-500"
+								>Login email: <span class="font-semibold text-slate-700">{$userProfile.email}</span></span
+							>
+						{:else}
+							<span class="text-[11px] text-slate-400">Personalizes every portal &amp; letter</span>
+						{/if}
 					</div>
 
 					<div class="mt-3 flex items-center gap-3">
