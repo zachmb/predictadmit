@@ -62,7 +62,7 @@
 		</div>
 
 		<div class="mb-8">
-			<div class="text-sm text-gray-600 mb-4 font-bold">March 12, 2026</div>
+			<div class="text-sm text-gray-600 mb-4 font-bold">March 12, 2027</div>
 			<div class="space-y-1">
 				<div>{applicantName || 'Applicant'}</div>
 			</div>
@@ -86,7 +86,7 @@
 				This year we received a remarkable number of applications from an exceptionally talented group
 				of students — far more qualified applicants than we have places in our incoming class. After a
 				careful and thorough review of your application, I am sorry to share that we are unable to
-				offer you admission for the autumn semester of 2026.
+				offer you admission for the autumn semester of 2027.
 			</p>
 
 			<p>

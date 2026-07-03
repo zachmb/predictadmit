@@ -79,7 +79,7 @@
 
 		<!-- Date -->
 		<div class="mb-8">
-			<div class="text-sm text-gray-700 mb-6">March 12, 2026</div>
+			<div class="text-sm text-gray-700 mb-6">March 12, 2027</div>
 		</div>
 
 		<!-- Salutation -->
@@ -91,7 +91,7 @@
 		<div class="space-y-4 mb-8 leading-relaxed">
 			<p>
 				It is my great pleasure to inform you that the Committee on Admission has admitted you to
-				Princeton University's Class of 2030. Congratulations! Your application stood out within an
+				Princeton University's Class of 2031. Congratulations! Your application stood out within an
 				exceptionally large and talented pool, and we are delighted to offer you a place in the
 				incoming class.
 			</p>
@@ -113,7 +113,7 @@
 
 			<p>
 				To accept your offer of admission, please complete the online reply form in your applicant
-				portal by <strong>May 1, 2026</strong>. We also warmly invite you to Princeton Preview, our
+				portal by <strong>May 1, 2027</strong>. We also warmly invite you to Princeton Preview, our
 				program for admitted students, where you can experience campus life and meet your future
 				classmates.
 			</p>

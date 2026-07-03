@@ -42,7 +42,7 @@
 		{/if}
 
 		<!-- Date + blue rule -->
-		<div class="mb-0 text-[13px] font-semibold text-gray-700">March 20, 2026</div>
+		<div class="mb-0 text-[13px] font-semibold text-gray-700">March 20, 2027</div>
 		<div class="mt-2 mb-6 border-t-2" style="border-color: {primaryColor};"></div>
 
 		<!-- Letter card -->
@@ -58,7 +58,7 @@
 
 			<div class="mb-6 text-[14px] leading-relaxed text-gray-900">
 				{applicantName || 'Applicant'}<br />
-				Fall 2026 First-Year Applicant
+				Fall 2027 First-Year Applicant
 			</div>
 
 			<div class="mb-6 text-[15px] text-gray-900">Dear {applicantName || 'Applicant'},</div>
@@ -66,11 +66,11 @@
 			<div class="space-y-4 text-[14px] leading-relaxed text-gray-800">
 				<p>
 					Congratulations! It is with tremendous pleasure that I offer you admission to the University
-					of California, Los Angeles, for Fall 2026. On behalf of the entire campus community, welcome
+					of California, Los Angeles, for Fall 2027. On behalf of the entire campus community, welcome
 					to the Bruin family. This is a distinction you have truly earned.
 				</p>
 				<p>
-					For Fall 2026, UCLA received over 146,000 first-year applications and was able to admit fewer
+					For Fall 2027, UCLA received over 146,000 first-year applications and was able to admit fewer
 					than one in ten. Every application is read at least twice, with consideration given to
 					accomplishments both in and outside of the classroom. Your record of achievement,
 					intellectual curiosity, and the strength of character evident throughout your application
@@ -85,8 +85,8 @@
 					await you in Westwood.
 				</p>
 				<p>
-					To reserve your place in the Fall 2026 class, please submit your Statement of Intent to
-					Register (SIR) through your applicant portal by <strong>May 1, 2026</strong>. We very much
+					To reserve your place in the Fall 2027 class, please submit your Statement of Intent to
+					Register (SIR) through your applicant portal by <strong>May 1, 2027</strong>. We very much
 					hope you will choose to become a Bruin, and we look forward to welcoming you to campus this
 					fall.
 				</p>

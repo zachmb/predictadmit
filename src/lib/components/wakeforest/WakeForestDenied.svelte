@@ -60,7 +60,7 @@
 		</div>
 
 		<div class="mb-8">
-			<div class="text-right text-sm text-gray-600 mb-2">March 24, 2026</div>
+			<div class="text-right text-sm text-gray-600 mb-2">March 24, 2027</div>
 			<div class="space-y-1">
 				<div>{applicantName || 'Applicant'}</div>
 			</div>
@@ -75,7 +75,7 @@
 		<div class="space-y-4 mb-8">
 			<p>
 				Thank you for applying to Wake Forest University and for allowing us to consider you for a
-				place in the Class of 2030. I know how much thought and effort went into your application, and
+				place in the Class of 2031. I know how much thought and effort went into your application, and
 				I want you to know that the Committee on Admissions read it with genuine care and attention.
 			</p>
 

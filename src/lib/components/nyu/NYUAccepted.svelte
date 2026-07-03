@@ -66,7 +66,7 @@
 		</div>
 
 		<div class="mb-8">
-			<div class="text-right text-sm text-gray-600 mb-2">March 25, 2026</div>
+			<div class="text-right text-sm text-gray-600 mb-2">March 25, 2027</div>
 		</div>
 
 		<div class="mb-6">
@@ -78,7 +78,7 @@
 		<div class="space-y-4 mb-8">
 			<p>
 				It is my honor and privilege to share with you that you have been admitted to New York
-				University and the Class of 2030. On the basis of your credentials and the interests stated in
+				University and the Class of 2031. On the basis of your credentials and the interests stated in
 				your application, we are pleased to offer you admission to the College of Arts and Science.
 			</p>
 
@@ -95,7 +95,7 @@
 			<p>
 				Your status page has been updated and will serve as your admitted student information hub, or
 				Home Base, over the next few months. There, you will see information about accepting your
-				offer of admission — your deadline is May 1, 2026 — and viewing your financial aid offer, if
+				offer of admission — your deadline is May 1, 2027 — and viewing your financial aid offer, if
 				you applied for aid. Beyond your checklist of next steps, you'll find plenty of resources to
 				help you learn more about academics, student life, and financial aid there, too.
 			</p>

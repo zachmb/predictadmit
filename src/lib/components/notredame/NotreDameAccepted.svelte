@@ -68,7 +68,7 @@
 		</div>
 
 		<div class="mb-8">
-			<div class="text-right text-sm text-gray-600 mb-2">March 25, 2026</div>
+			<div class="text-right text-sm text-gray-600 mb-2">March 25, 2027</div>
 			<div class="space-y-1">
 				<div>{applicantName || 'Applicant'}</div>
 			</div>
@@ -83,7 +83,7 @@
 		<div class="space-y-4 mb-8">
 			<p>
 				It is with great enthusiasm that I congratulate you on your admission to the University of
-				Notre Dame Class of 2030. After a thorough and holistic review of an extraordinary applicant
+				Notre Dame Class of 2031. After a thorough and holistic review of an extraordinary applicant
 				pool, the Committee on Admissions was deeply impressed by your academic accomplishments, your
 				character, and the ways you have already made a difference in your community.
 			</p>
@@ -106,7 +106,7 @@
 
 			<p>
 				To secure your place in the class, please submit your enrollment response and deposit through
-				your applicant status portal by <strong>May 1, 2026</strong>. Information regarding your
+				your applicant status portal by <strong>May 1, 2027</strong>. Information regarding your
 				financial aid award, housing, and next steps is also available in the portal.
 			</p>
 

@@ -57,7 +57,7 @@
 		{/if}
 
 		<!-- Date -->
-		<div class="font-bold mb-6">March 26, 2026</div>
+		<div class="font-bold mb-6">March 26, 2027</div>
 
 		<!-- Salutation -->
 		<p class="mb-4">Dear {firstName},</p>
@@ -65,7 +65,7 @@
 		<div class="space-y-4">
 			<p>
 				The Yale Admissions Committee has completed its evaluation of this year's candidates, and I am
-				genuinely sorry that we are not able to offer you a place in the Class of 2030.
+				genuinely sorry that we are not able to offer you a place in the Class of 2031.
 			</p>
 
 			<p>
@@ -121,7 +121,7 @@
 				Yale College<br />Undergraduate<br />Admissions
 			</div>
 			<p class="mt-4 text-[11px] text-gray-500 pb-8">
-				Copyright &copy;2026 Yale University. All rights reserved
+				Copyright &copy;2027 Yale University. All rights reserved
 			</p>
 		</div>
 	</footer>

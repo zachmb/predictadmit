@@ -63,7 +63,7 @@
 		</div>
 
 		<div class="mb-8">
-			<div class="text-right text-sm text-gray-600 mb-2">March 25, 2026</div>
+			<div class="text-right text-sm text-gray-600 mb-2">March 25, 2027</div>
 		</div>
 
 		<div class="mb-6">

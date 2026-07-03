@@ -68,7 +68,7 @@
 
 		<!-- Date + address -->
 		<div class="mb-8">
-			<div class="text-right text-sm text-gray-600 mb-2">March 13, 2026</div>
+			<div class="text-right text-sm text-gray-600 mb-2">March 13, 2027</div>
 			<div class="space-y-1">
 				<div>{applicantName || 'Applicant'}</div>
 				<div>Regular Decision Applicant</div>
@@ -85,7 +85,7 @@
 		<div class="space-y-4 mb-8">
 			<p>
 				On behalf of the Committee on Admissions, it is my great pleasure to offer you admission to
-				the Columbia University Class of 2030. Congratulations! After a remarkably competitive review
+				the Columbia University Class of 2031. Congratulations! After a remarkably competitive review
 				of applicants from every corner of the world, you distinguished yourself as someone who will
 				thrive in and contribute meaningfully to our community here in the City of New York.
 			</p>
@@ -100,7 +100,7 @@
 
 			<p>
 				To confirm your place in the class, please submit your enrollment response and deposit
-				through your applicant portal by <strong>May 1, 2026</strong>. We also warmly invite you to
+				through your applicant portal by <strong>May 1, 2027</strong>. We also warmly invite you to
 				experience our campus firsthand at Days on Campus, our program for admitted students; details
 				and registration are available in your portal. If you applied for financial aid, your award
 				package from Columbia Financial Aid and Educational Financing — which meets 100% of your

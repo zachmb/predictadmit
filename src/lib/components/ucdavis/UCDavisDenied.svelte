@@ -62,10 +62,10 @@
 		</div>
 
 		<div class="mb-8">
-			<div class="text-right text-sm text-gray-600 mb-2">March 20, 2026</div>
+			<div class="text-right text-sm text-gray-600 mb-2">March 20, 2027</div>
 			<div class="space-y-1">
 				<div>{applicantName || 'Applicant'}</div>
-				<div>Fall Quarter 2026 Applicant</div>
+				<div>Fall Quarter 2027 Applicant</div>
 			</div>
 		</div>
 
@@ -78,7 +78,7 @@
 		<div class="space-y-4 mb-8">
 			<p>
 				Thank you for your interest in the University of California, Davis, and for the time and care
-				you invested in your application for fall quarter 2026. We know how much thought goes into
+				you invested in your application for fall quarter 2027. We know how much thought goes into
 				applying, and we are grateful for the opportunity to review your accomplishments.
 			</p>
 
@@ -87,7 +87,7 @@
 				California and around the world. Because our capacity is limited and the applicant pool was
 				exceptionally strong, the Admissions Committee faced many difficult decisions. After a
 				thorough and holistic review of your application, I am sorry to inform you that we are unable
-				to offer you admission for fall quarter 2026.
+				to offer you admission for fall quarter 2027.
 			</p>
 
 			<p>

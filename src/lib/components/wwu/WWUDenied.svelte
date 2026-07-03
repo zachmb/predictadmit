@@ -26,7 +26,7 @@
 		<div class="relative mx-auto max-w-4xl px-8 py-10">
 			<BackToInboxButton />
 
-			<p class="mb-6 text-[12px] text-slate-600">March 28, 2026</p>
+			<p class="mb-6 text-[12px] text-slate-600">March 28, 2027</p>
 			<p class="mb-6 text-[13px] text-slate-800">{applicantName}</p>
 
 			<h1 class="mb-6 text-2xl font-semibold text-[#0a3a63]">Admission Decision</h1>
@@ -35,7 +35,7 @@
 
 			<p class="mb-4 text-[14px] leading-7 text-slate-800">
 				Thank you for applying to {schoolName}. After a careful review of your application, we
-				regret that we are unable to offer you admission for Fall 2026.
+				regret that we are unable to offer you admission for Fall 2027.
 			</p>
 
 			<p class="mb-4 text-[14px] leading-7 text-slate-800">
@@ -59,7 +59,7 @@
 
 	<footer class="py-4 text-[11px] text-white/75" style={`background-color: ${primaryColor};`}>
 		<div class="mx-auto flex max-w-5xl justify-between px-6">
-			<span>&copy; {footerDomain} 2026</span>
+			<span>&copy; {footerDomain} 2027</span>
 			<span>PredictAdmit.com simulation · Not affiliated with {schoolName}</span>
 		</div>
 	</footer>

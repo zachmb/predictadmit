@@ -79,7 +79,7 @@
 
 			<p class="mb-4">
 				Thank you for your application to Brown University. I am writing to inform you that we are
-				unable to offer you admission to the Class of 2028.
+				unable to offer you admission to the Class of 2031.
 			</p>
 
 			<p class="mb-4">
@@ -120,7 +120,7 @@
 
 			<div class="mt-12 p-6 bg-gray-50 rounded-lg border border-gray-300 text-sm">
 				<p class="text-gray-700 mb-2">
-					This decision is final for the 2024-2025 application cycle. We encourage you to explore
+					This decision is final for the 2026-2027 application cycle. We encourage you to explore
 					other excellent institutions where your talents will be valued and nurtured.
 				</p>
 			</div>

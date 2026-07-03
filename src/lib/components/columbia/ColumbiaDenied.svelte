@@ -65,7 +65,7 @@
 
 		<!-- Date + address -->
 		<div class="mb-8">
-			<div class="text-right text-sm text-gray-600 mb-2">March 13, 2026</div>
+			<div class="text-right text-sm text-gray-600 mb-2">March 13, 2027</div>
 			<div class="space-y-1">
 				<div>{applicantName || 'Applicant'}</div>
 				<div>Regular Decision Applicant</div>
@@ -82,7 +82,7 @@
 		<div class="space-y-4 mb-8">
 			<p>
 				Thank you for your application to Columbia University and for allowing us to consider you for
-				a place in the Class of 2030. I know how much thought and effort you invested in your
+				a place in the Class of 2031. I know how much thought and effort you invested in your
 				application, and the Committee on Admissions read it with genuine care and attention.
 			</p>
 

@@ -69,7 +69,7 @@
 			<div class="space-y-1 text-[15px]">
 				<div>{applicantName || 'Applicant'}</div>
 			</div>
-			<div class="text-sm text-gray-700">February 2, 2026</div>
+			<div class="text-sm text-gray-700">February 2, 2027</div>
 		</div>
 
 		<!-- Salutation -->
@@ -81,7 +81,7 @@
 		<div class="space-y-4 mb-8 text-[15px] leading-relaxed">
 			<p>
 				Thank you for applying to the University of Illinois Urbana-Champaign and for allowing us to
-				consider you for the Fall 2026 semester. We know how much thought and effort went into your
+				consider you for the Fall 2027 semester. We know how much thought and effort went into your
 				application, and we're grateful for the time you spent sharing your story with us.
 			</p>
 

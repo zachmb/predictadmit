@@ -33,7 +33,7 @@
 			<!-- Fade-in back button top-left -->
 			<BackToInboxButton />
 
-			<p class="text-[11px] text-slate-700 mb-4">March 28, 2026</p>
+			<p class="text-[11px] text-slate-700 mb-4">March 28, 2027</p>
 
 			<p class="text-[12px] text-slate-900 mb-4">
 				{applicantName}
@@ -46,7 +46,7 @@
 			<p class="text-[12px] leading-relaxed text-slate-900 mb-3">
 				The Admissions Committee has completed its review of your application to
 				<span class="font-semibold"> {schoolName}</span>. I regret to inform you that we are unable
-				to offer you admission to the entering class of 2026.
+				to offer you admission to the Class of 2031.
 			</p>
 
 			<p class="text-[12px] leading-relaxed text-slate-900 mb-3">
@@ -74,7 +74,7 @@
 			<div
 				class="max-w-5xl mx-auto px-6 w-full flex items-center justify-between text-[11px] text-white"
 			>
-				<span>&copy; {footerDomain} 2019</span>
+				<span>&copy; {footerDomain} 2027</span>
 				<span class="opacity-80">
 					PredictAdmit.com simulation · Not affiliated with {schoolName}
 				</span>

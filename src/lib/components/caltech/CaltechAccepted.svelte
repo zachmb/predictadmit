@@ -70,7 +70,7 @@
 		</div>
 
 		<div class="mb-8">
-			<div class="text-right text-sm text-gray-600 mb-2">March 14, 2020</div>
+			<div class="text-right text-sm text-gray-600 mb-2">March 14, 2027</div>
 			<div class="space-y-1">
 				<div>{applicantName || 'Applicant'}</div>
 				<div>1600 Pennsylvania Avenue NW</div>
@@ -85,7 +85,7 @@
 		<div class="space-y-4 mb-8">
 			<p>
 				The Undergraduate Admissions Committee is delighted to inform you that you have been offered
-				admission to the California Institute of Technology Class of 2024. Your application
+				admission to the California Institute of Technology Class of 2031. Your application
 				demonstrated exceptional intellectual prowess, a deep curiosity for scientific inquiry, and
 				the resilience needed to thrive in Caltech’s rigorous academic environment.
 			</p>
@@ -99,13 +99,13 @@
 
 			<p>
 				You are invited to attend Preview Weekend, our admitted students program, from April 13-15,
-				2020. This is your opportunity to visit our campus in Pasadena, meet the faculty, engage
+				2027. This is your opportunity to visit our campus in Pasadena, meet the faculty, engage
 				with current students (the Caltech Beavers!), and experience the unique Caltech culture.
 			</p>
 
 			<p>
 				To officially accept your offer of admission, please complete the reply form available in
-				your admissions portal by <strong>May 1, 2020</strong>. Further details regarding financial
+				your admissions portal by <strong>May 1, 2027</strong>. Further details regarding financial
 				aid, housing, and enrollment will also be found there.
 			</p>
 

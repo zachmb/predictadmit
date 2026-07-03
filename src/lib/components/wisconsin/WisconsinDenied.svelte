@@ -60,11 +60,11 @@
 		</div>
 
 		<div class="mb-8">
-			<div class="text-right text-sm text-gray-600 mb-2">March 15, 2026</div>
+			<div class="text-right text-sm text-gray-600 mb-2">March 15, 2027</div>
 			<div class="space-y-1">
 				<div>{applicantName || 'Applicant'}</div>
 				<div>Application Number 02049787</div>
-				<div>Fall 2026-2027 &bull; Mechanical Engineering BS</div>
+				<div>Fall 2027-2027 &bull; Mechanical Engineering BS</div>
 			</div>
 		</div>
 
@@ -76,7 +76,7 @@
 
 		<div class="space-y-4 mb-8">
 			<p>
-				Thank you for your application to the University of Wisconsin-Madison for the Fall 2026 term.
+				Thank you for your application to the University of Wisconsin-Madison for the Fall 2027 term.
 				We appreciate the time and thought you put into applying, and we are grateful for your interest
 				in becoming a Badger.
 			</p>

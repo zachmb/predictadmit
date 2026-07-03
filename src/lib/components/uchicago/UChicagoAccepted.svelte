@@ -66,7 +66,7 @@
 		</div>
 
 		<div class="mb-8">
-			<div class="text-right text-sm text-gray-600 mb-2">March 16, 2026</div>
+			<div class="text-right text-sm text-gray-600 mb-2">March 16, 2027</div>
 			<div class="space-y-1">
 				<div>{applicantName || 'Applicant'}</div>
 				<div>2550 Waterview Dr, Unit 347</div>
@@ -83,7 +83,7 @@
 		<div class="space-y-4 mb-8">
 			<p>
 				Congratulations! It is with tremendous enthusiasm that I write to offer you admission to the
-				College of the University of Chicago as a member of the Class of 2030. On behalf of the
+				College of the University of Chicago as a member of the Class of 2031. On behalf of the
 				Committee on Admissions, I want to be the first to welcome you to our community of scholars.
 			</p>
 
@@ -106,7 +106,7 @@
 				To learn more about your enrollment, financial aid, and the many opportunities that await
 				you, please visit your UChicago Account. We invite you to join us for our admitted students
 				program this spring to experience the life of the mind firsthand. Your reply and enrollment
-				deposit are due by <strong>May 1, 2026</strong>.
+				deposit are due by <strong>May 1, 2027</strong>.
 			</p>
 
 			<p>

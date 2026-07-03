@@ -64,7 +64,7 @@
 			</div>
 		{/if}
 
-		<div class="text-sm text-gray-800 mb-8 font-sans font-bold">March 18, 2026</div>
+		<div class="text-sm text-gray-800 mb-8 font-sans font-bold">March 18, 2027</div>
 
 		<div class="mb-4">
 			<div class="text-base">Dear {applicantName || 'Applicant'},</div>

@@ -94,13 +94,13 @@
 
 		<!-- Letter body -->
 		<div class="mx-auto max-w-4xl text-[13px] leading-relaxed text-gray-800">
-			<p class="mb-5 font-semibold">March 20, 2026</p>
+			<p class="mb-5 font-semibold">March 20, 2027</p>
 
 			<p class="mb-4">Dear {firstName},</p>
 
 			<p class="mb-4">
 				On behalf of the admissions committee, it is my great pleasure to offer you admission to the
-				University of North Carolina at Chapel Hill as a member of the Class of 2030. Congratulations,
+				University of North Carolina at Chapel Hill as a member of the Class of 2031. Congratulations,
 				and welcome to Carolina. Of the many talented students who applied this year, you distinguished
 				yourself, and we are delighted to invite you to join our community.
 			</p>
@@ -114,7 +114,7 @@
 
 			<p class="mb-4">
 				To secure your place in the class, please log in to your applicant portal to submit your
-				enrollment response by May 1, 2026. There you will also find details about Carolina admitted
+				enrollment response by May 1, 2027. There you will also find details about Carolina admitted
 				student programs, housing, orientation, and information from our Office of Scholarships and
 				Student Aid, which is committed to making a Carolina education affordable for every admitted
 				student.
@@ -147,6 +147,6 @@
 	</div>
 
 	<footer class="bg-[#f2f2f2] py-6 text-center text-[11px] text-gray-500">
-		2025 The University of North Carolina at Chapel Hill
+		2027 The University of North Carolina at Chapel Hill
 	</footer>
 </main>

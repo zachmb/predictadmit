@@ -54,7 +54,7 @@
 		<div class="flex justify-between items-start mb-8 text-sm">
 			<div>{applicantName || 'Applicant'}</div>
 			<div class="text-right leading-relaxed">
-				<div>March 20, 2026</div>
+				<div>March 20, 2027</div>
 				<div>Application ID: 20260012</div>
 			</div>
 		</div>
@@ -64,7 +64,7 @@
 
 		<div class="space-y-5 text-[15px] leading-relaxed">
 			<p>
-				Thank you for your application to the University of California San Diego for Fall 2026. I know
+				Thank you for your application to the University of California San Diego for Fall 2027. I know
 				how much thought and effort went into your application, and on behalf of the entire Office of
 				Admissions, I want to thank you for considering UC San Diego as your future home.
 			</p>
@@ -73,7 +73,7 @@
 				This year, UC San Diego received more than 168,000 applications from an exceptionally talented
 				group of students. After a careful and holistic review of your academic record,
 				accomplishments and personal insight questions, I regret to inform you that we are unable to
-				offer you admission to the Triton Class of 2030. Because the number of highly qualified
+				offer you admission to the Triton Class of 2031. Because the number of highly qualified
 				applicants far exceeds the space available in our entering class, we were not able to admit
 				many outstanding students, including you.
 			</p>

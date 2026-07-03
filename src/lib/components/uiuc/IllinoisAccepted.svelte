@@ -72,7 +72,7 @@
 			<div class="space-y-1 text-[15px]">
 				<div>{applicantName || 'Applicant'}</div>
 			</div>
-			<div class="text-sm text-gray-700">February 2, 2026</div>
+			<div class="text-sm text-gray-700">February 2, 2027</div>
 		</div>
 
 		<!-- Salutation -->
@@ -85,7 +85,7 @@
 			<p>
 				Congratulations! This letter serves to formally offer you admission to the University of
 				Illinois Urbana-Champaign. We officially welcome you into your intended program of study in
-				The Grainger College of Engineering for the Fall 2026 semester.
+				The Grainger College of Engineering for the Fall 2027 semester.
 			</p>
 
 			<p>

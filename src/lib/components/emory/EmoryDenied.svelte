@@ -67,7 +67,7 @@
 		</div>
 
 		<div class="mb-8">
-			<div class="text-right text-sm text-gray-600 mb-2">March 25, 2026</div>
+			<div class="text-right text-sm text-gray-600 mb-2">March 25, 2027</div>
 			<div class="space-y-1">
 				<div>{applicantName || 'Applicant'}</div>
 				<div>2550 Waterview Dr Unit 347</div>

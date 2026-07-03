@@ -91,7 +91,7 @@
 
 			<p class="mb-4">
 				It is with great pleasure that I inform you of your admission to Brown University's Class of
-				2028. On behalf of the Office of College Admission and the entire Brown community, I extend
+				2031. On behalf of the Office of College Admission and the entire Brown community, I extend
 				our heartfelt congratulations.
 			</p>
 

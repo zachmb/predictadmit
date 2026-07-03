@@ -71,13 +71,13 @@
 		{/if}
 
 		<div class="text-[15px] leading-relaxed text-[#16283c]">
-			<p class="font-bold mb-6">March 14, 2026</p>
+			<p class="font-bold mb-6">March 14, 2027</p>
 
 			<p class="mb-5">Dear {applicantName || 'Applicant'},</p>
 
 			<p class="mb-5">
 				The Admissions Committee has completed its review of your application. I am very sorry to tell
-				you that you were not admitted to the MIT Class of 2030.
+				you that you were not admitted to the MIT Class of 2031.
 			</p>
 
 			<p class="mb-5">

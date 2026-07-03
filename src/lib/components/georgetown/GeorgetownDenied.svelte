@@ -59,11 +59,11 @@
 		</div>
 
 		<div class="mb-8">
-			<div class="text-right text-sm text-gray-600 mb-2">March 20, 2026</div>
+			<div class="text-right text-sm text-gray-600 mb-2">March 20, 2027</div>
 			<div class="space-y-1">
 				<div>{applicantName || 'Applicant'}</div>
 				<div>Regular Decision Applicant</div>
-				<div>Class of 2030</div>
+				<div>Class of 2031</div>
 			</div>
 		</div>
 
@@ -83,7 +83,7 @@
 
 			<p>
 				This year Georgetown received one of the largest and most talented applicant pools in its
-				history for a limited number of places in the Class of 2030. After a careful, holistic, and
+				history for a limited number of places in the Class of 2031. After a careful, holistic, and
 				repeated review of your application, I write with regret to tell you that the Committee is
 				unable to offer you a place in the entering class.
 			</p>

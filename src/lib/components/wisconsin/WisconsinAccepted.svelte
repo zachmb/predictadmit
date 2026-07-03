@@ -63,11 +63,11 @@
 		</div>
 
 		<div class="mb-8">
-			<div class="text-right text-sm text-gray-600 mb-2">March 15, 2026</div>
+			<div class="text-right text-sm text-gray-600 mb-2">March 15, 2027</div>
 			<div class="space-y-1">
 				<div>{applicantName || 'Applicant'}</div>
 				<div>Application Number 02049787</div>
-				<div>Fall 2026-2027 &bull; Mechanical Engineering BS</div>
+				<div>Fall 2027-2027 &bull; Mechanical Engineering BS</div>
 			</div>
 		</div>
 
@@ -80,7 +80,7 @@
 		<div class="space-y-4 mb-8">
 			<p>
 				Congratulations! It is my great pleasure to offer you admission to the University of
-				Wisconsin-Madison for the Fall 2026 term. On behalf of the entire university community, welcome
+				Wisconsin-Madison for the Fall 2027 term. On behalf of the entire university community, welcome
 				to the Badger family. This is a moment worth celebrating, and you have every reason to be
 				proud.
 			</p>
@@ -103,7 +103,7 @@
 
 			<p>
 				To secure your place in the class, please log in to your Applicant Portal and submit your
-				enrollment confirmation by <strong>May 1, 2026</strong>. There you will also find information
+				enrollment confirmation by <strong>May 1, 2027</strong>. There you will also find information
 				about housing, orientation (Student Orientation, Advising, and Registration), and next steps
 				for connecting with your college. If you applied for financial aid, your award notification
 				will be available in your portal shortly.

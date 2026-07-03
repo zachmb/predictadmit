@@ -38,7 +38,7 @@
 		{/if}
 
 		<!-- Date + crimson rule -->
-		<div class="mb-0 text-[13px] font-semibold text-gray-700">March 26, 2026</div>
+		<div class="mb-0 text-[13px] font-semibold text-gray-700">March 26, 2027</div>
 		<div class="mt-2 mb-6 border-t-2" style="border-color: {primaryColor};"></div>
 
 		<!-- Letter card -->
@@ -65,7 +65,7 @@
 			<div class="space-y-4 text-[14px] leading-relaxed text-gray-800">
 				<p>
 					The Committee on Admissions has completed its meetings, and I am very sorry to inform you
-					that we cannot offer you admission to the Class of 2030. I wish that a different decision
+					that we cannot offer you admission to the Class of 2031. I wish that a different decision
 					had been possible, but I hope that receiving this final decision now will be helpful to you
 					as you make your college plans.
 				</p>

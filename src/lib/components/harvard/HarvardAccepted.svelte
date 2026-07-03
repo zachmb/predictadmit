@@ -41,7 +41,7 @@
 		{/if}
 
 		<!-- Date + crimson rule -->
-		<div class="mb-0 text-[13px] font-semibold text-gray-700">March 26, 2026</div>
+		<div class="mb-0 text-[13px] font-semibold text-gray-700">March 26, 2027</div>
 		<div class="mt-2 mb-6 border-t-2" style="border-color: {primaryColor};"></div>
 
 		<!-- Letter card -->
@@ -68,7 +68,7 @@
 			<div class="space-y-4 text-[14px] leading-relaxed text-gray-800">
 				<p>
 					The Committee on Admissions has completed its meetings, and it is with great pleasure that
-					I write to offer you admission to the Harvard College Class of 2030. Please accept my
+					I write to offer you admission to the Harvard College Class of 2031. Please accept my
 					personal congratulations on your outstanding achievements, which distinguished you within
 					an exceptionally talented and highly qualified pool of applicants.
 				</p>
@@ -84,7 +84,7 @@
 					our program for admitted students, which offers the best opportunity to experience the
 					academic and extracurricular life of the College, meet faculty, and connect with your
 					future classmates. To reserve your place in the class, please confirm your intention to
-					enroll through your applicant portal by May 1, 2026.
+					enroll through your applicant portal by May 1, 2027.
 				</p>
 				<p>
 					We very much hope that you will choose to join us. On behalf of the entire Committee,

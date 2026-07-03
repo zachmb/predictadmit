@@ -91,7 +91,7 @@
 
 		<!-- Letter body -->
 		<div class="mx-auto max-w-4xl text-[13px] leading-relaxed text-gray-800">
-			<p class="mb-5 font-semibold">March 20, 2026</p>
+			<p class="mb-5 font-semibold">March 20, 2027</p>
 
 			<p class="mb-4">Dear {firstName},</p>
 
@@ -137,6 +137,6 @@
 	</div>
 
 	<footer class="bg-[#f2f2f2] py-6 text-center text-[11px] text-gray-500">
-		2025 The University of North Carolina at Chapel Hill
+		2027 The University of North Carolina at Chapel Hill
 	</footer>
 </main>

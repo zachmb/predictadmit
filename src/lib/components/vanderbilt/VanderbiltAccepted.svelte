@@ -43,7 +43,7 @@
 
 		<!-- Top bar: applicant name + download -->
 		<div class="flex items-center justify-between text-[14px]">
-			<div class="font-semibold text-gray-800">March 25, 2026</div>
+			<div class="font-semibold text-gray-800">March 25, 2027</div>
 			<div class="flex items-center gap-8">
 				<span class="text-gray-800"
 					>{applicantName || 'Applicant'}
@@ -68,7 +68,7 @@
 		</div>
 
 		<!-- Date + recipient -->
-		<div class="mt-8 text-[14px] text-gray-800">March 25, 2026</div>
+		<div class="mt-8 text-[14px] text-gray-800">March 25, 2027</div>
 		<div class="mt-6 text-[14px] leading-relaxed text-gray-800">
 			<div>{applicantName || 'Applicant'}</div>
 			<div>1824 Smith Rd</div>
@@ -80,8 +80,8 @@
 		<div class="mt-6 space-y-5 text-[15px] leading-relaxed text-gray-800">
 			<p>
 				Our office has now completed its evaluation of the Regular Decision applicant pool for fall
-				2026, and it is with great pleasure that I write to offer you admission to the Vanderbilt
-				University Class of 2030. Congratulations! Your accomplishments distinguished you within an
+				2027, and it is with great pleasure that I write to offer you admission to the Vanderbilt
+				University Class of 2031. Congratulations! Your accomplishments distinguished you within an
 				exceptionally talented and competitive pool of applicants, and the Committee on Admissions was
 				genuinely impressed by all that you have achieved inside and outside of the classroom.
 			</p>
@@ -97,7 +97,7 @@
 				In the coming days you will receive detailed information about enrolling, financial aid, and
 				our programs for admitted students, including opportunities to visit campus, connect with
 				current students and faculty, and meet your future classmates. To reserve your place in the
-				class, please confirm your intention to enroll through your MyAppVU portal by May 1, 2026.
+				class, please confirm your intention to enroll through your MyAppVU portal by May 1, 2027.
 			</p>
 			<p>
 				On behalf of all of us at Vanderbilt, congratulations once again. We very much hope that you
@@ -170,7 +170,7 @@
 				athletic or other University-administered programs; or employment. Accessibility information.
 				Vanderbilt&reg;, Vanderbilt University&reg; and the Vanderbilt logos are trademarks of The
 				Vanderbilt University. Site Development: Digital Strategies (Communications and Marketing.)
-				&copy;2026
+				&copy;2027
 			</p>
 		</div>
 	</footer>

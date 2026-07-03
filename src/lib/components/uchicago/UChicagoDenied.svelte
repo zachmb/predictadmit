@@ -63,7 +63,7 @@
 		</div>
 
 		<div class="mb-8">
-			<div class="text-right text-sm text-gray-600 mb-2">March 16, 2026</div>
+			<div class="text-right text-sm text-gray-600 mb-2">March 16, 2027</div>
 			<div class="space-y-1">
 				<div>{applicantName || 'Applicant'}</div>
 				<div>2550 Waterview Dr, Unit 347</div>
@@ -89,7 +89,7 @@
 				This year we received a truly extraordinary number of applications from remarkable students
 				around the world &mdash; far more than we could possibly admit to a single entering class.
 				After the most rigorous and difficult deliberations, I am sorry to tell you that we are
-				unable to offer you a place in the Class of 2030.
+				unable to offer you a place in the Class of 2031.
 			</p>
 
 			<p>

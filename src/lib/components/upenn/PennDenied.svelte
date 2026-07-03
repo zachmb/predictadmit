@@ -70,7 +70,7 @@
 				</div>
 			{/if}
 
-			<p class="font-bold mb-8">March 26, 2026</p>
+			<p class="font-bold mb-8">March 26, 2027</p>
 
 			<p class="mb-6">Dear {firstName},</p>
 

@@ -46,14 +46,14 @@
 
 	<!-- Letter body -->
 	<main class="mx-auto max-w-4xl px-6 pb-16 pt-8">
-		<div class="mb-8 text-[15px] font-bold text-gray-900">March 20, 2026</div>
+		<div class="mb-8 text-[15px] font-bold text-gray-900">March 20, 2027</div>
 
 		<div class="mb-6 text-[14px] text-gray-900">Dear {firstName},</div>
 
 		<div class="space-y-5 text-[14px] leading-relaxed text-gray-800">
 			<p>
 				Congratulations! On behalf of the Admissions Committee, it is my great pleasure to offer you
-				admission to Washington University in St. Louis and to welcome you to the Class of 2030. Your
+				admission to Washington University in St. Louis and to welcome you to the Class of 2031. Your
 				accomplishments distinguished you within an exceptionally talented pool of applicants, and we
 				are thrilled that you will be joining the WashU community.
 			</p>
@@ -66,8 +66,8 @@
 			<p>
 				In the coming days you will find detailed information in your applicant portal about next
 				steps, including financial aid, housing, course planning, and WashU Preview&mdash;our program
-				for admitted students. To reserve your place in the Class of 2030, please confirm your
-				intention to enroll through your portal by May 1, 2026.
+				for admitted students. To reserve your place in the Class of 2031, please confirm your
+				intention to enroll through your portal by May 1, 2027.
 			</p>
 			<p>
 				Please take a moment to celebrate this achievement with the family, teachers, and friends who
@@ -119,7 +119,7 @@
 		</div>
 		<div class="border-t border-gray-700">
 			<div class="mx-auto max-w-6xl px-6 py-4 font-sans text-[12px] text-gray-300">
-				&copy;2025 Washington University in St. Louis
+				&copy;2027 Washington University in St. Louis
 			</div>
 		</div>
 	</footer>

@@ -82,7 +82,7 @@
 			<p class="mb-4">Dear {applicantName},</p>
 
 			<p class="mb-4">
-				On behalf of Dartmouth College, I am delighted to offer you admission to the Class of 2028.
+				On behalf of Dartmouth College, I am delighted to offer you admission to the Class of 2031.
 				Welcome to the Dartmouth family!
 			</p>
 

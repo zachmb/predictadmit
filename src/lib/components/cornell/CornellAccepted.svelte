@@ -73,7 +73,7 @@
 		</div>
 
 		<div class="mb-10">
-			<div class="text-right text-sm text-gray-600 mb-6">March 26, 2020</div>
+			<div class="text-right text-sm text-gray-600 mb-6">March 26, 2027</div>
 			<div class="space-y-1 font-semibold text-lg">
 				<div>{applicantName || 'Applicant'}</div>
 			</div>
@@ -86,7 +86,7 @@
 		<div class="space-y-6 mb-12 text-[15px]">
 			<p>
 				It is my distinct pleasure to inform you of your admission to Cornell University's Class of
-				2024. This year’s applicant pool was the largest and most competitive in our history. Your
+				2031. This year’s applicant pool was the largest and most competitive in our history. Your
 				academic achievements, personal qualities, and potential to contribute to our community
 				stood out considerably. We are thrilled to welcome you to the Big Red family.
 			</p>
@@ -106,7 +106,7 @@
 
 			<p>
 				To accept this offer of admission, please submit your enrollment deposit via your
-				application portal by the national reply deadline of <strong>May 1, 2020</strong>. Further
+				application portal by the national reply deadline of <strong>May 1, 2027</strong>. Further
 				details regarding housing, financial aid, and orientation will be available in your portal
 				shortly.
 			</p>

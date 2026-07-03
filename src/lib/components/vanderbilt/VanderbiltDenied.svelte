@@ -40,7 +40,7 @@
 
 		<!-- Top bar: applicant name + download -->
 		<div class="flex items-center justify-between text-[14px]">
-			<div class="font-semibold text-gray-800">March 25, 2026</div>
+			<div class="font-semibold text-gray-800">March 25, 2027</div>
 			<div class="flex items-center gap-8">
 				<span class="text-gray-800"
 					>{applicantName || 'Applicant'}
@@ -65,7 +65,7 @@
 		</div>
 
 		<!-- Date + recipient -->
-		<div class="mt-8 text-[14px] text-gray-800">March 25, 2026</div>
+		<div class="mt-8 text-[14px] text-gray-800">March 25, 2027</div>
 		<div class="mt-6 text-[14px] leading-relaxed text-gray-800">
 			<div>{applicantName || 'Applicant'}</div>
 			<div>1824 Smith Rd</div>
@@ -77,8 +77,8 @@
 		<div class="mt-6 space-y-5 text-[15px] leading-relaxed text-gray-800">
 			<p>
 				Our office has now completed its evaluation of the Regular Decision applicant pool for fall
-				2026, and it is with regret that I write with the news that we are not offering you admission
-				to the Class of 2030. We are honored by your interest in Vanderbilt, and we are aware of the
+				2027, and it is with regret that I write with the news that we are not offering you admission
+				to the Class of 2031. We are honored by your interest in Vanderbilt, and we are aware of the
 				time, thought, and effort that you put into the application process. Please be assured that
 				we reviewed your application carefully within the context of our applicant pool, getting to
 				know you through your academic and co-curricular record, and seeking to understand your high
@@ -163,7 +163,7 @@
 				athletic or other University-administered programs; or employment. Accessibility information.
 				Vanderbilt&reg;, Vanderbilt University&reg; and the Vanderbilt logos are trademarks of The
 				Vanderbilt University. Site Development: Digital Strategies (Communications and Marketing.)
-				&copy;2026
+				&copy;2027
 			</p>
 		</div>
 	</footer>

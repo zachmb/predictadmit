@@ -60,10 +60,10 @@
 		</div>
 
 		<div class="mb-8">
-			<div class="text-right text-sm text-gray-600 mb-2">March 10, 2026</div>
+			<div class="text-right text-sm text-gray-600 mb-2">March 10, 2027</div>
 			<div class="space-y-1">
 				<div>{applicantName || 'Applicant'}</div>
-				<div>Applicant, Fall 2026 First-Year Class</div>
+				<div>Applicant, Fall 2027 First-Year Class</div>
 			</div>
 		</div>
 
@@ -75,7 +75,7 @@
 
 		<div class="space-y-4 mb-8">
 			<p>
-				Thank you for your application to Purdue University for the Fall 2026 semester, and for the time
+				Thank you for your application to Purdue University for the Fall 2027 semester, and for the time
 				and care you invested in it. This year we received a record number of applications from an
 				exceptionally talented group of students, and the Office of Admissions reviewed every one with
 				great attention.

@@ -62,11 +62,11 @@
 		</div>
 
 		<div class="mb-8">
-			<div class="mb-2 text-right text-sm text-gray-600">March 20, 2026</div>
+			<div class="mb-2 text-right text-sm text-gray-600">March 20, 2027</div>
 			<div class="space-y-1">
 				<div>{applicantName || 'Applicant'}</div>
 				<div>Application ID: 4180909</div>
-				<div>Fall 2026 &bull; First Year</div>
+				<div>Fall 2027 &bull; First Year</div>
 			</div>
 		</div>
 
@@ -78,7 +78,7 @@
 
 		<div class="mb-8 space-y-4">
 			<p>
-				Thank you for applying to the University of California, Irvine for the Fall 2026 term, and for
+				Thank you for applying to the University of California, Irvine for the Fall 2027 term, and for
 				allowing us the opportunity to review your application. We know that a great deal of thought
 				and effort went into your candidacy, and we are grateful for your interest in becoming an
 				Anteater.

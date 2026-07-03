@@ -62,7 +62,7 @@
 		</div>
 
 		<div class="mb-8">
-			<div class="text-sm text-gray-600 mb-4 font-bold">March 28, 2026</div>
+			<div class="text-sm text-gray-600 mb-4 font-bold">March 28, 2027</div>
 			<div class="space-y-1">
 				<div>{applicantName || 'Applicant'}</div>
 			</div>
@@ -77,7 +77,7 @@
 		<div class="space-y-4 mb-8">
 			<p>
 				Thank you for your application to the University of Michigan College of Engineering for the
-				class entering fall 2026. I know how much thought and effort you put into your application,
+				class entering fall 2027. I know how much thought and effort you put into your application,
 				and the entire admissions committee is grateful for the opportunity to learn about your
 				accomplishments and aspirations.
 			</p>

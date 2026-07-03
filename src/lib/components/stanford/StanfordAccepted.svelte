@@ -50,7 +50,7 @@
 
 		<!-- Date + Download row -->
 		<div class="flex justify-between items-center text-[11px] text-gray-600 mb-6">
-			<span class="font-bold">March 14, 2026</span>
+			<span class="font-bold">March 14, 2027</span>
 			<a href="/disclaimer" class="text-[#8C1515] underline hover:no-underline">Download PDF</a>
 		</div>
 
@@ -77,7 +77,7 @@
 
 				<p>Dear {firstName},</p>
 
-				<p class="font-bold">Congratulations! You have been admitted to the Stanford Class of 2030!</p>
+				<p class="font-bold">Congratulations! You have been admitted to the Stanford Class of 2031!</p>
 
 				<p>
 					The admission committee was inspired by your passion, determination, accomplishments, and
@@ -94,7 +94,7 @@
 
 				<p>
 					We are excited to share more about Stanford with you. Mark your calendar now for Admit
-					Weekend 2026, which will take place on campus April 23&ndash;25. In addition, Stanford
+					Weekend 2027, which will take place on campus April 23&ndash;25. In addition, Stanford
 					alumni are organizing gatherings for admitted students in many locations. Information about
 					these events will be sent to the same email address you use to log in to your Stanford
 					portal. You can learn more by visiting our
@@ -104,7 +104,7 @@
 				<p>
 					When you are ready to make a decision about your enrollment, please complete the
 					<a href="/disclaimer" class="text-[#827252] underline">Admission Response Form</a> at any time
-					on or before May 1, 2026. The Additional Background Information Form, located in your portal,
+					on or before May 1, 2027. The Additional Background Information Form, located in your portal,
 					is also required. If you applied for financial aid by February 15, a reply from the Financial
 					Aid Office is below this letter.
 				</p>

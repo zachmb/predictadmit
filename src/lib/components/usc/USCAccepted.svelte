@@ -70,7 +70,7 @@
 		</div>
 
 		<div class="mb-8">
-			<div class="text-right text-sm text-gray-600 mb-2">March 27, 2026</div>
+			<div class="text-right text-sm text-gray-600 mb-2">March 27, 2027</div>
 			<div class="text-right text-sm text-gray-600 mb-4">Reference ID: 108037714</div>
 			<div class="space-y-1">
 				<div>{applicantName || 'Applicant'}</div>
@@ -109,7 +109,7 @@
 
 			<p>
 				To accept your offer of admission, please submit your enrollment confirmation and deposit
-				through your USC applicant portal by <strong>May 1, 2026</strong>, the National Candidates
+				through your USC applicant portal by <strong>May 1, 2027</strong>, the National Candidates
 				Reply Date. Your portal also contains important information about financial aid, housing, and
 				our admitted-student events, where you can experience USC firsthand and meet your future
 				classmates.

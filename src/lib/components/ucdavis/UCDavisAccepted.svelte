@@ -65,10 +65,10 @@
 		</div>
 
 		<div class="mb-8">
-			<div class="text-right text-sm text-gray-600 mb-2">March 20, 2026</div>
+			<div class="text-right text-sm text-gray-600 mb-2">March 20, 2027</div>
 			<div class="space-y-1">
 				<div>{applicantName || 'Applicant'}</div>
-				<div>Fall Quarter 2026 · Economics</div>
+				<div>Fall Quarter 2027 · Economics</div>
 			</div>
 		</div>
 
@@ -81,7 +81,7 @@
 		<div class="space-y-4 mb-8">
 			<p>
 				<strong>Congratulations!</strong> It is our pleasure to notify you that you are admitted to the
-				University of California, Davis, for fall quarter 2026 in the Economics major. We applaud your
+				University of California, Davis, for fall quarter 2027 in the Economics major. We applaud your
 				hard work toward this important milestone and would be honored to have you as a member of our UC
 				Davis community.
 			</p>
@@ -96,7 +96,7 @@
 			<p>
 				To join the Aggie family, you must submit your Statement of Intent to Register (SIR) or
 				decline your offer of admission on your MyAdmissions website by 11:45 pm (Pacific Time) on
-				<strong>May 1, 2026</strong>. To accept, you must pay a non-refundable, non-transferable $250
+				<strong>May 1, 2027</strong>. To accept, you must pay a non-refundable, non-transferable $250
 				deposit. You may return to MyAdmissions as many times as you wish before the SIR deadline.
 			</p>
 

@@ -60,7 +60,7 @@
 		{/if}
 
 		<!-- Date -->
-		<div class="font-bold mb-6">March 26, 2026</div>
+		<div class="font-bold mb-6">March 26, 2027</div>
 
 		<!-- Salutation -->
 		<p class="mb-4">Dear {firstName},</p>
@@ -68,7 +68,7 @@
 		<div class="space-y-4">
 			<p>
 				It is with great pleasure that I write on behalf of the Yale Admissions Committee to offer you
-				admission to the Yale College Class of 2030. Congratulations! From a pool of more than fifty
+				admission to the Yale College Class of 2031. Congratulations! From a pool of more than fifty
 				thousand exceptionally talented applicants, you distinguished yourself as one of the few whom
 				we are proud to welcome to Yale.
 			</p>
@@ -85,8 +85,8 @@
 				In the coming days you will receive further information about enrolling, including details
 				about your financial aid award, first-year advising, and Bulldog Days, our program for
 				admitted students held this April in New Haven. I encourage you to visit us and to picture
-				yourself as a member of the Yale community. To reserve your place in the Class of 2030, please
-				submit your reply through your applicant status portal by May 1, 2026.
+				yourself as a member of the Yale community. To reserve your place in the Class of 2031, please
+				submit your reply through your applicant status portal by May 1, 2027.
 			</p>
 
 			<p>
@@ -124,7 +124,7 @@
 				Yale College<br />Undergraduate<br />Admissions
 			</div>
 			<p class="mt-4 text-[11px] text-gray-500 pb-8">
-				Copyright &copy;2026 Yale University. All rights reserved
+				Copyright &copy;2027 Yale University. All rights reserved
 			</p>
 		</div>
 	</footer>

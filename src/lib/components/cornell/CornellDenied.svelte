@@ -69,7 +69,7 @@
 		</div>
 
 		<div class="mb-10">
-			<div class="text-right text-sm text-gray-600 mb-6">March 26, 2020</div>
+			<div class="text-right text-sm text-gray-600 mb-6">March 26, 2027</div>
 			<div class="space-y-1 font-semibold text-lg">
 				<div>{applicantName || 'Applicant'}</div>
 			</div>
@@ -81,7 +81,7 @@
 
 		<div class="space-y-6 mb-12 text-[15px]">
 			<p>
-				Thank you for your application to Cornell University for the Class of 2024. We appreciate
+				Thank you for your application to Cornell University for the Class of 2031. We appreciate
 				the time and care you took to share your achievements and aspirations with us.
 			</p>
 

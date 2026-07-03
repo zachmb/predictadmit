@@ -70,7 +70,7 @@
 		</div>
 
 		<div class="mb-8">
-			<div class="text-right text-sm text-gray-600 mb-2">March 25, 2026</div>
+			<div class="text-right text-sm text-gray-600 mb-2">March 25, 2027</div>
 			<div class="space-y-1">
 				<div>{applicantName || 'Applicant'}</div>
 				<div>2550 Waterview Dr Unit 347</div>
@@ -88,7 +88,7 @@
 			<p>
 				Congratulations! Based on a careful review of your Regular Decision application, it is my
 				great pleasure to offer you admission to Emory College of Arts and Sciences in the Class of
-				2030. Your application distinguished itself within an extraordinarily talented and
+				2031. Your application distinguished itself within an extraordinarily talented and
 				competitive pool, and the Admission Committee was genuinely impressed by your academic
 				accomplishments and the character you brought to every part of your application.
 			</p>
@@ -109,8 +109,8 @@
 			</p>
 
 			<p>
-				To secure your place in the Class of 2030, please submit your enrollment deposit and reply
-				form through your applicant portal by <strong>May 1, 2026</strong>. Information regarding your
+				To secure your place in the Class of 2031, please submit your enrollment deposit and reply
+				form through your applicant portal by <strong>May 1, 2027</strong>. Information regarding your
 				financial aid award, if you applied for aid, is available in the portal as well.
 			</p>
 

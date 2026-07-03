@@ -67,7 +67,7 @@
 		</div>
 
 		<div class="mb-8">
-			<div class="text-right text-sm text-gray-600 mb-2">March 27, 2026</div>
+			<div class="text-right text-sm text-gray-600 mb-2">March 27, 2027</div>
 			<div class="text-right text-sm text-gray-600 mb-4">Reference ID: 108037714</div>
 			<div class="space-y-1">
 				<div>{applicantName || 'Applicant'}</div>
@@ -136,7 +136,7 @@
 			<div class="text-sm text-gray-600">
 				Associate Dean and Director of Undergraduate Admission<br />
 				{schoolName}<br />
-				<span class="italic">Fall 2026 First-Year Admission Review</span>
+				<span class="italic">Fall 2027 First-Year Admission Review</span>
 			</div>
 		</div>
 

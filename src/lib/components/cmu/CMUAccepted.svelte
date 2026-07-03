@@ -55,7 +55,7 @@
 		</div>
 
 		<div class="mb-8">
-			<div class="text-sm text-gray-600 mb-6">March 15, 2026</div>
+			<div class="text-sm text-gray-600 mb-6">March 15, 2027</div>
 			<div class="space-y-1 text-[15px]">
 				<div>{applicantName || 'Applicant'}</div>
 				<div>2550 Waterview Dr Unit 347</div>
@@ -69,7 +69,7 @@
 			<p>
 				Congratulations! The Carnegie Mellon University Admission Committee is pleased to offer you
 				admission to the Department of Mechanical Engineering in the College of Engineering on the
-				Pittsburgh campus for Fall 2026.
+				Pittsburgh campus for Fall 2027.
 			</p>
 
 			<p>

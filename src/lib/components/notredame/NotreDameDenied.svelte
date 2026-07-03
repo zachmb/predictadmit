@@ -65,7 +65,7 @@
 		</div>
 
 		<div class="mb-8">
-			<div class="text-right text-sm text-gray-600 mb-2">March 25, 2026</div>
+			<div class="text-right text-sm text-gray-600 mb-2">March 25, 2027</div>
 			<div class="space-y-1">
 				<div>{applicantName || 'Applicant'}</div>
 			</div>
@@ -80,7 +80,7 @@
 		<div class="space-y-4 mb-8">
 			<p>
 				Thank you for your application to the University of Notre Dame and for allowing us to consider
-				you for a place in our Class of 2030. I know how much thought and effort you invested in your
+				you for a place in our Class of 2031. I know how much thought and effort you invested in your
 				application, and the Committee on Admissions reviewed it with the care and attention it
 				deserved.
 			</p>

@@ -55,7 +55,7 @@
 		{/if}
 
 		<!-- Date + gold rule -->
-		<div class="mb-0 text-[13px] font-semibold text-slate-700">March 20, 2026</div>
+		<div class="mb-0 text-[13px] font-semibold text-slate-700">March 20, 2027</div>
 		<div class="mt-2 mb-6 border-t-4" style="border-color: {accent};"></div>
 
 		<!-- Letter card -->
@@ -111,7 +111,7 @@
 				<p>
 					Our community celebrates you and your unique contributions, and we hope you will join us this
 					Fall. Accept your offer of admission in your MAP@Berkeley portal by 11:59 p.m. (Pacific time)
-					on May 1, 2026.
+					on May 1, 2027.
 				</p>
 				<p>Welcome to UC Berkeley.</p>
 				<p class="font-semibold text-[#003262]">Go Bears!</p>

@@ -67,7 +67,7 @@
 		</div>
 
 		<div class="mb-8">
-			<div class="text-right text-sm text-gray-600 mb-2">March 14, 2020</div>
+			<div class="text-right text-sm text-gray-600 mb-2">March 14, 2027</div>
 			<div class="space-y-1">
 				<div>{applicantName || 'Applicant'}</div>
 				<div>1600 Pennsylvania Avenue NW</div>
@@ -82,7 +82,7 @@
 		<div class="space-y-4 mb-8">
 			<p>
 				Thank you for your interest in the California Institute of Technology and for the
-				comprehensive application you submitted for admission to the Class of 2024.
+				comprehensive application you submitted for admission to the Class of 2031.
 			</p>
 
 			<p>

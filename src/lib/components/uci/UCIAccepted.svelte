@@ -65,11 +65,11 @@
 		</div>
 
 		<div class="mb-8">
-			<div class="mb-2 text-right text-sm text-gray-600">March 20, 2026</div>
+			<div class="mb-2 text-right text-sm text-gray-600">March 20, 2027</div>
 			<div class="space-y-1">
 				<div>{applicantName || 'Applicant'}</div>
 				<div>Application ID: 4180909</div>
-				<div>Fall 2026 &bull; First Year</div>
+				<div>Fall 2027 &bull; First Year</div>
 			</div>
 		</div>
 
@@ -82,7 +82,7 @@
 		<div class="mb-8 space-y-4">
 			<p>
 				Congratulations! On behalf of the entire campus community, it is my great pleasure to offer
-				you admission to the University of California, Irvine for the Fall 2026 term. Out of one of
+				you admission to the University of California, Irvine for the Fall 2027 term. Out of one of
 				the largest and most competitive applicant pools in the University of California system, you
 				distinguished yourself through your academic accomplishments, your personal insight, and the
 				promise you show to thrive as an Anteater.
@@ -99,7 +99,7 @@
 				To secure your place in the entering class, you must submit your <strong
 					>Statement of Intent to Register (SIR)</strong
 				>
-				through your UC Application account and the UCI Applicant Portal by <strong>May 1, 2026</strong>.
+				through your UC Application account and the UCI Applicant Portal by <strong>May 1, 2027</strong>.
 				Detailed instructions regarding enrollment, orientation, housing, and financial aid are available
 				in your applicant portal. We encourage you to review your financial aid notification and to explore
 				the many resources available to admitted students.

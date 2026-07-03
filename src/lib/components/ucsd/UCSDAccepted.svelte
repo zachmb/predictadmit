@@ -57,7 +57,7 @@
 		<div class="flex justify-between items-start mb-8 text-sm">
 			<div>{applicantName || 'Applicant'}</div>
 			<div class="text-right leading-relaxed">
-				<div>March 20, 2026</div>
+				<div>March 20, 2027</div>
 				<div>Application ID: 20260012</div>
 			</div>
 		</div>
@@ -67,12 +67,12 @@
 
 		<div class="space-y-5 text-[15px] leading-relaxed">
 			<p class="font-semibold text-slate-800">
-				Congratulations! We are pleased to offer you admission for Fall 2026 to the University of
+				Congratulations! We are pleased to offer you admission for Fall 2027 to the University of
 				California San Diego as an Undeclared major in Warren College.
 			</p>
 
 			<p>
-				Your selection for the Triton Class of 2030 is an extraordinary accomplishment, given that UC
+				Your selection for the Triton Class of 2031 is an extraordinary accomplishment, given that UC
 				San Diego received more than 168,000 total applications! We believe you have the talent,
 				skills, knowledge and passion to be a powerful contributing member of the Triton family.
 				Please accept my personal congratulations on your outstanding achievement.
@@ -110,7 +110,7 @@
 			</p>
 
 			<p>
-				I am confident the Class of 2030 will be a passionate and resilient group of students, ready to
+				I am confident the Class of 2031 will be a passionate and resilient group of students, ready to
 				make their mark on our evolving world. I cannot wait to see the unique impact you will have at
 				UC San Diego and beyond.
 			</p>

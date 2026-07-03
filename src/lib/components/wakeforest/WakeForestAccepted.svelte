@@ -63,7 +63,7 @@
 		</div>
 
 		<div class="mb-8">
-			<div class="text-right text-sm text-gray-600 mb-2">March 24, 2026</div>
+			<div class="text-right text-sm text-gray-600 mb-2">March 24, 2027</div>
 			<div class="space-y-1">
 				<div>{applicantName || 'Applicant'}</div>
 			</div>
@@ -78,7 +78,7 @@
 		<div class="space-y-4 mb-8">
 			<p>
 				It is my great privilege to congratulate you on your admission to the Wake Forest University
-				Class of 2030. On behalf of the entire Committee on Admissions, welcome to the Forest. This
+				Class of 2031. On behalf of the entire Committee on Admissions, welcome to the Forest. This
 				is a moment worth celebrating, and it is one you have earned through years of dedication,
 				curiosity, and character.
 			</p>
@@ -101,7 +101,7 @@
 
 			<p>
 				To secure your place in the class, please submit your enrollment deposit and Decision Reply
-				Form through your applicant status page by <strong>May 1, 2026</strong>. If you applied for
+				Form through your applicant status page by <strong>May 1, 2027</strong>. If you applied for
 				financial aid, your award information will be posted to your portal shortly. Our team is here
 				to help every step of the way.
 			</p>

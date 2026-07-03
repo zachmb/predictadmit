@@ -74,13 +74,13 @@
 		{/if}
 
 		<div class="text-[15px] leading-relaxed text-[#16283c]">
-			<p class="font-bold mb-6">March 14, 2026</p>
+			<p class="font-bold mb-6">March 14, 2027</p>
 
 			<p class="mb-5">Dear {applicantName || 'Applicant'},</p>
 
 			<p class="mb-5">
 				The Admissions Committee has completed its review of your application, and it is my great
-				pleasure to tell you that you have been admitted to the MIT Class of 2030. Congratulations! On
+				pleasure to tell you that you have been admitted to the MIT Class of 2031. Congratulations! On
 				behalf of the entire Admissions Committee, welcome to MIT.
 			</p>
 
@@ -96,7 +96,7 @@
 				Over the coming weeks you will receive information about Campus Preview Weekend (CPW), our
 				celebration for admitted students, along with details on financial aid, housing, and next
 				steps. To reserve your place in the class, please confirm your enrollment through your
-				applicant portal by May 1, 2026.
+				applicant portal by May 1, 2027.
 			</p>
 
 			<p class="mb-8">

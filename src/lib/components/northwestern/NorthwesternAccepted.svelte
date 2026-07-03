@@ -78,7 +78,7 @@
 
 		<!-- Date + Download PDF -->
 		<div class="flex items-center justify-between">
-			<div class="text-[13px] text-gray-700">March 17, 2026</div>
+			<div class="text-[13px] text-gray-700">March 17, 2027</div>
 			<a
 				href="/disclaimer"
 				class="text-[13px] font-semibold hover:underline"
@@ -110,7 +110,7 @@
 				In the coming days you will receive detailed information about enrolling, financial aid, and
 				Wildcat Days, our program for admitted students, where you can experience the academic and
 				social life of the University firsthand. To reserve your place in the class, please confirm
-				your intention to enroll through your applicant portal by May 1, 2026.
+				your intention to enroll through your applicant portal by May 1, 2027.
 			</p>
 			<p>
 				The admission committee is delighted by the prospect of welcoming you to campus. On behalf of
@@ -206,7 +206,7 @@
 		</div>
 		<div style="background-color: {primaryColor};">
 			<div class="mx-auto flex max-w-6xl flex-wrap items-center gap-4 px-6 py-3 text-[12px] text-gray-200">
-				<span>&copy; 2026 Northwestern University</span>
+				<span>&copy; 2027 Northwestern University</span>
 				<a href="/disclaimer" class="font-semibold underline">Accessibility</a>
 				<a href="/disclaimer" class="font-semibold underline">Disclaimer</a>
 				<a href="/disclaimer" class="font-semibold underline">Privacy Statement</a>

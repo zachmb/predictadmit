@@ -56,7 +56,7 @@
 		{/if}
 
 		<div class="flex justify-between items-start text-sm text-slate-600 mb-6">
-			<span>January 23, 2026</span>
+			<span>January 23, 2027</span>
 			<a href="/disclaimer" class="text-[#0021A5] font-medium hover:underline">Download PDF</a>
 		</div>
 
@@ -117,9 +117,9 @@
 				Conference (SEC).
 			</p>
 			<p>
-				You are admitted to the Fall term, which begins on August 20, 2026. To secure your place in
-				the Class of 2030, visit your Gator Portal, confirm your enrollment, and submit your $200
-				enrollment deposit by 11:59 pm on <strong>May 1, 2026</strong>.
+				You are admitted to the Fall term, which begins on August 20, 2027. To secure your place in
+				the Class of 2031, visit your Gator Portal, confirm your enrollment, and submit your $200
+				enrollment deposit by 11:59 pm on <strong>May 1, 2027</strong>.
 			</p>
 			<p>
 				To help you keep track of your next steps, we created a custom welcome site for all newly
@@ -153,7 +153,7 @@
 			tentative until we receive your official test scores and final high school and/or college
 			transcript(s), and we verify your eligibility. You must remain at the same academic level and
 			graduate from high school on time. Your final transcript(s) and test scores should be sent as
-			soon as they become available, no later than July 1, 2026.
+			soon as they become available, no later than July 1, 2027.
 		</div>
 
 		<div class="mt-8 text-center">
@@ -211,7 +211,7 @@
 				</div>
 			</div>
 			<div class="border-t border-white/20 mt-8 pt-4 flex justify-between text-[11px] text-white/70">
-				<span>&copy; 2026 University of Florida · www.{footerDomain}</span>
+				<span>&copy; 2027 University of Florida · www.{footerDomain}</span>
 				<span>PredictAdmit Simulation — Not affiliated with the University of Florida</span>
 			</div>
 		</div>

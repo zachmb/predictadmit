@@ -507,8 +507,8 @@
 				<p
 					class="text-xl md:text-2xl text-slate-500 max-w-2xl mx-auto leading-snug tracking-tight font-medium mt-6 animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-[200ms] fill-mode-both"
 				>
-					Experience perfectly realistic college admission portals. Search for your university or
-					run a full cycle.
+					Experience perfectly realistic college admission portals — and make your application as
+					strong as it can be with our free tools.
 				</p>
 			</div>
 

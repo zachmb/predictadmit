@@ -57,7 +57,7 @@
 		{/if}
 
 		<!-- Date + navy rule -->
-		<div class="mb-0 text-[13px] font-semibold text-gray-700">March 25, 2026</div>
+		<div class="mb-0 text-[13px] font-semibold text-gray-700">March 25, 2027</div>
 		<div class="mt-2 mb-6 border-t-2" style="border-color: {primaryColor};"></div>
 
 		<!-- Letter card -->
@@ -71,7 +71,7 @@
 				<div class="pt-1 text-[11px] font-bold tracking-wide text-gray-700">Office of Enrollment</div>
 			</div>
 
-			<div class="mb-6 text-[13px] text-gray-700">March 25, 2026</div>
+			<div class="mb-6 text-[13px] text-gray-700">March 25, 2027</div>
 
 			<div class="mb-6 text-[14px] leading-relaxed text-gray-900">
 				{applicantName || 'Applicant'}<br />
@@ -84,7 +84,7 @@
 			<div class="space-y-4 text-[14px] leading-relaxed text-gray-800">
 				<p>
 					After careful consideration, I regret to inform you that we are unable to offer you
-					admission to Rice University for the Class of 2030. We know this is likely not the news you
+					admission to Rice University for the Class of 2031. We know this is likely not the news you
 					were hoping to receive, and we want to emphasize how grateful we are that you took the time,
 					care and effort to apply to Rice. The college application process is incredibly rigorous,
 					and we are honored that you chose to share your journey and aspirations with our admission
@@ -97,7 +97,7 @@
 					with an interest in driving positive change.
 				</p>
 				<p>
-					This year, Rice received over 38,000 applications for the Class of 2030. Although our
+					This year, Rice received over 38,000 applications for the Class of 2031. Although our
 					university is growing and expanding, we unfortunately cannot offer admission to every
 					applicant who would thrive at Rice. Please know that this decision reflects the limitations
 					of our student body and not the limit of your potential. Our decision is final and we are

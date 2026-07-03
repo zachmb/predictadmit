@@ -65,7 +65,7 @@
 		</div>
 
 		<div class="mb-8">
-			<div class="text-sm text-gray-600 mb-4 font-bold">March 28, 2026</div>
+			<div class="text-sm text-gray-600 mb-4 font-bold">March 28, 2027</div>
 			<div class="space-y-1">
 				<div>{applicantName || 'Applicant'}</div>
 			</div>
@@ -80,7 +80,7 @@
 		<div class="space-y-4 mb-8">
 			<p>
 				I am pleased to inform you that you have been admitted to the University of Michigan College
-				of Engineering class entering fall 2026.
+				of Engineering class entering fall 2027.
 			</p>
 
 			<p>
@@ -98,7 +98,7 @@
 			</p>
 
 			<p>
-				Respond to your admissions offer in Enrollment Connect no later than May 1, 2026 at 11:59
+				Respond to your admissions offer in Enrollment Connect no later than May 1, 2027 at 11:59
 				p.m. Eastern Time. On behalf of the entire University of Michigan community, I applaud your
 				impressive scholastic achievement and look forward to welcoming you, <strong>{firstName}</strong>,
 				to the Michigan family of the Leaders and Best.

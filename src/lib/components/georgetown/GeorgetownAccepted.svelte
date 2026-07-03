@@ -62,11 +62,11 @@
 		</div>
 
 		<div class="mb-8">
-			<div class="text-right text-sm text-gray-600 mb-2">March 20, 2026</div>
+			<div class="text-right text-sm text-gray-600 mb-2">March 20, 2027</div>
 			<div class="space-y-1">
 				<div>{applicantName || 'Applicant'}</div>
 				<div>Regular Decision Applicant</div>
-				<div>Class of 2030</div>
+				<div>Class of 2031</div>
 			</div>
 		</div>
 
@@ -79,7 +79,7 @@
 		<div class="space-y-4 mb-8">
 			<p>
 				On behalf of the Committee on Admissions, it is my great pleasure to offer you admission to
-				Georgetown University and the Class of 2030. Congratulations. Your candidacy stood out within
+				Georgetown University and the Class of 2031. Congratulations. Your candidacy stood out within
 				an exceptionally accomplished and competitive pool, and the Committee was deeply impressed by
 				your academic achievement, intellectual curiosity, and the character you brought to every
 				part of your application.
@@ -96,13 +96,13 @@
 			<p>
 				Enclosed with this letter, and available through your applicant portal, you will find
 				information regarding your enrollment, your financial aid award, and the many opportunities to
-				connect with current students, faculty, and fellow admitted members of the Class of 2030. We
+				connect with current students, faculty, and fellow admitted members of the Class of 2031. We
 				encourage you to visit campus this spring to experience Georgetown firsthand.
 			</p>
 
 			<p>
 				To reserve your place in the entering class, please submit your enrollment response and
-				deposit through your online portal by <strong>May 1, 2026</strong>. Should you have any
+				deposit through your online portal by <strong>May 1, 2027</strong>. Should you have any
 				questions as you make this important decision, our office and your admissions officer are
 				here to help.
 			</p>

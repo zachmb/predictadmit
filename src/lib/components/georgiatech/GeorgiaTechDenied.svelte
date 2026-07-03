@@ -76,7 +76,7 @@
 
 			<!-- Letter body -->
 			<div class="max-w-2xl mx-auto text-[13px] leading-relaxed text-slate-800">
-				<p class="mb-6 font-semibold">January 30, 2026</p>
+				<p class="mb-6 font-semibold">January 30, 2027</p>
 
 				<div class="mb-6">
 					<p>{applicantName || 'Applicant'}</p>

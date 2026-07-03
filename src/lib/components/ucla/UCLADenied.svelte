@@ -39,7 +39,7 @@
 		{/if}
 
 		<!-- Date + blue rule -->
-		<div class="mb-0 text-[13px] font-semibold text-gray-700">March 20, 2026</div>
+		<div class="mb-0 text-[13px] font-semibold text-gray-700">March 20, 2027</div>
 		<div class="mt-2 mb-6 border-t-2" style="border-color: {primaryColor};"></div>
 
 		<!-- Letter card -->
@@ -55,7 +55,7 @@
 
 			<div class="mb-6 text-[14px] leading-relaxed text-gray-900">
 				{applicantName || 'Applicant'}<br />
-				Fall 2026 First-Year Applicant
+				Fall 2027 First-Year Applicant
 			</div>
 
 			<div class="mb-6 text-[15px] text-gray-900">Dear {applicantName || 'Applicant'},</div>
@@ -63,8 +63,8 @@
 			<div class="space-y-4 text-[14px] leading-relaxed text-gray-800">
 				<p>
 					After careful review of your application for admission, we regret to inform you that we are
-					unable to offer you admission for Fall 2026. UCLA continues to receive far more applications
-					for admission than we can accommodate in our first-year class. For Fall 2026, we received
+					unable to offer you admission for Fall 2027. UCLA continues to receive far more applications
+					for admission than we can accommodate in our first-year class. For Fall 2027, we received
 					over 146,000 first-year applications and were able to admit fewer than one in ten. Our
 					challenge lies not only in our volume of applications but in the quality of the students who
 					choose to apply to our campus.

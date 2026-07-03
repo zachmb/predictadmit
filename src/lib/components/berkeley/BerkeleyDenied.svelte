@@ -52,7 +52,7 @@
 		{/if}
 
 		<!-- Date + gold rule -->
-		<div class="mb-0 text-[13px] font-semibold text-slate-700">March 20, 2026</div>
+		<div class="mb-0 text-[13px] font-semibold text-slate-700">March 20, 2027</div>
 		<div class="mt-2 mb-6 border-t-4" style="border-color: {accent};"></div>
 
 		<!-- Letter card -->
@@ -89,7 +89,7 @@
 				</p>
 				<p>
 					After thorough and thoughtful review of your application, we regret to inform you that we are
-					unable to offer you admission for the fall 2026 semester.
+					unable to offer you admission for the fall 2027 semester.
 				</p>
 				<p>
 					This year, admission decisions were especially difficult. Demand far exceeds available
@@ -143,13 +143,13 @@
 				</div>
 				<ul class="space-y-1 text-slate-700">
 					<li>
-						<span class="mr-1 text-[#003262]">&bull;</span> Decision Information &mdash; March 20, 2026
+						<span class="mr-1 text-[#003262]">&bull;</span> Decision Information &mdash; March 20, 2027
 						(Displayed)
 					</li>
 					<li>
 						<span class="mr-1 font-semibold text-red-600">New!</span>
 						<a href="/disclaimer" class="text-[#003262] hover:underline"
-							>Application Decisions FAQ &mdash; March 20, 2026</a
+							>Application Decisions FAQ &mdash; March 20, 2027</a
 						>
 					</li>
 				</ul>

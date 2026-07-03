@@ -44,7 +44,7 @@
 			</div>
 		{/if}
 
-		<div class="mb-2 text-[13px] font-bold text-gray-900">March 26, 2026</div>
+		<div class="mb-2 text-[13px] font-bold text-gray-900">March 26, 2027</div>
 
 		<!-- Letter sheet -->
 		<div class="bg-white px-12 py-14 shadow-sm">
@@ -68,7 +68,7 @@
 
 				<p class="mb-5">
 					It is with great pleasure that I write to offer you admission to Duke University as a member
-					of the Class of 2030. On behalf of the Admissions Committee, congratulations. From a pool of
+					of the Class of 2031. On behalf of the Admissions Committee, congratulations. From a pool of
 					more than 61,000 applicants competing for just 1,775 places in the first-year class, you
 					distinguished yourself as one of the exceptionally accomplished and talented students we are
 					proud to welcome to Durham this fall.
@@ -85,7 +85,7 @@
 					In the coming days you will receive additional information through your applicant portal,
 					including details about your financial aid award, Blue Devil Days for admitted students, and
 					the steps to confirm your enrollment. To reserve your place in the class, please submit your
-					enrollment response and deposit through your online portal by May 1, 2026.
+					enrollment response and deposit through your online portal by May 1, 2027.
 				</p>
 
 				<p class="mb-8">

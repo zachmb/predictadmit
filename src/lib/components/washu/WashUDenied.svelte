@@ -43,7 +43,7 @@
 
 	<!-- Letter body -->
 	<main class="mx-auto max-w-4xl px-6 pb-16 pt-8">
-		<div class="mb-8 text-[15px] font-bold text-gray-900">March 20, 2026</div>
+		<div class="mb-8 text-[15px] font-bold text-gray-900">March 20, 2027</div>
 
 		<div class="mb-6 text-[14px] text-gray-900">Dear {firstName},</div>
 
@@ -51,7 +51,7 @@
 			<p>
 				Thank you for your interest in Washington University in St. Louis. The Admissions Committee
 				has completed its review of Regular Decision applications, and we are unable to offer you
-				admission to the Class of 2030.
+				admission to the Class of 2031.
 			</p>
 			<p>
 				The Admissions Committee carefully considered your application, taking note of your academic
@@ -110,7 +110,7 @@
 		</div>
 		<div class="border-t border-gray-700">
 			<div class="mx-auto max-w-6xl px-6 py-4 font-sans text-[12px] text-gray-300">
-				&copy;2025 Washington University in St. Louis
+				&copy;2027 Washington University in St. Louis
 			</div>
 		</div>
 	</footer>

@@ -79,7 +79,7 @@
 
 			<!-- Letter body -->
 			<div class="max-w-2xl mx-auto text-[13px] leading-relaxed text-slate-800">
-				<p class="mb-6 font-semibold">March 8, 2026</p>
+				<p class="mb-6 font-semibold">March 8, 2027</p>
 
 				<div class="mb-6">
 					<p>{applicantName || 'Applicant'}</p>
@@ -107,7 +107,7 @@
 				<p class="mb-4">
 					To secure your place in the class, please log in to your applicant portal to review your
 					enrollment steps, financial aid information, and next steps for orientation. We encourage
-					you to submit your enrollment confirmation by <strong>May 1, 2026</strong>.
+					you to submit your enrollment confirmation by <strong>May 1, 2027</strong>.
 				</p>
 
 				<p class="mb-6">

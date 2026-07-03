@@ -52,7 +52,7 @@
 		</div>
 
 		<div class="mb-8">
-			<div class="text-sm text-gray-600 mb-6">March 15, 2026</div>
+			<div class="text-sm text-gray-600 mb-6">March 15, 2027</div>
 			<div class="space-y-1 text-[15px]">
 				<div>{applicantName || 'Applicant'}</div>
 				<div>2550 Waterview Dr Unit 347</div>
@@ -65,7 +65,7 @@
 		<div class="space-y-4 mb-8 text-[15px] leading-relaxed">
 			<p>
 				Thank you for your interest in Carnegie Mellon University and for the time and care you put
-				into your application for Fall 2026. Our Admission Committee reviewed your application with
+				into your application for Fall 2027. Our Admission Committee reviewed your application with
 				great attention, and I know how much thought and effort went into it.
 			</p>
 

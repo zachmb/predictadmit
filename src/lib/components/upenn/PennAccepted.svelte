@@ -73,13 +73,13 @@
 				</div>
 			{/if}
 
-			<p class="font-bold mb-8">March 26, 2026</p>
+			<p class="font-bold mb-8">March 26, 2027</p>
 
 			<p class="mb-6">Dear {firstName},</p>
 
 			<p class="mb-6">
 				On behalf of the University of Pennsylvania, it is my great pleasure to offer you admission to
-				the Class of 2030. Congratulations, and welcome to Penn!
+				the Class of 2031. Congratulations, and welcome to Penn!
 			</p>
 
 			<p class="mb-6">

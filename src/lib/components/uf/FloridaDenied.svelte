@@ -53,7 +53,7 @@
 		{/if}
 
 		<div class="flex justify-between items-start text-sm text-slate-600 mb-6">
-			<span>February 27, 2026</span>
+			<span>February 27, 2027</span>
 			<a href="/disclaimer" class="text-[#0021A5] font-medium hover:underline">Download PDF</a>
 		</div>
 
@@ -103,11 +103,11 @@
 				Thank you for applying to the University of Florida. Our review committee carefully considered
 				your academic record, activities, and accomplishments, and I know the time and thought you put
 				into your application. After a thorough and holistic review, I am sorry to share that we are
-				unable to offer you admission for the Fall 2026 term.
+				unable to offer you admission for the Fall 2027 term.
 			</p>
 			<p>
 				This year we received a record number of applications from an exceptionally talented pool of
-				students for a limited number of spaces in the Class of 2030. Decisions like this are among
+				students for a limited number of spaces in the Class of 2031. Decisions like this are among
 				the most difficult we make, and being unable to admit you is in no way a reflection of your
 				ability or your promise. Many outstanding students could not be offered a place this year.
 			</p>
@@ -195,7 +195,7 @@
 				</div>
 			</div>
 			<div class="border-t border-white/20 mt-8 pt-4 flex justify-between text-[11px] text-white/70">
-				<span>&copy; 2026 University of Florida · www.{footerDomain}</span>
+				<span>&copy; 2027 University of Florida · www.{footerDomain}</span>
 				<span>PredictAdmit Simulation — Not affiliated with the University of Florida</span>
 			</div>
 		</div>

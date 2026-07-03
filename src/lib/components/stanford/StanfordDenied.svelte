@@ -47,7 +47,7 @@
 
 		<!-- Date + Download row -->
 		<div class="flex justify-between items-center text-[11px] text-gray-600 mb-6">
-			<span class="font-bold">March 14, 2026</span>
+			<span class="font-bold">March 14, 2027</span>
 			<a href="/disclaimer" class="text-[#8C1515] underline hover:no-underline">Download PDF</a>
 		</div>
 

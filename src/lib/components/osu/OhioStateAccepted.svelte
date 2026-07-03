@@ -65,7 +65,7 @@
 		</div>
 
 		<div class="mb-8">
-			<div class="text-sm text-gray-600 mb-4 font-bold">March 12, 2026</div>
+			<div class="text-sm text-gray-600 mb-4 font-bold">March 12, 2027</div>
 			<div class="space-y-1">
 				<div>{applicantName || 'Applicant'}</div>
 			</div>
@@ -80,7 +80,7 @@
 		<div class="space-y-4 mb-8">
 			<p>
 				It is my great pleasure to offer you admission to The Ohio State University for the autumn
-				semester of 2026. On behalf of the entire university community, welcome to Buckeye Nation.
+				semester of 2027. On behalf of the entire university community, welcome to Buckeye Nation.
 				Your admission reflects the strength of your academic record, your character, and the promise
 				you have shown as a future leader.
 			</p>
@@ -103,7 +103,7 @@
 			<p>
 				To accept our offer of admission and confirm your enrollment, please submit your Enrollment
 				Acceptance and non-refundable deposit through your applicant portal no later than
-				<strong>May 1, 2026</strong>. You will also find important information there regarding
+				<strong>May 1, 2027</strong>. You will also find important information there regarding
 				financial aid, scholarships, housing, and orientation. If you have any questions, our staff
 				is here to help every step of the way.
 			</p>

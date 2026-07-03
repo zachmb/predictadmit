@@ -63,10 +63,10 @@
 		</div>
 
 		<div class="mb-8">
-			<div class="text-right text-sm text-gray-600 mb-2">March 10, 2026</div>
+			<div class="text-right text-sm text-gray-600 mb-2">March 10, 2027</div>
 			<div class="space-y-1">
 				<div>{applicantName || 'Applicant'}</div>
-				<div>Applicant, Fall 2026 First-Year Class</div>
+				<div>Applicant, Fall 2027 First-Year Class</div>
 			</div>
 		</div>
 
@@ -79,7 +79,7 @@
 		<div class="space-y-4 mb-8">
 			<p>
 				Congratulations! It is my great pleasure to offer you admission to Purdue University for the
-				Fall 2026 semester. On behalf of the Office of Admissions, welcome to the Boilermaker family.
+				Fall 2027 semester. On behalf of the Office of Admissions, welcome to the Boilermaker family.
 				Your record of academic achievement, persistence, and promise stood out in one of the largest
 				and most competitive applicant pools in Purdue's history.
 			</p>

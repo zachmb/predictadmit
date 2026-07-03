@@ -65,7 +65,7 @@
 		</div>
 
 		<div class="mb-8">
-			<div class="text-right text-sm text-slate-600 mb-2">March 21, 2026</div>
+			<div class="text-right text-sm text-slate-600 mb-2">March 21, 2027</div>
 			<div class="space-y-1">
 				<div>{applicantName || 'Applicant'}</div>
 			</div>
@@ -102,7 +102,7 @@
 
 			<p>
 				To reserve your place in the entering class, please submit your enrollment decision through
-				your applicant portal by <strong>May 1, 2026</strong>. If you applied for financial aid,
+				your applicant portal by <strong>May 1, 2027</strong>. If you applied for financial aid,
 				Student Financial Services will share your award package separately; please do not let cost
 				stand between you and this opportunity before speaking with our office.
 			</p>

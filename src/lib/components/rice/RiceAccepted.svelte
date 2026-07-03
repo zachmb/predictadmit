@@ -60,7 +60,7 @@
 		{/if}
 
 		<!-- Date + navy rule -->
-		<div class="mb-0 text-[13px] font-semibold text-gray-700">March 25, 2026</div>
+		<div class="mb-0 text-[13px] font-semibold text-gray-700">March 25, 2027</div>
 		<div class="mt-2 mb-6 border-t-2" style="border-color: {primaryColor};"></div>
 
 		<!-- Letter card -->
@@ -74,7 +74,7 @@
 				<div class="pt-1 text-[11px] font-bold tracking-wide text-gray-700">Office of Enrollment</div>
 			</div>
 
-			<div class="mb-6 text-[13px] text-gray-700">March 25, 2026</div>
+			<div class="mb-6 text-[13px] text-gray-700">March 25, 2027</div>
 
 			<div class="mb-6 text-[14px] leading-relaxed text-gray-900">
 				{applicantName || 'Applicant'}<br />
@@ -87,7 +87,7 @@
 			<div class="space-y-4 text-[14px] leading-relaxed text-gray-800">
 				<p>
 					Congratulations! It is my great pleasure to offer you admission to Rice University and to
-					welcome you to the Class of 2030. On behalf of the entire admission committee, I want you to
+					welcome you to the Class of 2031. On behalf of the entire admission committee, I want you to
 					know how genuinely impressed we were by your accomplishments, your character, and the
 					distinct perspective you will bring to our residential colleges.
 				</p>

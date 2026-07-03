@@ -67,12 +67,12 @@
 			</div>
 		{/if}
 
-		<div class="text-sm text-gray-600 mb-8 font-sans font-bold">March 18, 2026</div>
+		<div class="text-sm text-gray-600 mb-8 font-sans font-bold">March 18, 2027</div>
 
 		<!-- Welcome banner -->
 		<div class="mb-10 text-center font-sans">
 			<div class="text-sm tracking-[0.25em] uppercase text-gray-500 mb-1">
-				Welcome to the Class of 2030
+				Welcome to the Class of 2031
 			</div>
 			<div class="text-4xl font-extrabold tracking-wide" style="color: {primaryColor};">
 				YOU'RE ADMITTED!
