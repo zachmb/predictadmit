@@ -37,22 +37,27 @@ body {
 	background-color: var(--color-brand-bg);
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-	font-weight: 700;
-	letter-spacing: -0.02em;
-	color: var(--color-brand-text);
-}
+/* Tailwind v4 emits utilities inside @layer; unlayered rules would always beat
+   them (e.g. text-white headings rendering slate-900). Keep these element
+   defaults in the base layer so utility classes can override them. */
+@layer base {
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		font-weight: 700;
+		letter-spacing: -0.02em;
+		color: var(--color-brand-text);
+	}
 
-p,
-li,
-a,
-span,
-div {
-	font-weight: 400;
-	line-height: 1.6;
+	p,
+	li,
+	a,
+	span,
+	div {
+		font-weight: 400;
+		line-height: 1.6;
+	}
 }

@@ -324,7 +324,7 @@
 						class="px-5 py-2 text-[14px] font-semibold transition-colors"
 						style={activeTab === tab
 							? `background-color: ${school.primaryColor}; color: white;`
-							: 'background-color: #ece9f0; color: #9a90a8;'}
+							: `background-color: #ece9f0; color: ${school.primaryColor};`}
 					>
 						{tab}
 					</button>
