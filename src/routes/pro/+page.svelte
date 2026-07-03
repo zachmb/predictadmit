@@ -2227,14 +2227,14 @@
 			<div class="text-center space-y-6 max-w-3xl mx-auto">
 				<div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-50 border border-emerald-100 backdrop-blur-sm mb-4">
 					<span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
-					<span class="text-xs font-bold text-emerald-700 tracking-wide uppercase">Now Completely Free</span>
+					<span class="text-xs font-bold text-emerald-700 tracking-wide uppercase">AI Free Forever · Mentors On Demand</span>
 				</div>
 				<h1 class="text-4xl md:text-6xl font-black tracking-tight text-slate-900 leading-tight">
 					PredictAdmit <span class="text-[#0052CC]">Pro</span><br />
-					<span class="text-slate-500">Free for Everyone.</span>
+					<span class="text-slate-500">Free AI. Real Mentors.</span>
 				</h1>
 				<p class="text-lg text-slate-500 max-w-xl mx-auto leading-relaxed mt-6">
-					We've unlocked all our premium tools. No subscriptions, no one-time fees. Just sign in to start building your elite application.
+					Every AI tool is free, forever — no subscriptions, no fees. When you want a human in your corner, add a vetted admissions mentor. That's the only thing you ever pay for.
 				</p>
 			</div>
 
@@ -2245,7 +2245,7 @@
 					<div class="relative rounded-[2rem] bg-white p-10 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.1)] border border-slate-100 space-y-8">
 						<div class="space-y-4 text-center md:text-left">
 							<h2 class="text-2xl font-bold text-slate-900">Get Started Instantly</h2>
-							<p class="text-slate-500">Sign in with Google to access the full Pro suite for free.</p>
+							<p class="text-slate-500">Sign in with Google to unlock every AI tool for free. Add a mentor whenever you're ready — never before.</p>
 						</div>
 
 						<button
@@ -2264,17 +2264,17 @@
 						<div class="pt-6 border-t border-slate-50 flex items-center justify-center gap-6 opacity-60">
 							<div class="flex flex-col items-center">
 								<span class="text-xl font-bold text-slate-900">$0</span>
-								<span class="text-[10px] uppercase font-bold text-slate-400">Setup</span>
+								<span class="text-[10px] uppercase font-bold text-slate-400">AI Tools</span>
 							</div>
 							<div class="w-px h-8 bg-slate-100"></div>
 							<div class="flex flex-col items-center">
 								<span class="text-xl font-bold text-slate-900">$0</span>
-								<span class="text-[10px] uppercase font-bold text-slate-400">Monthly</span>
+								<span class="text-[10px] uppercase font-bold text-slate-400">Forever</span>
 							</div>
 							<div class="w-px h-8 bg-slate-100"></div>
 							<div class="flex flex-col items-center">
-								<span class="text-xl font-bold text-slate-900">∞</span>
-								<span class="text-[10px] uppercase font-bold text-slate-400">Access</span>
+								<span class="text-xl font-bold text-slate-900">1:1</span>
+								<span class="text-[10px] uppercase font-bold text-slate-400">Mentors</span>
 							</div>
 						</div>
 					</div>
@@ -2282,7 +2282,7 @@
 
 				<!-- Features List -->
 				<div class="space-y-8">
-					<h3 class="text-2xl font-bold text-slate-900">What's Unlocked?</h3>
+					<h3 class="text-2xl font-bold text-slate-900">Free AI, unlocked instantly</h3>
 					<div class="grid gap-6">
 						<!-- Feature item -->
 						<div class="flex items-start gap-4">
@@ -2314,6 +2314,20 @@
 								<p class="text-sm text-slate-500">Unlock specific admissions strategies for the top 50+ universities.</p>
 							</div>
 						</div>
+
+						<!-- Paid human layer -->
+						<div class="flex items-start gap-4 rounded-2xl border border-blue-100 bg-blue-50/50 p-4 -m-4">
+							<div class="w-10 h-10 rounded-xl bg-[#0052CC] flex items-center justify-center shrink-0">
+								<svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 10-4-4 4 4 0 004 4zm6 0a4 4 0 10-3-6.7" /></svg>
+							</div>
+							<div>
+								<div class="flex items-center gap-2">
+									<p class="font-bold text-slate-900">1:1 Human Mentors</p>
+									<span class="text-[10px] uppercase font-bold tracking-wide text-[#0052CC] bg-white border border-blue-100 rounded-full px-2 py-0.5">Optional</span>
+								</div>
+								<p class="text-sm text-slate-500">Book a vetted admissions mentor for reads, strategy, and accountability. The one thing we charge for — and only if you want it.</p>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -2321,11 +2335,12 @@
 			<!-- Vision Section -->
 			<div class="pt-16 border-t border-slate-200">
 				<div class="bg-blue-900 rounded-[2.5rem] p-12 text-center text-white space-y-6">
-					<h3 class="text-3xl font-bold">The Vision for Free Pro</h3>
+					<h3 class="text-3xl font-bold">Free AI for all. Mentors for the moments that matter.</h3>
 					<p class="text-blue-100 text-lg max-w-2xl mx-auto leading-relaxed">
-						We believe the price of admissions advice should not determine the quality of your education. 
-						By making PredictAdmit Pro free for everyone, we're giving thousands of students the same 
-						advantages once reserved for those with expensive consultants.
+						We believe the price of admissions advice should not determine the quality of your education.
+						So we made the entire AI suite free for everyone — the same advantages once reserved for students
+						with expensive consultants. We keep the lights on a different way: when you want real human
+						judgment, you can book a vetted mentor. The AI stays free; great mentorship stays worth paying for.
 					</p>
 				</div>
 			</div>
