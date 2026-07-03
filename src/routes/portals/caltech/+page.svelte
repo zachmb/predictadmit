@@ -2,7 +2,7 @@
 	import { userProfile, defaultProfile } from '$lib/stores/user';
 	import type { UserProfile } from '$lib/stores/user';
 	import { schoolConfigs } from '$lib/config/schools';
-	import { decisionsBySlug } from '$lib/stores/results';
+	import { decisionsBySlug, type DecisionOutcome } from '$lib/stores/results';
 	import { portalDecisionViewed } from '$lib/stores/ui';
 
 	// Placeholder Decision Components (for completeness, although not requested yet)
@@ -36,10 +36,12 @@
 	let error = '';
 	let authenticated = false;
 	let hasViewedUpdate = false; // Controls the transition to the decision page
+	let shownDecision: DecisionOutcome = school.decision;
 
 	// ----------------- REACTIVE DERIVATIONS -----------------
 
 	$: profile = $userProfile;
+	$: shownDecision = $decisionsBySlug[SLUG] ?? school.decision;
 	const applicantName = () => profile.name || 'John Doe';
 	const applicantEmail = () => profile.email || 'johndoe@example.com';
 
@@ -358,7 +360,7 @@
 				</div>
 			</div>
 		</footer>
-	{:else if $decisionsBySlug[SLUG] === 'admit'}
+	{:else if shownDecision === 'admit'}
 		<CaltechAccepted
 			applicantName={applicantName()}
 			schoolName={school.schoolName}

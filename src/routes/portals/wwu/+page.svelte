@@ -1,15 +1,56 @@
-<script>
+<script lang="ts">
+  import { userProfile } from '$lib/stores/user';
+  import { decisionsBySlug, type DecisionOutcome } from '$lib/stores/results';
+  import { portalDecisionViewed } from '$lib/stores/ui';
+  import WWUAccepted from '$lib/components/wwu/WWUAccepted.svelte';
+  import WWUDenied from '$lib/components/wwu/WWUDenied.svelte';
+
+  const SLUG = 'wwu';
+  const school = {
+    schoolName: 'Western Washington University',
+    primaryColor: '#0a3a63',
+    footerDomain: 'wwu.edu',
+    decision: 'admit' as DecisionOutcome
+  };
+
   const applications = [
     {
       type: "Undergraduate Application",
       term: "Fall 2026 First Year Main Campus",
-      status: "Submitted",
+      status: "Decision Available",
       started: "11/24/2025",
       submitted: "11/24/2025"
     }
   ];
+
+  let hasViewedUpdate = false;
+
+  $: applicantName = $userProfile.name || 'Applicant';
+  $: shownDecision = $decisionsBySlug[SLUG] ?? school.decision;
+
+  const handleViewDecision = () => {
+    hasViewedUpdate = true;
+    portalDecisionViewed.set(true);
+  };
 </script>
 
+{#if hasViewedUpdate}
+  {#if shownDecision === 'admit'}
+    <WWUAccepted
+      applicantName={applicantName}
+      schoolName={school.schoolName}
+      primaryColor={school.primaryColor}
+      footerDomain={school.footerDomain}
+    />
+  {:else}
+    <WWUDenied
+      applicantName={applicantName}
+      schoolName={school.schoolName}
+      primaryColor={school.primaryColor}
+      footerDomain={school.footerDomain}
+    />
+  {/if}
+{:else}
 <div class="min-h-screen flex bg-[#0a3a63] text-white font-sans">
   <!-- LEFT SIDEBAR -->
   <aside class="w-[260px] shrink-0 px-8 pt-10 pb-8 border-r border-white/10">
@@ -37,7 +78,7 @@
   <main class="flex-1 px-[70px] pt-[60px] pb-[80px]">
     <!-- Top Right User -->
     <div class="flex justify-end items-center mb-[60px]">
-      <div class="text-[15px] mr-4">Zachary Basinger</div>
+      <div class="text-[15px] mr-4">{applicantName}</div>
       <button
         class="text-[12px] border border-white/50 px-4 py-1 rounded-sm tracking-wide hover:bg-white hover:text-[#0a3a63] transition"
       >
@@ -91,9 +132,16 @@
         </div>
       {/each}
 
-      <!-- Button -->
-      <div class="mt-[45px]">
+      <div class="mt-[45px] flex flex-wrap gap-3">
         <button
+          type="button"
+          onclick={handleViewDecision}
+          class="bg-[#c4dd3b] text-[#0a3a63] text-[14px] font-semibold px-10 py-4 tracking-wide shadow-sm hover:brightness-95 transition"
+        >
+          VIEW ADMISSION DECISION
+        </button>
+        <button
+          type="button"
           class="bg-[#c4dd3b] text-[#0a3a63] text-[14px] font-semibold px-10 py-4 tracking-wide shadow-sm hover:brightness-95 transition"
         >
           START NEW APPLICATION
@@ -140,3 +188,4 @@
     </div>
   </main>
 </div>
+{/if}

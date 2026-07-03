@@ -39,7 +39,26 @@
 		});
 	});
 
-	// NEW: The explicit trigger
+	const buildManualDecision = (
+		portal: (typeof initialPortals)[number],
+		outcome: DecisionOutcome
+	): AiDecision => ({
+		school: portal.name,
+		slug: portal.slug,
+		outcome,
+		academic_score: 0,
+		academic_explanation: 'N/A: manual portal selection',
+		extracurricular_score: 0,
+		extracurricular_explanation: 'Forced via individual selector',
+		fit_score: 0,
+		fit_explanation: 'Forced via individual selector',
+		intellectual_score: 0,
+		intellectual_explanation: 'Forced via individual selector',
+		character_score: 0,
+		character_explanation: 'Forced via individual selector',
+		improvement_tips: ''
+	});
+
 	const handleModeChange = (event: Event) => {
 		const target = event.target as HTMLSelectElement;
 		const newMode = target.value as 'accepted' | 'denied' | 'random';
@@ -52,42 +71,43 @@
 
 			const status: DecisionOutcome = newMode === 'accepted' ? 'admit' : 'deny';
 			const currentResults = get(aiResults);
-
-			let updatedDecisions: AiDecision[] = [];
-
-			// If empty, generate dummy data; otherwise, map existing
-			if (currentResults.decisions.length === 0) {
-				updatedDecisions = initialPortals.map((p) => ({
-					school: p.name,
-					slug: p.slug,
-					outcome: status,
-					academic_score: 0,
-					academic_explanation: 'N/A: random sim',
-					extracurricular_score: 0,
-					extracurricular_explanation: 'Forced via selector',
-					fit_score: 0,
-					fit_explanation: 'Forced via selector',
-					intellectual_score: 0,
-					intellectual_explanation: 'Forced via selector',
-					character_score: 0,
-					character_explanation: 'Forced via selector',
-					improvement_tips: ''
-				}));
-			} else {
-				updatedDecisions = currentResults.decisions.map((d) => ({
-					...d,
-					outcome: status
-				}));
-			}
+			const decisionsByPortal = new Map(currentResults.decisions.map((d) => [d.slug, d]));
+			const updatedDecisions = initialPortals.map((portal) => {
+				const existingDecision = decisionsByPortal.get(portal.slug);
+				return existingDecision
+					? { ...existingDecision, outcome: status }
+					: buildManualDecision(portal, status);
+			});
 
 			aiResults.setDecisions(updatedDecisions);
 		}
 	};
 
+	const handlePortalDecisionChange = (slug: string, decision: 'accepted' | 'denied') => {
+		const portal = initialPortals.find((p) => p.slug === slug);
+		if (!portal) return;
+
+		userProfile.update((u) => ({ ...u, usingAI: false }));
+		manualOverrideMode.set('random');
+
+		const outcome: DecisionOutcome = decision === 'accepted' ? 'admit' : 'deny';
+		const currentResults = get(aiResults);
+		const existingDecision = currentResults.decisions.find((d) => d.slug === slug);
+		const updatedDecision = existingDecision
+			? { ...existingDecision, outcome }
+			: buildManualDecision(portal, outcome);
+
+		aiResults.setDecisions([
+			...currentResults.decisions.filter((d) => d.slug !== slug),
+			updatedDecision
+		]);
+	};
+
 	const handlePortalClick = (slug: string, currentDecision: DecisionMode) => {
-		const mode = get(manualOverrideMode);
-		const status = mode === 'accepted' ? 'admit' : mode === 'denied' ? 'deny' : currentDecision;
-		sessionStorage.setItem(`decision-${slug}`, status);
+		if (currentDecision === 'accepted' || currentDecision === 'denied') {
+			const status = currentDecision === 'accepted' ? 'admit' : 'deny';
+			sessionStorage.setItem(`decision-${slug}`, status);
+		}
 		goto(`/portals/${slug}`);
 	};
 
@@ -122,8 +142,8 @@
 				>
 					<h1 class="text-3xl font-bold text-slate-900 mb-2">All College Portals</h1>
 					<p class="text-slate-700">
-						Explore individual college admission portals. These results are locked based on your
-						simulation run.
+						Explore individual college admission portals. Choose a result for any school, or use
+						the simulator mode to update every portal at once.
 					</p>
 
 					<div class="mt-4 flex flex-wrap items-center gap-3">
@@ -214,22 +234,26 @@
 										>
 
 										<button
-											disabled
-											class={`px-2 py-0.5 text-xs font-medium rounded border cursor-not-allowed ${
+											type="button"
+											aria-pressed={portal.decision === 'accepted'}
+											onclick={() => handlePortalDecisionChange(portal.slug, 'accepted')}
+											class={`px-2 py-0.5 text-xs font-medium rounded border transition-colors ${
 												portal.decision === 'accepted'
 													? 'bg-green-600 text-white border-green-600'
-													: 'bg-white text-slate-300 border-slate-200 opacity-50'
+													: 'bg-white text-slate-600 border-slate-200 hover:border-green-300 hover:text-green-700'
 											}`}
 										>
 											Accepted
 										</button>
 
 										<button
-											disabled
-											class={`px-2 py-0.5 text-xs font-medium rounded border cursor-not-allowed ${
+											type="button"
+											aria-pressed={portal.decision === 'denied'}
+											onclick={() => handlePortalDecisionChange(portal.slug, 'denied')}
+											class={`px-2 py-0.5 text-xs font-medium rounded border transition-colors ${
 												portal.decision === 'denied'
 													? 'bg-red-600 text-white border-red-600'
-													: 'bg-white text-slate-300 border-slate-200 opacity-50'
+													: 'bg-white text-slate-600 border-slate-200 hover:border-red-300 hover:text-red-700'
 											}`}
 										>
 											Denied
@@ -242,8 +266,8 @@
 
 					<div class="mt-8 p-4 bg-blue-50 border border-blue-200 rounded-md">
 						<p class="text-sm text-blue-800">
-							<strong>Simulation Results Locked:</strong> Individual decisions are determined by the PredictAdmit
-							simulation. These cannot be manually toggled to ensure the integrity of your practice run.
+							<strong>Simulation Controls:</strong> Individual buttons update that school's
+							portal and letter. The simulator mode above can still force every school at once.
 						</p>
 					</div>
 				</div>

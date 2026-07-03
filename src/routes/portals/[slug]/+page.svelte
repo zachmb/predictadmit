@@ -5,6 +5,7 @@
 
 	import AdmissionsPortalTemplate from '$lib/components/portal/AdmissionsPortalTemplate.svelte';
 	import { schoolConfigs } from '$lib/config/schools';
+	import { decisionsBySlug, type DecisionOutcome } from '$lib/stores/results';
 	import { portalDecisionViewed } from '$lib/stores/ui';
 
 	import GenericAcceptedLetter from '$lib/components/portal/GenericAcceptedLetter.svelte';
@@ -84,6 +85,7 @@
 	let currentSlug = '';
 	let school: (typeof schoolConfigs)[string] | undefined = undefined;
 	let pageTitle = 'PredictAdmit – Unknown Portal';
+	let shownDecision: DecisionOutcome = 'deny';
 
 	// ----------------- REACTIVE DERIVATIONS -----------------
 
@@ -96,6 +98,8 @@
 	$: pageTitle = school
 		? `${school.schoolName} Undergraduate Admissions Portal`
 		: 'PredictAdmit – Unknown Portal';
+
+	$: shownDecision = school ? ($decisionsBySlug[school.slug] ?? school.decision) : 'deny';
 
 	const applicantName = () => profile.name || 'Applicant';
 
@@ -312,7 +316,7 @@
 			/>
 		{:else}
 			{#key school.slug}
-				{#if school.decision === 'admit'}
+				{#if shownDecision === 'admit'}
 					<svelte:component
 						this={getLetterComponentsForSlug(school.slug).accepted}
 						applicantName={applicantName()}
