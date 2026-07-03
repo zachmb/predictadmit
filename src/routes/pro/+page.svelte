@@ -138,7 +138,6 @@
 		| 'dashboard'
 		| 'editor'
 		| 'mindmap'
-		| 'universities'
 		| 'counselor'
 		| 'schools'
 		| 'chanceme'
@@ -985,29 +984,6 @@
 					<span>Mind Map / Inspo</span>
 				</button>
 
-				<!-- UNIVERSITIES TAB -->
-				<button
-					onclick={() => (currentView = 'universities')}
-					class="w-full text-left px-6 py-3 text-sm font-bold flex items-center gap-3 transition-all border-l-4 {currentView ===
-					'universities'
-						? 'bg-emerald-50 text-emerald-600 border-emerald-600'
-						: 'text-slate-500 border-transparent hover:text-slate-900 hover:bg-slate-50'}"
-				>
-					<svg class="w-5 h-5 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-						<path d="M12 14l9-5-9-5-9 5 9 5z" />
-						<path
-							d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"
-						/>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"
-						/>
-					</svg>
-					<span>Universities</span>
-				</button>
-
 				<!-- AI COUNSELOR TAB -->
 				<button
 					onclick={() => (currentView = 'counselor')}
@@ -1048,7 +1024,7 @@
 							d="M12 14l6.16-3.422A12.083 12.083 0 0121 12.11c0 .93-.14 1.83-.4 2.68L12 21l-8.6-6.21A11.98 11.98 0 013 12.11c0-.9.14-1.79.4-2.63L12 14z"
 						/></svg
 					>
-					<span>Schools</span>
+					<span>Universities</span>
 				</button>
 
 				<!-- CHANCE ME TAB -->
@@ -1757,236 +1733,6 @@
 						<div class="h-48 bg-purple-50 border-t border-purple-100 p-6 overflow-y-auto">
 							<h3 class="text-xs font-bold uppercase text-purple-600 mb-2">AI Analysis</h3>
 							<p class="text-sm text-slate-800 whitespace-pre-line">{mindMapAnalysis}</p>
-						</div>
-					{/if}
-				</div>
-			{:else if currentView === 'universities'}
-				<!-- UNIVERSITIES VIEW -->
-				<div class="flex-1 overflow-y-auto p-8 md:p-12 bg-slate-50 relative">
-					<div class="max-w-6xl mx-auto space-y-8">
-						<div class="flex items-end justify-between">
-							<div>
-								<h2 class="text-3xl font-black text-slate-900 tracking-tight">
-									University Strategy
-								</h2>
-								<div class="text-sm text-slate-500 font-medium mt-1">
-									Craft your narrative and track your progress for top schools.
-								</div>
-							</div>
-						</div>
-
-						<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-							{#each Object.values(schoolConfigs) as config}
-								{@const odds = calculateAdmissionsOdds(config.slug)}
-								<div
-									class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-lg transition-all group relative flex flex-col h-full"
-								>
-									<!-- Header -->
-									<div class="flex items-start justify-between mb-4">
-										<div
-											class="w-12 h-12 rounded-xl flex items-center justify-center text-xl font-bold bg-slate-50 text-slate-700 border border-slate-100 shadow-sm"
-										>
-											{config.schoolName[0]}
-										</div>
-										<div class="flex flex-col items-end">
-											<span class="text-xs font-bold text-slate-400 uppercase tracking-widest"
-												>Chance</span
-											>
-											<span
-												class="text-xl font-black {odds < 15
-													? 'text-rose-500'
-													: odds < 40
-														? 'text-amber-500'
-														: 'text-emerald-500'}"
-											>
-												{odds}%
-											</span>
-										</div>
-									</div>
-
-									<!-- Content -->
-									<div class="space-y-4 flex-1 flex flex-col">
-										<div>
-											<h3 class="font-bold text-slate-900 text-lg leading-tight">
-												{config.schoolName}
-											</h3>
-											<p class="text-xs text-slate-400 mt-1 font-medium">
-												Acceptance Rate: {(config.baseRate * 100).toFixed(1)}%
-											</p>
-										</div>
-
-										<!-- Strategy Input -->
-										<div
-											class="flex-1 bg-slate-50 rounded-xl p-3 border border-slate-100 focus-within:border-blue-200 focus-within:ring-2 focus-within:ring-blue-50 transition-all"
-										>
-											<label class="block text-[10px] font-bold text-slate-400 uppercase mb-2"
-												>My Application Strategy</label
-											>
-											<textarea
-												bind:value={schoolStrategies[config.slug]}
-												placeholder="e.g. Focus on cultural identity essay..."
-												class="w-full bg-transparent border-none text-sm font-medium text-slate-700 placeholder:text-slate-300 resize-none focus:ring-0 p-0 h-24"
-											></textarea>
-										</div>
-									</div>
-								</div>
-							{/each}
-						</div>
-					</div>
-
-					<!-- DEEP DIVE MODAL -->
-					{#if selectedSchoolForDeepDive}
-						{@const deepConf = schoolConfigs[selectedSchoolForDeepDive]}
-						{@const deepOdds = calculateAdmissionsOdds(selectedSchoolForDeepDive)}
-						<div class="fixed inset-0 z-[100] flex items-center justify-center p-4">
-							<!-- Backdrop -->
-							<div
-								class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity"
-								onclick={() => (selectedSchoolForDeepDive = null)}
-								role="button"
-								tabindex="0"
-								onkeydown={(e) => e.key === 'Escape' && (selectedSchoolForDeepDive = null)}
-							></div>
-
-							<!-- Modal -->
-							<div
-								class="bg-white rounded-3xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto relative z-10 flex flex-col animate-in fade-in zoom-in-95 duration-200"
-							>
-								<!-- Modal Header -->
-								<div
-									class="p-8 border-b border-slate-100 flex items-start justify-between bg-slate-50/50"
-								>
-									<div class="flex items-center gap-4">
-										<div
-											class="w-16 h-16 rounded-2xl bg-white shadow-sm border border-slate-200 flex items-center justify-center text-3xl font-black text-slate-800"
-										>
-											{deepConf.schoolName[0]}
-										</div>
-										<div>
-											<h3 class="text-2xl font-black text-slate-900">{deepConf.schoolName}</h3>
-											<div class="flex items-center gap-2 mt-1">
-												<span
-													class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide bg-slate-200 text-slate-600"
-													>Difficulty: {deepConf.difficulty}/10</span
-												>
-												<span
-													class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide bg-slate-200 text-slate-600"
-													>Rate: {(deepConf.baseRate * 100).toFixed(1)}%</span
-												>
-											</div>
-										</div>
-									</div>
-									<button
-										onclick={() => (selectedSchoolForDeepDive = null)}
-										class="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-slate-500 hover:bg-slate-300 transition-colors"
-									>
-										<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-											><path
-												stroke-linecap="round"
-												stroke-linejoin="round"
-												stroke-width="2"
-												d="M6 18L18 6M6 6l12 12"
-											/></svg
-										>
-									</button>
-								</div>
-
-								<!-- Modal Content -->
-								<div class="p-8 space-y-8">
-									<!-- AI Prediction Section -->
-									<div
-										class="bg-indigo-50 rounded-2xl p-6 border border-indigo-100 flex items-center gap-6"
-									>
-										<div class="flex-1">
-											<div class="text-xs font-bold uppercase tracking-widest text-indigo-400 mb-1">
-												Your Predicted Odds
-											</div>
-											<div class="text-4xl font-black text-indigo-900">{deepOdds}%</div>
-											<p class="text-sm text-indigo-800/70 mt-2 font-medium">
-												Based on your Academic Index ({academicIndex}) and holistic profile rating.
-											</p>
-										</div>
-										<div class="w-32 h-32 relative hidden md:block">
-											<!-- Simple visual circle -->
-											<svg class="w-full h-full transform -rotate-90">
-												<circle
-													cx="64"
-													cy="64"
-													r="56"
-													fill="none"
-													stroke="#E0E7FF"
-													stroke-width="12"
-												/>
-												<circle
-													cx="64"
-													cy="64"
-													r="56"
-													fill="none"
-													stroke="#4F46E5"
-													stroke-width="12"
-													stroke-dasharray="351"
-													stroke-dashoffset={351 - (351 * deepOdds) / 100}
-													stroke-linecap="round"
-												/>
-											</svg>
-											<div
-												class="absolute inset-0 flex items-center justify-center text-indigo-600 font-bold text-lg"
-											>
-												{deepOdds}%
-											</div>
-										</div>
-									</div>
-
-									<!-- Recommendations -->
-									<div class="space-y-4">
-										<h4 class="text-lg font-bold text-slate-900 border-l-4 border-slate-900 pl-3">
-											Strategy & Recommendations
-										</h4>
-										<div class="grid gap-4">
-											<div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
-												<div class="font-bold text-slate-900 text-sm mb-1">
-													Target AI Score: {130 + deepConf.difficulty * 10}
-												</div>
-												<p class="text-sm text-slate-500">
-													{academicIndex >= 130 + deepConf.difficulty * 10
-														? 'Your stats are competitive for this school. Focus on essays.'
-														: 'Your stats are slightly below the typical range. Exceptional essays and ECs are required.'}
-												</p>
-											</div>
-											<div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
-												<div class="font-bold text-slate-900 text-sm mb-1">Essay Strategy</div>
-												<p class="text-sm text-slate-500">
-													{deepConf.schoolName} values intellectual vitality and community impact. Ensure
-													your essays highlight specific contributions.
-												</p>
-											</div>
-										</div>
-									</div>
-
-									<!-- Action -->
-									<div class="flex justify-end pt-4">
-										<button
-											class="bg-slate-900 text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:bg-slate-800 transition-all flex items-center gap-2"
-											onclick={() => {
-												selectedSchoolForDeepDive = null;
-												// Ideally verify file exists or create it
-												// For now, assuming user will handle file creation via sidebar
-												currentView = 'editor';
-											}}
-										>
-											Start Drafting Essays
-											<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-												><path
-													stroke-linecap="round"
-													stroke-linejoin="round"
-													stroke-width="2"
-													d="M17 8l4 4m0 0l-4 4m4-4H3"
-												/></svg
-											>
-										</button>
-									</div>
-								</div>
-							</div>
 						</div>
 					{/if}
 				</div>

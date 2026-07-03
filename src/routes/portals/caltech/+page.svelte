@@ -45,6 +45,30 @@
 
 	// ----------------- HANDLERS -----------------
 
+	let isAutoLoggingIn = false;
+	const autoLogin = async (e?: Event) => {
+		if (e) e.preventDefault();
+		if (isAutoLoggingIn) return;
+		isAutoLoggingIn = true;
+		const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+		const em = profile && profile.email && profile.password ? profile.email : 'john.doe@gmail.com';
+		const pw = profile && profile.email && profile.password ? profile.password : 'password123';
+		emailInput = '';
+		passwordInput = '';
+		for (let i = 1; i <= em.length; i++) {
+			emailInput = em.slice(0, i);
+			await sleep(30);
+		}
+		await sleep(220);
+		for (let i = 1; i <= pw.length; i++) {
+			passwordInput = pw.slice(0, i);
+			await sleep(30);
+		}
+		await sleep(360);
+		authenticated = true;
+		isAutoLoggingIn = false;
+	};
+
 	const handleLoadSavedLogin = () => {
 		if (!profile.email || !profile.password) {
 			// Use default John Doe credentials if user hasn't set up their own
@@ -118,7 +142,7 @@
 					To log in, please enter your email address and password.
 				</div>
 
-				<form class="space-y-4 max-w-[500px] mx-auto" on:submit={handleLogin}>
+				<form class="space-y-4 max-w-[500px] mx-auto" on:submit={autoLogin}>
 					{#if error}
 						<p
 							class="text-xs text-red-800 border border-red-300 bg-red-50 px-3 py-2 mb-2"
@@ -170,19 +194,12 @@
 						<div class="w-32"></div>
 
 						<button
-							type="submit"
+							type="button" on:click={autoLogin} disabled={isAutoLoggingIn}
 							class="border border-black bg-gray-300 px-4 py-1 text-[12px] font-normal text-black hover:bg-gray-400 transition-colors"
 						>
 							Login
 						</button>
-						<button
-							type="button"
-							class="border border-slate-400 bg-slate-100 px-3 py-1 text-[11px] text-slate-700 hover:bg-slate-200"
-							on:click={handleLoadSavedLogin}
-						>
-							Load saved PredictAdmit login
-						</button>
-					</div>
+						</div>
 
 					<p class="pt-6 text-[11px] leading-relaxed text-slate-600 max-w-[480px] mx-auto">
 						For this simulation, use the same email address and password that you saved on the

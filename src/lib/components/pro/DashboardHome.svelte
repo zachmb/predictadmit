@@ -21,7 +21,8 @@
 	});
 
 	// ---- Live countdown -------------------------------------------------------
-	const target = new Date('2027-03-27T19:00:00');
+	// Midnight CST (UTC-6) on Nov 1, 2026 — the classic early-application deadline.
+	const target = new Date('2026-11-01T00:00:00-06:00');
 	let now = $state(Date.now());
 
 	$effect(() => {
@@ -202,7 +203,7 @@
 				<div class="flex items-center justify-between">
 					<div>
 						<p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Countdown</p>
-						<h3 class="mt-0.5 text-lg font-bold text-slate-900">Regular Decisions 2027</h3>
+						<h3 class="mt-0.5 text-lg font-bold text-slate-900">Early Deadlines · Nov 1, 2026</h3>
 					</div>
 					<span class="flex items-center gap-1.5 text-xs font-semibold text-[#0052CC]">
 						<span class="relative flex h-2 w-2">

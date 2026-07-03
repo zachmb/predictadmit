@@ -41,6 +41,30 @@
 	$: shownDecision = $decisionsBySlug[SLUG] ?? DEFAULT_DECISION;
 
 	// --- Handlers ---
+	let isAutoLoggingIn = false;
+	const autoLogin = async (e?: Event) => {
+		if (e) e.preventDefault();
+		if (isAutoLoggingIn) return;
+		isAutoLoggingIn = true;
+		const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+		const em = profile && profile.email && profile.password ? profile.email : 'john.doe@gmail.com';
+		const pw = profile && profile.email && profile.password ? profile.password : 'password123';
+		emailInput = '';
+		passwordInput = '';
+		for (let i = 1; i <= em.length; i++) {
+			emailInput = em.slice(0, i);
+			await sleep(30);
+		}
+		await sleep(220);
+		for (let i = 1; i <= pw.length; i++) {
+			passwordInput = pw.slice(0, i);
+			await sleep(30);
+		}
+		await sleep(360);
+		authenticated = true;
+		isAutoLoggingIn = false;
+	};
+
 	const handleLoadSavedLogin = () => {
 		if (!profile.email || !profile.password) {
 			// Use default John Doe credentials if user hasn't set up their own
@@ -149,7 +173,7 @@
 			</h1>
 
 			<div class="border-t border-gray-200 pt-6">
-				<form class="space-y-4" on:submit={handleLogin}>
+				<form class="space-y-4" on:submit={autoLogin}>
 					{#if error}
 						<div
 							class="border border-dotted px-4 py-3 text-[11px]"
@@ -195,19 +219,11 @@
 					</div>
 
 					<button
-						type="submit"
+						type="button" on:click={autoLogin} disabled={isAutoLoggingIn}
 						class="w-full rounded py-3 text-[15px] font-bold cursor-pointer"
 						style="background: #335379; color: {school.accentGold};"
 					>
 						Login
-					</button>
-
-					<button
-						type="button"
-						class="w-full rounded py-2 text-[12px] border border-gray-300 bg-gray-50 text-gray-700 hover:bg-gray-100"
-						on:click={handleLoadSavedLogin}
-					>
-						Load saved PredictAdmit login
 					</button>
 
 					<div class="text-center pt-2">

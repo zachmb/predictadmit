@@ -42,6 +42,36 @@
 	$: shownDecision = $decisionsBySlug[SLUG] ?? DEFAULT_DECISION;
 
 	// --- Handlers ---
+	let isAutoLoggingIn = false;
+	const autoLogin = async (e?: Event) => {
+		if (e) e.preventDefault();
+		if (isAutoLoggingIn) return;
+		isAutoLoggingIn = true;
+		const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+		const parts = (profile.name || 'John Bruin').trim().split(/\s+/);
+		const lastName = parts.length > 1 ? parts[parts.length - 1] : parts[0];
+		const fields: Array<[string, (v: string) => void]> = [
+			[lastName, (v) => (lastNameInput = v)],
+			['004180001', (v) => (applicationIdInput = v)],
+			['02-19-2008', (v) => (dobInput = v)],
+			['Los Angeles', (v) => (cityOfBirthInput = v)]
+		];
+		lastNameInput = '';
+		applicationIdInput = '';
+		dobInput = '';
+		cityOfBirthInput = '';
+		for (const [val, setter] of fields) {
+			for (let i = 1; i <= val.length; i++) {
+				setter(val.slice(0, i));
+				await sleep(28);
+			}
+			await sleep(180);
+		}
+		await sleep(300);
+		authenticated = true;
+		isAutoLoggingIn = false;
+	};
+
 	const handleLoadSavedLogin = () => {
 		if (!profile.email || !profile.password) {
 			// Use default John Doe credentials if user hasn't set up their own
@@ -129,7 +159,7 @@
 						</p>
 					{/if}
 
-					<form class="space-y-5" on:submit={handleLogin}>
+					<form class="space-y-5" on:submit={autoLogin}>
 						<div>
 							<label for="last-name" class="mb-1 block text-sm text-gray-700">Last Name:</label>
 							<input
@@ -176,18 +206,13 @@
 
 						<div class="flex flex-wrap items-center gap-4 pt-1">
 							<button
-								type="submit"
-								class="px-6 py-2 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+								type="button"
+								on:click={autoLogin}
+								disabled={isAutoLoggingIn}
+								class="px-6 py-2 text-sm font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-70"
 								style="background-color: {school.primaryColor};"
 							>
-								Login
-							</button>
-							<button
-								type="button"
-								on:click={handleLoadSavedLogin}
-								class="border border-gray-400 bg-gray-100 px-3 py-2 text-xs text-gray-700 hover:bg-gray-200"
-							>
-								Load saved PredictAdmit login
+								{isAutoLoggingIn ? 'Logging in…' : 'Login'}
 							</button>
 							<a href="/disclaimer" class="text-xs underline" style="color: {school.primaryColor};">Forgot password?</a>
 						</div>

@@ -44,6 +44,30 @@
 	$: shownDecision = $decisionsBySlug[SLUG] ?? DEFAULT_DECISION;
 
 	// --- Handlers ---
+	let isAutoLoggingIn = false;
+	const autoLogin = async (e?: Event) => {
+		if (e) e.preventDefault();
+		if (isAutoLoggingIn) return;
+		isAutoLoggingIn = true;
+		const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+		const em = profile && profile.email && profile.password ? profile.email : 'john.doe@gmail.com';
+		const pw = profile && profile.email && profile.password ? profile.password : 'password123';
+		emailInput = '';
+		passwordInput = '';
+		for (let i = 1; i <= em.length; i++) {
+			emailInput = em.slice(0, i);
+			await sleep(30);
+		}
+		await sleep(220);
+		for (let i = 1; i <= pw.length; i++) {
+			passwordInput = pw.slice(0, i);
+			await sleep(30);
+		}
+		await sleep(360);
+		authenticated = true;
+		isAutoLoggingIn = false;
+	};
+
 	const handleLoadSavedLogin = () => {
 		if (!profile.email || !profile.password) {
 			userProfile.update((u) => ({
@@ -116,7 +140,7 @@
 							enrollment.
 						</p>
 
-						<form class="space-y-4 max-w-sm" on:submit={handleLogin}>
+						<form class="space-y-4 max-w-sm" on:submit={autoLogin}>
 							{#if error}
 								<p
 									class="text-xs text-red-800 border border-red-300 bg-red-50 px-3 py-2"
@@ -156,20 +180,13 @@
 
 							<div class="flex items-center gap-3 pt-1">
 								<button
-									type="submit"
+									type="button" on:click={autoLogin} disabled={isAutoLoggingIn}
 									class="text-white text-sm font-bold px-5 py-2 hover:opacity-90"
 									style="background-color: {ILLINI_BLUE};"
 								>
 									Log In
 								</button>
-								<button
-									type="button"
-									class="border border-gray-400 bg-gray-100 px-3 py-2 text-xs text-gray-700 hover:bg-gray-200"
-									on:click={handleLoadSavedLogin}
-								>
-									Load saved PredictAdmit login
-								</button>
-							</div>
+								</div>
 
 							<div class="pt-2 space-y-2 text-[13px]">
 								<a href="/disclaimer" class="block text-gray-600 hover:underline"

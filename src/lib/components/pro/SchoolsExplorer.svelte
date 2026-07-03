@@ -5,6 +5,7 @@
 		schoolStats,
 		computeAcademicIndex,
 		classifyLikelihood,
+		readableTextColor,
 		type SchoolStat,
 		type SchoolSize,
 		type CampusSetting,
@@ -323,8 +324,8 @@
 						<!-- Top: identity + rank -->
 						<div class="flex items-start gap-3">
 							<div
-								class="flex h-11 w-11 flex-none items-center justify-center rounded-xl text-sm font-bold text-white"
-								style="background-color: {row.color}"
+								class="flex h-11 w-11 flex-none items-center justify-center rounded-xl text-sm font-bold"
+								style="background-color: {row.color}; color: {readableTextColor(row.color)}"
 							>
 								{initials(row.name)}
 							</div>

@@ -41,6 +41,30 @@
 	$: shownDecision = $decisionsBySlug[SLUG] ?? DEFAULT_DECISION;
 
 	// --- Handlers ---
+	let isAutoLoggingIn = false;
+	const autoLogin = async (e?: Event) => {
+		if (e) e.preventDefault();
+		if (isAutoLoggingIn) return;
+		isAutoLoggingIn = true;
+		const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+		const em = profile && profile.email && profile.password ? profile.email : 'john.doe@gmail.com';
+		const pw = profile && profile.email && profile.password ? profile.password : 'password123';
+		emailInput = '';
+		passwordInput = '';
+		for (let i = 1; i <= em.length; i++) {
+			emailInput = em.slice(0, i);
+			await sleep(30);
+		}
+		await sleep(220);
+		for (let i = 1; i <= pw.length; i++) {
+			passwordInput = pw.slice(0, i);
+			await sleep(30);
+		}
+		await sleep(360);
+		authenticated = true;
+		isAutoLoggingIn = false;
+	};
+
 	const handleLoadSavedLogin = () => {
 		if (!profile.email || !profile.password) {
 			// Use default John Doe credentials if user hasn't set up their own
@@ -133,7 +157,7 @@
 				To log in, please enter your email address and password.
 			</div>
 
-			<form class="max-w-xl space-y-4" on:submit={handleLogin}>
+			<form class="max-w-xl space-y-4" on:submit={autoLogin}>
 				{#if error}
 					<p class="border border-red-300 bg-red-50 px-3 py-2 text-xs text-red-800" role="alert">
 						{error}
@@ -167,19 +191,12 @@
 
 				<div class="flex items-center gap-4 pt-2">
 					<button
-						type="submit"
+						type="button" on:click={autoLogin} disabled={isAutoLoggingIn}
 						class="border border-slate-400 bg-gradient-to-b from-white to-slate-200 px-5 py-1.5 text-[13px] font-semibold text-slate-800 hover:from-slate-50 hover:to-slate-300"
 					>
 						Login
 					</button>
-					<button
-						type="button"
-						class="border border-slate-400 bg-slate-100 px-3 py-1.5 text-[12px] text-slate-700 hover:bg-slate-200"
-						on:click={handleLoadSavedLogin}
-					>
-						Load saved PredictAdmit login
-					</button>
-				</div>
+					</div>
 
 				<p class="pt-3 text-[12px] leading-relaxed text-slate-600">
 					Questions about your application? Visit the

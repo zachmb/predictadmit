@@ -41,6 +41,30 @@
 	$: shownDecision = $decisionsBySlug[SLUG] ?? DEFAULT_DECISION;
 
 	// --- Handlers ---
+	let isAutoLoggingIn = false;
+	const autoLogin = async (e?: Event) => {
+		if (e) e.preventDefault();
+		if (isAutoLoggingIn) return;
+		isAutoLoggingIn = true;
+		const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+		const em = profile && profile.email && profile.password ? profile.email : 'john.doe@gmail.com';
+		const pw = profile && profile.email && profile.password ? profile.password : 'password123';
+		emailInput = '';
+		passwordInput = '';
+		for (let i = 1; i <= em.length; i++) {
+			emailInput = em.slice(0, i);
+			await sleep(30);
+		}
+		await sleep(220);
+		for (let i = 1; i <= pw.length; i++) {
+			passwordInput = pw.slice(0, i);
+			await sleep(30);
+		}
+		await sleep(360);
+		authenticated = true;
+		isAutoLoggingIn = false;
+	};
+
 	const handleLoadSavedLogin = () => {
 		if (!profile.email || !profile.password) {
 			userProfile.update((u) => ({
@@ -117,7 +141,7 @@
 				To log in, please enter your email address and password.
 			</div>
 
-			<form class="max-w-xl" on:submit={handleLogin}>
+			<form class="max-w-xl" on:submit={autoLogin}>
 				{#if error}
 					<p
 						class="text-xs text-red-800 border border-red-300 bg-red-50 px-3 py-2 mb-3"
@@ -154,19 +178,12 @@
 
 				<div class="flex items-center gap-3">
 					<button
-						type="submit"
+						type="button" on:click={autoLogin} disabled={isAutoLoggingIn}
 						class="border border-gray-400 bg-gray-200 px-4 py-[5px] text-[13px] text-[#16283c] hover:bg-gray-300"
 					>
 						Login
 					</button>
-					<button
-						type="button"
-						class="text-[12px] text-[#16283c] underline"
-						on:click={handleLoadSavedLogin}
-					>
-						Load saved PredictAdmit login
-					</button>
-				</div>
+					</div>
 
 				<p class="pt-6 text-[11px] leading-relaxed text-gray-500 max-w-lg">
 					For this simulation, use the same email address and password that you saved on the

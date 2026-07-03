@@ -41,6 +41,30 @@
 	$: shownDecision = $decisionsBySlug[SLUG] ?? DEFAULT_DECISION;
 
 	// --- Handlers ---
+	let isAutoLoggingIn = false;
+	const autoLogin = async (e?: Event) => {
+		if (e) e.preventDefault();
+		if (isAutoLoggingIn) return;
+		isAutoLoggingIn = true;
+		const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+		const em = profile && profile.email && profile.password ? profile.email : 'john.doe@gmail.com';
+		const pw = profile && profile.email && profile.password ? profile.password : 'password123';
+		emailInput = '';
+		passwordInput = '';
+		for (let i = 1; i <= em.length; i++) {
+			emailInput = em.slice(0, i);
+			await sleep(30);
+		}
+		await sleep(220);
+		for (let i = 1; i <= pw.length; i++) {
+			passwordInput = pw.slice(0, i);
+			await sleep(30);
+		}
+		await sleep(360);
+		authenticated = true;
+		isAutoLoggingIn = false;
+	};
+
 	const handleLoadSavedLogin = () => {
 		if (!profile.email || !profile.password) {
 			userProfile.update((u) => ({
@@ -124,7 +148,7 @@
 					<div class="px-6 py-8 sm:px-8">
 						<h1 class="pb-3 text-center text-[1.75rem] font-medium">Login with your UCInetID</h1>
 
-						<form class="space-y-1" on:submit={handleLogin}>
+						<form class="space-y-1" on:submit={autoLogin}>
 							{#if error}
 								<p
 									class="mb-3 rounded border border-[#f5c6cb] bg-[#f8d7da] px-3 py-2 text-sm text-[#2c0b0e]"
@@ -162,19 +186,11 @@
 							</div>
 
 							<button
-								type="submit"
+								type="button" on:click={autoLogin} disabled={isAutoLoggingIn}
 								class="mb-4 w-full rounded-[0.3rem] py-2 text-[1.25rem] font-medium"
 								style="background-color: {school.accentColor}; color: #255799;"
 							>
 								Login
-							</button>
-
-							<button
-								type="button"
-								class="mb-4 w-full rounded-[0.3rem] border border-[#255799] bg-white py-2 text-sm font-semibold text-[#255799] hover:bg-[#255799] hover:text-white"
-								on:click={handleLoadSavedLogin}
-							>
-								Load saved PredictAdmit login
 							</button>
 
 							<div class="text-center text-[80%] leading-6 text-[#255799]">

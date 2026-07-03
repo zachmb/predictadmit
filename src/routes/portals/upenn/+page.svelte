@@ -37,6 +37,30 @@
 	$: shownDecision = $decisionsBySlug[SLUG] ?? DEFAULT_DECISION;
 
 	// ----------------- HANDLERS -----------------
+	let isAutoLoggingIn = false;
+	const autoLogin = async (e?: Event) => {
+		if (e) e.preventDefault();
+		if (isAutoLoggingIn) return;
+		isAutoLoggingIn = true;
+		const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+		const em = profile && profile.email && profile.password ? profile.email : 'john.doe@gmail.com';
+		const pw = profile && profile.email && profile.password ? profile.password : 'password123';
+		emailInput = '';
+		passwordInput = '';
+		for (let i = 1; i <= em.length; i++) {
+			emailInput = em.slice(0, i);
+			await sleep(30);
+		}
+		await sleep(220);
+		for (let i = 1; i <= pw.length; i++) {
+			passwordInput = pw.slice(0, i);
+			await sleep(30);
+		}
+		await sleep(360);
+		authenticated = true;
+		isAutoLoggingIn = false;
+	};
+
 	const handleLoadSavedLogin = () => {
 		if (!profile.email || !profile.password) {
 			userProfile.update((u) => ({
@@ -112,7 +136,7 @@
 					To log in, please enter your email address and password.
 				</div>
 
-				<form class="space-y-3" on:submit={handleLogin}>
+				<form class="space-y-3" on:submit={autoLogin}>
 					{#if error}
 						<p
 							class="text-xs text-red-800 border border-red-300 bg-red-50 px-3 py-2 mb-2 max-w-md"
@@ -152,19 +176,12 @@
 
 					<div class="pt-5 pl-[140px] flex items-center gap-4">
 						<button
-							type="submit"
+							type="button" on:click={autoLogin} disabled={isAutoLoggingIn}
 							class="bg-[#011F5B] text-white rounded-full px-8 py-2 text-[13px] font-bold tracking-widest uppercase hover:bg-[#022a7a]"
 						>
 							Login
 						</button>
-						<button
-							type="button"
-							class="border border-slate-400 bg-slate-100 rounded-full px-4 py-2 text-[12px] text-slate-700 hover:bg-slate-200"
-							on:click={handleLoadSavedLogin}
-						>
-							Load saved PredictAdmit login
-						</button>
-					</div>
+						</div>
 
 					<div class="pt-6 text-[14px] text-slate-800 leading-relaxed max-w-4xl">
 						<p class="mb-1">

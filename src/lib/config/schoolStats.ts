@@ -112,6 +112,28 @@ export function getSchoolStat(slug: string): SchoolStat | undefined {
 	return schoolStats[slug];
 }
 
+/**
+ * Returns a readable text color ('#0f172a' dark or '#ffffff' white) for a given
+ * background hex, based on WCAG relative luminance. Use anywhere text sits on a
+ * school's brand color so light brands (orange, Carolina blue, etc.) get dark
+ * text and dark brands get white text — fixing low-contrast bands.
+ */
+export function readableTextColor(hex?: string): string {
+	if (!hex) return '#ffffff';
+	const h = hex.replace('#', '').trim();
+	const full = h.length === 3 ? h.split('').map((c) => c + c).join('') : h;
+	if (full.length < 6) return '#ffffff';
+	const toLin = (v: number) => {
+		const c = v / 255;
+		return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+	};
+	const r = toLin(parseInt(full.slice(0, 2), 16));
+	const g = toLin(parseInt(full.slice(2, 4), 16));
+	const b = toLin(parseInt(full.slice(4, 6), 16));
+	const L = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+	return L > 0.45 ? '#0f172a' : '#ffffff';
+}
+
 /** Rough applicant "academic index" 0–100 from SAT (or ACT) and weighted GPA. */
 export function computeAcademicIndex(sat?: number, act?: number, weightedGpa?: number): number {
 	let satPart = 0;

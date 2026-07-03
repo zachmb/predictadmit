@@ -41,6 +41,30 @@
 	$: shownDecision = $decisionsBySlug[SLUG] ?? DEFAULT_DECISION;
 
 	// --- Handlers ---
+	let isAutoLoggingIn = false;
+	const autoLogin = async (e?: Event) => {
+		if (e) e.preventDefault();
+		if (isAutoLoggingIn) return;
+		isAutoLoggingIn = true;
+		const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+		const em = profile && profile.email && profile.password ? profile.email : 'john.doe@gmail.com';
+		const pw = profile && profile.email && profile.password ? profile.password : 'password123';
+		emailInput = '';
+		passwordInput = '';
+		for (let i = 1; i <= em.length; i++) {
+			emailInput = em.slice(0, i);
+			await sleep(30);
+		}
+		await sleep(220);
+		for (let i = 1; i <= pw.length; i++) {
+			passwordInput = pw.slice(0, i);
+			await sleep(30);
+		}
+		await sleep(360);
+		authenticated = true;
+		isAutoLoggingIn = false;
+	};
+
 	const handleLoadSavedLogin = () => {
 		if (!profile.email || !profile.password) {
 			userProfile.update((u) => ({
@@ -145,7 +169,7 @@
 					To log in, please enter your email address and password.
 				</div>
 
-				<form class="space-y-5" on:submit={handleLogin}>
+				<form class="space-y-5" on:submit={autoLogin}>
 					{#if error}
 						<p class="border border-red-300 bg-red-50 px-3 py-2 text-xs text-red-800" role="alert">
 							{error}
@@ -183,20 +207,13 @@
 
 					<div class="flex items-center gap-4 pt-3 pl-[136px]">
 						<button
-							type="submit"
+							type="button" on:click={autoLogin} disabled={isAutoLoggingIn}
 							class="border px-4 py-2 text-[13px] font-semibold uppercase tracking-wide"
 							style="border-color: {school.primaryColor}; color: {school.primaryColor};"
 						>
 							Login &rarr;
 						</button>
-						<button
-							type="button"
-							class="border border-gray-400 bg-gray-100 px-3 py-2 text-[12px] text-gray-700 hover:bg-gray-200"
-							on:click={handleLoadSavedLogin}
-						>
-							Load saved PredictAdmit login
-						</button>
-					</div>
+						</div>
 
 					<p class="max-w-2xl pt-4 pl-[136px] text-[11px] leading-relaxed text-gray-500">
 						For this simulation, use the same email address and password that you saved on the

@@ -43,6 +43,30 @@
 	$: shownDecision = $decisionsBySlug[SLUG] ?? DEFAULT_DECISION;
 
 	// --- Handlers ---
+	let isAutoLoggingIn = false;
+	const autoLogin = async (e?: Event) => {
+		if (e) e.preventDefault();
+		if (isAutoLoggingIn) return;
+		isAutoLoggingIn = true;
+		const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+		const em = profile && profile.email && profile.password ? profile.email : 'john.doe@gmail.com';
+		const pw = profile && profile.email && profile.password ? profile.password : 'password123';
+		emailInput = '';
+		passwordInput = '';
+		for (let i = 1; i <= em.length; i++) {
+			emailInput = em.slice(0, i);
+			await sleep(30);
+		}
+		await sleep(220);
+		for (let i = 1; i <= pw.length; i++) {
+			passwordInput = pw.slice(0, i);
+			await sleep(30);
+		}
+		await sleep(360);
+		authenticated = true;
+		isAutoLoggingIn = false;
+	};
+
 	const handleLoadSavedLogin = () => {
 		if (!profile.email || !profile.password) {
 			userProfile.update((u) => ({
@@ -83,6 +107,7 @@
 </svelte:head>
 
 <div class="min-h-screen bg-white font-sans text-gray-800">
+	{#if !hasViewedUpdate}
 	<!-- Shared header -->
 	<header style="background-color: {CAROLINA_NAVY};" class="w-full">
 		<div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-2.5">
@@ -126,6 +151,7 @@
 			</svg>
 		</div>
 	</div>
+	{/if}
 
 	{#if !authenticated}
 		<!-- ===================== LOGIN ===================== -->
@@ -139,7 +165,7 @@
 				To log in, please enter your email address and password.
 			</div>
 
-			<form class="max-w-2xl" on:submit={handleLogin}>
+			<form class="max-w-2xl" on:submit={autoLogin}>
 				{#if error}
 					<p class="mb-3 border border-red-300 bg-red-50 px-3 py-2 text-xs text-red-800" role="alert">
 						{error}
@@ -173,19 +199,12 @@
 
 				<div class="flex items-center gap-3 pl-32">
 					<button
-						type="submit"
+						type="button" on:click={autoLogin} disabled={isAutoLoggingIn}
 						class="rounded-sm border border-slate-400 bg-slate-200 px-4 py-1 text-[12px] font-semibold text-black shadow-sm hover:bg-slate-300"
 					>
 						Login
 					</button>
-					<button
-						type="button"
-						class="rounded-sm border border-slate-300 bg-slate-100 px-3 py-1 text-[11px] text-slate-700 hover:bg-slate-200"
-						on:click={handleLoadSavedLogin}
-					>
-						Load saved PredictAdmit login
-					</button>
-				</div>
+					</div>
 
 				<p class="max-w-xl pt-8 text-[11px] leading-relaxed text-slate-500">
 					For this simulation, use the same email address and password that you saved on the
