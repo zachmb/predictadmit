@@ -2329,7 +2329,7 @@
 			<!-- Vision Section -->
 			<div class="pt-16 border-t border-slate-200">
 				<div class="bg-blue-900 rounded-[2.5rem] p-12 text-center text-white space-y-6">
-					<h3 class="text-3xl font-bold">Free AI for all. Mentors for the moments that matter.</h3>
+					<h3 class="text-3xl font-bold text-white">Free AI for all. Mentors for the moments that matter.</h3>
 					<p class="text-blue-100 text-lg max-w-2xl mx-auto leading-relaxed">
 						We believe the price of admissions advice should not determine the quality of your education.
 						So we made the entire AI suite free for everyone — the same advantages once reserved for students

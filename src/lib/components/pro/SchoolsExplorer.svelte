@@ -175,6 +175,13 @@
 			<p class="mt-1 text-sm text-slate-500">
 				Explore schools with real admissions data and your personalized chances.
 			</p>
+			<p class="mt-1 text-xs text-slate-400">
+				Chances use factor weights from NACAC's Factors in the Admission Decision survey,
+				calibrated on 2026-cycle HYPSM &amp; T20 admits.
+				<a href="/methodology" class="font-medium text-[#0052CC] hover:underline" target="_blank"
+					>How it works →</a
+				>
+			</p>
 			{#if !hasStats}
 				<div
 					class="mt-3 inline-flex items-center gap-2 rounded-lg bg-blue-50 px-3 py-1.5 text-xs font-medium text-[#0052CC] ring-1 ring-blue-100"

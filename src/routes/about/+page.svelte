@@ -57,7 +57,7 @@
 		}
 	];
 
-	const faqs = [
+	const faqs: { q: string; a: string; link?: { href: string; label: string } }[] = [
 		{
 			q: 'Is PredictAdmit free?',
 			a: 'Yes — the AI tools inside PredictAdmit Pro (essay grader, AI counselor, chances predictor, and mind-map) and the admissions simulator are all free to use. Booking a 1:1 human mentor for a working session is paid, but every mentor offers a free intro call first.'
@@ -77,6 +77,11 @@
 		{
 			q: 'How accurate is the predictor?',
 			a: 'The chances predictor is a data-informed estimate, not a promise. It reflects how an application like yours tends to fare, and it is meant to help you build a balanced list and focus your effort — not to guarantee any outcome.'
+		},
+		{
+			q: 'Where does the prediction data come from?',
+			a: 'Our factor weights are based on the "Factors in the Admission Decision" survey published by NACAC — the National Association for College Admission Counseling, the professional association of 28,000+ admission officers and counselors — which reports how much four-year colleges weight grades, curriculum rigor, test scores, essays, and other factors. Those weights are calibrated against admitted-student profiles from HYPSM and Top-20 universities in the 2026 admissions cycle. NACAC is not affiliated with and does not endorse PredictAdmit.',
+			link: { href: '/methodology', label: 'Read the full methodology →' }
 		}
 	];
 </script>
@@ -263,6 +268,14 @@
 						<span class="text-[#0052CC] text-xl transition-transform group-open:rotate-45">+</span>
 					</summary>
 					<p class="mt-3 text-slate-500 leading-relaxed">{faq.a}</p>
+					{#if faq.link}
+						<a
+							href={faq.link.href}
+							class="mt-2 inline-block text-sm font-semibold text-[#0052CC] hover:underline"
+						>
+							{faq.link.label}
+						</a>
+					{/if}
 				</details>
 			{/each}
 		</div>

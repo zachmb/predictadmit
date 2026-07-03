@@ -2,6 +2,11 @@
 // Richer, display-oriented admissions data for the Pro "Schools" explorer,
 // "Chance Me" profile, and dashboard. Values are approximate, publicly-known
 // figures used for a realistic simulation — not official guarantees.
+// Stat baselines reflect HYPSM / Top-20 admitted-student profiles from the
+// 2026 admissions cycle; factor weighting comes from NACAC's "Factors in the
+// Admission Decision" survey (see $lib/config/admissionFactors and /methodology).
+
+import { GPA_WEIGHT, TEST_WEIGHT } from './admissionFactors';
 
 export type CampusSetting = 'Urban' | 'Suburban' | 'College town' | 'Rural';
 export type SchoolSize = 'Small' | 'Medium' | 'Large';
@@ -134,13 +139,21 @@ export function readableTextColor(hex?: string): string {
 	return L > 0.45 ? '#0f172a' : '#ffffff';
 }
 
-/** Rough applicant "academic index" 0–100 from SAT (or ACT) and weighted GPA. */
+/**
+ * Rough applicant "academic index" 0–100 from SAT (or ACT) and weighted GPA.
+ * The GPA/test split is derived from NACAC's Fall 2023 factor-importance
+ * survey (grades + curriculum strength ≈ 75%, admission tests ≈ 25%), not
+ * hand-picked — see $lib/config/admissionFactors.
+ */
 export function computeAcademicIndex(sat?: number, act?: number, weightedGpa?: number): number {
 	let satPart = 0;
 	if (sat && sat > 0) satPart = Math.min(1, Math.max(0, (sat - 1000) / 600));
 	else if (act && act > 0) satPart = Math.min(1, Math.max(0, (act - 20) / 16));
 	const gpaPart = weightedGpa ? Math.min(1, Math.max(0, (weightedGpa - 3.0) / 1.5)) : 0;
-	const combined = sat || act ? 0.55 * satPart + 0.45 * gpaPart : gpaPart;
+	let combined: number;
+	if ((sat || act) && weightedGpa) combined = TEST_WEIGHT * satPart + GPA_WEIGHT * gpaPart;
+	else if (sat || act) combined = satPart;
+	else combined = gpaPart;
 	return Math.round(combined * 100);
 }
 

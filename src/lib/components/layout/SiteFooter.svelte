@@ -52,6 +52,12 @@
 						>
 					</li>
 					<li>
+						<a
+							href="/methodology"
+							class="hover:text-slate-900 hover:font-bold transition-all p-1 block">Methodology</a
+						>
+					</li>
+					<li>
 						<a href="/blog" class="hover:text-slate-900 hover:font-bold transition-all p-1 block"
 							>Blog</a
 						>
@@ -89,6 +95,11 @@
 
 		<div class="pt-8 border-t border-slate-200 text-center text-xs text-slate-400">
 			<p>Not affiliated with any university. For entertainment and educational purposes only.</p>
+			<p class="mt-2">
+				Prediction weights are based on NACAC's
+				<a href="/methodology" class="underline hover:text-slate-600">Factors in the Admission Decision</a>
+				survey and 2026-cycle HYPSM &amp; Top-20 admit data. NACAC does not endorse PredictAdmit.
+			</p>
 		</div>
 	</div>
 </footer>

@@ -5,7 +5,12 @@ import { getSchoolStat, computeAcademicIndex, classifyLikelihood } from '$lib/co
 
 type ChatMessage = { role: 'user' | 'assistant'; content: string };
 
-/** Estimate an admit chance % from selectivity and the applicant's academic index. */
+/**
+ * Estimate an admit chance % from selectivity and the applicant's academic
+ * index. The academic index itself is NACAC-weighted (grades ≫ tests — see
+ * $lib/config/admissionFactors), and school baselines reflect 2026-cycle
+ * HYPSM/T20 admit profiles.
+ */
 function estimateChance(acceptanceRate: number, academicIndex: number): number {
 	const selectivity = Math.min(1, Math.max(0, 1 - acceptanceRate * 1.8));
 	const strength = academicIndex / 100;
@@ -69,7 +74,8 @@ Awards: ${p.awards || p.applicationProfile?.awards || 'not provided'}
 Course rigor: ${p.applicationProfile?.rigor || 'not provided'}
 College list with estimated chances: ${listText}
 
-The chance estimates above are PredictAdmit's rough simulation, not official odds — reference them naturally but frame them as estimates.`;
+The chance estimates above are PredictAdmit's rough simulation, not official odds — reference them naturally but frame them as estimates.
+If asked how the estimates work: factor weights come from NACAC's "Factors in the Admission Decision" survey (grades and curriculum strength matter most; NACAC is the National Association for College Admission Counseling, the professional body for admission officers and counselors), calibrated against HYPSM and Top-20 admit profiles from the 2026 cycle. Full write-up lives at predictadmit's /methodology page.`;
 
 	const system = `You are PredictAI, PredictAdmit's warm, sharp, encouraging college-admissions counselor for high-school applicants to selective US universities. You are talking to a student inside their PredictAdmit Pro dashboard.
 

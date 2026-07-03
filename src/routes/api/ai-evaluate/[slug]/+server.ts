@@ -1,6 +1,11 @@
 import type { RequestHandler } from './$types';
 import { json } from '@sveltejs/kit';
 import { env } from '$env/dynamic/private';
+import {
+	dimensionWeightSummary,
+	factorTableForPrompt,
+	NACAC_SOURCE
+} from '$lib/config/admissionFactors';
 
 // Helper to find the full school name from the slug
 const SCHOOL_MAP: Record<string, string> = {
@@ -68,7 +73,7 @@ export const POST: RequestHandler = async ({ params, request }) => {
 		return json({ error: 'Please provide application data.' }, { status: 400 });
 	}
 
-	const systemPrompt = `You are a harsh, brutally honest, realistic admissions officer for ${schoolName}. 
+	const systemPrompt = `You are a harsh, brutally honest, realistic admissions officer for ${schoolName}.
 Evaluate the applicant strictly based on ${schoolName}'s specific institutional values, culture, and academic rigor.
 
 Provide a decision and five granular scores (1-10):
@@ -77,6 +82,13 @@ Provide a decision and five granular scores (1-10):
 3. **Fit**: Alignment with ${schoolName}'s specific "vibe" and campus culture.
 4. **Intellectual**: Curiosity and achievement.
 5. **Character**: Personality and "human" qualities.
+
+WEIGHTING METHODOLOGY (follow this when forming the overall decision):
+Your read is grounded in the ${NACAC_SOURCE.orgShort} "${NACAC_SOURCE.report}" survey (${NACAC_SOURCE.cycle}), which reports how four-year colleges weight each application factor:
+${factorTableForPrompt()}
+
+Derived dimension weights for the overall decision: ${dimensionWeightSummary()}.
+Grades in college-prep courses and strength of curriculum dominate; nothing offsets a weak transcript. NACAC notes importance shifts by institution type — and your calibration set is admitted-student profiles from HYPSM and Top-20 universities in the 2026 admissions cycle, where near-perfect academics are the baseline and test scores carry more weight than at the average NACAC college. Treat academics as the gate, then let character, essays, extracurricular spikes, and demonstrated fit decide among academically qualified applicants.
 
 BE BRUTALLY HONEST. Act like an actual admissions officer at one of the top of universities that only takes the best of the best.
 Don't manufacture issues that aren't there, but be harsh and forthright if there are problems. Your job is to be as accurate as possible when judging 

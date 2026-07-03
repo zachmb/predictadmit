@@ -174,6 +174,29 @@
 						the simulator mode to update every portal at once.
 					</p>
 
+					<div
+						class="mt-3 rounded-md border border-slate-300 bg-slate-50 px-4 py-3 text-[11px] leading-relaxed text-slate-600"
+					>
+						<p class="font-bold uppercase tracking-wider text-slate-500 mb-1">
+							Important disclosure — simulation only
+						</p>
+						<p>
+							PredictAdmit is an independent educational tool and is <strong>not affiliated with,
+							endorsed by, sponsored by, or connected to</strong> any college or university shown on
+							this site. Every portal, status page, and decision letter here is a
+							<strong>fictional simulation</strong> created for practice and preparation. Nothing on
+							this page is an official communication from any institution, and no simulated outcome
+							reflects, predicts, or affects any real application or admission decision. University
+							names and marks are the property of their respective owners and are used solely to
+							identify the institution being simulated. PredictAdmit does not access, connect to, or
+							interact with any university's actual application systems or applicant data. If you
+							represent an institution and have questions or concerns, please
+							<a href="/contact" class="font-semibold text-[#0052CC] underline hover:text-[#003d99]"
+								>contact us</a
+							>.
+						</p>
+					</div>
+
 					<div class="mt-4 flex flex-wrap items-center gap-3">
 						<label
 							for="applicant-name"
