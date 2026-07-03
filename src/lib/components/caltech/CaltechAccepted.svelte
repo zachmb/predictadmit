@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Confetti from '$lib/components/common/Confetti.svelte';
 	// Props passed from the main portal page
 	export let applicantName: string;
 	export let schoolName: string;
@@ -24,6 +25,8 @@
 		goto('/results/caltech');
 	};
 </script>
+
+<Confetti primary={primaryColor} />
 
 <div class="min-h-screen bg-white text-gray-800 font-sans p-6">
 	<main class="max-w-3xl mx-auto mt-10">

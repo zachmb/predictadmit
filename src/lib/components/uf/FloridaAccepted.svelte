@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Confetti from '$lib/components/common/Confetti.svelte';
 	export let applicantName: string;
 	export let schoolName: string = 'University of Florida';
 	export let primaryColor: string = '#0021A5';
@@ -19,6 +20,8 @@
 	const accent = '#FA4616';
 	$: firstName = applicantName ? applicantName.split(' ')[0] : 'Applicant';
 </script>
+
+<Confetti primary={primaryColor} />
 
 <svelte:head>
 	<title>{schoolName} - Admission Decision</title>

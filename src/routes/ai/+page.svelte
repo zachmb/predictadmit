@@ -92,18 +92,36 @@
 		// This runs whenever data.session changes
 	});
 
-	// ED selection
+	// ED selection — every school we simulate that offers a binding ED, or a
+	// restrictive/single-choice early plan (REA/SCEA). Public schools and
+	// non-restrictive EA schools (MIT, Caltech, Georgia Tech, Michigan, UNC, USC,
+	// the UCs, etc.) are intentionally excluded.
 	const ED_SCHOOLS = [
+		// Restrictive / single-choice early action (non-binding)
 		{ slug: 'harvard', label: 'Harvard (REA)' },
 		{ slug: 'stanford', label: 'Stanford (REA)' },
 		{ slug: 'yale', label: 'Yale (SCEA)' },
 		{ slug: 'princeton', label: 'Princeton (SCEA)' },
-		{ slug: 'duke', label: 'Duke (ED)' },
-		{ slug: 'u-penn', label: 'Penn (ED)' },
+		{ slug: 'notredame', label: 'Notre Dame (REA)' },
+		{ slug: 'georgetown', label: 'Georgetown (REA)' },
+		// Binding Early Decision
+		{ slug: 'columbia', label: 'Columbia (ED)' },
+		{ slug: 'upenn', label: 'Penn (ED)' },
 		{ slug: 'brown', label: 'Brown (ED)' },
-		{ slug: 'northwestern', label: 'Northwestern (ED)' },
 		{ slug: 'dartmouth', label: 'Dartmouth (ED)' },
-		{ slug: 'vanderbilt', label: 'Vanderbilt (ED I/II)' }
+		{ slug: 'duke', label: 'Duke (ED)' },
+		{ slug: 'northwestern', label: 'Northwestern (ED)' },
+		{ slug: 'cornell', label: 'Cornell (ED)' },
+		{ slug: 'uchicago', label: 'UChicago (ED I/II)' },
+		{ slug: 'jhu', label: 'Johns Hopkins (ED I/II)' },
+		{ slug: 'vanderbilt', label: 'Vanderbilt (ED I/II)' },
+		{ slug: 'rice', label: 'Rice (ED)' },
+		{ slug: 'wustl', label: 'WashU (ED I/II)' },
+		{ slug: 'emory', label: 'Emory (ED I/II)' },
+		{ slug: 'cmu', label: 'Carnegie Mellon (ED)' },
+		{ slug: 'uva', label: 'UVA (ED)' },
+		{ slug: 'nyu', label: 'NYU (ED I/II)' },
+		{ slug: 'wakeforest', label: 'Wake Forest (ED I/II)' }
 	];
 
 	export const SCHOOLS = [

@@ -1,10 +1,13 @@
 <script lang="ts">
+	import Confetti from '$lib/components/common/Confetti.svelte';
 	export let applicantName: string;
 	export let schoolName: string;
 	export let primaryColor: string;
 	export let footerDomain: string;
 	import BackToInboxButton from '$lib/components/common/BackToInboxButton.svelte';
 </script>
+
+<Confetti primary={primaryColor} />
 
 <div class="min-h-screen bg-slate-200 text-slate-900 font-serif flex flex-col">
 	<!-- HEADER -->

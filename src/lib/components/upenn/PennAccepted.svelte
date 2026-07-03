@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Confetti from '$lib/components/common/Confetti.svelte';
 	// Props passed from the portal route
 	export let applicantName: string;
 	export let schoolName: string = 'University of Pennsylvania';
@@ -21,6 +22,8 @@
 
 	$: firstName = (applicantName || 'Applicant').trim().split(' ')[0];
 </script>
+
+<Confetti primary={primaryColor} />
 
 <svelte:head>
 	<title>{schoolName} — Admission Decision</title>

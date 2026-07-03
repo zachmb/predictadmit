@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Confetti from '$lib/components/common/Confetti.svelte';
 	export let applicantName: string = 'Applicant';
 	export let schoolName: string = 'Brown University';
 	export let primaryColor: string = '#4E3629';
@@ -28,6 +29,8 @@
 		img.style.display = 'none';
 	};
 </script>
+
+<Confetti primary={primaryColor} />
 
 <div class="min-h-screen bg-white p-8 font-serif">
 	<div class="max-w-2xl mx-auto">

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Confetti from '$lib/components/common/Confetti.svelte';
 	export let applicantName: string;
 	export let schoolName: string = 'Georgia Institute of Technology';
 	export let primaryColor: string = '#003057';
@@ -21,6 +22,8 @@
 		goto('/results/georgiatech');
 	};
 </script>
+
+<Confetti primary={primaryColor} />
 
 <svelte:head>
 	<title>{schoolName} - Admission Decision</title>

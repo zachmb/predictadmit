@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Confetti from '$lib/components/common/Confetti.svelte';
 	// The parent component passes these props
 	export let applicantName: string;
 	export let schoolName: string = 'Purdue University';
@@ -20,6 +21,8 @@
 		goto('/results/purdue');
 	};
 </script>
+
+<Confetti primary={primaryColor} />
 
 <svelte:head>
 	<title>{schoolName} - Admission Decision</title>

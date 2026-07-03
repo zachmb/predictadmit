@@ -201,9 +201,9 @@
 		ctx.fillText(nameLine, centerX, cardY + bandH + 260);
 
 		// Simulated disclaimer
-		ctx.fillStyle = '#9ca3af';
-		ctx.font = '400 26px Inter, system-ui, sans-serif';
-		ctx.fillText('simulated on PredictAdmit', centerX, cardY + cardH - 44);
+		ctx.fillStyle = '#b45309';
+		ctx.font = '700 24px Inter, system-ui, sans-serif';
+		ctx.fillText('SIMULATION · NOT A REAL DECISION · predictadmit.com', centerX, cardY + cardH - 44);
 
 		// Trigger download
 		const link = document.createElement('a');
@@ -288,8 +288,15 @@
 						<p class="mt-3 text-lg font-semibold" style="color: {color};">
 							{firstName === 'I' ? 'A PredictAdmit applicant' : firstName}
 						</p>
-						<p class="mt-5 text-xs font-medium tracking-wide text-gray-400 uppercase">
-							simulated on PredictAdmit
+						<div class="mt-5 flex justify-center">
+							<span
+								class="inline-flex items-center gap-1.5 rounded-full border border-amber-300 bg-amber-100 px-3 py-1 text-[10px] font-bold tracking-widest text-amber-800 uppercase"
+							>
+								Simulation · not a real decision
+							</span>
+						</div>
+						<p class="mt-2 text-[10px] font-medium tracking-wide text-gray-400 uppercase">
+							predictadmit.com
 						</p>
 					</div>
 				</div>

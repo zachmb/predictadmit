@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Confetti from '$lib/components/common/Confetti.svelte';
 	export let applicantName: string;
 	export let schoolName: string; //just so the portal doesn't get mad
 	export let footerDomain: string;
@@ -25,6 +26,8 @@
 	// Cornell Red
 	export let primaryColor: string;
 </script>
+
+<Confetti primary={primaryColor} />
 
 <svelte:head>
 	<title>Cornell University - Admission Decision</title>
