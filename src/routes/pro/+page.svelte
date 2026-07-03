@@ -18,7 +18,7 @@
 	import SchoolsExplorer from '$lib/components/pro/SchoolsExplorer.svelte';
 	import ChanceMeProfile from '$lib/components/pro/ChanceMeProfile.svelte';
 	import SettingsView from '$lib/components/pro/SettingsView.svelte';
-	import CommunityAdmits from '$lib/components/pro/CommunityAdmits.svelte';
+	import HumanCounselors from '$lib/components/pro/HumanCounselors.svelte';
 
 	// --- RUNES STATE ---
 	let { data } = $props();
@@ -2207,13 +2207,13 @@
 					{/if}
 				</div>
 				{:else if currentView === 'counselor'}
-					<AICounselor />
+					<AICounselor onBookHuman={() => (currentView = 'community')} />
 				{:else if currentView === 'schools'}
 					<SchoolsExplorer />
 				{:else if currentView === 'chanceme'}
 					<ChanceMeProfile />
 				{:else if currentView === 'community'}
-					<CommunityAdmits />
+					<HumanCounselors />
 				{:else if currentView === 'settings'}
 					<SettingsView />
 			{/if}
