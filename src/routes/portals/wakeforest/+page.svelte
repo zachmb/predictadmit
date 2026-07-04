@@ -19,7 +19,7 @@
 		footerDomain: 'wfu.edu',
 		statusLastPosted: 'March 24, 2026',
 		round: 'Regular Decision',
-		referenceNumber: '908867920'
+		referenceNumber: '731049582'
 	};
 
 	// --- State Variables ---
@@ -413,7 +413,7 @@
 							<strong>Name:</strong> {applicantName()}<br />
 							<strong>Email:</strong> {profile.email || 'applicant@example.com'}<br />
 							<strong>App Type:</strong> {school.round}<br />
-							<strong>Student ID:</strong> 31050109<br />
+							<strong>Student ID:</strong> 42817635<br />
 							<strong>Financial Aid:</strong> Yes<br />
 							<strong>Consider Tests:</strong> Optional<br />
 							<strong>Residency Status:</strong> Out-of-State

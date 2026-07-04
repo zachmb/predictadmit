@@ -20,7 +20,7 @@
 		footerDomain: 'nd.edu',
 		statusLastPosted: 'March 25, 2026',
 		round: 'Regular Decision',
-		referenceNumber: '20260012'
+		referenceNumber: '51930842'
 	};
 
 	// --- State Variables ---
@@ -265,7 +265,7 @@
 				<!-- Applicant header -->
 				<div class="mb-8">
 					<h1 class="text-2xl font-serif" style="color: {ND_NAVY};">{applicantName()}</h1>
-					<p class="text-sm text-slate-600 mt-1">NDid: 902434802</p>
+					<p class="text-sm text-slate-600 mt-1">NDid: 415096273</p>
 				</div>
 
 				<!-- Status Update -->

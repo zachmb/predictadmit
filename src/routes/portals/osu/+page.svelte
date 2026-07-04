@@ -21,7 +21,7 @@
 		footerDomain: 'osu.edu',
 		statusLastPosted: 'March 12, 2026',
 		round: 'Regular Decision',
-		referenceNumber: '20260012'
+		referenceNumber: '79046132'
 	};
 
 	// --- State Variables ---

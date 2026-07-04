@@ -18,7 +18,7 @@
 		footerDomain: 'usc.edu',
 		statusLastPosted: 'March 27, 2026',
 		round: 'Regular Decision',
-		referenceNumber: '108037714'
+		referenceNumber: '205719348'
 	};
 
 	// --- State Variables ---

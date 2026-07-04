@@ -55,8 +55,8 @@
 			<div class="text-sm text-gray-600 mb-6">March 15, 2027</div>
 			<div class="space-y-1 text-[15px]">
 				<div>{applicantName || 'Applicant'}</div>
-				<div>2550 Waterview Dr Unit 347</div>
-				<div>Northbrook, IL 60062-6362</div>
+				<div>2847 Birchwood Ln</div>
+				<div>Naperville, IL 60540-4417</div>
 			</div>
 		</div>
 

@@ -15,7 +15,7 @@
 		footerDomain: 'gatech.edu',
 		statusLastPosted: 'March 8, 2026',
 		round: 'Regular Decision',
-		referenceNumber: '20260012'
+		referenceNumber: '90312478'
 	};
 
 	let profile: UserProfile = { ...defaultProfile };

@@ -68,8 +68,8 @@
 		<div class="mt-8 text-[14px] text-gray-800">March 25, 2027</div>
 		<div class="mt-6 text-[14px] leading-relaxed text-gray-800">
 			<div>{applicantName || 'Applicant'}</div>
-			<div>1824 Smith Rd</div>
-			<div>Northbrook, IL 60062-5830</div>
+			<div>2847 Birchwood Ln</div>
+			<div>Naperville, IL 60540-4417</div>
 		</div>
 
 		<div class="mt-8 text-[15px] text-gray-800">Dear {applicantName || 'Applicant'},</div>

@@ -18,7 +18,7 @@
 		footerDomain: 'ucdavis.edu',
 		statusLastPosted: 'March 20, 2026',
 		round: 'Regular Decision',
-		referenceNumber: '927159199'
+		referenceNumber: '814305627'
 	};
 
 	// --- State Variables ---

@@ -17,7 +17,7 @@
 		footerDomain: 'princeton.edu',
 		statusLastPosted: 'March 12, 2026',
 		round: 'Regular Decision',
-		referenceNumber: '365599560'
+		referenceNumber: '528370149'
 	};
 
 	// --- State Variables ---

@@ -18,7 +18,7 @@
 		footerDomain: 'georgetown.edu',
 		statusLastPosted: 'March 20, 2026',
 		round: 'Regular Decision',
-		referenceNumber: '136670423'
+		referenceNumber: '528491067'
 	};
 
 	// --- State Variables ---

@@ -20,7 +20,7 @@
 		footerDomain: 'ucsd.edu',
 		statusLastPosted: 'March 20, 2026',
 		round: 'Regular Decision',
-		referenceNumber: '20260012'
+		referenceNumber: '31709284'
 	};
 
 	// --- State Variables ---

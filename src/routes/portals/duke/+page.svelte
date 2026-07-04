@@ -17,7 +17,7 @@
 		footerDomain: 'duke.edu',
 		statusLastPosted: 'March 26, 2026',
 		round: 'Regular Decision',
-		referenceNumber: '074087361'
+		referenceNumber: '052936148'
 	};
 
 	// --- State Variables ---
@@ -396,7 +396,7 @@
 						<a href="/disclaimer" class="hover:underline" style="color: {school.primaryColor};"
 							>finaid@duke.edu</a
 						>. Your Financial Aid ID:
-						<strong style="color: {school.primaryColor};">3223626</strong>
+						<strong style="color: {school.primaryColor};">4815093</strong>
 					</p>
 
 					<div

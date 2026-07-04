@@ -83,8 +83,8 @@
 
 				<div class="mb-6">
 					<p>{applicantName || 'Applicant'}</p>
-					<p>1924 Smith Rd</p>
-					<p>Northbrook, IL 60062-5830</p>
+					<p>2847 Birchwood Ln</p>
+					<p>Naperville, IL 60540-4417</p>
 				</div>
 
 				<p class="mb-4">Congratulations, {firstName}!</p>

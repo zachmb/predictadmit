@@ -17,7 +17,7 @@
 		footerDomain: 'nyu.edu',
 		statusLastPosted: 'March 26, 2026',
 		round: 'Regular Decision',
-		referenceNumber: '20260012'
+		referenceNumber: '18274905'
 	};
 
 	// --- State Variables ---

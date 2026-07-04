@@ -17,7 +17,7 @@
 		footerDomain: 'cmu.edu',
 		statusLastPosted: 'March 15, 2026',
 		round: 'Regular Decision',
-		referenceNumber: '20260012'
+		referenceNumber: '92415078'
 	};
 
 	// --- State Variables ---
@@ -373,8 +373,8 @@
 						<p class="text-[13px] text-gray-700 mb-2">We have your address listed as follows:</p>
 						<p class="text-[13px] text-gray-700">
 							<em>Permanent Address</em><br />
-							2550 Waterview Dr Unit 347<br />
-							Northbrook, IL 60062-6362<br />
+							2847 Birchwood Ln<br />
+							Naperville, IL 60540-4417<br />
 							United States
 						</p>
 					</div>

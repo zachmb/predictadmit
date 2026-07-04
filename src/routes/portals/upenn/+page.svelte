@@ -16,7 +16,7 @@
 		footerDomain: 'upenn.edu',
 		statusLastPosted: 'March 13, 2026',
 		round: 'Regular Decision',
-		referenceNumber: '20260012'
+		referenceNumber: '47215906'
 	};
 
 	// ----------------- STATE -----------------

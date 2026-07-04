@@ -18,7 +18,7 @@
 		footerDomain: 'wustl.edu',
 		statusLastPosted: 'March 18, 2026',
 		round: 'Regular Decision',
-		referenceNumber: '20260012'
+		referenceNumber: '86154203'
 	};
 
 	// --- State Variables ---

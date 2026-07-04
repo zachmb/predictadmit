@@ -18,7 +18,7 @@
 
 	const school = {
 		schoolName: 'California Institute of Technology',
-		admissionsId: '987654321', // Placeholder
+		admissionsId: '462185937', // Placeholder
 		statusLastPosted: 'March 13, 2020', // Based on JHU example screenshot time
 		primaryColor: CALTECH_PRIMARY_COLOR,
 		secondaryColor: '#F0F0F0',

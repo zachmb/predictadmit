@@ -17,7 +17,7 @@
 		footerDomain: 'wisc.edu',
 		statusLastPosted: 'March 15, 2026',
 		round: 'Regular Decision',
-		referenceNumber: '02049787'
+		referenceNumber: '03158246'
 	};
 
 	// --- State Variables ---

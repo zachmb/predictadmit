@@ -26,7 +26,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		logoPrimary: 'Harvard',
 		logoSecondary: 'COLLEGE ADMISSIONS',
 		primaryColor: '#A51C30',
-		admissionsId: 'H-2026-001234',
+		admissionsId: 'H-2026-072951',
 		financialAidId: 'FA-H-567890',
 		bannerText: 'Thank you for applying to Harvard College.',
 		noticeText:
@@ -44,7 +44,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		logoPrimary: 'Stanford',
 		logoSecondary: 'UNDERGRADUATE ADMISSION',
 		primaryColor: '#8C1515',
-		admissionsId: 'S-2026-004321',
+		admissionsId: 'S-2026-068417',
 		financialAidId: 'FA-S-123456',
 		bannerText: 'Thank you for submitting your application to Stanford University.',
 		noticeText:
@@ -62,7 +62,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		logoPrimary: 'MIT',
 		logoSecondary: 'UNDERGRADUATE ADMISSIONS',
 		primaryColor: '#A31F34',
-		admissionsId: 'MIT-2026-098765',
+		admissionsId: 'MIT-2026-041286',
 		financialAidId: 'FA-MIT-246810',
 		bannerText: 'Thank you for applying to the Massachusetts Institute of Technology.',
 		noticeText:
@@ -80,7 +80,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		logoPrimary: 'Princeton',
 		logoSecondary: 'UNIVERSITY ADMISSION',
 		primaryColor: '#FF8F00',
-		admissionsId: 'P-2026-112233',
+		admissionsId: 'P-2026-183627',
 		financialAidId: 'FA-P-987654',
 		bannerText: 'Thank you for applying to Princeton University.',
 		noticeText:
@@ -98,7 +98,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		logoPrimary: 'Yale',
 		logoSecondary: 'UNDERGRADUATE ADMISSIONS',
 		primaryColor: '#00356B',
-		admissionsId: 'Y-2026-334455',
+		admissionsId: 'Y-2026-281706',
 		financialAidId: 'FA-Y-556677',
 		bannerText: 'Thank you for completing your application to Yale College.',
 		noticeText:
@@ -116,7 +116,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		logoPrimary: 'Columbia',
 		logoSecondary: 'UNDERGRADUATE ADMISSIONS',
 		primaryColor: '#003D6B',
-		admissionsId: 'CU-2026-778899',
+		admissionsId: 'CU-2026-463215',
 		financialAidId: 'FA-CU-001122',
 		bannerText: 'Thank you for applying to Columbia University in the City of New York.',
 		noticeText:
@@ -134,7 +134,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		logoPrimary: 'UChicago',
 		logoSecondary: 'COLLEGE ADMISSIONS',
 		primaryColor: '#800000',
-		admissionsId: 'UC-2026-135790',
+		admissionsId: 'UC-2026-248061',
 		financialAidId: 'FA-UC-246802',
 		bannerText: 'Thank you for applying to the College at the University of Chicago.',
 		noticeText:
@@ -152,7 +152,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		logoPrimary: 'Penn',
 		logoSecondary: 'UNDERGRADUATE ADMISSIONS',
 		primaryColor: '#011F5B',
-		admissionsId: 'PENN-2026-975310',
+		admissionsId: 'PENN-2026-624981',
 		financialAidId: 'FA-PENN-112244',
 		bannerText: 'Thank you for applying to the University of Pennsylvania.',
 		noticeText:
@@ -170,7 +170,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		logoPrimary: 'Caltech',
 		logoSecondary: 'UNDERGRADUATE ADMISSIONS',
 		primaryColor: '#FF6C0C',
-		admissionsId: 'CIT-2026-555111',
+		admissionsId: 'CIT-2026-390274',
 		financialAidId: 'FA-CIT-333777',
 		bannerText: 'Thank you for applying to the California Institute of Technology.',
 		noticeText:
@@ -188,7 +188,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		logoPrimary: 'Duke',
 		logoSecondary: 'UNDERGRADUATE ADMISSIONS',
 		primaryColor: '#00539B',
-		admissionsId: 'DUKE-2026-123456',
+		admissionsId: 'DUKE-2026-570913',
 		financialAidId: 'FA-DUKE-987654',
 		bannerText: 'Thank you for submitting your application to Duke University!',
 		noticeText:
@@ -206,7 +206,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		logoPrimary: 'Johns Hopkins',
 		logoSecondary: 'UNDERGRADUATE ADMISSIONS',
 		primaryColor: '#002D72',
-		admissionsId: 'JHU-2026-441122',
+		admissionsId: 'JHU-2026-386250',
 		financialAidId: 'FA-JHU-889900',
 		bannerText: 'Thank you for applying to Johns Hopkins University.',
 		noticeText: 'Admission decisions are now available in your Johns Hopkins applicant portal.',
@@ -223,7 +223,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		logoPrimary: 'Northwestern',
 		logoSecondary: 'UNDERGRADUATE ADMISSION',
 		primaryColor: '#4E2A84',
-		admissionsId: 'NU-2026-667788',
+		admissionsId: 'NU-2026-214539',
 		financialAidId: 'FA-NU-334455',
 		bannerText: 'Thank you for applying to Northwestern University.',
 		noticeText: 'Your Northwestern admissions decision is now available in your applicant portal.',
@@ -240,7 +240,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		logoPrimary: 'Dartmouth',
 		logoSecondary: 'OFFICE OF ADMISSIONS',
 		primaryColor: '#00693E',
-		admissionsId: 'DC-2026-220011',
+		admissionsId: 'DC-2026-175384',
 		financialAidId: 'FA-DC-880044',
 		bannerText: 'Thank you for applying to Dartmouth College.',
 		noticeText:
@@ -258,7 +258,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		logoPrimary: 'Brown',
 		logoSecondary: 'UNDERGRADUATE ADMISSIONS',
 		primaryColor: '#4E3629',
-		admissionsId: 'BR-2026-909090',
+		admissionsId: 'BR-2026-356208',
 		financialAidId: 'FA-BR-303030',
 		bannerText: 'Thank you for applying to Brown University.',
 		noticeText:
@@ -276,7 +276,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		logoPrimary: 'Vanderbilt',
 		logoSecondary: 'UNDERGRADUATE ADMISSIONS',
 		primaryColor: '#B89D4F',
-		admissionsId: 'VU-2026-505050',
+		admissionsId: 'VU-2026-481672',
 		financialAidId: 'FA-VU-252525',
 		bannerText: 'Thank you for applying to Vanderbilt University.',
 		noticeText: 'Your Vanderbilt admissions decision is now available via your MyAppVU portal.',
@@ -293,7 +293,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		logoPrimary: 'Rice',
 		logoSecondary: 'OFFICE OF ADMISSION',
 		primaryColor: '#00205B',
-		admissionsId: 'RU-2026-606060',
+		admissionsId: 'RU-2026-739105',
 		financialAidId: 'FA-RU-161616',
 		bannerText: 'Thank you for applying to Rice University.',
 		noticeText: 'Rice admission decisions are available in your Rice Admission Student Portal.',
@@ -310,7 +310,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		logoPrimary: 'WashU',
 		logoSecondary: 'UNDERGRADUATE ADMISSIONS',
 		primaryColor: '#295F2D',
-		admissionsId: 'WU-2026-707070',
+		admissionsId: 'WU-2026-260483',
 		financialAidId: 'FA-WU-191919',
 		bannerText: 'Thank you for applying to Washington University in St. Louis.',
 		noticeText:
@@ -328,7 +328,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		logoPrimary: 'Cornell',
 		logoSecondary: 'UNDERGRADUATE ADMISSIONS',
 		primaryColor: '#B31B1B',
-		admissionsId: 'CU-2026-818181',
+		admissionsId: 'CU-2026-594317',
 		financialAidId: 'FA-CU-272727',
 		bannerText: 'Thank you for applying to Cornell University.',
 		noticeText: 'Your admission decision is now available in your Cornell application status page.',
@@ -345,7 +345,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		logoPrimary: 'UCLA',
 		logoSecondary: 'UNDERGRADUATE ADMISSIONS',
 		primaryColor: '#2774AE',
-		admissionsId: 'UCLA-2026-929292',
+		admissionsId: 'UCLA-2026-407251',
 		financialAidId: 'FA-UCLA-282828',
 		bannerText: 'Thank you for applying to the University of California, Los Angeles.',
 		noticeText: 'Your UCLA admission decision has been posted to the UCLA Applicant Portal.',
@@ -362,7 +362,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		logoPrimary: 'Berkeley',
 		logoSecondary: 'OFFICE OF UNDERGRADUATE ADMISSIONS',
 		primaryColor: '#003262',
-		admissionsId: 'UCB-2026-737373',
+		admissionsId: 'UCB-2026-618490',
 		financialAidId: 'FA-UCB-292929',
 		bannerText: 'Thank you for applying to the University of California, Berkeley.',
 		noticeText: 'Your UC Berkeley admission decision is now available in the MAP@Berkeley portal.',
@@ -379,7 +379,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		logoPrimary: 'Western',
 		logoSecondary: 'ADMISSIONS',
 		primaryColor: '#003F87',
-		admissionsId: 'WWU-2026-112233',
+		admissionsId: 'WWU-2026-159340',
 		financialAidId: 'FA-WWU-445566',
 		bannerText: 'Thank you for applying to Western Washington University.',
 		noticeText: 'Your admission decision is now available in your portal.',
@@ -396,7 +396,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		logoPrimary: 'Georgia Tech',
 		logoSecondary: 'UNDERGRADUATE ADMISSION',
 		primaryColor: '#003057',
-		admissionsId: 'GT-2026-204060',
+		admissionsId: 'GT-2026-371852',
 		financialAidId: 'FA-GT-102030',
 		bannerText: 'Thank you for applying to the Georgia Institute of Technology.',
 		noticeText:
@@ -414,7 +414,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		logoPrimary: 'NYU',
 		logoSecondary: 'UNDERGRADUATE ADMISSIONS',
 		primaryColor: '#57068C',
-		admissionsId: 'NYU-2026-305070',
+		admissionsId: 'NYU-2026-482964',
 		financialAidId: 'FA-NYU-203040',
 		bannerText: 'Thank you for applying to New York University.',
 		noticeText:
@@ -432,7 +432,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		logoPrimary: 'USC',
 		logoSecondary: 'UNDERGRADUATE ADMISSION',
 		primaryColor: '#990000',
-		admissionsId: 'USC-2026-406080',
+		admissionsId: 'USC-2026-519273',
 		financialAidId: 'FA-USC-304050',
 		bannerText: 'Thank you for applying to the University of Southern California.',
 		noticeText:
@@ -450,7 +450,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		logoPrimary: 'Georgetown',
 		logoSecondary: 'OFFICE OF UNDERGRADUATE ADMISSIONS',
 		primaryColor: '#041E42',
-		admissionsId: 'GU-2026-507090',
+		admissionsId: 'GU-2026-630184',
 		financialAidId: 'FA-GU-405060',
 		bannerText: 'Thank you for applying to Georgetown University.',
 		noticeText:
@@ -468,7 +468,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		logoPrimary: 'Notre Dame',
 		logoSecondary: 'UNDERGRADUATE ADMISSIONS',
 		primaryColor: '#0C2340',
-		admissionsId: 'ND-2026-608010',
+		admissionsId: 'ND-2026-741295',
 		financialAidId: 'FA-ND-506070',
 		bannerText: 'Thank you for applying to the University of Notre Dame.',
 		noticeText:
@@ -486,7 +486,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		logoPrimary: 'Emory',
 		logoSecondary: 'OFFICE OF ADMISSION',
 		primaryColor: '#012169',
-		admissionsId: 'EU-2026-709020',
+		admissionsId: 'EU-2026-852306',
 		financialAidId: 'FA-EU-607080',
 		bannerText: 'Thank you for applying to Emory University.',
 		noticeText:
@@ -504,7 +504,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		logoPrimary: 'UVA',
 		logoSecondary: 'OFFICE OF ADMISSION',
 		primaryColor: '#232D4B',
-		admissionsId: 'UVA-2026-801030',
+		admissionsId: 'UVA-2026-963417',
 		financialAidId: 'FA-UVA-708090',
 		bannerText: 'Thank you for applying to the University of Virginia.',
 		noticeText:
@@ -522,7 +522,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		logoPrimary: 'Carnegie Mellon',
 		logoSecondary: 'OFFICE OF ADMISSION',
 		primaryColor: '#C41230',
-		admissionsId: 'CMU-2026-902040',
+		admissionsId: 'CMU-2026-174528',
 		financialAidId: 'FA-CMU-809000',
 		bannerText: 'Thank you for applying to Carnegie Mellon University.',
 		noticeText:
@@ -540,7 +540,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		logoPrimary: 'Michigan',
 		logoSecondary: 'OFFICE OF UNDERGRADUATE ADMISSIONS',
 		primaryColor: '#00274C',
-		admissionsId: 'UM-2026-103050',
+		admissionsId: 'UM-2026-285639',
 		financialAidId: 'FA-UM-900010',
 		bannerText: 'Thank you for applying to the University of Michigan.',
 		noticeText:
@@ -558,7 +558,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		logoPrimary: 'UNC',
 		logoSecondary: 'OFFICE OF UNDERGRADUATE ADMISSIONS',
 		primaryColor: '#4B9CD3',
-		admissionsId: 'UNC-2026-204070',
+		admissionsId: 'UNC-2026-396740',
 		financialAidId: 'FA-UNC-100020',
 		bannerText: 'Thank you for applying to the University of North Carolina at Chapel Hill.',
 		noticeText:
@@ -576,7 +576,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		logoPrimary: 'UC San Diego',
 		logoSecondary: 'OFFICE OF ADMISSIONS',
 		primaryColor: '#182B49',
-		admissionsId: 'UCSD-2026-305080',
+		admissionsId: 'UCSD-2026-407851',
 		financialAidId: 'FA-UCSD-200030',
 		bannerText: 'Thank you for applying to the University of California, San Diego.',
 		noticeText:
@@ -594,7 +594,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		logoPrimary: 'UC Irvine',
 		logoSecondary: 'OFFICE OF ADMISSIONS',
 		primaryColor: '#0064A4',
-		admissionsId: 'UCI-2026-406090',
+		admissionsId: 'UCI-2026-518962',
 		financialAidId: 'FA-UCI-300040',
 		bannerText: 'Thank you for applying to the University of California, Irvine.',
 		noticeText:
@@ -612,7 +612,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		logoPrimary: 'UC Davis',
 		logoSecondary: 'OFFICE OF ADMISSIONS',
 		primaryColor: '#022851',
-		admissionsId: 'UCD-2026-507000',
+		admissionsId: 'UCD-2026-629073',
 		financialAidId: 'FA-UCD-400050',
 		bannerText: 'Thank you for applying to the University of California, Davis.',
 		noticeText:
@@ -630,7 +630,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		logoPrimary: 'Wake Forest',
 		logoSecondary: 'OFFICE OF ADMISSIONS',
 		primaryColor: '#9E7E38',
-		admissionsId: 'WFU-2026-204050',
+		admissionsId: 'WFU-2026-730184',
 		financialAidId: 'FA-WFU-101020',
 		bannerText: 'Thank you for applying to Wake Forest University.',
 		noticeText:
@@ -648,7 +648,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		logoPrimary: 'Florida',
 		logoSecondary: 'OFFICE OF ADMISSIONS',
 		primaryColor: '#0021A5',
-		admissionsId: 'UF-2026-608000',
+		admissionsId: 'UF-2026-841295',
 		financialAidId: 'FA-UF-500060',
 		bannerText: 'Thank you for applying to the University of Florida.',
 		noticeText:
@@ -666,7 +666,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		logoPrimary: 'Illinois',
 		logoSecondary: 'OFFICE OF UNDERGRADUATE ADMISSIONS',
 		primaryColor: '#13294B',
-		admissionsId: 'UIUC-2026-709010',
+		admissionsId: 'UIUC-2026-952306',
 		financialAidId: 'FA-UIUC-600070',
 		bannerText: 'Thank you for applying to the University of Illinois Urbana-Champaign.',
 		noticeText:
@@ -684,7 +684,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		logoPrimary: 'Wisconsin',
 		logoSecondary: 'OFFICE OF ADMISSIONS AND RECRUITMENT',
 		primaryColor: '#C5050C',
-		admissionsId: 'UW-2026-801020',
+		admissionsId: 'UW-2026-163417',
 		financialAidId: 'FA-UW-700080',
 		bannerText: 'Thank you for applying to the University of Wisconsin-Madison.',
 		noticeText:
@@ -702,7 +702,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		logoPrimary: 'Purdue',
 		logoSecondary: 'OFFICE OF ADMISSIONS',
 		primaryColor: '#000000',
-		admissionsId: 'PU-2026-902030',
+		admissionsId: 'PU-2026-274528',
 		financialAidId: 'FA-PU-800090',
 		bannerText: 'Thank you for applying to Purdue University.',
 		noticeText:
@@ -720,7 +720,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		logoPrimary: 'Ohio State',
 		logoSecondary: 'OFFICE OF UNDERGRADUATE ADMISSIONS',
 		primaryColor: '#BB0000',
-		admissionsId: 'OSU-2026-103040',
+		admissionsId: 'OSU-2026-385639',
 		financialAidId: 'FA-OSU-900000',
 		bannerText: 'Thank you for applying to The Ohio State University.',
 		noticeText:

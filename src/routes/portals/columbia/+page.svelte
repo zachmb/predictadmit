@@ -17,7 +17,7 @@
 		footerDomain: 'columbia.edu',
 		statusLastPosted: 'March 13, 2026',
 		round: 'Regular Decision',
-		referenceNumber: '20260012'
+		referenceNumber: '40529871'
 	};
 
 	// Columbia Blue light accent

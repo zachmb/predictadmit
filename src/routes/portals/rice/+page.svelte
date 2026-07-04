@@ -21,7 +21,7 @@
 		footerDomain: 'rice.edu',
 		statusLastPosted: 'March 16, 2026',
 		round: 'Regular Decision',
-		referenceNumber: '382817805'
+		referenceNumber: '471590263'
 	};
 
 	// A lighter steel blue used by Rice for section headings / links.
@@ -444,8 +444,8 @@
 							<div>zacharybasingercollege@gmail.com</div>
 						</div>
 						<div>
-							1924 Smith Rd<br />
-							Northbrook, IL 60062-5830<br />
+							2847 Birchwood Ln<br />
+							Naperville, IL 60540-4417<br />
 							United States
 						</div>
 						<div>

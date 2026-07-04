@@ -18,7 +18,7 @@
 		footerDomain: 'berkeley.edu',
 		statusLastPosted: 'March 20, 2026',
 		round: 'Regular Decision',
-		referenceNumber: '4180001'
+		referenceNumber: '5236114'
 	};
 
 	// --- State Variables ---
@@ -428,9 +428,9 @@
 					<div class="border border-t-0 border-slate-300 bg-white px-4 py-3 text-[13px] text-slate-700">
 						<p class="mb-2">We have your addresses listed below.</p>
 						<p class="font-semibold">Mailing Address</p>
-						<p class="leading-snug">1924 Smith Rd<br />Northbrook, IL 60062-5830<br />United States</p>
+						<p class="leading-snug">2847 Birchwood Ln<br />Naperville, IL 60540-4417<br />United States</p>
 						<p class="mt-2 font-semibold">Permanent Address</p>
-						<p class="leading-snug">1924 Smith Rd<br />Northbrook, IL 60062-5830<br />United States</p>
+						<p class="leading-snug">2847 Birchwood Ln<br />Naperville, IL 60540-4417<br />United States</p>
 						<a href="/disclaimer" class="mt-2 inline-block text-[#003262] hover:underline">Edit Addresses</a>
 					</div>
 

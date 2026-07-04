@@ -17,7 +17,7 @@
 		footerDomain: 'vanderbilt.edu',
 		statusLastPosted: 'March 17, 2026',
 		round: 'Regular Decision',
-		referenceNumber: '582937831'
+		referenceNumber: '619204573'
 	};
 
 	// --- State Variables ---
@@ -429,14 +429,14 @@
 				<div class="mt-4 flex flex-wrap gap-16 text-[15px] leading-relaxed text-gray-800">
 					<div>
 						<div class="italic text-gray-500">Mailing Address</div>
-						<div>1824 Smith Rd</div>
-						<div>Northbrook, IL 60062-5830</div>
+						<div>2847 Birchwood Ln</div>
+						<div>Naperville, IL 60540-4417</div>
 						<div>United States</div>
 					</div>
 					<div>
 						<div class="italic text-gray-500">Permanent Address</div>
-						<div>1824 Smith Rd</div>
-						<div>Northbrook, IL 60062-5830</div>
+						<div>2847 Birchwood Ln</div>
+						<div>Naperville, IL 60540-4417</div>
 						<div>United States</div>
 					</div>
 				</div>

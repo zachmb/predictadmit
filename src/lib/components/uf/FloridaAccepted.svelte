@@ -91,8 +91,8 @@
 		<!-- Applicant address -->
 		<div class="text-sm text-slate-700 mb-6 leading-relaxed">
 			{applicantName || 'Applicant'}<br />
-			1924 Smith Rd<br />
-			Northbrook, IL 60062-5830
+			2847 Birchwood Ln<br />
+			Naperville, IL 60540-4417
 		</div>
 
 		<!-- Salutation -->

@@ -17,7 +17,7 @@
 		footerDomain: 'stanford.edu',
 		statusLastPosted: 'March 14, 2026',
 		round: 'Regular Decision',
-		referenceNumber: '20260012'
+		referenceNumber: '24831067'
 	};
 
 	// --- State Variables ---

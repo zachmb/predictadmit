@@ -73,8 +73,8 @@
 			<div class="text-right text-sm text-gray-600 mb-2">March 14, 2027</div>
 			<div class="space-y-1">
 				<div>{applicantName || 'Applicant'}</div>
-				<div>1600 Pennsylvania Avenue NW</div>
-				<div>Washington, DC 20500</div>
+				<div>2847 Birchwood Ln</div>
+				<div>Naperville, IL 60540</div>
 			</div>
 		</div>
 

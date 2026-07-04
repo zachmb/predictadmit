@@ -20,7 +20,7 @@
 		footerDomain: 'emory.edu',
 		statusLastPosted: 'March 25, 2026',
 		round: 'Regular Decision',
-		referenceNumber: '2850727'
+		referenceNumber: '4193085'
 	};
 
 	// --- State Variables ---
@@ -360,8 +360,8 @@
 				<p class="text-[12px] text-slate-600 mb-2">We have your address listed as follows:</p>
 				<div class="text-[13px] text-slate-800 leading-relaxed">
 					<div class="font-semibold">Permanent Address</div>
-					<div>2550 Waterview Dr Unit 347</div>
-					<div>Northbrook, IL 60062-6362</div>
+					<div>2847 Birchwood Ln</div>
+					<div>Naperville, IL 60540-4417</div>
 					<div>United States</div>
 				</div>
 				<div class="mt-3 text-[12px] space-x-4">

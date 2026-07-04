@@ -18,7 +18,7 @@
 		footerDomain: 'uci.edu',
 		statusLastPosted: 'March 20, 2026',
 		round: 'Regular Decision',
-		referenceNumber: '20260012'
+		referenceNumber: '63820471'
 	};
 
 	// --- State Variables ---
@@ -103,8 +103,8 @@
 	const applicantInfo = [
 		{ label: 'Level', value: 'First Year' },
 		{ label: 'Term', value: 'Fall 2026' },
-		{ label: 'App ID', value: '4180909' },
-		{ label: 'UCI ID', value: '28568655' },
+		{ label: 'App ID', value: '5273046' },
+		{ label: 'UCI ID', value: '41932760' },
 		{ label: 'Major', value: 'Business Administration' },
 		{ label: 'Alt Major', value: 'Information and Computer Sciences/Undeclared' }
 	];

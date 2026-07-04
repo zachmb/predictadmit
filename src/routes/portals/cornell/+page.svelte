@@ -17,7 +17,7 @@
 		footerDomain: 'cornell.edu',
 		statusLastPosted: 'March 15, 2026',
 		round: 'Regular Decision',
-		referenceNumber: '20260012'
+		referenceNumber: '30412857'
 	};
 
 	// --- State Variables ---
