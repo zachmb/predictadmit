@@ -7,7 +7,7 @@
 					predictadmit
 				</a>
 				<p class="text-sm text-slate-500 leading-relaxed mb-6">
-					The only college admissions simulator that reveals the "why" behind the decision.
+					Admissions outcome rehearsal with clear simulation labels and the "why" behind each result.
 				</p>
 				<div class="text-xs text-slate-400">&copy; 2025 PredictAdmit.</div>
 			</div>

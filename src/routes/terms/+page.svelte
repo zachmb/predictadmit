@@ -52,8 +52,7 @@
 				rights.
 			</p>
 			<p>
-				<strong>Educational Simulation Only:</strong> PredictAdmit provides estimates and simulations
-				based on historical data. These are NOT guarantees of admission. We are not affiliated with any
+				<strong>Educational Simulation Only:</strong> PredictAdmit provides estimates, rehearsals, and fictional simulations based on historical data. These are NOT guarantees of admission. We are not affiliated with any
 				university or college.
 			</p>
 

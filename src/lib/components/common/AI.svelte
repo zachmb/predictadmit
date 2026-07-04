@@ -94,8 +94,8 @@
 			</button>
 
 			<p class="max-w-xs text-[11px] text-slate-300">
-				Run the static decision sim for free. Upgrade to Pro to stress-test the actual narrative
-				sitting in your file.
+				Run a free admissions rehearsal. Upgrade to Pro to stress-test the actual narrative sitting
+				in your file.
 			</p>
 		</div>
 	</div>

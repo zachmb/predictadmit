@@ -131,7 +131,7 @@
 						{@html statusLinkLabel}
 					</a>
 				{:else}
-					<!-- Use button as a fake link when using onViewUpdate -->
+					<!-- Use a button styled like a link when using onViewUpdate -->
 					<button
 						type="button"
 						class="p-0 border-0 bg-transparent text-blue-700 font-bold text-sm underline-offset-2 hover:underline cursor-pointer"

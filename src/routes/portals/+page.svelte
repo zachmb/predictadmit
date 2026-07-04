@@ -171,8 +171,7 @@
 				>
 					<h1 class="text-3xl font-bold text-slate-900 mb-2">All College Portals</h1>
 					<p class="text-slate-700">
-						Explore individual college admission portals. Choose a result for any school, or use
-						the simulator mode to update every portal at once.
+						Explore clearly labeled admissions outcome rehearsals. Choose a result for any school scenario, or use rehearsal mode to update every portal at once.
 					</p>
 
 					<div
@@ -218,7 +217,7 @@
 								userProfile.update((u) => ({
 									...u,
 									name: v,
-									// Derive the fake-login email from the name so it matches on every portal.
+									// Derive the practice-login email from the name so it matches on every portal.
 									email: slug ? `${slug}@gmail.com` : u.email,
 									// Ensure a password exists so auto-login uses the derived email.
 									password: u.password || 'password123'
@@ -325,8 +324,8 @@
 
 					<div class="mt-8 p-4 bg-blue-50 border border-blue-200 rounded-md">
 						<p class="text-sm text-blue-800">
-							<strong>Simulation Controls:</strong> Individual buttons update that school's
-							portal and letter. The simulator mode above can still force every school at once.
+							<strong>Rehearsal Controls:</strong> Individual buttons update that school's
+							portal and letter. The rehearsal mode above can still force every school at once.
 						</p>
 					</div>
 				</div>

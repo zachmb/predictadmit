@@ -49,8 +49,8 @@
 
 	const metaDescription = $derived(
 		isAdmit
-			? `${name} just got admitted to ${schoolName} on PredictAdmit's realistic admissions simulator. Predict your own decision for free.`
-			: `See ${name}'s simulated ${schoolName} admissions decision on PredictAdmit. Run your own realistic prediction for free.`
+			? `${name} rehearsed a ${schoolName} admissions outcome on PredictAdmit. Try your own clearly labeled rehearsal for free.`
+			: `See ${name}'s simulated ${schoolName} admissions decision on PredictAdmit. Run your own admissions rehearsal for free.`
 	);
 </script>
 

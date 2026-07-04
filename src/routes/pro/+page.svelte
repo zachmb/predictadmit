@@ -852,7 +852,7 @@
 		},
 		{
 			q: 'What is included in the Cycle Pass?',
-			a: 'The Cycle Pass is a one-time payment that gives you unlimited access to simulations, essay grading, and deep dive analysis for the entire current application cycle.'
+			a: 'The Cycle Pass is a one-time payment that gives you unlimited access to admissions rehearsals, essay grading, and deep dive analysis for the entire current application cycle.'
 		},
 		{
 			q: 'How accurate is the essay grader?',
@@ -2169,7 +2169,7 @@
 					<span class="text-slate-500">Start free. Go unlimited.</span>
 				</h1>
 				<p class="text-lg text-slate-500 max-w-xl mx-auto leading-relaxed mt-6">
-					Every account starts with a free AI simulation and a taste of every tool. Pro unlocks unlimited simulations, full deep-dive analyses, and the complete essay suite — $5/month, or $9 once for lifetime access.
+					Every account starts with a free AI admissions rehearsal and a taste of every tool. Pro unlocks unlimited rehearsals, full deep-dive analyses, and the complete essay suite — $5/month, or $9 once for lifetime access.
 				</p>
 			</div>
 
@@ -2180,7 +2180,7 @@
 					<div class="relative rounded-[2rem] bg-white p-10 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.1)] border border-slate-100 space-y-8">
 						<div class="space-y-4 text-center md:text-left">
 							<h2 class="text-2xl font-bold text-slate-900">Get Started Instantly</h2>
-							<p class="text-slate-500">Sign in with Google to run your free AI simulation. Upgrade to Pro whenever you're ready — no credit card to start.</p>
+							<p class="text-slate-500">Sign in with Google to run your free AI admissions rehearsal. Upgrade to Pro whenever you're ready — no credit card to start.</p>
 						</div>
 
 						<button
@@ -2260,7 +2260,7 @@
 									<p class="font-bold text-slate-900">Unlimited with Pro</p>
 									<span class="text-[10px] uppercase font-bold tracking-wide text-[#0052CC] bg-white border border-blue-100 rounded-full px-2 py-0.5">$5/mo · $9 lifetime</span>
 								</div>
-								<p class="text-sm text-slate-500">Unlimited AI simulations, full deep-dive decision analyses, and unlimited essay grading. One free simulation to try it first.</p>
+								<p class="text-sm text-slate-500">Unlimited AI admissions rehearsals, full deep-dive decision analyses, and unlimited essay grading. One free rehearsal to try it first.</p>
 							</div>
 						</div>
 					</div>
@@ -2274,7 +2274,7 @@
 					<p class="text-blue-100 text-lg max-w-2xl mx-auto leading-relaxed">
 						We believe the price of admissions advice should not determine the quality of your education.
 						Private consultants charge thousands for the judgment Pro gives you for $9, once — every
-						simulation, every deep dive, every essay tool, forever. Try it free first; upgrade only if
+						rehearsal, every deep dive, every essay tool, forever. Try it free first; upgrade only if
 						it earns it.
 					</p>
 				</div>

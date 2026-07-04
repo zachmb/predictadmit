@@ -491,10 +491,10 @@
 </script>
 
 <svelte:head>
-	<title>PredictAdmit - T20 Admissions Simulator.</title>
+	<title>PredictAdmit - Admissions Outcome Rehearsal.</title>
 	<meta
 		name="description"
-		content="Master your college application cycle with the world's most advanced admissions simulator."
+		content="Rehearse college admissions outcomes with clearly labeled fictional portals, decision letters, and AI application tools."
 	/>
 </svelte:head>
 
@@ -508,13 +508,13 @@
 				<h1
 					class="text-6xl md:text-[5.5rem] font-bold tracking-tighter leading-[0.95] text-slate-900 animate-in fade-in slide-in-from-bottom-6 duration-1000 fill-mode-both"
 				>
-					Simulate Any <br class="hidden md:block" /> University Portal.
+					Rehearse Any <br class="hidden md:block" /> Admissions Outcome.
 				</h1>
 				<p
 					class="text-xl md:text-2xl text-slate-500 max-w-2xl mx-auto leading-snug tracking-tight font-medium mt-6 animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-[200ms] fill-mode-both"
 				>
-					Experience realistic simulated admission portals — and make your application as
-					strong as it can be with our AI tools.
+					Practice decision day with clearly labeled fictional portals and letters — then make
+					your application as strong as it can be with our AI tools.
 				</p>
 			</div>
 
@@ -736,11 +736,11 @@
 			<!-- Headline -->
 			<div class="text-center max-w-2xl mx-auto mb-20 space-y-6">
 				<h2 class="text-5xl md:text-6xl font-bold tracking-tighter text-slate-900 leading-[1.05]">
-					Free Portals. <br /> AI Simulations.
+					Free Rehearsals. <br /> AI Strategy.
 				</h2>
 				<p class="text-lg text-slate-500">
 					Experience the rush of decision day without the risk. <span
-						class="text-[#0052CC] font-bold">Portals are 100% free — your first AI simulation is on us.</span
+						class="text-[#0052CC] font-bold">Outcome rehearsals are 100% free — your first AI review is on us.</span
 					>
 				</p>
 			</div>
@@ -1021,7 +1021,7 @@
 			<div class="space-y-4">
 				<h2 class="text-3xl font-bold text-slate-900">Ready to begin?</h2>
 				<p class="text-slate-500">
-					Create a temporary profile to start your free simulation or upgrade for the full workshop.
+					Create a temporary profile to start your free admissions outcome rehearsal or upgrade for the full workshop.
 				</p>
 			</div>
 
@@ -1057,7 +1057,7 @@
 								<label
 									for="email"
 									class="block text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2"
-									>Fake Email</label
+									>Practice Email</label
 								>
 								<input
 									id="email"
@@ -1071,7 +1071,7 @@
 								<label
 									for="password"
 									class="block text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2"
-									>Fake Password</label
+									>Practice Password</label
 								>
 								<input
 									id="password"
@@ -1089,7 +1089,7 @@
 								on:click={handleApply}
 								class="w-full py-3.5 bg-slate-900 text-white text-sm font-bold uppercase tracking-wide rounded-full hover:bg-black transition-all shadow-sm active:scale-95"
 							>
-								Start Application Cycle
+								Start Outcome Rehearsal
 							</button>
 							<p class="text-[10px] text-center text-slate-400 mt-3">
 								By clicking Start, you agree to our terms. This is a simulation.
@@ -1111,13 +1111,13 @@
 							>
 						</div>
 						<p class="text-sm text-slate-500 font-medium">
-							The Simulator is always free. We fund it through our Pro tools.
+							The outcome rehearsal is always free. We fund it through our Pro tools.
 						</p>
 						<button
 							on:click={() => (showAccountForm = true)}
 							class="w-full py-3.5 bg-slate-900 text-white text-sm font-bold uppercase tracking-wide rounded-full hover:bg-black transition-all shadow-sm active:scale-95"
 						>
-							Start Free Simulation
+							Start Free Rehearsal
 						</button>
 					</div>
 				{/if}
@@ -1195,7 +1195,7 @@
 					on:click={acknowledgeSimDisclosure}
 					class="rounded-lg bg-[#0052CC] px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-[#0052CC]/20 transition-colors hover:bg-[#003d99]"
 				>
-					I understand — view the simulation →
+					I understand — view the rehearsal →
 				</button>
 			</div>
 		</div>

@@ -3,31 +3,31 @@
 
 	const stats = [
 		{ value: '5,000+', label: 'Students on PredictAdmit' },
-		{ value: '39', label: 'Universities simulated' },
+		{ value: '39', label: 'School scenarios' },
 		{ value: '$9', label: 'Lifetime Pro access' },
-		{ value: '1', label: 'Free simulation to start' }
+		{ value: '1', label: 'Free rehearsal to start' }
 	];
 
 	const differentiators = [
 		{
 			icon: '🎯',
-			title: 'Practice the real moment',
-			body: 'Log into realistic simulated applicant portals for 39 universities and open a simulated decision letter. Feel the moment before it happens for real — every screen is clearly labeled as a simulation.'
+			title: 'Admissions outcome rehearsal',
+			body: 'Practice the emotional moment of decision day with clearly labeled fictional portals, status pages, and decision letters for 39 school scenarios. Every screen is marked as a simulation.'
 		},
 		{
 			icon: '✍️',
 			title: 'Try everything free',
-			body: 'Every account starts with a free AI simulation and a taste of the full toolkit — essay grader, AI counselor, chances predictor, and mind-map. No credit card required to start.'
+			body: 'Every account starts with a free AI admissions rehearsal and a taste of the full toolkit — essay grader, AI counselor, chances predictor, and mind-map. No credit card required to start.'
 		},
 		{
 			icon: '⚡',
 			title: 'Pro unlocks it all',
-			body: 'PredictAdmit Pro removes every limit: unlimited AI simulations, full deep-dive decision analyses, and unlimited essay grading — $5/month or $9 once for lifetime access. Less than a private consultant charges per minute.'
+			body: 'PredictAdmit Pro removes every limit: unlimited AI admissions rehearsals, full deep-dive decision analyses, and unlimited essay grading — $5/month or $9 once for lifetime access. Less than a private consultant charges per minute.'
 		},
 		{
 			icon: '🔍',
 			title: 'Honest by design',
-			body: 'Everything simulated is labeled a simulation. We never claim to guarantee admission or fake an acceptance. And the AI gives feedback on your writing — it never writes your essays for you. Your application stays 100% your own work.'
+			body: 'Every simulated screen is labeled as fictional and independent. We never claim to guarantee admission or present any outcome as official. And the AI gives feedback on your writing — it never writes your essays for you. Your application stays 100% your own work.'
 		}
 	];
 
@@ -55,15 +55,15 @@
 	const faqs: { q: string; a: string; link?: { href: string; label: string } }[] = [
 		{
 			q: 'Is PredictAdmit free?',
-			a: 'You can start free: every account gets a free AI simulation and access to try the tools, no credit card required. PredictAdmit Pro unlocks unlimited simulations, full deep-dive analyses, and unlimited essay grading for $5/month — or $9 once for lifetime access.'
+			a: 'You can start free: every account gets a free AI admissions rehearsal and access to try the tools, no credit card required. PredictAdmit Pro unlocks unlimited rehearsals, full deep-dive analyses, and unlimited essay grading for $5/month — or $9 once for lifetime access.'
 		},
 		{
 			q: 'Are the decision letters real?',
-			a: 'No. The portals and decision letters in the simulator are simulations built for practice, and every screen is clearly labeled as one. They exist to help you prepare for the real thing — they are not official communications from any university.'
+			a: 'No. The portals, status pages, and decision letters are fictional simulations built for practice, and every screen is clearly labeled as one. They exist to help you prepare for the real moment — they are not official communications from any university.'
 		},
 		{
 			q: 'What exactly does Pro include?',
-			a: 'Unlimited AI admissions simulations across all 39 universities, the full deep-dive analysis behind every decision (five scored dimensions plus improvement tips), unlimited essay grading, the AI counselor, and the mind-map planner. One payment covers everything — there are no add-ons.'
+			a: 'Unlimited AI admissions rehearsals across all 39 universities, the full deep-dive analysis behind every decision (five scored dimensions plus improvement tips), unlimited essay grading, the AI counselor, and the mind-map planner. One payment covers everything — there are no add-ons.'
 		},
 		{
 			q: 'How accurate is the predictor?',
@@ -81,19 +81,19 @@
 	<title>About PredictAdmit — Your unfair advantage in college admissions</title>
 	<meta
 		name="description"
-		content="PredictAdmit gives students a realistic admissions simulator, an AI essay workshop, and a chances predictor. Start with a free simulation; Pro unlocks everything for $9. Everything simulated is clearly labeled."
+		content="PredictAdmit gives students an admissions outcome rehearsal tool, an AI essay workshop, and a chances predictor. Start with a free rehearsal; Pro unlocks everything for $9. Everything simulated is clearly labeled."
 	/>
 	<meta property="og:title" content="About PredictAdmit — Your unfair advantage in college admissions" />
 	<meta
 		property="og:description"
-		content="Practice on realistic simulated applicant portals and sharpen your essays with AI. One free simulation to start — Pro unlocks unlimited for $9."
+		content="Practice with clearly labeled admissions outcome rehearsals and sharpen your essays with AI. One free rehearsal to start — Pro unlocks unlimited for $9."
 	/>
 	<meta property="og:type" content="website" />
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:title" content="About PredictAdmit" />
 	<meta
 		name="twitter:description"
-		content="A realistic admissions simulator, an AI essay workshop, and a chances predictor. Free to try — Pro unlocks unlimited for $9."
+		content="An admissions outcome rehearsal tool, an AI essay workshop, and a chances predictor. Free to try — Pro unlocks unlimited for $9."
 	/>
 </svelte:head>
 
@@ -151,7 +151,7 @@
 					Why PredictAdmit is different
 				</h2>
 				<p class="text-lg text-slate-500 leading-relaxed">
-					A realistic simulator and a full AI toolkit — priced for students, with one rule: total
+					A realistic outcome rehearsal and a full AI toolkit — priced for students, with one rule: total
 					honesty about what is real and what is practice.
 				</p>
 			</div>
@@ -176,13 +176,13 @@
 				One upgrade. Everything unlocked.
 			</h2>
 			<p class="text-lg text-slate-500 leading-relaxed">
-				Start with a free simulation. When you're ready, Pro removes every limit — for less than a
+				Start with a free rehearsal. When you're ready, Pro removes every limit — for less than a
 				private consultant charges per minute.
 			</p>
 		</div>
 		<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
 			{#each [
-				{ icon: '🔮', title: 'Unlimited AI simulations', body: 'Run your profile against all 39 universities as many times as you want. Change your essay, rerun, and watch what moves.' },
+				{ icon: '🔮', title: 'Unlimited AI rehearsals', body: 'Run your profile against all 39 school scenarios as many times as you want. Change your essay, rerun, and watch what moves.' },
 				{ icon: '🔬', title: 'Full deep-dive analyses', body: 'Every decision comes with five scored dimensions and specific improvement tips — the "why" behind the outcome, unblurred.' },
 				{ icon: '📝', title: 'Unlimited essay grading', body: 'Grade every draft of every essay. The AI reads like a coded, blunt admissions officer — before a real one does.' }
 			] as f}
@@ -262,8 +262,7 @@
 				Ready to see where you stand?
 			</h2>
 			<p class="text-lg text-white/80 leading-relaxed max-w-xl mx-auto mb-10">
-				Start with the free AI tools, or step into a simulated portal and feel the moment before it's
-				real.
+				Start with the free AI tools, or rehearse a fictional decision-day outcome before the real moment arrives.
 			</p>
 			<div class="flex flex-col sm:flex-row gap-3 justify-center">
 				<a
@@ -276,7 +275,7 @@
 					href="/portals"
 					class="inline-flex items-center justify-center font-semibold text-sm bg-transparent text-white px-8 py-3.5 rounded-lg border border-white/40 hover:bg-white/10 transition-colors"
 				>
-					Try the simulator
+					Try the rehearsal
 				</a>
 			</div>
 		</div>

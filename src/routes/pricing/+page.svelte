@@ -33,7 +33,7 @@
 	}
 
 	const proFeatures = [
-		'Unlimited AI simulations across all 39 universities',
+		'Unlimited AI admissions rehearsals across all 39 schools',
 		'Full deep-dive analysis behind every decision',
 		'Unlimited essay grading',
 		'AI counselor + narrative mind-map',
@@ -41,8 +41,8 @@
 	];
 
 	const freeFeatures = [
-		'1 full AI simulation (all 39 schools)',
-		'Simulated portals & decision letters',
+		'1 full AI admissions rehearsal (all 39 schools)',
+		'Clearly labeled fictional portals and decision letters',
 		'Chances predictor preview',
 		'No credit card required'
 	];
@@ -52,7 +52,7 @@
 	<title>PredictAdmit – Pricing</title>
 	<meta
 		name="description"
-		content="Start free with one full AI admissions simulation. PredictAdmit Pro unlocks unlimited simulations, deep dives, and essay grading — $5/month or $9 once for lifetime access."
+		content="Start free with one full AI admissions rehearsal. PredictAdmit Pro unlocks unlimited rehearsals, deep dives, and essay grading — $5/month or $9 once for lifetime access."
 	/>
 </svelte:head>
 
@@ -63,7 +63,7 @@
 				Start free. Go Pro for <span class="text-[#0052CC]">$9</span>.
 			</h1>
 			<p class="text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
-				One free simulation to see where you stand. One tiny upgrade to remove every limit —
+				One free admissions rehearsal to see where you stand. One tiny upgrade to remove every limit —
 				less than a private consultant charges per minute.
 			</p>
 		</header>
@@ -88,7 +88,7 @@
 					href="/ai"
 					class="mt-8 w-full rounded-2xl border border-slate-200 px-6 py-3.5 text-center text-sm font-bold text-slate-700 hover:bg-slate-50 transition-colors"
 				>
-					Run your free simulation
+					Run your free rehearsal
 				</a>
 			</div>
 
