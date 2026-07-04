@@ -924,13 +924,13 @@
 	<!-- PREDICTADMIT PRO INTERFACE -->
 	<div class="flex h-screen w-screen bg-slate-50 text-slate-900 font-sans overflow-hidden">
 		<!-- SIDEBAR NAVIGATION -->
-		<aside class="w-64 flex flex-col border-r border-slate-200 bg-white z-50 shadow-sm">
+		<aside class="w-60 flex flex-col border-r border-slate-200/80 bg-white z-50">
 			<!-- Branding -->
-			<div class="p-6 border-b border-slate-100">
-				<div class="flex items-center gap-2 text-[#0052CC]">
+			<div class="h-14 px-4 flex items-center shrink-0">
+				<div class="flex items-center gap-2.5 min-w-0">
 					<!-- Logo Icon -->
-					<div class="w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center">
-						<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+					<div class="w-6 h-6 rounded-md bg-[#0052CC] flex items-center justify-center shrink-0">
+						<svg class="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"
 							><path
 								stroke-linecap="round"
 								stroke-linejoin="round"
@@ -939,133 +939,171 @@
 							/></svg
 						>
 					</div>
-					<span class="font-bold tracking-tight text-lg"
-						>PredictAdmit <span class="text-slate-900">Pro</span></span
+					<span class="text-sm font-semibold tracking-tight text-slate-900 truncate"
+						>PredictAdmit</span
+					>
+					<span
+						class="rounded-md border border-blue-100 bg-blue-50 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[#0052CC]"
+						>Pro</span
 					>
 				</div>
 			</div>
 
 			<!-- Views -->
-			<div class="flex-1 overflow-y-auto py-4 space-y-1">
+			<div class="flex-1 overflow-y-auto px-2 py-2 space-y-px">
 				<!-- DASHBOARD TAB -->
 				<button
 					onclick={() => (currentView = 'dashboard')}
-					class="w-full text-left px-6 py-3 text-sm font-bold flex items-center gap-3 transition-all border-l-4 {currentView ===
+					class="w-full h-9 flex items-center rounded-md text-left transition-colors {currentView ===
 					'dashboard'
-						? 'bg-blue-50 text-[#0052CC] border-[#0052CC]'
-						: 'text-slate-500 border-transparent hover:text-slate-900 hover:bg-slate-50'}"
+						? 'bg-slate-100 text-slate-900'
+						: 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'}"
 				>
-					<svg class="w-5 h-5 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-						><path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
-						/></svg
+					<span
+						class="w-9 h-9 grid place-content-center shrink-0 {currentView === 'dashboard'
+							? 'text-[#0052CC]'
+							: ''}"
 					>
-					<span>Hub & Stats</span>
+						<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+							><path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
+							/></svg
+						>
+					</span>
+					<span class="text-[13px] font-medium truncate">Hub & Stats</span>
 				</button>
 
 				<!-- MIND MAP TAB -->
 				<button
 					onclick={() => (currentView = 'mindmap')}
-					class="w-full text-left px-6 py-3 text-sm font-bold flex items-center gap-3 transition-all border-l-4 {currentView ===
+					class="w-full h-9 flex items-center rounded-md text-left transition-colors {currentView ===
 					'mindmap'
-						? 'bg-purple-50 text-purple-600 border-purple-600'
-						: 'text-slate-500 border-transparent hover:text-slate-900 hover:bg-slate-50'}"
+						? 'bg-slate-100 text-slate-900'
+						: 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'}"
 				>
-					<svg class="w-5 h-5 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
-						/>
-					</svg>
-					<span>Mind Map / Inspo</span>
+					<span
+						class="w-9 h-9 grid place-content-center shrink-0 {currentView === 'mindmap'
+							? 'text-[#0052CC]'
+							: ''}"
+					>
+						<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+							/>
+						</svg>
+					</span>
+					<span class="text-[13px] font-medium truncate">Mind Map / Inspo</span>
 				</button>
 
 				<!-- AI COUNSELOR TAB -->
 				<button
 					onclick={() => (currentView = 'counselor')}
-					class="w-full text-left px-6 py-3 text-sm font-bold flex items-center gap-3 transition-all border-l-4 {currentView ===
+					class="w-full h-9 flex items-center rounded-md text-left transition-colors {currentView ===
 					'counselor'
-						? 'bg-blue-50 text-[#0052CC] border-[#0052CC]'
-						: 'text-slate-500 border-transparent hover:text-slate-900 hover:bg-slate-50'}"
+						? 'bg-slate-100 text-slate-900'
+						: 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'}"
 				>
-					<svg class="w-5 h-5 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-						><path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 3v-3z"
-						/></svg
+					<span
+						class="w-9 h-9 grid place-content-center shrink-0 {currentView === 'counselor'
+							? 'text-[#0052CC]'
+							: ''}"
 					>
-					<span>AI Counselor</span>
+						<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+							><path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 3v-3z"
+							/></svg
+						>
+					</span>
+					<span class="text-[13px] font-medium truncate">AI Counselor</span>
 				</button>
 
 				<!-- SCHOOLS TAB -->
 				<button
 					onclick={() => (currentView = 'schools')}
-					class="w-full text-left px-6 py-3 text-sm font-bold flex items-center gap-3 transition-all border-l-4 {currentView ===
+					class="w-full h-9 flex items-center rounded-md text-left transition-colors {currentView ===
 					'schools'
-						? 'bg-blue-50 text-[#0052CC] border-[#0052CC]'
-						: 'text-slate-500 border-transparent hover:text-slate-900 hover:bg-slate-50'}"
+						? 'bg-slate-100 text-slate-900'
+						: 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'}"
 				>
-					<svg class="w-5 h-5 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-						><path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M12 14l9-5-9-5-9 5 9 5z"
-						/><path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M12 14l6.16-3.422A12.083 12.083 0 0121 12.11c0 .93-.14 1.83-.4 2.68L12 21l-8.6-6.21A11.98 11.98 0 013 12.11c0-.9.14-1.79.4-2.63L12 14z"
-						/></svg
+					<span
+						class="w-9 h-9 grid place-content-center shrink-0 {currentView === 'schools'
+							? 'text-[#0052CC]'
+							: ''}"
 					>
-					<span>Universities</span>
+						<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+							><path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M12 14l9-5-9-5-9 5 9 5z"
+							/><path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M12 14l6.16-3.422A12.083 12.083 0 0121 12.11c0 .93-.14 1.83-.4 2.68L12 21l-8.6-6.21A11.98 11.98 0 013 12.11c0-.9.14-1.79.4-2.63L12 14z"
+							/></svg
+						>
+					</span>
+					<span class="text-[13px] font-medium truncate">Universities</span>
 				</button>
 
 				<!-- CHANCE ME TAB -->
 				<button
 					onclick={() => (currentView = 'chanceme')}
-					class="w-full text-left px-6 py-3 text-sm font-bold flex items-center gap-3 transition-all border-l-4 {currentView ===
+					class="w-full h-9 flex items-center rounded-md text-left transition-colors {currentView ===
 					'chanceme'
-						? 'bg-blue-50 text-[#0052CC] border-[#0052CC]'
-						: 'text-slate-500 border-transparent hover:text-slate-900 hover:bg-slate-50'}"
+						? 'bg-slate-100 text-slate-900'
+						: 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'}"
 				>
-					<svg class="w-5 h-5 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-						><path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-						/></svg
+					<span
+						class="w-9 h-9 grid place-content-center shrink-0 {currentView === 'chanceme'
+							? 'text-[#0052CC]'
+							: ''}"
 					>
-					<span>Chance Me</span>
+						<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+							><path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+							/></svg
+						>
+					</span>
+					<span class="text-[13px] font-medium truncate">Chance Me</span>
 				</button>
 
 				<!-- COMMUNITY TAB -->
 				<button
 					onclick={() => (currentView = 'community')}
-					class="w-full text-left px-6 py-3 text-sm font-bold flex items-center gap-3 transition-all border-l-4 {currentView ===
+					class="w-full h-9 flex items-center rounded-md text-left transition-colors {currentView ===
 					'community'
-						? 'bg-blue-50 text-[#0052CC] border-[#0052CC]'
-						: 'text-slate-500 border-transparent hover:text-slate-900 hover:bg-slate-50'}"
+						? 'bg-slate-100 text-slate-900'
+						: 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'}"
 				>
-					<Users class="w-5 h-5 opacity-70" strokeWidth={2} />
-					<span>Human Counselors</span>
+					<span
+						class="w-9 h-9 grid place-content-center shrink-0 {currentView === 'community'
+							? 'text-[#0052CC]'
+							: ''}"
+					>
+						<Users class="w-4 h-4" strokeWidth={2} />
+					</span>
+					<span class="text-[13px] font-medium truncate">Human Counselors</span>
 				</button>
 
-				<div
-					class="mt-4 px-6 pb-2 text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center justify-between group"
-				>
-					<span>Essays</span>
+				<div class="mt-5 mb-1 px-3 flex items-center justify-between">
+					<span class="text-[11px] font-medium uppercase tracking-wider text-slate-400">Essays</span>
 					<button
 						onclick={addNewSupplemental}
-						class="text-slate-300 hover:text-[#0052CC] p-1 rounded hover:bg-blue-50 transition-colors"
+						class="p-1 rounded-md text-slate-300 hover:text-slate-700 hover:bg-slate-100 transition-colors"
 						title="New Supplemental Essay"
 					>
 						<svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1082,35 +1120,43 @@
 				{#each files as file, i}
 					<button
 						onclick={() => switchFile(i)}
-						class="w-full text-left px-6 py-2.5 text-xs font-medium flex items-center justify-between gap-2 transition-all border-l-4 {currentView ===
+						class="w-full h-8 flex items-center gap-2 rounded-md px-3 text-left transition-colors {currentView ===
 							'editor' && activeFileIndex === i
-							? 'bg-blue-50 text-[#0052CC] border-[#0052CC]'
-							: 'text-slate-600 border-transparent hover:bg-slate-50 hover:text-slate-900'}"
+							? 'bg-slate-100 text-slate-900'
+							: 'text-slate-600 hover:bg-slate-100/70 hover:text-slate-900'}"
 					>
-						<span class="truncate">{file.name.replace(/.md|.txt/g, '')}</span>
-						{#if currentView === 'editor' && activeFileIndex === i}
-							<div class="h-1.5 w-1.5 rounded-full bg-[#0052CC]"></div>
-						{/if}
+						<svg
+							class="w-3.5 h-3.5 shrink-0 {currentView === 'editor' && activeFileIndex === i
+								? 'text-[#0052CC]'
+								: 'text-slate-400'}"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke="currentColor"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+							/>
+						</svg>
+						<span class="text-[13px] font-medium truncate flex-1">{file.name.replace(/.md|.txt/g, '')}</span>
 					</button>
 				{/each}
 
 				<button
 					onclick={addNewSupplemental}
-					class="w-full text-left px-6 py-3 text-xs font-bold text-slate-400 hover:text-[#0052CC] hover:bg-slate-50 transition-all flex items-center gap-2 mt-2"
+					class="w-full h-8 flex items-center gap-2 rounded-md px-3 text-left text-slate-400 hover:text-slate-700 hover:bg-slate-100/70 transition-colors"
 				>
-					<div
-						class="w-5 h-5 rounded-full border border-dashed border-slate-300 flex items-center justify-center"
-					>
-						<svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								d="M12 4v16m8-8H4"
-							/>
-						</svg>
-					</div>
-					<span>Add New Essay</span>
+					<svg class="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M12 4v16m8-8H4"
+						/>
+					</svg>
+					<span class="text-[13px] font-medium">Add New Essay</span>
 				</button>
 
 				<!-- Import Modal -->
@@ -1148,24 +1194,37 @@
 			</div>
 
 			<!-- User Menu — h-24 to line up with the essay editor's bottom action bar -->
-			<div class="h-24 px-4 border-t border-slate-100 bg-slate-50/50 flex items-center">
+			<div class="h-24 px-3 border-t border-slate-200/80 flex items-center shrink-0">
 				<button
 					onclick={() => (currentView = 'settings')}
-					class="flex items-center gap-3 w-full p-2 rounded-xl hover:bg-white hover:shadow-sm transition-all border {currentView ===
+					title="Settings"
+					class="flex items-center gap-2.5 w-full h-10 px-2 rounded-md transition-colors {currentView ===
 					'settings'
-						? 'bg-white shadow-sm border-slate-200'
-						: 'border-transparent hover:border-slate-200'}"
+						? 'bg-slate-100'
+						: 'hover:bg-slate-100/70'}"
 				>
-					<div
-						class="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-xs text-indigo-700 font-bold border border-indigo-200"
-					>
-						{session?.user?.name?.[0] || 'U'}
-					</div>
+					{#if session?.user?.image}
+						<img
+							src={session.user.image}
+							alt={session.user.name}
+							referrerpolicy="no-referrer"
+							class="w-6 h-6 rounded-full shrink-0"
+						/>
+					{:else}
+						<div
+							class="w-6 h-6 rounded-full bg-[#0052CC] flex items-center justify-center text-[11px] font-semibold text-white shrink-0"
+						>
+							{session?.user?.name?.[0] || 'U'}
+						</div>
+					{/if}
 					<div class="text-left flex-1 min-w-0">
-						<div class="text-xs font-bold text-slate-900 truncate">{session?.user?.name}</div>
-						<div class="text-[10px] text-slate-500">View settings</div>
+						<div class="text-[13px] font-medium text-slate-900 truncate">{session?.user?.name}</div>
 					</div>
-					<svg class="w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+					<svg
+						class="w-4 h-4 text-slate-400 shrink-0"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke="currentColor"
 						><path
 							stroke-linecap="round"
 							stroke-linejoin="round"
