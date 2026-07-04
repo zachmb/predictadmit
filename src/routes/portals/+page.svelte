@@ -47,6 +47,7 @@
 		school: portal.name,
 		slug: portal.slug,
 		outcome,
+		source: 'manual',
 		academic_score: 0,
 		academic_explanation: 'N/A: manual portal selection',
 		extracurricular_score: 0,
@@ -76,7 +77,7 @@
 			const updatedDecisions = initialPortals.map((portal) => {
 				const existingDecision = decisionsByPortal.get(portal.slug);
 				return existingDecision
-					? { ...existingDecision, outcome: status }
+					? { ...existingDecision, outcome: status, source: 'manual' as const }
 					: buildManualDecision(portal, status);
 			});
 
@@ -95,7 +96,7 @@
 		const currentResults = get(aiResults);
 		const existingDecision = currentResults.decisions.find((d) => d.slug === slug);
 		const updatedDecision = existingDecision
-			? { ...existingDecision, outcome }
+			? { ...existingDecision, outcome, source: 'manual' as const }
 			: buildManualDecision(portal, outcome);
 
 		aiResults.setDecisions([

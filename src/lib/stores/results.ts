@@ -7,6 +7,9 @@ export type AiDecision = {
 	school: string;
 	slug: string;
 	outcome: DecisionOutcome;
+	// Distinguishes real AI evaluations from manual/random simulation placeholders.
+	// Absent on old cached payloads — treat those as manual.
+	source?: 'ai' | 'manual';
 	academic_score: number;
 	academic_explanation: string;
 	extracurricular_score: number;
@@ -74,6 +77,15 @@ export const decisionsBySlug = derived(aiResults, ($results) => {
 	const map: Record<string, DecisionOutcome> = {};
 	for (const d of $results.decisions) {
 		if (d.slug) map[d.slug] = d.outcome;
+	}
+	return map;
+});
+
+// Only decisions produced by the AI evaluation flow — manual/random sim decisions are excluded.
+export const aiDecisionsBySlug = derived(aiResults, ($results) => {
+	const map: Record<string, DecisionOutcome> = {};
+	for (const d of $results.decisions) {
+		if (d.slug && d.source === 'ai') map[d.slug] = d.outcome;
 	}
 	return map;
 });

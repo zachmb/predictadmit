@@ -476,7 +476,7 @@
 				}
 
 				// 4. Add individual decision to the store
-				aiResults.addDecision(data.decision, myValidId, {
+				aiResults.addDecision({ ...data.decision, source: 'ai' }, myValidId, {
 					major,
 					applicantSummary: data.applicantSummary
 				});

@@ -113,12 +113,17 @@
 		let updatedDecisions = [...currentResults.decisions];
 
 		if (existingIndex !== -1) {
-			updatedDecisions[existingIndex] = { ...updatedDecisions[existingIndex], outcome: status };
+			updatedDecisions[existingIndex] = {
+				...updatedDecisions[existingIndex],
+				outcome: status,
+				source: 'manual'
+			};
 		} else {
 			const newDecision: AiDecision = {
 				school: schoolConfig.schoolName,
 				slug: slug,
 				outcome: status,
+				source: 'manual',
 				academic_score: 0,
 				academic_explanation: 'N/A: random sim',
 				extracurricular_score: 0,
@@ -335,6 +340,7 @@
 			school: p.name,
 			slug: p.slug,
 			outcome: Math.random() > 0.5 ? 'admit' : ('deny' as 'admit' | 'deny'),
+			source: 'manual' as const,
 			academic_score: 0,
 			extracurricular_score: 0,
 			intellectual_score: 0,
