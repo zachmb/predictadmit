@@ -1148,7 +1148,7 @@
 
 {#if showSimDisclosure}
 	<div
-		class="fixed inset-0 z-[300] flex items-center justify-center p-4"
+		class="fixed inset-0 z-[10000] flex items-center justify-center p-4"
 		role="dialog"
 		aria-modal="true"
 		aria-labelledby="sim-disclosure-title"
