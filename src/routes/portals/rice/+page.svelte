@@ -358,7 +358,7 @@
 
 		<!-- Welcome band -->
 		<div style="background-color: {school.primaryColor};" class="mt-6 py-12 text-center text-white">
-			<h1 class="text-4xl font-extrabold uppercase tracking-wide">Welcome, {firstName()}</h1>
+			<h1 class="text-4xl font-extrabold uppercase tracking-wide text-white">Welcome, {firstName()}</h1>
 			<p class="mx-auto mt-3 max-w-2xl px-6 text-[14px] leading-relaxed text-white/85">
 				Use your <span class="font-semibold">Rice Admission Student Portal</span> to track your
 				admission and financial aid progress, submit required materials, request an optional

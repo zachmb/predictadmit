@@ -329,7 +329,7 @@
 		<div
 			class="bg-gradient-to-r from-amber-400 via-orange-500 to-[#FA4616] text-white text-center py-10 px-6"
 		>
-			<h1 class="text-3xl font-bold">Hi, {firstName()}!</h1>
+			<h1 class="text-3xl font-bold text-white">Hi, {firstName()}!</h1>
 			<p class="text-2xl font-light mt-1">Welcome to your Gator Portal.</p>
 			<div
 				class="mt-6 mx-auto max-w-md aspect-video bg-black/70 rounded-lg flex items-center justify-center border-4 border-white/30"
