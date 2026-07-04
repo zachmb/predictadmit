@@ -345,7 +345,7 @@
 				<div class="text-xs font-bold uppercase tracking-widest text-blue-200">
 					Available in PredictAdmit Pro
 				</div>
-				<h2 class="text-2xl md:text-3xl font-bold tracking-tight">
+				<h2 class="text-2xl md:text-3xl font-bold tracking-tight text-white">
 					Stop guessing. Get 50+ vetted research programs matched to your major.
 				</h2>
 				<p class="text-blue-100 text-lg leading-relaxed max-w-xl">
