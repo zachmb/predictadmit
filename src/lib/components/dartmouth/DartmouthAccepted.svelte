@@ -127,6 +127,11 @@
 					information will be available in your portal.
 				</p>
 			</div>
+
+			<div class="mt-8 p-4 bg-amber-50 border border-amber-200 rounded text-sm text-amber-800">
+				<strong>Note:</strong> This is a simulated admission letter for entertainment purposes only. This
+				is not a real admission decision from Dartmouth College.
+			</div>
 		</div>
 	</div>
 </div>

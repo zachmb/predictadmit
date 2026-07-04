@@ -60,6 +60,11 @@
 				<span class="font-semibold">Office of Admissions</span><br />
 				Western Washington University
 			</p>
+
+			<div class="mt-8 rounded border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800">
+				<strong>Note:</strong> This is a simulated admission letter for entertainment purposes only. This
+				is not a real admission decision from Western Washington University.
+			</div>
 		</div>
 	</section>
 
