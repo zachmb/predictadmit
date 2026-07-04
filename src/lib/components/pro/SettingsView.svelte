@@ -2,6 +2,7 @@
 	import { userProfile } from '$lib/stores/user';
 	import { page } from '$app/stores';
 	import { browser } from '$app/environment';
+	import { signOut } from '@auth/sveltekit/client';
 
 	const PREFS_KEY = 'predictadmit:pro:prefs';
 
@@ -132,8 +133,9 @@
 				</dl>
 
 				<div class="mt-6">
-					<a
-						href="/"
+					<button
+						type="button"
+						onclick={() => signOut({ callbackUrl: '/' })}
 						class="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 hover:text-slate-900"
 					>
 						<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" class="h-4 w-4" aria-hidden="true">
@@ -141,7 +143,7 @@
 							<path stroke-linecap="round" stroke-linejoin="round" d="M16 10H8m0 0 2.5-2.5M8 10l2.5 2.5" />
 						</svg>
 						Log out
-					</a>
+					</button>
 				</div>
 			</section>
 

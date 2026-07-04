@@ -1,26 +1,15 @@
 <script lang="ts">
 	import SiteFooter from '$lib/components/layout/SiteFooter.svelte';
-	import Card from '$lib/components/common/Card.svelte';
+	import SettingsView from '$lib/components/pro/SettingsView.svelte';
 
-	import { signIn, signOut } from '@auth/sveltekit/client';
+	import { signIn } from '@auth/sveltekit/client';
 	import { page } from '$app/stores';
-	import { goto } from '$app/navigation';
-	import { userProfile } from '$lib/stores/user';
 
 	$: session = $page.data.session;
 	$: isSignedIn = !!session;
-	$: userEmail = session?.user?.email || '';
-	$: userName = session?.user?.name || '';
-	$: userImage = session?.user?.image || '';
-
-	$: subscriptionStatus = $userProfile.isPro ? 'pro' : 'free';
 
 	const handleGoogleSignIn = () => {
 		signIn('google');
-	};
-
-	const handleSignOut = () => {
-		signOut();
 	};
 </script>
 
@@ -123,70 +112,7 @@
 	</div>
 {:else}
 	<div class="min-h-[calc(100vh-64px)] bg-slate-50 flex flex-col">
-		<main class="flex-1 max-w-4xl w-full mx-auto px-6 py-12">
-			<h1 class="text-4xl font-bold text-slate-900 mb-8">Account Settings</h1>
-
-			<!-- Signed in -->
-			<div class="space-y-6">
-				<!-- Profile Card -->
-				<Card class="bg-white border-slate-200">
-					<div class="p-6">
-						<h2 class="text-xl font-bold text-slate-900 mb-4">Profile</h2>
-						<div class="flex items-center gap-4">
-							{#if userImage}
-								<img
-									src={userImage}
-									alt={userName}
-									class="w-16 h-16 rounded-full border border-slate-200"
-								/>
-							{:else}
-								<div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center">
-									<span class="text-2xl font-bold text-blue-600">{userName.charAt(0)}</span>
-								</div>
-							{/if}
-							<div>
-								<p class="font-semibold text-slate-900">{userName}</p>
-								<p class="text-sm text-slate-600">{userEmail}</p>
-							</div>
-						</div>
-						<button
-							on:click={handleSignOut}
-							class="mt-4 text-sm text-red-600 hover:text-red-700 font-semibold"
-						>
-							Sign Out
-						</button>
-					</div>
-				</Card>
-
-				<!-- Subscription Card -->
-				<Card class="bg-white border-slate-200">
-					<div class="p-6">
-						<h2 class="text-xl font-bold text-slate-900 mb-4">Subscription</h2>
-						<div class="flex items-center justify-between">
-							<div>
-								<p class="font-semibold text-slate-900 capitalize">{subscriptionStatus} Plan</p>
-								<p class="text-sm text-slate-600">
-									{#if subscriptionStatus === 'free'}
-										Upgrade to Pro for AI-powered predictions
-									{:else}
-										Access to all Pro features
-									{/if}
-								</p>
-							</div>
-							{#if subscriptionStatus === 'free'}
-								<a
-									href="/ai"
-									class="inline-flex items-center justify-center font-bold text-sm bg-blue-600 text-white px-6 py-2.5 rounded-lg hover:bg-blue-700 transition-colors"
-								>
-									Upgrade to Pro
-								</a>
-							{/if}
-						</div>
-					</div>
-				</Card>
-			</div>
-		</main>
-
+		<SettingsView />
 		<SiteFooter />
 	</div>
 {/if}
