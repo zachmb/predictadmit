@@ -123,9 +123,15 @@
 					class="lg:col-span-8 bg-white rounded-xl border border-slate-200 shadow-xl overflow-hidden"
 				>
 					<div class="p-8 border-b border-slate-100 flex justify-between items-center">
-						<h2 class="text-[11px] font-black uppercase tracking-[0.3em] text-slate-400">
-							Decision Outcome
-						</h2>
+						<div class="space-y-2">
+							<h2 class="text-[11px] font-black uppercase tracking-[0.3em] text-slate-400">
+								Decision Outcome
+							</h2>
+							<p class="max-w-xl text-xs leading-relaxed text-slate-500">
+								Remember: this is just an AI prediction. It could be completely wrong, so
+								don't think about it too deeply or treat it like a real admissions decision.
+							</p>
+						</div>
 						<div class="flex items-center gap-4">
 							<div
 								class="text-4xl font-black uppercase italic tracking-tighter {outcomeColors[

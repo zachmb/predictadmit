@@ -763,6 +763,13 @@
 						>Read our methodology →</a
 					>
 				</p>
+
+				<p
+					class="mx-auto max-w-lg rounded-2xl border border-amber-200 bg-amber-50 px-5 py-3 text-sm leading-relaxed text-amber-900"
+				>
+					Quick reality check: this is just an AI prediction. It could be completely wrong,
+					so don't think about it too deeply or treat it like a real admissions decision.
+				</p>
 			</header>
 
 			<!-- Application builder + AI controls -->
@@ -1346,6 +1353,11 @@
 									Clear AI inbox
 								</button>
 							</div>
+
+							<p class="mt-4 text-center text-xs leading-relaxed text-slate-500">
+								Reminder: this is only an AI prediction and it may be way off. Use it as a
+								rehearsal, not as something to spiral over.
+							</p>
 
 							{#if applicantSummary}
 								<details class="mt-6">
