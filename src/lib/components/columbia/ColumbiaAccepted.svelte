@@ -1,4 +1,5 @@
 <script lang="ts">
+	import DeepDiveButton from '$lib/components/common/DeepDiveButton.svelte';
 	import Confetti from '$lib/components/common/Confetti.svelte';
 	// The parent component passes these props
 	export let applicantName: string;
@@ -6,21 +7,11 @@
 	export let primaryColor: string = '#003D6B';
 	export let footerDomain: string = 'columbia.edu';
 
-	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
-	import { userProfile } from '$lib/stores/user';
-	import { decisionsBySlug } from '$lib/stores/results';
 
 	const COLUMBIA_BLUE = '#B9D9EB';
 
-	$: session = $page.data.session;
 
-	let googleSignedIn = false;
-	$: googleSignedIn = !!session?.user;
 
-	const viewAnalysis = () => {
-		goto('/results/columbia');
-	};
 </script>
 
 <Confetti primary={primaryColor} />
@@ -31,17 +22,7 @@
 
 <main class="min-h-screen bg-white text-gray-800 p-6" style="font-family: Georgia, 'Times New Roman', serif;">
 	<div class="max-w-3xl mx-auto mt-10">
-		{#if googleSignedIn && $userProfile.usingAI}
-			<div class="mb-6 flex justify-end">
-				<button
-					on:click={viewAnalysis}
-					class="group flex items-center px-4 py-2 text-white rounded-lg text-sm font-sans font-bold hover:opacity-90 transition-all shadow-md active:scale-95"
-					style="background-color: {primaryColor};"
-				>
-					Deep Dive: Why did I get {$decisionsBySlug['columbia']}?
-				</button>
-			</div>
-		{/if}
+		<DeepDiveButton slug="columbia" color={primaryColor} />
 
 		<!-- Letterhead -->
 		<div class="border-b-2 pb-4 mb-8" style="border-color: {primaryColor};">

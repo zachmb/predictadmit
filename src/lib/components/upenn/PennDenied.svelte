@@ -1,23 +1,14 @@
 <script lang="ts">
+	import DeepDiveButton from '$lib/components/common/DeepDiveButton.svelte';
 	// Props passed from the portal route
 	export let applicantName: string;
 	export let schoolName: string = 'University of Pennsylvania';
 	export let primaryColor: string = '#011F5B';
 	export let footerDomain: string = 'upenn.edu';
 
-	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
-	import { userProfile } from '$lib/stores/user';
 
-	$: session = $page.data.session;
 
-	let googleSignedIn = false;
-	$: googleSignedIn = !!session?.user;
 
-	import { decisionsBySlug } from '$lib/stores/results';
-	const viewAnalysis = () => {
-		goto('/results/upenn');
-	};
 
 	$: firstName = (applicantName || 'Applicant').trim().split(' ')[0];
 </script>
@@ -59,16 +50,7 @@
 	<!-- Letter body -->
 	<main class="flex-grow bg-white">
 		<div class="max-w-3xl mx-auto px-6 py-12 text-[15px] leading-relaxed text-slate-800">
-			{#if googleSignedIn && $userProfile.usingAI}
-				<div class="mb-8 flex justify-end">
-					<button
-						on:click={viewAnalysis}
-						class="flex items-center px-4 py-2 bg-[#011F5B] text-white rounded-lg text-sm font-bold hover:bg-[#022a7a] transition-all shadow-md active:scale-95"
-					>
-						Deep Dive: Why did I get {$decisionsBySlug['upenn']}?
-					</button>
-				</div>
-			{/if}
+			<DeepDiveButton slug="upenn" color={primaryColor} />
 
 			<p class="font-bold mb-8">March 26, 2027</p>
 

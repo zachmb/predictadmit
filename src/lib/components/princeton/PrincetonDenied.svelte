@@ -1,32 +1,25 @@
 <script lang="ts">
+	import DeepDiveButton from '$lib/components/common/DeepDiveButton.svelte';
 	// The parent component passes these props
 	export let applicantName: string;
 	export let schoolName: string = 'Princeton University';
 	export let primaryColor: string = '#FF8F00'; // Princeton orange
 	export let footerDomain: string = 'princeton.edu';
 
-	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { userProfile } from '$lib/stores/user';
-	import { decisionsBySlug } from '$lib/stores/results';
 
 	$: session = $page.data.session;
 
-	let googleSignedIn = false;
 	let googleEmail = '';
 	let googleName = '';
 
 	$: {
-		googleSignedIn = !!session?.user;
 		googleEmail = (session?.user?.email as string) ?? '';
 		googleName = (session?.user?.name as string) ?? '';
 	}
 
 	$: firstName = applicantName ? applicantName.split(' ')[0] : '';
 
-	const viewAnalysis = () => {
-		goto('/results/princeton');
-	};
 </script>
 
 <svelte:head>
@@ -35,24 +28,7 @@
 
 <main class="min-h-screen bg-white text-gray-800 font-serif p-6">
 	<div class="max-w-3xl mx-auto mt-10">
-		{#if googleSignedIn && $userProfile.usingAI}
-			<div class="mb-6 flex justify-end">
-				<button
-					on:click={viewAnalysis}
-					class="group flex items-center px-4 py-2 bg-black text-white rounded-lg text-sm font-sans font-bold hover:bg-gray-800 transition-all shadow-md active:scale-95"
-				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						class="w-4 h-4 mr-2 transition-transform group-hover:-translate-x-1"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
-					>
-					</svg>
-					Deep Dive: Why did I get {$decisionsBySlug['princeton']}?
-				</button>
-			</div>
-		{/if}
+		<DeepDiveButton slug="princeton" color={primaryColor} />
 
 		<!-- Letterhead -->
 		<div class="border-b-2 pb-4 mb-8" style="border-color: {primaryColor};">

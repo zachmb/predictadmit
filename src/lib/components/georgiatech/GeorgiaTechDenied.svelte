@@ -1,25 +1,16 @@
 <script lang="ts">
+	import DeepDiveButton from '$lib/components/common/DeepDiveButton.svelte';
 	export let applicantName: string;
 	export let schoolName: string = 'Georgia Institute of Technology';
 	export let primaryColor: string = '#003057';
 	export let footerDomain: string = 'gatech.edu';
 
-	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
-	import { userProfile } from '$lib/stores/user';
-	import { decisionsBySlug } from '$lib/stores/results';
 
 	const accent = '#B3A369';
 
-	$: session = $page.data.session;
-	let googleSignedIn = false;
-	$: googleSignedIn = !!session?.user;
 
 	$: firstName = applicantName ? applicantName.split(' ')[0] : 'Applicant';
 
-	const viewAnalysis = () => {
-		goto('/results/georgiatech');
-	};
 </script>
 
 <svelte:head>
@@ -50,16 +41,7 @@
 				>
 			</div>
 
-			{#if googleSignedIn && $userProfile.usingAI}
-				<div class="mt-4 flex justify-end">
-					<button
-						on:click={viewAnalysis}
-						class="flex items-center px-4 py-2 bg-[#003057] text-white rounded-md text-sm font-bold hover:brightness-125 transition-all shadow-md active:scale-95"
-					>
-						Deep Dive: Why did I get {$decisionsBySlug['georgiatech'] ?? 'this decision'}?
-					</button>
-				</div>
-			{/if}
+			<DeepDiveButton slug="georgiatech" color={primaryColor} />
 
 			<!-- Seal + wordmark -->
 			<div class="flex items-center justify-center gap-4 my-10">

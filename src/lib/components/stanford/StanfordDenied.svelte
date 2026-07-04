@@ -1,28 +1,22 @@
 <script lang="ts">
+	import DeepDiveButton from '$lib/components/common/DeepDiveButton.svelte';
 	// The parent component passes these props
 	export let applicantName: string;
 	export let schoolName: string = 'Stanford University';
 	export let primaryColor: string = '#8C1515';
 	export let footerDomain: string = 'stanford.edu';
-	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { userProfile } from '$lib/stores/user';
 
 	$: session = $page.data.session;
 
-	let googleSignedIn = false;
 	let googleEmail = '';
 	let googleName = '';
 
 	$: {
-		googleSignedIn = !!session?.user;
 		googleEmail = (session?.user?.email as string) ?? '';
 		googleName = (session?.user?.name as string) ?? '';
 	}
-	import { decisionsBySlug } from '$lib/stores/results';
-	const viewAnalysis = () => {
-		goto('/results/stanford');
-	};
 
 	$: firstName = (applicantName || 'Applicant').split(' ')[0];
 </script>
@@ -33,17 +27,7 @@
 
 <main class="min-h-screen bg-white text-[#2e2d29] font-serif p-6">
 	<div class="max-w-3xl mx-auto mt-4">
-		{#if googleSignedIn && $userProfile.usingAI}
-			<div class="mb-4 flex justify-end">
-				<button
-					on:click={viewAnalysis}
-					class="group flex items-center px-4 py-2 text-white rounded-lg text-sm font-sans font-bold hover:opacity-90 transition-all shadow-md active:scale-95"
-					style="background-color: {primaryColor};"
-				>
-					Deep Dive: Why did I get {$decisionsBySlug['stanford']}?
-				</button>
-			</div>
-		{/if}
+		<DeepDiveButton slug="stanford" color={primaryColor} />
 
 		<!-- Date + Download row -->
 		<div class="flex justify-between items-center text-[11px] text-gray-600 mb-6">

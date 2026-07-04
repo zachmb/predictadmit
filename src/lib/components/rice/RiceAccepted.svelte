@@ -1,4 +1,5 @@
 <script lang="ts">
+	import DeepDiveButton from '$lib/components/common/DeepDiveButton.svelte';
 	import Confetti from '$lib/components/common/Confetti.svelte';
 	// The parent component passes these props
 	export let applicantName: string;
@@ -6,21 +7,11 @@
 	export let primaryColor: string = '#00205B';
 	export let footerDomain: string = 'rice.edu';
 
-	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
-	import { userProfile } from '$lib/stores/user';
-	import { decisionsBySlug } from '$lib/stores/results';
 
-	$: session = $page.data.session;
 
-	let googleSignedIn = false;
-	$: googleSignedIn = !!session?.user;
 
 	$: firstName = (applicantName || 'Applicant').split(' ')[0];
 
-	const viewAnalysis = () => {
-		goto('/results/rice');
-	};
 
 	const shieldSvg = `
 		<svg viewBox="0 0 120 148" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -47,17 +38,7 @@
 
 <main class="min-h-screen bg-[#f4f4f4] font-serif text-gray-800">
 	<div class="mx-auto max-w-3xl px-6 py-10">
-		{#if googleSignedIn && $userProfile.usingAI}
-			<div class="mb-6 flex justify-end">
-				<button
-					on:click={viewAnalysis}
-					class="flex items-center gap-2 rounded-lg px-4 py-2 font-sans text-sm font-bold text-white shadow-md transition-all hover:opacity-90 active:scale-95"
-					style="background-color: {primaryColor};"
-				>
-					Deep Dive: Why did I get {$decisionsBySlug['rice']}?
-				</button>
-			</div>
-		{/if}
+		<DeepDiveButton slug="rice" color={primaryColor} />
 
 		<!-- Date + navy rule -->
 		<div class="mb-0 text-[13px] font-semibold text-gray-700">March 25, 2027</div>

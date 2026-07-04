@@ -1,24 +1,17 @@
 <script lang="ts">
+	import DeepDiveButton from '$lib/components/common/DeepDiveButton.svelte';
 	// The parent component passes these props
 	export let applicantName: string;
 	export let schoolName: string = 'University of California, Irvine';
 	export let primaryColor: string = '#0064A4'; // UCI blue
 	export let footerDomain: string = 'uci.edu';
-	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { userProfile } from '$lib/stores/user';
 
 	$: session = $page.data.session;
 
-	let googleSignedIn = false;
 
 	$: {
-		googleSignedIn = !!session?.user;
 	}
-	import { decisionsBySlug } from '$lib/stores/results';
-	const viewAnalysis = () => {
-		goto('/results/uci');
-	};
 </script>
 
 <svelte:head>
@@ -27,17 +20,7 @@
 
 <main class="min-h-screen bg-white p-6 font-serif text-gray-800">
 	<div class="mx-auto mt-10 max-w-3xl">
-		{#if googleSignedIn && $userProfile.usingAI}
-			<div class="mb-6 flex justify-end">
-				<button
-					on:click={viewAnalysis}
-					class="group flex items-center rounded-lg px-4 py-2 font-sans text-sm font-bold text-white shadow-md transition-all hover:opacity-90 active:scale-95"
-					style="background-color: {primaryColor};"
-				>
-					Deep Dive: Why did I get {$decisionsBySlug['uci']}?
-				</button>
-			</div>
-		{/if}
+		<DeepDiveButton slug="uci" color={primaryColor} />
 
 		<!-- Letterhead -->
 		<div class="mb-8 border-b-2 pb-4" style="border-color: {primaryColor};">

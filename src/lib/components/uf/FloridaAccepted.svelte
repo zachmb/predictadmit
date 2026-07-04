@@ -1,21 +1,12 @@
 <script lang="ts">
+	import DeepDiveButton from '$lib/components/common/DeepDiveButton.svelte';
 	import Confetti from '$lib/components/common/Confetti.svelte';
 	export let applicantName: string;
 	export let schoolName: string = 'University of Florida';
 	export let primaryColor: string = '#0021A5';
 	export let footerDomain: string = 'ufl.edu';
-	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
-	import { userProfile } from '$lib/stores/user';
 
-	$: session = $page.data.session;
-	let googleSignedIn = false;
-	$: googleSignedIn = !!session?.user;
 
-	import { decisionsBySlug } from '$lib/stores/results';
-	const viewAnalysis = () => {
-		goto('/results/uf');
-	};
 
 	const accent = '#FA4616';
 	$: firstName = applicantName ? applicantName.split(' ')[0] : 'Applicant';
@@ -44,16 +35,7 @@
 	</header>
 
 	<div class="max-w-3xl mx-auto px-6 py-10">
-		{#if googleSignedIn && $userProfile.usingAI}
-			<div class="mb-6 flex justify-end">
-				<button
-					on:click={viewAnalysis}
-					class="flex items-center px-4 py-2 bg-[#0021A5] text-white rounded-lg text-sm font-bold hover:bg-[#001a85] transition-all shadow-md active:scale-95"
-				>
-					Deep Dive: Why did I get {$decisionsBySlug['uf']}?
-				</button>
-			</div>
-		{/if}
+		<DeepDiveButton slug="uf" color={primaryColor} />
 
 		<div class="flex justify-between items-start text-sm text-slate-600 mb-6">
 			<span>January 23, 2027</span>

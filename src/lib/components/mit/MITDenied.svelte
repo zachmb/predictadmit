@@ -1,23 +1,14 @@
 <script lang="ts">
+	import DeepDiveButton from '$lib/components/common/DeepDiveButton.svelte';
 	// The parent component passes these props
 	export let applicantName: string;
 	export let schoolName: string = 'Massachusetts Institute of Technology';
 	export let primaryColor: string = '#A31F34';
 	export let footerDomain: string = 'mit.edu';
 
-	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
-	import { userProfile } from '$lib/stores/user';
-	import { decisionsBySlug } from '$lib/stores/results';
 
-	$: session = $page.data.session;
 
-	let googleSignedIn = false;
-	$: googleSignedIn = !!session?.user;
 
-	const viewAnalysis = () => {
-		goto('/results/mit');
-	};
 </script>
 
 <svelte:head>
@@ -59,16 +50,7 @@
 			<a href="/disclaimer" class="text-[13px] text-[#2f6fb0] underline">Download PDF</a>
 		</div>
 
-		{#if googleSignedIn && $userProfile.usingAI}
-			<div class="mb-6 flex justify-end">
-				<button
-					on:click={viewAnalysis}
-					class="px-4 py-2 bg-[#14243a] text-white rounded text-sm font-semibold hover:bg-[#0f1c2e] transition-all shadow-md active:scale-95"
-				>
-					Deep Dive: Why did I get {$decisionsBySlug['mit']}?
-				</button>
-			</div>
-		{/if}
+		<DeepDiveButton slug="mit" color={primaryColor} />
 
 		<div class="text-[15px] leading-relaxed text-[#16283c]">
 			<p class="font-bold mb-6">March 14, 2027</p>

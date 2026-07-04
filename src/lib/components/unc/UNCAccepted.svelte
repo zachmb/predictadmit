@@ -1,4 +1,5 @@
 <script lang="ts">
+	import DeepDiveButton from '$lib/components/common/DeepDiveButton.svelte';
 	import Confetti from '$lib/components/common/Confetti.svelte';
 	// The parent component passes these props
 	export let applicantName: string;
@@ -6,22 +7,12 @@
 	export let primaryColor: string = '#4B9CD3'; // Carolina Blue
 	export let footerDomain: string = 'unc.edu';
 
-	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
-	import { userProfile } from '$lib/stores/user';
-	import { decisionsBySlug } from '$lib/stores/results';
 
 	const CAROLINA_NAVY = '#13294B';
 
-	$: session = $page.data.session;
-	let googleSignedIn = false;
-	$: googleSignedIn = !!session?.user;
 
 	$: firstName = (applicantName || 'Applicant').trim().split(' ')[0];
 
-	const viewAnalysis = () => {
-		goto('/results/unc');
-	};
 </script>
 
 <Confetti primary={primaryColor} />
@@ -76,17 +67,7 @@
 			<a href="/disclaimer" class="ml-2 hover:underline" style="color:{primaryColor};">Logout</a>
 		</div>
 
-		{#if googleSignedIn && $userProfile.usingAI}
-			<div class="mb-4 flex justify-end">
-				<button
-					on:click={viewAnalysis}
-					class="rounded-lg px-4 py-2 text-sm font-bold text-white shadow-md transition-all hover:opacity-90 active:scale-95"
-					style="background-color:{CAROLINA_NAVY};"
-				>
-					Deep Dive: Why did I get {$decisionsBySlug['unc']}?
-				</button>
-			</div>
-		{/if}
+		<DeepDiveButton slug="unc" color={primaryColor} />
 
 		<div class="mb-6 text-right">
 			<a href="/disclaimer" class="text-[13px] hover:underline" style="color:{primaryColor};">Download PDF</a>

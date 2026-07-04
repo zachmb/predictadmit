@@ -1,4 +1,5 @@
 <script lang="ts">
+	import DeepDiveButton from '$lib/components/common/DeepDiveButton.svelte';
 	import Confetti from '$lib/components/common/Confetti.svelte';
 	// The parent component passes these props
 	export let applicantName: string;
@@ -6,21 +7,11 @@
 	export let primaryColor: string = '#003262';
 	export let footerDomain: string = 'berkeley.edu';
 
-	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
-	import { userProfile } from '$lib/stores/user';
-	import { decisionsBySlug } from '$lib/stores/results';
 
 	const accent = '#FDB515';
 
-	$: session = $page.data.session;
 
-	let googleSignedIn = false;
-	$: googleSignedIn = !!session?.user;
 
-	const viewAnalysis = () => {
-		goto('/results/ucberkeley');
-	};
 </script>
 
 <Confetti primary={primaryColor} />
@@ -43,16 +34,7 @@
 	</div>
 
 	<div class="mx-auto max-w-3xl px-6 py-10">
-		{#if googleSignedIn && $userProfile.usingAI}
-			<div class="mb-6 flex justify-end">
-				<button
-					on:click={viewAnalysis}
-					class="flex items-center gap-2 rounded-lg bg-[#003262] px-4 py-2 font-sans text-sm font-bold text-white shadow-md transition-all hover:bg-slate-800 active:scale-95"
-				>
-					Deep Dive: Why did I get {$decisionsBySlug['ucberkeley']}?
-				</button>
-			</div>
-		{/if}
+		<DeepDiveButton slug="ucberkeley" color={primaryColor} />
 
 		<!-- Date + gold rule -->
 		<div class="mb-0 text-[13px] font-semibold text-slate-700">March 20, 2027</div>

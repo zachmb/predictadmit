@@ -1,25 +1,16 @@
 <script lang="ts">
+	import DeepDiveButton from '$lib/components/common/DeepDiveButton.svelte';
 	// The parent component passes these props
 	export let applicantName: string;
 	export let schoolName: string = 'Northwestern University';
 	export let primaryColor: string = '#4E2A84';
 	export let footerDomain: string = 'northwestern.edu';
 
-	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
-	import { userProfile } from '$lib/stores/user';
-	import { decisionsBySlug } from '$lib/stores/results';
 
-	$: session = $page.data.session;
 
-	let googleSignedIn = false;
-	$: googleSignedIn = !!session?.user;
 
 	const firstName = () => (applicantName || 'Applicant').split(' ')[0];
 
-	const viewAnalysis = () => {
-		goto('/results/northwestern');
-	};
 </script>
 
 <svelte:head>
@@ -61,17 +52,7 @@
 	</header>
 
 	<div class="mx-auto max-w-3xl px-6 py-10">
-		{#if googleSignedIn && $userProfile.usingAI}
-			<div class="mb-6 flex justify-end">
-				<button
-					on:click={viewAnalysis}
-					class="flex items-center gap-2 rounded-lg px-4 py-2 font-sans text-sm font-bold text-white shadow-md transition-all hover:opacity-90 active:scale-95"
-					style="background-color: {primaryColor};"
-				>
-					Deep Dive: Why did I get {$decisionsBySlug['northwestern']}?
-				</button>
-			</div>
-		{/if}
+		<DeepDiveButton slug="northwestern" color={primaryColor} />
 
 		<!-- Date + Download PDF -->
 		<div class="flex items-center justify-between">
