@@ -725,6 +725,13 @@
 					</span>. Every aspect of your application analyzed in depth—trained on real admissions
 					results.
 				</p>
+
+				<p class="text-sm text-slate-500">
+					Predictions use factor weights from NACAC's Factors in the Admission Decision survey.
+					<a href="/methodology" class="font-medium text-[#0052CC] hover:underline"
+						>Read our methodology →</a
+					>
+				</p>
 			</header>
 
 			<!-- Application builder + AI controls -->
