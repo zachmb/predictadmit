@@ -97,7 +97,7 @@
 	}
 
 	// ---------- booking modal (schedule-then-pay) ----------
-	type SessionOption = { key: 'intro' | 'session' | 'package'; label: string; sub: string; price: number };
+	type SessionOption = { key: 'intro' | 'session' | 'tworeader' | 'package'; label: string; sub: string; price: number };
 	let active = $state<Counselor | null>(null);
 	let modalEl = $state<HTMLElement | null>(null);
 	let step = $state<'options' | 'time' | 'done'>('options');
@@ -105,19 +105,46 @@
 	let slot = $state<string | null>(null);
 	let checkoutState = $state<'idle' | 'loading' | 'error'>('idle');
 
+	// Second reader for the two-reader review: another verified mentor, ideally from a
+	// different campus with overlapping majors/topics so the reads cross-check well.
+	const secondReader = $derived.by<Counselor | null>(() => {
+		const a = active;
+		if (!a) return null;
+		let best: { c: Counselor; score: number } | null = null;
+		for (const c of counselors) {
+			if (c.id === a.id) continue;
+			let score = 0;
+			if (c.school !== a.school) score += 2; // a second read from a different campus
+			score += c.majors.filter((m) => a.majors.includes(m)).length;
+			score += c.specialties.filter((s) => a.specialties.includes(s)).length;
+			score += c.rating - 4.5;
+			if (!best || score > best.score) best = { c, score };
+		}
+		return best?.c ?? null;
+	});
+
 	const options = $derived.by<SessionOption[]>(() => {
 		if (!active) return [];
 		const pkgSaving = active.pricePerSession * 4 - active.packagePrice;
-		return [
+		const opts: SessionOption[] = [
 			{ key: 'intro', label: 'Free 20-min intro call', sub: 'Meet your mentor, get a plan — no charge', price: 0 },
-			{ key: 'session', label: '60-min working session', sub: 'Live essay + strategy help', price: active.pricePerSession },
-			{
-				key: 'package',
-				label: 'Application package (4 sessions)',
-				sub: pkgSaving > 0 ? `Save $${pkgSaving} vs. booking singly` : 'Multi-session ED/app support',
-				price: active.packagePrice
-			}
+			{ key: 'session', label: '60-min working session', sub: 'Live essay + strategy help', price: active.pricePerSession }
 		];
+		if (secondReader) {
+			opts.push({
+				key: 'tworeader',
+				label: 'Two-reader application review',
+				sub: `${firstName(active.name)} + ${firstName(secondReader.name)} (${secondReader.school}) read independently, check each other's notes, then both join your call`,
+				price: active.pricePerSession + secondReader.pricePerSession
+			});
+		}
+		opts.push({
+			key: 'package',
+			label: 'Application package (4 sessions)',
+			sub: pkgSaving > 0 ? `Save $${pkgSaving} vs. booking singly` : 'Multi-session ED/app support',
+			price: active.packagePrice
+		});
+		return opts;
 	});
 
 	// Fake availability: next weekdays x a few evening slots.
@@ -175,13 +202,16 @@
 		}
 		checkoutState = 'loading';
 		try {
+			const sr = chosen.key === 'tworeader' ? secondReader : null;
 			const res = await fetch('/api/checkout', {
 				method: 'POST',
 				headers: { 'content-type': 'application/json' },
 				body: JSON.stringify({
 					pricingMode: 'counselor',
-					counselorName: `${active.name} · ${active.school}`,
-					sessionLabel: `${chosen.label} with ${active.name} — ${when}`,
+					counselorName: sr
+						? `${active.name} (${active.school}) + ${sr.name} (${sr.school})`
+						: `${active.name} · ${active.school}`,
+					sessionLabel: `${chosen.label} with ${sr ? `${active.name} + ${sr.name}` : active.name} — ${when}`,
 					amount: Math.round(chosen.price * 100)
 				})
 			});
@@ -416,7 +446,7 @@
 		<section class="mt-10">
 			<h2 class="mb-4 text-xl font-bold text-slate-900">Questions</h2>
 			<div class="space-y-2">
-				{#each [{ q: 'How do you verify mentors got into a Top-20?', a: 'We confirm every mentor is currently enrolled at the school shown by sending a one-time code to their school-issued .edu email — the same method employers use. We never accept portal screenshots or decision letters (including PredictAdmit-generated ones). Their enrolled school is verified; any additional admits they list are labeled self-reported.' }, { q: 'Do I have to pay to start?', a: 'No. Every mentor offers a free 20-minute intro call. You only pay if you book a full session or a package afterward.' }, { q: 'How does scheduling work?', a: 'You pick a session type and a time slot, then confirm. Paid sessions go to secure Stripe checkout only after you\'ve chosen a time.' }, { q: 'What is your refund policy?', a: 'If a paid session is not useful in the first 15 minutes, or your mentor no-shows, you get a full refund.' }] as f}
+				{#each [{ q: 'How do you verify mentors got into a Top-20?', a: 'We confirm every mentor is currently enrolled at the school shown by sending a one-time code to their school-issued .edu email — the same method employers use. We never accept portal screenshots or decision letters (including PredictAdmit-generated ones). Their enrolled school is verified; any additional admits they list are labeled self-reported.' }, { q: 'Do I have to pay to start?', a: 'No. Every mentor offers a free 20-minute intro call. You only pay if you book a full session or a package afterward.' }, { q: 'What is the two-reader review?', a: 'It\'s modeled on how admissions offices actually read files. Two mentors read your application independently — neither sees the other\'s notes — then they compare reads to check each other\'s blind spots before your call. Both mentors join the call together, so you hear where they agree, where they differ, and why. You pay each reader\'s session rate.' }, { q: 'How does scheduling work?', a: 'You pick a session type and a time slot, then confirm. Paid sessions go to secure Stripe checkout only after you\'ve chosen a time.' }, { q: 'What is your refund policy?', a: 'If a paid session is not useful in the first 15 minutes, or your mentor no-shows, you get a full refund.' }] as f}
 					<details class="group rounded-xl border border-slate-200 bg-white p-4">
 						<summary class="flex cursor-pointer list-none items-center justify-between text-sm font-semibold text-slate-900">
 							{f.q}
@@ -456,7 +486,7 @@
 						</div>
 						<h4 class="mt-4 text-lg font-bold text-slate-900">You're booked!</h4>
 						<p class="mx-auto mt-1 max-w-sm text-sm text-slate-500">
-							{c.name} will confirm your {chosen?.label.toLowerCase()}{slot ? ` for ${slots.find((s) => s.id === slot)?.day} at ${slots.find((s) => s.id === slot)?.time}` : ''} by email. Check your inbox for the meeting link.
+							{chosen?.key === 'tworeader' && secondReader ? `${c.name} and ${secondReader.name}` : c.name} will confirm your {chosen?.label.toLowerCase()}{slot ? ` for ${slots.find((s) => s.id === slot)?.day} at ${slots.find((s) => s.id === slot)?.time}` : ''} by email. Check your inbox for the meeting link{chosen?.key === 'tworeader' ? ' — both readers will be on the call' : ''}.
 						</p>
 						<button onclick={closeBooking} class="mt-5 rounded-xl bg-[#0052CC] px-5 py-2.5 text-sm font-bold text-white hover:bg-[#0047b3]">Done</button>
 					</div>
@@ -489,6 +519,25 @@
 							</button>
 						{/each}
 					</div>
+
+					<!-- Two-reader explainer: who the second reader is and how the cross-check works -->
+					{#if chosen?.key === 'tworeader' && secondReader}
+						{@const sr = secondReader}
+						<div class="mt-3 rounded-xl border border-[#0052CC]/20 bg-blue-50/60 p-3">
+							<div class="flex items-center gap-2.5">
+								<div class="grid h-9 w-9 flex-none place-items-center rounded-xl text-xs font-bold" style="background-color: {sr.color}; color: {readableTextColor(sr.color)}">{initials(sr.name)}</div>
+								<div class="min-w-0">
+									<p class="text-sm font-semibold text-slate-900">Your second reader: {sr.name}</p>
+									<p class="truncate text-xs font-semibold" style="color: {sr.color}">{sr.headline}</p>
+								</div>
+							</div>
+							<p class="mt-2 text-xs leading-relaxed text-slate-600">
+								Like a real admissions office, each mentor reads your application <b>separately</b> — no peeking at the
+								other's notes — then they compare reads to catch each other's blind spots. <b>Both join your call together</b>,
+								so you hear where they agree, where they split, and why.
+							</p>
+						</div>
+					{/if}
 
 					<!-- Step 2: choose a time (only after a session is picked) -->
 					{#if chosen}
