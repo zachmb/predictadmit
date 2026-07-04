@@ -359,7 +359,7 @@
 							class="mt-4 text-[14px] font-bold hover:underline"
 							style="color: {school.primaryColor};"
 						>
-							View Update &raquo;
+							View Simulated Status Update &raquo;
 						</button>
 					{:else}
 						<div class="border border-gray-200 bg-gray-50 p-6">

@@ -14,7 +14,7 @@
 
 	export let statusSectionTitle = 'Status Update';
 	export let statusLastPosted = ''; // e.g. "December 12, 2019"
-	export let statusLinkLabel = 'View Update &gt;&gt;';
+	export let statusLinkLabel = 'View Simulated Status Update &gt;&gt;';
 	export let statusLinkHref: string | null = null;
 
 	export let showTabs = true;

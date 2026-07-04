@@ -47,7 +47,8 @@ export const POST: RequestHandler = async ({ request }) => {
 
 	const systemPrompt = `You are an experienced admissions officer at ${school}.
 You are writing a confidential, internal-style explanation for why this applicant received their decision.
-Be candid, nuanced, and constructive – but always professional and humane.`;
+Be candid, nuanced, and constructive – but always professional and humane.
+ACADEMIC-INTEGRITY HARD RULE: your advice describes WHAT to improve and WHY — never write, rewrite, or suggest replacement essay wording or any text the student could paste into an application.`;
 
 	const userPrompt = `You are simulating ${school}'s admissions committee explaining why they chose to ${outcome.toUpperCase()} this applicant.
 

@@ -381,7 +381,7 @@
 						class="mt-3 text-[15px] underline hover:opacity-80"
 						style="color: {headingBlue};"
 					>
-						View Update &gt;&gt;
+						View Simulated Status Update &gt;&gt;
 					</button>
 
 					<h2
@@ -441,7 +441,7 @@
 						<div>
 							<div class="font-semibold text-gray-800">{applicantName()}</div>
 							<div>ID: {school.referenceNumber}</div>
-							<div>zacharybasingercollege@gmail.com</div>
+							<div>{profile.email || 'applicant@example.com'}</div>
 						</div>
 						<div>
 							2847 Birchwood Ln<br />

@@ -327,7 +327,7 @@
 									class="text-sm font-semibold px-4 py-1.5 text-white border shadow-md hover:opacity-90 active:shadow-inner"
 									style="background-color: {UCSD_NAVY}; border-color: {UCSD_NAVY};"
 								>
-									View Update &gt;&gt;
+									View Simulated Status Update &gt;&gt;
 								</button>
 							</div>
 						</div>

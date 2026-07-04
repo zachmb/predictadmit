@@ -57,15 +57,15 @@
 
 		<div class="space-y-4 mb-8">
 			<p>
-				Thank you for your application to The Ohio State University and for your interest in becoming
-				a Buckeye. I know how much thought and effort went into your application, and it was a genuine
-				pleasure to learn about your accomplishments, your goals, and all that you would bring to a
-				university community.
+				Thank you for applying to The Ohio State University and for your interest in becoming a
+				Buckeye. I know how much thought and effort went into your application, and it was a genuine
+				pleasure to learn about your accomplishments, goals, and all you would bring to a university
+				community.
 			</p>
 
 			<p>
 				This year we received a remarkable number of applications from an exceptionally talented group
-				of students — far more qualified applicants than we have places in our incoming class. After a
+				of students, far more qualified applicants than we have places in our incoming class. After a
 				careful and thorough review of your application, I am sorry to share that we are unable to
 				offer you admission for the autumn semester of 2027.
 			</p>
@@ -85,14 +85,14 @@
 
 			<p>
 				On behalf of the Office of Undergraduate Admissions, thank you again for considering Ohio
-				State. We wish you every success in your college search and in all that lies ahead.
+				State. We wish you success in your college search and in all that lies ahead.
 			</p>
 		</div>
 
 		<div class="mt-12">
 			<div class="mb-1 text-lg">Sincerely,</div>
-			<div class="font-bold italic text-xl" style="color: {primaryColor};">Vern Granger</div>
-			<div class="font-bold">Vern Granger</div>
+			<div class="font-bold italic text-xl" style="color: {primaryColor};">Victor Hollis</div>
+			<div class="font-bold">Victor Hollis</div>
 			<div class="text-sm" style="color: {GRAY};">
 				Director of Undergraduate Admissions<br />
 				Office of Undergraduate Admissions, {schoolName}

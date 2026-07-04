@@ -408,6 +408,34 @@
 		paywallContextDecision = null;
 	}
 
+	let checkoutLoading = $state(false);
+	async function startCheckout(plan: 'lifetime' | 'monthly') {
+		if (checkoutLoading) return;
+		if (!googleSignedIn) {
+			signIn('google', { callbackUrl: '/ai' });
+			return;
+		}
+		checkoutLoading = true;
+		try {
+			const res = await fetch('/api/checkout', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ pricingMode: plan })
+			});
+			const data = await res.json();
+			if (data.url) {
+				window.location.href = data.url;
+				return;
+			}
+			alert('Checkout error: ' + (data.error || 'Unknown error'));
+		} catch (e) {
+			console.error(e);
+			alert('Checkout error');
+		} finally {
+			checkoutLoading = false;
+		}
+	}
+
 	async function runEvaluation() {
 		saveToStore(); // Save before running
 		const myId = currentStoreVersion + 1;
@@ -423,8 +451,11 @@
 			return;
 		}
 
-		// Simulation is now free for all users (previously limited).
-		// if (hasUsedFreeSimulation && !hasDeepDiveAccess) { ... }
+		// Free tier: one full simulation per browser. Pro unlocks unlimited runs.
+		if (hasUsedFreeSimulation && !hasDeepDiveAccess) {
+			openPaywall('simulation');
+			return;
+		}
 
 		userProfile.update((u) => ({ ...u, isSubmittingAI: true }));
 		userProfile.update((u) => ({ ...u, usingAI: true }));
@@ -708,7 +739,7 @@
 
 				<p class="text-lg text-slate-600 font-normal max-w-xl mx-auto leading-relaxed">
 					Get <span class="font-bold text-emerald-600 relative">
-						unlimited free AI simulations
+						your first AI simulation free
 						<svg
 							class="absolute -bottom-1 left-0 w-full h-2"
 							viewBox="0 0 100 10"
@@ -1537,5 +1568,45 @@
 		}
 	</style>
 </main>
+
+<!-- Pro paywall modal -->
+{#if showPaywallModal}
+	<div class="fixed inset-0 z-50 flex items-end justify-center bg-slate-900/60 p-0 backdrop-blur-sm sm:items-center sm:p-6" role="presentation">
+		<button class="absolute inset-0 cursor-default" aria-label="Close" onclick={closePaywall}></button>
+		<div class="relative z-10 w-full max-w-md overflow-hidden rounded-t-2xl bg-white shadow-2xl sm:rounded-2xl" role="dialog" aria-modal="true" aria-label="Upgrade to Pro">
+			<div class="p-6">
+				<div class="mx-auto grid h-12 w-12 place-items-center rounded-2xl bg-[#0052CC]/10 text-[#0052CC]">
+					<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+				</div>
+				<h3 class="mt-4 text-center text-xl font-bold text-slate-900">
+					{paywallMode === 'simulation' ? "You've used your free simulation" : paywallMode === 'deepDive' ? 'Deep dives are a Pro feature' : 'This is a Pro feature'}
+				</h3>
+				<p class="mx-auto mt-2 max-w-sm text-center text-sm text-slate-500">
+					Pro unlocks unlimited AI simulations, full deep-dive decision analyses, and unlimited
+					essay grading. One upgrade, everything included.
+				</p>
+				<div class="mt-6 space-y-2">
+					<button
+						onclick={() => startCheckout('lifetime')}
+						disabled={checkoutLoading}
+						class="w-full rounded-xl bg-[#0052CC] px-4 py-3 text-sm font-bold text-white transition hover:bg-[#0047b3] disabled:opacity-50"
+					>
+						{checkoutLoading ? 'Starting secure checkout…' : 'Lifetime Pro — $9 once'}
+					</button>
+					<button
+						onclick={() => startCheckout('monthly')}
+						disabled={checkoutLoading}
+						class="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 disabled:opacity-50"
+					>
+						Monthly — $5/mo, cancel anytime
+					</button>
+				</div>
+				<button onclick={closePaywall} class="mt-4 w-full text-center text-xs font-semibold text-slate-400 hover:text-slate-600">
+					Maybe later
+				</button>
+			</div>
+		</div>
+	</div>
+{/if}
 
 <SiteFooter />

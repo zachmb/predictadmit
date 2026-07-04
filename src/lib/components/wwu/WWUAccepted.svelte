@@ -39,20 +39,20 @@
 			<p class="mb-4 text-[14px] leading-7 text-slate-800">Dear {applicantName},</p>
 
 			<p class="mb-4 text-[14px] leading-7 text-slate-800">
-				Congratulations! We are pleased to offer you admission to {schoolName} for Fall 2027.
-				Your application reflected the curiosity, preparation, and community-minded spirit that
-				Western values in its incoming class.
+				Congratulations! We are happy to offer you admission to {schoolName} for Fall 2027. Your
+				application showed the curiosity, preparation, and community-minded spirit Western hopes to
+				see in its incoming class.
 			</p>
 
 			<p class="mb-4 text-[14px] leading-7 text-slate-800">
-				Your admitted student checklist will include next steps for confirming your enrollment,
-				reviewing financial aid information, applying for housing, and preparing for orientation in
+				Your admitted student checklist will outline the next steps for confirming enrollment,
+				reviewing financial aid details, applying for housing, and preparing for orientation in
 				Bellingham.
 			</p>
 
 			<p class="mb-4 text-[14px] leading-7 text-slate-800">
-				We hope you will bring your voice and energy to the Western community. Congratulations
-				again on your admission.
+				We hope you will bring your voice and energy to the Western community. Again,
+				congratulations on your admission.
 			</p>
 
 			<p class="mt-8 text-[14px] leading-7 text-slate-800">

@@ -57,26 +57,26 @@
 
 		<div class="mt-6 space-y-5 text-[15px] leading-relaxed text-gray-800">
 			<p>
-				Our office has now completed its evaluation of the Regular Decision applicant pool for fall
-				2027, and it is with regret that I write with the news that we are not offering you admission
-				to the Class of 2031. We are honored by your interest in Vanderbilt, and we are aware of the
-				time, thought, and effort that you put into the application process. Please be assured that
-				we reviewed your application carefully within the context of our applicant pool, getting to
-				know you through your academic and co-curricular record, and seeking to understand your high
-				school circumstances.
+				Having now completed our evaluation of the Regular Decision applicant pool for fall 2027, it
+				is with regret that I write to tell you we are not offering you admission to the Class of
+				2031. We are honored by your interest in Vanderbilt, and we recognize the time, thought, and
+				effort you devoted to the application process. Please be assured that your application was
+				reviewed carefully within the context of our applicant pool; we came to know you through
+				your academic and co-curricular record and sought to understand your high school
+				circumstances.
 			</p>
 			<p>
-				Virtually every applicant who was not admitted presented a strong combination of academic and
-				personal qualities, but we cannot admit all qualified applicants because this year's incoming
-				class is limited to 1,600 students. I encourage you to pursue a fulfilling college career
-				elsewhere, and I am confident that the school you choose will benefit from your presence
-				there. If after a year you find that you are still searching for a better fit college, please
-				consider applying as a transfer student to Vanderbilt. Each year we enroll approximately 450
-				transfer students, many of whom had applied originally as first-year students.
+				Nearly every applicant we could not admit presented a strong combination of academic and
+				personal qualities, but because this year's incoming class is limited to 1,600 students, we
+				simply cannot admit all who are qualified. I encourage you to build a fulfilling college
+				career elsewhere, and I am confident the school you choose will be better for your presence
+				there. Should you find after a year that you are still searching for a college that fits you
+				better, please consider applying to Vanderbilt as a transfer student. Each year we enroll
+				approximately 450 transfer students, many of whom originally applied as first-year students.
 			</p>
 			<p>
-				On behalf of all of us at Vanderbilt, I wish you every success in your college career. Please
-				do not hesitate to contact me if I can be of any service to you in the future.
+				On behalf of everyone at Vanderbilt, I wish you every success in your college career. If I
+				can be of any service to you in the future, please do not hesitate to contact me.
 			</p>
 		</div>
 
@@ -86,9 +86,9 @@
 				class="text-3xl italic text-gray-800"
 				style="font-family: 'Segoe Script', 'Brush Script MT', cursive;"
 			>
-				Douglas L. Christiansen
+				Donald F. Whitmore
 			</div>
-			<div class="mt-2 text-[15px] text-gray-800">Douglas L. Christiansen, Ph.D.</div>
+			<div class="mt-2 text-[15px] text-gray-800">Donald F. Whitmore, Ph.D.</div>
 			<div class="text-[15px] text-gray-800">Vice Provost for University Enrollment Affairs</div>
 			<div class="text-[15px] text-gray-800">Dean of Admissions and Financial Aid</div>
 		</div>

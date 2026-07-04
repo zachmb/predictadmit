@@ -312,7 +312,7 @@
 								class="text-[14px] font-bold px-5 py-2 text-white rounded hover:opacity-90"
 								style="background-color: {school.primaryColor};"
 							>
-								View Update &gt;&gt;
+								View Simulated Status Update &gt;&gt;
 							</button>
 						</div>
 					</div>

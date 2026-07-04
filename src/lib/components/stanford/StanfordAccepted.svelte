@@ -63,24 +63,24 @@
 				<p class="font-bold">Congratulations! You have been admitted to the Stanford Class of 2031!</p>
 
 				<p>
-					The admission committee was inspired by your passion, determination, accomplishments, and
-					heart. We celebrate all that you have worked for with the good news this letter brings.
+					Your passion, determination, accomplishments, and heart inspired the admission committee.
+					With the good news this letter carries, we celebrate everything you have worked toward.
 				</p>
 
 				<p>
-					You are a fantastic match with Stanford. Here, you join a campus community with a shared
-					determination to make our world better. Indeed, Leland and Jane Stanford founded the
+					Stanford is a wonderful match for you. Here you will join a campus community united by a
+					shared determination to improve our world. Leland and Jane Stanford, after all, founded the
 					University &ldquo;to promote the public welfare by exercising an influence on behalf of
-					humanity and civilization.&rdquo; That influence begins in an academic community committed
-					to mastering the known and developing an intuitive capacity to imagine the unknown.
+					humanity and civilization.&rdquo; That influence takes root in an academic community devoted
+					to understanding what is known while cultivating the imagination to explore what is not.
 				</p>
 
 				<p>
-					We are excited to share more about Stanford with you. Mark your calendar now for Admit
-					Weekend 2027, which will take place on campus April 23&ndash;25. In addition, Stanford
-					alumni are organizing gatherings for admitted students in many locations. Information about
-					these events will be sent to the same email address you use to log in to your Stanford
-					portal. You can learn more by visiting our
+					There is so much more about Stanford we are eager to share with you. Mark your calendar now
+					for Admit Weekend 2027, taking place on campus April 23&ndash;25. Stanford alumni are also
+					organizing gatherings for admitted students in many locations. Details about these events
+					will go to the same email address you use to log in to your Stanford portal. You can learn
+					more by visiting our
 					<a href="/disclaimer" class="text-[#827252] underline">Admitted Student Website</a>.
 				</p>
 
@@ -93,16 +93,15 @@
 				</p>
 
 				<p>
-					In order to keep your place in the class, we expect you to maintain the quality of your
-					character and to return a strong performance in the academic courses reported in your
-					application. If you plan to make any changes to these courses, you must first submit the
-					Course Change Request Form in your portal. Any changes must be approved in advance by the
-					Office of Undergraduate Admission.
+					To hold your place in the class, we expect you to uphold the quality of your character and
+					to finish strong in the academic courses listed on your application. Should you plan any
+					changes to these courses, you must first submit the Course Change Request Form in your
+					portal; the Office of Undergraduate Admission must approve all changes in advance.
 				</p>
 
 				<p>
-					Please share this wonderful news with everyone whose love and support helped you reach this
-					moment. We are thrilled to offer you admission. Welcome to the Stanford family.
+					Please share this wonderful news with all of the people whose love and support carried you to
+					this moment. We are thrilled to be offering you admission. Welcome to the Stanford family.
 				</p>
 
 				<p>With my congratulations and very best wishes,</p>
@@ -114,7 +113,7 @@
 						class="h-10"
 						style="filter: invert(12%) sepia(90%) saturate(2000%) hue-rotate(345deg) brightness(35%) contrast(95%);"
 					/>
-					<div class="mt-1">Richard H. Shaw</div>
+					<div class="mt-1">Daniel R. Prentiss</div>
 					<div>Dean of Admission and Financial Aid</div>
 				</div>
 			</div>

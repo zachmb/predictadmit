@@ -262,7 +262,7 @@
 					class="p-6 my-6 text-2xl font-bold text-white"
 					style="background-color: {INSTITUTIONAL_BLUE};"
 				>
-					Current Application Status: <span class="uppercase">Decision Available</span>
+					Current Application Status: <span class="uppercase">Simulated Decision Available</span>
 				</div>
 
 				<div
@@ -278,7 +278,7 @@
 						on:click={handleViewUpdate}
 						class="text-sm font-semibold px-4 py-1 text-black bg-gray-200 border border-gray-500 shadow-md hover:bg-gray-300 active:shadow-inner"
 					>
-						View Update >>
+						View Simulated Status Update >>
 					</button>
 				</div>
 

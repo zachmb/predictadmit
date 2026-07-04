@@ -60,18 +60,17 @@
 
 		<div class="space-y-4 mb-8">
 			<p>
-				It is my great pleasure to offer you admission to The Ohio State University for the autumn
-				semester of 2027. On behalf of the entire university community, welcome to Buckeye Nation.
-				Your admission reflects the strength of your academic record, your character, and the promise
-				you have shown as a future leader.
+				I am very pleased to offer you admission to The Ohio State University for the autumn semester
+				of 2027. On behalf of our university community, welcome to Buckeye Nation. Your admission
+				reflects the strength of your academic record, your character, and the promise you have shown
+				as a future leader.
 			</p>
 
 			<p>
 				This year we reviewed one of the largest and most accomplished applicant pools in the
-				university's history. Earning your place among the incoming class is a genuine achievement,
-				and one you should be proud of. We were impressed by all that you have accomplished, and we
-				are confident you will thrive within our vibrant community of scholars, researchers, and
-				doers.
+				university's history. Earning a place in the incoming class is a meaningful achievement, and
+				one you should be proud of. We were impressed by all you have accomplished and believe you
+				will thrive in our vibrant community of scholars, researchers, and doers.
 			</p>
 
 			<p>
@@ -90,15 +89,15 @@
 			</p>
 
 			<p>
-				Once again, congratulations, {firstName}. We cannot wait to welcome you to campus and to call
-				you a Buckeye. O-H!
+				Once again, congratulations, {firstName}. We look forward to welcoming you to campus and
+				calling you a Buckeye. O-H!
 			</p>
 		</div>
 
 		<div class="mt-12">
 			<div class="mb-1 text-lg">Sincerely,</div>
-			<div class="font-bold italic text-xl" style="color: {primaryColor};">Vern Granger</div>
-			<div class="font-bold">Vern Granger</div>
+			<div class="font-bold italic text-xl" style="color: {primaryColor};">Victor Hollis</div>
+			<div class="font-bold">Victor Hollis</div>
 			<div class="text-sm" style="color: {GRAY};">
 				Director of Undergraduate Admissions<br />
 				Office of Undergraduate Admissions, {schoolName}

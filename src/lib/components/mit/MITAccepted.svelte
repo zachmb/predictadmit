@@ -61,29 +61,28 @@
 			<p class="mb-5">Dear {applicantName || 'Applicant'},</p>
 
 			<p class="mb-5">
-				The Admissions Committee has completed its review of your application, and it is my great
-				pleasure to tell you that you have been admitted to the MIT Class of 2031. Congratulations! On
-				behalf of the entire Admissions Committee, welcome to MIT.
+				The Admissions Committee has finished reviewing your application, and it is my great
+				pleasure to share that you have been offered admission to the MIT Class of 2031.
+				Congratulations! On behalf of everyone on the Admissions Committee, welcome to MIT.
 			</p>
 
 			<p class="mb-5">
-				Every year we are astonished by the talent, curiosity, and character of our applicants, and
-				this year was no exception. Your application stood out among more than 28,000 candidates. We
-				chose you not only because of what you have accomplished, but because of who you are and what
-				you will bring to our community. We cannot wait to see the problems you will choose to solve
-				here.
+				Each year, the talent, curiosity, and character of our applicants astonish us, and this year
+				was no different. Among more than 28,000 candidates, your application stood out. We selected
+				you not just for what you have accomplished, but for who you are and what you will bring to
+				our community. We can't wait to see which problems you will choose to solve here.
 			</p>
 
 			<p class="mb-5">
-				Over the coming weeks you will receive information about Campus Preview Weekend (CPW), our
-				celebration for admitted students, along with details on financial aid, housing, and next
-				steps. To reserve your place in the class, please confirm your enrollment through your
+				In the weeks ahead you will receive information about Campus Preview Weekend (CPW), our
+				celebration for admitted students, along with details about financial aid, housing, and
+				next steps. To hold your place in the class, please confirm your enrollment through your
 				applicant portal by May 1, 2027.
 			</p>
 
 			<p class="mb-8">
-				We are thrilled to welcome you to MIT and cannot wait to see everything you will accomplish
-				here. Congratulations once again.
+				We are thrilled to have you join us at MIT and look forward to all that you will accomplish
+				here. Once again, congratulations.
 			</p>
 
 			<p class="mb-2">Sincerely,</p>
@@ -95,7 +94,7 @@
 					/>
 				</svg>
 			</div>
-			<p class="font-semibold">Stuart Schmill</p>
+			<p class="font-semibold">Martin J. Hollenbeck</p>
 			<p class="text-[13px] text-gray-600">Dean of Admissions and Student Financial Services</p>
 		</div>
 

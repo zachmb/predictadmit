@@ -57,37 +57,37 @@
 				<p>Dear {firstName},</p>
 
 				<p>
-					I am very sorry to let you know that we are unable to offer you admission to Stanford. This
-					decision in no way takes away from the thoughtfulness and care that we know went into your
-					application.
+					It is with real regret that I write to tell you we cannot offer you admission to Stanford.
+					Please know that this decision does nothing to diminish the thoughtfulness and care we know
+					you poured into your application.
 				</p>
 
 				<p>
-					We were inspired by the hopes and dreams your application represents. We were humbled by the
-					talent, commitment, and heart you bring to your academics, extracurricular activities, work,
-					and family responsibilities. Simply put, we wish that we had more space in the first-year
-					class.
+					The hopes and dreams reflected in your application inspired us, and the talent, commitment,
+					and heart you devote to your academics, activities, work, and family responsibilities left
+					us humbled. Put simply, we only wish the first-year class had room for more students like
+					you.
 				</p>
 
 				<p>
-					At every step in our process, from the moment we open an application to its eventual
-					presentation in the admission committee, we bring the highest level of consideration to our
-					decisions. Ultimately, these difficult decisions are made with conviction and clarity, and
-					we do not conduct an appeals process.
+					From the moment an application is first opened to the time it reaches the admission
+					committee, every stage of our process receives the greatest possible care. In the end, these
+					hard decisions are reached with clarity and conviction, and we do not offer an appeals
+					process.
 				</p>
 
 				<p>
 					You can visit our page of <a href="/disclaimer" class="text-[#827252] underline"
 						>frequently asked questions</a
-					> for answers about our admission process. I also want to share a
-					<a href="/disclaimer" class="text-[#827252] underline">letter</a> to students and families.
-					In it, I reflect on admission decisions in the context of educational journeys that
-					encompass a lifetime.
+					> for answers about our admission process. I would also like to share a
+					<a href="/disclaimer" class="text-[#827252] underline">letter</a> to students and families,
+					in which I reflect on what an admission decision means within an educational journey that
+					spans a lifetime.
 				</p>
 
 				<p>
-					Thank you for applying to Stanford. We enjoyed learning about you, and we know that you will
-					thrive wherever your education takes you.
+					Thank you for applying to Stanford. It was a pleasure to learn about you, and we are certain
+					you will flourish wherever your education leads.
 				</p>
 
 				<p>With very best wishes,</p>
@@ -99,7 +99,7 @@
 						class="h-10"
 						style="filter: invert(12%) sepia(90%) saturate(2000%) hue-rotate(345deg) brightness(35%) contrast(95%);"
 					/>
-					<div class="mt-1">Richard H. Shaw</div>
+					<div class="mt-1">Daniel R. Prentiss</div>
 					<div>Dean of Admission and Financial Aid</div>
 				</div>
 			</div>

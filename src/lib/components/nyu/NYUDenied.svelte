@@ -57,18 +57,18 @@
 
 		<div class="space-y-4 mb-8">
 			<p>
-				The admissions committee at New York University has carefully considered your application for
-				all programs to which you have requested consideration. It is with regret that I must inform
-				you that we are unable to offer you admission to NYU.
+				The admissions committee at New York University has carefully reviewed your application for
+				all programs to which you requested consideration. I regret to share that we are unable to
+				offer you admission to NYU.
 			</p>
 
 			<p>
-				Over the many years that I have been doing this work, one thing has proven true time and
-				again: one setback is never the defining moment of an ambitious student. My foremost wish is
-				that you will find an academic institution where you will continue to thrive. If, after
-				matriculating elsewhere, you remain interested in finding a path to NYU, you are welcome to
-				reapply as a transfer candidate to our campus in New York. In the meantime, we do not have any
-				process by which you can submit an appeal or reconsideration request.
+				Over the years I have done this work, one thing has proven true again and again: one setback
+				is never the defining moment of an ambitious student. My sincere hope is that you will find
+				an academic institution where you continue to thrive. If, after matriculating elsewhere, you
+				remain interested in finding a path to NYU, you are welcome to reapply as a transfer
+				candidate to our campus in New York. At this time, we do not offer an appeal or
+				reconsideration process.
 			</p>
 
 			<p>
@@ -78,7 +78,7 @@
 
 		<div class="mt-12">
 			<div class="mb-2 text-lg" style="color: {primaryColor};">Sincerely,</div>
-			<div class="font-bold">William Sichel</div>
+			<div class="font-bold">Warren Selby</div>
 			<div class="text-sm text-gray-600">
 				Assistant Vice President of Undergraduate Admissions<br />
 				{schoolName}

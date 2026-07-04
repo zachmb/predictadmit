@@ -65,23 +65,23 @@
 
 			<div class="space-y-4 text-[14px] leading-relaxed text-slate-800">
 				<p>
-					Thank you for applying to the University of California, Berkeley. We were deeply humbled by
-					the overwhelming interest in attending UC Berkeley and by the exceptional quality of the
-					applications we received.
+					Thank you for your application to the University of California, Berkeley. We were humbled
+					both by the extraordinary interest in attending UC Berkeley and by the exceptional strength
+					of this year's applicant pool.
 				</p>
 				<p>
-					After thorough and thoughtful review of your application, we regret to inform you that we are
-					unable to offer you admission for the fall 2027 semester.
+					After a careful and thoughtful review of your application, we regret that we are unable to
+					offer you admission for the fall 2027 semester.
 				</p>
 				<p>
-					This year, admission decisions were especially difficult. Demand far exceeds available
-					spaces, and we are unable to accommodate every deserving applicant. We understand this news
-					may be disappointing. If you would like to learn more about the selection process, we
-					encourage you to review the Frequently Asked Questions below.
+					Admission decisions were especially difficult this year. Because demand far exceeds the
+					spaces available, we simply cannot accommodate every deserving applicant. We recognize this
+					news may be disappointing. If you would like to learn more about how selections were made,
+					we encourage you to review the Frequently Asked Questions below.
 				</p>
 				<p>
-					Your achievements reflect your talent, determination, and potential, and we are confident
-					that you will excel in your academic pursuits wherever you choose to enroll.
+					Your record reflects genuine talent, determination, and promise, and we are confident that
+					you will thrive in your academic pursuits wherever you choose to enroll.
 				</p>
 				<p>
 					Thank you for considering UC Berkeley. We wish you every success in your next academic
@@ -97,9 +97,9 @@
 						class="text-2xl italic text-slate-800"
 						style="font-family: 'Segoe Script', 'Brush Script MT', cursive;"
 					>
-						John Marfield
+						Alan J. Merritt
 					</div>
-					<div class="mt-1 text-[14px] font-semibold text-slate-900">John Marfield, Ph.D.</div>
+					<div class="mt-1 text-[14px] font-semibold text-slate-900">Alan J. Merritt, Ph.D.</div>
 					<div class="text-[13px] text-slate-600">Assistant Vice Chancellor</div>
 					<div class="text-[13px] text-slate-600">Director of Undergraduate Admissions</div>
 					<div class="text-[13px] text-slate-600">University of California, Berkeley</div>
@@ -109,9 +109,9 @@
 						class="text-2xl italic text-slate-800"
 						style="font-family: 'Segoe Script', 'Brush Script MT', cursive;"
 					>
-						Olufemi Ogundele
+						Samuel O. Adekunle
 					</div>
-					<div class="mt-1 text-[14px] font-semibold text-slate-900">Olufemi Ogundele, Ed.D.</div>
+					<div class="mt-1 text-[14px] font-semibold text-slate-900">Samuel O. Adekunle, Ed.D.</div>
 					<div class="text-[13px] text-slate-600">Associate Vice Chancellor of Enrollment</div>
 					<div class="text-[13px] text-slate-600">Dean of Undergraduate Admissions</div>
 					<div class="text-[13px] text-slate-600">University of California, Berkeley</div>

@@ -58,21 +58,21 @@
 			<p class="mb-5">Dear {applicantName || 'Applicant'},</p>
 
 			<p class="mb-5">
-				The Admissions Committee has completed its review of your application. I am very sorry to tell
-				you that you were not admitted to the MIT Class of 2031.
+				The Admissions Committee has finished reviewing your application. I am very sorry to share
+				that we are unable to offer you a place in the MIT Class of 2031.
 			</p>
 
 			<p class="mb-5">
-				Please understand that this is in no way a judgment of you as a student or as a person, since
-				our decision has more to do with the applicant pool than anything else—many of our applicants
-				are not offered admission simply because we don't have enough space in our entering class.
-				This year we had more than 28,000 candidates for fewer than 1,300 offers of admission. Since
-				all of our decisions are made at one time and all available spaces have been committed, all
+				Please know that this outcome is not a judgment of you as a student or as a person; it
+				reflects the applicant pool far more than anything else—many applicants cannot be offered
+				admission simply because our entering class does not have enough space. This year, more
+				than 28,000 candidates competed for fewer than 1,300 offers of admission. Because all of
+				our decisions are made at once and every available space has been committed, these
 				decisions are final.
 			</p>
 
 			<p class="mb-8">
-				We truly appreciate your interest in MIT and wish you the best in all your future endeavors.
+				We sincerely appreciate your interest in MIT and wish you every success in the endeavors ahead.
 			</p>
 
 			<p class="mb-2">Sincerely,</p>
@@ -84,7 +84,7 @@
 					/>
 				</svg>
 			</div>
-			<p class="font-semibold">Stuart Schmill</p>
+			<p class="font-semibold">Martin J. Hollenbeck</p>
 			<p class="text-[13px] text-gray-600">Dean of Admissions and Student Financial Services</p>
 		</div>
 

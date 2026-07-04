@@ -60,42 +60,42 @@
 
 		<div class="space-y-4 mb-8 leading-relaxed">
 			<p>
-				It is my great pleasure to offer you admission to the University of Virginia. On behalf of
-				the entire Office of Undergraduate Admission, congratulations. Your application stood out in
-				an extraordinarily talented and accomplished pool, and we are genuinely excited about all
-				that you will bring to Grounds.
+				It is my genuine pleasure to offer you admission to the University of Virginia.
+				Congratulations, on behalf of the entire Office of Undergraduate Admission. In an
+				extraordinarily talented and accomplished pool, your application stood out, and we are truly
+				excited about all that you will bring to Grounds.
 			</p>
 
 			<p>
-				We read every application with great care, looking not only at academic achievement but at
-				character, curiosity, and the ways a student might contribute to and grow within our
-				community. Your record of accomplishment and the person we came to know through your
-				application convinced us that you belong here. We believe you will thrive at UVA and help
-				make this University an even better place.
+				Every application is read with great care, with attention not only to academic achievement
+				but to character, curiosity, and the ways a student might contribute to and grow within our
+				community. Both your record of accomplishment and the person we came to know through your
+				application convinced us that you belong here. We are confident you will thrive at UVA and
+				help make this University an even better place.
 			</p>
 
 			<p>
 				We hope you will join us this spring for <strong>Days on the Lawn</strong>, our celebration
-				for admitted students. It is the best way to experience the academic life, traditions, and
-				community of the University firsthand, to meet faculty and current students, and to picture
-				yourself as a Wahoo. Details and registration are available in your MyUVA Application Portal.
+				for admitted students. There is no better way to experience the University's academic life,
+				traditions, and community firsthand, meet faculty and current students, and picture yourself
+				as a Wahoo. Details and registration are available in your MyUVA Application Portal.
 			</p>
 
 			<p>
-				To reserve your place in the entering class, please submit your enrollment decision through
+				To secure your place in the entering class, please submit your enrollment decision through
 				your applicant portal by <strong>May 1, 2027</strong>. If you applied for financial aid,
-				Student Financial Services will share your award package separately; please do not let cost
-				stand between you and this opportunity before speaking with our office.
+				your award package will come separately from Student Financial Services; please do not let
+				cost stand between you and this opportunity before speaking with our office.
 			</p>
 
 			<p>
-				Congratulations once again. We are honored that you considered the University of Virginia,
+				Once again, congratulations. We are honored that you considered the University of Virginia,
 				and we very much hope to welcome you to Mr. Jefferson's University this fall.
 			</p>
 		</div>
 
 		<div class="mt-12">
-			<div class="font-bold" style="color: {primaryColor};">Greg W. Roberts</div>
+			<div class="font-bold" style="color: {primaryColor};">Gerald W. Rutherford</div>
 			<div class="text-sm text-slate-600">
 				Associate Vice Provost of Enrollment and<br />
 				Dean of Admission<br />

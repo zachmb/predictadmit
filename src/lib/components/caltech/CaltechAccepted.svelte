@@ -60,29 +60,29 @@
 
 		<div class="space-y-4 mb-8">
 			<p>
-				The Undergraduate Admissions Committee is delighted to inform you that you have been offered
-				admission to the California Institute of Technology Class of 2031. Your application
-				demonstrated exceptional intellectual prowess, a deep curiosity for scientific inquiry, and
-				the resilience needed to thrive in Caltech’s rigorous academic environment.
+				The Undergraduate Admissions Committee is delighted to inform you that you have been admitted
+				to the California Institute of Technology Class of 2031. Your application showed exceptional
+				intellectual strength, a deep curiosity for scientific inquiry, and the resilience required
+				to thrive in Caltech’s rigorous academic environment.
 			</p>
 
 			<p>
-				We received over 13,000 applications this year for a class of approximately 235 students.
-				Your admission is a profound honor that reflects our belief in your potential to contribute
-				significantly to discovery and innovation. We are eager for you to join our community of
-				passionate scientists and engineers.
+				This year we received over 13,000 applications for a class of approximately 235 students.
+				Your admission is a profound honor, and it reflects our confidence in your potential to
+				contribute meaningfully to discovery and innovation. We are eager to welcome you into our
+				community of passionate scientists and engineers.
 			</p>
 
 			<p>
-				You are invited to attend Preview Weekend, our admitted students program, from April 13-15,
-				2027. This is your opportunity to visit our campus in Pasadena, meet the faculty, engage
+				You are invited to attend Preview Weekend, our program for admitted students, from April
+				13-15, 2027. This is your chance to visit our Pasadena campus, meet the faculty, connect
 				with current students (the Caltech Beavers!), and experience the unique Caltech culture.
 			</p>
 
 			<p>
-				To officially accept your offer of admission, please complete the reply form available in
-				your admissions portal by <strong>May 1, 2027</strong>. Further details regarding financial
-				aid, housing, and enrollment will also be found there.
+				To officially accept this offer of admission, please submit the reply form available in
+				your admissions portal by <strong>May 1, 2027</strong>. You will also find further details
+				there regarding financial aid, housing, and enrollment.
 			</p>
 
 			<p>
@@ -97,7 +97,7 @@
 					Grant's Signature
 				</div>
 			</div>
-			<div class="font-bold">Grant D. Currin</div>
+			<div class="font-bold">Glenn D. Corwin</div>
 			<div class="text-sm text-gray-600">
 				Director of Undergraduate Admissions<br />
 				Caltech

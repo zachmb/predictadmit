@@ -86,7 +86,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		noticeText:
 			'Regular Decision results for first-year applicants will be available in the applicant portal on March 28 at 7:00 p.m. ET.',
 		statusLastPosted: 'March 12, 2026',
-		statusLinkLabel: 'View Update >>',
+		statusLinkLabel: 'View Simulated Status Update >>',
 		decision: 'deny',
 		footerDomain: 'princeton.edu',
 		difficulty: 9.8,
@@ -120,9 +120,9 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		financialAidId: 'FA-CU-001122',
 		bannerText: 'Thank you for applying to Columbia University in the City of New York.',
 		noticeText:
-			'Admission decisions are now available in your applicant status page. Please log in to view your decision.',
+			'Admission decisions are now available in your applicant status page. Please log in to view your simulated decision.',
 		statusLastPosted: 'March 13, 2026',
-		statusLinkLabel: 'View Decision >>',
+		statusLinkLabel: 'View Simulated Decision >>',
 		decision: 'admit',
 		footerDomain: 'columbia.edu',
 		difficulty: 9.7,
@@ -194,7 +194,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		noticeText:
 			'Admission decisions for Regular Decision (and deferred Early Decision) candidates will be available Thursday, March 26 at 7 p.m. Eastern Time.',
 		statusLastPosted: 'December 12, 2019',
-		statusLinkLabel: 'View Update >>',
+		statusLinkLabel: 'View Simulated Status Update >>',
 		decision: 'admit',
 		footerDomain: 'duke.edu',
 		difficulty: 9.4,
@@ -246,7 +246,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		noticeText:
 			'A decision has been posted to your Dartmouth applicant portal. Please log in to view it.',
 		statusLastPosted: 'March 16, 2026',
-		statusLinkLabel: 'View Decision >>',
+		statusLinkLabel: 'View Simulated Decision >>',
 		decision: 'admit',
 		footerDomain: 'dartmouth.edu',
 		difficulty: 9.3,
@@ -281,7 +281,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		bannerText: 'Thank you for applying to Vanderbilt University.',
 		noticeText: 'Your Vanderbilt admissions decision is now available via your MyAppVU portal.',
 		statusLastPosted: 'March 17, 2026',
-		statusLinkLabel: 'View Decision >>',
+		statusLinkLabel: 'View Simulated Decision >>',
 		decision: 'admit',
 		footerDomain: 'vanderbilt.edu',
 		difficulty: 9.1,
@@ -314,9 +314,9 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		financialAidId: 'FA-WU-191919',
 		bannerText: 'Thank you for applying to Washington University in St. Louis.',
 		noticeText:
-			'A status update has been posted to your WashU Pathway portal. Please log in to view your decision.',
+			'A status update has been posted to your WashU Pathway portal. Please log in to view your simulated decision.',
 		statusLastPosted: 'March 18, 2026',
-		statusLinkLabel: 'View Update >>',
+		statusLinkLabel: 'View Simulated Status Update >>',
 		decision: 'admit',
 		footerDomain: 'wustl.edu',
 		difficulty: 8.8,
@@ -350,7 +350,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		bannerText: 'Thank you for applying to the University of California, Los Angeles.',
 		noticeText: 'Your UCLA admission decision has been posted to the UCLA Applicant Portal.',
 		statusLastPosted: 'March 20, 2026',
-		statusLinkLabel: 'View Decision >>',
+		statusLinkLabel: 'View Simulated Decision >>',
 		decision: 'admit',
 		footerDomain: 'ucla.edu',
 		difficulty: 8.5,
@@ -384,7 +384,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		bannerText: 'Thank you for applying to Western Washington University.',
 		noticeText: 'Your admission decision is now available in your portal.',
 		statusLastPosted: 'March 15, 2026',
-		statusLinkLabel: 'View Decision >>',
+		statusLinkLabel: 'View Simulated Decision >>',
 		decision: 'admit',
 		footerDomain: 'wwu.edu',
 		difficulty: 4.0,
@@ -400,9 +400,9 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		financialAidId: 'FA-GT-102030',
 		bannerText: 'Thank you for applying to the Georgia Institute of Technology.',
 		noticeText:
-			'A decision has been posted to your Georgia Tech application status page. Please log in to view your decision.',
+			'A decision has been posted to your Georgia Tech application status page. Please log in to view your simulated decision.',
 		statusLastPosted: 'March 8, 2026',
-		statusLinkLabel: 'View Update >>',
+		statusLinkLabel: 'View Simulated Status Update >>',
 		decision: 'deny',
 		footerDomain: 'gatech.edu',
 		difficulty: 8.5,
@@ -420,7 +420,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		noticeText:
 			'Your NYU admission decision is now available. Please log in to your NYU Albert applicant portal to view it.',
 		statusLastPosted: 'March 26, 2026',
-		statusLinkLabel: 'View Decision >>',
+		statusLinkLabel: 'View Simulated Decision >>',
 		decision: 'admit',
 		footerDomain: 'nyu.edu',
 		difficulty: 8.5,
@@ -438,7 +438,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		noticeText:
 			'Your USC admission decision is now available in your USC Applicant Portal. Fight On!',
 		statusLastPosted: 'March 27, 2026',
-		statusLinkLabel: 'View Decision >>',
+		statusLinkLabel: 'View Simulated Decision >>',
 		decision: 'admit',
 		footerDomain: 'usc.edu',
 		difficulty: 8.6,
@@ -474,7 +474,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		noticeText:
 			'A decision has been posted to your Notre Dame applicant status portal. Please log in to view it.',
 		statusLastPosted: 'March 25, 2026',
-		statusLinkLabel: 'View Decision >>',
+		statusLinkLabel: 'View Simulated Decision >>',
 		decision: 'admit',
 		footerDomain: 'nd.edu',
 		difficulty: 8.6,
@@ -492,7 +492,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		noticeText:
 			'Your Emory admission decision is now available in your applicant portal. Please log in to view it.',
 		statusLastPosted: 'March 25, 2026',
-		statusLinkLabel: 'View Decision >>',
+		statusLinkLabel: 'View Simulated Decision >>',
 		decision: 'admit',
 		footerDomain: 'emory.edu',
 		difficulty: 8.4,
@@ -528,7 +528,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		noticeText:
 			'Your admission decision is now available. Please log in to your CMU applicant portal to view it.',
 		statusLastPosted: 'March 15, 2026',
-		statusLinkLabel: 'View Decision >>',
+		statusLinkLabel: 'View Simulated Decision >>',
 		decision: 'admit',
 		footerDomain: 'cmu.edu',
 		difficulty: 8.9,
@@ -546,7 +546,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		noticeText:
 			'Your admission decision is now available in your U-M applicant portal. Please log in to view it.',
 		statusLastPosted: 'March 28, 2026',
-		statusLinkLabel: 'View Decision >>',
+		statusLinkLabel: 'View Simulated Decision >>',
 		decision: 'admit',
 		footerDomain: 'umich.edu',
 		difficulty: 8.0,
@@ -562,9 +562,9 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		financialAidId: 'FA-UNC-100020',
 		bannerText: 'Thank you for applying to the University of North Carolina at Chapel Hill.',
 		noticeText:
-			'A decision has been posted to your UNC applicant portal. Please log in to view your decision.',
+			'A decision has been posted to your UNC applicant portal. Please log in to view your simulated decision.',
 		statusLastPosted: 'March 20, 2026',
-		statusLinkLabel: 'View Update >>',
+		statusLinkLabel: 'View Simulated Status Update >>',
 		decision: 'deny',
 		footerDomain: 'unc.edu',
 		difficulty: 7.8,
@@ -582,7 +582,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		noticeText:
 			'Your UC San Diego admission decision is now available in your applicant portal.',
 		statusLastPosted: 'March 20, 2026',
-		statusLinkLabel: 'View Decision >>',
+		statusLinkLabel: 'View Simulated Decision >>',
 		decision: 'admit',
 		footerDomain: 'ucsd.edu',
 		difficulty: 7.5,
@@ -600,7 +600,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		noticeText:
 			'Your UC Irvine admission decision is now available in your applicant portal.',
 		statusLastPosted: 'March 20, 2026',
-		statusLinkLabel: 'View Decision >>',
+		statusLinkLabel: 'View Simulated Decision >>',
 		decision: 'admit',
 		footerDomain: 'uci.edu',
 		difficulty: 7.3,
@@ -618,7 +618,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		noticeText:
 			'Your UC Davis admission decision is now available in your applicant portal.',
 		statusLastPosted: 'March 20, 2026',
-		statusLinkLabel: 'View Decision >>',
+		statusLinkLabel: 'View Simulated Decision >>',
 		decision: 'admit',
 		footerDomain: 'ucdavis.edu',
 		difficulty: 6.5,
@@ -636,7 +636,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		noticeText:
 			'Your admission decision is now available in your Wake Forest applicant status portal.',
 		statusLastPosted: 'March 24, 2026',
-		statusLinkLabel: 'View Decision >>',
+		statusLinkLabel: 'View Simulated Decision >>',
 		decision: 'admit',
 		footerDomain: 'wfu.edu',
 		difficulty: 7.5,
@@ -654,29 +654,11 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		noticeText:
 			'Your admission decision is now available in your University of Florida applicant portal.',
 		statusLastPosted: 'February 27, 2026',
-		statusLinkLabel: 'View Decision >>',
+		statusLinkLabel: 'View Simulated Decision >>',
 		decision: 'admit',
 		footerDomain: 'ufl.edu',
 		difficulty: 7.0,
 		baseRate: 0.23
-	},
-	uiuc: {
-		slug: 'uiuc',
-		schoolName: 'University of Illinois Urbana-Champaign',
-		logoPrimary: 'Illinois',
-		logoSecondary: 'OFFICE OF UNDERGRADUATE ADMISSIONS',
-		primaryColor: '#13294B',
-		admissionsId: 'UIUC-2026-952306',
-		financialAidId: 'FA-UIUC-600070',
-		bannerText: 'Thank you for applying to the University of Illinois Urbana-Champaign.',
-		noticeText:
-			'Your admission decision is now available in your myIllini applicant portal.',
-		statusLastPosted: 'March 6, 2026',
-		statusLinkLabel: 'View Decision >>',
-		decision: 'admit',
-		footerDomain: 'illinois.edu',
-		difficulty: 6.5,
-		baseRate: 0.43
 	},
 	wisconsin: {
 		slug: 'wisconsin',
@@ -690,7 +672,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		noticeText:
 			'Your admission decision is now available in your MyUW applicant portal.',
 		statusLastPosted: 'March 15, 2026',
-		statusLinkLabel: 'View Decision >>',
+		statusLinkLabel: 'View Simulated Decision >>',
 		decision: 'admit',
 		footerDomain: 'wisc.edu',
 		difficulty: 6.0,
@@ -708,7 +690,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		noticeText:
 			'Your admission decision is now available in your Purdue applicant portal.',
 		statusLastPosted: 'March 10, 2026',
-		statusLinkLabel: 'View Decision >>',
+		statusLinkLabel: 'View Simulated Decision >>',
 		decision: 'admit',
 		footerDomain: 'purdue.edu',
 		difficulty: 5.8,
@@ -726,7 +708,7 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		noticeText:
 			'Your admission decision is now available in your Ohio State applicant portal.',
 		statusLastPosted: 'March 12, 2026',
-		statusLinkLabel: 'View Decision >>',
+		statusLinkLabel: 'View Simulated Decision >>',
 		decision: 'admit',
 		footerDomain: 'osu.edu',
 		difficulty: 5.5,

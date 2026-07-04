@@ -81,34 +81,6 @@ export const POST: RequestHandler = async ({ request }) => {
 				success_url: 'http://localhost:5201/ai?upgrade=success&plan=monthly',
 				cancel_url: 'http://localhost:5201/pro?canceled=1'
 			};
-		} else if (pricingMode === 'counselor') {
-			// One-time payment to book a 1:1 human counselor session.
-			const rawAmount = Number(body.amount);
-			const amount = Number.isFinite(rawAmount) ? Math.round(rawAmount) : 0;
-			// Guard to a sane range ($10–$2000) so a bad client can't set arbitrary prices.
-			if (amount < 1000 || amount > 200000) {
-				return json({ error: 'Invalid booking amount.' }, { status: 400 });
-			}
-			const counselorName = String(body.counselorName || 'a PredictAdmit counselor').slice(0, 80);
-			const sessionLabel = String(body.sessionLabel || '1:1 counseling session').slice(0, 140);
-			sessionConfig = {
-				mode: 'payment',
-				line_items: [
-					{
-						price_data: {
-							currency: 'usd',
-							product_data: {
-								name: `Human Counselor · ${counselorName}`,
-								description: sessionLabel
-							},
-							unit_amount: amount
-						},
-						quantity: 1
-					}
-				],
-				success_url: 'http://localhost:5201/pro?booking=success',
-				cancel_url: 'http://localhost:5201/pro?canceled=1'
-			};
 		} else {
 			// Fallback or Legacy (if existing calls use isMonthly)
 			if (isMonthly) {

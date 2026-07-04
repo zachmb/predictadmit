@@ -366,7 +366,7 @@
 												class="mt-3 inline-block px-6 py-2 text-sm font-bold text-white hover:opacity-90"
 												style="background-color: #000;"
 											>
-												VIEW YOUR DECISION
+												VIEW YOUR SIMULATED DECISION
 											</button>
 										{/if}
 									</div>

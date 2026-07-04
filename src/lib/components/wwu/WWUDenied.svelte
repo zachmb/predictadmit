@@ -34,19 +34,19 @@
 			<p class="mb-4 text-[14px] leading-7 text-slate-800">Dear {applicantName},</p>
 
 			<p class="mb-4 text-[14px] leading-7 text-slate-800">
-				Thank you for applying to {schoolName}. After a careful review of your application, we
-				regret that we are unable to offer you admission for Fall 2027.
+				Thank you for applying to {schoolName}. After reviewing your application carefully, we
+				regret that we cannot offer you admission for Fall 2027.
 			</p>
 
 			<p class="mb-4 text-[14px] leading-7 text-slate-800">
-				We know this is disappointing news, and we appreciate the time and thought you put into
+				We know this news may be disappointing, and we appreciate the time and thought you gave to
 				your application. This decision reflects the space available in the incoming class and does
 				not diminish your accomplishments or potential.
 			</p>
 
 			<p class="mb-4 text-[14px] leading-7 text-slate-800">
-				We wish you success as you continue your college search and pursue the next steps in your
-				education.
+				We wish you success as your college search continues and as you move into the next chapter of
+				your education.
 			</p>
 
 			<p class="mt-8 text-[14px] leading-7 text-slate-800">

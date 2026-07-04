@@ -128,7 +128,7 @@
 			country: 'United States'
 		},
 		{
-			name: 'University of Illinois at Urbana-Champaign',
+			name: 'Northern Illinois University',
 			degree: 'No degree',
 			level: 'College',
 			state: 'IL',
@@ -358,7 +358,7 @@
 					on:click={handleViewUpdate}
 					class="text-sm font-semibold px-4 py-1.5 text-white bg-[#0021A5] rounded-sm hover:bg-[#001a85]"
 				>
-					View Update &raquo;
+					View Simulated Status Update &raquo;
 				</button>
 			</div>
 
@@ -414,7 +414,7 @@
 					<button
 						on:click={handleViewUpdate}
 						class="text-sm font-semibold px-4 py-1.5 text-white bg-[#0021A5] rounded-sm hover:bg-[#001a85]"
-						>Confirm or Decline Enrollment</button
+						>View Simulated Enrollment Decision</button
 					>
 				</div>
 			</section>

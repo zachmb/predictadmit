@@ -308,13 +308,6 @@ export const portals: PortalEmail[] = [
 		received: 'Mar 20, 2026, 5:35 PM'
 	},
 	{
-		name: 'University of Illinois Urbana-Champaign',
-		slug: 'uiuc',
-		from: 'Illinois Admissions <admissions@illinois.edu>',
-		subject: 'Your University of Illinois admission decision is available',
-		received: 'Mar 20, 2026, 5:37 PM'
-	},
-	{
 		name: 'University of Wisconsin-Madison',
 		slug: 'wisconsin',
 		from: 'UW-Madison Admissions <onwisconsin@admissions.wisc.edu>',

@@ -68,32 +68,32 @@
 
 			<div class="space-y-4 text-[14px] leading-relaxed text-slate-800">
 				<p>
-					Congratulations, and welcome to the University of California, Berkeley! We are pleased to
-					offer you admission to the College of Letters and Science, through the Fall Program for First
-					Semester.
+					Congratulations, and welcome to the University of California, Berkeley! It is our pleasure
+					to offer you admission to the College of Letters and Science through the Fall Program for
+					First Semester.
 				</p>
 				<p>
-					{applicantName || 'Applicant'}, your remarkable achievements both inside and outside the
-					classroom made you stand tall amongst more than 133,000 applicants to the nation's leading
-					public university. You, your loved ones, and supporters along the way have every reason to be
-					proud of your success!
+					{applicantName || 'Applicant'}, your impressive accomplishments in and beyond the classroom
+					set you apart among more than 133,000 applicants to the nation's leading public university.
+					You, your family, and everyone who supported you along the way should take great pride in
+					this achievement!
 				</p>
 				<p>
-					At UC Berkeley, you'll have the opportunity to learn and discover within a welcoming and
-					dynamic community united by our mission: education, research, and service to the greater
-					good. Our community includes distinguished faculty and scholars &mdash; Nobel laureates,
-					MacArthur fellows, and pioneering experts across every field of inquiry. We will encourage
-					you to challenge yourself to reach your full potential through the extensive opportunities
-					and resources that UC Berkeley provides.
+					At UC Berkeley, you'll learn and discover within a dynamic, welcoming community bound
+					together by a shared mission: education, research, and service to the greater good. Among
+					our community are distinguished faculty and scholars &mdash; Nobel laureates, MacArthur
+					fellows, and pioneering experts in every field of inquiry. We will encourage you to push
+					yourself toward your full potential through the wealth of opportunities and resources UC
+					Berkeley offers.
 				</p>
 				<p>
-					All the details of your offer, including your Conditions of Admission, Frequently Asked
-					Questions, and more, are below.
+					You will find the full details of your offer below, including your Conditions of Admission,
+					Frequently Asked Questions, and more.
 				</p>
 				<p>
-					Our community celebrates you and your unique contributions, and we hope you will join us this
-					Fall. Accept your offer of admission in your MAP@Berkeley portal by 11:59 p.m. (Pacific time)
-					on May 1, 2027.
+					We celebrate you and the unique contributions you will bring, and we hope you will join us
+					this Fall. Accept your offer of admission in your MAP@Berkeley portal by 11:59 p.m. (Pacific
+					time) on May 1, 2027.
 				</p>
 				<p>Welcome to UC Berkeley.</p>
 				<p class="font-semibold text-[#003262]">Go Bears!</p>
@@ -107,9 +107,9 @@
 						class="text-2xl italic text-slate-800"
 						style="font-family: 'Segoe Script', 'Brush Script MT', cursive;"
 					>
-						John Marfield
+						Alan J. Merritt
 					</div>
-					<div class="mt-1 text-[14px] font-semibold text-slate-900">John Marfield, Ph.D.</div>
+					<div class="mt-1 text-[14px] font-semibold text-slate-900">Alan J. Merritt, Ph.D.</div>
 					<div class="text-[13px] text-slate-600">Assistant Vice Chancellor</div>
 					<div class="text-[13px] text-slate-600">Director of Undergraduate Admissions</div>
 					<div class="text-[13px] text-slate-600">University of California, Berkeley</div>
@@ -119,9 +119,9 @@
 						class="text-2xl italic text-slate-800"
 						style="font-family: 'Segoe Script', 'Brush Script MT', cursive;"
 					>
-						Olufemi Ogundele
+						Samuel O. Adekunle
 					</div>
-					<div class="mt-1 text-[14px] font-semibold text-slate-900">Olufemi Ogundele, Ed.D.</div>
+					<div class="mt-1 text-[14px] font-semibold text-slate-900">Samuel O. Adekunle, Ed.D.</div>
 					<div class="text-[13px] text-slate-600">Associate Vice Chancellor of Enrollment</div>
 					<div class="text-[13px] text-slate-600">Dean of Undergraduate Admissions</div>
 					<div class="text-[13px] text-slate-600">University of California, Berkeley</div>

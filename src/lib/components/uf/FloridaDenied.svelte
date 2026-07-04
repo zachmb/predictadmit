@@ -82,26 +82,26 @@
 		<!-- Body -->
 		<div class="space-y-4 text-sm leading-relaxed text-slate-800">
 			<p>
-				Thank you for applying to the University of Florida. Our review committee carefully considered
-				your academic record, activities, and accomplishments, and I know the time and thought you put
-				into your application. After a thorough and holistic review, I am sorry to share that we are
-				unable to offer you admission for the Fall 2027 term.
+				Thank you for your application to the University of Florida. Our review committee gave careful
+				consideration to your academic record, activities, and accomplishments, and I recognize the
+				time and thought your application required. Following a thorough and holistic review, I am
+				sorry to share that we cannot offer you admission for the Fall 2027 term.
 			</p>
 			<p>
-				This year we received a record number of applications from an exceptionally talented pool of
-				students for a limited number of spaces in the Class of 2031. Decisions like this are among
-				the most difficult we make, and being unable to admit you is in no way a reflection of your
-				ability or your promise. Many outstanding students could not be offered a place this year.
+				This year an exceptionally talented pool of students submitted a record number of applications
+				for a limited number of spaces in the Class of 2031. These are among the most difficult
+				decisions we make, and our inability to admit you in no way reflects on your ability or your
+				promise. Many outstanding students could not be offered a place this year.
 			</p>
 			<p>
-				If you plan to enroll at another institution, you may wish to explore our transfer pathways.
-				The University of Florida welcomes strong transfer applicants each year, and many Gators begin
-				their journey at another college before joining us in Gainesville. You can learn more about
-				transferring to UF through your Gator Portal or by contacting our office.
+				If you plan to enroll at another institution, you may want to look into our transfer pathways.
+				Each year the University of Florida welcomes strong transfer applicants, and many Gators start
+				at another college before joining us in Gainesville. More information about transferring to UF
+				is available through your Gator Portal or by contacting our office.
 			</p>
 			<p>
-				We were genuinely impressed by what you have accomplished, and we are confident you will
-				thrive wherever you continue your education. Please accept our best wishes for a bright and
+				What you have accomplished genuinely impressed us, and we are confident you will thrive
+				wherever you continue your education. Please accept our warmest wishes for a bright and
 				successful future.
 			</p>
 			<p>Sincerely, and go forward with confidence. Go Gators!</p>
@@ -114,9 +114,9 @@
 				class="text-2xl text-slate-700"
 				style="font-family: 'Brush Script MT', cursive;"
 			>
-				Lee H. Melvin
+				Leon H. Mercer
 			</div>
-			<div class="text-sm font-semibold text-slate-900 mt-1">Lee H. Melvin</div>
+			<div class="text-sm font-semibold text-slate-900 mt-1">Leon H. Mercer</div>
 			<div class="text-xs text-slate-600">
 				Associate Vice President and Executive Director of Admissions
 			</div>

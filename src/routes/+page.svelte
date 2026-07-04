@@ -513,8 +513,8 @@
 				<p
 					class="text-xl md:text-2xl text-slate-500 max-w-2xl mx-auto leading-snug tracking-tight font-medium mt-6 animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-[200ms] fill-mode-both"
 				>
-					Experience perfectly realistic college admission portals — and make your application as
-					strong as it can be with our free tools.
+					Experience realistic simulated admission portals — and make your application as
+					strong as it can be with our AI tools.
 				</p>
 			</div>
 
@@ -740,7 +740,7 @@
 				</h2>
 				<p class="text-lg text-slate-500">
 					Experience the rush of decision day without the risk. <span
-						class="text-[#0052CC] font-bold">100% Free.</span
+						class="text-[#0052CC] font-bold">Portals are 100% free — your first AI simulation is on us.</span
 					>
 				</p>
 			</div>

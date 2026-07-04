@@ -70,36 +70,37 @@
 
 		<div class="space-y-4 mb-8">
 			<p>
-				It is my great pleasure to congratulate you on your admission to the University of Southern
-				California for the fall semester. On behalf of the entire admission committee, welcome to the
-				Trojan Family.
+				It is my sincere pleasure to congratulate you on being admitted to the University of Southern
+				California for the fall semester. On behalf of everyone on the admission committee, welcome
+				to the Trojan Family.
 			</p>
 
 			<p>
-				Admission to USC was as competitive as ever this year. We received roughly 79,000
-				applications from extraordinary students around the world, and we were able to offer fall
-				admission to only about one in nine candidates. Your selection from such an exceptional pool
-				reflects the strength of your academic record, the quality of your character, and the promise
-				you show to contribute to our community. We were genuinely impressed by your accomplishments.
+				Admission to USC this year was as competitive as it has ever been. From roughly 79,000
+				applications submitted by extraordinary students around the world, we could extend offers of
+				fall admission to only about one in nine candidates. That you were chosen from such an
+				exceptional pool speaks to the strength of your academic record, the quality of your
+				character, and the promise you show to contribute to our community. Your accomplishments
+				genuinely impressed us.
 			</p>
 
 			<p>
-				Ours is a qualitative process in which we consider each applicant as an individual. We read
-				your application carefully, respectfully, and thoughtfully &mdash; and it stood out. We
-				believe you will thrive here, and we cannot wait to see all that you will achieve as a
+				Our review is a qualitative one, and we consider every applicant as an individual. Your
+				application was read carefully, respectfully, and thoughtfully &mdash; and it stood out. We
+				are confident you will thrive here, and we cannot wait to see everything you accomplish as a
 				Trojan.
 			</p>
 
 			<p>
-				To accept your offer of admission, please submit your enrollment confirmation and deposit
-				through your USC applicant portal by <strong>May 1, 2027</strong>, the National Candidates
-				Reply Date. Your portal also contains important information about financial aid, housing, and
-				our admitted-student events, where you can experience USC firsthand and meet your future
-				classmates.
+				To accept this offer of admission, please submit your enrollment confirmation and deposit
+				through your USC applicant portal no later than <strong>May 1, 2027</strong>, the National
+				Candidates Reply Date. In your portal you will also find important information about
+				financial aid, housing, and our admitted-student events, where you can experience USC
+				firsthand and meet your future classmates.
 			</p>
 
 			<p>
-				Congratulations once again on this outstanding achievement. We look forward to welcoming you
+				Once again, congratulations on this remarkable achievement. We look forward to welcoming you
 				to University Park Campus this fall. Fight On!
 			</p>
 		</div>
@@ -113,7 +114,7 @@
 					style="filter: invert(11%) sepia(95%) saturate(4000%) hue-rotate(357deg) brightness(70%) contrast(110%);"
 				/>
 			</div>
-			<div class="font-bold">Kirk Brennan</div>
+			<div class="font-bold">Kent Bradshaw</div>
 			<div class="text-sm text-gray-600">
 				Associate Dean and Director of Undergraduate Admission<br />
 				{schoolName}

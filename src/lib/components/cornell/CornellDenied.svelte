@@ -57,26 +57,26 @@
 
 		<div class="space-y-6 mb-12 text-[15px]">
 			<p>
-				Thank you for your application to Cornell University for the Class of 2031. We appreciate
-				the time and care you took to share your achievements and aspirations with us.
+				Thank you for applying to Cornell University for the Class of 2031. We appreciate the time
+				and care you gave to sharing your achievements and aspirations with us.
 			</p>
 
 			<p>
-				This year, we received an historically high number of applications for a limited number of
-				spaces in the first-year class. The selection process was incredibly difficult, involving a
-				comprehensive and holistic review of every applicant's academic record, essays, and
-				extracurricular engagement.
+				This year, we received a historically high number of applications for a limited number of
+				places in the first-year class. The selection process was especially difficult and included a
+				comprehensive, holistic review of each applicant's academic record, essays, and extracurricular
+				engagement.
 			</p>
 
 			<p>
-				After careful consideration by the Admissions Committee, I regret to inform you that we are
-				unable to offer you admission at this time. Please know that this decision is not a
-				reflection of your potential for success, but rather a consequence of the extraordinary
-				competitiveness of this year's applicant pool.
+				After careful consideration by the Admissions Committee, I regret to share that we are unable
+				to offer you admission at this time. Please know that this decision is not a reflection of
+				your potential for success, but rather a result of the extraordinary competitiveness of this
+				year's applicant pool.
 			</p>
 
 			<p>
-				We know that this is disappointing news. We wish you the very best in all your future
+				We understand that this is disappointing news. We wish you the very best in your future
 				academic and personal endeavors.
 			</p>
 		</div>
@@ -90,7 +90,7 @@
 					style="filter: invert(16%) sepia(78%) saturate(3315%) hue-rotate(346deg) brightness(85%) contrast(102%); opacity: 0.9;"
 				/>
 			</div>
-			<div class="font-bold text-lg">Shawn L. Abbott</div>
+			<div class="font-bold text-lg">Sean D. Ambrose</div>
 			<div class="text-sm text-gray-600 leading-snug">
 				Vice Provost for Enrollment<br />
 				Dean of Undergraduate Admissions

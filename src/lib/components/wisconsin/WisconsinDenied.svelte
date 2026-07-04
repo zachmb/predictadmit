@@ -57,35 +57,35 @@
 
 		<div class="space-y-4 mb-8">
 			<p>
-				Thank you for your application to the University of Wisconsin-Madison for the Fall 2027 term.
-				We appreciate the time and thought you put into applying, and we are grateful for your interest
-				in becoming a Badger.
+				Thank you for applying to the University of Wisconsin-Madison for the Fall 2027 term. We
+				appreciate the thought you brought to your application and are grateful for your interest in
+				joining the Badger community.
 			</p>
 
 			<p>
-				This year UW-Madison received a record number of applications from an extraordinarily talented
-				group of students. After a thorough and holistic review of your academic record,
-				accomplishments, and personal qualities, I am sorry to tell you that we are unable to offer you
-				admission at this time. With far more qualified applicants than we have space to enroll, many
-				capable and deserving students, including you, could not be admitted.
+				This year, UW-Madison received a record number of applications from an extraordinarily
+				talented group of students. After a thorough, holistic review of your academic record,
+				accomplishments, and personal qualities, I am sorry to share that we are unable to offer you
+				admission at this time. Because we have far more qualified applicants than spaces available,
+				many capable and deserving students could not be admitted.
 			</p>
 
 			<p>
-				Please understand that this decision is not a judgment of your ability or your promise. The
-				strength of our applicant pool made this an exceptionally difficult process, and a decision not
-				to admit reflects the limits of our capacity far more than any shortcoming in your application.
+				Please understand that this decision is not a judgment of your ability or promise. The
+				strength of the applicant pool made this an exceptionally difficult process, and a decision
+				not to admit reflects the limits of our capacity far more than any shortcoming in your
+				application.
 			</p>
 
 			<p>
-				If you plan to continue your education elsewhere, know that transfer options to UW-Madison may
-				be available in the future, and information about the transfer process can be found on our
-				admissions website. We encourage you to pursue the many outstanding opportunities ahead of you
-				with confidence.
+				If you continue your education elsewhere, transfer options to UW-Madison may be available in
+				the future, and details about that process can be found on our admissions website. We hope
+				you pursue the many outstanding opportunities ahead of you with confidence.
 			</p>
 
 			<p>
-				We wish you every success in your college search and in all that lies ahead. Thank you again
-				for considering the University of Wisconsin-Madison.
+				We wish you success in your college search and in all that lies ahead. Thank you again for
+				considering the University of Wisconsin-Madison.
 			</p>
 		</div>
 

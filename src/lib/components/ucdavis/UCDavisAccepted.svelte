@@ -63,10 +63,10 @@
 
 		<div class="space-y-4 mb-8">
 			<p>
-				<strong>Congratulations!</strong> It is our pleasure to notify you that you are admitted to the
-				University of California, Davis, for fall quarter 2027 in the Economics major. We applaud your
-				hard work toward this important milestone and would be honored to have you as a member of our UC
-				Davis community.
+				<strong>Congratulations!</strong> We are pleased to let you know that you have been admitted to
+				the University of California, Davis, for fall quarter 2027 in the Economics major. The hard work
+				that brought you to this important milestone deserves applause, and we would be honored to count
+				you as a member of our UC Davis community.
 			</p>
 
 			<p>
@@ -96,8 +96,8 @@
 		</div>
 
 		<div class="mt-12">
-			<div class="mb-2 text-2xl italic" style="color: {primaryColor};">Ebony M. Lewis</div>
-			<div class="font-bold">Ebony M. Lewis</div>
+			<div class="mb-2 text-2xl italic" style="color: {primaryColor};">Erica M. Lockhart</div>
+			<div class="font-bold">Erica M. Lockhart</div>
 			<div class="text-sm text-gray-600">
 				Executive Director of Undergraduate Admissions<br />
 				{schoolName}

@@ -278,7 +278,7 @@
 				class="text-[14px] font-semibold underline mb-5 hover:opacity-80"
 				style="color: {school.primaryColor};"
 			>
-				View Update
+				View Simulated Status Update
 			</button>
 
 			<!-- Additional Information -->

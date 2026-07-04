@@ -18,16 +18,12 @@
 	import SchoolsExplorer from '$lib/components/pro/SchoolsExplorer.svelte';
 	import ChanceMeProfile from '$lib/components/pro/ChanceMeProfile.svelte';
 	import SettingsView from '$lib/components/pro/SettingsView.svelte';
-	import HumanCounselors from '$lib/components/pro/HumanCounselors.svelte';
-	import { Users } from 'lucide-svelte';
 
 	// --- RUNES STATE ---
 	let { data } = $props();
 
 	// Mind Map AI State
 	let isGeneratingMindMap = $state(false);
-	let isDraftingEssay = $state(false);
-	let selectedDraftSchool = $state('');
 
 	async function generateMindMap() {
 		if (isGeneratingMindMap) return;
@@ -47,52 +43,6 @@
 			console.error(e);
 		} finally {
 			isGeneratingMindMap = false;
-		}
-	}
-
-	async function draftEssayFromMindMap() {
-		if (isDraftingEssay || !selectedDraftSchool) return;
-		isDraftingEssay = true;
-
-		// Find prompt if school selected
-		let prompt = 'Personal Statement';
-		if (selectedDraftSchool !== 'General') {
-			// quick lookup or pass the slug to backend
-		}
-
-		try {
-			const res = await fetch('/api/ai/draft-essay', {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({
-					profile,
-					mindMap: { nodes: mindMapNodes, connections: mindMapConnections },
-					targetSchool: selectedDraftSchool
-				})
-			});
-			const data = await res.json();
-
-			if (data.content) {
-				const fileName = `Draft_${selectedDraftSchool}_${Date.now()}.md`;
-				const newFile = {
-					id: Math.random().toString(36).substring(7),
-					name: fileName,
-					content: data.content,
-					language: 'markdown' as const,
-					isOpen: true,
-					isModified: false,
-					school: selectedDraftSchool // Added school property
-				};
-				// @ts-ignore
-				files = [...files, newFile];
-				// @ts-ignore
-				activeFile = newFile;
-				currentView = 'editor';
-			}
-		} catch (e) {
-			console.error(e);
-		} finally {
-			isDraftingEssay = false;
 		}
 	}
 
@@ -142,7 +92,6 @@
 		| 'counselor'
 		| 'schools'
 		| 'chanceme'
-		| 'community'
 		| 'settings'
 	>('dashboard');
 
@@ -1081,24 +1030,6 @@
 					<span class="text-[13px] font-medium truncate">Chance Me</span>
 				</button>
 
-				<!-- COMMUNITY TAB -->
-				<button
-					onclick={() => (currentView = 'community')}
-					class="w-full h-9 flex items-center rounded-md text-left transition-colors {currentView ===
-					'community'
-						? 'bg-slate-100 text-slate-900'
-						: 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'}"
-				>
-					<span
-						class="w-9 h-9 grid place-content-center shrink-0 {currentView === 'community'
-							? 'text-[#0052CC]'
-							: ''}"
-					>
-						<Users class="w-4 h-4" strokeWidth={2} />
-					</span>
-					<span class="text-[13px] font-medium truncate">Human Counselors</span>
-				</button>
-
 				<div class="mt-5 mb-1 px-3 flex items-center justify-between">
 					<span class="text-[11px] font-medium uppercase tracking-wider text-slate-400">Essays</span>
 					<button
@@ -1628,53 +1559,6 @@
 									<span>AI Brainstorm</span>
 								{/if}
 							</button>
-
-							<!-- Essay Drafter -->
-							<div
-								class="flex items-center gap-2 bg-slate-50 p-1 rounded-lg border border-slate-200"
-							>
-								<select
-									bind:value={selectedDraftSchool}
-									class="bg-transparent text-sm font-bold text-slate-600 border-none focus:ring-0 py-1 pl-2 pr-8 w-32"
-								>
-									<option value="" disabled selected>Draft Essay...</option>
-									<option value="General">General Personal Statement</option>
-									{#each Object.values(schoolConfigs) as s}
-										<option value={s.slug}>{s.schoolName}</option>
-									{/each}
-								</select>
-								<button
-									onclick={draftEssayFromMindMap}
-									disabled={isDraftingEssay || !selectedDraftSchool}
-									class="p-1.5 bg-slate-900 text-white rounded-md hover:bg-slate-700 disabled:opacity-50 transition-colors"
-								>
-									{#if isDraftingEssay}
-										<svg class="animate-spin h-3 w-3" viewBox="0 0 24 24"
-											><circle
-												class="opacity-25"
-												cx="12"
-												cy="12"
-												r="10"
-												stroke="currentColor"
-												stroke-width="4"
-											></circle><path
-												class="opacity-75"
-												fill="currentColor"
-												d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-											></path></svg
-										>
-									{:else}
-										<svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-											><path
-												stroke-linecap="round"
-												stroke-linejoin="round"
-												stroke-width="2"
-												d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-											/></svg
-										>
-									{/if}
-								</button>
-							</div>
 
 							<button
 								onclick={analyzeMindMap}
@@ -2260,13 +2144,11 @@
 					{/if}
 				</div>
 				{:else if currentView === 'counselor'}
-					<AICounselor onBookHuman={() => (currentView = 'community')} />
+					<AICounselor />
 				{:else if currentView === 'schools'}
 					<SchoolsExplorer />
 				{:else if currentView === 'chanceme'}
 					<ChanceMeProfile />
-				{:else if currentView === 'community'}
-					<HumanCounselors />
 				{:else if currentView === 'settings'}
 					<SettingsView />
 			{/if}
@@ -2280,14 +2162,14 @@
 			<div class="text-center space-y-6 max-w-3xl mx-auto">
 				<div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-50 border border-emerald-100 backdrop-blur-sm mb-4">
 					<span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
-					<span class="text-xs font-bold text-emerald-700 tracking-wide uppercase">AI Free Forever · Mentors On Demand</span>
+					<span class="text-xs font-bold text-emerald-700 tracking-wide uppercase">Try It Free · Pro Unlocks Everything</span>
 				</div>
 				<h1 class="text-4xl md:text-6xl font-black tracking-tight text-slate-900 leading-tight">
 					PredictAdmit <span class="text-[#0052CC]">Pro</span><br />
-					<span class="text-slate-500">Free AI. Real Mentors.</span>
+					<span class="text-slate-500">Start free. Go unlimited.</span>
 				</h1>
 				<p class="text-lg text-slate-500 max-w-xl mx-auto leading-relaxed mt-6">
-					Every AI tool is free, forever — no subscriptions, no fees. When you want a human in your corner, add a vetted admissions mentor. That's the only thing you ever pay for.
+					Every account starts with a free AI simulation and a taste of every tool. Pro unlocks unlimited simulations, full deep-dive analyses, and the complete essay suite — $5/month, or $9 once for lifetime access.
 				</p>
 			</div>
 
@@ -2298,7 +2180,7 @@
 					<div class="relative rounded-[2rem] bg-white p-10 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.1)] border border-slate-100 space-y-8">
 						<div class="space-y-4 text-center md:text-left">
 							<h2 class="text-2xl font-bold text-slate-900">Get Started Instantly</h2>
-							<p class="text-slate-500">Sign in with Google to unlock every AI tool for free. Add a mentor whenever you're ready — never before.</p>
+							<p class="text-slate-500">Sign in with Google to run your free AI simulation. Upgrade to Pro whenever you're ready — no credit card to start.</p>
 						</div>
 
 						<button
@@ -2317,17 +2199,17 @@
 						<div class="pt-6 border-t border-slate-50 flex items-center justify-center gap-6 opacity-60">
 							<div class="flex flex-col items-center">
 								<span class="text-xl font-bold text-slate-900">$0</span>
-								<span class="text-[10px] uppercase font-bold text-slate-400">AI Tools</span>
+								<span class="text-[10px] uppercase font-bold text-slate-400">To Start</span>
 							</div>
 							<div class="w-px h-8 bg-slate-100"></div>
 							<div class="flex flex-col items-center">
-								<span class="text-xl font-bold text-slate-900">$0</span>
-								<span class="text-[10px] uppercase font-bold text-slate-400">Forever</span>
+								<span class="text-xl font-bold text-slate-900">$9</span>
+								<span class="text-[10px] uppercase font-bold text-slate-400">Lifetime Pro</span>
 							</div>
 							<div class="w-px h-8 bg-slate-100"></div>
 							<div class="flex flex-col items-center">
-								<span class="text-xl font-bold text-slate-900">1:1</span>
-								<span class="text-[10px] uppercase font-bold text-slate-400">Mentors</span>
+								<span class="text-xl font-bold text-slate-900">∞</span>
+								<span class="text-[10px] uppercase font-bold text-slate-400">Pro Runs</span>
 							</div>
 						</div>
 					</div>
@@ -2335,7 +2217,7 @@
 
 				<!-- Features List -->
 				<div class="space-y-8">
-					<h3 class="text-2xl font-bold text-slate-900">Free AI, unlocked instantly</h3>
+					<h3 class="text-2xl font-bold text-slate-900">What's inside</h3>
 					<div class="grid gap-6">
 						<!-- Feature item -->
 						<div class="flex items-start gap-4">
@@ -2353,8 +2235,8 @@
 								<svg class="w-5 h-5 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
 							</div>
 							<div>
-								<p class="font-bold text-slate-900">AI Essay Drafting & IDE</p>
-								<p class="text-sm text-slate-500">Write, edit, and analyze your essays with built-in institutional intelligence.</p>
+								<p class="font-bold text-slate-900">AI Essay Feedback & IDE</p>
+								<p class="text-sm text-slate-500">Write and edit your essays, then get blunt institutional-grade feedback. You write every word — the AI never does.</p>
 							</div>
 						</div>
 
@@ -2368,17 +2250,17 @@
 							</div>
 						</div>
 
-						<!-- Paid human layer -->
+						<!-- Pro tier -->
 						<div class="flex items-start gap-4 rounded-2xl border border-blue-100 bg-blue-50/50 p-4 -m-4">
 							<div class="w-10 h-10 rounded-xl bg-[#0052CC] flex items-center justify-center shrink-0">
-								<svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 10-4-4 4 4 0 004 4zm6 0a4 4 0 10-3-6.7" /></svg>
+								<svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
 							</div>
 							<div>
 								<div class="flex items-center gap-2">
-									<p class="font-bold text-slate-900">1:1 Human Mentors</p>
-									<span class="text-[10px] uppercase font-bold tracking-wide text-[#0052CC] bg-white border border-blue-100 rounded-full px-2 py-0.5">Optional</span>
+									<p class="font-bold text-slate-900">Unlimited with Pro</p>
+									<span class="text-[10px] uppercase font-bold tracking-wide text-[#0052CC] bg-white border border-blue-100 rounded-full px-2 py-0.5">$5/mo · $9 lifetime</span>
 								</div>
-								<p class="text-sm text-slate-500">Book a vetted admissions mentor for reads, strategy, and accountability. The one thing we charge for — and only if you want it.</p>
+								<p class="text-sm text-slate-500">Unlimited AI simulations, full deep-dive decision analyses, and unlimited essay grading. One free simulation to try it first.</p>
 							</div>
 						</div>
 					</div>
@@ -2388,12 +2270,12 @@
 			<!-- Vision Section -->
 			<div class="pt-16 border-t border-slate-200">
 				<div class="bg-blue-900 rounded-[2.5rem] p-12 text-center text-white space-y-6">
-					<h3 class="text-3xl font-bold text-white">Free AI for all. Mentors for the moments that matter.</h3>
+					<h3 class="text-3xl font-bold text-white">Elite admissions intelligence, priced like a sandwich.</h3>
 					<p class="text-blue-100 text-lg max-w-2xl mx-auto leading-relaxed">
 						We believe the price of admissions advice should not determine the quality of your education.
-						So we made the entire AI suite free for everyone — the same advantages once reserved for students
-						with expensive consultants. We keep the lights on a different way: when you want real human
-						judgment, you can book a vetted mentor. The AI stays free; great mentorship stays worth paying for.
+						Private consultants charge thousands for the judgment Pro gives you for $9, once — every
+						simulation, every deep dive, every essay tool, forever. Try it free first; upgrade only if
+						it earns it.
 					</p>
 				</div>
 			</div>

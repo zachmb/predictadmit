@@ -124,7 +124,7 @@ Structure:
   "intellectual_explanation": "string",
   "character_score": number,
   "character_explanation": "string",
-  "improvement_tips": "string (3-4 specific bullet points)"
+  "improvement_tips": "string (3-4 specific bullet points — describe WHAT to improve and WHY; never write or suggest replacement essay wording, sentences, or any text the applicant could paste into their application)"
 }`;
 
 	const userPrompt = `Applicant materials:

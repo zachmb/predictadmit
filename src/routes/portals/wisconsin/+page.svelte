@@ -342,7 +342,7 @@
 							class="text-white text-[14px] font-semibold px-5 py-2 rounded-sm shadow-sm hover:opacity-90"
 							style="background-color: {school.primaryColor};"
 						>
-							View Decision Letter
+							View Simulated Decision Letter
 						</button>
 						<a
 							href="/disclaimer"

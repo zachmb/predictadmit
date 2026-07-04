@@ -62,17 +62,17 @@
 
 		<div class="space-y-4 mb-8">
 			<p>
-				Thank you for applying to the College of the University of Chicago and for sharing your
-				ideas and aspirations with our Committee on Admissions. I know how much thought and effort
-				you devoted to your application, and I want you to know that it received a careful, complete,
-				and genuinely appreciative reading.
+				Thank you for applying to the College of the University of Chicago and for sharing your ideas
+				and aspirations with our Committee on Admissions. I know how much thought and effort you gave
+				to your application, and I want you to know that it received a careful, complete, and
+				appreciative reading.
 			</p>
 
 			<p>
 				This year we received a truly extraordinary number of applications from remarkable students
 				around the world &mdash; far more than we could possibly admit to a single entering class.
-				After the most rigorous and difficult deliberations, I am sorry to tell you that we are
-				unable to offer you a place in the Class of 2031.
+				After rigorous and difficult deliberations, I am sorry to share that we are unable to offer
+				you a place in the Class of 2031.
 			</p>
 
 			<p>
@@ -91,8 +91,8 @@
 			</p>
 
 			<p>
-				Thank you again for considering the University of Chicago. We wish you every success and
-				much happiness in the years to come.
+				Thank you again for considering the University of Chicago. We wish you success and happiness
+				in the years to come.
 			</p>
 		</div>
 
@@ -105,7 +105,7 @@
 					style="filter: invert(15%) sepia(85%) saturate(1500%) hue-rotate(330deg) brightness(30%) contrast(100%);"
 				/>
 			</div>
-			<div class="font-bold">James G. Nondorf</div>
+			<div class="font-bold">Jonathan P. Merriweather</div>
 			<div class="text-sm text-gray-600">
 				Vice President and Dean of Admissions and Financial Aid<br />
 				{schoolName}

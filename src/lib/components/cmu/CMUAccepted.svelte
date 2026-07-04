@@ -56,32 +56,32 @@
 			</p>
 
 			<p>
-				To accept your offer of admission, please complete the enrollment reply form and submit your
+				To accept this offer of admission, please submit the enrollment reply form along with your
 				deposit in your <em>Where Am I in the Process?</em> portal. For next steps, admitted student
 				visit opportunities and important dates, visit the admitted student website at
 				<a href="/disclaimer" class="underline" style="color: {primaryColor};"
 					>cmu.edu/admission/admitted</a
-				>. If you applied for financial aid, stay tuned for further updates about your financial aid
-				status and eligibility in the coming weeks.
+				>. If you applied for financial aid, watch for further updates on your financial aid status
+				and eligibility in the coming weeks.
 			</p>
 
 			<p>
-				Please keep in mind that all Carnegie Mellon offers of admission are contingent upon students
-				upholding the academic and personal conduct standards on which their admission was based. The
-				university reserves the right to rescind an offer of admission if circumstances warrant.
+				Please remember that every Carnegie Mellon offer of admission is contingent upon the student
+				upholding the academic and personal conduct standards on which admission was based. Should
+				circumstances warrant, the university reserves the right to rescind an offer of admission.
 			</p>
 
 			<p>
 				On behalf of our faculty and staff, congratulations and welcome to the Tartan community!
-				We're here to support you every step of the way. If you have any questions now or at any
-				point during your transition to Carnegie Mellon, don't hesitate to contact the Office of
-				Admission.
+				We're here to support you at every step. Should any questions arise now or at any point
+				during your transition to Carnegie Mellon, please don't hesitate to reach out to the Office
+				of Admission.
 			</p>
 		</div>
 
 		<div class="mb-12 text-[15px]">
 			<div class="mb-4">Sincerely,</div>
-			<div class="font-bold">Miguel Alvarez</div>
+			<div class="font-bold">Rafael M. Ortiz</div>
 			<div class="text-sm text-gray-600">Executive Director of Admission</div>
 		</div>
 

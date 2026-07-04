@@ -61,35 +61,35 @@
 
 		<div class="space-y-6 mb-12 text-[15px]">
 			<p>
-				It is my distinct pleasure to inform you of your admission to Cornell University's Class of
-				2031. This year’s applicant pool was the largest and most competitive in our history. Your
-				academic achievements, personal qualities, and potential to contribute to our community
-				stood out considerably. We are thrilled to welcome you to the Big Red family.
+				It is my distinct pleasure to inform you that you have been admitted to Cornell University's
+				Class of 2031. This year’s applicant pool was the largest and most competitive we have ever
+				seen, and your academic record, personal qualities, and potential to contribute to our
+				community stood out considerably. We are delighted to welcome you to the Big Red family.
 			</p>
 
 			<p>
-				At Cornell, you will join a diverse and dynamic community of scholars dedicated to adhering
-				to Ezra Cornell’s vision of "an institution where any person can find instruction in any
-				study." We are confident that your intellectual curiosity and unique perspective will enrich
-				our campus life in Ithaca.
+				At Cornell, you will join a diverse, dynamic community of scholars committed to Ezra
+				Cornell’s vision of "an institution where any person can find instruction in any study." We
+				are confident that your intellectual curiosity and distinctive perspective will enrich
+				campus life in Ithaca.
 			</p>
 
 			<p>
 				We invite you and your family to visit campus during Cornell Days, our admitted student
-				programming running throughout April. These events will provide opportunities to engage with
-				faculty, connect with current students, and explore the vibrant life on "The Hill."
+				programming held throughout April. These events offer opportunities to engage with faculty,
+				connect with current students, and explore the vibrant life on "The Hill."
 			</p>
 
 			<p>
-				To accept this offer of admission, please submit your enrollment deposit via your
-				application portal by the national reply deadline of <strong>May 1, 2027</strong>. Further
-				details regarding housing, financial aid, and orientation will be available in your portal
-				shortly.
+				To accept this offer of admission, please submit your enrollment deposit through your
+				application portal by the national reply deadline of <strong>May 1, 2027</strong>.
+				Additional details regarding housing, financial aid, and orientation will appear in your
+				portal shortly.
 			</p>
 
 			<p>
-				Congratulations once again on this significant achievement. We eagerly anticipate welcoming
-				you to Cornell in the fall.
+				Once again, congratulations on this significant achievement. We look forward eagerly to
+				welcoming you to Cornell in the fall.
 			</p>
 		</div>
 
@@ -102,7 +102,7 @@
 					style="filter: invert(16%) sepia(78%) saturate(3315%) hue-rotate(346deg) brightness(85%) contrast(102%); opacity: 0.9;"
 				/>
 			</div>
-			<div class="font-bold text-lg">Shawn L. Abbott</div>
+			<div class="font-bold text-lg">Sean D. Ambrose</div>
 			<div class="text-sm text-gray-600 leading-snug">
 				Vice Provost for Enrollment<br />
 				Dean of Undergraduate Admissions

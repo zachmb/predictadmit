@@ -280,7 +280,7 @@
 							class="text-sm font-semibold px-5 py-2 text-white uppercase tracking-wide hover:opacity-90"
 							style="background-color: {ND_NAVY};"
 						>
-							View Update &raquo;
+							View Simulated Status Update &raquo;
 						</button>
 					</div>
 				</div>

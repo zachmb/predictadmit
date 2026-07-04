@@ -69,15 +69,15 @@
 
 		<div class="space-y-4 mb-8 leading-relaxed">
 			<p>
-				<strong>Congratulations!</strong> You have been admitted to Johns Hopkins University—a place
-				where firsts lead you forward.
+				<strong>Congratulations!</strong> We are delighted to offer you admission to Johns Hopkins
+				University—a place where firsts carry you forward.
 			</p>
 
 			<p>
-				We're excited to welcome you to our community of scholars at this historic moment, as we
-				celebrate our 150th anniversary. Over the next four years, you'll have the opportunity to
-				engage with new perspectives, contribute to some of the most important conversations of our
-				time, and thrive within a community fueled by the next great pursuit of knowledge.
+				You join our community of scholars at a historic moment, as we celebrate our 150th
+				anniversary. Over the next four years, you'll have the chance to encounter new
+				perspectives, take part in some of the defining conversations of our time, and flourish in
+				a community energized by the next great pursuit of knowledge.
 			</p>
 
 			<p class="italic pl-4 border-l-2" style="border-color: {primaryColor};">
@@ -85,39 +85,39 @@
 			</p>
 
 			<p>
-				The words of Daniel Coit Gilman, the first president of the university, continue to define
-				the Hopkins community as one that works together to make real and meaningful impact on causes
+				These words from Daniel Coit Gilman, the university's first president, still capture the
+				Hopkins community—one that works together to create real, meaningful impact on the causes
 				that matter.
 			</p>
 
 			<p>
-				Your time at Hopkins will be shaped by all of the first steps you take, the connections you
-				pursue, and the relationships you build. As a Blue Jay, you will explore what you care about
-				most, meet your next best friends, and be part of a community that's so glad you're here.
+				Your years at Hopkins will be shaped by the first steps you take, the connections you seek
+				out, and the relationships you form. As a Blue Jay, you'll dig into what matters most to
+				you, find your next best friends, and join a community that is so glad you're here.
 			</p>
 
 			<p>
-				At Hopkins you'll have the flexibility and resources to turn your biggest questions into
-				answers, and the network of the leading research university to support you at each step of
+				At Hopkins you'll find the flexibility and resources to turn your biggest questions into
+				answers, along with the network of a leading research university supporting every step of
 				your journey.
 			</p>
 
 			<p>
-				When you're ready to enroll, submit your Reply Form to secure your spot in the class. You'll
-				also receive an official admit packet in the mail in the near future.
+				When you're ready to enroll, complete your Reply Form to claim your place in the class. An
+				official admit packet will also be arriving in the mail soon.
 			</p>
 
 			<p>
-				Congratulations once again—and welcome to Hopkins! We know this is just the beginning, and we
-				look forward to the questions you will ask, the discoveries you will make, and the lasting
-				impact you will have on our community and the world around you.
+				Once again, congratulations—and welcome to Hopkins! This is only the beginning, and we look
+				forward to the questions you'll ask, the discoveries you'll make, and the lasting mark
+				you'll leave on our community and the world around you.
 			</p>
 		</div>
 
 		<div class="mt-10">
 			<div class="mb-1">Sincerely,</div>
 			<div class="font-bold tracking-wide uppercase" style="color: {primaryColor};">
-				Calvin Wise III
+				Nathaniel Boone III
 			</div>
 			<div class="text-sm text-gray-600">
 				Dean of Undergraduate Admissions<br />

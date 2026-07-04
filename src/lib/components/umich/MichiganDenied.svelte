@@ -57,18 +57,18 @@
 
 		<div class="space-y-4 mb-8">
 			<p>
-				Thank you for your application to the University of Michigan College of Engineering for the
-				class entering fall 2027. I know how much thought and effort you put into your application,
-				and the entire admissions committee is grateful for the opportunity to learn about your
-				accomplishments and aspirations.
+				Thank you for applying to the University of Michigan College of Engineering for the class
+				entering fall 2027. I know how much thought and effort you put into your application, and the
+				admissions committee is grateful for the opportunity to learn about your accomplishments and
+				aspirations.
 			</p>
 
 			<p>
 				This year we received a record number of applications from an exceptionally talented pool of
 				students from across the country and around the world. After a careful and holistic review of
-				your application, I am sorry to inform you that we are unable to offer you admission. With far
-				more deserving candidates than we have space to enroll, many outstanding students, like you,
-				could not be admitted.
+				your application, I am sorry to share that we are unable to offer you admission. With far more
+				deserving candidates than we have space to enroll, many outstanding students could not be
+				admitted.
 			</p>
 
 			<p>
@@ -79,16 +79,16 @@
 			</p>
 
 			<p>
-				On behalf of the University of Michigan, I want to thank you for your interest in becoming a
-				Wolverine. We wish you tremendous success as you continue your education, and we are confident
-				that you will thrive wherever your path leads, {firstName}.
+				On behalf of the University of Michigan, thank you for your interest in becoming a Wolverine.
+				We wish you success as you continue your education, and we are confident you will thrive
+				wherever your path leads, {firstName}.
 			</p>
 		</div>
 
 		<div class="mt-12">
 			<div class="mb-1 text-lg">Sincerely,</div>
-			<div class="font-bold italic text-xl" style="color: {primaryColor};">Erica L. Sanders</div>
-			<div class="font-bold">Erica L. Sanders</div>
+			<div class="font-bold italic text-xl" style="color: {primaryColor};">Elaine R. Sutton</div>
+			<div class="font-bold">Elaine R. Sutton</div>
 			<div class="text-sm text-gray-600">
 				Assistant Vice Provost and Executive Director<br />
 				Office of Undergraduate Admissions, {schoolName}

@@ -53,38 +53,37 @@
 			<p class="mb-4">Dear {applicantName},</p>
 
 			<p class="mb-4">
-				Thank you for your application to Dartmouth College. After careful consideration by our
-				Admissions Committee, I regret to inform you that we are unable to offer you admission to
-				the Class of 2031.
+				Thank you for applying to Dartmouth College. After thorough review by our Admissions
+				Committee, I am sorry to tell you that we cannot offer you a place in the Class of 2031.
 			</p>
 
 			<p class="mb-4">
-				This year, Dartmouth reviewed applications from an exceptionally accomplished pool of
-				candidates with strong academic backgrounds and demonstrated leadership potential. Each
-				application was evaluated holistically, considering academic achievement, personal
-				qualities, extracurricular involvement, and potential contributions to our close-knit
-				community in Hanover.
+				Dartmouth considered applications this year from a remarkably accomplished group of
+				candidates with strong academic records and clear leadership potential. We evaluated every
+				application holistically, weighing academic achievement, personal qualities,
+				extracurricular involvement, and the contributions each student might make to our
+				close-knit community in Hanover.
 			</p>
 
 			<div class="my-8 p-6 bg-gray-50 border-l-4 border-[#00693E] italic">
 				<p class="mb-2 font-semibold text-gray-700">About Our Selection Process</p>
 				<p class="text-gray-600">
-					Dartmouth seeks students who demonstrate exceptional intellectual ability, curiosity, and
-					a commitment to community engagement. While you have clearly demonstrated significant
-					accomplishments, the limitations of our class size prevent us from admitting many
-					outstanding students who would undoubtedly thrive at Dartmouth.
+					Dartmouth looks for students with exceptional intellectual ability, curiosity, and a
+					commitment to community engagement. Your accomplishments are clearly significant, yet
+					the constraints of our class size mean we must turn away many outstanding students who
+					would undoubtedly thrive here.
 				</p>
 			</div>
 
 			<p class="mb-4">
-				Please know that this decision reflects the extraordinary selectivity of our applicant pool
-				rather than any deficiency in your abilities or potential. We have every confidence that you
-				will find success and make meaningful contributions at another excellent institution.
+				Please understand that this outcome speaks to the extraordinary selectivity of our
+				applicant pool, not to any shortcoming in your abilities or promise. We are confident you
+				will thrive and contribute meaningfully at another excellent institution.
 			</p>
 
 			<p class="mb-4">
-				We appreciate the time and effort you dedicated to your application and wish you all the
-				best in your future academic endeavors.
+				We are grateful for the care and effort you put into your application, and we wish you
+				every success in your future academic pursuits.
 			</p>
 		</div>
 

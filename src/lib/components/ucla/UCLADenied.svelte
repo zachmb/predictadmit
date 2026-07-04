@@ -43,32 +43,32 @@
 
 			<div class="space-y-4 text-[14px] leading-relaxed text-gray-800">
 				<p>
-					After careful review of your application for admission, we regret to inform you that we are
-					unable to offer you admission for Fall 2027. UCLA continues to receive far more applications
-					for admission than we can accommodate in our first-year class. For Fall 2027, we received
-					over 146,000 first-year applications and were able to admit fewer than one in ten. Our
-					challenge lies not only in our volume of applications but in the quality of the students who
-					choose to apply to our campus.
+					We have completed a careful review of your application, and I am sorry to inform you that we
+					cannot offer you admission for Fall 2027. UCLA continues to receive far more applications
+					than our first-year class can accommodate. For Fall 2027, we received over 146,000
+					first-year applications and admitted fewer than one in ten. The difficulty we face lies not
+					only in the volume of applications but in the quality of the students who choose to apply
+					to our campus.
 				</p>
 				<p>
-					Each application is unique, and each student presents wonderful attributes and potential. Our
-					work is challenging but our commitment to being thorough in our review process is sincere.
-					Every application is read at least twice with consideration given to accomplishments both in
-					and outside of the classroom and we are mindful of the opportunities and challenges students
-					face while achieving so much in their schools and communities. Ultimately, no single
-					attribute or achievement guarantees admission&mdash;there are simply too many well-qualified,
-					accomplished, and capable applicants for the number of first-year spaces available at UCLA.
+					Every application is unique, and every student brings wonderful qualities and potential. Our
+					work is difficult, but our commitment to a thorough review process is sincere. Each
+					application is read at least twice, with attention to achievements both inside and outside
+					the classroom, and we remain mindful of the opportunities and challenges students navigate
+					while accomplishing so much in their schools and communities. In the end, no single
+					attribute or achievement guarantees admission&mdash;there are simply far more well-qualified,
+					accomplished, and capable applicants than there are first-year spaces available at UCLA.
 				</p>
 				<p>
-					If attending UCLA remains your ambition, you should know that there is another opportunity for
-					admission later in your academic career: applying as a junior-level transfer student. You can
-					learn more about the transfer option at
+					If attending UCLA remains your goal, please know that another path to admission exists later
+					in your academic career: applying as a junior-level transfer student. More information about
+					the transfer option is available at
 					<a href="/disclaimer" class="underline" style="color: {primaryColor};">www.admission.ucla.edu/transfer</a>.
 				</p>
 				<p>
-					While no language in a decision letter can lessen the disappointment you may feel, please know
-					that we understand the emotional investment you have made in this process and take this
-					responsibility very seriously. We wish you all the best in your collegiate experience.
+					No words in a decision letter can soften the disappointment you may feel, but please know
+					that we recognize the emotional investment you have made in this process and take our
+					responsibility very seriously. We wish you every success in your collegiate experience.
 				</p>
 			</div>
 
@@ -78,9 +78,9 @@
 					class="text-3xl italic text-gray-800"
 					style="font-family: 'Segoe Script', 'Brush Script MT', cursive;"
 				>
-					Ffiona Rees
+					Bronwyn Hale
 				</div>
-				<div class="mt-2 text-[14px] font-semibold text-gray-900">Ffiona Rees</div>
+				<div class="mt-2 text-[14px] font-semibold text-gray-900">Bronwyn Hale</div>
 				<div class="text-[13px] text-gray-600">Executive Director, Undergraduate Admission</div>
 			</div>
 

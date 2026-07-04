@@ -73,26 +73,26 @@
 
 		<div class="mt-4 space-y-4 text-[14px] leading-relaxed text-gray-800">
 			<p>
-				The admission committee has concluded its evaluation of applicants to Northwestern.
-				Unfortunately, we are unable to offer you a place in the first-year class.
+				The admission committee has completed its evaluation of this year's applicants to
+				Northwestern. We are sorry that we cannot offer you a place in the first-year class.
 			</p>
 			<p>
-				Given the size and strength of our applicant pool relative to the limited spots in our
-				incoming class, we cannot admit all qualified students who apply to Northwestern. You should
-				not feel our decision reflects negatively on you or your potential as a college student. We
-				simply are unable to admit every candidate who presents a solid record of achievement.
+				Because our applicant pool is so large and strong relative to the limited spaces in our
+				incoming class, we cannot admit every qualified student who applies to Northwestern. Please
+				do not take our decision as a negative reflection on you or your potential as a college
+				student. We are simply unable to admit each candidate who presents a strong record of
+				achievement.
 			</p>
 			<p>
-				Our admission committee reviews applications carefully in our efforts to shape an incoming
-				class. Unfortunately, we cannot provide explanations about individual admission decisions;
-				however,
+				Our admission committee weighs each application carefully as we work to shape an incoming
+				class. We are unable to offer explanations of individual admission decisions; however,
 				<a href="/disclaimer" class="italic underline" style="color: {primaryColor};"
 					>A Statement from the Vice President of Enrollment</a
 				>, linked to this letter, may answer some of your questions about our admission process.
 			</p>
 			<p>
-				The admission committee appreciates the time and effort you put into applying to
-				Northwestern. We wish you every success as you pursue your education.
+				The admission committee is grateful for the time and care you invested in your application
+				to Northwestern. We wish you great success in your continued education.
 			</p>
 		</div>
 
@@ -104,9 +104,9 @@
 					class="text-2xl italic text-gray-800"
 					style="font-family: 'Segoe Script', 'Brush Script MT', cursive;"
 				>
-					Stacey Kostell
+					Sandra Kirchner
 				</div>
-				<div class="mt-2 text-[13px] text-gray-900">Stacey Kostell</div>
+				<div class="mt-2 text-[13px] text-gray-900">Sandra Kirchner</div>
 				<div class="text-[13px] text-gray-600">Vice President of Enrollment</div>
 			</div>
 			<div>
@@ -114,9 +114,9 @@
 					class="text-2xl italic text-gray-800"
 					style="font-family: 'Segoe Script', 'Brush Script MT', cursive;"
 				>
-					Elisabeth Kinsley
+					Eleanor Kessler
 				</div>
-				<div class="mt-2 text-[13px] text-gray-900">Elisabeth Kinsley</div>
+				<div class="mt-2 text-[13px] text-gray-900">Eleanor Kessler</div>
 				<div class="text-[13px] text-gray-600">Dean of Undergraduate Admission</div>
 			</div>
 		</div>

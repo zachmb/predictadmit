@@ -85,21 +85,21 @@
 		<!-- Body -->
 		<div class="space-y-4 text-sm leading-relaxed text-slate-800">
 			<p>
-				On behalf of our faculty, staff, and students, I am thrilled to offer you admission to the
-				University of Florida. Your academic and extracurricular accomplishments impressed our review
-				committee, and you will make a significant contribution to our community. Welcome to The Gator
-				Nation!
+				On behalf of our faculty, staff, and students, I am delighted to offer you admission to the
+				University of Florida. Our review committee was impressed by your academic and extracurricular
+				accomplishments, and we know you will contribute significantly to our community. Welcome to
+				The Gator Nation!
 			</p>
 			<p>
-				When you arrive at UF, the possibilities are endless! Jump into groundbreaking research with
-				professors who are leaders in their fields, land internships that will launch your career, and
-				take part in hands-on projects that create a real impact. Outside the classroom, lead campus
-				initiatives, meet friends at the Reitz Student Union for fun workshops, or experience the
+				Once you arrive at UF, the possibilities are endless! Dive into groundbreaking research
+				alongside professors who lead their fields, secure internships that will launch your career,
+				and join hands-on projects that make a real impact. Beyond the classroom, lead campus
+				initiatives, meet friends at the Reitz Student Union for fun workshops, or soak in the
 				electric energy of campus and the school spirit you can only find in the Southeastern
 				Conference (SEC).
 			</p>
 			<p>
-				You are admitted to the Fall term, which begins on August 20, 2027. To secure your place in
+				Your admission is for the Fall term, which begins on August 20, 2027. To hold your place in
 				the Class of 2031, visit your Gator Portal, confirm your enrollment, and submit your $200
 				enrollment deposit by 11:59 pm on <strong>May 1, 2027</strong>.
 			</p>
@@ -109,8 +109,8 @@
 				<a href="/disclaimer" class="text-[#0021A5] hover:underline">our.ufl.edu/uf30welcome</a>.
 			</p>
 			<p>
-				If you or your family need any assistance as you make your final college decision, please let
-				us know. Go Gators!
+				If you or your family need any help as you weigh your final college decision, please reach
+				out to us. Go Gators!
 			</p>
 		</div>
 
@@ -121,9 +121,9 @@
 				class="font-serif italic text-2xl text-slate-700"
 				style="font-family: 'Brush Script MT', cursive;"
 			>
-				Lee H. Melvin
+				Leon H. Mercer
 			</div>
-			<div class="text-sm font-semibold text-slate-900 mt-1">Lee H. Melvin</div>
+			<div class="text-sm font-semibold text-slate-900 mt-1">Leon H. Mercer</div>
 			<div class="text-xs text-slate-600">
 				Associate Vice President and Executive Director of Admissions
 			</div>

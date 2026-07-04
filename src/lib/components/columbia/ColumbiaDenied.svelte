@@ -62,30 +62,30 @@
 
 		<div class="space-y-4 mb-8">
 			<p>
-				Thank you for your application to Columbia University and for allowing us to consider you for
-				a place in the Class of 2031. I know how much thought and effort you invested in your
-				application, and the Committee on Admissions read it with genuine care and attention.
+				Thank you for applying to Columbia University and for giving us the opportunity to consider
+				you for a place in the Class of 2031. I know how much thought and effort your application
+				represents, and the Committee on Admissions read it with genuine care and attention.
 			</p>
 
 			<p>
-				This year we received one of the largest and most accomplished applicant pools in Columbia's
-				history for a very limited number of places. Because of this, we were forced to make many
-				difficult decisions among candidates of remarkable promise. After a thorough and thoughtful
-				review, I am sorry to tell you that we are unable to offer you admission.
+				We received one of the largest and most accomplished applicant pools in Columbia's history
+				this year for a very limited number of places. As a result, we had to make many difficult
+				decisions among candidates of remarkable promise. After a thorough and thoughtful review, I
+				am sorry to tell you that we are unable to offer you admission.
 			</p>
 
 			<p>
-				I want to be clear that this decision is not a judgment of your ability or your worth. Our
-				choices reflect the extraordinary competitiveness of this year's pool and the constraints of
-				our class size far more than any shortcoming in your candidacy. The accomplishments and
-				character evident throughout your application are real, and they will continue to open doors
-				for you.
+				I want to be clear that this decision is no judgment of your ability or your worth. Our
+				choices reflect the extraordinary competitiveness of this year's pool and the limits of our
+				class size far more than any shortcoming in your candidacy. The accomplishments and
+				character shown throughout your application are real, and they will keep opening doors for
+				you.
 			</p>
 
 			<p>
-				Wherever you continue your education, I am confident you will bring energy, curiosity, and
-				distinction to that community. On behalf of the entire Committee, I thank you for your
-				interest in Columbia and wish you every success in the years ahead.
+				I am confident that wherever you continue your education, you will bring energy, curiosity,
+				and distinction to that community. On behalf of the entire Committee, thank you for your
+				interest in Columbia, and we wish you every success in the years ahead.
 			</p>
 
 			<p>With warm regards and best wishes,</p>
@@ -100,7 +100,7 @@
 					style="filter: invert(15%) sepia(60%) saturate(1200%) hue-rotate(180deg) brightness(45%) contrast(100%);"
 				/>
 			</div>
-			<div class="font-bold">Jessica Marinaccio</div>
+			<div class="font-bold">Laura Benedetto</div>
 			<div class="text-sm text-gray-600">
 				Dean of Undergraduate Admissions and Financial Aid<br />
 				{schoolName}

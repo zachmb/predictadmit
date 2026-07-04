@@ -54,30 +54,30 @@
 			<p class="mb-4">Dear {applicantName},</p>
 
 			<p class="mb-4">
-				Thank you for your application to Brown University. I am writing to inform you that we are
-				unable to offer you admission to the Class of 2031.
+				Thank you for applying to Brown University. I write to let you know that we are unable to
+				offer you a place in the Class of 2031.
 			</p>
 
 			<p class="mb-4">
-				This year, Brown received more than 50,000 applications for approximately 1,700 places in
-				the first-year class—the most competitive selection process in our history. The sheer volume
-				of exceptionally qualified candidates made our decisions profoundly difficult.
+				Brown received more than 50,000 applications this year for approximately 1,700 places in
+				the first-year class—the most competitive selection process in our history. With so many
+				exceptionally qualified candidates, our decisions were profoundly difficult.
 			</p>
 
 			<div class="my-8 p-6 bg-gray-50 border-l-4 border-[#ED1C24] italic">
 				<p class="mb-2 font-semibold text-[#4E3629]">A Note on Our Process</p>
 				<p>
-					Our holistic review process considers each applicant's academic achievements, personal
-					qualities, and potential contributions to our community. While you have clearly
-					accomplished a great deal, the limitations of our class size prevent us from admitting
-					many outstanding students.
+					Our review is holistic, weighing each applicant's academic record, personal qualities,
+					and potential contributions to our community. While you have clearly accomplished a
+					great deal, the limits of our class size prevent us from admitting many outstanding
+					students.
 				</p>
 			</div>
 
 			<p class="mb-4">
-				Please know that this decision reflects the extraordinary competitiveness of our applicant
-				pool rather than any deficiency in your accomplishments or potential. We have no doubt that
-				you will find success and make meaningful contributions at another fine institution.
+				Please understand that this decision speaks to the extraordinary competitiveness of our
+				applicant pool, not to any shortcoming in your accomplishments or promise. We have no doubt
+				that you will thrive and contribute meaningfully at another fine institution.
 			</p>
 
 			<p class="mb-4">

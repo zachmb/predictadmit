@@ -57,37 +57,38 @@
 
 		<div class="space-y-4 mb-8 leading-relaxed">
 			<p>
-				I am deeply sorry to inform you that we are not able to offer you admission to the University
-				of Virginia. I can appreciate that this decision is not the one you had hoped to receive, and
-				I regret having to share it with you.
+				I am deeply sorry to tell you that we cannot offer you admission to the University of
+				Virginia. I understand this is not the decision you had hoped to receive, and I regret that
+				I must be the one to share it with you.
 			</p>
 
 			<p>
-				Your application demonstrated that you are a capable student with a bright future. We wish
-				that we had more places in the first-year class and that our decisions were not so hard to
-				make and especially so hard to bear. We do our absolute best to consider all applicants
-				fairly, and to treat them with the care and respect they deserve. Still, we regret that we
-				must disappoint many students who we know will be successful in college and far beyond.
+				Your application made clear that you are a capable student with a bright future ahead of
+				you. We only wish the first-year class had more room, and that decisions like this one were
+				not so difficult to make &mdash; and harder still to receive. We do our absolute best to
+				weigh every applicant fairly and to treat each one with the care and respect they deserve.
+				Even so, we regret having to disappoint so many students who we know will succeed in college
+				and well beyond it.
 			</p>
 
 			<p>
-				Although it may be too early to begin thinking of next steps, I want to emphasize that the
-				door to the University remains open. Many candidates who are not admitted as first-year
-				students reapply after one or two years of study elsewhere. Others apply to our graduate or
-				professional schools after completing their undergraduate degrees. Should you remain
-				interested in the University, we sincerely hope that you'll stay in touch with us.
+				It may feel too soon to think about next steps, but I want to emphasize that the door to the
+				University remains open. Many candidates who are not admitted as first-year students choose
+				to reapply after a year or two of study elsewhere, and others apply to our graduate or
+				professional schools once they have completed their undergraduate degrees. If your interest
+				in the University continues, we sincerely hope you'll stay in touch with us.
 			</p>
 
 			<p>
-				Again, I am sorry that we are not able to offer you admission. All of us in the Office of
-				Undergraduate Admission remain grateful for the interest you have shown in the University, and
-				we wish you well as you continue your education.
+				Again, I am sorry that we cannot offer you admission. Everyone in the Office of
+				Undergraduate Admission remains grateful for the interest you have shown in the University,
+				and we wish you well as your education continues.
 			</p>
 		</div>
 
 		<div class="mt-12">
 			<div class="mb-2 text-slate-700">Sincerely,</div>
-			<div class="font-bold" style="color: {primaryColor};">Greg W. Roberts</div>
+			<div class="font-bold" style="color: {primaryColor};">Gerald W. Rutherford</div>
 			<div class="text-sm text-slate-600">
 				Associate Vice Provost of Enrollment and<br />
 				Dean of Admission<br />

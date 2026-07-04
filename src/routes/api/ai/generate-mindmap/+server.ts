@@ -11,6 +11,8 @@ export const POST: RequestHandler = async ({ request }) => {
         
         You must also define connections between these nodes to show how different parts of their application relate (e.g., "Robotics Club" connects to "Leadership" via "Project Management").
 
+        INTEGRITY RULE: every node must be grounded in something the student actually listed in their profile — never invent activities, achievements, or experiences, and never produce essay prose. Nodes are short labels for THEIR OWN material only.
+
         Return ONLY a valid JSON object with this exact structure:
         {
             "nodes": [

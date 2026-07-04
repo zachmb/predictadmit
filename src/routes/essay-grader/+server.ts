@@ -92,6 +92,8 @@ export const POST: RequestHandler = async ({ request }) => {
     2. For each area, provide the "quote" and a "comment" that asks a specific question to clarify that confusion.
     3. Score the essay on the specified categories using the HARSH scale above.
 
+    ACADEMIC-INTEGRITY HARD RULE: you give feedback ONLY. Never write, rewrite, or suggest replacement wording, sentences, or phrases the student could paste into their essay — no "try saying X instead", no example rewrites, no model sentences. Comments must be questions or observations about THEIR text, never new application prose.
+
     Categories to Score (1-10): ${essayType === 'personal' ? 'selfReflection, personality/Character, writingQuality, growth, institutionalAlignment' : 'personalityCharacter, majorFit, schoolFit, potentialContribution, promptAlignment'}
 
     Return ONLY a JSON object with this exact structure: 
@@ -114,6 +116,8 @@ export const POST: RequestHandler = async ({ request }) => {
     Your Role:
     1. The Cynic (Brutal): Tear this essay apart. What is your first negative impression? Ignore the positives.
     2. The Realist (Honest): Provide a balanced check. What works, what doesn't, and what is the realistic outcome?
+
+    ACADEMIC-INTEGRITY HARD RULE: feedback only — never write or suggest replacement sentences, wording, or any text the student could paste into their essay.
  
     Return ONLY JSON:
     { 

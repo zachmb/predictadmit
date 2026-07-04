@@ -364,7 +364,7 @@
 							class="text-[14px] font-bold px-5 py-2 text-white rounded-sm shadow hover:opacity-90"
 							style="background-color: {school.primaryColor};"
 						>
-							View Update &raquo;
+							View Simulated Status Update &raquo;
 						</button>
 					</div>
 				</section>

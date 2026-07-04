@@ -61,7 +61,7 @@
 		<div class="space-y-4 mb-8">
 			<p>
 				Thank you for your interest in the University of California, Davis, and for the time and care
-				you invested in your application for fall quarter 2027. We know how much thought goes into
+				you invested in your fall quarter 2027 application. We know how much thought goes into
 				applying, and we are grateful for the opportunity to review your accomplishments.
 			</p>
 
@@ -69,8 +69,8 @@
 				This year UC Davis received a remarkable number of applications from talented students across
 				California and around the world. Because our capacity is limited and the applicant pool was
 				exceptionally strong, the Admissions Committee faced many difficult decisions. After a
-				thorough and holistic review of your application, I am sorry to inform you that we are unable
-				to offer you admission for fall quarter 2027.
+				thorough, holistic review of your application, I am sorry to share that we are unable to offer
+				you admission for fall quarter 2027.
 			</p>
 
 			<p>
@@ -87,14 +87,14 @@
 			</p>
 
 			<p>
-				We wish you every success as you continue your education, and we thank you again for
-				considering UC Davis.
+				We wish you success as you continue your education, and we thank you again for considering UC
+				Davis.
 			</p>
 		</div>
 
 		<div class="mt-12">
-			<div class="mb-2 text-2xl italic" style="color: {primaryColor};">Ebony M. Lewis</div>
-			<div class="font-bold">Ebony M. Lewis</div>
+			<div class="mb-2 text-2xl italic" style="color: {primaryColor};">Erica M. Lockhart</div>
+			<div class="font-bold">Erica M. Lockhart</div>
 			<div class="text-sm text-gray-600">
 				Executive Director of Undergraduate Admissions<br />
 				{schoolName}

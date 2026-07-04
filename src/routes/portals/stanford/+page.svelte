@@ -207,7 +207,7 @@
 					on:click={handleViewUpdate}
 					class="text-sm font-bold text-[#8C1515] underline hover:no-underline"
 				>
-					View Update &gt;&gt;
+					View Simulated Status Update &gt;&gt;
 				</button>
 			</section>
 
@@ -217,7 +217,7 @@
 				<p class="text-sm text-[#2e2d29] leading-relaxed">
 					{applicantName()}<br />
 					{profile.email || 'applicant@example.com'}<br />
-					Date of Birth: February 19, 2008
+					Date of Birth: July 12, 2008
 				</p>
 				<div class="text-sm mt-3 space-y-1">
 					<a href="/disclaimer" class="block text-[#8C1515] underline hover:no-underline"

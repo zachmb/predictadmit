@@ -67,42 +67,43 @@
 
 		<div class="space-y-4 mb-8">
 			<p>
-				We have arrived at the end of our application review period, and I am sorry to say that we
-				are unable to offer you a space in this year&rsquo;s incoming class.
+				Our application review period has now come to a close, and I am sorry to tell you that we
+				cannot offer you a place in this year&rsquo;s incoming class.
 			</p>
 
 			<p>
-				Please understand that our decision is driven primarily by space limitations and is in no way
-				a judgment about you as a person nor any kind of statement about your ability to succeed in
-				college. Be proud of your accomplishments and press on in your pursuit of higher education.
+				Please know that this decision reflects, above all, the limits of available space; it is not
+				a judgment of you as a person, nor any statement about your ability to succeed in college.
+				Take pride in what you have accomplished and continue your pursuit of higher education.
 			</p>
 
 			<p>
-				Admission to USC was as competitive as ever. We could not accommodate thousands of
-				exceptional candidates, including many with pristine academic records, remarkable talent,
-				strong character, enriching experiences and unique perspectives. I hope you can find some
-				comfort in knowing that none of us enjoys turning away outstanding students.
+				Admission to USC this year was as competitive as it has ever been. Thousands of exceptional
+				candidates could not be accommodated, among them many with superb academic records,
+				remarkable talent, strong character, enriching experiences and distinctive perspectives. I
+				hope it offers some comfort to know that none of us takes any pleasure in turning away
+				outstanding students.
 			</p>
 
 			<p>
-				Numbers cannot tell the whole story, but I hope you find the context helpful: We received
-				roughly 79,000 applications for admission. Our anticipated enrollment of 3,650 students
-				limits us to offering fall admission to roughly one in nine candidates. Of those admitted,
-				most achieved nearly straight-A averages in a rigorous schedule of classes. Every candidate
-				offers real strengths.
+				Numbers never tell the whole story, but the context may be helpful: we received roughly
+				79,000 applications for admission, and with an anticipated enrollment of 3,650 students, we
+				could offer fall admission to only about one in nine candidates. Most of those admitted
+				earned nearly straight-A averages in a demanding schedule of classes. Every candidate brings
+				genuine strengths.
 			</p>
 
 			<p>
-				Beyond the academic record, we considered many other factors presented in your application
-				materials. Ours is a qualitative process, in which opinions are weighed with facts. Your
-				application was carefully, respectfully and thoughtfully reviewed multiple times. If you
-				decide that you still wish to explore a path to USC, consider applying next year as a
-				transfer student. Although our transfer process is selective and there are no guarantees,
-				with careful planning and continued hard work in school, you could transfer as early as your
-				sophomore year.
+				We also looked beyond the academic record to the many other factors presented in your
+				application materials. Our review is a qualitative process, one in which opinions are
+				weighed alongside facts, and your application was read carefully, respectfully and
+				thoughtfully more than once. Should you decide that you still wish to pursue a path to USC,
+				you may consider applying next year as a transfer student. Our transfer process is selective
+				and offers no guarantees, but with careful planning and continued hard work in school, you
+				could transfer as early as your sophomore year.
 			</p>
 
-			<p>Thank you for considering USC. We wish you all the best in your college plans.</p>
+			<p>Thank you for your interest in USC. We wish you every success in your college plans.</p>
 		</div>
 
 		<div class="mt-12">
@@ -115,7 +116,7 @@
 					style="filter: invert(11%) sepia(95%) saturate(4000%) hue-rotate(357deg) brightness(70%) contrast(110%);"
 				/>
 			</div>
-			<div class="font-bold">Kirk Brennan</div>
+			<div class="font-bold">Kent Bradshaw</div>
 			<div class="text-sm text-gray-600">
 				Associate Dean and Director of Undergraduate Admission<br />
 				{schoolName}<br />

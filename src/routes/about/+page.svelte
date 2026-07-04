@@ -1,38 +1,33 @@
 <script lang="ts">
 	import SiteFooter from '$lib/components/layout/SiteFooter.svelte';
-	import { counselors } from '$lib/config/counselors';
-	import { readableTextColor } from '$lib/config/schoolStats';
-
-	// Show a handful of mentors on the About page.
-	const featuredMentors = counselors.slice(0, 6);
 
 	const stats = [
 		{ value: '5,000+', label: 'Students on PredictAdmit' },
-		{ value: '40', label: 'Universities simulated' },
-		{ value: '8', label: 'Verified T20 mentors' },
-		{ value: '$0', label: 'AI tools are free' }
+		{ value: '39', label: 'Universities simulated' },
+		{ value: '$9', label: 'Lifetime Pro access' },
+		{ value: '1', label: 'Free simulation to start' }
 	];
 
 	const differentiators = [
 		{
 			icon: '🎯',
-			title: 'Practice on the real thing',
-			body: 'Log into pixel-accurate recreations of 40 real applicant portals and open a simulated decision letter. Feel the moment before it happens for real — every screen is clearly labeled as a simulation.'
+			title: 'Practice the real moment',
+			body: 'Log into realistic simulated applicant portals for 39 universities and open a simulated decision letter. Feel the moment before it happens for real — every screen is clearly labeled as a simulation.'
 		},
 		{
 			icon: '✍️',
-			title: 'Free AI essay workshop',
-			body: 'PredictAdmit Pro gives you an essay grader, an AI counselor, a chances predictor, and a mind-map to plan your list — all free. No credit card, no trial timer.'
+			title: 'Try everything free',
+			body: 'Every account starts with a free AI simulation and a taste of the full toolkit — essay grader, AI counselor, chances predictor, and mind-map. No credit card required to start.'
 		},
 		{
-			icon: '🎓',
-			title: 'Mentors who just did it',
-			body: 'Our 1:1 counselors are verified current students who got into a Top-20 this cycle. You get advice from someone who navigated the same portals months ago — not decades ago.'
+			icon: '⚡',
+			title: 'Pro unlocks it all',
+			body: 'PredictAdmit Pro removes every limit: unlimited AI simulations, full deep-dive decision analyses, and unlimited essay grading — $5/month or $9 once for lifetime access. Less than a private consultant charges per minute.'
 		},
 		{
 			icon: '🔍',
 			title: 'Honest by design',
-			body: 'Everything simulated is labeled a simulation. We never claim to guarantee admission or fake an acceptance. The predictor gives you an honest read on where you stand.'
+			body: 'Everything simulated is labeled a simulation. We never claim to guarantee admission or fake an acceptance. And the AI gives feedback on your writing — it never writes your essays for you. Your application stays 100% your own work.'
 		}
 	];
 
@@ -45,13 +40,13 @@
 		},
 		{
 			quote:
-				'The free essay grader caught the cliché opening I would have submitted. My intro call with a mentor turned a rambling draft into something that sounded like me.',
+				'The essay grader caught the cliché opening I would have submitted. The deep dive on my rejection showed me exactly which part of my application was weakest.',
 			name: 'Marcus',
 			role: 'First-gen applicant'
 		},
 		{
 			quote:
-				'Talking to someone who got into my dream school this year — not ten years ago — was the single most useful hour of my whole application process.',
+				'Nine dollars for unlimited runs was the easiest decision of my application season. I stress-tested my list until every school on it made sense.',
 			name: 'Elena',
 			role: 'Class of 2026 applicant'
 		}
@@ -60,19 +55,15 @@
 	const faqs: { q: string; a: string; link?: { href: string; label: string } }[] = [
 		{
 			q: 'Is PredictAdmit free?',
-			a: 'Yes — the AI tools inside PredictAdmit Pro (essay grader, AI counselor, chances predictor, and mind-map) and the admissions simulator are all free to use. Booking a 1:1 human mentor for a working session is paid, but every mentor offers a free intro call first.'
+			a: 'You can start free: every account gets a free AI simulation and access to try the tools, no credit card required. PredictAdmit Pro unlocks unlimited simulations, full deep-dive analyses, and unlimited essay grading for $5/month — or $9 once for lifetime access.'
 		},
 		{
 			q: 'Are the decision letters real?',
-			a: 'No. The portals and decision letters in the simulator are recreations built for practice, and every screen is clearly labeled as a simulation. They exist to help you prepare for the real thing — they are not official communications from any university.'
+			a: 'No. The portals and decision letters in the simulator are simulations built for practice, and every screen is clearly labeled as one. They exist to help you prepare for the real thing — they are not official communications from any university.'
 		},
 		{
-			q: 'Are the mentors real T20 students?',
-			a: 'Yes. Every 1:1 counselor is a verified current student who was admitted to a Top-20 university in the most recent admissions cycle. Their profiles list exactly which schools they were accepted to as the trust proof.'
-		},
-		{
-			q: 'How do I book a mentor?',
-			a: 'Head to PredictAdmit Pro and open the Human Counselors tab. Browse mentors by school and specialty, start with a free intro call, and book a paid working session or package if it feels like the right fit.'
+			q: 'What exactly does Pro include?',
+			a: 'Unlimited AI admissions simulations across all 39 universities, the full deep-dive analysis behind every decision (five scored dimensions plus improvement tips), unlimited essay grading, the AI counselor, and the mind-map planner. One payment covers everything — there are no add-ons.'
 		},
 		{
 			q: 'How accurate is the predictor?',
@@ -90,19 +81,19 @@
 	<title>About PredictAdmit — Your unfair advantage in college admissions</title>
 	<meta
 		name="description"
-		content="PredictAdmit gives students a hyper-realistic admissions simulator, a free AI essay workshop and chances predictor, and 1:1 mentorship from verified current Top-20 students. Everything simulated is clearly labeled."
+		content="PredictAdmit gives students a realistic admissions simulator, an AI essay workshop, and a chances predictor. Start with a free simulation; Pro unlocks everything for $9. Everything simulated is clearly labeled."
 	/>
 	<meta property="og:title" content="About PredictAdmit — Your unfair advantage in college admissions" />
 	<meta
 		property="og:description"
-		content="Practice on pixel-accurate applicant portals, sharpen your essays with free AI tools, and book mentors who got into a Top-20 this cycle."
+		content="Practice on realistic simulated applicant portals and sharpen your essays with AI. One free simulation to start — Pro unlocks unlimited for $9."
 	/>
 	<meta property="og:type" content="website" />
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:title" content="About PredictAdmit" />
 	<meta
 		name="twitter:description"
-		content="A hyper-realistic admissions simulator, a free AI essay workshop, and 1:1 mentors who just got into a Top-20."
+		content="A realistic admissions simulator, an AI essay workshop, and a chances predictor. Free to try — Pro unlocks unlimited for $9."
 	/>
 </svelte:head>
 
@@ -119,8 +110,8 @@
 				Your unfair advantage in college admissions.
 			</h1>
 			<p class="text-lg md:text-xl text-slate-500 leading-relaxed max-w-2xl mx-auto mb-10">
-				We help students practice on the real thing, sharpen their essays with free AI, and learn
-				from mentors who just walked through the same doors.
+				We help students feel decision day before it's real, sharpen their essays with AI, and know
+				exactly where they stand — for less than the cost of lunch.
 			</p>
 			<div class="flex flex-col sm:flex-row gap-3 justify-center">
 				<a
@@ -130,10 +121,10 @@
 					Start free →
 				</a>
 				<a
-					href="#mentors"
+					href="/pricing"
 					class="inline-flex items-center justify-center font-semibold text-sm bg-white text-slate-900 px-8 py-3.5 rounded-lg border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-colors"
 				>
-					Meet our mentors
+					See Pro pricing
 				</a>
 			</div>
 			<p class="mt-6 text-sm text-slate-400">Trusted by 5,000+ students.</p>
@@ -160,8 +151,8 @@
 					Why PredictAdmit is different
 				</h2>
 				<p class="text-lg text-slate-500 leading-relaxed">
-					Three pillars — a realistic simulator, free AI tools, and real human mentors — with one
-					rule: total honesty about what is real and what is practice.
+					A realistic simulator and a full AI toolkit — priced for students, with one rule: total
+					honesty about what is real and what is practice.
 				</p>
 			</div>
 			<div class="grid md:grid-cols-2 gap-5">
@@ -178,55 +169,38 @@
 		</div>
 	</section>
 
-	<!-- Meet our mentors -->
-	<section id="mentors" class="max-w-6xl mx-auto px-6 py-24 scroll-mt-16">
+	<!-- Pro -->
+	<section id="pro" class="max-w-6xl mx-auto px-6 py-24 scroll-mt-16">
 		<div class="text-center max-w-2xl mx-auto mb-14">
 			<h2 class="text-3xl md:text-4xl font-bold tracking-tight text-slate-900 mb-4">
-				Meet our mentors
+				One upgrade. Everything unlocked.
 			</h2>
 			<p class="text-lg text-slate-500 leading-relaxed">
-				Verified current students who got into a Top-20 this cycle. Start with a free intro call —
-				book a working session only if it clicks.
+				Start with a free simulation. When you're ready, Pro removes every limit — for less than a
+				private consultant charges per minute.
 			</p>
 		</div>
 		<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-			{#each featuredMentors as mentor}
-				{@const firstName = mentor.name.split(' ')[0]}
+			{#each [
+				{ icon: '🔮', title: 'Unlimited AI simulations', body: 'Run your profile against all 39 universities as many times as you want. Change your essay, rerun, and watch what moves.' },
+				{ icon: '🔬', title: 'Full deep-dive analyses', body: 'Every decision comes with five scored dimensions and specific improvement tips — the "why" behind the outcome, unblurred.' },
+				{ icon: '📝', title: 'Unlimited essay grading', body: 'Grade every draft of every essay. The AI reads like a coded, blunt admissions officer — before a real one does.' }
+			] as f}
 				<div class="flex flex-col rounded-2xl border border-slate-100 bg-white p-6 hover:shadow-md transition-shadow">
-					<div class="flex items-center gap-4 mb-4">
-						<div
-							class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full text-lg font-bold"
-							style="background-color: {mentor.color}; color: {readableTextColor(mentor.color)};"
-						>
-							{firstName[0]}
-						</div>
-						<div>
-							<div class="font-bold text-slate-900 leading-tight">{mentor.name}</div>
-							<div class="text-sm text-[#0052CC] font-medium">{mentor.school}</div>
-						</div>
-					</div>
-					<p class="text-sm text-slate-600 leading-relaxed mb-4">{mentor.headline}</p>
-					<div class="flex flex-wrap gap-1.5 mb-4">
-						{#each mentor.specialties.slice(0, 3) as tag}
-							<span class="text-xs font-medium text-slate-600 bg-slate-100 px-2.5 py-1 rounded-full">
-								{tag}
-							</span>
-						{/each}
-					</div>
-					<div class="mt-auto pt-4 border-t border-slate-100">
-						<div class="text-xs text-slate-400 mb-3">
-							<span class="font-semibold text-slate-500">Accepted to:</span>
-							{mentor.acceptedTo.join(', ')}
-						</div>
-						<a
-							href="/pro"
-							class="inline-flex items-center justify-center w-full font-semibold text-sm bg-[#0052CC] text-white px-4 py-2.5 rounded-lg hover:bg-[#003d99] transition-colors"
-						>
-							Book {firstName} →
-						</a>
-					</div>
+					<div class="text-3xl mb-3">{f.icon}</div>
+					<div class="font-bold text-slate-900 mb-2">{f.title}</div>
+					<p class="text-sm text-slate-600 leading-relaxed">{f.body}</p>
 				</div>
 			{/each}
+		</div>
+		<div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+			<a
+				href="/pricing"
+				class="inline-flex items-center justify-center font-semibold text-sm bg-[#0052CC] text-white px-8 py-3.5 rounded-lg hover:bg-[#003d99] transition-colors shadow-lg shadow-[#0052CC]/20"
+			>
+				Go Pro — $5/mo or $9 lifetime →
+			</a>
+			<span class="text-sm text-slate-400">Free simulation included. No credit card to start.</span>
 		</div>
 	</section>
 

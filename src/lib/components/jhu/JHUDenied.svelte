@@ -53,17 +53,17 @@
 
 		<div class="space-y-4 mb-8 leading-relaxed">
 			<p>
-				Thank you for your interest in Johns Hopkins University. After a thorough review of your
-				application, we regret to inform you that we are not able to offer you admission.
+				Thank you for your interest in Johns Hopkins University. After carefully reviewing your
+				application, we are sorry to inform you that we cannot offer you admission.
 			</p>
 
 			<p>
-				Every year we receive a large number of applications from talented students, making admission
-				to Hopkins a highly selective process. For answers to some common questions, please see the
+				Each year we receive applications from a great many talented students, which makes admission
+				to Hopkins highly selective. For answers to some common questions, please see the
 				<a href="/disclaimer" class="hover:underline" style="color: {primaryColor};">FAQ</a> below.
 			</p>
 
-			<p>We wish you the best with your future educational and personal goals.</p>
+			<p>We wish you every success as you pursue your educational and personal goals.</p>
 		</div>
 
 		<div class="mb-10">
@@ -82,17 +82,17 @@
 				<div>
 					<div class="font-bold mb-1">Can I appeal my decision?</div>
 					<p>
-						Johns Hopkins University does not accept appeals of admissions decisions, nor will we
-						re-evaluate applications with new information. The decisions of the admissions committee
-						are final and are based on the information provided by the application deadline.
+						Johns Hopkins University does not consider appeals of admissions decisions, nor do we
+						re-evaluate applications based on new information. The committee's decisions are final
+						and rest on the materials submitted by the application deadline.
 					</p>
 				</div>
 
 				<div>
 					<div class="font-bold mb-1">Can I find out why I was denied?</div>
 					<p>
-						We are not able to discuss the specific factors that go into the final decisions nor
-						provide students with a detailed analysis of their specific application evaluation.
+						We are unable to discuss the individual factors behind final decisions or to give
+						students a detailed analysis of how their particular application was evaluated.
 					</p>
 				</div>
 

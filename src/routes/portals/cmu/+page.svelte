@@ -315,7 +315,7 @@
 							on:click={handleViewUpdate}
 							class="text-[14px] font-bold text-[#C41230] hover:underline"
 						>
-							Please click here to view your decision letter.
+							Please click here to view your simulated decision letter.
 						</button>
 					</div>
 

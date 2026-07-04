@@ -342,7 +342,7 @@
 										class="rounded px-5 py-2 text-sm font-bold shadow hover:opacity-90"
 										style="background-color: {school.accentColor}; color: {school.primaryColor};"
 									>
-										View Update &gt;&gt;
+										View Simulated Status Update &gt;&gt;
 									</button>
 								</div>
 							</div>

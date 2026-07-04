@@ -56,30 +56,30 @@
 
 		<div class="space-y-4 mb-8">
 			<p>
-				Thank you for your application to Purdue University for the Fall 2027 semester, and for the time
-				and care you invested in it. This year we received a record number of applications from an
-				exceptionally talented group of students, and the Office of Admissions reviewed every one with
+				Thank you for applying to Purdue University for the Fall 2027 semester, and for the time and
+				care your application reflects. This year the Office of Admissions received a record number of
+				applications from an exceptionally talented group of students, and each one was reviewed with
 				great attention.
 			</p>
 
 			<p>
-				After a thorough and holistic review of your application, I am sorry to inform you that we are
-				unable to offer you admission to your requested program at this time. Because our applicant pool
-				far exceeds the number of spaces available, we must make many difficult decisions among highly
-				qualified candidates — and this outcome is a reflection of that competition, not of your ability
-				or your potential.
+				Following a thorough and holistic review of your application, I am sorry to inform you that we
+				cannot offer you admission to your requested program at this time. With an applicant pool far
+				larger than the number of available spaces, we face many difficult choices among highly
+				qualified candidates — this outcome reflects that competition, not your ability or your
+				potential.
 			</p>
 
 			<p>
-				I know this news is disappointing, and I do not want it to discourage you. Many successful
-				Boilermakers began their journeys elsewhere and joined Purdue as transfer students. If Purdue
-				remains your goal, I encourage you to explore our transfer pathways and to stay connected with
-				our Office of Admissions, whose counselors are glad to help you plan your next steps.
+				I know this news is disappointing, but I hope it does not discourage you. Many successful
+				Boilermakers started their journeys elsewhere before joining Purdue as transfer students. If
+				Purdue remains your goal, I encourage you to look into our transfer pathways and keep in touch
+				with our Office of Admissions — our counselors are glad to help you plan your next steps.
 			</p>
 
 			<p>
-				You have accomplished a great deal, and those accomplishments will continue to open doors for
-				you. We wish you every success as you begin the next chapter of your education.
+				You have accomplished a great deal, and those achievements will keep opening doors for you. As
+				you begin the next chapter of your education, we wish you every success.
 			</p>
 
 			<p>Thank you again for your interest in Purdue University.</p>
@@ -87,9 +87,9 @@
 
 		<div class="mt-12">
 			<div class="text-2xl mb-1" style="font-family: 'Brush Script MT', cursive; color: {primaryColor};">
-				Kris Wong Davis
+				Dana Wong Ellis
 			</div>
-			<div class="font-bold">Kris Wong Davis</div>
+			<div class="font-bold">Dana Wong Ellis</div>
 			<div class="text-sm text-gray-600">
 				Vice Provost for Enrollment Management<br />
 				{schoolName}

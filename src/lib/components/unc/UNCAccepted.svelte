@@ -80,14 +80,14 @@
 			<p class="mb-4">Dear {firstName},</p>
 
 			<p class="mb-4">
-				On behalf of the admissions committee, it is my great pleasure to offer you admission to the
+				On behalf of the admissions committee, I am very pleased to offer you admission to the
 				University of North Carolina at Chapel Hill as a member of the Class of 2031. Congratulations,
-				and welcome to Carolina. Of the many talented students who applied this year, you distinguished
-				yourself, and we are delighted to invite you to join our community.
+				and welcome to Carolina. Among the many talented students who applied this year, you stood out,
+				and we are delighted to invite you into our community.
 			</p>
 
 			<p class="mb-4">
-				As you read your application, our committee was drawn to the curiosity, character, and heart
+				As we read your application, our committee was drawn to the curiosity, character, and heart
 				you bring to everything you do. We are confident that you will thrive here and that Carolina
 				will be a better place because you are part of it. From the Old Well to Franklin Street, we
 				cannot wait for you to make this campus your own.
@@ -102,16 +102,16 @@
 			</p>
 
 			<p class="mb-6">
-				Congratulations once again on this well-earned achievement. We look forward to welcoming you
-				to Chapel Hill this fall. Go Heels!
+				Again, congratulations on this well-earned achievement. We look forward to welcoming you to
+				Chapel Hill this fall. Go Heels!
 			</p>
 
 			<p class="mb-3">Sincerely,</p>
 
 			<p class="mb-1 text-2xl leading-none text-gray-900" style="font-family: 'Segoe Script','Bradley Hand',cursive;">
-				Jared Rosenberg
+				Jonah Reinhart
 			</p>
-			<p class="font-semibold">Jared Rosenberg</p>
+			<p class="font-semibold">Jonah Reinhart</p>
 			<p class="text-gray-600">Associate Provost and Director of Undergraduate Admissions</p>
 		</div>
 

@@ -59,45 +59,45 @@
 
 		<div class="space-y-4 mb-8">
 			<p>
-				Congratulations! It is my great pleasure to offer you admission to Purdue University for the
+				Congratulations! I am delighted to offer you admission to Purdue University for the
 				Fall 2027 semester. On behalf of the Office of Admissions, welcome to the Boilermaker family.
-				Your record of academic achievement, persistence, and promise stood out in one of the largest
-				and most competitive applicant pools in Purdue's history.
+				In one of the largest and most competitive applicant pools Purdue has ever seen, your record
+				of academic achievement, persistence, and promise truly stood out.
 			</p>
 
 			<p>
-				Purdue is a place where the next giant leaps are made — in engineering, agriculture, business,
-				science, the liberal arts, and beyond. We were genuinely impressed by what you have already
-				accomplished, and we are confident that you will thrive here and contribute meaningfully to
-				our community of doers, makers, and problem-solvers.
+				Purdue is where the next giant leaps take shape — in engineering, agriculture, business,
+				science, the liberal arts, and beyond. What you have accomplished so far genuinely impressed
+				us, and we are confident you will thrive here and add real value to our community of doers,
+				makers, and problem-solvers.
 			</p>
 
 			<p>
-				To secure your place in the class, please log in to your applicant portal and accept your
-				offer of admission. We encourage you to submit your
+				To claim your spot in the class, please log in to your applicant portal and accept your
+				offer of admission. We also encourage you to file your
 				<strong>Free Application for Federal Student Aid (FAFSA)</strong> using Purdue's Federal School
 				code <strong>001825</strong> before the April 15 priority filing date to maximize your financial
 				aid and scholarship eligibility.
 			</p>
 
 			<p>
-				We also invite you to visit campus in West Lafayette. There is no better way to picture your
-				future here than to walk past the Engineering Fountain, tour a residence hall, and meet the
-				faculty and students who will become your community. Details for admitted-student programs are
-				available in your portal.
+				We also invite you to visit campus in West Lafayette. Walking past the Engineering Fountain,
+				touring a residence hall, and meeting the faculty and students who will become your community
+				is the best way to picture your future here. You will find details for admitted-student
+				programs in your portal.
 			</p>
 
 			<p>
-				Congratulations once again on this outstanding accomplishment. We look forward to welcoming you
-				to Purdue and to seeing all that you will achieve. Boiler Up! Hammer Down!
+				Once again, congratulations on this outstanding accomplishment. We cannot wait to welcome you
+				to Purdue and to watch all that you will achieve. Boiler Up! Hammer Down!
 			</p>
 		</div>
 
 		<div class="mt-12">
 			<div class="text-2xl mb-1" style="font-family: 'Brush Script MT', cursive; color: {primaryColor};">
-				Kris Wong Davis
+				Dana Wong Ellis
 			</div>
-			<div class="font-bold">Kris Wong Davis</div>
+			<div class="font-bold">Dana Wong Ellis</div>
 			<div class="text-sm text-gray-600">
 				Vice Provost for Enrollment Management<br />
 				{schoolName}

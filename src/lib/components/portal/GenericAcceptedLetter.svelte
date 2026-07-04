@@ -47,24 +47,24 @@
 			</p>
 
 			<p class="text-[12px] leading-relaxed text-slate-900 mb-3">
-				It is with great pleasure that I write to inform you of your admission to
+				I am very pleased to share that you have been admitted to
 				<span class="font-semibold"> {schoolName}</span> as a member of the Class of 2031.
 			</p>
 
 			<p class="text-[12px] leading-relaxed text-slate-900 mb-3">
-				The admissions committee was deeply impressed by your academic achievement, intellectual
-				curiosity, and the initiative you have demonstrated in your academic and personal pursuits.
+				The admissions committee was impressed by your academic achievement, intellectual curiosity,
+				and the initiative you have shown in your academic and personal pursuits.
 			</p>
 
 			<p class="text-[12px] leading-relaxed text-slate-900 mb-3">
-				Over the coming weeks, your admitted student portal will provide information about financial
-				aid, housing, orientation, and important enrollment deadlines. Please review these materials
-				carefully and respond by the stated reply date.
+				In the coming weeks, your admitted student portal will provide details about financial aid,
+				housing, orientation, and key enrollment deadlines. Please review those materials carefully
+				and respond by the stated reply date.
 			</p>
 
 			<p class="text-[12px] leading-relaxed text-slate-900 mb-3">
 				On behalf of the faculty and staff of {schoolName}, congratulations on your admission. We
-				hope you will join our community this fall.
+				hope to welcome you into our community this fall.
 			</p>
 
 			<p class="text-[12px] leading-relaxed text-slate-900 mt-4">

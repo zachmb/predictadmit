@@ -67,28 +67,28 @@
 
 			<div class="space-y-4 text-[14px] leading-relaxed text-gray-800">
 				<p>
-					Congratulations! It is my great pleasure to offer you admission to Rice University and to
-					welcome you to the Class of 2031. On behalf of the entire admission committee, I want you to
+					Congratulations! I am truly delighted to offer you admission to Rice University and to
+					welcome you to the Class of 2031. Speaking for the entire admission committee, I want you to
 					know how genuinely impressed we were by your accomplishments, your character, and the
 					distinct perspective you will bring to our residential colleges.
 				</p>
 				<p>
-					This year, Rice received over 38,000 applications from extraordinary students around the
-					world, and our decisions were extremely difficult. Your application stood out for its
-					curiosity, dedication, and resilience, along with a clear interest in driving positive
-					change. We are confident that you will not only thrive at Rice, but that you will make our
-					community stronger because you are part of it.
+					Rice received over 38,000 applications this year from extraordinary students around the
+					world, which made our decisions extremely difficult. What set your application apart was
+					its curiosity, dedication, and resilience, together with a clear desire to create positive
+					change. We are confident that you will not only thrive at Rice, but that our community will
+					be stronger because you are part of it.
 				</p>
 				<p>
-					In the coming days you will receive information about your financial aid award, your
+					Over the coming days you will receive information about your financial aid award, your
 					residential college assignment, and Owl Days, our celebration for admitted students. Please
-					take the time to review the enrollment materials in your applicant portal, and know that our
-					office is here to answer any questions as you make this important decision. We hope you will
-					choose to say yes to Rice.
+					take time to review the enrollment materials in your applicant portal, and remember that our
+					office is ready to answer any questions as you weigh this important decision. We hope you
+					will choose to say yes to Rice.
 				</p>
 				<p>
-					Once again, congratulations on this well-earned achievement. We cannot wait to see all that
-					you will accomplish here, and we look forward to welcoming you to Houston.
+					Congratulations once more on this well-earned achievement. We look forward to welcoming you
+					to Houston and cannot wait to see everything you will accomplish here.
 				</p>
 			</div>
 
@@ -98,9 +98,9 @@
 					class="text-3xl italic text-gray-800"
 					style="font-family: 'Segoe Script', 'Brush Script MT', cursive;"
 				>
-					Yvonne Romero
+					Veronica Salas
 				</div>
-				<div class="mt-2 text-[14px] font-semibold text-gray-900">Dr. Yvonne M. Romero</div>
+				<div class="mt-2 text-[14px] font-semibold text-gray-900">Dr. Veronica M. Salas</div>
 				<div class="text-[13px] text-gray-600">Vice President for Enrollment</div>
 				<div class="text-[13px] text-gray-600">Dean of Admission and Financial Aid</div>
 			</div>

@@ -57,21 +57,21 @@
 
 		<div class="space-y-4 mb-8">
 			<p>
-				Thank you for your interest in the California Institute of Technology and for the
-				comprehensive application you submitted for admission to the Class of 2031.
+				Thank you for your interest in the California Institute of Technology and for the thorough
+				application you submitted as a candidate for the Class of 2031.
 			</p>
 
 			<p>
-				The selection process this year was extremely competitive, with an exceptionally talented
-				pool of applicants seeking a limited number of spaces. After a careful and holistic review
-				by the Undergraduate Admissions Committee, we regret to inform you that we are unable to
-				offer you admission at this time.
+				This year's selection process was extremely competitive, with an exceptionally talented
+				group of applicants competing for a limited number of spaces. Following a careful, holistic
+				review by the Undergraduate Admissions Committee, we are sorry to share that we cannot offer
+				you admission at this time.
 			</p>
 
 			<p>
-				Please know that this decision reflects the demanding nature of our selection process and
-				the small size of our entering class, rather than a lack of respect for your considerable
-				academic and personal achievements. We were impressed by your demonstrated abilities and
+				Please know that this decision reflects the small size of our entering class and the
+				demanding nature of our selection process, not a lack of regard for your considerable
+				academic and personal achievements. We were genuinely impressed by your abilities and
 				contributions.
 			</p>
 
@@ -80,7 +80,7 @@
 			</p>
 
 			<p>
-				We wish you great success in the continuation of your education and all future endeavors.
+				We wish you great success as you continue your education, and in all that follows.
 			</p>
 		</div>
 
@@ -90,7 +90,7 @@
 					Grant's Signature
 				</div>
 			</div>
-			<div class="font-bold">Grant D. Currin</div>
+			<div class="font-bold">Glenn D. Corwin</div>
 			<div class="text-sm text-gray-600">
 				Director of Undergraduate Admissions<br />
 				Caltech

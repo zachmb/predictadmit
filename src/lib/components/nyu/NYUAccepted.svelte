@@ -60,40 +60,40 @@
 
 		<div class="space-y-4 mb-8">
 			<p>
-				It is my honor and privilege to share with you that you have been admitted to New York
-				University and the Class of 2031. On the basis of your credentials and the interests stated in
-				your application, we are pleased to offer you admission to the College of Arts and Science.
+				It is my privilege and honor to tell you that you have been admitted to New York University
+				and the Class of 2031. Based on your credentials and the interests described in your
+				application, we are pleased to offer you admission to the College of Arts and Science.
 			</p>
 
 			<p>
-				At NYU, your ambition will find its true scale. You will join a mosaic of scholars, artists,
-				and innovators who chose NYU to test their limits and define their purpose. Here, in one of
-				the most influential institutions of higher learning in the world, students like you don't
-				just study the world's greatest challenges; you actively immerse yourself in them. Since our
-				founding in 1831, the NYU community has been, at its core, one of bridge builders committed to
-				engaging with wide-ranging perspectives, because we believe in the possibilities that are
-				created where bold ideas converge.
+				At NYU, your ambition will find room to grow to its full scale. You will join a community of
+				scholars, artists, and innovators who chose NYU to test their limits and define their
+				purpose. Here, at one of the world's most influential institutions of higher learning,
+				students like you don't simply study the greatest challenges of our time; you immerse
+				yourself in them. Since 1831, the NYU community has at its core been one of bridge builders,
+				committed to engaging wide-ranging perspectives because of the possibilities created when
+				bold ideas converge.
 			</p>
 
 			<p>
-				Your status page has been updated and will serve as your admitted student information hub, or
-				Home Base, over the next few months. There, you will see information about accepting your
-				offer of admission — your deadline is May 1, 2027 — and viewing your financial aid offer, if
-				you applied for aid. Beyond your checklist of next steps, you'll find plenty of resources to
-				help you learn more about academics, student life, and financial aid there, too.
+				Your status page has been updated and will serve as your admitted student information hub,
+				or Home Base, over the coming months. There you will find information about accepting your
+				offer of admission — your deadline is May 1, 2027 — and about viewing your financial aid
+				offer, if you applied for aid. Beyond the checklist of next steps, it also holds plenty of
+				resources for learning more about academics, student life, and financial aid.
 			</p>
 
 			<p>
-				Please know that your offer of admission is contingent upon successful completion of your
-				existing academic program at a performance level comparable to the one presented in your
-				application. Visit the admitted student section of our website to review our expectations for
-				admitted students.
+				Please note that your offer of admission is contingent on your successfully completing your
+				current academic program at a level of performance comparable to that presented in your
+				application. Visit the admitted student section of our website to review our expectations
+				for admitted students.
 			</p>
 
 			<p>
-				{applicantName || 'Applicant'}, we have offered you admission not just because you meet our
-				standards, but because we believe you will raise them. We eagerly anticipate the unique
-				contributions you will bring to our vibrant community, both in New York and around the world.
+				{applicantName || 'Applicant'}, we offered you admission not merely because you meet our
+				standards, but because we believe you will raise them. We look forward eagerly to the unique
+				contributions you will bring to our vibrant community, in New York and around the world.
 			</p>
 
 			<p>We can't wait to welcome you home.</p>
@@ -101,7 +101,7 @@
 
 		<div class="mt-12">
 			<div class="mb-2 text-lg" style="color: {primaryColor};">Sincerely,</div>
-			<div class="font-bold">William Sichel</div>
+			<div class="font-bold">Warren Selby</div>
 			<div class="text-sm text-gray-600">
 				Assistant Vice President of Undergraduate Admissions<br />
 				{schoolName}

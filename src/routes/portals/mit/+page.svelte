@@ -307,7 +307,7 @@
 						on:click={handleViewUpdate}
 						class="text-[13px] text-[#2f6fb0] underline hover:text-[#A31F34]"
 					>
-						View Update &gt;&gt;
+						View Simulated Status Update &gt;&gt;
 					</button>
 
 					<div class="mt-5 border border-gray-300">

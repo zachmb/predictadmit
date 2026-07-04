@@ -66,40 +66,39 @@
 			<p class="mb-4">Dear {applicantName},</p>
 
 			<p class="mb-4">
-				It is with great pleasure that I inform you of your admission to Brown University's Class of
-				2031. On behalf of the Office of College Admission and the entire Brown community, I extend
-				our heartfelt congratulations.
+				It gives me great pleasure to inform you that you have been admitted to Brown University's
+				Class of 2031. On behalf of the Office of College Admission and the entire Brown community,
+				please accept our warmest congratulations.
 			</p>
 
 			<p class="mb-4">
-				Your application stood out among more than 50,000 candidates—one of the most competitive
-				pools in Brown's history. Your intellectual curiosity, commitment to your community, and
-				distinctive perspective resonated deeply with our admissions committee. We were particularly
-				impressed by your thoughtful reflections on learning and your dedication to the spirit of
-				collaboration that defines the Brown community.
+				Among more than 50,000 candidates—one of the most competitive pools in Brown's history—your
+				application stood out. The admissions committee was struck by your intellectual curiosity,
+				your commitment to your community, and your distinctive perspective. We were especially
+				impressed by your thoughtful reflections on learning and by your dedication to the
+				collaborative spirit that defines the Brown community.
 			</p>
 
 			<div class="my-8 p-6 bg-[#F8F5F2] border-l-4 border-[#ED1C24] italic">
 				<p class="mb-2 font-semibold text-[#4E3629]">Welcome to Brown's Open Curriculum</p>
 				<p class="text-gray-700">
-					At Brown, you will forge your own path of study, free from distribution requirements.
-					You'll collaborate with peers who share your passion for inquiry and work alongside
-					faculty who are leaders in their fields. Here, education is an active, collaborative
-					process—one that empowers you to take intellectual risks and pursue knowledge for its own
-					sake.
+					At Brown, you will chart your own course of study, unbound by distribution requirements.
+					You'll work with peers who share your passion for inquiry and alongside faculty who lead
+					their fields. Here, education is an active, collaborative endeavor—one that encourages
+					you to take intellectual risks and to pursue knowledge for its own sake.
 				</p>
 			</div>
 
 			<p class="mb-4">
-				Admitted students will receive comprehensive information about next steps, including details
-				about Brown's admitted student programs, housing, and course registration. You can also
-				expect to hear directly from current students, faculty, and alumni who are eager to welcome
-				you to College Hill.
+				In the coming weeks, admitted students will receive full information about next steps,
+				including Brown's admitted student programs, housing, and course registration. You can also
+				expect to hear directly from current students, faculty, and alumni eager to welcome you to
+				College Hill.
 			</p>
 
 			<p class="mb-4">
-				Please take time to celebrate this remarkable achievement with your family, teachers, and
-				friends who have supported you along this journey. We look forward to welcoming you to
+				Please take a moment to celebrate this remarkable accomplishment with the family, teachers,
+				and friends who have supported you along the way. We look forward to greeting you in
 				Providence this fall.
 			</p>
 		</div>
@@ -108,13 +107,13 @@
 		<div class="mt-12">
 			<p class="mb-1">With warm congratulations,</p>
 			<div class="mb-8">
-				<img
-					src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Signature_of_Logan_Powell.png/300px-Signature_of_Logan_Powell.png"
-					alt="Signature"
-					class="h-12 mb-2"
-					on:error={handleImageError}
-				/>
-				<p class="font-semibold text-[#4E3629]">Logan Powell</p>
+				<div
+					class="h-12 mb-2 flex items-center text-3xl italic text-[#4E3629]"
+					style="font-family: 'Segoe Script', 'Brush Script MT', cursive;"
+				>
+					Landon Pierce
+				</div>
+				<p class="font-semibold text-[#4E3629]">Landon Pierce</p>
 				<p class="text-sm text-[#ED1C24]">Dean of Admission</p>
 				<p class="text-sm text-gray-600">Brown University</p>
 			</div>

@@ -61,18 +61,17 @@
 
 		<div class="mb-8 space-y-4">
 			<p>
-				Thank you for applying to the University of California, Irvine for the Fall 2027 term, and for
-				allowing us the opportunity to review your application. We know that a great deal of thought
-				and effort went into your candidacy, and we are grateful for your interest in becoming an
-				Anteater.
+				Thank you for applying to the University of California, Irvine for the Fall 2027 term and for
+				allowing us to review your application. We know that a great deal of thought and effort went
+				into your candidacy, and we are grateful for your interest in becoming an Anteater.
 			</p>
 
 			<p>
 				This year UCI received a record number of applications from an exceptionally talented and
 				accomplished group of students. Because the number of highly qualified applicants far
 				exceeds the space available in our entering class, our selection process was extraordinarily
-				competitive. After a careful and holistic review of your application, I regret to inform you
-				that we are unable to offer you admission to UCI at this time.
+				competitive. After a careful, holistic review of your application, I regret to share that we
+				are unable to offer you admission to UCI at this time.
 			</p>
 
 			<p>
@@ -86,15 +85,15 @@
 			<p>
 				We encourage you to explore the many excellent options within the University of California
 				system and beyond. Wherever your path leads, we are confident you will continue to grow and
-				thrive, and we wish you every success in your future studies and endeavors.
+				thrive, and we wish you success in your future studies and endeavors.
 			</p>
 
 			<p>Thank you again for your interest in the University of California, Irvine.</p>
 		</div>
 
 		<div class="mt-12">
-			<div class="mb-2 font-serif text-2xl italic" style="color: {primaryColor};">Dale Leaman</div>
-			<div class="font-bold">Dale Leaman</div>
+			<div class="mb-2 font-serif text-2xl italic" style="color: {primaryColor};">Drew Lanford</div>
+			<div class="font-bold">Drew Lanford</div>
 			<div class="text-sm text-gray-600">
 				Executive Director of Undergraduate Admissions<br />
 				{schoolName}

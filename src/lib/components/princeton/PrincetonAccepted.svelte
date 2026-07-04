@@ -66,37 +66,35 @@
 		<!-- Letter Body -->
 		<div class="space-y-4 mb-8 leading-relaxed">
 			<p>
-				It is my great pleasure to inform you that the Committee on Admission has admitted you to
-				Princeton University's Class of 2031. Congratulations! Your application stood out within an
-				exceptionally large and talented pool, and we are delighted to offer you a place in the
-				incoming class.
+				I am delighted to share that the Committee on Admission has offered you a place in
+				Princeton University's Class of 2031. Congratulations! In an exceptionally large and
+				accomplished applicant group, your application earned our enthusiastic attention.
 			</p>
 
 			<p>
-				Over the past several weeks, our admission officers reviewed files diligently, thoughtfully
-				and carefully. As we do each year, we weighed each student's achievements, talents and skills
-				within the context of their secondary school setting. Your intellectual curiosity, character
-				and potential to contribute to our community made a lasting impression on the committee.
+				During the past several weeks, our admission officers read applications with care and
+				considerable thought. As in every year, we considered each student's achievements, talents,
+				and skills in the context of their secondary school setting. Your intellectual curiosity,
+				character, and potential to contribute to our community made a strong impression.
 			</p>
 
 			<p>
-				At Princeton you will join a community dedicated to being "In the Nation's Service and the
-				Service of Humanity." You will study alongside world-renowned faculty, pursue original
-				research, complete a senior thesis, and become part of our distinctive residential college
-				system. Princeton meets 100 percent of every admitted student's demonstrated financial need
-				with aid that never has to be repaid.
+				At Princeton, you will enter a community guided by the ideals of service to the nation and
+				to humanity. You will learn with renowned faculty, pursue original research, complete a
+				senior thesis, and take part in our distinctive residential college system. Princeton also
+				meets the full demonstrated financial need of every admitted student with aid that does not
+				need to be repaid.
 			</p>
 
 			<p>
-				To accept your offer of admission, please complete the online reply form in your applicant
-				portal by <strong>May 1, 2027</strong>. We also warmly invite you to Princeton Preview, our
-				program for admitted students, where you can experience campus life and meet your future
-				classmates.
+				To reserve your place, please submit the online reply form in your applicant portal by
+				<strong>May 1, 2027</strong>. We also hope you will join us for Princeton Preview, our
+				admitted-student program, where you can explore campus life and meet future classmates.
 			</p>
 
 			<p>
-				On behalf of the entire Office of Admission, congratulations once again on this outstanding
-				achievement. We look forward to welcoming you to Princeton this fall.
+				From all of us in the Office of Admission, please accept our warm congratulations on this
+				remarkable achievement. We look forward to welcoming you to Princeton this fall.
 			</p>
 		</div>
 

@@ -49,20 +49,19 @@
 
 		<div class="space-y-5 text-[14px] leading-relaxed text-gray-800">
 			<p>
-				Thank you for your interest in Washington University in St. Louis. The Admissions Committee
-				has completed its review of Regular Decision applications, and we are unable to offer you
+				Thank you for your interest in Washington University in St. Louis. Having completed its
+				review of Regular Decision applications, the Admissions Committee is unable to offer you
 				admission to the Class of 2031.
 			</p>
 			<p>
-				The Admissions Committee carefully considered your application, taking note of your academic
-				record, talents, and achievements. We appreciate the time and care you put into your
-				application, and we regret that space limitations prevent us from offering admission to all
-				the many accomplished students who applied.
+				Your application received the Committee's careful consideration, and we took note of your
+				academic record, talents, and achievements. We appreciate the time and care your application
+				reflects, and we regret that limited space prevents us from admitting all of the many
+				accomplished students who applied.
 			</p>
 			<p>
-				We wish you the best of luck as you continue on your college journey&mdash;we know that
-				regardless of where you begin the next chapter of your story, you'll continue to achieve
-				great things.
+				We wish you the very best as your college journey continues&mdash;wherever the next chapter
+				of your story begins, we know you'll keep achieving great things.
 			</p>
 		</div>
 

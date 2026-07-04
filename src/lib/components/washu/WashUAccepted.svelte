@@ -53,25 +53,25 @@
 		<div class="space-y-5 text-[14px] leading-relaxed text-gray-800">
 			<p>
 				Congratulations! On behalf of the Admissions Committee, it is my great pleasure to offer you
-				admission to Washington University in St. Louis and to welcome you to the Class of 2031. Your
-				accomplishments distinguished you within an exceptionally talented pool of applicants, and we
-				are thrilled that you will be joining the WashU community.
+				admission to Washington University in St. Louis and to welcome you to the Class of 2031. In
+				an exceptionally talented pool of applicants, your accomplishments set you apart, and we are
+				thrilled at the prospect of you joining the WashU community.
 			</p>
 			<p>
-				The Admissions Committee was deeply impressed by your academic record, your talents, and the
-				character and curiosity that come through in your application. We are confident that you will
-				thrive on our collaborative, park-like campus and contribute meaningfully to the intellectual
-				and cultural life of the university.
+				Your academic record, your talents, and the character and curiosity that come through in
+				your application deeply impressed the Admissions Committee. We are confident you will thrive
+				on our collaborative, park-like campus and add meaningfully to the intellectual and cultural
+				life of the university.
 			</p>
 			<p>
-				In the coming days you will find detailed information in your applicant portal about next
-				steps, including financial aid, housing, course planning, and WashU Preview&mdash;our program
-				for admitted students. To reserve your place in the Class of 2031, please confirm your
-				intention to enroll through your portal by May 1, 2027.
+				Over the coming days, detailed information about next steps will appear in your applicant
+				portal, including financial aid, housing, course planning, and WashU Preview&mdash;our
+				program for admitted students. To secure your place in the Class of 2031, please confirm
+				your intention to enroll through your portal by May 1, 2027.
 			</p>
 			<p>
-				Please take a moment to celebrate this achievement with the family, teachers, and friends who
-				supported you along the way. We look forward to welcoming you to St. Louis this fall.
+				Please take a moment to celebrate this achievement with the family, teachers, and friends
+				who helped you along the way. We look forward to welcoming you to St. Louis in the fall.
 			</p>
 		</div>
 

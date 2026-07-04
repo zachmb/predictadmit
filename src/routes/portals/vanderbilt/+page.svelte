@@ -318,9 +318,7 @@
 					<button
 						on:click={handleViewUpdate}
 						class="mt-6 rounded-full bg-[#111111] px-6 py-2.5 text-[14px] font-medium text-white hover:bg-black"
-					>
-						Decision Available
-					</button>
+					>Simulated Decision Available</button>
 				</div>
 
 				<div class="text-[14px] leading-relaxed text-gray-800 md:pt-2">
@@ -332,7 +330,7 @@
 						<button
 							on:click={handleViewUpdate}
 							class="font-semibold underline"
-							style="color: {school.primaryColor};">Decision Available &#9873;</button
+							style="color: {school.primaryColor};">Simulated Decision Available &#9873;</button
 						>
 					</div>
 					<div><span class="font-bold">Reference Number:</span> {school.referenceNumber}</div>

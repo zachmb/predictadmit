@@ -61,7 +61,6 @@ export const schoolStats: Record<string, SchoolStat> = {
 	uci: { slug: 'uci', rank: 33, location: 'Irvine, CA', acceptanceRate: 0.21, satAvg: 1360, actAvg: 30, gpaWeighted: 4.16, size: 'Large', setting: 'Suburban', tuition: 15026 },
 	ucdavis: { slug: 'ucdavis', rank: 33, location: 'Davis, CA', acceptanceRate: 0.37, satAvg: 1310, actAvg: 29, gpaWeighted: 4.15, size: 'Large', setting: 'College town', tuition: 15266 },
 	uf: { slug: 'uf', rank: 28, location: 'Gainesville, FL', acceptanceRate: 0.23, satAvg: 1400, actAvg: 31, gpaWeighted: 4.4, size: 'Large', setting: 'College town', tuition: 6380 },
-	uiuc: { slug: 'uiuc', rank: 33, location: 'Champaign, IL', acceptanceRate: 0.43, satAvg: 1440, actAvg: 32, gpaWeighted: 3.8, size: 'Large', setting: 'College town', tuition: 17138 },
 	wisconsin: { slug: 'wisconsin', rank: 39, location: 'Madison, WI', acceptanceRate: 0.45, satAvg: 1410, actAvg: 30, gpaWeighted: 3.9, size: 'Large', setting: 'College town', tuition: 11205 },
 	purdue: { slug: 'purdue', rank: 46, location: 'West Lafayette, IN', acceptanceRate: 0.5, satAvg: 1330, actAvg: 30, gpaWeighted: 3.75, size: 'Large', setting: 'College town', tuition: 9992 },
 	osu: { slug: 'osu', rank: 43, location: 'Columbus, OH', acceptanceRate: 0.53, satAvg: 1370, actAvg: 30, gpaWeighted: 3.83, size: 'Large', setting: 'Urban', tuition: 12485 },

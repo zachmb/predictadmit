@@ -307,7 +307,7 @@
 						class="text-[15px] font-bold hover:underline"
 						style="color: {UCHICAGO_TEAL};"
 					>
-						View Update &gt;&gt;
+						View Simulated Status Update &gt;&gt;
 					</button>
 				</div>
 

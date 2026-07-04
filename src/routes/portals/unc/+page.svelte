@@ -249,7 +249,7 @@
 							class="text-[16px] font-bold underline underline-offset-2"
 							style="color:{CAROLINA_BLUE};"
 						>
-							View your decision.
+							View your simulated decision.
 						</button>
 					{:else}
 						<div class="max-w-lg border border-gray-200 bg-gray-50 p-5 text-[13px] text-gray-600">

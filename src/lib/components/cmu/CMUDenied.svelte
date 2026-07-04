@@ -47,35 +47,35 @@
 
 		<div class="space-y-4 mb-8 text-[15px] leading-relaxed">
 			<p>
-				Thank you for your interest in Carnegie Mellon University and for the time and care you put
-				into your application for Fall 2027. Our Admission Committee reviewed your application with
-				great attention, and I know how much thought and effort went into it.
+				Thank you for your interest in Carnegie Mellon University and for the care you invested in
+				your application for Fall 2027. Our Admission Committee gave your application close and
+				careful attention, and I know how much thought and effort it represents.
 			</p>
 
 			<p>
-				This year we received a remarkable number of applications from exceptionally talented
+				We received a remarkable number of applications this year from exceptionally talented
 				students across the country and around the world. After a thorough and holistic review, I am
-				sorry to inform you that we are unable to offer you admission. With far more qualified
-				applicants than we have places in our incoming class, we faced many genuinely difficult
-				decisions, and this was one of them.
+				sorry to tell you that we cannot offer you admission. Because qualified applicants far
+				outnumber the places in our incoming class, we faced many genuinely difficult decisions, and
+				this was one of them.
 			</p>
 
 			<p>
-				Please understand that this outcome is not a judgment of your ability or your promise. The
-				accomplishments reflected in your application are real, and they will continue to open doors
-				for you. Many students who were not admitted to Carnegie Mellon go on to thrive at
+				Please understand that this outcome is not a verdict on your ability or your promise. The
+				accomplishments your application reflects are real, and they will keep opening doors for
+				you. Many students who were not admitted to Carnegie Mellon go on to flourish at
 				outstanding institutions and in careers they love.
 			</p>
 
 			<p>
-				On behalf of the entire Office of Admission, thank you again for considering Carnegie Mellon.
-				We wish you every success in your studies and in all that lies ahead.
+				On behalf of the entire Office of Admission, thank you once more for considering Carnegie
+				Mellon. We wish you every success in your studies and in everything that lies ahead.
 			</p>
 		</div>
 
 		<div class="mb-12 text-[15px]">
 			<div class="mb-4">Sincerely,</div>
-			<div class="font-bold">Miguel Alvarez</div>
+			<div class="font-bold">Rafael M. Ortiz</div>
 			<div class="text-sm text-gray-600">Executive Director of Admission</div>
 		</div>
 

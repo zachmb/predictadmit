@@ -58,32 +58,31 @@
 
 		<div class="space-y-4 mb-8">
 			<p>
-				On behalf of the Committee on Admissions, thank you for your application to Georgetown
-				University and for the time and thought you invested in it. I know that many months of work
-				preceded your decision to apply, and we are grateful for the opportunity to learn about your
+				On behalf of the Committee on Admissions, thank you for applying to Georgetown University
+				and for the thought and care you put into your application. Many months of work went into
+				your decision to apply, and we are grateful to have had the chance to learn about your
 				accomplishments and aspirations.
 			</p>
 
 			<p>
-				This year Georgetown received one of the largest and most talented applicant pools in its
-				history for a limited number of places in the Class of 2031. After a careful, holistic, and
-				repeated review of your application, I write with regret to tell you that the Committee is
-				unable to offer you a place in the entering class.
+				Georgetown received one of the largest and most talented applicant pools in its history
+				this year for a limited number of places in the Class of 2031. After reviewing your
+				application carefully, holistically, and more than once, I must regretfully tell you that
+				the Committee cannot offer you a place in the entering class.
 			</p>
 
 			<p>
-				I want to be clear that this decision is not a judgment of your ability, your character, or
-				your promise. The strength of this year's pool required us to make many difficult choices
-				among candidates who were, like you, genuinely deserving of admission. The outcome reflects
-				the realities of a highly competitive process far more than it reflects any shortcoming in
-				your record.
+				Let me be clear: this decision is no judgment of your ability, your character, or your
+				promise. The depth of this year's pool forced many difficult choices among candidates who,
+				like you, genuinely deserved admission. This outcome says far more about the realities of
+				a highly competitive process than about any shortcoming in your record.
 			</p>
 
 			<p>
-				I have no doubt that you will find an academic home where you will flourish, and that you will
-				bring the same energy and dedication there that you would have brought to the Hilltop. The
-				members of the Committee join me in wishing you every success in your studies and in all that
-				lies ahead.
+				I am certain you will find an academic home where you will flourish, and that you will
+				bring to it the same energy and dedication you would have brought to the Hilltop. The
+				members of the Committee join me in wishing you every success in your studies and in
+				everything ahead.
 			</p>
 
 			<p>Thank you again for your interest in Georgetown University.</p>
@@ -98,7 +97,7 @@
 					style="filter: invert(11%) sepia(35%) saturate(2000%) hue-rotate(200deg) brightness(45%) contrast(95%);"
 				/>
 			</div>
-			<div class="font-bold">Charles A. Deacon</div>
+			<div class="font-bold">Walter H. Pembroke</div>
 			<div class="text-sm text-gray-600">
 				Dean of Undergraduate Admissions<br />
 				{schoolName}

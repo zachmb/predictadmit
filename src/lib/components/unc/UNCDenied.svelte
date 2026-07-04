@@ -77,31 +77,30 @@
 			<p class="mb-4">Dear {firstName},</p>
 
 			<p class="mb-4">
-				Our admissions committee has completed our thorough review of applications and has determined
-				that we will not be able to offer you admission to the University of North Carolina at Chapel
-				Hill. We appreciate the time, energy, and heart you put into applying to Carolina, and we're
-				grateful that you gave us the opportunity to get to know you.
+				Our admissions committee has completed its thorough review of applications and determined
+				that we are not able to offer you admission to the University of North Carolina at Chapel
+				Hill. We appreciate the time, energy, and heart you put into applying to Carolina, and we are
+				grateful for the opportunity to get to know you.
 			</p>
 
 			<p class="mb-4">
-				Although it may be too early to begin thinking of next steps, I hope you will remember that
-				there are many paths to Carolina. Many candidates reapply as transfer students and enroll
-				after one or two years elsewhere. Others enroll in our graduate and professional schools after
-				earning their undergraduate degrees. Should you remain interested in Carolina, we hope you
-				will stay in touch. We would welcome the chance to help.
+				Although it may feel early to think about next steps, I hope you will remember that there are
+				many paths to Carolina. Some candidates reapply as transfer students after one or two years
+				elsewhere. Others join our graduate and professional schools after earning undergraduate
+				degrees. Should you remain interested in Carolina, we hope you will stay in touch.
 			</p>
 
 			<p class="mb-6">
-				Thank you for your interest in the University and we wish you well in all of your future
+				Thank you for your interest in the University, and we wish you well in all of your future
 				endeavors.
 			</p>
 
 			<p class="mb-3">Sincerely,</p>
 
 			<p class="mb-1 text-2xl leading-none text-gray-900" style="font-family: 'Segoe Script','Bradley Hand',cursive;">
-				Jared Rosenberg
+				Jonah Reinhart
 			</p>
-			<p class="font-semibold">Jared Rosenberg</p>
+			<p class="font-semibold">Jonah Reinhart</p>
 			<p class="text-gray-600">Associate Provost and Director of Undergraduate Admissions</p>
 		</div>
 

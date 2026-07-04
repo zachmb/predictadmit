@@ -64,27 +64,25 @@
 
 			<div class="space-y-4 text-[14px] leading-relaxed text-gray-800">
 				<p>
-					After careful consideration, I regret to inform you that we are unable to offer you
-					admission to Rice University for the Class of 2031. We know this is likely not the news you
-					were hoping to receive, and we want to emphasize how grateful we are that you took the time,
-					care and effort to apply to Rice. The college application process is incredibly rigorous,
-					and we are honored that you chose to share your journey and aspirations with our admission
-					committee.
+					After careful consideration, I am sorry to share that we cannot offer you admission to Rice
+					University for the Class of 2031. This is probably not the news you were hoping for, and we
+					want you to know how much we appreciate the time, care, and effort you devoted to your
+					application. Applying to college is an incredibly demanding process, and our admission
+					committee is honored that you chose to share your journey and aspirations with us.
 				</p>
 				<p>
-					Since we deeply value the unique stories and distinct experiences that inform each student's
-					individual perspective, each application we receive is thoroughly read and reviewed by our
-					team. Across these applications, we saw a common thread of dedication and resilience, along
-					with an interest in driving positive change.
+					Because we place great value on the individual stories and experiences that shape each
+					student's perspective, our team reads and reviews every application we receive in full.
+					Across this year's applications we noticed a shared thread of dedication and resilience,
+					along with a genuine desire to make a positive difference.
 				</p>
 				<p>
-					This year, Rice received over 38,000 applications for the Class of 2031. Although our
-					university is growing and expanding, we unfortunately cannot offer admission to every
-					applicant who would thrive at Rice. Please know that this decision reflects the limitations
-					of our student body and not the limit of your potential. Our decision is final and we are
-					unable to consider appeals, but we hope you will bring the same curiosity and dedication
-					that we see in your application to your future endeavors. As you begin your next chapter, we
-					would like to wish you the very best.
+					Rice received more than 38,000 applications for the Class of 2031 this year. Even as our
+					university continues to grow, we simply cannot admit every applicant who would flourish at
+					Rice. Please know that this outcome speaks to the limits of our class size, not to the
+					limits of what you can achieve. Our decision is final and appeals cannot be considered, but
+					we hope you will carry the same curiosity and dedication we saw in your application into
+					everything you pursue next. We wish you the very best as you begin your next chapter.
 				</p>
 			</div>
 
@@ -94,9 +92,9 @@
 					class="text-3xl italic text-gray-800"
 					style="font-family: 'Segoe Script', 'Brush Script MT', cursive;"
 				>
-					Yvonne Romero
+					Veronica Salas
 				</div>
-				<div class="mt-2 text-[14px] font-semibold text-gray-900">Dr. Yvonne M. Romero</div>
+				<div class="mt-2 text-[14px] font-semibold text-gray-900">Dr. Veronica M. Salas</div>
 				<div class="text-[13px] text-gray-600">Vice President for Enrollment</div>
 				<div class="text-[13px] text-gray-600">Dean of Admission and Financial Aid</div>
 			</div>

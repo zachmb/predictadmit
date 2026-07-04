@@ -241,7 +241,7 @@
 								on:click={() => selectPortal(currentEdPortal)}
 								class="text-xs font-bold text-white bg-rose-600 hover:bg-rose-700 px-3 py-1.5 rounded-lg transition-colors cursor-pointer"
 							>
-								View Decision
+								View Simulated Decision
 							</button>
 						</div>
 					{/if}
@@ -425,7 +425,7 @@
 											href={`/portals/${selectedPortal.slug}`}
 											class="inline-flex items-center justify-center px-6 py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition-all shadow-lg shadow-blue-200 no-underline"
 										>
-											View Decision
+											View Simulated Decision
 										</a>
 
 										{#if deepDiveItems && deepDiveItems.some((d) => d.slug === selectedPortal.slug)}

@@ -48,36 +48,36 @@
 				<p class="mb-5">Dear {applicantName || 'Applicant'},</p>
 
 				<p class="mb-5">
-					It is with great pleasure that I write to offer you admission to Duke University as a member
-					of the Class of 2031. On behalf of the Admissions Committee, congratulations. From a pool of
-					more than 61,000 applicants competing for just 1,775 places in the first-year class, you
-					distinguished yourself as one of the exceptionally accomplished and talented students we are
-					proud to welcome to Durham this fall.
+					I am delighted to write with an offer of admission to Duke University as a member of the
+					Class of 2031. On behalf of the Admissions Committee, congratulations. Among more than
+					61,000 applicants competing for just 1,775 places in the first-year class, you stood out
+					as one of the remarkably accomplished and talented students we are proud to welcome to
+					Durham this fall.
 				</p>
 
 				<p class="mb-5">
-					My staff and I were genuinely impressed by the effort you have put forth both inside and
-					outside the classroom. Your record of achievement, intellectual curiosity, and the qualities
-					of character revealed throughout your application convinced us that you will thrive within
+					My colleagues and I were genuinely impressed by all you have accomplished both in and
+					beyond the classroom. Your record of achievement, your intellectual curiosity, and the
+					character that came through in your application persuaded us that you will flourish in
 					the vibrant, collaborative community of students and faculty that defines Duke.
 				</p>
 
 				<p class="mb-5">
-					In the coming days you will receive additional information through your applicant portal,
-					including details about your financial aid award, Blue Devil Days for admitted students, and
-					the steps to confirm your enrollment. To reserve your place in the class, please submit your
+					Over the coming days, additional information will arrive through your applicant portal,
+					including details about your financial aid award, Blue Devil Days for admitted students,
+					and how to confirm your enrollment. To hold your place in the class, please submit your
 					enrollment response and deposit through your online portal by May 1, 2027.
 				</p>
 
 				<p class="mb-8">
-					Congratulations once again on this well-earned achievement. We look forward to welcoming you
-					to Duke and to all that lies ahead.
+					Once again, congratulations on an achievement you have truly earned. We look forward to
+					welcoming you to Duke and to everything that lies ahead.
 				</p>
 
 				<p class="mb-8">Sincerely,</p>
 
-				<div class="mb-1 font-[cursive] text-2xl italic text-gray-800">Kathy L. Phillips</div>
-				<div class="text-[14px] font-bold text-gray-900">Kathy L. Phillips</div>
+				<div class="mb-1 font-[cursive] text-2xl italic text-gray-800">Karen L. Prescott</div>
+				<div class="text-[14px] font-bold text-gray-900">Karen L. Prescott</div>
 				<div class="text-[13px] text-gray-700">Interim Dean of Undergraduate Admissions</div>
 			</div>
 		</div>

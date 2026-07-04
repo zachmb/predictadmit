@@ -72,36 +72,36 @@
 				<p class="mb-4">Congratulations, {firstName}!</p>
 
 				<p class="mb-4">
-					It is my great pleasure to offer you admission to the Georgia Institute of Technology and to
-					welcome you to the incoming first-year class. From a remarkably competitive pool of
-					applicants, your record of academic achievement, curiosity, and drive to make an impact
-					stood out to our review team.
+					I am delighted to offer you admission to the Georgia Institute of Technology and to
+					welcome you to the incoming first-year class. Within a remarkably competitive group of
+					applicants, our review team took notice of your academic achievement, your curiosity,
+					and your drive to make an impact.
 				</p>
 
 				<p class="mb-4">
-					Every application is holistically reviewed by multiple staff members who evaluate the
-					credentials of each student on an individual and comparative basis. Your admission reflects
-					the strength of your accomplishments and our confidence that you will thrive in the
-					rigorous, collaborative environment that defines Georgia Tech, where progress and service
-					guide everything we do.
+					Several staff members review every application holistically, weighing each student's
+					credentials both individually and alongside the rest of the pool. Your admission speaks
+					to the strength of what you have accomplished and to our confidence that you will
+					thrive in the rigorous, collaborative environment that defines Georgia Tech, where
+					progress and service guide all that we do.
 				</p>
 
 				<p class="mb-4">
-					To secure your place in the class, please log in to your applicant portal to review your
-					enrollment steps, financial aid information, and next steps for orientation. We encourage
-					you to submit your enrollment confirmation by <strong>May 1, 2027</strong>.
+					To claim your place in the class, log in to your applicant portal and review your
+					enrollment steps, financial aid information, and orientation details. We encourage you
+					to submit your enrollment confirmation by <strong>May 1, 2027</strong>.
 				</p>
 
 				<p class="mb-6">
-					We are excited about all that you will contribute to our campus community, and we look
-					forward to welcoming you to The Flats. Again, congratulations, and go Jackets!
+					We are excited about everything you will bring to our campus community and look forward
+					to welcoming you to The Flats. Once again, congratulations — and go Jackets!
 				</p>
 
 				<p class="mb-1">Sincerely,</p>
 				<p class="text-2xl mb-1" style="font-family: 'Brush Script MT', 'Segoe Script', cursive; color: {primaryColor};">
-					Mary Tipton Woolley
+					Margaret T. Winslow
 				</p>
-				<p class="font-semibold">Mary Tipton Woolley</p>
+				<p class="font-semibold">Margaret T. Winslow</p>
 				<p class="text-slate-700">Executive Director | Undergraduate Admission</p>
 			</div>
 

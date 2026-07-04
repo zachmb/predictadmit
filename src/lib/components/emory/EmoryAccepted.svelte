@@ -69,26 +69,28 @@
 
 		<div class="space-y-4 mb-8">
 			<p>
-				Congratulations! Based on a careful review of your Regular Decision application, it is my
-				great pleasure to offer you admission to Emory College of Arts and Sciences in the Class of
-				2031. Your application distinguished itself within an extraordinarily talented and
-				competitive pool, and the Admission Committee was genuinely impressed by your academic
-				accomplishments and the character you brought to every part of your application.
+				Congratulations! Following a careful review of your Regular Decision application, I am
+				pleased to offer you admission to Emory College of Arts and Sciences in the Class of 2031.
+				Within an extraordinarily talented and competitive pool, your application stood out, and
+				the Admission Committee was genuinely impressed by your academic record and the character
+				evident in every part of your file.
 			</p>
 
 			<p>
-				At Emory, you will join a community of scholars, artists, scientists, and leaders who are
-				committed to the pursuit of knowledge in the service of humanity. We were drawn to the
-				curiosity, integrity, and drive evident throughout your file, and we are confident that you
-				will both contribute to and thrive within the intellectual life of our campus in Atlanta.
+				At Emory, you will become part of a community of scholars, artists, scientists, and
+				leaders devoted to pursuing knowledge in the service of humanity. The curiosity,
+				integrity, and drive that ran through your application drew our attention, and we are
+				confident you will both enrich and thrive within the intellectual life of our Atlanta
+				campus.
 			</p>
 
 			<p>
 				To learn more about the next steps and to celebrate with your fellow admitted students, we
 				invite you to explore your admitted student portal and to attend <strong
 					>Experience Emory</strong
-				>, our official program for admitted students this spring. There you will meet faculty,
-				current students, and future classmates, and see firsthand what makes Emory special.
+				>, our official program for admitted students this spring. You will have the chance to
+				meet faculty, current students, and future classmates, and to see for yourself what makes
+				Emory special.
 			</p>
 
 			<p>
@@ -98,14 +100,14 @@
 			</p>
 
 			<p>
-				On behalf of the entire Office of Undergraduate Admission, welcome to Emory. We look forward
-				to seeing all that you will accomplish here.
+				On behalf of everyone in the Office of Undergraduate Admission, welcome to Emory. We look
+				forward to all that you will accomplish here.
 			</p>
 		</div>
 
 		<div class="mt-12">
-			<div class="mb-2 text-2xl italic" style="color: {primaryColor};">Kelley A. Lips</div>
-			<div class="font-bold">Kelley A. Lips, Ed.D.</div>
+			<div class="mb-2 text-2xl italic" style="color: {primaryColor};">Kerry A. Linden</div>
+			<div class="font-bold">Kerry A. Linden, Ed.D.</div>
 			<div class="text-sm text-gray-600">
 				Vice Provost for Undergraduate Enrollment, Admissions<br />
 				{schoolName}

@@ -58,36 +58,35 @@
 			<p class="mb-4">Dear {applicantName},</p>
 
 			<p class="mb-4">
-				On behalf of Dartmouth College, I am delighted to offer you admission to the Class of 2031.
+				On behalf of Dartmouth College, I am delighted to offer you a place in the Class of 2031.
 				Welcome to the Dartmouth family!
 			</p>
 
 			<p class="mb-4">
-				Your application was evaluated within an exceptionally competitive pool of candidates from
-				around the world. The Admissions Committee was impressed by your intellectual curiosity,
-				academic achievements, and demonstrated commitment to both academic excellence and community
-				engagement. Your unique perspective and potential for leadership align perfectly with
-				Dartmouth's mission to educate the most promising students and prepare them for a lifetime
-				of learning and of responsible leadership.
+				Your application was reviewed within a remarkably competitive worldwide pool of candidates.
+				The Admissions Committee was impressed by your intellectual curiosity, your record of
+				academic accomplishment, and your evident dedication to both scholarship and community
+				engagement. Your distinctive perspective and capacity for leadership speak directly to
+				Dartmouth's mission of educating promising students and preparing them for a lifetime of
+				learning and responsible leadership.
 			</p>
 
 			<div class="my-8 p-6 bg-green-50 border-l-4 border-[#00693E] italic">
 				<p class="mb-2 font-semibold text-[#00693E]">Welcome to the Dartmouth Experience</p>
 				<p class="text-gray-700">
-					At Dartmouth, you will join a close-knit community of scholars in the beautiful Upper
-					Valley of New Hampshire. You'll engage with our distinctive D-Plan (quarter system), work
-					closely with world-renowned faculty in small classes, and participate in the vibrant
-					outdoor and social traditions that define the Dartmouth experience—from the Dartmouth
-					Outing Club to Winter Carnival.
+					At Dartmouth, you will become part of a close-knit community of scholars set in New
+					Hampshire's beautiful Upper Valley. You'll take advantage of our distinctive D-Plan
+					(quarter system), study alongside world-renowned faculty in small classes, and join the
+					vibrant outdoor and social traditions that define life here—from the Dartmouth Outing
+					Club to Winter Carnival.
 				</p>
 			</div>
 
 			<p class="mb-4">
-				As an admitted student, you will receive comprehensive information about next steps,
-				including details about Dartmouth's admitted student programs (Dimensions of Dartmouth),
-				housing, course registration, and financial aid (if applicable). You can also expect to hear
-				directly from current students, faculty, and alumni who are eager to welcome you to our
-				community.
+				In the weeks ahead, you will receive detailed information about next steps, including
+				Dartmouth's admitted student programs (Dimensions of Dartmouth), housing, course
+				registration, and financial aid (if applicable). Current students, faculty, and alumni who
+				are eager to welcome you to our community will also be reaching out to you directly.
 			</p>
 
 			<p class="mb-4">
@@ -97,9 +96,8 @@
 			</p>
 
 			<p class="mb-4">
-				Please take time to celebrate this significant achievement with your family, teachers, and
-				friends who have supported you throughout this process. We look forward to welcoming you to
-				Hanover this fall.
+				Take a moment to celebrate this milestone with the family, teachers, and friends who have
+				supported you along the way. We look forward to greeting you in Hanover this fall.
 			</p>
 		</div>
 
@@ -110,7 +108,7 @@
 				<div class="h-12 mb-2 flex items-center text-[#00693E] font-bold text-lg">
 					Dartmouth College
 				</div>
-				<p class="font-semibold text-[#00693E]">Lee Coffin</p>
+				<p class="font-semibold text-[#00693E]">Marcus T. Fielding</p>
 				<p class="text-sm text-gray-700">
 					Vice Provost for Enrollment and Dean of Admissions and Financial Aid
 				</p>

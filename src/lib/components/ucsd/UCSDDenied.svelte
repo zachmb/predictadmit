@@ -45,38 +45,37 @@
 
 		<div class="space-y-5 text-[15px] leading-relaxed">
 			<p>
-				Thank you for your application to the University of California San Diego for Fall 2027. I know
-				how much thought and effort went into your application, and on behalf of the entire Office of
-				Admissions, I want to thank you for considering UC San Diego as your future home.
+				Thank you for applying to the University of California San Diego for Fall 2027. I know how
+				much thought and effort your application required, and on behalf of the entire Office of
+				Admissions, I am grateful that you considered UC San Diego as your future home.
 			</p>
 
 			<p>
-				This year, UC San Diego received more than 168,000 applications from an exceptionally talented
-				group of students. After a careful and holistic review of your academic record,
-				accomplishments and personal insight questions, I regret to inform you that we are unable to
-				offer you admission to the Triton Class of 2031. Because the number of highly qualified
-				applicants far exceeds the space available in our entering class, we were not able to admit
-				many outstanding students, including you.
+				This year, more than 168,000 exceptionally talented students applied to UC San Diego. After a
+				careful and holistic review of your academic record, accomplishments and personal insight
+				questions, I am sorry to inform you that we are unable to offer you admission to the Triton
+				Class of 2031. With highly qualified applicants far outnumbering the spaces in our entering
+				class, many outstanding students, including you, could not be admitted.
 			</p>
 
 			<p>
-				Please understand that this decision is not a judgment of your ability or your potential. The
-				strength of this year's applicant pool made our selection process extraordinarily competitive,
-				and a decision not to offer admission reflects the limits of our capacity far more than any
+				Please understand that this decision is not a verdict on your ability or your potential. The
+				strength of this year's applicant pool made our selection extraordinarily competitive, and our
+				inability to offer you admission says far more about the limits of our capacity than about any
 				shortcoming in your application.
 			</p>
 
 			<p>
-				If you are a California resident, you may still have options within the University of
+				If you are a California resident, options may still exist for you within the University of
 				California system. We encourage you to review referral opportunities to other UC campuses
-				through your UC Application, and to explore transfer pathways that can bring you to UC San
-				Diego in the future. Many successful Tritons begin their journey elsewhere and join us later.
+				through your UC Application and to consider transfer pathways that could bring you to UC San
+				Diego down the road. Many successful Tritons start their journey elsewhere and join us later.
 			</p>
 
 			<p>
-				You should be genuinely proud of everything you have accomplished. I have every confidence that
-				you will thrive at the institution you attend, and I wish you tremendous success in your
-				studies and in all that lies ahead.
+				You should take genuine pride in all you have accomplished. I have every confidence you will
+				thrive wherever you enroll, and I wish you tremendous success in your studies and in
+				everything that lies ahead.
 			</p>
 
 			<p>Thank you again for your interest in UC San Diego.</p>
@@ -85,7 +84,7 @@
 		<!-- Signature -->
 		<div class="mt-10 text-[15px]">
 			<div>Sincerely,</div>
-			<div class="mt-6 font-semibold text-slate-800">James Rujimora</div>
+			<div class="mt-6 font-semibold text-slate-800">Julian R. Marsh</div>
 			<div class="text-sm text-slate-600">
 				Assistant Vice Chancellor, Enrollment Management<br />
 				Office of Admissions, {schoolName}

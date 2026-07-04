@@ -54,32 +54,32 @@
 			</p>
 
 			<p>
-				Your selection for the Triton Class of 2031 is an extraordinary accomplishment, given that UC
-				San Diego received more than 168,000 total applications! We believe you have the talent,
-				skills, knowledge and passion to be a powerful contributing member of the Triton family.
-				Please accept my personal congratulations on your outstanding achievement.
+				Being selected for the Triton Class of 2031 is an extraordinary accomplishment&mdash;UC San
+				Diego received more than 168,000 total applications this year! We believe you bring the
+				talent, skills, knowledge and passion to become a powerful contributor to the Triton family.
+				Please accept my personal congratulations on this outstanding achievement.
 			</p>
 
 			<p>
-				UC San Diego is one of the top 10 public universities in the world. Here, you will have
-				unparalleled opportunities to learn from professors who are leading experts across the arts,
-				humanities and sciences. You will be exposed to new methodologies, pioneering ideas and
-				state-of-the-art facilities. You will gain access to internships and professional settings
-				where you can practice what you learn, explore your career options and leave a lasting mark on
-				society.
+				UC San Diego stands among the top 10 public universities in the world. Here, you will have
+				unmatched opportunities to learn from professors who lead their fields across the arts,
+				humanities and sciences, and you will encounter new methodologies, pioneering ideas and
+				state-of-the-art facilities. You will also gain access to internships and professional
+				settings where you can apply what you learn, explore your career options and leave a lasting
+				mark on society.
 			</p>
 
 			<p>
-				At UC San Diego, your voice will be heard. Our dynamic community will ensure you feel at home
-				and allow you to leverage the powerful education you have earned. This is the place for you to
+				At UC San Diego, your voice will be heard. Our dynamic community will make sure you feel at
+				home and help you make the most of the powerful education you have earned. Here you can
 				discover who you are as a person, a scholar and a member of a community that values diversity,
 				inclusion and collaboration.
 			</p>
 
 			<p>
-				There are more than 256,000 influential Triton alumni worldwide. You'll be joining a community
-				that takes risks, pushes the frontiers of knowledge and challenges conventional thinking to
-				create a more prosperous and equitable society for all people.
+				More than 256,000 influential Triton alumni live and work around the world. You'll join a
+				community that takes risks, expands the frontiers of knowledge and questions conventional
+				thinking in order to build a more prosperous and equitable society for all people.
 			</p>
 
 			<p>
@@ -92,9 +92,9 @@
 			</p>
 
 			<p>
-				I am confident the Class of 2031 will be a passionate and resilient group of students, ready to
-				make their mark on our evolving world. I cannot wait to see the unique impact you will have at
-				UC San Diego and beyond.
+				I am confident that the Class of 2031 will be a passionate, resilient group of students, ready
+				to leave their mark on our changing world. I cannot wait to see the distinctive impact you
+				will make at UC San Diego and beyond.
 			</p>
 
 			<p>
@@ -106,7 +106,7 @@
 		<!-- Signature -->
 		<div class="mt-10 text-[15px]">
 			<div>With Triton pride,</div>
-			<div class="mt-6 font-semibold text-slate-800">James Rujimora</div>
+			<div class="mt-6 font-semibold text-slate-800">Julian R. Marsh</div>
 			<div class="text-sm text-slate-600">
 				Assistant Vice Chancellor, Enrollment Management<br />
 				Office of Admissions, {schoolName}

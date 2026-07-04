@@ -60,16 +60,15 @@
 			<p class="mb-6">Dear {firstName},</p>
 
 			<p class="mb-6">
-				On behalf of the University of Pennsylvania, it is my great pleasure to offer you admission to
-				the Class of 2031. Congratulations, and welcome to Penn!
+				On behalf of the University of Pennsylvania, I am delighted to offer you admission to the
+				Class of 2031. Congratulations, and welcome to Penn!
 			</p>
 
 			<p class="mb-6">
 				Your application stood out within an exceptionally competitive and talented pool of
-				candidates from around the world. The Admissions Committee was genuinely impressed by your
-				intellectual curiosity, your accomplishments, and the character you brought to every part of
-				your application. We are confident that you will thrive here and contribute meaningfully to
-				our community.
+				candidates from around the world. The Admissions Committee admired your intellectual
+				curiosity, your accomplishments, and the character evident throughout your application. We are
+				confident you will thrive here and contribute meaningfully to our community.
 			</p>
 
 			<p class="mb-6">
@@ -80,7 +79,7 @@
 			</p>
 
 			<p class="mb-8">
-				Thank you for including Penn in your college search. We cannot wait to welcome you to
+				Thank you for including Penn in your college search. We look forward to welcoming you to
 				Philadelphia this fall.
 			</p>
 
@@ -89,10 +88,10 @@
 			<!-- Signature -->
 			<div class="mb-1">
 				<span class="text-3xl italic text-slate-900" style="font-family: 'Segoe Script', 'Brush Script MT', cursive;">
-					E. Whitney Soule
+					E. Morgan Whitfield
 				</span>
 			</div>
-			<p class="font-semibold">E. Whitney Soule</p>
+			<p class="font-semibold">E. Morgan Whitfield</p>
 			<p class="text-slate-700 mb-8">Vice Provost and Dean of Admissions</p>
 
 			<a href="/disclaimer" class="text-[#011F5B] font-medium hover:underline">

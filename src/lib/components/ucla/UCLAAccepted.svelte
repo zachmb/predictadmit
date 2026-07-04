@@ -46,29 +46,29 @@
 
 			<div class="space-y-4 text-[14px] leading-relaxed text-gray-800">
 				<p>
-					Congratulations! It is with tremendous pleasure that I offer you admission to the University
-					of California, Los Angeles, for Fall 2027. On behalf of the entire campus community, welcome
-					to the Bruin family. This is a distinction you have truly earned.
+					Congratulations! I am delighted to offer you admission to the University of California,
+					Los Angeles, for Fall 2027. On behalf of our entire campus community, welcome to the Bruin
+					family. You have truly earned this distinction.
 				</p>
 				<p>
-					For Fall 2027, UCLA received over 146,000 first-year applications and was able to admit fewer
-					than one in ten. Every application is read at least twice, with consideration given to
-					accomplishments both in and outside of the classroom. Your record of achievement,
-					intellectual curiosity, and the strength of character evident throughout your application
-					distinguished you within an exceptionally talented pool. We are confident that you will
-					thrive here and contribute meaningfully to the life of our university.
+					For Fall 2027, UCLA received over 146,000 first-year applications and admitted fewer than
+					one in ten. Each application is reviewed at least twice, with careful attention to
+					achievements inside the classroom and beyond it. Your record of accomplishment, your
+					intellectual curiosity, and the strength of character evident across your application set
+					you apart in an exceptionally talented pool. We are confident you will thrive here and add
+					meaningfully to the life of our university.
 				</p>
 				<p>
-					In the coming weeks you will receive detailed information regarding your financial aid,
-					housing, orientation, and next steps for enrollment through your applicant portal. We
-					encourage you to explore all that UCLA has to offer and to join us for Bruin Day, our program
-					for admitted students, to experience firsthand the academic and vibrant campus life that
-					await you in Westwood.
+					Over the coming weeks, detailed information about financial aid, housing, orientation, and
+					your next enrollment steps will arrive through your applicant portal. We encourage you to
+					explore everything UCLA has to offer and to join us for Bruin Day, our program for admitted
+					students, to experience firsthand the academics and vibrant campus life that await you in
+					Westwood.
 				</p>
 				<p>
-					To reserve your place in the Fall 2027 class, please submit your Statement of Intent to
-					Register (SIR) through your applicant portal by <strong>May 1, 2027</strong>. We very much
-					hope you will choose to become a Bruin, and we look forward to welcoming you to campus this
+					To hold your place in the Fall 2027 class, please submit your Statement of Intent to
+					Register (SIR) through your applicant portal by <strong>May 1, 2027</strong>. We sincerely
+					hope you will decide to become a Bruin, and we look forward to welcoming you to campus this
 					fall.
 				</p>
 			</div>
@@ -79,9 +79,9 @@
 					class="text-3xl italic text-gray-800"
 					style="font-family: 'Segoe Script', 'Brush Script MT', cursive;"
 				>
-					Ffiona Rees
+					Bronwyn Hale
 				</div>
-				<div class="mt-2 text-[14px] font-semibold text-gray-900">Ffiona Rees</div>
+				<div class="mt-2 text-[14px] font-semibold text-gray-900">Bronwyn Hale</div>
 				<div class="text-[13px] text-gray-600">Executive Director, Undergraduate Admission</div>
 			</div>
 

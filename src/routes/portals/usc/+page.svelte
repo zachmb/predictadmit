@@ -292,7 +292,7 @@
 							class="text-sm font-semibold px-5 py-2 text-white shadow-sm"
 							style="background-color: {school.primaryColor};"
 						>
-							View Update &raquo;
+							View Simulated Status Update &raquo;
 						</button>
 					</div>
 				</section>

@@ -61,38 +61,38 @@
 
 		<div class="space-y-4 mb-8">
 			<p>
-				On behalf of the Committee on Admissions, it is my great pleasure to offer you admission to
-				Georgetown University and the Class of 2031. Congratulations. Your candidacy stood out within
-				an exceptionally accomplished and competitive pool, and the Committee was deeply impressed by
-				your academic achievement, intellectual curiosity, and the character you brought to every
-				part of your application.
+				On behalf of the Committee on Admissions, I am delighted to offer you admission to
+				Georgetown University and the Class of 2031. Congratulations. Within an exceptionally
+				accomplished and competitive pool, your candidacy stood apart, and the Committee was deeply
+				impressed by your academic record, intellectual curiosity, and the character evident
+				throughout your application.
 			</p>
 
 			<p>
 				Founded in 1789 as the nation's first Catholic and Jesuit university, Georgetown is animated
 				by the ideal of <em>cura personalis</em> — care for the whole person — and by a commitment to
-				educating women and men who will be thoughtful, principled leaders in service to others. We
-				believe you will both thrive in and add to this community, and we are excited by all that you
-				will contribute on the Hilltop.
+				educating women and men who will be thoughtful, principled leaders in service to others.
+				We believe this is a community in which you will thrive and to which you will add a great
+				deal, and we are excited by all you will bring to the Hilltop.
 			</p>
 
 			<p>
-				Enclosed with this letter, and available through your applicant portal, you will find
-				information regarding your enrollment, your financial aid award, and the many opportunities to
-				connect with current students, faculty, and fellow admitted members of the Class of 2031. We
-				encourage you to visit campus this spring to experience Georgetown firsthand.
+				With this letter, and through your applicant portal, you will find information about your
+				enrollment, your financial aid award, and the many ways to connect with current students,
+				faculty, and your fellow admitted members of the Class of 2031. We hope you will visit
+				campus this spring and experience Georgetown for yourself.
 			</p>
 
 			<p>
-				To reserve your place in the entering class, please submit your enrollment response and
-				deposit through your online portal by <strong>May 1, 2027</strong>. Should you have any
-				questions as you make this important decision, our office and your admissions officer are
-				here to help.
+				To hold your place in the entering class, please submit your enrollment response and
+				deposit through your online portal by <strong>May 1, 2027</strong>. If questions arise as
+				you weigh this important decision, our office and your admissions officer stand ready to
+				help.
 			</p>
 
 			<p>
-				Congratulations once again on this well-earned achievement. We very much hope you will choose
-				to join us, and we look forward to welcoming you to the Hilltop in the fall.
+				Once more, congratulations on an achievement you have thoroughly earned. We very much hope
+				you will decide to join us, and we look forward to greeting you on the Hilltop this fall.
 			</p>
 		</div>
 
@@ -105,7 +105,7 @@
 					style="filter: invert(11%) sepia(35%) saturate(2000%) hue-rotate(200deg) brightness(45%) contrast(95%);"
 				/>
 			</div>
-			<div class="font-bold">Charles A. Deacon</div>
+			<div class="font-bold">Walter H. Pembroke</div>
 			<div class="text-sm text-gray-600">
 				Dean of Undergraduate Admissions<br />
 				{schoolName}

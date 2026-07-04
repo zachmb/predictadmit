@@ -43,7 +43,7 @@
 	const DEFAULT_DECISION = 'admit';
 	$: shownDecision = $decisionsBySlug[SLUG] ?? DEFAULT_DECISION;
 
-	const statusLinkLabel = 'Decision Letter Viewer';
+	const statusLinkLabel = 'Simulated Decision Letter Viewer';
 
 	// --- Handlers ---
 	let isAutoLoggingIn = false;
@@ -384,7 +384,7 @@
 					style="border-color: {MICHIGAN_MAIZE};"
 				>
 					An update to your application was last posted <strong>{school.statusLastPosted}</strong>.
-					Select <strong>{statusLinkLabel}</strong> above to view your decision.
+					Select <strong>{statusLinkLabel}</strong> above to view your simulated decision.
 				</div>
 
 				<!-- Newly admitted resources -->

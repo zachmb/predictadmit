@@ -57,13 +57,13 @@
 			<p class="mb-6">Dear {firstName},</p>
 
 			<p class="mb-6">
-				After completing a careful review of your application, I regret to inform you that we are not
-				able to offer you admission to the {schoolName}.
+				After completing a careful review of your application, I regret to share that we are not able
+				to offer you admission to {schoolName}.
 			</p>
 
 			<p class="mb-6">
-				We recognize that this is not the decision you were hoping to receive. I wish we could offer
-				admission to all the impressive applicants we see, but our space is limited.
+				We recognize that this is not the decision you hoped to receive. We wish we could offer
+				admission to all the impressive applicants we meet, but our space is limited.
 			</p>
 
 			<p class="mb-6">
@@ -75,7 +75,7 @@
 
 			<p class="mb-8">
 				Thank you for including Penn in your college search. We wish you great success in your
-				educational pursuits and the many opportunities that will come your way.
+				educational pursuits and in the opportunities ahead.
 			</p>
 
 			<p class="mb-2">Sincerely,</p>
@@ -83,10 +83,10 @@
 			<!-- Signature -->
 			<div class="mb-1">
 				<span class="text-3xl italic text-slate-900" style="font-family: 'Segoe Script', 'Brush Script MT', cursive;">
-					E. Whitney Soule
+					E. Morgan Whitfield
 				</span>
 			</div>
-			<p class="font-semibold">E. Whitney Soule</p>
+			<p class="font-semibold">E. Morgan Whitfield</p>
 			<p class="text-slate-700 mb-8">Vice Provost and Dean of Admissions</p>
 
 			<a href="/disclaimer" class="text-[#011F5B] font-medium hover:underline">

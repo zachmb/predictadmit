@@ -76,26 +76,26 @@
 
 		<div class="mt-4 space-y-4 text-[14px] leading-relaxed text-gray-800">
 			<p>
-				Congratulations! It is with tremendous enthusiasm that the admission committee offers you a
-				place in Northwestern's first-year class. Of the many thousands of talented students who
-				applied this year, you distinguished yourself as someone we are certain will thrive here and
-				enrich our community. We are thrilled to welcome you to Northwestern.
+				Congratulations! With tremendous enthusiasm, the admission committee offers you a place in
+				Northwestern's first-year class. Among the many thousands of talented students who applied
+				this year, you stood out as someone we are certain will thrive here and enrich our
+				community. We are thrilled to welcome you to Northwestern.
 			</p>
 			<p>
-				Our committee reviews every application with great care, looking beyond grades and scores to
-				the character, curiosity, and promise each candidate brings. Your accomplishments and your
-				potential made a lasting impression, and we are confident that you will make the most of the
-				extraordinary opportunities that await you in Evanston and beyond.
+				Our committee gives every application careful review, looking past grades and scores to the
+				character, curiosity, and promise each candidate brings. Your accomplishments and potential
+				left a lasting impression, and we are confident you will take full advantage of the
+				extraordinary opportunities awaiting you in Evanston and beyond.
 			</p>
 			<p>
-				In the coming days you will receive detailed information about enrolling, financial aid, and
-				Wildcat Days, our program for admitted students, where you can experience the academic and
-				social life of the University firsthand. To reserve your place in the class, please confirm
-				your intention to enroll through your applicant portal by May 1, 2027.
+				Over the coming days you will receive detailed information about enrollment, financial aid,
+				and Wildcat Days, our program for admitted students, where you can experience the
+				University's academic and social life firsthand. To hold your place in the class, please
+				confirm your intention to enroll through your applicant portal by May 1, 2027.
 			</p>
 			<p>
-				The admission committee is delighted by the prospect of welcoming you to campus. On behalf of
-				the entire University, congratulations once again, and Go 'Cats!
+				The admission committee looks forward with delight to welcoming you to campus. On behalf of
+				the entire University, congratulations again, and Go 'Cats!
 			</p>
 		</div>
 
@@ -107,9 +107,9 @@
 					class="text-2xl italic text-gray-800"
 					style="font-family: 'Segoe Script', 'Brush Script MT', cursive;"
 				>
-					Stacey Kostell
+					Sandra Kirchner
 				</div>
-				<div class="mt-2 text-[13px] text-gray-900">Stacey Kostell</div>
+				<div class="mt-2 text-[13px] text-gray-900">Sandra Kirchner</div>
 				<div class="text-[13px] text-gray-600">Vice President of Enrollment</div>
 			</div>
 			<div>
@@ -117,9 +117,9 @@
 					class="text-2xl italic text-gray-800"
 					style="font-family: 'Segoe Script', 'Brush Script MT', cursive;"
 				>
-					Elisabeth Kinsley
+					Eleanor Kessler
 				</div>
-				<div class="mt-2 text-[13px] text-gray-900">Elisabeth Kinsley</div>
+				<div class="mt-2 text-[13px] text-gray-900">Eleanor Kessler</div>
 				<div class="text-[13px] text-gray-600">Dean of Undergraduate Admission</div>
 			</div>
 		</div>

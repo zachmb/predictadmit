@@ -46,30 +46,30 @@
 
 			<div class="space-y-4 text-[14px] leading-relaxed text-gray-800">
 				<p>
-					The Committee on Admissions has completed its meetings, and I am very sorry to inform you
-					that we cannot offer you admission to the Class of 2031. I wish that a different decision
-					had been possible, but I hope that receiving this final decision now will be helpful to you
-					as you make your college plans.
+					The Committee on Admissions has concluded its meetings, and I am very sorry to tell you
+					that we are unable to offer you a place in the Class of 2031. I truly wish a different
+					outcome had been possible, though I hope having this final decision in hand now will be
+					useful as you make your college plans.
 				</p>
 				<p>
-					In recent years, the Committee has been faced with increasingly difficult decisions; many
-					thousands of students now apply for the sixteen hundred and fifty places in the first-year
-					class, and the great majority of our applicants could be successful here academically. In
-					addition, most candidates present strong co-curricular credentials. The Committee has,
-					therefore, been faced with the necessity of choosing a first-year class from a great many
-					more talented and highly qualified students than it has room to admit.
+					The Committee's decisions have grown increasingly difficult in recent years; many
+					thousands of students now apply for the sixteen hundred and fifty places in the
+					first-year class, and the great majority of those applicants would succeed here
+					academically. Most also bring strong co-curricular credentials. As a result, the
+					Committee must assemble a first-year class from far more talented and highly qualified
+					students than it can possibly accommodate.
 				</p>
 				<p>
-					We wish we could admit more of our fine applicants, and we understand how difficult the
-					college application process can be for students and their families. While the Committee
-					conducted its deliberations with the utmost care, we know that no one can predict with
-					certainty what an individual will accomplish during college or beyond. Experience suggests
-					that the particular college a student attends is far less important than developing the
-					strengths and talents that a student brings to campus over the next four years.
+					We wish it were possible to admit more of our fine applicants, and we understand how
+					trying the college application process can be for students and their families. Though
+					the Committee deliberated with the utmost care, no one can predict with certainty what
+					any individual will go on to accomplish in college or afterward. Experience suggests
+					that where a student attends college matters far less than how fully that student
+					develops the strengths and talents they bring to campus over the next four years.
 				</p>
 				<p>
-					We very much appreciate the interest you have shown in Harvard, and we hope you will accept
-					the best wishes of the Committee for success in all your future endeavors.
+					We deeply appreciate the interest you have shown in Harvard, and the Committee joins me
+					in offering best wishes for success in everything you pursue.
 				</p>
 			</div>
 
@@ -79,9 +79,9 @@
 					class="text-3xl italic text-gray-800"
 					style="font-family: 'Segoe Script', 'Brush Script MT', cursive;"
 				>
-					William R. Fitzsimmons
+					Edward C. Mansfield
 				</div>
-				<div class="mt-2 text-[14px] font-semibold text-gray-900">William R. Fitzsimmons</div>
+				<div class="mt-2 text-[14px] font-semibold text-gray-900">Edward C. Mansfield</div>
 				<div class="text-[13px] text-gray-600">Dean of Admissions and Financial Aid</div>
 			</div>
 

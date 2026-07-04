@@ -344,7 +344,7 @@
 							class="mt-5 px-4 py-2 font-sans text-sm font-semibold text-white shadow-sm transition-opacity hover:opacity-90"
 							style="background-color: {school.primaryColor};"
 						>
-							View Update &gt;&gt;
+							View Simulated Status Update &gt;&gt;
 						</button>
 					{:else}
 						<div class="border border-gray-200 bg-gray-50 p-6">

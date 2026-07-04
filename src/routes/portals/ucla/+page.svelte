@@ -53,7 +53,7 @@
 		const fields: Array<[string, (v: string) => void]> = [
 			[lastName, (v) => (lastNameInput = v)],
 			['005236114', (v) => (applicationIdInput = v)],
-			['02-19-2008', (v) => (dobInput = v)],
+			['07-12-2008', (v) => (dobInput = v)],
 			['Los Angeles', (v) => (cityOfBirthInput = v)]
 		];
 		lastNameInput = '';
@@ -336,7 +336,7 @@
 					class="mt-5 px-5 py-2 text-sm font-semibold text-white shadow-sm transition-opacity hover:opacity-90"
 					style="background-color: {school.primaryColor};"
 				>
-					View Decision Letter &gt;&gt;
+					View Simulated Decision Letter &gt;&gt;
 				</button>
 			</div>
 

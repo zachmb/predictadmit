@@ -278,9 +278,7 @@
 						<button
 							on:click={handleViewUpdate}
 							class="bg-[#B3A369] text-[#003057] text-[12px] font-bold uppercase tracking-wide px-4 py-2 hover:brightness-105"
-						>
-							Decision Letter
-						</button>
+						>Simulated Decision Letter</button>
 					</div>
 					<a
 						href="/disclaimer"

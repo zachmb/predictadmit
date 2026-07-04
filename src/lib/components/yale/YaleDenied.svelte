@@ -47,39 +47,37 @@
 
 		<div class="space-y-4">
 			<p>
-				The Yale Admissions Committee has completed its evaluation of this year's candidates, and I am
-				genuinely sorry that we are not able to offer you a place in the Class of 2031.
+				The Yale Admissions Committee has completed its review of this year's candidates, and I am
+				sincerely sorry that we cannot offer you a place in the Class of 2031.
 			</p>
 
 			<p>
-				I realize that this decision may come as a real disappointment. I hope you will understand
-				that the decision reflects the extraordinary range of talents represented in our applicant
-				pool and not a judgment about your own abilities or potential. Of the more than fifty
-				thousand individuals who applied to Yale this year, most are fully capable of doing
-				outstanding work and making a unique contribution to a campus community. It is painful to us
-				that we must turn away so many superbly talented students.
+				I realize that this decision may be a real disappointment. I hope you will understand that it
+				reflects the extraordinary range of talents represented in our applicant pool, not a judgment
+				about your own abilities or potential. Of the more than fifty thousand individuals who applied
+				to Yale this year, most are fully capable of outstanding work and meaningful contribution to a
+				campus community. It is difficult for us to turn away so many superbly talented students.
 			</p>
 
 			<p>
-				You may be tempted to ask what was lacking in your application. In truth, it is usually
+				You may be tempted to ask what was missing from your application. In truth, it is often
 				difficult for us to point to obvious weaknesses when so many applicants have demonstrated real
-				achievement and potential for the future. Our decisions say far more about the small number of
-				spaces available and the difficult choices we make than they do about a candidate's personal
-				and academic promise.
+				achievement and future potential. Our decisions say far more about the limited number of
+				spaces available and the difficult choices we must make than they do about a candidate's
+				personal and academic promise.
 			</p>
 
 			<p>
-				I hope that the replies you receive from other colleges will soon erase any disappointment
-				regarding Yale's decision, and that you will go on to great success in your educational
-				pursuits.
+				I hope the replies you receive from other colleges will soon ease any disappointment about
+				Yale's decision, and that you will go on to great success in your educational pursuits.
 			</p>
 		</div>
 
 		<!-- Signature -->
 		<div class="mt-6">
 			<p class="mb-4">Sincerely,</p>
-			<p class="italic font-serif text-lg mb-1" style="color: {primaryColor};">Jeremiah Quinlan</p>
-			<p>Jeremiah Quinlan</p>
+			<p class="italic font-serif text-lg mb-1" style="color: {primaryColor};">Thomas A. Whitcomb</p>
+			<p>Thomas A. Whitcomb</p>
 			<p>Dean of Undergraduate Admissions and Financial Aid</p>
 		</div>
 

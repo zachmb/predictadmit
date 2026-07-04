@@ -60,14 +60,14 @@
 
 		<div class="space-y-4 mb-8">
 			<p>
-				I am pleased to inform you that you have been admitted to the University of Michigan College
-				of Engineering class entering fall 2027.
+				I am pleased to share that you have been admitted to the University of Michigan College of
+				Engineering class entering fall 2027.
 			</p>
 
 			<p>
 				We are thrilled to welcome you into a vibrant, lifelong academic community of scholars and
-				alumni who are making a difference everywhere in the world. Once you become a Wolverine, you
-				will always be distinguished by this achievement.
+				alumni making a difference around the world. Once you become a Wolverine, this achievement
+				will always be part of your story.
 			</p>
 
 			<p>
@@ -80,7 +80,7 @@
 
 			<p>
 				Respond to your admissions offer in Enrollment Connect no later than May 1, 2027 at 11:59
-				p.m. Eastern Time. On behalf of the entire University of Michigan community, I applaud your
+				p.m. Eastern Time. On behalf of the University of Michigan community, I applaud your
 				impressive scholastic achievement and look forward to welcoming you, <strong>{firstName}</strong>,
 				to the Michigan family of the Leaders and Best.
 			</p>
@@ -88,8 +88,8 @@
 
 		<div class="mt-12">
 			<div class="mb-1 text-lg">Sincerely,</div>
-			<div class="font-bold italic text-xl" style="color: {primaryColor};">Erica L. Sanders</div>
-			<div class="font-bold">Erica L. Sanders</div>
+			<div class="font-bold italic text-xl" style="color: {primaryColor};">Elaine R. Sutton</div>
+			<div class="font-bold">Elaine R. Sutton</div>
 			<div class="text-sm text-gray-600">
 				Assistant Vice Provost and Executive Director<br />
 				Office of Undergraduate Admissions, {schoolName}

@@ -289,7 +289,7 @@
 									class="text-[12px] font-semibold px-4 py-1.5 text-white rounded-sm hover:opacity-90"
 									style="background-color: {EMORY_GOLD};"
 								>
-									View Letter »
+									View Simulated Letter »
 								</button>
 							</td>
 						</tr>

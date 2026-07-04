@@ -17,7 +17,7 @@
     {
       type: "Undergraduate Application",
       term: "Fall 2026 First Year Main Campus",
-      status: "Decision Available",
+      status: "Simulated Decision Available",
       started: "11/24/2025",
       submitted: "11/24/2025"
     }
@@ -138,7 +138,7 @@
           onclick={handleViewDecision}
           class="bg-[#c4dd3b] text-[#0a3a63] text-[14px] font-semibold px-10 py-4 tracking-wide shadow-sm hover:brightness-95 transition"
         >
-          VIEW ADMISSION DECISION
+          VIEW SIMULATED ADMISSION DECISION
         </button>
         <button
           type="button"

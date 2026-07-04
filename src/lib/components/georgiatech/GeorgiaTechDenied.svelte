@@ -69,26 +69,26 @@
 				<p class="mb-4">{firstName},</p>
 
 				<p class="mb-4">
-					Thank you for your application to the Georgia Institute of Technology. Due to the large
-					number of applications from highly qualified students, we are unable to offer you admission
-					to the incoming first-year class.
+					Thank you for applying to the Georgia Institute of Technology. Given the volume of
+					applications we received from highly qualified students, we are unable to offer you a
+					place in the incoming first-year class.
 				</p>
 
 				<p class="mb-4">
-					We work to make sure each application is holistically reviewed by multiple staff members.
-					Because of the competitive pool of applicants, we carefully evaluate the credentials of each
-					student on an individual and comparative basis to ensure a thorough process.
+					Every application is read holistically by several members of our staff. Given how
+					competitive this year's pool was, each student's credentials were weighed carefully,
+					both on their own and in comparison with others, to ensure a thorough process.
 				</p>
 
 				<p class="mb-6">
-					Again, we appreciate your interest in Georgia Tech and wish you success in the future.
+					We are grateful for your interest in Georgia Tech and wish you every success going forward.
 				</p>
 
 				<p class="mb-1">Sincerely,</p>
 				<p class="text-2xl mb-1" style="font-family: 'Brush Script MT', 'Segoe Script', cursive; color: {primaryColor};">
-					Mary Tipton Woolley
+					Margaret T. Winslow
 				</p>
-				<p class="font-semibold">Mary Tipton Woolley</p>
+				<p class="font-semibold">Margaret T. Winslow</p>
 				<p class="text-slate-700">Executive Director | Undergraduate Admission</p>
 			</div>
 

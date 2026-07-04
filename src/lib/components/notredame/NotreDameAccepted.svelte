@@ -65,43 +65,43 @@
 
 		<div class="space-y-4 mb-8">
 			<p>
-				It is with great enthusiasm that I congratulate you on your admission to the University of
-				Notre Dame Class of 2031. After a thorough and holistic review of an extraordinary applicant
-				pool, the Committee on Admissions was deeply impressed by your academic accomplishments, your
-				character, and the ways you have already made a difference in your community.
+				With great enthusiasm, I write to congratulate you on your admission to the University of
+				Notre Dame Class of 2031. Following a thorough and holistic review of an extraordinary
+				applicant pool, the Committee on Admissions came away deeply impressed by your academic
+				accomplishments, your character, and the difference you have already made in your community.
 			</p>
 
 			<p>
-				This year we received a record number of applications from remarkable students around the
-				world, and admission was highly selective. Your acceptance is a genuine achievement and a
-				reflection of the person you are and the promise the Committee sees in you. We are confident
-				that you will thrive within our community of scholars, and that you will both contribute to
-				and be shaped by the mission of this University.
+				This year a record number of remarkable students from around the world applied, and
+				admission was highly selective. Your acceptance is a true achievement, reflecting both the
+				person you are and the promise the Committee sees in you. We are confident that you will
+				thrive within our community of scholars, and that you will both contribute to and be shaped
+				by the mission of this University.
 			</p>
 
 			<p>
-				Notre Dame is a special place &mdash; a community grounded in faith, scholarship, and service,
+				Notre Dame is a special place &mdash; a community rooted in faith, scholarship, and service,
 				where you will be challenged to become a force for good in the world. We warmly invite you to
 				Notre Dame Days, our official program for admitted students this April, where you can explore
-				campus, meet faculty and current students, and imagine your life under the Golden Dome.
+				campus, meet faculty and current students, and picture your life under the Golden Dome.
 				Details will be posted to your applicant status portal.
 			</p>
 
 			<p>
-				To secure your place in the class, please submit your enrollment response and deposit through
-				your applicant status portal by <strong>May 1, 2027</strong>. Information regarding your
-				financial aid award, housing, and next steps is also available in the portal.
+				To reserve your place in the class, please submit your enrollment response and deposit
+				through your applicant status portal by <strong>May 1, 2027</strong>. Details about your
+				financial aid award, housing, and next steps are also available in the portal.
 			</p>
 
 			<p>
-				On behalf of the entire Notre Dame family, congratulations once again. We cannot wait to
-				welcome you home to Notre Dame this fall.
+				On behalf of the whole Notre Dame family, congratulations once more. We look forward to
+				welcoming you home to Notre Dame this fall.
 			</p>
 		</div>
 
 		<div class="mt-12">
-			<div class="mb-2 text-2xl italic" style="color: {primaryColor};">Debra E. Johns</div>
-			<div class="font-bold">Debra E. Johns</div>
+			<div class="mb-2 text-2xl italic" style="color: {primaryColor};">Diane E. Jasper</div>
+			<div class="font-bold">Diane E. Jasper</div>
 			<div class="text-sm text-gray-600">
 				Assistant Vice President of Undergraduate Admissions<br />
 				{schoolName}

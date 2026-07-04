@@ -338,7 +338,7 @@
 								class="font-sans text-[15px] font-bold underline"
 								style="color: {school.primaryColor};"
 							>
-								View your admission decision letter.
+								View your simulated admission decision letter.
 							</button>
 						</p>
 					</div>

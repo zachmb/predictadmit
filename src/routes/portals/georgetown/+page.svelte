@@ -326,7 +326,7 @@
 								class="text-[14px] font-bold text-white px-5 py-2 hover:opacity-90"
 								style="background-color: {school.primaryColor}; font-family: Arial, sans-serif;"
 							>
-								View Update &gt;&gt;
+								View Simulated Status Update &gt;&gt;
 							</button>
 						</div>
 					</div>

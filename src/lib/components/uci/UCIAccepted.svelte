@@ -64,18 +64,17 @@
 
 		<div class="mb-8 space-y-4">
 			<p>
-				Congratulations! On behalf of the entire campus community, it is my great pleasure to offer
-				you admission to the University of California, Irvine for the Fall 2027 term. Out of one of
-				the largest and most competitive applicant pools in the University of California system, you
-				distinguished yourself through your academic accomplishments, your personal insight, and the
-				promise you show to thrive as an Anteater.
+				Congratulations! On behalf of our campus community, I am pleased to offer you admission to
+				the University of California, Irvine for the Fall 2027 term. In one of the largest and most
+				competitive applicant pools in the University of California system, you stood out through your
+				academic accomplishments, personal insight, and promise as a future Anteater.
 			</p>
 
 			<p>
-				Your admission to UCI is a tremendous achievement. The Committee on Admissions was impressed
-				by the strength of your academic record and the character reflected throughout your
-				application. We are confident that you will contribute meaningfully to our vibrant community
-				of scholars, innovators, and leaders here in Orange County.
+				Your admission to UCI is a tremendous achievement. The Committee on Admissions admired the
+				strength of your academic record and the character reflected throughout your application. We
+				are confident you will contribute meaningfully to our vibrant community of scholars,
+				innovators, and leaders here in Orange County.
 			</p>
 
 			<p>
@@ -95,14 +94,14 @@
 			</p>
 
 			<p>
-				Congratulations once again on your admission to UCI. We look forward to welcoming you to the
+				Once again, congratulations on your admission to UCI. We look forward to welcoming you to the
 				Anteater family this fall.
 			</p>
 		</div>
 
 		<div class="mt-12">
-			<div class="mb-2 font-serif text-2xl italic" style="color: {primaryColor};">Dale Leaman</div>
-			<div class="font-bold">Dale Leaman</div>
+			<div class="mb-2 font-serif text-2xl italic" style="color: {primaryColor};">Drew Lanford</div>
+			<div class="font-bold">Drew Lanford</div>
 			<div class="text-sm text-gray-600">
 				Executive Director of Undergraduate Admissions<br />
 				{schoolName}

@@ -200,8 +200,7 @@
 					notes that factor importance varies by institution type. PredictAdmit focuses on highly
 					selective admissions, so we calibrate the NACAC-derived weights against
 					<strong>admitted-student profiles from HYPSM (Harvard, Yale, Princeton, Stanford, MIT)
-					and Top-20 universities in the 2026 admissions cycle</strong> — including the verified
-					2026-cycle admits who mentor on PredictAdmit.
+					and Top-20 universities in the 2026 admissions cycle</strong>.
 				</p>
 				<p>
 					That calibration is why our school baselines (average SAT/ACT and weighted GPA of admits,

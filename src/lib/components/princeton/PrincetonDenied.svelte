@@ -60,36 +60,35 @@
 			<div class="text-lg">Dear {firstName || applicantName || 'Applicant'},</div>
 		</div>
 
-		<!-- Letter Body (from the real Princeton denial letter) -->
+			<!-- Letter Body -->
 		<div class="space-y-4 mb-8 leading-relaxed">
 			<p>
-				I am sorry to inform you that we are unable to admit you to Princeton University this year.
+				I am sorry to share that Princeton University is not able to offer you admission this year.
 			</p>
 
 			<p>
-				Our large and talented applicant pool contained many students who were in the admissible
-				range. Over the past several weeks, our admission officers reviewed files diligently,
-				thoughtfully and carefully. As we do each year, we made every effort to weigh each student's
-				achievements, talents and skills within the context of their secondary school setting. We
-				also took into consideration the vast differences among the various learning environments
-				represented in the pool.
+				This year's applicant pool was both large and exceptionally talented, with many students
+				whose records merited serious consideration. During the past several weeks, our admission
+				officers read applications with care and thought, weighing each student's achievements,
+				talents, and skills in the context of their secondary school setting. We also considered
+				the wide range of learning environments represented in the pool.
 			</p>
 
 			<p>
-				The admission committee appreciated the time, care and effort you put into the materials you
-				submitted. Ultimately, the strength and size of this year's pool dictated our choices and
-				even candidates who had exceptional credentials could not be guaranteed a spot in the class.
+				The admission committee appreciated the time, care, and effort reflected in the materials you
+				submitted. Ultimately, the strength and size of this year's pool shaped our choices, and even
+				candidates with exceptional credentials could not be guaranteed a place in the class.
 			</p>
 
 			<p>
-				I recognize that this is not the decision you wanted to receive. While all our decisions are
-				final and we do not consider appeals, nor can we offer individual feedback, please know that
-				the committee's conclusion does not at all reflect your ability to succeed in a rigorous
-				college environment.
+				I understand that this is not the outcome you hoped to receive. While our decisions are
+				final, and we cannot consider appeals or provide individual feedback, please know that the
+				committee's conclusion is not a judgment on your ability to succeed in a rigorous college
+				environment.
 			</p>
 
 			<p>
-				Thank you for your interest in Princeton and for giving us the opportunity to consider your
+				Thank you for your interest in Princeton and for allowing us the opportunity to review your
 				application.
 			</p>
 		</div>

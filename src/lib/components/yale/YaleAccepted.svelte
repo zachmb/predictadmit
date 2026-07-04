@@ -50,16 +50,16 @@
 
 		<div class="space-y-4">
 			<p>
-				It is with great pleasure that I write on behalf of the Yale Admissions Committee to offer you
-				admission to the Yale College Class of 2031. Congratulations! From a pool of more than fifty
-				thousand exceptionally talented applicants, you distinguished yourself as one of the few whom
-				we are proud to welcome to Yale.
+				On behalf of the Yale Admissions Committee, I am delighted to offer you admission to the Yale
+				College Class of 2031. Congratulations! From a pool of more than fifty thousand exceptionally
+				talented applicants, you distinguished yourself as one of the few students we are proud to
+				welcome to Yale.
 			</p>
 
 			<p>
 				Our decision is the result of a deliberate and careful process. The Committee was drawn to the
 				intellectual curiosity, character, and promise evident throughout your application, and we are
-				confident that you will both contribute to and thrive within our community. We were impressed
+				confident you will both contribute to and thrive within our community. We were impressed
 				not only by what you have already accomplished, but by the person you are becoming and the
 				energy you will bring to Yale's classrooms, residential colleges, and campus life.
 			</p>
@@ -74,15 +74,15 @@
 
 			<p>
 				On behalf of all of us in the Office of Undergraduate Admissions, congratulations once again.
-				We cannot wait to welcome you to Yale.
+				We look forward to welcoming you to Yale.
 			</p>
 		</div>
 
 		<!-- Signature -->
 		<div class="mt-6">
 			<p class="mb-4">Sincerely,</p>
-			<p class="italic font-serif text-lg mb-1" style="color: {primaryColor};">Jeremiah Quinlan</p>
-			<p>Jeremiah Quinlan</p>
+			<p class="italic font-serif text-lg mb-1" style="color: {primaryColor};">Thomas A. Whitcomb</p>
+			<p>Thomas A. Whitcomb</p>
 			<p>Dean of Undergraduate Admissions and Financial Aid</p>
 		</div>
 

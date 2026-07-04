@@ -55,40 +55,41 @@
 
 		<div class="space-y-4 mb-8">
 			<p>
-				Thank you for applying to Wake Forest University and for allowing us to consider you for a
-				place in the Class of 2031. I know how much thought and effort went into your application, and
-				I want you to know that the Committee on Admissions read it with genuine care and attention.
+				Thank you for applying to Wake Forest University and for giving us the opportunity to
+				consider you for a place in the Class of 2031. I know how much thought and effort your
+				application represents, and I want you to know the Committee on Admissions read it with
+				genuine care and attention.
 			</p>
 
 			<p>
-				This year we received an extraordinary number of applications from remarkable students around
-				the world. Because Wake Forest is test-optional, we evaluated each candidate holistically
-				&mdash; considering academic record, writing, recommendations, and personal context. After
-				the most thoughtful review we could give it, I am sorry to tell you that we are not able to
-				offer you admission. With so many outstanding applicants and a limited number of places, we
-				had to make many difficult decisions, and this was among the hardest.
+				This year brought an extraordinary number of applications from remarkable students around
+				the world. Because Wake Forest is test-optional, every candidate was evaluated holistically
+				&mdash; academic record, writing, recommendations, and personal context all considered.
+				After the most thoughtful review we could give it, I am sorry to tell you that we cannot
+				offer you admission. With so many outstanding applicants and so few places, many difficult
+				decisions had to be made, and this was among the hardest.
 			</p>
 
 			<p>
-				Please understand that this outcome is not a judgment of your ability or your worth. The
-				qualities that make you a strong student and a good person are unchanged by this letter, and
-				they will carry you far. Admissions decisions at highly selective universities turn on many
-				factors, and a denial here says far more about the depth of our applicant pool than about
-				your potential.
+				Please understand that this outcome is no judgment of your ability or your worth. Nothing in
+				this letter changes the qualities that make you a strong student and a good person, and
+				those qualities will carry you far. Decisions at highly selective universities turn on many
+				factors, and a denial here says far more about the depth of our applicant pool than it does
+				about your potential.
 			</p>
 
 			<p>
-				I hope you will take real pride in all you have accomplished, and I am confident you will
-				flourish at a university that is fortunate to have you. On behalf of everyone at Wake Forest,
-				I wish you every success and happiness in the years ahead.
+				I hope you take real pride in all you have accomplished, and I am confident you will
+				flourish at a university fortunate enough to have you. On behalf of all of us at Wake
+				Forest, I wish you every success and much happiness in the years ahead.
 			</p>
 
 			<p>With warm regards and best wishes, <em>Pro Humanitate</em>.</p>
 		</div>
 
 		<div class="mt-12">
-			<div class="mb-2 text-2xl italic" style="color: {primaryColor};">Eric J. Maguire</div>
-			<div class="font-bold">Eric J. Maguire</div>
+			<div class="mb-2 text-2xl italic" style="color: {primaryColor};">Evan J. Mercer</div>
+			<div class="font-bold">Evan J. Mercer</div>
 			<div class="text-sm text-gray-600">
 				Vice President for Enrollment<br />
 				{schoolName}

@@ -45,19 +45,19 @@
 
 			<p class="text-[12px] leading-relaxed text-slate-900 mb-3">
 				The Admissions Committee has completed its review of your application to
-				<span class="font-semibold"> {schoolName}</span>. I regret to inform you that we are unable
-				to offer you admission to the Class of 2031.
+				<span class="font-semibold"> {schoolName}</span>. I regret to share that we are not able to
+				offer you admission to the Class of 2031.
 			</p>
 
 			<p class="text-[12px] leading-relaxed text-slate-900 mb-3">
-				This decision in no way diminishes the accomplishments you have achieved in your academic
-				work and in your community. We simply receive far more qualified applications than we are
-				able to accommodate in our entering class.
+				This decision does not diminish the accomplishments you have achieved in your academic work
+				and in your community. We simply receive far more qualified applications than we can
+				accommodate in our entering class.
 			</p>
 
 			<p class="text-[12px] leading-relaxed text-slate-900 mb-3">
-				We appreciate the time and care you devoted to your application and your interest in {schoolName}.
-				We wish you the very best in your future academic and personal endeavors.
+				We appreciate the time and care you devoted to your application and your interest in
+				{schoolName}. We wish you the very best in your future academic and personal endeavors.
 			</p>
 
 			<p class="text-[12px] leading-relaxed text-slate-900 mt-4">

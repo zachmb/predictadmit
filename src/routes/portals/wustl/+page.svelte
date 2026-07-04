@@ -273,7 +273,7 @@
 						class="mt-3 text-[15px] font-bold underline"
 						style="color: {school.primaryColor};"
 					>
-						View Update &gt;&gt;
+						View Simulated Status Update &gt;&gt;
 					</button>
 					<div class="mt-4 border-b border-gray-300"></div>
 				</section>
@@ -312,9 +312,9 @@
 						</svg>
 					</div>
 					<div class="mt-2 text-[13px] leading-relaxed text-gray-800">
-						<div class="font-semibold">Morgan Farrar</div>
+						<div class="font-semibold">Taylor Renwick</div>
 						<div>Senior Assistant Director of Admissions</div>
-						<a href="/disclaimer" class="underline" style="color: {school.primaryColor};">farrar@{school.footerDomain}</a>
+						<a href="/disclaimer" class="underline" style="color: {school.primaryColor};">renwick@{school.footerDomain}</a>
 						<div class="italic text-gray-500">She/Her/Hers</div>
 					</div>
 				</aside>

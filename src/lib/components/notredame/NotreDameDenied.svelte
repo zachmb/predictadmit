@@ -62,38 +62,38 @@
 
 		<div class="space-y-4 mb-8">
 			<p>
-				Thank you for your application to the University of Notre Dame and for allowing us to consider
-				you for a place in our Class of 2031. I know how much thought and effort you invested in your
-				application, and the Committee on Admissions reviewed it with the care and attention it
+				Thank you for applying to the University of Notre Dame and for giving us the opportunity to
+				consider you for a place in our Class of 2031. I know how much thought and effort went into
+				your application, and the Committee on Admissions gave it the care and attention it
 				deserved.
 			</p>
 
 			<p>
-				This year we received a record number of applications from exceptionally talented students,
-				and we were able to offer admission to only a small portion of them. After a careful and
-				holistic review, we are unable to offer you a place in the incoming class. I understand this
-				is not the news you had hoped to receive, and I do not share it lightly.
+				This year brought a record number of applications from exceptionally talented students, and
+				we could offer admission to only a small fraction of them. After a careful and holistic
+				review, we are unable to offer you a place in the incoming class. I understand this is not
+				the news you hoped for, and I do not deliver it lightly.
 			</p>
 
 			<p>
-				Please know that this decision is not a judgment of your ability or your worth. It reflects
-				the extraordinary strength of this year's applicant pool and the limited number of places we
-				are able to offer. The accomplishments and character you demonstrated throughout your
-				application are real and meaningful, and they will continue to serve you well.
+				Please know that this decision is no judgment of your ability or your worth. It speaks to
+				the extraordinary strength of this year's applicant pool and the limited number of places
+				available to offer. The accomplishments and character evident throughout your application
+				are real and meaningful, and they will continue to serve you well.
 			</p>
 
 			<p>
-				We are grateful for your interest in Notre Dame and for the opportunity to learn about you. I
-				am confident that you will find a community where you will flourish, and I wish you every
-				success in your studies and in all that lies ahead.
+				We are grateful for your interest in Notre Dame and for the chance to come to know you. I am
+				confident you will find a community in which you flourish, and I wish you every success in
+				your studies and in all that lies ahead.
 			</p>
 
 			<p>With warm regards and sincere best wishes for your future,</p>
 		</div>
 
 		<div class="mt-12">
-			<div class="mb-2 text-2xl italic" style="color: {primaryColor};">Debra E. Johns</div>
-			<div class="font-bold">Debra E. Johns</div>
+			<div class="mb-2 text-2xl italic" style="color: {primaryColor};">Diane E. Jasper</div>
+			<div class="font-bold">Diane E. Jasper</div>
 			<div class="text-sm text-gray-600">
 				Assistant Vice President of Undergraduate Admissions<br />
 				{schoolName}

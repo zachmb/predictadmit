@@ -60,39 +60,36 @@
 
 		<div class="space-y-4 mb-8">
 			<p>
-				Congratulations! It is my great pleasure to offer you admission to the University of
-				Wisconsin-Madison for the Fall 2027 term. On behalf of the entire university community, welcome
-				to the Badger family. This is a moment worth celebrating, and you have every reason to be
-				proud.
+				Congratulations! I am pleased to offer you admission to the University of Wisconsin-Madison
+				for the Fall 2027 term. On behalf of our university community, welcome to the Badger family.
+				This is a meaningful accomplishment, and you should feel proud of all that brought you here.
 			</p>
 
 			<p>
-				Admission to UW-Madison is highly selective, and your accomplishments distinguished you within
-				an exceptionally strong and talented applicant pool. The Admissions Committee was impressed by
-				your academic record, your intellectual curiosity, and the ways you have engaged with your
-				school and community. We are confident that you will thrive here and add something meaningful
-				to our campus.
+				Admission to UW-Madison is highly selective, and your accomplishments stood out within an
+				exceptionally strong applicant pool. The Admissions Committee admired your academic record,
+				your curiosity, and the ways you have contributed to your school and community. We believe
+				you will thrive here and bring something meaningful to our campus.
 			</p>
 
 			<p>
 				You have been admitted to the College of Engineering with an intended major in Mechanical
-				Engineering. At UW-Madison, you will join a community that has been "sifting and winnowing" in
-				the pursuit of truth for more than 170 years, with world-class faculty, hands-on research, and
-				a tradition of the Wisconsin Idea, the principle that the boundaries of the university are the
-				boundaries of the state and the world.
+				Engineering. At UW-Madison, you will join a community long committed to searching for truth,
+				with world-class faculty, hands-on research, and the Wisconsin Idea, the belief that the
+				university's reach extends across the state and beyond.
 			</p>
 
 			<p>
-				To secure your place in the class, please log in to your Applicant Portal and submit your
-				enrollment confirmation by <strong>May 1, 2027</strong>. There you will also find information
-				about housing, orientation (Student Orientation, Advising, and Registration), and next steps
-				for connecting with your college. If you applied for financial aid, your award notification
-				will be available in your portal shortly.
+				To claim your place in the class, please log in to your Applicant Portal and submit your
+				enrollment confirmation by <strong>May 1, 2027</strong>. The portal will also guide you
+				through housing, Student Orientation, Advising, and Registration, and the next steps for
+				connecting with your college. If you applied for financial aid, your award notification will
+				be posted there shortly.
 			</p>
 
 			<p>
-				We cannot wait to welcome you to Bascom Hill this fall. Once a Badger, always a Badger, on,
-				Wisconsin!
+				We look forward to welcoming you to Bascom Hill this fall. Once a Badger, always a Badger.
+				On, Wisconsin!
 			</p>
 		</div>
 

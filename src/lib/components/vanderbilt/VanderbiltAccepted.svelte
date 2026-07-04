@@ -60,30 +60,30 @@
 
 		<div class="mt-6 space-y-5 text-[15px] leading-relaxed text-gray-800">
 			<p>
-				Our office has now completed its evaluation of the Regular Decision applicant pool for fall
-				2027, and it is with great pleasure that I write to offer you admission to the Vanderbilt
-				University Class of 2031. Congratulations! Your accomplishments distinguished you within an
-				exceptionally talented and competitive pool of applicants, and the Committee on Admissions was
-				genuinely impressed by all that you have achieved inside and outside of the classroom.
+				Having now completed our evaluation of the Regular Decision applicant pool for fall 2027, it
+				is with great pleasure that I write to offer you admission to the Vanderbilt University
+				Class of 2031. Congratulations! Within an exceptionally talented and competitive pool of
+				applicants, your accomplishments set you apart, and the Committee on Admissions was
+				genuinely impressed by all that you have achieved both in and beyond the classroom.
 			</p>
 			<p>
-				As you consider this offer, I hope you will take pride in this achievement. We reviewed your
-				application carefully within the context of our applicant pool, getting to know you through
-				your academic and co-curricular record and your high school circumstances, and we are
-				confident that you will thrive within our community of scholars and contribute meaningfully to
-				life on campus. We are excited about the energy, curiosity, and perspective you will bring to
-				Vanderbilt.
+				As you consider this offer, I hope you will take real pride in this achievement. Your
+				application was reviewed carefully within the context of our applicant pool; we came to know
+				you through your academic and co-curricular record and your high school circumstances, and
+				we are confident that you will flourish within our community of scholars and contribute
+				meaningfully to campus life. The energy, curiosity, and perspective you will bring to
+				Vanderbilt excite us.
 			</p>
 			<p>
-				In the coming days you will receive detailed information about enrolling, financial aid, and
-				our programs for admitted students, including opportunities to visit campus, connect with
-				current students and faculty, and meet your future classmates. To reserve your place in the
-				class, please confirm your intention to enroll through your MyAppVU portal by May 1, 2027.
+				Over the coming days you will receive detailed information about enrolling, financial aid,
+				and our programs for admitted students, including opportunities to visit campus, connect
+				with current students and faculty, and meet your future classmates. To secure your place in
+				the class, please confirm your intention to enroll through your MyAppVU portal by May 1, 2027.
 			</p>
 			<p>
-				On behalf of all of us at Vanderbilt, congratulations once again. We very much hope that you
-				will choose to join us, and we look forward to welcoming you to Nashville in the fall. Please
-				do not hesitate to contact me if I can be of any service to you.
+				On behalf of everyone at Vanderbilt, congratulations once again. We very much hope you will
+				choose to join us, and we look forward to welcoming you to Nashville this fall. If I can be
+				of any service to you, please do not hesitate to contact me.
 			</p>
 		</div>
 
@@ -93,9 +93,9 @@
 				class="text-3xl italic text-gray-800"
 				style="font-family: 'Segoe Script', 'Brush Script MT', cursive;"
 			>
-				Douglas L. Christiansen
+				Donald F. Whitmore
 			</div>
-			<div class="mt-2 text-[15px] text-gray-800">Douglas L. Christiansen, Ph.D.</div>
+			<div class="mt-2 text-[15px] text-gray-800">Donald F. Whitmore, Ph.D.</div>
 			<div class="text-[15px] text-gray-800">Vice Provost for University Enrollment Affairs</div>
 			<div class="text-[15px] text-gray-800">Dean of Admissions and Financial Aid</div>
 		</div>

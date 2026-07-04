@@ -65,32 +65,33 @@
 
 		<div class="space-y-4 mb-8">
 			<p>
-				On behalf of the Committee on Admissions, it is my great pleasure to offer you admission to
-				the Columbia University Class of 2031. Congratulations! After a remarkably competitive review
+				On behalf of the Committee on Admissions, it gives me great pleasure to offer you a place in
+				the Columbia University Class of 2031. Congratulations! In a remarkably competitive review
 				of applicants from every corner of the world, you distinguished yourself as someone who will
-				thrive in and contribute meaningfully to our community here in the City of New York.
+				thrive in our community here in the City of New York and contribute meaningfully to it.
 			</p>
 
 			<p>
 				The Committee was genuinely impressed by the intellectual curiosity, character, and
-				accomplishment evident throughout your application. At Columbia, you will join a community of
-				scholars defined by the Core Curriculum — a shared intellectual experience that has, for more
-				than a century, invited students to grapple with the great questions of human thought
-				alongside faculty and classmates of extraordinary talent.
+				accomplishment your application displayed throughout. At Columbia, you will join a community
+				of scholars shaped by the Core Curriculum — a shared intellectual experience that, for more
+				than a century, has invited students to wrestle with the great questions of human thought
+				alongside extraordinarily talented faculty and classmates.
 			</p>
 
 			<p>
-				To confirm your place in the class, please submit your enrollment response and deposit
+				To secure your place in the class, please submit your enrollment response and deposit
 				through your applicant portal by <strong>May 1, 2027</strong>. We also warmly invite you to
-				experience our campus firsthand at Days on Campus, our program for admitted students; details
-				and registration are available in your portal. If you applied for financial aid, your award
+				experience our campus firsthand at Days on Campus, our program for admitted students; you
+				will find details and registration in your portal. If you applied for financial aid, your award
 				package from Columbia Financial Aid and Educational Financing — which meets 100% of your
 				demonstrated need — accompanies this letter.
 			</p>
 
 			<p>
-				We recognize that you likely have many outstanding options, and we hope you will choose to
-				call Morningside Heights home. The entire Columbia community looks forward to welcoming you.
+				We know you likely have many outstanding options before you, and we hope you will choose to
+				make Morningside Heights your home. The entire Columbia community looks forward to welcoming
+				you.
 			</p>
 
 			<p>Congratulations once again on this well-deserved achievement.</p>
@@ -105,7 +106,7 @@
 					style="filter: invert(15%) sepia(60%) saturate(1200%) hue-rotate(180deg) brightness(45%) contrast(100%);"
 				/>
 			</div>
-			<div class="font-bold">Jessica Marinaccio</div>
+			<div class="font-bold">Laura Benedetto</div>
 			<div class="text-sm text-gray-600">
 				Dean of Undergraduate Admissions and Financial Aid<br />
 				{schoolName}

@@ -66,24 +66,23 @@
 
 		<div class="space-y-4 mb-8">
 			<p>
-				The Admission Committee has completed the review of our Regular Decision candidates, and we
-				regret to inform you that we are unable to offer you admission to Emory College of Arts and
-				Sciences. I know this is not the news you had hoped to receive, and I do not share it
-				lightly.
+				The Admission Committee has now finished reviewing our Regular Decision candidates, and I
+				am sorry to share that we cannot offer you admission to Emory College of Arts and
+				Sciences. This is surely not the news you hoped for, and it is not news I deliver lightly.
 			</p>
 
 			<p>
-				Each year we receive applications from many more highly qualified students from around the
-				world than we are able to admit. Because our entering class is limited in size, we are
-				unfortunately unable to offer a place to everyone who has the talent and potential to succeed
-				at Emory. Decisions such as this one are among the most difficult that we make.
+				Every year, far more highly qualified students from around the world apply than we can
+				possibly admit. With an entering class of limited size, we regrettably cannot extend a
+				place to every applicant with the talent and potential to succeed at Emory. Decisions like
+				this are among the hardest we face.
 			</p>
 
 			<p>
-				Please know that this decision is not a judgment of your ability or your worth. We recognize
-				the time, effort, and thoughtfulness you invested in your application, and we acknowledge the
-				impressive accomplishments that you have already achieved. We are confident that you will
-				find success and fulfillment in the opportunities ahead of you.
+				Please understand that this outcome is no judgment of your ability or your worth. We saw
+				the time, care, and thoughtfulness you brought to your application, and we recognize how
+				much you have already accomplished. We have no doubt you will find success and fulfillment
+				in the opportunities that lie ahead.
 			</p>
 
 			<p>
@@ -93,14 +92,14 @@
 			</p>
 
 			<p>
-				We thank you sincerely for your interest in Emory, and we offer you our very best wishes for a
-				productive and rewarding college experience.
+				We sincerely appreciate your interest in Emory and send our very best wishes for a
+				rewarding and productive college experience.
 			</p>
 		</div>
 
 		<div class="mt-12">
-			<div class="mb-2 text-2xl italic" style="color: {primaryColor};">Kelley A. Lips</div>
-			<div class="font-bold">Kelley A. Lips, Ed.D.</div>
+			<div class="mb-2 text-2xl italic" style="color: {primaryColor};">Kerry A. Linden</div>
+			<div class="font-bold">Kerry A. Linden, Ed.D.</div>
 			<div class="text-sm text-gray-600">
 				Vice Provost for Undergraduate Enrollment, Admissions<br />
 				{schoolName}

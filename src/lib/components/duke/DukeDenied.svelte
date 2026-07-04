@@ -45,34 +45,34 @@
 				<p class="mb-5">Dear {applicantName || 'Applicant'},</p>
 
 				<p class="mb-5">
-					It is with regret that I write to let you know that we are unable to offer you admission to
-					Duke this fall. I realize this is disappointing news, and I want to assure you that our
-					decision was not an easy one. We received over 61,000 applications this year for just 1,775
-					places in the first-year class; unfortunately we could offer admission to only a small
-					percentage of our many exceptionally accomplished and talented applicants.
+					I am sorry to write that we cannot offer you admission to Duke this fall. I know this
+					news is disappointing, and I want you to know that reaching this decision was far from
+					easy. This year we received over 61,000 applications for just 1,775 places in the
+					first-year class, which meant admission could be extended to only a small fraction of a
+					remarkably accomplished and talented group of applicants.
 				</p>
 
 				<p class="mb-5">
-					My staff and I appreciate the effort you have put forth both inside and outside the
-					classroom to achieve a high level of excellence. Our decision is not an indication of any
-					weakness on your part but rather the result of having many more qualified applicants than we
-					can accommodate. Unfortunately, we do not have an appeal or reconsideration process, either
-					for admission or for a place on our waiting list.
+					My colleagues and I recognize the dedication it took to reach such a high level of
+					excellence both in and beyond the classroom. This decision reflects no weakness on your
+					part; it is simply the result of far more qualified applicants than we have room to
+					accommodate. I must also note that we are unable to offer an appeal or reconsideration
+					process, whether for admission or for a place on our waiting list.
 				</p>
 
 				<p class="mb-5">
-					I know this is not the letter you wanted to receive. My colleagues and I thank you for
-					sharing so much of yourself with us through your application; it's clear that you have great
-					potential for much success in college and beyond and that you will achieve that success in
-					the years to come.
+					I understand this is not the letter you hoped to receive. We are grateful that you shared
+					so much of yourself with us in your application; it is evident that you hold great
+					promise for success in college and well beyond, and we trust you will realize that
+					success in the years ahead.
 				</p>
 
-				<p class="mb-8">Thank you again for considering Duke.</p>
+				<p class="mb-8">Thank you once more for your interest in Duke.</p>
 
 				<p class="mb-8">Sincerely,</p>
 
-				<div class="mb-1 font-[cursive] text-2xl italic text-gray-800">Kathy L. Phillips</div>
-				<div class="text-[14px] font-bold text-gray-900">Kathy L. Phillips</div>
+				<div class="mb-1 font-[cursive] text-2xl italic text-gray-800">Karen L. Prescott</div>
+				<div class="text-[14px] font-bold text-gray-900">Karen L. Prescott</div>
 				<div class="text-[13px] text-gray-700">Interim Dean of Undergraduate Admissions</div>
 			</div>
 		</div>

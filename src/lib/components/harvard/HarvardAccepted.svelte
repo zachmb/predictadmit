@@ -49,29 +49,28 @@
 
 			<div class="space-y-4 text-[14px] leading-relaxed text-gray-800">
 				<p>
-					The Committee on Admissions has completed its meetings, and it is with great pleasure that
-					I write to offer you admission to the Harvard College Class of 2031. Please accept my
-					personal congratulations on your outstanding achievements, which distinguished you within
-					an exceptionally talented and highly qualified pool of applicants.
+					The Committee on Admissions has concluded its meetings, and it is with great pleasure
+					that I write to offer you a place in the Harvard College Class of 2031. Please accept
+					my personal congratulations on your remarkable achievements, which set you apart within
+					an exceptionally talented and highly qualified group of applicants.
 				</p>
 				<p>
-					Each year the Committee reads many thousands of applications for the sixteen hundred and
-					fifty places in the first-year class, and admission is offered to only a small number of
-					candidates whose intellectual curiosity, character, and accomplishments promise to enrich
-					the life of the College. We are confident that you will contribute meaningfully to our
-					community and thrive here at Harvard.
+					The Committee reads many thousands of applications each year for the sixteen hundred and
+					fifty places in the first-year class, and it extends admission to only a small number
+					of candidates whose intellectual curiosity, character, and accomplishments promise to
+					enrich the life of the College. We are confident that you will thrive at Harvard and
+					contribute meaningfully to our community.
 				</p>
 				<p>
-					You will soon receive detailed information about enrollment, financial aid, and Visitas,
-					our program for admitted students, which offers the best opportunity to experience the
-					academic and extracurricular life of the College, meet faculty, and connect with your
-					future classmates. To reserve your place in the class, please confirm your intention to
-					enroll through your applicant portal by May 1, 2027.
+					Detailed information will reach you soon about enrollment, financial aid, and Visitas,
+					our program for admitted students — the best way to experience the academic and
+					extracurricular life of the College, to meet faculty, and to get to know your future
+					classmates. To hold your place in the class, please confirm your intention to enroll
+					through your applicant portal by May 1, 2027.
 				</p>
 				<p>
-					We very much hope that you will choose to join us. On behalf of the entire Committee,
-					congratulations once again, and we look forward to welcoming you to Harvard Yard in the
-					fall.
+					We very much hope you will decide to join us. On behalf of the entire Committee,
+					congratulations once more — we look forward to greeting you in Harvard Yard this fall.
 				</p>
 			</div>
 
@@ -81,9 +80,9 @@
 					class="text-3xl italic text-gray-800"
 					style="font-family: 'Segoe Script', 'Brush Script MT', cursive;"
 				>
-					William R. Fitzsimmons
+					Edward C. Mansfield
 				</div>
-				<div class="mt-2 text-[14px] font-semibold text-gray-900">William R. Fitzsimmons</div>
+				<div class="mt-2 text-[14px] font-semibold text-gray-900">Edward C. Mansfield</div>
 				<div class="text-[13px] text-gray-600">Dean of Admissions and Financial Aid</div>
 			</div>
 

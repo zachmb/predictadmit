@@ -354,9 +354,7 @@
 						on:click={handleViewUpdate}
 						class="text-2xl font-bold underline decoration-2 underline-offset-4 hover:no-underline block mb-4 text-left"
 						style="color: {school.primaryColor};"
-					>
-						Decision Letter
-					</button>
+					>Simulated Decision Letter</button>
 					<p class="text-[14px] text-gray-700">
 						<span class="font-bold" style="color: {school.primaryColor};">READ</span>, Received
 						3/18/2026

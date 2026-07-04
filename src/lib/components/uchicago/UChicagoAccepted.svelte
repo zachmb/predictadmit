@@ -65,17 +65,17 @@
 
 		<div class="space-y-4 mb-8">
 			<p>
-				Congratulations! It is with tremendous enthusiasm that I write to offer you admission to the
-				College of the University of Chicago as a member of the Class of 2031. On behalf of the
-				Committee on Admissions, I want to be the first to welcome you to our community of scholars.
+				Congratulations! I am tremendously pleased to offer you admission to the College of the
+				University of Chicago as a member of the Class of 2031. On behalf of the Committee on
+				Admissions, welcome to our community of scholars.
 			</p>
 
 			<p>
 				This year we reviewed one of the largest and most talented applicant pools in the history of
 				the University. Your candidacy stood out for its intellectual daring, your genuine love of
-				ideas, and the distinctive way you engaged the questions we posed. The Committee was
-				especially struck by the originality of your thinking &mdash; the very quality that defines
-				life on our campus, where inquiry is relentless and no idea is taken for granted.
+				ideas, and the distinctive way you engaged the questions we posed. The Committee especially
+				admired the originality of your thinking &mdash; a quality central to life on our campus,
+				where inquiry is relentless and no idea is taken for granted.
 			</p>
 
 			<p>
@@ -93,7 +93,7 @@
 			</p>
 
 			<p>
-				Congratulations once again on this remarkable achievement. We cannot wait to see what you
+				Congratulations once again on this remarkable achievement. We look forward to seeing what you
 				will make of your time in Hyde Park.
 			</p>
 		</div>
@@ -107,7 +107,7 @@
 					style="filter: invert(15%) sepia(85%) saturate(1500%) hue-rotate(330deg) brightness(30%) contrast(100%);"
 				/>
 			</div>
-			<div class="font-bold">James G. Nondorf</div>
+			<div class="font-bold">Jonathan P. Merriweather</div>
 			<div class="text-sm text-gray-600">
 				Vice President and Dean of Admissions and Financial Aid<br />
 				{schoolName}

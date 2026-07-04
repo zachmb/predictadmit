@@ -309,7 +309,7 @@
 						class="text-[14px] font-bold hover:underline"
 						style="color: {school.primaryColor};"
 					>
-						View Application Update &gt;&gt;
+						View Simulated Application Update &gt;&gt;
 					</button>
 
 					<h3 class="mb-1 mt-10 text-xl font-bold" style="color: {school.primaryColor};">

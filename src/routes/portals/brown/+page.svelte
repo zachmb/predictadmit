@@ -280,7 +280,7 @@
 						class="mt-5 inline-flex items-center gap-2 px-5 py-2.5 font-sans text-sm font-semibold text-white shadow-sm transition-opacity hover:opacity-90"
 						style="background-color: {school.accentColor};"
 					>
-						Your Admission Decision &gt;&gt;
+						View Simulated Admission Decision &gt;&gt;
 					</button>
 				</div>
 			</section>
