@@ -84,7 +84,7 @@ Do not include JSON – just write readable markdown text.`;
 					{ role: 'user', content: userPrompt }
 				],
 				temperature: 0.65,
-				max_tokens: 1600
+				max_tokens: 3000
 			})
 		});
 

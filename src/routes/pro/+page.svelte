@@ -67,16 +67,16 @@
 	// Sales/Pricing State
 	let pricingMode = $state<'lifetime' | 'monthly'>('monthly');
 	// Ticker Animation
-	const displayedPrice = tweened(5, {
+	const displayedPrice = tweened(39, {
 		duration: 800,
 		easing: cubicOut
 	});
 
 	$effect(() => {
 		if (pricingMode === 'monthly') {
-			displayedPrice.set(5);
+			displayedPrice.set(39);
 		} else {
-			displayedPrice.set(9);
+			displayedPrice.set(99);
 		}
 	});
 
@@ -2169,7 +2169,7 @@
 					<span class="text-slate-500">Start free. Go unlimited.</span>
 				</h1>
 				<p class="text-lg text-slate-500 max-w-xl mx-auto leading-relaxed mt-6">
-					Every account starts with a free AI admissions rehearsal and a taste of every tool. Pro unlocks unlimited rehearsals, full deep-dive analyses, and the complete essay suite — $5/month, or $9 once for lifetime access.
+					Every account starts with a free AI admissions rehearsal and a taste of every tool. Full Access unlocks unlimited rehearsals, full deep-dive analyses, and the complete essay suite — $39/month, or $99 once for lifetime access. Only need one school? A School Pass is $14.99.
 				</p>
 			</div>
 
@@ -2203,7 +2203,7 @@
 							</div>
 							<div class="w-px h-8 bg-slate-100"></div>
 							<div class="flex flex-col items-center">
-								<span class="text-xl font-bold text-slate-900">$9</span>
+								<span class="text-xl font-bold text-slate-900">$99</span>
 								<span class="text-[10px] uppercase font-bold text-slate-400">Lifetime Pro</span>
 							</div>
 							<div class="w-px h-8 bg-slate-100"></div>
@@ -2258,7 +2258,7 @@
 							<div>
 								<div class="flex items-center gap-2">
 									<p class="font-bold text-slate-900">Unlimited with Pro</p>
-									<span class="text-[10px] uppercase font-bold tracking-wide text-[#0052CC] bg-white border border-blue-100 rounded-full px-2 py-0.5">$5/mo · $9 lifetime</span>
+									<span class="text-[10px] uppercase font-bold tracking-wide text-[#0052CC] bg-white border border-blue-100 rounded-full px-2 py-0.5">$39/mo · $99 lifetime</span>
 								</div>
 								<p class="text-sm text-slate-500">Unlimited AI admissions rehearsals, full deep-dive decision analyses, and unlimited essay grading. One free rehearsal to try it first.</p>
 							</div>
@@ -2270,10 +2270,10 @@
 			<!-- Vision Section -->
 			<div class="pt-16 border-t border-slate-200">
 				<div class="bg-blue-900 rounded-[2.5rem] p-12 text-center text-white space-y-6">
-					<h3 class="text-3xl font-bold text-white">Elite admissions intelligence, priced like a sandwich.</h3>
+					<h3 class="text-3xl font-bold text-white">Elite admissions intelligence, priced for students.</h3>
 					<p class="text-blue-100 text-lg max-w-2xl mx-auto leading-relaxed">
 						We believe the price of admissions advice should not determine the quality of your education.
-						Private consultants charge thousands for the judgment Pro gives you for $9, once — every
+						Private consultants charge thousands per season for the judgment Full Access gives you for $99, once — every
 						rehearsal, every deep dive, every essay tool, forever. Try it free first; upgrade only if
 						it earns it.
 					</p>

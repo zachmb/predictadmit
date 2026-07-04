@@ -62,6 +62,7 @@
 		email: '',
 		password: '',
 		isPro: false,
+		proSchools: [],
 		requestCount: 0,
 		applicationProfile: {
 			gpa: '',

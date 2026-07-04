@@ -112,7 +112,7 @@ ${profileContext}`;
 				},
 				body: JSON.stringify({
 					model,
-					max_tokens: 1024,
+					max_tokens: 2048,
 					system,
 					messages: apiMessages
 				})

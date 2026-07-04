@@ -18,6 +18,10 @@
 	} from '$lib/stores/results';
 
 	const slug = $derived($page.params.slug ?? '');
+	// Full Access or a School Pass for this school unlocks the full analysis.
+	const unlocked = $derived(
+		$userProfile.isPro || ($userProfile.proSchools ?? []).includes(slug)
+	);
 	const schoolData = $derived($aiResults.decisions.find((d) => d.slug === slug));
 	$effect(() => {
 		if (schoolData && schoolData.academic_explanation === 'N/A: random sim') {
@@ -209,10 +213,7 @@
 									<p>
 										<strong class="text-slate-900 not-italic">{item.label}:</strong>
 										<span>{getPeekText(item.val)}</span>
-										<span
-											class:blur-sm={!$userProfile.isPro}
-											class:select-none={!$userProfile.isPro}
-										>
+										<span class:blur-sm={!unlocked} class:select-none={!unlocked}>
 											{getRemainingText(item.val)}
 										</span>
 									</p>
@@ -225,8 +226,8 @@
 								</h3>
 								<div
 									class="text-xs text-slate-700 space-y-2 whitespace-pre-line"
-									class:blur-sm={!$userProfile.isPro}
-									class:select-none={!$userProfile.isPro}
+									class:blur-sm={!unlocked}
+									class:select-none={!unlocked}
 								>
 									{$improvementTipsBySlug[slug]}
 								</div>

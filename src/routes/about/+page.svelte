@@ -4,7 +4,7 @@
 	const stats = [
 		{ value: '5,000+', label: 'Students on PredictAdmit' },
 		{ value: '39', label: 'School scenarios' },
-		{ value: '$9', label: 'Lifetime Pro access' },
+		{ value: '$99', label: 'Lifetime Full Access' },
 		{ value: '1', label: 'Free rehearsal to start' }
 	];
 
@@ -22,7 +22,7 @@
 		{
 			icon: '⚡',
 			title: 'Pro unlocks it all',
-			body: 'PredictAdmit Pro removes every limit: unlimited AI admissions rehearsals, full deep-dive decision analyses, and unlimited essay grading — $5/month or $9 once for lifetime access. Less than a private consultant charges per minute.'
+			body: 'PredictAdmit Pro removes every limit: unlimited AI admissions rehearsals, full deep-dive decision analyses, and unlimited essay grading — $39/month or $99 once for lifetime access. A single School Pass is $14.99. All of it costs less than one hour with a private consultant.'
 		},
 		{
 			icon: '🔍',
@@ -55,7 +55,7 @@
 	const faqs: { q: string; a: string; link?: { href: string; label: string } }[] = [
 		{
 			q: 'Is PredictAdmit free?',
-			a: 'You can start free: every account gets a free AI admissions rehearsal and access to try the tools, no credit card required. PredictAdmit Pro unlocks unlimited rehearsals, full deep-dive analyses, and unlimited essay grading for $5/month — or $9 once for lifetime access.'
+			a: 'You can start free: every account gets a free AI admissions rehearsal and access to try the tools, no credit card required. PredictAdmit Pro unlocks unlimited rehearsals, full deep-dive analyses, and unlimited essay grading for $39/month — or $99 once for lifetime Full Access. If you only care about one school, a School Pass unlocks its full analysis for $14.99.'
 		},
 		{
 			q: 'Are the decision letters real?',
@@ -81,19 +81,19 @@
 	<title>About PredictAdmit — Your unfair advantage in college admissions</title>
 	<meta
 		name="description"
-		content="PredictAdmit gives students an admissions outcome rehearsal tool, an AI essay workshop, and a chances predictor. Start with a free rehearsal; Pro unlocks everything for $9. Everything simulated is clearly labeled."
+		content="PredictAdmit gives students an admissions outcome rehearsal tool, an AI essay workshop, and a chances predictor. Start with a free rehearsal; Full Access unlocks everything for $99 once. Everything simulated is clearly labeled."
 	/>
 	<meta property="og:title" content="About PredictAdmit — Your unfair advantage in college admissions" />
 	<meta
 		property="og:description"
-		content="Practice with clearly labeled admissions outcome rehearsals and sharpen your essays with AI. One free rehearsal to start — Pro unlocks unlimited for $9."
+		content="Practice with clearly labeled admissions outcome rehearsals and sharpen your essays with AI. One free rehearsal to start — Full Access unlocks unlimited for $99 once."
 	/>
 	<meta property="og:type" content="website" />
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:title" content="About PredictAdmit" />
 	<meta
 		name="twitter:description"
-		content="An admissions outcome rehearsal tool, an AI essay workshop, and a chances predictor. Free to try — Pro unlocks unlimited for $9."
+		content="An admissions outcome rehearsal tool, an AI essay workshop, and a chances predictor. Free to try — Full Access unlocks unlimited for $99 once."
 	/>
 </svelte:head>
 
@@ -182,9 +182,9 @@
 		</div>
 		<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
 			{#each [
-				{ icon: '🔮', title: 'Unlimited AI rehearsals', body: 'Run your profile against all 39 school scenarios as many times as you want. Change your essay, rerun, and watch what moves.' },
-				{ icon: '🔬', title: 'Full deep-dive analyses', body: 'Every decision comes with five scored dimensions and specific improvement tips — the "why" behind the outcome, unblurred.' },
-				{ icon: '📝', title: 'Unlimited essay grading', body: 'Grade every draft of every essay. The AI reads like a coded, blunt admissions officer — before a real one does.' }
+				{ icon: '🔮', title: 'Unlimited AI rehearsals', body: 'Run your profile against all 39 school scenarios as many times as you want. Change your essay, rerun, and watch what moves — the feedback loop consultants bill by the hour.' },
+				{ icon: '🔬', title: 'Full deep-dive analyses', body: 'Every decision comes with five scored dimensions, a committee-style written critique, and a prioritized improvement plan for that school — the "why" behind the outcome, unblurred.' },
+				{ icon: '📝', title: 'Unlimited essay grading', body: 'Ten inline annotations plus a harsh and an honest admissions-officer read on every draft, for every essay — before a real committee sees it.' }
 			] as f}
 				<div class="flex flex-col rounded-2xl border border-slate-100 bg-white p-6 hover:shadow-md transition-shadow">
 					<div class="text-3xl mb-3">{f.icon}</div>
@@ -198,7 +198,7 @@
 				href="/pricing"
 				class="inline-flex items-center justify-center font-semibold text-sm bg-[#0052CC] text-white px-8 py-3.5 rounded-lg hover:bg-[#003d99] transition-colors shadow-lg shadow-[#0052CC]/20"
 			>
-				Go Pro — $5/mo or $9 lifetime →
+				Get Full Access — $39/mo or $99 lifetime →
 			</a>
 			<span class="text-sm text-slate-400">Free simulation included. No credit card to start.</span>
 		</div>

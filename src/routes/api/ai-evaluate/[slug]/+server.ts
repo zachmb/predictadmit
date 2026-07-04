@@ -124,7 +124,7 @@ Structure:
   "intellectual_explanation": "string",
   "character_score": number,
   "character_explanation": "string",
-  "improvement_tips": "string (3-4 specific bullet points — describe WHAT to improve and WHY; never write or suggest replacement essay wording, sentences, or any text the applicant could paste into their application)"
+  "improvement_tips": "string (5-7 specific bullet points, ordered by expected impact for THIS school — each names the weakness, why it matters to this school's committee, and a concrete action; never write or suggest replacement essay wording, sentences, or any text the applicant could paste into their application)"
 }`;
 
 	const userPrompt = `Applicant materials:

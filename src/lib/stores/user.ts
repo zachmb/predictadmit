@@ -25,6 +25,8 @@ export type UserProfile = {
 	email: string;
 	password: string;
 	isPro: boolean;
+	// One-time $14.99 School Pass purchases — slugs with full Pro analysis unlocked.
+	proSchools: string[];
 	requestCount: number;
 	applicationProfile: {
 		gpa: string;
@@ -44,6 +46,7 @@ export const defaultProfile: UserProfile = {
 	email: '',
 	password: '',
 	isPro: false,
+	proSchools: [],
 	requestCount: 0,
 	applicationProfile: {
 		gpa: '',

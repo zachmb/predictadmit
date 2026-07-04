@@ -324,10 +324,20 @@
 
 		const params = new URLSearchParams(window.location.search);
 
-		// If we just came back from Stripe with ?upgrade=success, mark this browser as Pro
+		// If we just came back from Stripe with ?upgrade=success, grant the purchased plan
 		if (params.get('upgrade') === 'success') {
-			// Update the global store (which auto-persists to localStorage['predictadmit:user'])
-			userProfile.update((u) => ({ ...u, isPro: true }));
+			const plan = params.get('plan');
+			const slug = params.get('slug');
+			if (plan === 'school' && slug) {
+				// $14.99 School Pass: full Pro analysis for this one school
+				userProfile.update((u) => ({
+					...u,
+					proSchools: u.proSchools.includes(slug) ? u.proSchools : [...u.proSchools, slug]
+				}));
+			} else {
+				// Full Access (monthly or lifetime) — auto-persists to localStorage['predictadmit:user']
+				userProfile.update((u) => ({ ...u, isPro: true }));
+			}
 
 			// Optional: clean ?upgrade=success from the URL
 			window.history.replaceState({}, '', window.location.pathname);
@@ -409,7 +419,7 @@
 	}
 
 	let checkoutLoading = $state(false);
-	async function startCheckout(plan: 'lifetime' | 'monthly') {
+	async function startCheckout(plan: 'lifetime' | 'monthly' | 'school', decision?: AiDecision) {
 		if (checkoutLoading) return;
 		if (!googleSignedIn) {
 			signIn('google', { callbackUrl: '/ai' });
@@ -420,7 +430,11 @@
 			const res = await fetch('/api/checkout', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ pricingMode: plan })
+				body: JSON.stringify(
+					plan === 'school' && decision
+						? { pricingMode: plan, slug: decision.slug, schoolName: decision.school }
+						: { pricingMode: plan }
+				)
 			});
 			const data = await res.json();
 			if (data.url) {
@@ -563,8 +577,16 @@
 		}
 	}
 
-	// 🔒 Deep Dive is now fully free for signed-in users
+	// 🔒 Deep Dive requires Full Access or a School Pass for that school
+	function hasSchoolAccess(slug: string): boolean {
+		return $userProfile.isPro || ($userProfile.proSchools ?? []).includes(slug);
+	}
+
 	async function requestDeepDive(decision: AiDecision) {
+		if (!hasSchoolAccess(decision.slug)) {
+			openPaywall('deepDive', decision);
+			return;
+		}
 
 		if (!applicantSummary) {
 			applicantSummary = [
@@ -1594,8 +1616,8 @@
 					{paywallMode === 'simulation' ? "You've used your free rehearsal" : paywallMode === 'deepDive' ? 'Deep dives are a Pro feature' : 'This is a Pro feature'}
 				</h3>
 				<p class="mx-auto mt-2 max-w-sm text-center text-sm text-slate-500">
-					Pro unlocks unlimited AI admissions rehearsals, full deep-dive decision analyses, and unlimited
-					essay grading. One upgrade, everything included.
+					Full Access unlocks unlimited AI admissions rehearsals across every school, every deep-dive
+					decision analysis, unlimited essay grading, and the full counselor toolkit.
 				</p>
 				<div class="mt-6 space-y-2">
 					<button
@@ -1603,15 +1625,28 @@
 						disabled={checkoutLoading}
 						class="w-full rounded-xl bg-[#0052CC] px-4 py-3 text-sm font-bold text-white transition hover:bg-[#0047b3] disabled:opacity-50"
 					>
-						{checkoutLoading ? 'Starting secure checkout…' : 'Lifetime Pro — $9 once'}
+						{checkoutLoading ? 'Starting secure checkout…' : 'Full Access — $99 once, forever'}
 					</button>
 					<button
 						onclick={() => startCheckout('monthly')}
 						disabled={checkoutLoading}
 						class="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 disabled:opacity-50"
 					>
-						Monthly — $5/mo, cancel anytime
+						Full Access — $39/mo, cancel anytime
 					</button>
+					{#if paywallContextDecision}
+						<button
+							onclick={() => startCheckout('school', paywallContextDecision ?? undefined)}
+							disabled={checkoutLoading}
+							class="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 disabled:opacity-50"
+						>
+							{paywallContextDecision.school} School Pass — $14.99 once
+						</button>
+						<p class="text-center text-[11px] text-slate-400">
+							School Pass unlocks the full deep-dive analysis and essay grading for
+							{paywallContextDecision.school} only.
+						</p>
+					{/if}
 				</div>
 				<button onclick={closePaywall} class="mt-4 w-full text-center text-xs font-semibold text-slate-400 hover:text-slate-600">
 					Maybe later

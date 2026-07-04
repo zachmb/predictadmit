@@ -33,13 +33,13 @@ export const POST: RequestHandler = async ({ request }) => {
 
 		if (isMonthly) {
 			// Keeping legacy logic just in case, or map 'cycle' to this if we consider it the subscription
-			// But requirements said "$9 for full cycle"
+			// Legacy isMonthly branch kept for compatibility
 		}
 
-		const { pricingMode } = body; // 'lifetime' | 'monthly'
+		const { pricingMode } = body; // 'lifetime' | 'monthly' | 'school'
 
 		if (pricingMode === 'lifetime') {
-			// $9.00 Lifetime Pass (formerly Cycle)
+			// $99 Full Access — one-time payment, everything forever.
 			sessionConfig = {
 				mode: 'payment',
 				line_items: [
@@ -47,10 +47,10 @@ export const POST: RequestHandler = async ({ request }) => {
 						price_data: {
 							currency: 'usd',
 							product_data: {
-								name: 'PredictAdmit Pro - Lifetime Pass',
-								description: 'One-time payment. Forever access.'
+								name: 'PredictAdmit Pro — Full Access (Lifetime)',
+								description: 'One-time payment. Every school, every tool, forever.'
 							},
-							unit_amount: 900 // $9.00
+							unit_amount: 9900 // $99.00
 						},
 						quantity: 1
 					}
@@ -59,7 +59,7 @@ export const POST: RequestHandler = async ({ request }) => {
 				cancel_url: 'http://localhost:5201/pro?canceled=1'
 			};
 		} else if (pricingMode === 'monthly') {
-			// $5.00 Monthly Subscription
+			// $39/month Full Access subscription.
 			sessionConfig = {
 				mode: 'subscription',
 				line_items: [
@@ -67,10 +67,10 @@ export const POST: RequestHandler = async ({ request }) => {
 						price_data: {
 							currency: 'usd',
 							product_data: {
-								name: 'PredictAdmit Pro - Monthly Access',
+								name: 'PredictAdmit Pro — Full Access (Monthly)',
 								description: 'Monthly subscription. Cancel anytime.'
 							},
-							unit_amount: 500, // $5.00
+							unit_amount: 3900, // $39.00
 							recurring: {
 								interval: 'month'
 							}
@@ -79,6 +79,31 @@ export const POST: RequestHandler = async ({ request }) => {
 					}
 				],
 				success_url: 'http://localhost:5201/ai?upgrade=success&plan=monthly',
+				cancel_url: 'http://localhost:5201/pro?canceled=1'
+			};
+		} else if (pricingMode === 'school') {
+			// $14.99 School Pass — one-time, unlocks full Pro analysis for one school.
+			const slug = String(body.slug || '');
+			const schoolName = String(body.schoolName || '').slice(0, 80);
+			if (!/^[a-z0-9-]{2,32}$/.test(slug) || !schoolName) {
+				return json({ error: 'Invalid school for School Pass.' }, { status: 400 });
+			}
+			sessionConfig = {
+				mode: 'payment',
+				line_items: [
+					{
+						price_data: {
+							currency: 'usd',
+							product_data: {
+								name: `PredictAdmit School Pass — ${schoolName}`,
+								description: 'One-time payment. Full Pro analysis for this school.'
+							},
+							unit_amount: 1499 // $14.99
+						},
+						quantity: 1
+					}
+				],
+				success_url: `http://localhost:5201/ai?upgrade=success&plan=school&slug=${slug}`,
 				cancel_url: 'http://localhost:5201/pro?canceled=1'
 			};
 		} else {

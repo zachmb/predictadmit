@@ -31,8 +31,22 @@
 	// Form inputs - Using $state for Svelte 5 reactivity
 	let major = $state('');
 
+	// School Pass holders can grade essays for their unlocked school(s) without Full Access.
+	const passSchools = $derived(
+		portals.filter((p) => ($userProfile.proSchools ?? []).includes(p.slug))
+	);
+	const graderUnlocked = $derived($userProfile.isPro || passSchools.length > 0);
+	// Without Full Access, the school selector is limited to School Pass schools.
+	const selectableSchools = $derived($userProfile.isPro ? portals : passSchools);
+
 	// SAFETY FIX: Check if portals exists before accessing index 0
 	let selectedSchool = $state(portals && portals.length > 0 ? portals[0].name : '');
+
+	$effect(() => {
+		if (!$userProfile.isPro && passSchools.length > 0 && !passSchools.some((p) => p.name === selectedSchool)) {
+			selectedSchool = passSchools[0].name;
+		}
+	});
 
 	let essayType = $state<'personal' | 'supplemental'>('personal');
 	let content = $state('');
@@ -154,7 +168,7 @@
 				</div>
 			</Card>
 		</div>
-	{:else if !$userProfile.isPro}
+	{:else if !graderUnlocked}
 		<div class="max-w-2xl mx-auto py-20 px-6">
 			<Card
 				class="relative overflow-hidden border-none shadow-2xl bg-white/80 backdrop-blur-xl p-1"
@@ -355,10 +369,16 @@
 							bind:value={selectedSchool}
 							class="w-full bg-slate-50 border border-slate-200 p-4 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all appearance-none"
 						>
-							{#each portals as school}
+							{#each selectableSchools as school}
 								<option value={school.name}>{school.name}</option>
 							{/each}
 						</select>
+						{#if !$userProfile.isPro && passSchools.length > 0}
+							<p class="text-[11px] text-slate-400">
+								Your School Pass covers {passSchools.map((p) => p.name).join(', ')}. Full Access
+								unlocks every school.
+							</p>
+						{/if}
 					</div>
 				</div>
 
