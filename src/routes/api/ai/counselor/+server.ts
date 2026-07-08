@@ -98,7 +98,7 @@ ${profileContext}`;
 		.filter((m) => m && (m.role === 'user' || m.role === 'assistant') && typeof m.content === 'string')
 		.map((m) => ({ role: m.role, content: m.content }));
 
-	const models = ['claude-3-5-sonnet-20241022', 'claude-3-haiku-20240307'];
+	const models = ['claude-sonnet-4-6', 'claude-haiku-4-5'];
 	let lastError: unknown;
 
 	for (const model of models) {

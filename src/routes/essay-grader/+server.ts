@@ -130,7 +130,7 @@ export const POST: RequestHandler = async ({ request }) => {
 	try {
 		// Helper to call Claude with fallback
 		async function callClaudeWithFallback(prompt: string) {
-			const models = ['claude-3-5-sonnet-20241022', 'claude-3-haiku-20240307'];
+			const models = ['claude-sonnet-4-6', 'claude-haiku-4-5'];
 			let lastError;
 
 			for (const model of models) {
