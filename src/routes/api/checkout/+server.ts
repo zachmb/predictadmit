@@ -19,6 +19,9 @@ export const POST: RequestHandler = async ({ request }) => {
 
 		const body = await request.json();
 		const { isMonthly } = body;
+		// Use the REQUEST's own origin so checkout redirects work in every
+		// environment (was hardcoded to http://localhost:5201 — broken in prod).
+		const origin = new URL(request.url).origin;
 
 		// ✅ Create Stripe client
 		const stripe = new Stripe(STRIPE_SECRET_KEY, {
@@ -55,8 +58,8 @@ export const POST: RequestHandler = async ({ request }) => {
 						quantity: 1
 					}
 				],
-				success_url: 'http://localhost:5201/ai?upgrade=success&plan=lifetime',
-				cancel_url: 'http://localhost:5201/pro?canceled=1'
+				success_url: `${origin}/ai?upgrade=success&plan=lifetime`,
+				cancel_url: `${origin}/pro?canceled=1`
 			};
 		} else if (pricingMode === 'monthly') {
 			// $39/month Full Access subscription.
@@ -78,8 +81,8 @@ export const POST: RequestHandler = async ({ request }) => {
 						quantity: 1
 					}
 				],
-				success_url: 'http://localhost:5201/ai?upgrade=success&plan=monthly',
-				cancel_url: 'http://localhost:5201/pro?canceled=1'
+				success_url: `${origin}/ai?upgrade=success&plan=monthly`,
+				cancel_url: `${origin}/pro?canceled=1`
 			};
 		} else if (pricingMode === 'school') {
 			// $14.99 School Pass — one-time, unlocks full Pro analysis for one school.
@@ -103,8 +106,8 @@ export const POST: RequestHandler = async ({ request }) => {
 						quantity: 1
 					}
 				],
-				success_url: `http://localhost:5201/ai?upgrade=success&plan=school&slug=${slug}`,
-				cancel_url: 'http://localhost:5201/pro?canceled=1'
+				success_url: `${origin}/ai?upgrade=success&plan=school&slug=${slug}`,
+				cancel_url: `${origin}/pro?canceled=1`
 			};
 		} else {
 			// Fallback or Legacy (if existing calls use isMonthly)
