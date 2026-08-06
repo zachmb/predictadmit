@@ -52,6 +52,14 @@
 			? `${name} rehearsed a ${schoolName} admissions outcome on PredictAdmit. Try your own clearly labeled rehearsal for free.`
 			: `See ${name}'s simulated ${schoolName} admissions decision on PredictAdmit. Run your own admissions rehearsal for free.`
 	);
+
+	// Personalized preview card (absolute URL required by crawlers). Points at the
+	// dynamic /share/og endpoint so the unfurled image shows THIS name + school in
+	// the school's brand color instead of one generic house image.
+	const metaImage = $derived(
+		`${$page.url.origin}/share/og?school=${encodeURIComponent(schoolSlug)}` +
+			`&outcome=${outcome}&name=${encodeURIComponent(name)}`
+	);
 </script>
 
 <svelte:head>
@@ -62,14 +70,16 @@
 	<meta property="og:type" content="website" />
 	<meta property="og:title" content={metaTitle} />
 	<meta property="og:description" content={metaDescription} />
-	<meta property="og:image" content="/og-default.png" />
+	<meta property="og:image" content={metaImage} />
+	<meta property="og:image:width" content="1200" />
+	<meta property="og:image:height" content="630" />
 	<meta property="og:site_name" content="PredictAdmit" />
 
 	<!-- Twitter -->
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:title" content={metaTitle} />
 	<meta name="twitter:description" content={metaDescription} />
-	<meta name="twitter:image" content="/og-default.png" />
+	<meta name="twitter:image" content={metaImage} />
 </svelte:head>
 
 <div
