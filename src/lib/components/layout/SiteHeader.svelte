@@ -91,7 +91,7 @@
 						: 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'}"
 				>
 					<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v2m0 14v2M3 12h2m14 0h2m-3.5-6.5-1.4 1.4M6.9 17.1l-1.4 1.4m0-13 1.4 1.4m11.6 11.6-1.4-1.4"/><circle cx="12" cy="12" r="4"/></svg>
-					Predict My Chances</a
+					Predict My Decisions</a
 				>
 				<a
 					href="/portals"

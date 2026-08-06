@@ -493,7 +493,7 @@
 </script>
 
 <svelte:head>
-	<title>PredictAdmit — Rehearse any college admissions outcome</title>
+	<title>PredictAdmit — Simulate any university portal</title>
 	<meta
 		name="description"
 		content="Open any top school's decision portal — a clearly-fictional, pixel-for-pixel replica — and live out decision day before it's real. Then grade your application with AI and see your real chances."
@@ -510,7 +510,7 @@
 				<h1
 					class="text-5xl sm:text-6xl md:text-[5.5rem] font-bold tracking-tighter leading-[0.95] text-slate-900 animate-in fade-in slide-in-from-bottom-6 duration-1000 fill-mode-both"
 				>
-					Rehearse Any <br class="hidden md:block" /> Admissions <span class="text-[#0052CC]">Outcome</span>.
+					Simulate Any <br class="hidden md:block" /> University <span class="text-[#0052CC]">Portal</span>
 				</h1>
 				<p
 					class="text-xl md:text-2xl text-slate-500 max-w-2xl mx-auto leading-snug tracking-tight font-medium mt-6 animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-[200ms] fill-mode-both"
