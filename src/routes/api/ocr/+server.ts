@@ -34,22 +34,14 @@ export const POST: RequestHandler = async ({ request }) => {
 	}
 
 	try {
-		// Dynamic import keeps pdf.js out of the main server bundle.
-		const { PDFParse } = await import('pdf-parse');
-		const parser = new PDFParse({ data: new Uint8Array(buffer) });
+		// unpdf ships a serverless-safe build of pdf.js (no external font/cmap
+		// assets to bundle), which is why it works on Vercel where plain pdf.js
+		// throws at runtime.
+		const { extractText, getDocumentProxy } = await import('unpdf');
+		const doc = await getDocumentProxy(new Uint8Array(buffer));
+		const { text: raw } = await extractText(doc, { mergePages: true });
 
-		let text = '';
-		try {
-			const res = await parser.getText();
-			text = (res?.text ?? '').trim();
-		} finally {
-			// Release the pdf.js worker/document.
-			await (parser as { destroy?: () => Promise<void> }).destroy?.().catch(() => {});
-		}
-
-		// pdf-parse injects "-- N of M --" page separators; strip them.
-		text = text
-			.replace(/\n?--\s*\d+\s+of\s+\d+\s*--\n?/gi, '\n')
+		const text = (Array.isArray(raw) ? raw.join('\n') : (raw ?? ''))
 			.replace(/\n{3,}/g, '\n\n')
 			.trim();
 
