@@ -143,7 +143,7 @@
 							class="inline-flex w-full items-center justify-center rounded-xl px-6 py-3.5 text-base font-semibold text-white shadow-sm transition-opacity hover:opacity-90"
 							style="background-color: var(--accent);"
 						>
-							Predict YOUR decision →
+							Predict YOUR decisions →
 						</a>
 						<a
 							href="/ai"
