@@ -61,6 +61,13 @@
 	let ocrError = $state('');
 	let ocrText = $state('');
 
+	// "Paste everything you've got" → autofill every field.
+	let pasteBlob = $state('');
+	let parsing = $state(false);
+	let parseError = $state('');
+	let parseNotice = $state('');
+	let parsedFieldKeys = $state<string[]>([]);
+
 	// Major Autofill
 	let majorSuggestions = $derived(
 		major.length > 0
@@ -700,6 +707,9 @@
 				if (typeof localStorage !== 'undefined') {
 					localStorage.setItem('predictadmit_hasUsedFreePdfOcr', 'true');
 				}
+				// The whole point of the upload: turn the extracted text into filled
+				// fields automatically, not just a blob the student re-sorts by hand.
+				await parseAndFill(ocrText);
 			}
 		} catch (err) {
 			console.error(err);
@@ -712,6 +722,64 @@
 	function applyOcrToEssay() {
 		if (!ocrText) return;
 		essay = ocrText;
+	}
+
+	// Send one blob of text (OCR'd PDF or a big paste) to the parser and drop the
+	// pieces into the right boxes. We only OVERWRITE a field when the parser
+	// actually found something for it, so a partial resume never wipes work the
+	// student already typed.
+	const FIELD_LABELS: Record<string, string> = {
+		transcript: 'GPA & scores',
+		activities: 'Activities',
+		honors: 'Honors',
+		essay: 'Essay',
+		major: 'Major'
+	};
+
+	async function parseAndFill(text: string) {
+		const source = (text ?? '').trim();
+		parseError = '';
+		parseNotice = '';
+		parsedFieldKeys = [];
+		if (source.length < 20) {
+			parseError = 'Add a bit more text first — a resume, brag sheet, or your Common App activities.';
+			return;
+		}
+
+		parsing = true;
+		try {
+			const res = await fetch('/api/parse-application', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ text: source })
+			});
+			const data = await res.json();
+
+			if (!res.ok) {
+				parseError = data?.error ?? 'Could not read your materials. Try pasting them again.';
+				return;
+			}
+
+			const f = (data.fields ?? {}) as Record<string, string>;
+			const filled: string[] = [];
+			if (f.transcript) { transcript = f.transcript; filled.push('transcript'); }
+			if (f.activities) { activities = f.activities; filled.push('activities'); }
+			if (f.honors) { honors = f.honors; filled.push('honors'); }
+			if (f.essay) { essay = f.essay; filled.push('essay'); }
+			if (f.major) { major = f.major; filled.push('major'); }
+
+			if (!filled.length) {
+				parseError = "Couldn't find application details in that text. Try your resume or brag sheet.";
+				return;
+			}
+			parsedFieldKeys = filled;
+			parseNotice = `Filled ${filled.length} field${filled.length > 1 ? 's' : ''} — review and tweak anything below.`;
+		} catch (err) {
+			console.error('parseAndFill error:', err);
+			parseError = 'Network error while reading your materials. Please try again.';
+		} finally {
+			parsing = false;
+		}
 	}
 
 	import Card from '$lib/components/common/Card.svelte';
@@ -885,9 +953,9 @@
 												</svg>
 											</div>
 											<div>
-												<h3 class="text-sm font-bold text-slate-900">Import from PDF</h3>
+												<h3 class="text-sm font-bold text-slate-900">Autofill your application</h3>
 												<p class="text-xs text-slate-500 mt-0.5">
-													Extract your Common App data instantly
+													Upload a PDF or paste everything — we sort it into every field
 												</p>
 											</div>
 										</div>
@@ -955,30 +1023,55 @@
 										</div>
 									{/if}
 
-									{#if ocrText}
-										<div class="mt-4">
-											<button
-												type="button"
-												onclick={applyOcrToEssay}
-												class="inline-flex items-center gap-2 text-sm font-bold text-blue-600 hover:text-blue-700 hover:gap-3 transition-all duration-200 group/insert"
-											>
-												<span>Insert extracted text into essay</span>
-												<svg
-													class="w-4 h-4 group-hover/insert:translate-y-0.5 transition-transform"
-													fill="none"
-													viewBox="0 0 24 24"
-													stroke="currentColor"
-												>
-													<path
-														stroke-linecap="round"
-														stroke-linejoin="round"
-														stroke-width="2"
-														d="M19 14l-7 7m0 0l-7-7m7 7V3"
-													/>
-												</svg>
-											</button>
+									<!-- Autofill status: which fields got populated -->
+									{#if parsing}
+										<div class="mt-3 flex items-center gap-2 text-sm font-medium text-slate-600">
+											<span class="h-3.5 w-3.5 animate-spin rounded-full border-2 border-slate-300 border-t-blue-600"></span>
+											Reading your materials and sorting them into fields…
+										</div>
+									{:else if parseNotice}
+										<div class="mt-3 rounded-lg bg-emerald-50 border border-emerald-200 p-3">
+											<p class="text-xs font-semibold text-emerald-700 flex items-center gap-1.5">
+												<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+												{parseNotice}
+											</p>
+											<div class="mt-2 flex flex-wrap gap-1.5">
+												{#each parsedFieldKeys as k}
+													<span class="text-[10px] font-bold uppercase tracking-wide text-emerald-700 bg-white border border-emerald-200 rounded-full px-2 py-0.5">{FIELD_LABELS[k] ?? k}</span>
+												{/each}
+											</div>
 										</div>
 									{/if}
+
+									{#if parseError}
+										<div class="mt-3 flex items-start gap-2 p-3 rounded-lg bg-amber-50 border border-amber-200">
+											<svg class="w-4 h-4 text-amber-500 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+											<p class="text-xs text-amber-800 font-medium">{parseError}</p>
+										</div>
+									{/if}
+
+									<!-- Or paste one big blob -->
+									<div class="mt-4 pt-4 border-t border-slate-200/70">
+										<label for="paste-blob" class="block text-xs font-semibold text-slate-500 mb-2">
+											No PDF? Paste your resume, brag sheet, or Common App activities:
+										</label>
+										<textarea
+											id="paste-blob"
+											bind:value={pasteBlob}
+											rows="4"
+											placeholder="Paste everything you've got — GPA, test scores, activities, awards, essay… we'll sort it into the right boxes."
+											class="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 transition-all shadow-sm resize-y font-sans"
+										></textarea>
+										<button
+											type="button"
+											onclick={() => parseAndFill(pasteBlob)}
+											disabled={parsing || pasteBlob.trim().length < 20}
+											class="mt-2 inline-flex items-center gap-2 rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-bold text-white shadow-sm transition-all hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-40"
+										>
+											<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3v4M3 5h4M6 17v4m-2-2h4"/><path d="M13 3l3.5 8.5L21 13l-8.5 1.5L11 23l-1.5-8.5L1 13l8.5-1.5z"/></svg>
+											{parsing ? 'Reading…' : 'Autofill my application'}
+										</button>
+									</div>
 								</div>
 							</div>
 
