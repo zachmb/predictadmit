@@ -63,11 +63,6 @@
 							class="hover:text-slate-900 hover:font-bold transition-all p-1 block">Summer Programs</a
 						>
 					</li>
-					<li>
-						<a href="/blog" class="hover:text-slate-900 hover:font-bold transition-all p-1 block"
-							>Blog</a
-						>
-					</li>
 				</ul>
 			</div>
 
