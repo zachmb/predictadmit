@@ -77,11 +77,12 @@
 			     odds, run every school's real portal, and upgrade. Bigger + clearer;
 			     each carries a small glyph, and "Go Pro" is an accent pill so the
 			     paid action reads instantly. Active route gets a filled chip. -->
-			<nav class="hidden md:flex items-center gap-1.5 absolute left-1/2 -translate-x-1/2">
+			<nav class="hidden lg:flex items-center gap-1.5 absolute left-1/2 -translate-x-1/2">
 				<a
 					href="/ai"
 					aria-current={isActive('/ai') ? 'page' : undefined}
-					class="inline-flex items-center gap-1.5 text-[15px] font-semibold px-4 py-2.5 rounded-full transition-all duration-200 {isActive('/ai')
+					on:click={(e) => e.currentTarget.blur()}
+					class="inline-flex items-center gap-1.5 whitespace-nowrap shrink-0 text-[15px] font-semibold px-4 py-2.5 rounded-full transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0052CC]/40 {isActive('/ai')
 						? 'text-slate-900 bg-slate-100'
 						: 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'}"
 				>
@@ -91,7 +92,8 @@
 				<a
 					href="/portals"
 					aria-current={isActive('/portals') ? 'page' : undefined}
-					class="inline-flex items-center gap-1.5 text-[15px] font-semibold px-4 py-2.5 rounded-full transition-all duration-200 {isActive('/portals')
+					on:click={(e) => e.currentTarget.blur()}
+					class="inline-flex items-center gap-1.5 whitespace-nowrap shrink-0 text-[15px] font-semibold px-4 py-2.5 rounded-full transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0052CC]/40 {isActive('/portals')
 						? 'text-slate-900 bg-slate-100'
 						: 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'}"
 				>
@@ -101,7 +103,8 @@
 				<a
 					href="/pro"
 					aria-current={isActive('/pro') ? 'page' : undefined}
-					class="inline-flex items-center gap-1.5 text-[15px] font-bold px-4 py-2.5 rounded-full transition-all duration-200 {isActive('/pro')
+					on:click={(e) => e.currentTarget.blur()}
+					class="inline-flex items-center gap-1.5 whitespace-nowrap shrink-0 text-[15px] font-bold px-4 py-2.5 rounded-full transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0052CC]/40 {isActive('/pro')
 						? 'text-white bg-[#0052CC]'
 						: 'text-[#0052CC] bg-[#0052CC]/10 hover:bg-[#0052CC]/15'}"
 				>
@@ -111,7 +114,8 @@
 				<a
 					href="/about"
 					aria-current={isActive('/about') ? 'page' : undefined}
-					class="text-[14px] font-medium text-slate-400 hover:text-slate-700 px-3 py-2.5 rounded-full transition-all duration-200"
+					on:click={(e) => e.currentTarget.blur()}
+					class="whitespace-nowrap shrink-0 text-[14px] font-medium text-slate-400 hover:text-slate-700 px-3 py-2.5 rounded-full transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0052CC]/40"
 					>About</a
 				>
 			</nav>

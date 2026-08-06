@@ -4,7 +4,6 @@
 	import SiteHeader from '$lib/components/layout/SiteHeader.svelte';
 	import PortalShareLauncher from '$lib/components/portal/PortalShareLauncher.svelte';
 	import SimulationBadge from '$lib/components/portal/SimulationBadge.svelte';
-	import FaventeConnect from '$lib/components/FaventeConnect.svelte';
 	import { page } from '$app/stores';
 	import { userProfile } from '$lib/stores/user';
 	import { portalDecisionHeaderVisible, portalDecisionViewed, headerVisible } from '$lib/stores/ui';
@@ -91,4 +90,3 @@
 
 <PortalShareLauncher />
 <SimulationBadge />
-<FaventeConnect />

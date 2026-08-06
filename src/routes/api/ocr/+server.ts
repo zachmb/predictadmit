@@ -1,95 +1,74 @@
 // src/routes/api/ocr/+server.ts
-import type { RequestHandler } from '@sveltejs/kit';
-import fs from 'fs';
-import path from 'path';
-import Tesseract from 'tesseract.js';
-
-const TMP_DIR = path.join(process.cwd(), 'tmp');
-
-// Ensure tmp directory exists
-if (!fs.existsSync(TMP_DIR)) {
-	fs.mkdirSync(TMP_DIR, { recursive: true });
-}
+//
+// Resume/CV text extraction. The previous implementation used pdf-poppler +
+// tesseract.js, but poppler was explicitly skipped on Linux — so on Vercel
+// (Linux serverless) it produced ZERO images and always returned empty text.
+// OCR "worked" only on the developer's Mac.
+//
+// Virtually every resume is a text-based PDF (exported from Google Docs, Word,
+// LaTeX, Canva, etc.), so we extract the embedded text layer with pdf-parse —
+// pure JS (pdf.js under the hood), no native binaries, works on serverless.
+// A genuinely scanned/image-only PDF has no text layer; we detect that and ask
+// the user to paste their text instead of silently returning nothing.
+import type { RequestHandler } from './$types';
+import { json } from '@sveltejs/kit';
 
 export const POST: RequestHandler = async ({ request }) => {
+	let file: FormDataEntryValue | null;
 	try {
-		// Dynamically import pdf-poppler at runtime
-		let Poppler: any = null;
-		if (process.platform !== 'linux') {
-			// Only import Poppler on Windows/macOS
-			const { createRequire } = await import('module');
-			const require = createRequire(import.meta.url);
-			Poppler = require('pdf-poppler');
-		} else {
-			console.warn('pdf-poppler is not supported on Linux. Skipping PDF→PNG conversion.');
-		}
-
 		const formData = await request.formData();
-		const file = formData.get('file');
+		file = formData.get('file');
+	} catch {
+		return json({ error: 'Invalid upload.' }, { status: 400 });
+	}
 
-		if (!file || !(file instanceof File)) {
-			return new Response('No file uploaded', { status: 400 });
-		}
+	if (!file || !(file instanceof File)) {
+		return json({ error: 'No file uploaded.' }, { status: 400 });
+	}
 
-		// Save PDF temporarily
-		const arrayBuffer = await file.arrayBuffer();
-		const buffer = Buffer.from(arrayBuffer);
-		const pdfFilename = `upload-${Date.now()}.pdf`;
-		const pdfPath = path.join(TMP_DIR, pdfFilename);
-		fs.writeFileSync(pdfPath, buffer);
+	let buffer: Buffer;
+	try {
+		buffer = Buffer.from(await file.arrayBuffer());
+	} catch {
+		return json({ error: 'Could not read the uploaded file.' }, { status: 400 });
+	}
 
-		let imageFiles: string[] = [];
+	try {
+		// Dynamic import keeps pdf.js out of the main server bundle.
+		const { PDFParse } = await import('pdf-parse');
+		const parser = new PDFParse({ data: new Uint8Array(buffer) });
 
-		if (Poppler) {
-			const baseName = path.basename(pdfPath, '.pdf');
-
-			const popplerOptions = {
-				format: 'png',
-				out_dir: TMP_DIR,
-				out_prefix: baseName,
-				page: null as number | null
-			};
-
-			// Convert PDF → PNG images
-			await Poppler.convert(pdfPath, popplerOptions);
-
-			// Collect PNG files
-			imageFiles = fs
-				.readdirSync(TMP_DIR)
-				.filter((f) => f.startsWith(baseName) && f.endsWith('.png'))
-				.sort()
-				.map((f) => path.join(TMP_DIR, f));
-		}
-
-		let finalText = '';
-
-		if (imageFiles.length > 0) {
-			// OCR each page
-			for (const imagePath of imageFiles) {
-				const result = await (Tesseract as any).recognize(imagePath, 'eng', {
-					logger: (m: any) => console.log(m)
-				});
-				finalText += ((result?.data?.text as string) || '') + '\n';
-
-				try {
-					fs.unlinkSync(imagePath);
-				} catch {}
-			}
-		} else {
-			console.warn('No PNG images generated, skipping OCR.');
-		}
-
-		// Clean up PDF
+		let text = '';
 		try {
-			fs.unlinkSync(pdfPath);
-		} catch {}
+			const res = await parser.getText();
+			text = (res?.text ?? '').trim();
+		} finally {
+			// Release the pdf.js worker/document.
+			await (parser as { destroy?: () => Promise<void> }).destroy?.().catch(() => {});
+		}
 
-		return new Response(JSON.stringify({ text: finalText.trim() }), {
-			status: 200,
-			headers: { 'Content-Type': 'application/json' }
-		});
+		// pdf-parse injects "-- N of M --" page separators; strip them.
+		text = text
+			.replace(/\n?--\s*\d+\s+of\s+\d+\s*--\n?/gi, '\n')
+			.replace(/\n{3,}/g, '\n\n')
+			.trim();
+
+		if (text.replace(/\s/g, '').length < 20) {
+			// No meaningful text layer → scanned/image-only or locked PDF.
+			return json({
+				text: '',
+				scanned: true,
+				message:
+					'This PDF has no selectable text (it looks scanned or image-only). Paste your resume text below, or upload a text-based PDF exported from Google Docs, Word, or LaTeX.'
+			});
+		}
+
+		return json({ text });
 	} catch (err) {
-		console.error('OCR Error:', err);
-		return new Response('OCR failed', { status: 500 });
+		console.error('OCR/parse error:', err);
+		return json(
+			{ error: 'Could not read this PDF. Please paste your resume text instead.' },
+			{ status: 500 }
+		);
 	}
 };
