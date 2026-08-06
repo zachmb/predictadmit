@@ -491,10 +491,10 @@
 </script>
 
 <svelte:head>
-	<title>PredictAdmit - Admissions Outcome Rehearsal.</title>
+	<title>PredictAdmit — Will you get in? Grade your application with AI.</title>
 	<meta
 		name="description"
-		content="Rehearse college admissions outcomes with clearly labeled fictional portals, decision letters, and AI application tools."
+		content="Paste your Common App stats, essays, and activities and let AI predict your admissions chances at every top school. Then rehearse decision day with clearly labeled fictional portals and decision letters."
 	/>
 </svelte:head>
 
@@ -504,23 +504,42 @@
 	<section class="relative pt-32 pb-24 md:pt-48 md:pb-32 overflow-hidden bg-[#FAFAFA]">
 		<div class="max-w-[1200px] mx-auto px-6 text-center relative z-10 flex flex-col items-center">
 			<!-- Headline -->
-			<div class="space-y-6 max-w-4xl mx-auto mb-12">
+			<div class="space-y-6 max-w-4xl mx-auto mb-10">
 				<h1
-					class="text-6xl md:text-[5.5rem] font-bold tracking-tighter leading-[0.95] text-slate-900 animate-in fade-in slide-in-from-bottom-6 duration-1000 fill-mode-both"
+					class="text-5xl sm:text-6xl md:text-[5.5rem] font-bold tracking-tighter leading-[0.95] text-slate-900 animate-in fade-in slide-in-from-bottom-6 duration-1000 fill-mode-both"
 				>
-					Rehearse Any <br class="hidden md:block" /> Admissions Outcome.
+					Will you get <span class="text-[#0052CC]">in</span>?
 				</h1>
 				<p
 					class="text-xl md:text-2xl text-slate-500 max-w-2xl mx-auto leading-snug tracking-tight font-medium mt-6 animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-[200ms] fill-mode-both"
 				>
-					Practice decision day with clearly labeled fictional portals and letters — then make
-					your application as strong as it can be with our AI tools.
+					Paste your Common App stats, essays, and activities — our AI grades your application and
+					predicts your admissions chances at every top school. Your first prediction is free.
 				</p>
+			</div>
+
+			<!-- Primary CTA: the AI application grader is the main funnel entry -->
+			<div
+				class="mb-14 flex flex-col items-center gap-3 animate-in fade-in slide-in-from-bottom-5 duration-700 delay-150 fill-mode-both"
+			>
+				<a
+					href="/ai"
+					class="inline-flex items-center gap-2 rounded-full bg-[#0052CC] px-8 py-4 text-lg font-bold text-white shadow-xl shadow-blue-200 transition-all hover:bg-blue-700 active:scale-95"
+				>
+					Grade my application <span aria-hidden="true">&rarr;</span>
+				</a>
+				<span class="text-sm text-slate-400">Free · no credit card · takes 2 minutes</span>
 			</div>
 
 			<!-- Search Bar + Simulation Button -->
 			<!-- Search Bar + Simulation Button OR Simulation Interface -->
 			{#if !hasApplied}
+				<!-- Secondary path: rehearse a mock decision instantly (colleges come second) -->
+				<div
+					class="mb-4 text-xs font-bold uppercase tracking-widest text-slate-400 animate-in fade-in duration-700 delay-200 fill-mode-both"
+				>
+					Or just rehearse decision day
+				</div>
 				<div
 					class="w-full max-w-xl mx-auto relative z-20 animate-in fade-in slide-in-from-bottom-5 duration-700 delay-150 fill-mode-both"
 				>
