@@ -493,10 +493,10 @@
 </script>
 
 <svelte:head>
-	<title>PredictAdmit — Will you get in? Grade your application with AI.</title>
+	<title>PredictAdmit — Rehearse any college admissions outcome</title>
 	<meta
 		name="description"
-		content="Paste your Common App stats, essays, and activities and let AI predict your admissions chances at every top school. Then rehearse decision day with clearly labeled fictional portals and decision letters."
+		content="Open any top school's decision portal — a clearly-fictional, pixel-for-pixel replica — and live out decision day before it's real. Then grade your application with AI and see your real chances."
 	/>
 </svelte:head>
 
@@ -510,37 +510,26 @@
 				<h1
 					class="text-5xl sm:text-6xl md:text-[5.5rem] font-bold tracking-tighter leading-[0.95] text-slate-900 animate-in fade-in slide-in-from-bottom-6 duration-1000 fill-mode-both"
 				>
-					Will you get <span class="text-[#0052CC]">in</span>?
+					Rehearse Any <br class="hidden md:block" /> Admissions <span class="text-[#0052CC]">Outcome</span>.
 				</h1>
 				<p
 					class="text-xl md:text-2xl text-slate-500 max-w-2xl mx-auto leading-snug tracking-tight font-medium mt-6 animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-[200ms] fill-mode-both"
 				>
-					Paste your Common App stats, essays, and activities — our AI grades your application and
-					predicts your admissions chances at every top school. Your first prediction is free.
+					Open any top school's decision portal — a pixel-for-pixel, clearly-fictional replica — and
+					live out decision day before it's real. Then make your application as strong as it can be
+					with our AI tools.
 				</p>
 			</div>
 
-			<!-- Primary CTA: the AI application grader is the main funnel entry -->
-			<div
-				class="mb-14 flex flex-col items-center gap-3 animate-in fade-in slide-in-from-bottom-5 duration-700 delay-150 fill-mode-both"
-			>
-				<a
-					href="/ai"
-					class="inline-flex items-center gap-2 rounded-full bg-[#0052CC] px-8 py-4 text-lg font-bold text-white shadow-xl shadow-blue-200 transition-all hover:bg-blue-700 active:scale-95"
-				>
-					Grade my application <span aria-hidden="true">&rarr;</span>
-				</a>
-				<span class="text-sm text-slate-400">Free · no credit card · takes 2 minutes</span>
-			</div>
-
-			<!-- Search Bar + Simulation Button -->
-			<!-- Search Bar + Simulation Button OR Simulation Interface -->
+			<!-- PRIMARY action: open a real school's decision portal. This tangible,
+			     school-specific hook is what makes PredictAdmit distinctive (vs. a
+			     generic "grade my application" AI box); the AI grader is the strong
+			     secondary path just below. -->
 			{#if !hasApplied}
-				<!-- Secondary path: rehearse a mock decision instantly (colleges come second) -->
 				<div
-					class="mb-4 text-xs font-bold uppercase tracking-widest text-slate-400 animate-in fade-in duration-700 delay-200 fill-mode-both"
+					class="mb-4 text-sm font-semibold text-slate-500 animate-in fade-in duration-700 delay-200 fill-mode-both"
 				>
-					Or just rehearse decision day
+					Pick your dream school to open its decision portal →
 				</div>
 				<div
 					class="w-full max-w-xl mx-auto relative z-20 animate-in fade-in slide-in-from-bottom-5 duration-700 delay-150 fill-mode-both"
@@ -621,11 +610,20 @@
 						</button>
 					</div>
 
-					<!-- Start Simulation Link (Secondary) -->
-					<div class="mt-8">
+					<!-- Secondary paths: grade the real application with AI (the funnel to
+					     the paid product), and run a full mock cycle. -->
+					<div class="mt-8 flex flex-col items-center gap-4">
+						<a
+							href="/ai"
+							class="inline-flex items-center gap-2 rounded-full border-2 border-[#0052CC]/20 bg-white px-6 py-3 text-base font-bold text-[#0052CC] transition-all hover:border-[#0052CC]/40 hover:bg-[#0052CC]/5 active:scale-95"
+						>
+							<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v2m0 14v2M3 12h2m14 0h2m-3.5-6.5-1.4 1.4M6.9 17.1l-1.4 1.4m0-13 1.4 1.4m11.6 11.6-1.4-1.4"/><circle cx="12" cy="12" r="4"/></svg>
+							Grade my real application with AI
+							<span aria-hidden="true">&rarr;</span>
+						</a>
 						<button
 							on:click={handleStartSimulationClick}
-							class="inline-flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-slate-900 transition-colors group"
+							class="inline-flex items-center gap-2 text-sm font-semibold text-slate-400 hover:text-slate-700 transition-colors group"
 						>
 							Or run a full cycle simulation <span
 								class="group-hover:translate-x-1 transition-transform">&rarr;</span
