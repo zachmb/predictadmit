@@ -1,12 +1,13 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { userProfile } from '$lib/stores/user';
+	import { userProfile, defaultStats } from '$lib/stores/user';
 	import type { UserProfile } from '$lib/stores/user';
 
 	import AdmissionsPortalTemplate from '$lib/components/portal/AdmissionsPortalTemplate.svelte';
 	import { schoolConfigs } from '$lib/config/schools';
 	import { decisionsBySlug, type DecisionOutcome } from '$lib/stores/results';
 	import { portalDecisionViewed } from '$lib/stores/ui';
+	import { computeDecisionForSchool, hasEnoughToScore } from '$lib/scoring/model';
 
 	import GenericAcceptedLetter from '$lib/components/portal/GenericAcceptedLetter.svelte';
 	import GenericDeniedLetter from '$lib/components/portal/GenericDeniedLetter.svelte';
@@ -71,6 +72,7 @@
 			awards: '',
 			rigor: ''
 		},
+		stats: { ...defaultStats },
 		schoolList: [],
 		usingAI: false,
 		isSubmitting: false,
@@ -100,7 +102,19 @@
 		? `${school.schoolName} Undergraduate Admissions Portal`
 		: 'PredictAdmit – Unknown Portal';
 
-	$: shownDecision = school ? ($decisionsBySlug[school.slug] ?? school.decision) : 'deny';
+	// Decision resolution, in priority order:
+	//   1. A stored decision for this slug (from /stats, the AI flow, or a manual
+	//      force) — these already reflect the applicant.
+	//   2. If none stored but the user has entered stats, compute the decision
+	//      deterministically from those stats vs. this school. This is what makes
+	//      the outcome *derived from the applicant's profile* instead of a
+	//      hardcoded per-school default.
+	//   3. Only as a last resort (no stats at all) fall back to the school default.
+	$: hasStats = hasEnoughToScore(profile.stats);
+	$: shownDecision = !school
+		? 'deny'
+		: ($decisionsBySlug[school.slug] ??
+			(hasStats ? computeDecisionForSchool(profile.stats, school.slug).outcome : school.decision));
 
 	const applicantName = () => profile.name || 'Applicant';
 

@@ -4,12 +4,14 @@
 	import SiteHeader from '$lib/components/layout/SiteHeader.svelte';
 	import PortalShareLauncher from '$lib/components/portal/PortalShareLauncher.svelte';
 	import SimulationBadge from '$lib/components/portal/SimulationBadge.svelte';
+	import FaventeConnect from '$lib/components/FaventeConnect.svelte';
 	import { page } from '$app/stores';
 	import { userProfile } from '$lib/stores/user';
 	import { portalDecisionHeaderVisible, portalDecisionViewed, headerVisible } from '$lib/stores/ui';
 	import { captureReferral, redeemReferralIfJoined } from '$lib/referral';
 	import { decisionsBySlug } from '$lib/stores/results';
 	import { schoolConfigs } from '$lib/config/schools';
+	import { computeDecisionForSchool, hasEnoughToScore } from '$lib/scoring/model';
 
 	let { children } = $props();
 
@@ -30,7 +32,12 @@
 		const match = $page.url.pathname.match(/^\/portals\/([^/]+)\/?$/);
 		const slug = match?.[1];
 		if (!slug) return;
-		const outcome = $decisionsBySlug[slug] ?? schoolConfigs[slug]?.decision ?? 'deny';
+		const stats = $userProfile.stats;
+		const outcome =
+			$decisionsBySlug[slug] ??
+			(stats && hasEnoughToScore(stats)
+				? computeDecisionForSchool(stats, slug).outcome
+				: (schoolConfigs[slug]?.decision ?? 'deny'));
 		try {
 			sessionStorage.setItem(
 				'predictadmit:lastDecision',
@@ -84,3 +91,4 @@
 
 <PortalShareLauncher />
 <SimulationBadge />
+<FaventeConnect />

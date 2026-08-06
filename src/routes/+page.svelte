@@ -6,6 +6,11 @@
 	import { userProfile } from '$lib/stores/user';
 	import { aiResults, manualOverrideMode } from '$lib/stores/results';
 	import { type AiDecision, type DecisionOutcome } from '$lib/stores/results';
+	import {
+		computeDecisionForSchool,
+		decisionResultToAiDecision,
+		hasEnoughToScore
+	} from '$lib/scoring/model';
 	import SiteFooter from '$lib/components/layout/SiteFooter.svelte';
 	import AdmitMail from '$lib/components/AdmitMail.svelte';
 	import Card from '$lib/components/common/Card.svelte';
@@ -332,28 +337,25 @@
 	const handleApply = () => {
 		if (!canApply) return;
 		if (hasApplied) return;
+
+		// The prediction is derived from the student's real academic profile. If
+		// they haven't entered one yet, send them to the stats funnel first instead
+		// of assigning meaningless random outcomes.
+		const stats = get(userProfile).stats;
+		if (!hasEnoughToScore(stats)) {
+			goto('/stats');
+			return;
+		}
+
 		userProfile.update((u) => ({ ...u, usingAI: false, isSubmitting: true }));
 		hasApplied = true;
 		aiResults.clear();
-		// Generate random decisions for this simulation mode
-		const randomDecisions = portals.map((p) => ({
-			school: p.name,
-			slug: p.slug,
-			outcome: Math.random() > 0.5 ? 'admit' : ('deny' as 'admit' | 'deny'),
-			source: 'manual' as const,
-			academic_score: 0,
-			extracurricular_score: 0,
-			intellectual_score: 0,
-			fit_score: 0,
-			character_score: 0,
-			academic_explanation: 'Sim',
-			extracurricular_explanation: 'Sim',
-			fit_explanation: 'Sim',
-			intellectual_explanation: 'Sim',
-			character_explanation: 'Sim',
-			improvement_tips: 'Sim'
-		}));
-		aiResults.setDecisions(randomDecisions);
+		// Deterministic decisions computed from the applicant's stats vs. each
+		// school — same profile always yields the same outcome (no Math.random).
+		const statsDecisions: AiDecision[] = portals.map((p) =>
+			decisionResultToAiDecision(computeDecisionForSchool(stats, p.slug))
+		);
+		aiResults.setDecisions(statsDecisions);
 
 		// Reset state
 		currentEdPortal = edChoiceSlug ? (portals.find((p) => p.slug === edChoiceSlug) ?? null) : null;

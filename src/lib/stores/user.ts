@@ -20,6 +20,37 @@ export type TrackedSchool = {
 	supplements: { prompt: string; draft: string; aiFeedback?: string }[];
 };
 
+// Structured academic profile the /stats funnel collects and the shared
+// scoring model (src/lib/scoring/model.ts) turns into real, deterministic
+// decisions. Entered once, reused across every school + portal.
+export type StatsProfile = {
+	gpaUnweighted: string;
+	gpaWeighted: string;
+	sat: string;
+	act: string;
+	rigor: 'Regular' | 'Honors' | 'AP/IB';
+	gradeTrend: 'Rising' | 'Steady' | 'Dipping';
+	lowestGrade: 'A' | 'A-' | 'B+' | 'B' | 'B-' | 'C+' | 'C' | 'C-' | 'D' | 'F';
+	activities: string;
+	awards: string;
+	major: string;
+	essay: string;
+};
+
+export const defaultStats: StatsProfile = {
+	gpaUnweighted: '',
+	gpaWeighted: '',
+	sat: '',
+	act: '',
+	rigor: 'Regular',
+	gradeTrend: 'Steady',
+	lowestGrade: 'A',
+	activities: '',
+	awards: '',
+	major: '',
+	essay: ''
+};
+
 export type UserProfile = {
 	name: string;
 	email: string;
@@ -35,6 +66,8 @@ export type UserProfile = {
 		awards: string;
 		rigor: string;
 	};
+	// Structured stats that drive the deterministic prediction funnel.
+	stats: StatsProfile;
 	schoolList: TrackedSchool[];
 	isSubmitting: boolean;
 	isSubmittingAI: boolean;
@@ -55,6 +88,7 @@ export const defaultProfile: UserProfile = {
 		awards: '',
 		rigor: ''
 	},
+	stats: { ...defaultStats },
 	schoolList: [],
 	isSubmitting: false,
 	isSubmittingAI: false,
@@ -68,7 +102,17 @@ function loadInitial(): UserProfile {
 		const raw = window.localStorage.getItem(STORAGE_KEY);
 		if (!raw) return defaultProfile;
 		const parsed = JSON.parse(raw);
-		return { ...defaultProfile, ...parsed };
+		return {
+			...defaultProfile,
+			...parsed,
+			// Deep-merge nested shapes so profiles cached before these fields
+			// existed still get every key the app expects.
+			applicationProfile: {
+				...defaultProfile.applicationProfile,
+				...(parsed.applicationProfile ?? {})
+			},
+			stats: { ...defaultStats, ...(parsed.stats ?? {}) }
+		};
 	} catch {
 		return defaultProfile;
 	}

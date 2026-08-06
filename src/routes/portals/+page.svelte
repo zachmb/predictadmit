@@ -12,9 +12,14 @@
 		type DecisionOutcome,
 		type AiDecision
 	} from '$lib/stores/results';
+	import { computeDecisionForSchool } from '$lib/scoring/model';
 	import { schoolConfigs } from '$lib/config/schools';
+	import { hasEnoughToScore } from '$lib/scoring/model';
 
 	type DecisionMode = 'random' | 'accepted' | 'denied' | 'waitlisted' | 'deferred';
+
+	// Has the visitor entered a real academic profile yet? Drives the funnel CTA.
+	let hasStats = $derived(hasEnoughToScore($userProfile.stats));
 
 	const initialPortals = Object.values(schoolConfigs)
 		.map((s) => ({
@@ -27,11 +32,20 @@
 
 	let portals = $state([...initialPortals]);
 
-	// This runs ONLY to keep the UI (the cards) synced with whatever is in the store
+	// Keep the cards synced with the current prediction. Priority:
+	//   1. A stored decision for this school (from /stats, AI, or a manual force).
+	//   2. Otherwise, if the visitor has entered stats, compute the outcome
+	//      deterministically so the card label reflects THEIR profile.
+	//   3. Otherwise leave it blank ('random') until they enter stats.
 	$effect(() => {
 		const decisions = $decisionsBySlug;
+		const stats = $userProfile.stats;
+		const canScore = hasStats;
 		portals = initialPortals.map((p) => {
-			const outcome = decisions[p.slug];
+			let outcome = decisions[p.slug];
+			if (!outcome && canScore) {
+				outcome = computeDecisionForSchool(stats, p.slug).outcome;
+			}
 			if (outcome) {
 				const mappedMode: DecisionMode = outcome === 'admit' ? 'accepted' : 'denied';
 				return { ...p, decision: mappedMode };
@@ -173,6 +187,34 @@
 					<p class="text-slate-700">
 						Explore clearly labeled admissions outcome rehearsals. Choose a result for any school scenario, or use rehearsal mode to update every portal at once.
 					</p>
+
+					<!-- Funnel entry point: portals are only meaningful once a real
+					     academic profile has been entered. Nudge accordingly. -->
+					<div
+						class="mt-4 rounded-lg border px-4 py-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 {hasStats
+							? 'border-[#0052CC]/20 bg-[#0052CC]/5'
+							: 'border-amber-300 bg-amber-50'}"
+					>
+						<div class="text-sm">
+							{#if hasStats}
+								<span class="font-semibold text-slate-900">Your decisions are computed from your stats.</span>
+								<span class="text-slate-600">
+									Each portal below shows a real outcome derived from your GPA, scores, rigor, and activities.
+								</span>
+							{:else}
+								<span class="font-semibold text-slate-900">Enter your stats first.</span>
+								<span class="text-slate-700">
+									Portal decisions are computed from your GPA, test scores, rigor, and activities — not at random.
+								</span>
+							{/if}
+						</div>
+						<a
+							href="/stats"
+							class="shrink-0 inline-flex items-center justify-center gap-1.5 rounded-lg bg-[#0052CC] px-4 py-2 text-sm font-bold text-white hover:bg-[#003d99] transition-colors"
+						>
+							{hasStats ? 'Edit my stats' : 'Enter my stats'} →
+						</a>
+					</div>
 
 					<div
 						class="mt-3 rounded-md border border-slate-300 bg-slate-50 px-4 py-3 text-[11px] leading-relaxed text-slate-600"

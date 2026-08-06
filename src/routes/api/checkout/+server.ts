@@ -3,6 +3,7 @@ import type { RequestHandler } from '@sveltejs/kit';
 import { json } from '@sveltejs/kit';
 import Stripe from 'stripe';
 import { env } from '$env/dynamic/private';
+import { STRIPE_PRODUCTS } from '$lib/config/stripe-products';
 
 const STRIPE_SECRET_KEY = env.STRIPE_SECRET_KEY;
 
@@ -49,15 +50,13 @@ export const POST: RequestHandler = async ({ request }) => {
 					{
 						price_data: {
 							currency: 'usd',
-							product_data: {
-								name: 'PredictAdmit Pro — Full Access (Lifetime)',
-								description: 'One-time payment. Every school, every tool, forever.'
-							},
-							unit_amount: 9900 // $99.00
+							product: STRIPE_PRODUCTS.lifetime.productId, // "PredictAdmit Max"
+							unit_amount: STRIPE_PRODUCTS.lifetime.amountCents // $99.00
 						},
 						quantity: 1
 					}
 				],
+				metadata: { plan: 'lifetime' },
 				success_url: `${origin}/ai?upgrade=success&plan=lifetime`,
 				cancel_url: `${origin}/pro?canceled=1`
 			};
@@ -69,11 +68,8 @@ export const POST: RequestHandler = async ({ request }) => {
 					{
 						price_data: {
 							currency: 'usd',
-							product_data: {
-								name: 'PredictAdmit Pro — Full Access (Monthly)',
-								description: 'Monthly subscription. Cancel anytime.'
-							},
-							unit_amount: 3900, // $39.00
+							product: STRIPE_PRODUCTS.monthly.productId, // "PredictAdmit Pro"
+							unit_amount: STRIPE_PRODUCTS.monthly.amountCents, // $39.00
 							recurring: {
 								interval: 'month'
 							}
@@ -81,6 +77,7 @@ export const POST: RequestHandler = async ({ request }) => {
 						quantity: 1
 					}
 				],
+				metadata: { plan: 'monthly' },
 				success_url: `${origin}/ai?upgrade=success&plan=monthly`,
 				cancel_url: `${origin}/pro?canceled=1`
 			};
@@ -97,15 +94,16 @@ export const POST: RequestHandler = async ({ request }) => {
 					{
 						price_data: {
 							currency: 'usd',
-							product_data: {
-								name: `PredictAdmit School Pass — ${schoolName}`,
-								description: 'One-time payment. Full Pro analysis for this school.'
-							},
-							unit_amount: 1499 // $14.99
+							product: STRIPE_PRODUCTS.school.productId, // "PredictAdmit One"
+							unit_amount: STRIPE_PRODUCTS.school.amountCents // $14.99
 						},
 						quantity: 1
 					}
 				],
+				// The single "PredictAdmit One" product backs every school pass; the
+				// specific school rides in metadata (and the success_url slug) for
+				// attribution instead of minting a per-school ad-hoc product.
+				metadata: { plan: 'school', slug, schoolName },
 				success_url: `${origin}/ai?upgrade=success&plan=school&slug=${slug}`,
 				cancel_url: `${origin}/pro?canceled=1`
 			};

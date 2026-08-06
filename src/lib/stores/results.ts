@@ -7,9 +7,12 @@ export type AiDecision = {
 	school: string;
 	slug: string;
 	outcome: DecisionOutcome;
-	// Distinguishes real AI evaluations from manual/random simulation placeholders.
+	// Distinguishes real AI evaluations from manual/random simulation placeholders
+	// and from the deterministic stats-based prediction funnel.
 	// Absent on old cached payloads — treat those as manual.
-	source?: 'ai' | 'manual';
+	source?: 'ai' | 'manual' | 'stats';
+	// Admit probability (0–100) when produced by the stats scoring model.
+	odds?: number;
 	academic_score: number;
 	academic_explanation: string;
 	extracurricular_score: number;
@@ -59,6 +62,11 @@ function createResultsStore() {
 			});
 		},
 		setDecisions: (decisions: AiDecision[]) => update((prev) => ({ ...prev, decisions })),
+		// Replace all decisions with a freshly-computed, stats-derived set from the
+		// deterministic scoring model. Tagged source:'stats' so we can tell these
+		// apart from LLM ('ai') and hand-forced ('manual') decisions.
+		setStatsDecisions: (decisions: AiDecision[]) =>
+			update((prev) => ({ ...prev, decisions })),
 		clear: () => {
 			currentStoreVersion++;
 			set({ decisions: [], raw: null });

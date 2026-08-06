@@ -5,6 +5,9 @@
 	import { onDestroy } from 'svelte';
 
 	$: isPortal = $page.url.pathname.startsWith('/portals/');
+	// Active-route highlight for the primary nav (exact match or a sub-path).
+	$: path = $page.url.pathname;
+	const isActive = (p: string) => path === p || path.startsWith(p + '/');
 
 	let showHeader = true;
 	let timer: ReturnType<typeof setTimeout> | undefined;
@@ -47,16 +50,16 @@
 {#if showHeader}
 	{#if !isLandingPage && !isPortal}
 		<!-- Placeholder to prevent content overlap on inner pages without animating height -->
-		<div class="w-full h-16 transition-none"></div>
+		<div class="w-full h-[76px] transition-none"></div>
 	{/if}
 
 	<header
 		class="fixed left-1/2 -translate-x-1/2 z-[9999] bg-white/80 backdrop-blur-xl transition-all duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden
 		{floatingIsland
-			? 'top-6 h-14 border border-slate-200/80 rounded-full px-2'
-			: 'top-0 h-16 border-b border-transparent lg:border-slate-200/80 rounded-none px-4'}"
+			? 'top-6 h-[68px] border border-slate-200/80 rounded-full px-2'
+			: 'top-0 h-[76px] border-b border-transparent lg:border-slate-200/80 rounded-none px-4'}"
 		style="width: {floatingIsland ? 'calc(100% - 32px)' : '100%'}; max-width: {floatingIsland
-			? '900px'
+			? '1060px'
 			: '100%'};"
 	>
 		<div
@@ -64,31 +67,51 @@
 			style="max-width: {floatingIsland ? '100%' : '1200px'};"
 		>
 			<div class="pl-4">
-				<a href="/" class="text-lg font-[700] tracking-tight text-slate-900 transition-colors">
+				<a href="/" class="text-xl font-[700] tracking-tight text-slate-900 transition-colors">
 					predictadmit<span class="text-[#0052CC]">.com</span>
 				</a>
 			</div>
 
-			<!-- CENTERED NAVIGATION -->
-			<nav class="hidden md:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
-				<a
-					href="/portals"
-					class="text-[13px] font-semibold text-slate-500 hover:text-slate-900 hover:bg-slate-100 px-4 py-2 rounded-full transition-all duration-200"
-					>Portals</a
-				>
+			<!-- CENTERED NAVIGATION — the three things a visitor comes to do, spelled
+			     out plainly (was terse "Portals / Predict / Pro"): predict their own
+			     odds, run every school's real portal, and upgrade. Bigger + clearer;
+			     each carries a small glyph, and "Go Pro" is an accent pill so the
+			     paid action reads instantly. Active route gets a filled chip. -->
+			<nav class="hidden md:flex items-center gap-1.5 absolute left-1/2 -translate-x-1/2">
 				<a
 					href="/ai"
-					class="text-[13px] font-semibold text-slate-500 hover:text-slate-900 hover:bg-slate-100 px-4 py-2 rounded-full transition-all duration-200"
-					>Predict</a
+					aria-current={isActive('/ai') ? 'page' : undefined}
+					class="inline-flex items-center gap-1.5 text-[15px] font-semibold px-4 py-2.5 rounded-full transition-all duration-200 {isActive('/ai')
+						? 'text-slate-900 bg-slate-100'
+						: 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'}"
+				>
+					<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v2m0 14v2M3 12h2m14 0h2m-3.5-6.5-1.4 1.4M6.9 17.1l-1.4 1.4m0-13 1.4 1.4m11.6 11.6-1.4-1.4"/><circle cx="12" cy="12" r="4"/></svg>
+					Predict My Chances</a
+				>
+				<a
+					href="/portals"
+					aria-current={isActive('/portals') ? 'page' : undefined}
+					class="inline-flex items-center gap-1.5 text-[15px] font-semibold px-4 py-2.5 rounded-full transition-all duration-200 {isActive('/portals')
+						? 'text-slate-900 bg-slate-100'
+						: 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'}"
+				>
+					<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+					Portal Simulator</a
 				>
 				<a
 					href="/pro"
-					class="text-[13px] font-semibold text-slate-500 hover:text-slate-900 hover:bg-slate-100 px-4 py-2 rounded-full transition-all duration-200"
-					>Pro</a
+					aria-current={isActive('/pro') ? 'page' : undefined}
+					class="inline-flex items-center gap-1.5 text-[15px] font-bold px-4 py-2.5 rounded-full transition-all duration-200 {isActive('/pro')
+						? 'text-white bg-[#0052CC]'
+						: 'text-[#0052CC] bg-[#0052CC]/10 hover:bg-[#0052CC]/15'}"
+				>
+					<svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 2.4 7.4H22l-6 4.6 2.3 7.4L12 17l-6.3 4.4L8 14 2 9.4h7.6z"/></svg>
+					Go Pro</a
 				>
 				<a
 					href="/about"
-					class="text-[13px] font-semibold text-slate-500 hover:text-slate-900 hover:bg-slate-100 px-4 py-2 rounded-full transition-all duration-200"
+					aria-current={isActive('/about') ? 'page' : undefined}
+					class="text-[14px] font-medium text-slate-400 hover:text-slate-700 px-3 py-2.5 rounded-full transition-all duration-200"
 					>About</a
 				>
 			</nav>
