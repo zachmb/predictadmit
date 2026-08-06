@@ -177,14 +177,14 @@
 						/>
 					</div>
 
-					<div class="flex items-center gap-3">
+					<div class="flex flex-wrap items-center gap-3">
 						<label for="portal-password" class="text-sm text-slate-800 w-36 text-right">
 							Password
 						</label>
 						<input
 							id="portal-password"
 							type="password"
-							class="border border-slate-400 bg-white px-2 py-1.5 text-sm w-64"
+							class="border border-slate-400 bg-white px-2 py-1.5 text-sm w-full max-w-[16rem] sm:w-64"
 							bind:value={passwordInput}
 							autocomplete="current-password"
 						/>

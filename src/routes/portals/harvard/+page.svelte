@@ -138,7 +138,7 @@
 			</div>
 		</header>
 
-		<main class="mx-auto min-h-[520px] max-w-6xl px-6 py-14">
+		<main class="mx-auto min-h-[520px] max-w-6xl px-4 py-14 sm:px-6">
 			<h1 class="mb-8 text-5xl font-normal text-gray-900">Login</h1>
 
 			<div class="max-w-3xl">
@@ -159,27 +159,27 @@
 						</p>
 					{/if}
 
-					<div class="flex items-center gap-6">
+					<div class="flex flex-wrap items-center gap-x-6 gap-y-2">
 						<label for="portal-email" class="w-32 text-[13px] font-bold text-gray-900">
 							Email Address
 						</label>
 						<input
 							id="portal-email"
 							type="email"
-							class="w-72 border border-gray-300 bg-[#f2f2f2] px-2 py-1.5 text-[13px]"
+							class="w-full max-w-[16rem] border border-gray-300 bg-[#f2f2f2] px-2 py-1.5 text-[13px] sm:w-72 sm:max-w-none"
 							bind:value={emailInput}
 							autocomplete="email"
 						/>
 					</div>
 
-					<div class="flex items-center gap-6">
+					<div class="flex flex-wrap items-center gap-x-6 gap-y-2">
 						<label for="portal-password" class="w-32 text-[13px] font-bold text-gray-900">
 							Password
 						</label>
 						<input
 							id="portal-password"
 							type="password"
-							class="w-72 border border-gray-300 bg-[#f2f2f2] px-2 py-1.5 text-[13px]"
+							class="w-full max-w-[16rem] border border-gray-300 bg-[#f2f2f2] px-2 py-1.5 text-[13px] sm:w-72 sm:max-w-none"
 							bind:value={passwordInput}
 							autocomplete="current-password"
 						/>
@@ -188,7 +188,7 @@
 						</a>
 					</div>
 
-					<div class="flex items-center gap-4 pt-3 pl-[152px]">
+					<div class="flex items-center gap-4 pt-3 pl-0 sm:pl-[152px]">
 						<button
 							type="button" on:click={autoLogin} disabled={isAutoLoggingIn}
 							class="bg-[#1a1a1a] px-5 py-2 text-[13px] font-medium text-white hover:bg-black"
@@ -197,7 +197,7 @@
 						</button>
 						</div>
 
-					<p class="max-w-2xl pl-[152px] pt-4 text-[11px] leading-relaxed text-gray-500">
+					<p class="max-w-2xl pl-0 pt-4 text-[11px] leading-relaxed text-gray-500 sm:pl-[152px]">
 						For this simulation, use the same email address and password that you saved on the
 						PredictAdmit.com home page. No real application data is used, and all information is
 						stored only in your browser.

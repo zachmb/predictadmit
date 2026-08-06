@@ -157,18 +157,18 @@
 						<input
 							id="portal-email"
 							type="email"
-							class="border border-slate-400 bg-white px-2 py-1 text-sm w-64 shadow-inner"
+							class="border border-slate-400 bg-white px-2 py-1 text-sm w-full max-w-[16rem] sm:w-64 shadow-inner"
 							bind:value={emailInput}
 							autocomplete="email"
 						/>
 					</div>
 
-					<div class="flex items-center gap-4 mb-6">
+					<div class="flex flex-wrap items-center gap-4 mb-6">
 						<label for="portal-password" class="text-sm text-slate-800 w-32">Password</label>
 						<input
 							id="portal-password"
 							type="password"
-							class="border border-slate-400 bg-[#eef2fb] px-2 py-1 text-sm w-64 shadow-inner"
+							class="border border-slate-400 bg-[#eef2fb] px-2 py-1 text-sm w-full max-w-[16rem] sm:w-64 shadow-inner"
 							bind:value={passwordInput}
 							autocomplete="current-password"
 						/>

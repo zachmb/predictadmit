@@ -176,23 +176,23 @@
 						</p>
 					{/if}
 
-					<div class="flex items-center gap-6">
+					<div class="flex flex-wrap items-center gap-6">
 						<label for="portal-email" class="w-28 text-[14px] text-gray-800"> Email Address </label>
 						<input
 							id="portal-email"
 							type="email"
-							class="w-72 border border-gray-300 bg-white px-2 py-1.5 text-[14px]"
+							class="w-full max-w-[18rem] sm:w-72 border border-gray-300 bg-white px-2 py-1.5 text-[14px]"
 							bind:value={emailInput}
 							autocomplete="email"
 						/>
 					</div>
 
-					<div class="flex items-center gap-6">
+					<div class="flex flex-wrap items-center gap-6">
 						<label for="portal-password" class="w-28 text-[14px] text-gray-800"> Password </label>
 						<input
 							id="portal-password"
 							type="password"
-							class="w-72 border border-gray-300 bg-white px-2 py-1.5 text-[14px]"
+							class="w-full max-w-[18rem] sm:w-72 border border-gray-300 bg-white px-2 py-1.5 text-[14px]"
 							bind:value={passwordInput}
 							autocomplete="current-password"
 						/>

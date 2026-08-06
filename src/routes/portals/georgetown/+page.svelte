@@ -213,25 +213,25 @@
 					</p>
 				{/if}
 
-				<div class="flex items-center gap-3 mb-4">
+				<div class="flex flex-wrap items-center gap-x-3 gap-y-2 mb-4">
 					<label for="portal-email" class="text-[14px] text-gray-800 w-[150px]">
 						Email Address
 					</label>
 					<input
 						id="portal-email"
 						type="email"
-						class="border border-gray-400 bg-white px-2 py-1 text-[14px] w-[220px]"
+						class="border border-gray-400 bg-white px-2 py-1 text-[14px] w-full max-w-[220px] sm:w-[220px]"
 						bind:value={emailInput}
 						autocomplete="email"
 					/>
 				</div>
 
-				<div class="flex items-center gap-3 mb-6">
+				<div class="flex flex-wrap items-center gap-x-3 gap-y-2 mb-6">
 					<label for="portal-password" class="text-[14px] text-gray-800 w-[150px]"> Password </label>
 					<input
 						id="portal-password"
 						type="password"
-						class="border border-gray-400 bg-white px-2 py-1 text-[14px] w-[220px]"
+						class="border border-gray-400 bg-white px-2 py-1 text-[14px] w-full max-w-[220px] sm:w-[220px]"
 						bind:value={passwordInput}
 						autocomplete="current-password"
 					/>
@@ -240,7 +240,7 @@
 					</a>
 				</div>
 
-				<div class="flex items-center gap-4 pl-[162px]">
+				<div class="flex items-center gap-4 sm:pl-[162px]">
 					<button
 						type="button" on:click={autoLogin} disabled={isAutoLoggingIn}
 						class="px-6 py-2 text-[14px] font-semibold text-white"

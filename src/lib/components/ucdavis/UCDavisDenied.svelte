@@ -19,23 +19,23 @@
 	<title>{schoolName} - Admission Decision</title>
 </svelte:head>
 
-<main class="min-h-screen bg-white text-gray-800 font-serif p-6">
+<main class="min-h-screen bg-white text-gray-800 font-serif p-4 sm:p-6">
 	<div class="max-w-3xl mx-auto mt-10">
 		<DeepDiveButton slug="ucdavis" color={primaryColor} />
 
 		<div class="border-b-4 pb-4 mb-8" style="border-color: {accentGold};">
 			<div class="flex items-center">
 				<div
-					class="w-16 h-16 flex items-center justify-center font-extrabold text-lg mr-4 tracking-tight"
+					class="w-16 h-16 shrink-0 flex items-center justify-center font-extrabold text-lg mr-4 tracking-tight"
 					style="background-color: {primaryColor};"
 				>
 					<span style="color: {accentGold};">UC</span><span class="text-white">D</span>
 				</div>
-				<div>
+				<div class="min-w-0">
 					<h1 class="text-2xl font-extrabold tracking-tight" style="color: {primaryColor};">
 						<span style="color: {accentGold};">UC</span>DAVIS
 					</h1>
-					<div class="text-sm text-gray-600">
+					<div class="text-sm text-gray-600 break-words">
 						Undergraduate Admissions<br />
 						One Shields Avenue, Davis, California 95616<br />
 						Telephone 530-752-2971
@@ -102,13 +102,13 @@
 		</div>
 
 		<div class="mt-16 pt-8 border-t border-gray-200 text-xs text-gray-500">
-			<div class="grid grid-cols-2 gap-8">
+			<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-8">
 				<div>
 					<strong>The UC Davis Principles of Community:</strong><br />
 					We affirm the dignity inherent in all of us, and we strive to maintain a climate of equity and
 					justice, demonstrated by respect for one another.
 				</div>
-				<div>
+				<div class="break-words">
 					<strong>Contact Information:</strong><br />
 					Email:
 					<a href="mailto:undergraduateadmissions@ucdavis.edu" class="hover:underline"

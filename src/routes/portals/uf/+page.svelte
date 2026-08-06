@@ -150,7 +150,7 @@
 					<span class="text-2xl font-black italic tracking-tight leading-none">UF</span>
 					<span class="text-sm font-semibold tracking-[0.2em] uppercase">Admissions</span>
 				</div>
-				<nav class="flex items-center gap-8 text-sm font-medium">
+				<nav class="flex flex-wrap items-center gap-3 sm:gap-8 text-sm font-medium">
 					<a href="/disclaimer" class="hover:underline">Gator Portal</a>
 					<a href="/disclaimer" class="hover:underline">Visit and Events</a>
 					<a href="/disclaimer" class="hover:underline">Contact</a>
@@ -188,12 +188,12 @@
 							/>
 						</div>
 
-						<div class="flex items-center gap-4">
+						<div class="flex flex-wrap items-center gap-4">
 							<label for="portal-password" class="text-sm text-slate-700 w-28">Password</label>
 							<input
 								id="portal-password"
 								type="password"
-								class="border border-slate-300 bg-slate-50 px-2 py-1.5 text-sm w-64 rounded-sm focus:outline-none focus:ring-1 focus:ring-[#0021A5]"
+								class="border border-slate-300 bg-slate-50 px-2 py-1.5 text-sm w-full max-w-[16rem] sm:w-64 rounded-sm focus:outline-none focus:ring-1 focus:ring-[#0021A5]"
 								bind:value={passwordInput}
 								autocomplete="current-password"
 							/>
@@ -290,7 +290,7 @@
 					<span class="text-2xl font-black italic tracking-tight leading-none">UF</span>
 					<span class="text-sm font-semibold tracking-[0.2em] uppercase">Admissions</span>
 				</div>
-				<nav class="flex items-center gap-8 text-sm font-medium">
+				<nav class="flex flex-wrap items-center gap-3 sm:gap-8 text-sm font-medium">
 					<a href="/disclaimer" class="hover:underline">Gator Portal</a>
 					<a href="/disclaimer" class="hover:underline">Visit and Events</a>
 					<a href="/disclaimer" class="hover:underline">Contact</a>

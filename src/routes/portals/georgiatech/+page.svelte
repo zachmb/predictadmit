@@ -140,29 +140,29 @@
 						</p>
 					{/if}
 
-					<div class="flex items-center gap-3 mb-2">
+					<div class="flex flex-wrap items-center gap-x-3 gap-y-2 mb-2">
 						<label for="gt-email" class="w-28 text-[13px] text-slate-800">Email Address</label>
 						<input
 							id="gt-email"
 							type="email"
-							class="border border-slate-400 bg-white px-2 py-1 text-[13px] w-64"
+							class="border border-slate-400 bg-white px-2 py-1 text-[13px] w-full max-w-[16rem] sm:w-64"
 							bind:value={emailInput}
 							autocomplete="email"
 						/>
 					</div>
 
-					<div class="flex items-center gap-3 mb-4">
+					<div class="flex flex-wrap items-center gap-x-3 gap-y-2 mb-4">
 						<label for="gt-password" class="w-28 text-[13px] text-slate-800">Password</label>
 						<input
 							id="gt-password"
 							type="password"
-							class="border border-slate-400 bg-white px-2 py-1 text-[13px] w-64"
+							class="border border-slate-400 bg-white px-2 py-1 text-[13px] w-full max-w-[16rem] sm:w-64"
 							bind:value={passwordInput}
 							autocomplete="current-password"
 						/>
 						<a
 							href="/disclaimer"
-							class="text-[13px] font-bold text-[#003057] underline hover:no-underline ml-4"
+							class="text-[13px] font-bold text-[#003057] underline hover:no-underline sm:ml-4"
 						>
 							Forgot Your Password?
 						</a>

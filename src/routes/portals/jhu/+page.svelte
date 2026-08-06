@@ -161,7 +161,7 @@
 		</header>
 
 		<main class="bg-white min-h-[440px] py-12">
-			<div class="max-w-2xl mx-auto px-6">
+			<div class="max-w-2xl mx-auto px-4 sm:px-6">
 				<h1
 					class="text-2xl font-bold tracking-wide mb-6 uppercase"
 					style="color: {school.primaryColor};"
@@ -185,24 +185,24 @@
 						</p>
 					{/if}
 
-					<div class="flex items-center gap-3 mb-2">
+					<div class="flex flex-wrap items-center gap-x-3 gap-y-2 mb-2">
 						<label for="portal-email" class="text-[14px] text-gray-800 w-28">Email Address</label>
 						<input
 							id="portal-email"
 							type="email"
-							class="border border-gray-400 bg-white px-2 py-1 text-[14px] w-56"
+							class="border border-gray-400 bg-white px-2 py-1 text-[14px] w-full max-w-[14rem] sm:w-56 sm:max-w-none"
 							bind:value={emailInput}
 							autocomplete="email"
 						/>
 					</div>
 
-					<div class="flex items-start gap-3 mb-6">
+					<div class="flex flex-wrap items-start gap-x-3 gap-y-2 mb-6">
 						<label for="portal-password" class="text-[14px] text-gray-800 w-28 pt-1">Password</label>
 						<div>
 							<input
 								id="portal-password"
 								type="password"
-								class="border border-gray-400 bg-white px-2 py-1 text-[14px] w-56 block"
+								class="border border-gray-400 bg-white px-2 py-1 text-[14px] w-full max-w-[14rem] sm:w-56 sm:max-w-none block"
 								bind:value={passwordInput}
 								autocomplete="current-password"
 							/>

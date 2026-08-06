@@ -154,11 +154,11 @@
 	{#if !authenticated}
 		<!-- Utility bar -->
 		<div class="bg-[#F2F2F2] border-b border-gray-300 text-[12px] text-gray-700">
-			<div class="max-w-6xl mx-auto px-4 h-10 flex items-center justify-between">
+			<div class="max-w-6xl mx-auto px-4 min-h-10 md:h-10 py-1 md:py-0 flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
 				<a href="/disclaimer" class="font-extrabold tracking-tight text-gray-800">
 					OSU<span style="color: {SCARLET};">.EDU</span>
 				</a>
-				<nav class="flex items-center gap-5">
+				<nav class="flex flex-wrap items-center gap-x-5 gap-y-1">
 					<a href="/disclaimer" class="hover:underline">Help</a>
 					<a href="/disclaimer" class="hover:underline">BuckeyeLink</a>
 					<a href="/disclaimer" class="hover:underline">Map</a>

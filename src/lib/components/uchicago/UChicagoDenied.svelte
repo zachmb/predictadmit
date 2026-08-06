@@ -22,21 +22,21 @@
 	<title>{schoolName} - Admission Decision</title>
 </svelte:head>
 
-<main class="min-h-screen bg-white text-gray-800 font-serif p-6">
+<main class="min-h-screen bg-white text-gray-800 font-serif p-4 sm:p-6">
 	<div class="max-w-3xl mx-auto mt-10">
 		<DeepDiveButton slug="uchicago" color={primaryColor} />
 
 		<div class="border-b-2 pb-4 mb-8" style="border-color: {primaryColor};">
 			<div class="flex items-center">
 				<div
-					class="w-16 h-16 text-white flex items-center justify-center font-bold text-3xl mr-4 font-serif"
+					class="w-16 h-16 shrink-0 text-white flex items-center justify-center font-bold text-3xl mr-4 font-serif"
 					style="background-color: {primaryColor};"
 				>
 					UC
 				</div>
-				<div>
+				<div class="min-w-0">
 					<h1 class="text-2xl font-bold" style="color: {primaryColor};">THE UNIVERSITY OF CHICAGO</h1>
-					<div class="text-sm text-gray-600">
+					<div class="text-sm text-gray-600 break-words">
 						Office of College Admissions<br />
 						1101 East 58th Street, Rosenwald Hall 105, Chicago, Illinois 60637<br />
 						Telephone 773.702.8650 &bull; collegeadmissions@uchicago.edu
@@ -113,13 +113,13 @@
 		</div>
 
 		<div class="mt-16 pt-8 border-t border-gray-200 text-xs text-gray-500">
-			<div class="grid grid-cols-2 gap-8">
+			<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-8">
 				<div>
 					<strong>Crescat scientia; vita excolatur.</strong><br />
 					&ldquo;Let knowledge grow from more to more; and so be human life enriched.&rdquo; The
 					motto of the University of Chicago.
 				</div>
-				<div>
+				<div class="break-words">
 					<strong>Contact Information:</strong><br />
 					Email:
 					<a href="mailto:collegeadmissions@uchicago.edu" class="hover:underline"

@@ -20,14 +20,14 @@
 	<title>{schoolName} — Admission Decision</title>
 </svelte:head>
 
-<main class="min-h-screen bg-white text-gray-800 p-6" style="font-family: Georgia, 'Times New Roman', serif;">
+<main class="min-h-screen bg-white text-gray-800 p-4 sm:p-6" style="font-family: Georgia, 'Times New Roman', serif;">
 	<div class="max-w-3xl mx-auto mt-10">
 		<DeepDiveButton slug="columbia" color={primaryColor} />
 
 		<!-- Letterhead -->
 		<div class="border-b-2 pb-4 mb-8" style="border-color: {primaryColor};">
 			<div class="flex items-center">
-				<div class="w-16 h-16 flex items-center justify-center mr-4" style="background-color: {primaryColor};">
+				<div class="w-16 h-16 shrink-0 flex items-center justify-center mr-4" style="background-color: {primaryColor};">
 					<svg viewBox="0 0 60 46" class="w-10 h-8" aria-hidden="true">
 						<path d="M4 40 L6 16 L18 26 L30 6 L42 26 L54 16 L56 40 Z" fill={COLUMBIA_BLUE} />
 						<rect x="4" y="40" width="52" height="5" fill={COLUMBIA_BLUE} />
@@ -36,9 +36,9 @@
 						<circle cx="54" cy="14" r="3" fill={COLUMBIA_BLUE} />
 					</svg>
 				</div>
-				<div>
+				<div class="min-w-0">
 					<h1 class="text-2xl font-bold" style="color: {primaryColor};">COLUMBIA UNIVERSITY</h1>
-					<div class="text-sm text-gray-600">
+					<div class="text-sm text-gray-600 break-words">
 						Office of Undergraduate Admissions<br />
 						212 Hamilton Hall, Mail Code 2807 · 1130 Amsterdam Avenue<br />
 						New York, New York 10027 · Telephone 212-854-2522
@@ -114,13 +114,13 @@
 		</div>
 
 		<div class="mt-16 pt-8 border-t border-gray-200 text-xs text-gray-500">
-			<div class="grid grid-cols-2 gap-8">
+			<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-8">
 				<div>
 					<strong>Columbia's Mission:</strong><br />
 					To advance knowledge and learning at the highest level and to convey the products of its efforts
 					to the world, grounded in the shared intellectual experience of the Core Curriculum.
 				</div>
-				<div>
+				<div class="break-words">
 					<strong>Contact Information:</strong><br />
 					Email:
 					<a href="mailto:ugrad-ask@columbia.edu" class="hover:underline">ugrad-ask@columbia.edu</a

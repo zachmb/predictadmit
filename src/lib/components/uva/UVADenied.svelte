@@ -16,7 +16,7 @@
 	<title>{schoolName} - Admission Decision</title>
 </svelte:head>
 
-<main class="min-h-screen bg-white text-slate-800 font-serif p-6">
+<main class="min-h-screen bg-white text-slate-800 font-serif p-4 sm:p-6">
 	<div class="max-w-3xl mx-auto mt-10">
 		<DeepDiveButton slug="uva" color={primaryColor} />
 
@@ -24,16 +24,16 @@
 		<div class="border-b-4 pb-4 mb-8" style="border-color: {accentColor};">
 			<div class="flex items-center">
 				<div
-					class="w-16 h-16 text-white flex items-center justify-center font-bold text-3xl mr-4 rounded-sm"
+					class="w-16 h-16 shrink-0 text-white flex items-center justify-center font-bold text-3xl mr-4 rounded-sm"
 					style="background-color: {accentColor};"
 				>
 					V
 				</div>
-				<div>
+				<div class="min-w-0">
 					<h1 class="text-2xl font-bold tracking-wide" style="color: {primaryColor};">
 						UNIVERSITY OF VIRGINIA
 					</h1>
-					<div class="text-sm text-slate-600">
+					<div class="text-sm text-slate-600 break-words">
 						Office of Undergraduate Admission<br />
 						190 McCormick Road, P.O. Box 400160, Charlottesville, VA 22904<br />
 						Telephone (434) 982-5300
@@ -97,13 +97,13 @@
 		</div>
 
 		<div class="mt-16 pt-8 border-t border-slate-200 text-xs text-slate-500">
-			<div class="grid grid-cols-2 gap-8">
+			<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-8">
 				<div>
 					<strong>The University's Purpose:</strong><br />
 					To advance human knowledge, educate leaders, and cultivate an informed citizenry founded on
 					the belief that ideas can change the world for the better.
 				</div>
-				<div>
+				<div class="break-words">
 					<strong>Contact Information:</strong><br />
 					Email:
 					<a href="mailto:undergradadmission@virginia.edu" class="hover:underline"

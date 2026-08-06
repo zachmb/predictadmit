@@ -51,9 +51,9 @@
     />
   {/if}
 {:else}
-<div class="min-h-screen flex bg-[#0a3a63] text-white font-sans">
+<div class="min-h-screen flex flex-col md:flex-row bg-[#0a3a63] text-white font-sans">
   <!-- LEFT SIDEBAR -->
-  <aside class="w-[260px] shrink-0 px-8 pt-10 pb-8 border-r border-white/10">
+  <aside class="w-full md:w-[260px] shrink-0 px-8 pt-10 pb-8 border-b md:border-b-0 md:border-r border-white/10">
     <!-- Logo Area -->
     <div class="mb-12">
       <div class="text-[22px] leading-[1.1] font-semibold tracking-wide">
@@ -75,7 +75,7 @@
   </aside>
 
   <!-- MAIN CONTENT -->
-  <main class="flex-1 px-[70px] pt-[60px] pb-[80px]">
+  <main class="flex-1 min-w-0 px-6 sm:px-[70px] pt-[60px] pb-[80px]">
     <!-- Top Right User -->
     <div class="flex justify-end items-center mb-[60px]">
       <div class="text-[15px] mr-4">{applicantName}</div>
@@ -150,7 +150,7 @@
     </div>
 
     <!-- FOOTER AREA -->
-    <div class="mt-[90px] border-t border-white/30 pt-[40px] grid grid-cols-2 gap-[100px]">
+    <div class="mt-[90px] border-t border-white/30 pt-[40px] grid grid-cols-1 sm:grid-cols-2 gap-10 sm:gap-[100px]">
       <!-- Office -->
       <div>
         <h3 class="text-[16px] font-semibold tracking-[0.15em] mb-6">

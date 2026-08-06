@@ -162,7 +162,7 @@
 					/>
 				</div>
 
-				<div class="flex items-center mb-5">
+				<div class="flex flex-wrap items-center mb-5">
 					<label for="portal-password" class="w-28 text-[13px] text-[#16283c]">Password</label>
 					<input
 						id="portal-password"

@@ -134,14 +134,14 @@
 		<!-- ================= LOGIN ================= -->
 		<header class="bg-white border-b border-gray-200">
 			<div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-				<div class="flex items-center gap-4">
+				<div class="flex min-w-0 flex-wrap items-center gap-x-4 gap-y-1">
 					<span class="text-2xl font-extrabold tracking-tight text-black">PURDUE</span>
 					<span class="hidden sm:inline-block h-6 w-px bg-[#555960]"></span>
-					<a href="/disclaimer" class="text-[22px] font-bold text-black hover:text-black whitespace-nowrap">
+					<a href="/disclaimer" class="text-lg sm:text-[22px] font-bold text-black hover:text-black sm:whitespace-nowrap">
 						Undergraduate Admissions
 					</a>
 				</div>
-				<a href="/disclaimer" aria-label="Menu" class="text-black">
+				<a href="/disclaimer" aria-label="Menu" class="shrink-0 text-black">
 					<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
 						<path stroke-linecap="butt" d="M4 6h16M4 12h16M4 18h16" />
 					</svg>
@@ -166,28 +166,28 @@
 						</p>
 					{/if}
 
-					<div class="flex items-center gap-3">
+					<div class="flex flex-wrap items-center gap-3">
 						<label for="portal-email" class="text-[14px] font-semibold text-black w-36">
 							Email Address <span class="text-red-600">*</span>
 						</label>
 						<input
 							id="portal-email"
 							type="email"
-							class="border border-gray-400 bg-white px-2 py-1.5 text-[14px] w-64 focus:outline-none focus:ring-2"
+							class="border border-gray-400 bg-white px-2 py-1.5 text-[14px] w-full max-w-[16rem] sm:w-64 focus:outline-none focus:ring-2"
 							style="--tw-ring-color: {PURDUE_GOLD};"
 							bind:value={emailInput}
 							autocomplete="email"
 						/>
 					</div>
 
-					<div class="flex items-center gap-3">
+					<div class="flex flex-wrap items-center gap-3">
 						<label for="portal-password" class="text-[14px] font-semibold text-black w-36">
 							Password <span class="text-red-600">*</span>
 						</label>
 						<input
 							id="portal-password"
 							type="password"
-							class="border border-gray-400 bg-white px-2 py-1.5 text-[14px] w-64 focus:outline-none focus:ring-2"
+							class="border border-gray-400 bg-white px-2 py-1.5 text-[14px] w-full max-w-[16rem] sm:w-64 focus:outline-none focus:ring-2"
 							style="--tw-ring-color: {PURDUE_GOLD};"
 							bind:value={passwordInput}
 							autocomplete="current-password"

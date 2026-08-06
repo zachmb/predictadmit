@@ -108,7 +108,7 @@
 	{#if !authenticated}
 		<!-- ============================ LOGIN ============================ -->
 		<header class="border-b border-gray-200 bg-white">
-			<div class="mx-auto flex h-[70px] max-w-7xl items-center justify-between px-6">
+			<div class="mx-auto flex min-h-[70px] max-w-7xl flex-wrap items-center justify-between gap-y-2 px-4 py-2 md:h-[70px] md:flex-nowrap md:gap-y-0 md:px-6 md:py-0">
 				<div class="flex items-center gap-3">
 					<span class="font-serif text-3xl font-semibold" style="color: {school.primaryColor};">
 						Duke
@@ -132,8 +132,8 @@
 					class="flex text-[13px] font-bold uppercase tracking-wide"
 					style="color: {school.primaryColor};"
 				>
-					<a href="/disclaimer" class="border border-gray-200 px-5 py-4 hover:bg-gray-50">Visit</a>
-					<a href="/disclaimer" class="border border-l-0 border-gray-200 px-5 py-4 hover:bg-gray-50"
+					<a href="/disclaimer" class="border border-gray-200 px-3 py-4 sm:px-5 hover:bg-gray-50">Visit</a>
+					<a href="/disclaimer" class="border border-l-0 border-gray-200 px-3 py-4 sm:px-5 hover:bg-gray-50"
 						>Apply</a
 					>
 				</div>
@@ -143,7 +143,7 @@
 		<div style="background-color: {school.primaryColor};" class="h-[60px]"></div>
 
 		<main class="min-h-[440px] bg-white">
-			<div class="mx-auto max-w-6xl px-8 py-10">
+			<div class="mx-auto max-w-6xl px-4 py-10 sm:px-8">
 				<h1 class="mb-6 text-4xl font-normal text-gray-900">Login</h1>
 
 				<div
@@ -162,36 +162,36 @@
 						</p>
 					{/if}
 
-					<div class="mb-2 flex items-center gap-3">
+					<div class="mb-2 flex flex-wrap items-center gap-3">
 						<label for="portal-email" class="w-32 text-[15px] text-gray-900">Email Address</label>
 						<input
 							id="portal-email"
 							type="email"
-							class="w-64 border border-gray-400 bg-white px-2 py-1 text-[14px] shadow-inner"
+							class="w-full max-w-[16rem] sm:w-64 border border-gray-400 bg-white px-2 py-1 text-[14px] shadow-inner"
 							bind:value={emailInput}
 							autocomplete="email"
 						/>
 					</div>
 
-					<div class="mb-4 flex items-center gap-3">
+					<div class="mb-4 flex flex-wrap items-center gap-3">
 						<label for="portal-password" class="w-32 text-[15px] text-gray-900">Password</label>
 						<input
 							id="portal-password"
 							type="password"
-							class="w-64 border border-gray-400 bg-white px-2 py-1 text-[14px] shadow-inner"
+							class="w-full max-w-[16rem] sm:w-64 border border-gray-400 bg-white px-2 py-1 text-[14px] shadow-inner"
 							bind:value={passwordInput}
 							autocomplete="current-password"
 						/>
 						<a
 							href="/disclaimer"
-							class="ml-4 text-[15px] hover:underline"
+							class="text-[15px] hover:underline sm:ml-4"
 							style="color: {school.primaryColor};"
 						>
 							Forgot Your Password?
 						</a>
 					</div>
 
-					<div class="ml-[8.75rem] flex items-center gap-3">
+					<div class="flex items-center gap-3 sm:ml-[8.75rem]">
 						<button
 							type="button" on:click={autoLogin} disabled={isAutoLoggingIn}
 							class="border border-gray-400 bg-gray-300 px-4 py-1 text-[13px] font-semibold text-black shadow-[1px_1px_0_0_rgba(0,0,0,0.3)] hover:bg-gray-200 active:shadow-none"
@@ -210,9 +210,9 @@
 		</main>
 
 		<footer style="background-color: {school.primaryColor};" class="mt-10 text-white">
-			<div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 text-[12px]">
+			<div class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-x-6 gap-y-3 px-6 py-4 text-[12px]">
 				<span class="font-bold uppercase tracking-wide">&copy; DUKE.EDU</span>
-				<nav class="flex gap-6">
+				<nav class="flex flex-wrap gap-x-6 gap-y-2">
 					<a href="/disclaimer" class="hover:underline">Counselors</a>
 					<a href="/disclaimer" class="hover:underline">Families</a>
 					<a href="/disclaimer" class="hover:underline">Resources</a>
@@ -230,7 +230,7 @@
 	{:else if authenticated && !hasViewedUpdate}
 		<!-- ============================ PORTAL ============================ -->
 		<header class="border-b border-gray-200 bg-white">
-			<div class="mx-auto flex h-[70px] max-w-7xl items-center justify-between px-6">
+			<div class="mx-auto flex min-h-[70px] max-w-7xl flex-wrap items-center justify-between gap-y-2 px-4 py-2 md:h-[70px] md:flex-nowrap md:gap-y-0 md:px-6 md:py-0">
 				<div class="flex items-center gap-3">
 					<span class="font-serif text-3xl font-semibold" style="color: {school.primaryColor};">
 						Duke
@@ -254,8 +254,8 @@
 					class="flex text-[13px] font-bold uppercase tracking-wide"
 					style="color: {school.primaryColor};"
 				>
-					<a href="/disclaimer" class="border border-gray-200 px-5 py-4 hover:bg-gray-50">Visit</a>
-					<a href="/disclaimer" class="border border-l-0 border-gray-200 px-5 py-4 hover:bg-gray-50"
+					<a href="/disclaimer" class="border border-gray-200 px-3 py-4 sm:px-5 hover:bg-gray-50">Visit</a>
+					<a href="/disclaimer" class="border border-l-0 border-gray-200 px-3 py-4 sm:px-5 hover:bg-gray-50"
 						>Apply</a
 					>
 				</div>
@@ -438,9 +438,9 @@
 		</main>
 
 		<footer style="background-color: {school.primaryColor};" class="mt-10 text-white">
-			<div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 text-[12px]">
+			<div class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-x-6 gap-y-3 px-6 py-4 text-[12px]">
 				<span class="font-bold uppercase tracking-wide">&copy; DUKE.EDU</span>
-				<nav class="flex gap-6">
+				<nav class="flex flex-wrap gap-x-6 gap-y-2">
 					<a href="/disclaimer" class="hover:underline">Counselors</a>
 					<a href="/disclaimer" class="hover:underline">Families</a>
 					<a href="/disclaimer" class="hover:underline">Resources</a>

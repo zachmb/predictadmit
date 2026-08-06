@@ -155,7 +155,7 @@
 
 	{#if !authenticated}
 		<!-- ===================== LOGIN ===================== -->
-		<main class="mx-auto max-w-6xl px-6 pb-24 pt-8">
+		<main class="mx-auto max-w-6xl px-4 sm:px-6 pb-24 pt-8">
 			<h1 class="mb-4 text-[28px] font-normal text-gray-900">Login</h1>
 
 			<div
@@ -172,23 +172,23 @@
 					</p>
 				{/if}
 
-				<div class="mb-3 flex items-center gap-4">
+				<div class="mb-3 flex flex-wrap items-center gap-x-4 gap-y-2">
 					<label for="portal-email" class="w-28 text-[13px] text-gray-800">Email Address</label>
 					<input
 						id="portal-email"
 						type="email"
-						class="w-56 border border-slate-400 bg-white px-2 py-0.5 text-[13px] shadow-inner"
+						class="w-full max-w-[14rem] sm:w-56 sm:max-w-none border border-slate-400 bg-white px-2 py-0.5 text-[13px] shadow-inner"
 						bind:value={emailInput}
 						autocomplete="email"
 					/>
 				</div>
 
-				<div class="mb-4 flex items-center gap-4">
+				<div class="mb-4 flex flex-wrap items-center gap-x-4 gap-y-2">
 					<label for="portal-password" class="w-28 text-[13px] text-gray-800">Password</label>
 					<input
 						id="portal-password"
 						type="password"
-						class="w-56 border border-slate-400 bg-white px-2 py-0.5 text-[13px] shadow-inner"
+						class="w-full max-w-[14rem] sm:w-56 sm:max-w-none border border-slate-400 bg-white px-2 py-0.5 text-[13px] shadow-inner"
 						bind:value={passwordInput}
 						autocomplete="current-password"
 					/>

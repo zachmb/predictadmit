@@ -25,7 +25,7 @@
 		<div class="mb-2 text-[13px] font-bold text-gray-900">March 26, 2027</div>
 
 		<!-- Letter sheet -->
-		<div class="bg-white px-12 py-14 shadow-sm">
+		<div class="bg-white px-6 py-10 shadow-sm sm:px-12 sm:py-14">
 			<!-- Letterhead -->
 			<div class="mb-6 text-center">
 				<div class="font-serif text-5xl font-bold tracking-tight" style="color: {primaryColor};">
@@ -36,7 +36,7 @@
 				<div class="mt-4 text-[13px] font-bold uppercase tracking-wide text-gray-900">
 					Office of Undergraduate Admissions
 				</div>
-				<div class="text-[12px] text-gray-700">
+				<div class="text-[12px] text-gray-700 break-words">
 					2138 Campus Drive, Box 90586 &bull; Durham, North Carolina 27708-0586 &bull; (919) 684-3214
 				</div>
 			</div>
@@ -92,9 +92,9 @@
 
 	<!-- Footer -->
 	<footer style="background-color: {primaryColor};" class="text-white">
-		<div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 text-[12px] font-sans">
+		<div class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-x-6 gap-y-3 px-6 py-4 text-[12px] font-sans">
 			<span class="font-bold uppercase tracking-wide">&copy; DUKE.EDU</span>
-			<nav class="flex gap-6">
+			<nav class="flex flex-wrap gap-x-6 gap-y-2">
 				<a href="/disclaimer" class="hover:underline">Counselors</a>
 				<a href="/disclaimer" class="hover:underline">Families</a>
 				<a href="/disclaimer" class="hover:underline">Resources</a>

@@ -158,6 +158,7 @@
 						</p>
 					{/if}
 
+					<div class="overflow-x-auto">
 					<table class="border-separate" style="border-spacing: 0 8px;">
 						<tbody>
 							<tr>
@@ -200,6 +201,7 @@
 							</tr>
 						</tbody>
 					</table>
+					</div>
 
 					<div class="mt-5 flex items-center gap-3">
 						<button

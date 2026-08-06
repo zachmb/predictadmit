@@ -138,7 +138,7 @@
 				</div>
 			</div>
 			<nav style="background-color: {UCHICAGO_MAROON};" class="text-white">
-				<div class="max-w-6xl mx-auto px-6 flex items-center text-sm">
+				<div class="max-w-6xl mx-auto px-6 flex items-center text-sm overflow-x-auto">
 					<a href="/disclaimer" class="px-3 py-3 hover:bg-black/20">&#8962;</a>
 					{#each mainNav as item}
 						<a href="/disclaimer" class="px-3 py-3 hover:bg-black/20 whitespace-nowrap">{item}</a>
@@ -148,7 +148,7 @@
 		</header>
 
 		<main class="min-h-[520px] py-12">
-			<div class="max-w-4xl mx-auto px-6">
+			<div class="max-w-4xl mx-auto px-4 sm:px-6">
 				<h1 class="text-4xl font-normal mb-6 text-gray-900 border-b border-gray-200 pb-3">Login</h1>
 
 				<div class="border border-green-700 bg-[#E6F4EA] px-4 py-3 mb-8 text-[14px] text-green-900">
@@ -165,27 +165,27 @@
 						</p>
 					{/if}
 
-					<div class="flex items-center gap-3">
+					<div class="flex flex-wrap items-center gap-x-3 gap-y-2">
 						<label for="portal-email" class="text-[14px] text-gray-900 w-36 text-left font-semibold">
 							Email Address
 						</label>
 						<input
 							id="portal-email"
 							type="email"
-							class="border border-gray-400 bg-white px-2 py-1 text-[14px] w-64"
+							class="border border-gray-400 bg-white px-2 py-1 text-[14px] w-full max-w-[16rem] sm:w-64 sm:max-w-none"
 							bind:value={emailInput}
 							autocomplete="email"
 						/>
 					</div>
 
-					<div class="flex items-center gap-3">
+					<div class="flex flex-wrap items-center gap-x-3 gap-y-2">
 						<label for="portal-password" class="text-[14px] text-gray-900 w-36 text-left font-semibold">
 							Password
 						</label>
 						<input
 							id="portal-password"
 							type="password"
-							class="border border-gray-400 bg-white px-2 py-1 text-[14px] w-64"
+							class="border border-gray-400 bg-white px-2 py-1 text-[14px] w-full max-w-[16rem] sm:w-64 sm:max-w-none"
 							bind:value={passwordInput}
 							autocomplete="current-password"
 						/>
@@ -253,7 +253,7 @@
 				</div>
 			</div>
 			<nav style="background-color: {UCHICAGO_MAROON};" class="text-white">
-				<div class="max-w-6xl mx-auto px-6 flex items-center text-sm">
+				<div class="max-w-6xl mx-auto px-6 flex items-center text-sm overflow-x-auto">
 					<a href="/disclaimer" class="px-3 py-3 hover:bg-black/20">&#8962;</a>
 					{#each mainNav as item}
 						<a href="/disclaimer" class="px-3 py-3 hover:bg-black/20 whitespace-nowrap">{item}</a>

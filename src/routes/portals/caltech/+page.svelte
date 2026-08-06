@@ -116,8 +116,8 @@
 <div class="min-h-screen font-sans text-slate-800 bg-white">
 	{#if !authenticated}
 		<header class="bg-white border-b border-gray-200">
-			<div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-				<div class="flex items-center gap-3">
+			<div class="max-w-6xl mx-auto px-4 sm:px-6 min-h-16 flex flex-wrap items-center justify-between gap-x-2 gap-y-1 py-2 sm:flex-nowrap sm:py-0 sm:h-16">
+				<div class="flex items-center gap-2 sm:gap-3">
 					<span class="text-2xl font-serif font-bold" style="color: {school.primaryColor};"
 						>Caltech</span
 					>
@@ -126,9 +126,9 @@
 					>
 				</div>
 				<div class="text-xs">
-					<a href="/disclaimer" class="hover:text-blue-700 mx-2">Contact</a>
+					<a href="/disclaimer" class="hover:text-blue-700 mx-1 sm:mx-2">Contact</a>
 					<span class="text-gray-300">|</span>
-					<a href="/disclaimer" class="hover:text-blue-700 mx-2">Apply</a>
+					<a href="/disclaimer" class="hover:text-blue-700 mx-1 sm:mx-2">Apply</a>
 				</div>
 			</div>
 		</header>
@@ -154,7 +154,7 @@
 						</p>
 					{/if}
 
-					<div class="flex items-center gap-2">
+					<div class="flex flex-wrap items-center gap-2">
 						<label
 							for="portal-email"
 							class="text-[13px] font-normal text-slate-900 w-32 text-right"
@@ -164,13 +164,13 @@
 						<input
 							id="portal-email"
 							type="email"
-							class="border border-gray-400 bg-white px-2 py-1 text-[13px] w-64 shadow-inner"
+							class="border border-gray-400 bg-white px-2 py-1 text-[13px] w-full max-w-[16rem] sm:w-64 shadow-inner"
 							bind:value={emailInput}
 							autocomplete="email"
 						/>
 					</div>
 
-					<div class="flex items-center gap-2">
+					<div class="flex flex-wrap items-center gap-2">
 						<label
 							for="portal-password"
 							class="text-[13px] font-normal text-slate-900 w-32 text-right"
@@ -186,7 +186,7 @@
 						/>
 						<a
 							href="/disclaimer"
-							class="text-[12px] text-blue-800 hover:underline ml-6 whitespace-nowrap"
+							class="text-[12px] text-blue-800 hover:underline sm:ml-6 whitespace-nowrap"
 						>
 							Forgot Your Password?
 						</a>
@@ -214,9 +214,9 @@
 
 		<footer
 			style="background-color: {school.primaryColor};"
-			class="h-10 flex items-center justify-center text-white text-[11px] font-normal"
+			class="flex items-center justify-center py-2 text-white text-[11px] font-normal sm:h-10 sm:py-0"
 		>
-			<div class="max-w-6xl mx-auto flex justify-between w-full px-6">
+			<div class="max-w-6xl mx-auto flex flex-wrap justify-between gap-x-4 gap-y-1 w-full px-6">
 				<span>&copy; 2019</span>
 				<span
 					>PredictAdmit.com simulation - Not affiliated with California Institute of Technology</span
