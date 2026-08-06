@@ -724,7 +724,7 @@
 </svelte:head>
 
 <main
-	class="relative min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-slate-50 text-slate-900 overflow-hidden font-sans"
+	class="relative min-h-screen bg-[#FAFAFA] text-slate-900 overflow-hidden font-sans"
 >
 	<!-- Decorative background elements -->
 	<div class="absolute inset-0 overflow-hidden pointer-events-none">
@@ -732,7 +732,7 @@
 			class="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-br from-blue-100/40 to-transparent rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"
 		></div>
 		<div
-			class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-to-tr from-emerald-100/30 to-transparent rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2"
+			class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-to-tr from-blue-100/25 to-transparent rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2"
 		></div>
 	</div>
 
@@ -742,25 +742,21 @@
 			<!-- Hero -->
 			<header class="text-center space-y-6 max-w-2xl mx-auto">
 				<div
-					class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-600/10 to-emerald-600/10 border border-blue-200/50 backdrop-blur-sm"
+					class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-100"
 				>
-					<span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
-					<span class="text-xs font-bold text-blue-700 tracking-wide"
+					<span class="w-2 h-2 bg-[#0052CC] rounded-full animate-pulse"></span>
+					<span class="text-xs font-bold text-[#0052CC] tracking-wide"
 						>AI-POWERED ADMISSIONS SIMULATOR</span
 					>
 				</div>
 
 				<h1 class="text-6xl font-black tracking-tight text-slate-900 leading-[1.1]">
 					Predict Your College<br />
-					<span
-						class="bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 bg-clip-text text-transparent"
-					>
-						Results
-					</span>
+					<span class="text-[#0052CC]"> Results </span>
 				</h1>
 
 				<p class="text-lg text-slate-600 font-normal max-w-xl mx-auto leading-relaxed">
-					Get <span class="font-bold text-emerald-600 relative">
+					Get <span class="font-bold text-[#0052CC] relative">
 						your first AI simulation free
 						<svg
 							class="absolute -bottom-1 left-0 w-full h-2"
@@ -772,7 +768,7 @@
 								stroke="currentColor"
 								stroke-width="2"
 								fill="none"
-								class="text-emerald-300"
+								class="text-blue-300"
 							/>
 						</svg>
 					</span>. Every aspect of your application analyzed in depth—trained on real admissions
