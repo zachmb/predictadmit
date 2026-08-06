@@ -64,6 +64,10 @@
 	let googleSignedIn = $derived(!!session?.user);
 	let isPro = $derived($userProfile.isPro);
 
+	// Mobile navigation: the workspace sidebar collapses into an off-canvas drawer
+	// on phones (it is always visible from md up). Toggled by the mobile top bar.
+	let sidebarOpen = $state(false);
+
 	// Sales/Pricing State
 	let pricingMode = $state<'lifetime' | 'monthly'>('monthly');
 	// Ticker Animation
@@ -871,9 +875,22 @@
 
 {#if googleSignedIn}
 	<!-- PREDICTADMIT PRO INTERFACE -->
-	<div class="flex h-screen w-screen bg-slate-50 text-slate-900 font-sans overflow-hidden">
-		<!-- SIDEBAR NAVIGATION -->
-		<aside class="w-60 flex flex-col border-r border-slate-200/80 bg-white z-50">
+	<div class="relative flex h-[100dvh] w-full bg-slate-50 text-slate-900 font-sans overflow-hidden">
+		<!-- Mobile drawer backdrop -->
+		{#if sidebarOpen}
+			<div
+				class="fixed inset-0 z-40 bg-slate-900/40 backdrop-blur-sm md:hidden"
+				onclick={() => (sidebarOpen = false)}
+				role="presentation"
+			></div>
+		{/if}
+
+		<!-- SIDEBAR NAVIGATION (off-canvas drawer on mobile, static from md up) -->
+		<aside
+			class="fixed inset-y-0 left-0 z-50 flex w-60 flex-col border-r border-slate-200/80 bg-white transition-transform duration-300 md:static md:translate-x-0 {sidebarOpen
+				? 'translate-x-0 shadow-2xl'
+				: '-translate-x-full'} md:shadow-none"
+		>
 			<!-- Branding -->
 			<div class="h-14 px-4 flex items-center shrink-0">
 				<div class="flex items-center gap-2.5 min-w-0">
@@ -899,7 +916,11 @@
 			</div>
 
 			<!-- Views -->
-			<div class="flex-1 overflow-y-auto px-2 py-2 space-y-px">
+			<!-- svelte-ignore a11y_no_static_element_interactions -->
+			<div
+				class="flex-1 overflow-y-auto px-2 py-2 space-y-px"
+				onclick={() => (sidebarOpen = false)}
+			>
 				<!-- DASHBOARD TAB -->
 				<button
 					onclick={() => (currentView = 'dashboard')}
@@ -1127,7 +1148,10 @@
 			<!-- User Menu — h-24 to line up with the essay editor's bottom action bar -->
 			<div class="h-24 px-3 border-t border-slate-200/80 flex items-center shrink-0">
 				<button
-					onclick={() => (currentView = 'settings')}
+					onclick={() => {
+						currentView = 'settings';
+						sidebarOpen = false;
+					}}
 					title="Settings"
 					class="flex items-center gap-2.5 w-full h-10 px-2 rounded-md transition-colors {currentView ===
 					'settings'
@@ -1174,6 +1198,33 @@
 
 		<!-- MAIN AREA -->
 		<main class="flex-1 flex flex-col min-w-0 bg-slate-50 relative">
+			<!-- Mobile top bar: opens the workspace drawer (hidden from md up) -->
+			<div
+				class="md:hidden h-14 shrink-0 flex items-center gap-3 px-4 border-b border-slate-200 bg-white z-30"
+			>
+				<button
+					onclick={() => (sidebarOpen = true)}
+					aria-label="Open menu"
+					class="p-2 -ml-2 rounded-md text-slate-600 hover:bg-slate-100 transition-colors"
+				>
+					<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+						><path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M4 6h16M4 12h16M4 18h16"
+						/></svg
+					>
+				</button>
+				<div class="flex items-center gap-2 min-w-0">
+					<span class="text-sm font-semibold tracking-tight text-slate-900 truncate">PredictAdmit</span>
+					<span
+						class="rounded-md border border-blue-100 bg-blue-50 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[#0052CC]"
+						>Pro</span
+					>
+				</div>
+			</div>
+
 			{#if currentView === 'dashboard'}
 					<DashboardHome setView={(v) => (currentView = v as typeof currentView)} />
 
@@ -1505,10 +1556,12 @@
 				<!-- MIND MAP VIEW -->
 				<div class="flex-1 bg-slate-50 relative overflow-hidden flex flex-col">
 					<div
-						class="h-16 px-8 flex items-center justify-between bg-white border-b border-slate-200 shadow-sm z-10"
+						class="h-16 px-4 md:px-8 flex items-center justify-between gap-3 bg-white border-b border-slate-200 shadow-sm z-10"
 					>
-						<h2 class="text-xl font-bold text-slate-900">Application Mind Map</h2>
-						<div class="flex items-center gap-2">
+						<h2 class="text-base md:text-xl font-bold text-slate-900 truncate min-w-0">
+							<span class="hidden sm:inline">Application </span>Mind Map
+						</h2>
+						<div class="flex items-center gap-1.5 md:gap-2 shrink-0">
 							<button
 								onclick={resetMindMap}
 								class="px-3 py-2 text-slate-400 hover:text-rose-500 hover:bg-rose-50 rounded-lg text-sm font-bold transition-colors"
@@ -1556,7 +1609,7 @@
 											d="M13 10V3L4 14h7v7l9-11h-7z"
 										/></svg
 									>
-									<span>AI Brainstorm</span>
+									<span><span class="hidden sm:inline">AI </span>Brainstorm</span>
 								{/if}
 							</button>
 
@@ -1582,7 +1635,7 @@
 									>
 									Analyzing...
 								{:else}
-									Analyze Themes
+									<span class="hidden sm:inline">Analyze&nbsp;</span>Themes
 								{/if}
 							</button>
 						</div>
@@ -1677,14 +1730,14 @@
 				<!-- EDITOR VIEW -->
 				<!-- Header/Breadcrumbs -->
 				<div
-					class="h-16 px-8 flex items-center justify-between bg-white border-b border-slate-200 shadow-sm z-10"
+					class="h-16 px-4 md:px-8 flex items-center justify-between gap-3 bg-white border-b border-slate-200 shadow-sm z-10"
 				>
-					<div class="flex items-center gap-2 text-sm">
-						<span class="text-slate-400 font-medium">Editor</span>
-						<span class="text-slate-300">/</span>
-						<span class="font-bold text-slate-900">{activeFile.name.replace('.md', '')}</span>
+					<div class="flex items-center gap-2 text-sm min-w-0">
+						<span class="text-slate-400 font-medium hidden sm:inline">Editor</span>
+						<span class="text-slate-300 hidden sm:inline">/</span>
+						<span class="font-bold text-slate-900 truncate">{activeFile.name.replace('.md', '')}</span>
 					</div>
-					<div class="flex items-center gap-4">
+					<div class="flex items-center gap-2 md:gap-4 shrink-0">
 						<!-- View Toggles -->
 						<div class="flex bg-slate-100 p-1 rounded-lg">
 							<button
@@ -1722,15 +1775,17 @@
 							</button>
 						</div>
 
-						<div class="w-px h-6 bg-slate-200"></div>
+						<div class="w-px h-6 bg-slate-200 hidden md:block"></div>
 
 						<span
-							class="text-xs font-medium {profile.gpa_uw ? 'text-emerald-500' : 'text-amber-500'}"
+							class="text-xs font-medium hidden md:inline {profile.gpa_uw
+								? 'text-emerald-500'
+								: 'text-amber-500'}"
 						>
 							{profile.gpa_uw ? 'Profile Linked' : 'No Profile Linked'}
 						</span>
-						<span class="text-slate-300">|</span>
-						<span class="text-xs font-medium text-slate-400">
+						<span class="text-slate-300 hidden md:inline">|</span>
+						<span class="text-xs font-medium text-slate-400 hidden md:inline">
 							{activeFile.content.length} chars
 						</span>
 						<button
@@ -1754,7 +1809,7 @@
 				<div class="flex-1 overflow-hidden flex relative">
 					<!-- Text Editor -->
 					<div class="flex-1 relative flex flex-col">
-						<div class="flex-1 relative overflow-y-auto custom-scrollbar p-8 space-y-12">
+						<div class="flex-1 relative overflow-y-auto custom-scrollbar p-4 md:p-8 space-y-12">
 							{#if analysisResult && activeTab === 'feedback'}
 								<!-- MODE: ANNOTATED VIEW (Interactive Highlight) -->
 								<div class="relative">
@@ -1782,7 +1837,7 @@
 
 									<!-- Content Area -->
 									<div
-										class="w-full bg-slate-50 text-slate-800 font-serif text-lg leading-loose p-8 rounded-xl border border-slate-100"
+										class="w-full bg-slate-50 text-slate-800 font-serif text-lg leading-loose p-4 md:p-8 rounded-xl border border-slate-100"
 										onclick={(e) => {
 											// @ts-ignore
 											const span = e.target.closest('.highlight-span');
@@ -1812,7 +1867,7 @@
 									<div class="relative group flex-1 flex flex-col">
 										<textarea
 											bind:value={activeFile.content}
-											class="w-full flex-1 bg-white text-slate-800 p-8 rounded-2xl border border-slate-200 focus:border-[#0052CC] focus:ring-4 focus:ring-blue-500/10 outline-none font-serif text-lg leading-loose shadow-sm transition-all resize-none"
+											class="w-full flex-1 bg-white text-slate-800 p-4 md:p-8 rounded-2xl border border-slate-200 focus:border-[#0052CC] focus:ring-4 focus:ring-blue-500/10 outline-none font-serif text-base md:text-lg leading-loose shadow-sm transition-all resize-none"
 											placeholder="# Prompt\nPaste prompt here...\n\n# Response\nStart writing..."
 											spellcheck="false"
 										></textarea>
@@ -1831,9 +1886,9 @@
 
 						<!-- Bottom Action Bar — h-24 to line up with the sidebar user menu -->
 						<div
-							class="h-24 bg-white border-t border-slate-200 flex items-center justify-between px-8 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] z-50"
+							class="h-24 bg-white border-t border-slate-200 flex items-center justify-between gap-3 px-4 md:px-8 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] z-50"
 						>
-							<div class="flex items-center gap-6 flex-1">
+							<div class="hidden md:flex items-center gap-6 flex-1">
 								<div class="text-xs text-slate-500 font-medium">
 									{analysisResult
 										? 'Viewing Analysis'
@@ -1863,11 +1918,11 @@
 								</div>
 							</div>
 
-							<div class="flex items-center gap-4">
+							<div class="flex items-center gap-4 flex-1 md:flex-none justify-end">
 								<button
 									onclick={runBuild}
 									disabled={isBuilding}
-									class="flex items-center gap-3 px-8 py-4 bg-[#0052CC] text-white rounded-xl font-bold hover:bg-blue-700 transition-all shadow-xl shadow-blue-200 disabled:opacity-50 disabled:shadow-none transform active:scale-95 duration-200 text-lg"
+									class="flex items-center justify-center gap-3 w-full md:w-auto px-5 md:px-8 py-3.5 md:py-4 bg-[#0052CC] text-white rounded-xl font-bold hover:bg-blue-700 transition-all shadow-xl shadow-blue-200 disabled:opacity-50 disabled:shadow-none transform active:scale-95 duration-200 text-base md:text-lg"
 								>
 									{#if isBuilding}
 										<svg class="animate-spin h-4 w-4" viewBox="0 0 24 24"
@@ -1904,7 +1959,7 @@
 					<!-- Analysis Sidebar -->
 					{#if showTerminal}
 						<div
-							class="w-96 border-l border-slate-200 bg-white flex flex-col shadow-2xl relative z-30"
+							class="fixed inset-y-0 right-0 w-full max-w-sm md:max-w-none md:static md:w-96 border-l border-slate-200 bg-white flex flex-col shadow-2xl z-30"
 							transition:slide={{ axis: 'x', duration: 300 }}
 						>
 							<div
