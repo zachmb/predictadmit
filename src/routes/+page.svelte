@@ -762,7 +762,7 @@
 						</div>
 						<div class="flex-1 text-center">
 							<div
-								class="bg-white border border-slate-200/60 rounded-md px-4 py-1.5 text-[11px] font-medium text-slate-400 inline-block w-64 shadow-sm"
+								class="bg-white border border-slate-200/60 rounded-md px-4 py-1.5 text-[11px] font-medium text-slate-400 inline-block w-64 max-w-full truncate shadow-sm"
 							>
 								portal.harvard.edu/status
 							</div>
@@ -890,7 +890,7 @@
 				</div>
 
 				<!-- Visual: Pro Dashboard Mockup -->
-				<div class="relative group perspective-1000">
+				<div class="relative group perspective-1000 min-w-0 w-full">
 					<!-- Glow effect on hover -->
 					<div
 						class="absolute -inset-1 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-[2rem] blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"
