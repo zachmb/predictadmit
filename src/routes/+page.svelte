@@ -1160,7 +1160,7 @@
 					{/each}
 				</div>
 				<blockquote class="text-2xl md:text-4xl font-serif leading-relaxed opacity-90">
-					"ts was lowkenuinely accurate"
+					"ts was lowkey scary accurate"
 				</blockquote>
 				<div class="pt-4">
 					<div class="font-bold">Miao S.</div>
