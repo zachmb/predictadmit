@@ -1,5 +1,7 @@
 import { SvelteKitAuth } from '@auth/sveltekit';
 import Google from '@auth/core/providers/google';
+import { sequence } from '@sveltejs/kit/hooks';
+import type { Handle } from '@sveltejs/kit';
 import { env } from '$env/dynamic/private';
 
 // Accept either naming convention for the Google credentials so a rename in the
@@ -25,7 +27,7 @@ if (!AUTH_SECRET) {
 //   http://localhost:5173/auth/callback/google   (local dev — default vite port)
 //   https://predictadmit.com/auth/callback/google (production)
 // A mismatch here is what produces Google's "Error 400: redirect_uri_mismatch".
-export const { handle } = SvelteKitAuth({
+const { handle: authHandle } = SvelteKitAuth({
 	providers: [
 		Google({
 			clientId: GOOGLE_ID,
@@ -41,3 +43,24 @@ export const { handle } = SvelteKitAuth({
 	trustHost: true,
 	secret: AUTH_SECRET
 });
+
+// Canonical host: force apex predictadmit.com. Because trustHost derives the
+// OAuth redirect_uri from the request host, a visitor on www.predictadmit.com
+// would send Google `https://www.predictadmit.com/auth/callback/google` — which
+// is NOT the registered redirect URI, producing "Error 400: redirect_uri_mismatch".
+// Redirecting www → apex up front (before the auth handle) keeps the entire
+// OAuth flow on the one host Google knows about. Only the exact prod www host is
+// touched, so localhost and *.vercel.app previews are unaffected.
+const canonicalHost: Handle = async ({ event, resolve }) => {
+	if (event.url.hostname === 'www.predictadmit.com') {
+		const dest = new URL(event.request.url);
+		dest.hostname = 'predictadmit.com';
+		return new Response(null, {
+			status: 308,
+			headers: { location: dest.toString() }
+		});
+	}
+	return resolve(event);
+};
+
+export const handle = sequence(canonicalHost, authHandle);
