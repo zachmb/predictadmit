@@ -51,6 +51,39 @@
 
 	// Callback to request a deep dive for a given slug
 	export let requestDeepDiveForSlug: (slug: string) => void = () => {};
+
+	// A real inbox never shows the same one-line preview on every message. Pick a
+	// varied, believable snippet deterministically per school so the simulated
+	// inbox reads like a real one instead of a generated list.
+	const PREVIEWS = [
+		'Please log in to your applicant portal to view the latest update.',
+		'There has been a change to the status of your application.',
+		'Your admission decision is now available. Sign in to view it.',
+		"We've posted an update to your application — log in to see it.",
+		'A new notification is waiting for you in your applicant status page.',
+		'Important: action may be required on your application. Please sign in.'
+	];
+	function previewFor(portal: PortalEmail): string {
+		let h = 0;
+		for (let i = 0; i < portal.slug.length; i++) h = (h * 31 + portal.slug.charCodeAt(i)) >>> 0;
+		return PREVIEWS[h % PREVIEWS.length];
+	}
+	// Short brand-ish accent per school for the avatar, so the list has color
+	// variety like a real inbox (falls back to blue).
+	const AVATAR_TINTS = [
+		'bg-rose-100 text-rose-700',
+		'bg-blue-100 text-blue-700',
+		'bg-emerald-100 text-emerald-700',
+		'bg-amber-100 text-amber-700',
+		'bg-violet-100 text-violet-700',
+		'bg-sky-100 text-sky-700',
+		'bg-indigo-100 text-indigo-700'
+	];
+	function tintFor(portal: PortalEmail): string {
+		let h = 0;
+		for (let i = 0; i < portal.slug.length; i++) h = (h * 33 + portal.slug.charCodeAt(i)) >>> 0;
+		return AVATAR_TINTS[h % AVATAR_TINTS.length];
+	}
 </script>
 
 <section id="inboxSection" bind:this={inboxSection} class="scroll-mt-24 font-sans">
@@ -279,9 +312,16 @@
 										on:click={() => selectPortal(portal)}
 										class={`w-full text-left px-6 py-4 border-b border-slate-50 hover:bg-slate-50 transition-colors flex items-start gap-4 group ${readPortalSlugs.has(portal.slug) ? 'opacity-80' : 'bg-white'}`}
 									>
+										<!-- Unread dot -->
+										<div class="w-2 flex-shrink-0 self-center">
+											{#if !readPortalSlugs.has(portal.slug)}
+												<span class="block w-2 h-2 rounded-full bg-blue-600"></span>
+											{/if}
+										</div>
+
 										<!-- Avatar/Icon -->
 										<div
-											class={`w-10 h-10 rounded-full flex-shrink-0 flex items-center justify-center text-xs font-bold ${readPortalSlugs.has(portal.slug) ? 'bg-slate-100 text-slate-500' : 'bg-blue-100 text-blue-600'}`}
+											class={`w-10 h-10 rounded-full flex-shrink-0 flex items-center justify-center text-sm font-bold ${readPortalSlugs.has(portal.slug) ? 'bg-slate-100 text-slate-400' : tintFor(portal)}`}
 										>
 											{portal.name[0]}
 										</div>
@@ -289,7 +329,7 @@
 										<div class="flex-1 min-w-0">
 											<div class="flex justify-between items-baseline mb-1">
 												<span
-													class={`text-sm truncate pr-2 ${readPortalSlugs.has(portal.slug) ? 'font-medium text-slate-900' : 'font-bold text-slate-900'}`}
+													class={`text-sm truncate pr-2 ${readPortalSlugs.has(portal.slug) ? 'font-medium text-slate-500' : 'font-bold text-slate-900'}`}
 												>
 													{portal.name}
 												</span>
@@ -298,16 +338,14 @@
 												</span>
 											</div>
 											<div class="text-sm text-slate-600 truncate flex items-center gap-2">
-												<div>
+												<div class="truncate">
 													<span
 														class={readPortalSlugs.has(portal.slug)
-															? ''
+															? 'text-slate-500'
 															: 'font-semibold text-slate-800'}>{portal.subject}</span
 													>
-													<span class="text-slate-400 mx-1">–</span>
-													<span class="text-slate-500"
-														>A status update is available in your application portal.</span
-													>
+													<span class="text-slate-300 mx-1.5">·</span>
+													<span class="text-slate-400">{previewFor(portal)}</span>
 												</div>
 												{#if deepDiveItems && deepDiveItems.some((d) => d.slug === portal.slug)}
 													<span
@@ -392,7 +430,7 @@
 
 								<div class="flex items-center gap-4 mb-8 pb-8 border-b border-slate-100">
 									<div
-										class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-lg font-bold text-blue-600"
+										class={`w-12 h-12 rounded-full flex items-center justify-center text-lg font-bold ${tintFor(selectedPortal)}`}
 									>
 										{selectedPortal.name[0]}
 									</div>
