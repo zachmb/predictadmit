@@ -86,9 +86,9 @@
 					href="/ai"
 					aria-current={isActive('/ai') ? 'page' : undefined}
 					on:click={(e) => e.currentTarget.blur()}
-					class="inline-flex items-center gap-1.5 whitespace-nowrap shrink-0 text-[15px] font-semibold px-4 py-2.5 rounded-full transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0052CC]/40 {isActive('/ai')
-						? 'text-slate-900 bg-slate-100'
-						: 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'}"
+					class="inline-flex items-center gap-1.5 whitespace-nowrap shrink-0 text-[15px] font-semibold px-4 py-2.5 rounded-full transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0052CC]/40 {isActive('/ai')
+						? 'text-[#0052CC]'
+						: 'text-slate-600 hover:text-slate-900'}"
 				>
 					<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v2m0 14v2M3 12h2m14 0h2m-3.5-6.5-1.4 1.4M6.9 17.1l-1.4 1.4m0-13 1.4 1.4m11.6 11.6-1.4-1.4"/><circle cx="12" cy="12" r="4"/></svg>
 					Predict My Decisions</a
@@ -97,9 +97,9 @@
 					href="/portals"
 					aria-current={isPortalsIndex ? 'page' : undefined}
 					on:click={(e) => e.currentTarget.blur()}
-					class="inline-flex items-center gap-1.5 whitespace-nowrap shrink-0 text-[15px] font-semibold px-4 py-2.5 rounded-full transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0052CC]/40 {isPortalsIndex
-						? 'text-slate-900 bg-slate-100'
-						: 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'}"
+					class="inline-flex items-center gap-1.5 whitespace-nowrap shrink-0 text-[15px] font-semibold px-4 py-2.5 rounded-full transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0052CC]/40 {isPortalsIndex
+						? 'text-[#0052CC]'
+						: 'text-slate-600 hover:text-slate-900'}"
 				>
 					<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
 					Portal Simulator</a
