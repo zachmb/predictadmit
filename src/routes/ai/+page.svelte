@@ -67,6 +67,8 @@
 	let parseError = $state('');
 	let parseNotice = $state('');
 	let parsedFieldKeys = $state<string[]>([]);
+	// Which field is currently being typed in (drives the glow highlight).
+	let fillingField = $state<string | null>(null);
 
 	// Major Autofill
 	let majorSuggestions = $derived(
@@ -736,6 +738,57 @@
 		major: 'Major'
 	};
 
+	// Visual order the boxes fill in (top → bottom of the form).
+	const FILL_ORDER = ['major', 'transcript', 'activities', 'honors', 'essay'] as const;
+
+	const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+	// Type text into a field progressively so the user watches it populate.
+	async function typeReveal(text: string, set: (v: string) => void) {
+		const total = text.length;
+		set('');
+		if (total <= 48) {
+			const steps = 10;
+			for (let i = 1; i <= steps; i++) {
+				set(text.slice(0, Math.ceil((total * i) / steps)));
+				await sleep(26);
+			}
+		} else {
+			const chunk = Math.max(8, Math.ceil(total / 45));
+			for (let i = chunk; i < total; i += chunk) {
+				set(text.slice(0, i));
+				await sleep(15);
+			}
+		}
+		set(text);
+	}
+
+	// Fill each box one after another, gliding to it with a glow, so the autofill
+	// reads as the AI "writing in" the application rather than a silent snap.
+	async function animateFill(f: Record<string, string>) {
+		const setters: Record<string, (v: string) => void> = {
+			major: (v) => (major = v),
+			transcript: (v) => (transcript = v),
+			activities: (v) => (activities = v),
+			honors: (v) => (honors = v),
+			essay: (v) => (essay = v)
+		};
+		for (const key of FILL_ORDER) {
+			const text = f[key];
+			if (!text) continue;
+			fillingField = key;
+			try {
+				document.getElementById(key)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+			} catch {
+				/* SSR / no DOM */
+			}
+			await sleep(180);
+			await typeReveal(text, setters[key]);
+			await sleep(160);
+		}
+		fillingField = null;
+	}
+
 	async function parseAndFill(text: string) {
 		const source = (text ?? '').trim();
 		parseError = '';
@@ -747,6 +800,7 @@
 		}
 
 		parsing = true;
+		let fields: Record<string, string> | null = null;
 		try {
 			const res = await fetch('/api/parse-application', {
 				method: 'POST',
@@ -754,32 +808,35 @@
 				body: JSON.stringify({ text: source })
 			});
 			const data = await res.json();
-
 			if (!res.ok) {
 				parseError = data?.error ?? 'Could not read your materials. Try pasting them again.';
 				return;
 			}
-
-			const f = (data.fields ?? {}) as Record<string, string>;
-			const filled: string[] = [];
-			if (f.transcript) { transcript = f.transcript; filled.push('transcript'); }
-			if (f.activities) { activities = f.activities; filled.push('activities'); }
-			if (f.honors) { honors = f.honors; filled.push('honors'); }
-			if (f.essay) { essay = f.essay; filled.push('essay'); }
-			if (f.major) { major = f.major; filled.push('major'); }
-
-			if (!filled.length) {
-				parseError = "Couldn't find application details in that text. Try your resume or brag sheet.";
-				return;
-			}
-			parsedFieldKeys = filled;
-			parseNotice = `Filled ${filled.length} field${filled.length > 1 ? 's' : ''} — review and tweak anything below.`;
+			fields = (data.fields ?? {}) as Record<string, string>;
 		} catch (err) {
 			console.error('parseAndFill error:', err);
 			parseError = 'Network error while reading your materials. Please try again.';
+			return;
 		} finally {
 			parsing = false;
 		}
+
+		const present = FILL_ORDER.filter((k) => fields && fields[k]);
+		if (!present.length) {
+			parseError = "Couldn't find application details in that text. Try your resume or brag sheet.";
+			return;
+		}
+		parsedFieldKeys = [...present];
+		// Watch every box get written in, one by one.
+		await animateFill(fields!);
+		parseNotice = `Filled ${present.length} field${present.length > 1 ? 's' : ''} — review and tweak anything below.`;
+	}
+
+	// Glow applied to whichever field is currently being typed into.
+	function fillClass(key: string) {
+		return fillingField === key
+			? ' ring-4 ring-blue-500/40 border-blue-500 bg-blue-50/40'
+			: '';
 	}
 
 	import Card from '$lib/components/common/Card.svelte';
@@ -1029,6 +1086,11 @@
 											<span class="h-3.5 w-3.5 animate-spin rounded-full border-2 border-slate-300 border-t-blue-600"></span>
 											Reading your materials and sorting them into fields…
 										</div>
+									{:else if fillingField}
+										<div class="mt-3 flex items-center gap-2 text-sm font-semibold text-blue-700">
+											<span class="h-3.5 w-3.5 animate-spin rounded-full border-2 border-blue-200 border-t-blue-600"></span>
+											Writing in your {FIELD_LABELS[fillingField] ?? fillingField}…
+										</div>
 									{:else if parseNotice}
 										<div class="mt-3 rounded-lg bg-emerald-50 border border-emerald-200 p-3">
 											<p class="text-xs font-semibold text-emerald-700 flex items-center gap-1.5">
@@ -1065,11 +1127,11 @@
 										<button
 											type="button"
 											onclick={() => parseAndFill(pasteBlob)}
-											disabled={parsing || pasteBlob.trim().length < 20}
+											disabled={parsing || !!fillingField || pasteBlob.trim().length < 20}
 											class="mt-2 inline-flex items-center gap-2 rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-bold text-white shadow-sm transition-all hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-40"
 										>
 											<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3v4M3 5h4M6 17v4m-2-2h4"/><path d="M13 3l3.5 8.5L21 13l-8.5 1.5L11 23l-1.5-8.5L1 13l8.5-1.5z"/></svg>
-											{parsing ? 'Reading…' : 'Autofill my application'}
+											{parsing ? 'Reading…' : fillingField ? 'Autofilling…' : 'Autofill my application'}
 										</button>
 									</div>
 								</div>
@@ -1089,7 +1151,7 @@
 										id="major"
 										type="text"
 										bind:value={major}
-										class="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 transition-all shadow-sm hover:border-slate-300 font-sans"
+										class="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 transition-all shadow-sm hover:border-slate-300 font-sans{fillClass('major')}"
 										placeholder="e.g. Computer Science, Comparative Literature..."
 										onfocus={() => (showMajorDropdown = true)}
 										onblur={() => setTimeout(() => (showMajorDropdown = false), 200)}
@@ -1127,7 +1189,7 @@
 										id="essay"
 										bind:value={essay}
 										rows="6"
-										class="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 transition-all shadow-sm hover:border-slate-300 font-sans resize-y"
+										class="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 transition-all shadow-sm hover:border-slate-300 font-sans resize-y{fillClass('essay')}"
 										placeholder="Paste your personal statement here..."
 									></textarea>
 								</div>
@@ -1249,7 +1311,7 @@
 										id="activities"
 										bind:value={activities}
 										rows="4"
-										class="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 resize-y font-sans shadow-sm hover:border-slate-300 transition-all"
+										class="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 resize-y font-sans shadow-sm hover:border-slate-300 transition-all{fillClass('activities')}"
 										placeholder="Paste your activities list or résumé bullets. If in PDF, copy-paste the text."
 									></textarea>
 								</div>
@@ -1269,7 +1331,7 @@
 										id="honors"
 										bind:value={honors}
 										rows="3"
-										class="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 resize-y font-sans shadow-sm hover:border-slate-300 transition-all"
+										class="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 resize-y font-sans shadow-sm hover:border-slate-300 transition-all{fillClass('honors')}"
 										placeholder="List major competitions, scholarships, and distinctions..."
 									></textarea>
 								</div>
@@ -1287,7 +1349,7 @@
 										id="transcript"
 										bind:value={transcript}
 										rows="3"
-										class="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 resize-y font-sans shadow-sm hover:border-slate-300 transition-all"
+										class="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 resize-y font-sans shadow-sm hover:border-slate-300 transition-all{fillClass('transcript')}"
 										placeholder="Include GPA, course rigor, key grades, testing, and context..."
 									></textarea>
 								</div>
