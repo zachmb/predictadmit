@@ -9,6 +9,9 @@ import {
 } from '$lib/config/admissionFactors';
 
 // Helper to find the full school name from the slug
+// Every school here must have a matching /portals/<slug> page (the "View
+// Simulated Decision" link) AND match the frontend SCHOOLS list in
+// src/routes/ai/+page.svelte so the full simulation runs across all of them.
 const SCHOOL_MAP: Record<string, string> = {
 	harvard: 'Harvard University',
 	stanford: 'Stanford University',
@@ -24,12 +27,30 @@ const SCHOOL_MAP: Record<string, string> = {
 	northwestern: 'Northwestern University',
 	dartmouth: 'Dartmouth College',
 	brown: 'Brown University',
+	cornell: 'Cornell University',
 	vanderbilt: 'Vanderbilt University',
 	rice: 'Rice University',
 	wustl: 'Washington University in St. Louis',
-	cornell: 'Cornell University',
+	notredame: 'University of Notre Dame',
+	georgetown: 'Georgetown University',
+	emory: 'Emory University',
+	ucberkeley: 'University of California, Berkeley',
 	ucla: 'University of California, Los Angeles',
-	ucberkeley: 'University of California, Berkeley'
+	usc: 'University of Southern California',
+	umich: 'University of Michigan',
+	unc: 'University of North Carolina at Chapel Hill',
+	uva: 'University of Virginia',
+	nyu: 'New York University',
+	cmu: 'Carnegie Mellon University',
+	georgiatech: 'Georgia Institute of Technology',
+	ucsd: 'University of California, San Diego',
+	uci: 'University of California, Irvine',
+	ucdavis: 'University of California, Davis',
+	wakeforest: 'Wake Forest University',
+	uf: 'University of Florida',
+	wisconsin: 'University of Wisconsin–Madison',
+	purdue: 'Purdue University',
+	osu: 'The Ohio State University'
 };
 
 function truncateForModel(text: string, maxChars = 14000): string {
@@ -42,7 +63,10 @@ function truncateForModel(text: string, maxChars = 14000): string {
 export const config = { maxDuration: 60 };
 
 export const POST: RequestHandler = async (event) => {
-	const g = await guardAi(event);
+	// One simulation fans out to ~38 schools in a burst, so allow a higher
+	// per-minute ceiling here than the default (still bounded against abuse; the
+	// free-sim/paywall gate limits how often a user can trigger a full run).
+	const g = await guardAi(event, { max: 60, windowMs: 60_000 });
 	if (!g.ok) return g.response;
 	const { params, request } = event;
 	const DEEPSEEK_API_KEY = env.DEEPSEEK_API_KEY;

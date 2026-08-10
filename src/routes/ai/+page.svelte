@@ -133,6 +133,9 @@
 		{ slug: 'wakeforest', label: 'Wake Forest (ED I/II)' }
 	];
 
+	// Runs the AI simulation across every school that has a portal page + a
+	// backend SCHOOL_MAP entry (keep these in sync with SCHOOL_MAP in
+	// src/routes/api/ai-evaluate/[slug]/+server.ts).
 	export const SCHOOLS = [
 		{ school: 'Harvard University', slug: 'harvard' },
 		{ school: 'Stanford University', slug: 'stanford' },
@@ -148,12 +151,30 @@
 		{ school: 'Northwestern University', slug: 'northwestern' },
 		{ school: 'Dartmouth College', slug: 'dartmouth' },
 		{ school: 'Brown University', slug: 'brown' },
+		{ school: 'Cornell University', slug: 'cornell' },
 		{ school: 'Vanderbilt University', slug: 'vanderbilt' },
 		{ school: 'Rice University', slug: 'rice' },
 		{ school: 'Washington University in St. Louis', slug: 'wustl' },
-		{ school: 'Cornell University', slug: 'cornell' },
+		{ school: 'University of Notre Dame', slug: 'notredame' },
+		{ school: 'Georgetown University', slug: 'georgetown' },
+		{ school: 'Emory University', slug: 'emory' },
+		{ school: 'University of California, Berkeley', slug: 'ucberkeley' },
 		{ school: 'University of California, Los Angeles', slug: 'ucla' },
-		{ school: 'University of California, Berkeley', slug: 'ucberkeley' }
+		{ school: 'University of Southern California', slug: 'usc' },
+		{ school: 'University of Michigan', slug: 'umich' },
+		{ school: 'University of North Carolina at Chapel Hill', slug: 'unc' },
+		{ school: 'University of Virginia', slug: 'uva' },
+		{ school: 'New York University', slug: 'nyu' },
+		{ school: 'Carnegie Mellon University', slug: 'cmu' },
+		{ school: 'Georgia Institute of Technology', slug: 'georgiatech' },
+		{ school: 'University of California, San Diego', slug: 'ucsd' },
+		{ school: 'University of California, Irvine', slug: 'uci' },
+		{ school: 'University of California, Davis', slug: 'ucdavis' },
+		{ school: 'Wake Forest University', slug: 'wakeforest' },
+		{ school: 'University of Florida', slug: 'uf' },
+		{ school: 'University of Wisconsin–Madison', slug: 'wisconsin' },
+		{ school: 'Purdue University', slug: 'purdue' },
+		{ school: 'The Ohio State University', slug: 'osu' }
 	];
 
 	const handlePromoCode = (e: KeyboardEvent) => {
@@ -929,7 +950,7 @@
 				<p
 					class="mx-auto max-w-lg rounded-2xl border border-amber-200 bg-amber-50 px-5 py-3 text-sm leading-relaxed text-amber-900"
 				>
-					Quick reality check: this is just an AI prediction. It could be completely wrong,
+					Calibrated on real decisions: we tuned PredictAdmit until it reproduced our founding team's own college admissions results, so it reads your profile far more sharply than a generic ChatGPT guess. Still — it's an AI prediction and could be wrong,
 					so don't think about it too deeply or treat it like a real admissions decision.
 				</p>
 			</header>

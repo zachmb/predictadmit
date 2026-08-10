@@ -52,6 +52,35 @@
 	// Callback to request a deep dive for a given slug
 	export let requestDeepDiveForSlug: (slug: string) => void = () => {};
 
+	// Share the decision from the inbox (native share, copy-link fallback) — sits
+	// alongside "View" and "Deep Dive" in one row so all three show at once and
+	// never overlap.
+	let shareCopied = false;
+	async function shareDecision(portal: PortalEmail) {
+		if (typeof window === 'undefined') return;
+		const url = `${window.location.origin}/portals/${portal.slug}`;
+		const title = `My ${portal.name} decision`;
+		try {
+			if (navigator.share) {
+				await navigator.share({ title, url });
+				return;
+			}
+		} catch {
+			/* user cancelled or unsupported — fall through to copy */
+		}
+		try {
+			await navigator.clipboard.writeText(url);
+			shareCopied = true;
+			setTimeout(() => (shareCopied = false), 2000);
+		} catch {
+			/* ignore clipboard errors */
+		}
+	}
+
+	// Unread decisions still waiting to be opened — powers the blue Inbox badge
+	// (a real mail app counts unread, not total).
+	$: unreadCount = visiblePortals.filter((p) => !readPortalSlugs.has(p.slug)).length;
+
 	// A real inbox never shows the same one-line preview on every message. Pick a
 	// varied, believable snippet deterministically per school so the simulated
 	// inbox reads like a real one instead of a generated list.
@@ -171,10 +200,10 @@
 							</svg>
 							<span>Inbox</span>
 						</div>
-						{#if visiblePortals.length > 0}
-							<span class="text-xs font-bold bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full"
-								>{visiblePortals.length}</span
-							>
+						{#if unreadCount > 0}
+							<span class="text-xs font-bold bg-blue-600 text-white px-2 py-0.5 rounded-full">{unreadCount}</span>
+						{:else if visiblePortals.length > 0}
+							<span class="text-xs font-bold bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full">{visiblePortals.length}</span>
 						{/if}
 					</button>
 
@@ -457,6 +486,11 @@
 										Please log in to your applicant portal using the credentials you created when
 										you first applied.
 									</p>
+									<p class="not-prose rounded-lg border border-blue-100 bg-blue-50 px-4 py-2.5 text-sm text-slate-600">
+										<span class="font-semibold text-[#0052CC]">First time?</span> The portal is a
+										simulation — just tap <span class="font-semibold">Login</span> to reveal your
+										decision (your details are pre-filled, no real credentials needed).
+									</p>
 
 									<div class="my-8 flex flex-wrap items-center gap-3">
 										<a
@@ -465,6 +499,14 @@
 										>
 											View Simulated Decision
 										</a>
+
+										<button
+											type="button"
+											on:click={() => shareDecision(selectedPortal)}
+											class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors"
+										>
+											{shareCopied ? 'Link copied!' : 'Share your decision'}
+										</button>
 
 										{#if deepDiveItems && deepDiveItems.some((d) => d.slug === selectedPortal.slug)}
 											<button

@@ -5,6 +5,10 @@
 	import { onDestroy } from 'svelte';
 
 	$: isPortal = $page.url.pathname.startsWith('/portals/');
+	// During an AI simulation, viewing a school's decision page, the nav morphs
+	// into a "mail" nav so the user can jump straight back to their inbox and open
+	// another decision instead of hunting for the browser back button.
+	$: mailMode = isPortal && $userProfile.usingAI;
 	// Active-route highlight for the primary nav (exact match or a sub-path).
 	$: path = $page.url.pathname;
 	const isActive = (p: string) => path === p || path.startsWith(p + '/');
@@ -71,9 +75,20 @@
 			style="max-width: {floatingIsland ? '100%' : '1200px'};"
 		>
 			<div class="pl-4">
-				<a href="/" class="text-xl font-[700] tracking-tight text-slate-900 transition-colors">
-					predictadmit<span class="text-[#0052CC]">.com</span>
-				</a>
+				{#if mailMode}
+					<!-- Mail-nav mode: one tap back to the decision inbox. -->
+					<a
+						href="/ai"
+						class="inline-flex items-center gap-2 rounded-full bg-[#0052CC] px-4 py-2 text-sm font-semibold text-white no-underline transition-colors hover:bg-[#0041a3]"
+					>
+						<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m0 0 7 7m-7-7 7-7"/></svg>
+						Back to Inbox
+					</a>
+				{:else}
+					<a href="/" class="text-xl font-[700] tracking-tight text-slate-900 transition-colors">
+						predictadmit<span class="text-[#0052CC]">.com</span>
+					</a>
+				{/if}
 			</div>
 
 			<!-- CENTERED NAVIGATION — the three things a visitor comes to do, spelled
