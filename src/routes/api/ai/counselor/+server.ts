@@ -1,6 +1,7 @@
 import { json } from '@sveltejs/kit';
 import { env } from '$env/dynamic/private';
 import type { RequestHandler } from './$types';
+import { guardAi } from '$lib/server/guard';
 import { getSchoolStat, computeAcademicIndex, classifyLikelihood } from '$lib/config/schoolStats';
 
 type ChatMessage = { role: 'user' | 'assistant'; content: string };
@@ -23,7 +24,14 @@ function estimateChance(acceptanceRate: number, academicIndex: number): number {
  * Mirrors the essay-grader Anthropic integration (x-api-key, sonnet -> haiku
  * fallback) so it uses the same CLAUDE_API_KEY and works in the same env.
  */
-export const POST: RequestHandler = async ({ request }) => {
+// Claude Sonnet calls can run long; lift the serverless timeout off the default
+// so a slow model response doesn't 504 mid-answer (60s is the Hobby-tier max).
+export const config = { maxDuration: 60 };
+
+export const POST: RequestHandler = async (event) => {
+	const g = await guardAi(event);
+	if (!g.ok) return g.response;
+	const { request } = event;
 	let body;
 	try {
 		body = await request.json();

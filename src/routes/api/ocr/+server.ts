@@ -12,8 +12,15 @@
 // the user to paste their text instead of silently returning nothing.
 import type { RequestHandler } from './$types';
 import { json } from '@sveltejs/kit';
+import { guardAi } from '$lib/server/guard';
 
-export const POST: RequestHandler = async ({ request }) => {
+// PDF text extraction can run long on large files — lift the timeout (60s max).
+export const config = { maxDuration: 60 };
+
+export const POST: RequestHandler = async (event) => {
+	const g = await guardAi(event);
+	if (!g.ok) return g.response;
+	const { request } = event;
 	let file: FormDataEntryValue | null;
 	try {
 		const formData = await request.formData();

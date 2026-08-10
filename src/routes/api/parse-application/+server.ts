@@ -11,6 +11,7 @@
 import { json } from '@sveltejs/kit';
 import { env } from '$env/dynamic/private';
 import type { RequestHandler } from './$types';
+import { guardAi } from '$lib/server/guard';
 
 const SYSTEM_PROMPT = `You are a parser that extracts a US college applicant's materials into structured fields.
 
@@ -30,7 +31,13 @@ Rules:
 - Keep the applicant's own wording where possible; lightly clean formatting only.
 - Return ONLY the JSON object, nothing else.`;
 
-export const POST: RequestHandler = async ({ request }) => {
+// DeepSeek call — lift the serverless timeout off the default (60s = Hobby max).
+export const config = { maxDuration: 60 };
+
+export const POST: RequestHandler = async (event) => {
+	const g = await guardAi(event);
+	if (!g.ok) return g.response;
+	const { request } = event;
 	const DEEPSEEK_API_KEY = env.DEEPSEEK_API_KEY;
 	if (!DEEPSEEK_API_KEY) {
 		return json({ error: 'Parsing is temporarily unavailable.' }, { status: 503 });

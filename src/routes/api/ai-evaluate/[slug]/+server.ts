@@ -1,6 +1,7 @@
 import type { RequestHandler } from './$types';
 import { json } from '@sveltejs/kit';
 import { env } from '$env/dynamic/private';
+import { guardAi } from '$lib/server/guard';
 import {
 	dimensionWeightSummary,
 	factorTableForPrompt,
@@ -36,7 +37,14 @@ function truncateForModel(text: string, maxChars = 14000): string {
 	return text.slice(0, maxChars) + '\n\n[Truncated for length]';
 }
 
-export const POST: RequestHandler = async ({ params, request }) => {
+// DeepSeek call — lift the serverless timeout off the default so a slow model
+// response doesn't 504 (60s = Hobby-tier max).
+export const config = { maxDuration: 60 };
+
+export const POST: RequestHandler = async (event) => {
+	const g = await guardAi(event);
+	if (!g.ok) return g.response;
+	const { params, request } = event;
 	const DEEPSEEK_API_KEY = env.DEEPSEEK_API_KEY;
 	const { slug } = params;
 
@@ -156,11 +164,17 @@ Metadata:
 		const content = completion?.choices?.[0]?.message?.content;
 		const decision = JSON.parse(content);
 
-		// Normalize outcome
-		const normalized = (decision.outcome || 'deny').toLowerCase();
-		decision.outcome = ['admit', 'deny', 'waitlist', 'defer'].includes(normalized)
-			? normalized
-			: 'deny';
+		// Normalize outcome. HONESTY: never fabricate a rejection when the model
+		// didn't actually return a clear verdict — fall back to the neutral
+		// 'waitlist' and flag it uncertain rather than showing a hard 'deny' the
+		// model never gave.
+		const normalized = String(decision.outcome || '').toLowerCase();
+		if (['admit', 'deny', 'waitlist', 'defer'].includes(normalized)) {
+			decision.outcome = normalized;
+		} else {
+			decision.outcome = 'waitlist';
+			decision.uncertain = true;
+		}
 
 		return json({ decision, applicantSummary });
 	} catch (error) {

@@ -1,0 +1,67 @@
+// Server-side guards for the AI endpoints.
+//
+// WHY: every /api/ai* + parse/ocr route was previously unauthenticated and
+// unmetered, so an anonymous script could hammer DeepSeek/Claude and run up an
+// unbounded bill (and the "paywall" protected nothing). These guards make the
+// expensive routes require a signed-in user and throttle bursts.
+//
+// Auth is the real cutoff (no anonymous access). The rate limiter is in-memory
+// and therefore best-effort on serverless (state resets on cold start), but it
+// still throttles a sustained loop on a warm instance — meaningful defense in
+// depth layered on top of auth. If a hard, cross-instance cap is later needed,
+// swap `buckets` for a shared store (Upstash/KV) behind the same interface.
+import { json, type RequestEvent } from '@sveltejs/kit';
+
+type Bucket = { count: number; resetAt: number };
+const buckets = new Map<string, Bucket>();
+
+/** Sliding fixed-window limiter. Returns true if the call is allowed. */
+export function rateLimit(key: string, max: number, windowMs: number): boolean {
+	const now = Date.now();
+	const b = buckets.get(key);
+	if (!b || now >= b.resetAt) {
+		buckets.set(key, { count: 1, resetAt: now + windowMs });
+		return true;
+	}
+	if (b.count >= max) return false;
+	b.count += 1;
+	return true;
+}
+
+export type GuardOk = { ok: true; email: string; ip: string };
+export type GuardFail = { ok: false; response: Response };
+
+/**
+ * Require a signed-in user + apply per-user and per-IP rate limits. Returns the
+ * caller identity on success, or a ready-to-return error Response on failure
+ * (401 unauthenticated / 429 throttled) — keeping the `{ error }` JSON shape the
+ * frontend already expects.
+ */
+export async function guardAi(
+	event: RequestEvent,
+	opts?: { max?: number; windowMs?: number }
+): Promise<GuardOk | GuardFail> {
+	const session = await event.locals.auth?.();
+	const email = session?.user?.email;
+	if (!email) {
+		return {
+			ok: false,
+			response: json({ error: 'Please sign in to use this feature.' }, { status: 401 })
+		};
+	}
+	const ip = event.getClientAddress?.() ?? 'unknown';
+	const max = opts?.max ?? 20; // per user per window
+	const windowMs = opts?.windowMs ?? 60_000; // 1 minute
+	// Per-user cap is the primary gate; a looser per-IP cap catches one account
+	// scripting many parallel calls without punishing shared-NAT classmates.
+	if (!rateLimit(`ai:${email}`, max, windowMs) || !rateLimit(`ip:${ip}`, max * 4, windowMs)) {
+		return {
+			ok: false,
+			response: json(
+				{ error: 'You’re going a bit fast — give it a moment and try again.' },
+				{ status: 429 }
+			)
+		};
+	}
+	return { ok: true, email, ip };
+}

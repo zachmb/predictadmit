@@ -1,8 +1,16 @@
 import { json } from '@sveltejs/kit';
 import { env } from '$env/dynamic/private';
 import type { RequestHandler } from './$types';
+import { guardAi } from '$lib/server/guard';
 
-export const POST: RequestHandler = async ({ request }) => {
+// Claude call — lift the serverless timeout off the default so a slow response
+// doesn't 504 (60s = Hobby-tier max).
+export const config = { maxDuration: 60 };
+
+export const POST: RequestHandler = async (event) => {
+	const g = await guardAi(event);
+	if (!g.ok) return g.response;
+	const { request } = event;
 	try {
 		const { profile } = await request.json();
 

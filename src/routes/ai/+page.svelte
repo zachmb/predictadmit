@@ -333,23 +333,42 @@
 
 		const params = new URLSearchParams(window.location.search);
 
-		// If we just came back from Stripe with ?upgrade=success, grant the purchased plan
+		// If we just came back from Stripe with ?upgrade=success, VERIFY the payment
+		// with Stripe before unlocking anything. Granting on the URL param alone was
+		// a free-unlock hole (anyone could visit /ai?upgrade=success). We confirm
+		// payment_status:paid AND read the plan from Stripe metadata (not the URL),
+		// so a user can't replay a $14.99 school session to claim lifetime.
 		if (params.get('upgrade') === 'success') {
-			const plan = params.get('plan');
-			const slug = params.get('slug');
-			if (plan === 'school' && slug) {
-				// $14.99 School Pass: full Pro analysis for this one school
-				userProfile.update((u) => ({
-					...u,
-					proSchools: u.proSchools.includes(slug) ? u.proSchools : [...u.proSchools, slug]
-				}));
-			} else {
-				// Full Access (monthly or lifetime) — auto-persists to localStorage['predictadmit:user']
-				userProfile.update((u) => ({ ...u, isPro: true }));
-			}
-
-			// Optional: clean ?upgrade=success from the URL
-			window.history.replaceState({}, '', window.location.pathname);
+			const sessionId = params.get('session_id');
+			(async () => {
+				try {
+					if (!sessionId) return; // no session to verify → grant nothing
+					const res = await fetch(
+						`/api/checkout/session?session_id=${encodeURIComponent(sessionId)}`
+					);
+					const data = await res.json().catch(() => null);
+					const paid =
+						res.ok && data && data.payment_status === 'paid' && data.status === 'complete';
+					if (!paid) return; // payment not confirmed → do NOT unlock
+					const vPlan = data.plan as string | null;
+					const vSlug = data.slug as string | null;
+					if (vPlan === 'school' && vSlug) {
+						userProfile.update((u) => ({
+							...u,
+							proSchools: u.proSchools.includes(vSlug)
+								? u.proSchools
+								: [...u.proSchools, vSlug]
+						}));
+					} else if (vPlan === 'lifetime' || vPlan === 'monthly') {
+						userProfile.update((u) => ({ ...u, isPro: true }));
+					}
+				} catch (err) {
+					console.error('Payment verification failed', err);
+				} finally {
+					// Clean the query string either way so a refresh can't retrigger.
+					window.history.replaceState({}, '', window.location.pathname);
+				}
+			})();
 		}
 
 		// Restore free-tier usage flags (still used for non-Pro users)
@@ -1567,6 +1586,15 @@
 				<section
 					class="rounded-3xl border-2 border-slate-200 bg-white/80 backdrop-blur-xl shadow-2xl overflow-hidden mt-12"
 				>
+					<!-- Honesty caveat: these are AI-simulated letters, never real decisions.
+					     A student must not mistake the inbox metaphor for an actual result. -->
+					<p
+						class="px-6 py-2 text-[11px] leading-snug text-slate-500 bg-slate-50 border-b border-slate-100"
+					>
+						AI simulation for guidance only — these are estimated outcomes based on your inputs,
+						not real or official admissions decisions, and PredictAdmit is not affiliated with any
+						school.
+					</p>
 					{#if $userProfile.isSubmittingAI}
 						<div
 							class="border-b-2 border-slate-100 bg-gradient-to-r from-slate-50 to-blue-50/30 px-6 py-4 flex items-center gap-3 text-sm text-slate-700"

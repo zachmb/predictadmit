@@ -57,7 +57,9 @@ export const POST: RequestHandler = async ({ request }) => {
 					}
 				],
 				metadata: { plan: 'lifetime' },
-				success_url: `${origin}/ai?upgrade=success&plan=lifetime`,
+				// {CHECKOUT_SESSION_ID} lets the return page verify payment_status
+				// with Stripe BEFORE unlocking Pro (no unlock on the URL param alone).
+				success_url: `${origin}/ai?upgrade=success&plan=lifetime&session_id={CHECKOUT_SESSION_ID}`,
 				cancel_url: `${origin}/pro?canceled=1`
 			};
 		} else if (pricingMode === 'monthly') {
@@ -78,7 +80,7 @@ export const POST: RequestHandler = async ({ request }) => {
 					}
 				],
 				metadata: { plan: 'monthly' },
-				success_url: `${origin}/ai?upgrade=success&plan=monthly`,
+				success_url: `${origin}/ai?upgrade=success&plan=monthly&session_id={CHECKOUT_SESSION_ID}`,
 				cancel_url: `${origin}/pro?canceled=1`
 			};
 		} else if (pricingMode === 'school') {
@@ -104,7 +106,7 @@ export const POST: RequestHandler = async ({ request }) => {
 				// specific school rides in metadata (and the success_url slug) for
 				// attribution instead of minting a per-school ad-hoc product.
 				metadata: { plan: 'school', slug, schoolName },
-				success_url: `${origin}/ai?upgrade=success&plan=school&slug=${slug}`,
+				success_url: `${origin}/ai?upgrade=success&plan=school&slug=${slug}&session_id={CHECKOUT_SESSION_ID}`,
 				cancel_url: `${origin}/pro?canceled=1`
 			};
 		} else {

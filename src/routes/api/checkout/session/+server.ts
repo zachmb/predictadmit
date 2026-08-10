@@ -25,10 +25,15 @@ export const GET: RequestHandler = async ({ url }) => {
 	try {
 		const session = await stripe.checkout.sessions.retrieve(sessionId);
 
+		// Return the plan/slug FROM STRIPE METADATA (not the client's URL) so the
+		// return page grants exactly what was paid for — a user can't replay a
+		// $14.99 school session while claiming plan=lifetime.
 		return json({
 			id: session.id,
 			payment_status: session.payment_status,
 			status: session.status,
+			plan: (session.metadata?.plan as string) ?? null,
+			slug: (session.metadata?.slug as string) ?? null,
 			customer_email: session.customer_details?.email ?? null
 		});
 	} catch (err) {

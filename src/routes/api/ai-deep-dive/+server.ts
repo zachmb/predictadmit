@@ -2,10 +2,17 @@
 import type { RequestHandler } from './$types';
 import { json } from '@sveltejs/kit';
 import { env } from '$env/dynamic/private';
+import { guardAi } from '$lib/server/guard';
 
 type DecisionOutcome = 'admit' | 'deny' | 'waitlist' | 'defer';
 
-export const POST: RequestHandler = async ({ request }) => {
+// DeepSeek call — lift the serverless timeout off the default (60s = Hobby max).
+export const config = { maxDuration: 60 };
+
+export const POST: RequestHandler = async (event) => {
+	const g = await guardAi(event);
+	if (!g.ok) return g.response;
+	const { request } = event;
 	// 🔑 Read env at request time so it's never stale
 	const DEEPSEEK_API_KEY = env.DEEPSEEK_API_KEY;
 
