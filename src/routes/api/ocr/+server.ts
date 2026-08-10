@@ -6,8 +6,8 @@
 // OCR "worked" only on the developer's Mac.
 //
 // Virtually every resume is a text-based PDF (exported from Google Docs, Word,
-// LaTeX, Canva, etc.), so we extract the embedded text layer with pdf-parse —
-// pure JS (pdf.js under the hood), no native binaries, works on serverless.
+// LaTeX, Canva, etc.), so we extract the embedded text layer with unpdf — a
+// serverless-safe pdf.js build, no native binaries, works on Vercel.
 // A genuinely scanned/image-only PDF has no text layer; we detect that and ask
 // the user to paste their text instead of silently returning nothing.
 import type { RequestHandler } from './$types';
