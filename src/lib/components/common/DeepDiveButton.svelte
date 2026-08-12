@@ -25,7 +25,7 @@
 </script>
 
 {#if visible && googleSignedIn && decision}
-	<div class="fixed bottom-6 right-6 z-40" transition:fade={{ duration: 300 }}>
+	<div class="fixed bottom-20 right-6 z-40" transition:fade={{ duration: 300 }}>
 		<button
 			on:click={() => goto(`/results/${slug}`)}
 			class="flex items-center gap-2 rounded-full px-5 py-3 font-sans text-sm font-bold text-white shadow-xl transition-all hover:-translate-y-0.5 hover:shadow-2xl active:scale-95"
