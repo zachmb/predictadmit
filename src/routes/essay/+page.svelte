@@ -129,7 +129,7 @@
 			<div class="text-white mb-8">
 				<hr class="my-8 border-slate-200" />
 
-				<span class="text-7xl font-black tracking-tighter">$29</span>
+				<span class="text-7xl font-black tracking-tighter">$99</span>
 
 				<span
 					class="text-blue-200 font-bold ml-2 underline decoration-blue-400 underline-offset-4 tracking-tight"
@@ -177,7 +177,7 @@
 				Upgrade Now
 			</button>
 			<p class="text-white text-xs mt-6 font-bold uppercase tracking-widest">
-				Secure Payment via Stripe
+				Start with a 7-day free trial · then $39/mo, or $99 once
 			</p>
 		</div>
 	</section>
