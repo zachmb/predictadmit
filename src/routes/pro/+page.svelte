@@ -877,8 +877,11 @@
 	/>
 </svelte:head>
 
-{#if googleSignedIn}
-	<!-- PREDICTADMIT PRO INTERFACE -->
+{#if isPro}
+	<!-- PREDICTADMIT PRO INTERFACE — gated on an active Pro plan (Stripe trial or
+	     purchase), NOT on mere Google sign-in. Free signed-in users fall through
+	     to the pricing/paywall branch below. -->
+
 	<div class="relative flex h-[100dvh] w-full bg-slate-50 text-slate-900 font-sans overflow-hidden">
 		<!-- Mobile drawer backdrop -->
 		{#if sidebarOpen}

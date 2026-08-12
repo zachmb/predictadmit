@@ -58,23 +58,23 @@
 		if (who) redeemReferralIfJoined(who);
 	});
 
-	// Signed-in users: grant Pro and adopt the Google account name/email as the
-	// display identity right away.
+	// Signed-in users: adopt the Google account name/email as the display
+	// identity. Do NOT grant Pro here — Pro is unlocked ONLY by a completed
+	// Stripe checkout (the 7-day trial or a purchase), verified on return in
+	// /ai's onMount. Signing in with Google is the free tier.
 	$effect(() => {
 		const session = $page.data.session;
-		if (session?.user) {
-			const name = session.user.name || '';
-			const email = session.user.email || '';
-			userProfile.update((u) => {
-				if (u.isPro && (!name || u.name === name) && (!email || u.email === email)) return u;
-				return {
-					...u,
-					isPro: true,
-					name: name || u.name,
-					email: email || u.email
-				};
-			});
-		}
+		if (!session?.user) return;
+		const name = session.user.name || '';
+		const email = session.user.email || '';
+		userProfile.update((u) => {
+			if ((!name || u.name === name) && (!email || u.email === email)) return u;
+			return {
+				...u,
+				name: name || u.name,
+				email: email || u.email
+			};
+		});
 	});
 </script>
 
