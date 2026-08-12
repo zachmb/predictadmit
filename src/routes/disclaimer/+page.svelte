@@ -6,7 +6,7 @@
 	<title>How PredictAdmit simulations work · Disclaimer</title>
 	<meta
 		name="description"
-		content="PredictAdmit's admission portals are unofficial simulations for practice — not real decisions and not affiliated with any university. Here's how it works and what's free."
+		content="PredictAdmit's admission portals are unofficial simulations for practice — not real decisions, not affiliated with any university. Here's how it works and what's free."
 	/>
 </svelte:head>
 
@@ -29,11 +29,11 @@
 			These admission portals are simulations.
 		</h1>
 		<p class="mt-4 text-lg leading-relaxed text-slate-600">
-			Every decision portal on PredictAdmit is a practice replica built for rehearsal. Nothing you
-			see here is a real admissions decision, and PredictAdmit is
+			Every decision portal here is a practice replica. Nothing you see is a real admissions
+			decision, and PredictAdmit is
 			<strong class="font-semibold text-slate-900">not affiliated with, endorsed by, or connected to</strong>
-			any university. School names, logos, and portal designs belong to their respective owners and are
-			shown only to make practice feel realistic.
+			any university. School names, logos, and portal designs belong to their owners. We show them so
+			the rehearsal feels like the real thing.
 		</p>
 
 		<!-- What's free vs. paid -->
@@ -51,8 +51,8 @@
 				</div>
 				<h2 class="mt-3 text-base font-bold text-slate-900">Portal decision simulations</h2>
 				<p class="mt-1.5 text-sm leading-relaxed text-slate-600">
-					Open any school's decision portal and rehearse opening day — accepted, denied, waitlisted.
-					Practice the moment as many times as you like.
+					Open any school's portal and rehearse opening day — accepted, denied, waitlisted. As many
+					times as you want, no card required.
 				</p>
 			</div>
 
@@ -67,9 +67,9 @@
 				</div>
 				<h2 class="mt-3 text-base font-bold text-slate-900">AI decision predictions</h2>
 				<p class="mt-1.5 text-sm leading-relaxed text-slate-600">
-					Getting PredictAdmit's AI to weigh your real application and predict your likely decision
-					at every school is a Pro feature, with a 7-day free trial. It's an informed estimate — not
-					a guarantee, and never an official decision.
+					Having the AI read your real application and predict your likely decision at each school is
+					a Pro feature — 7-day free trial, then $39/month or $99 once. It's an estimate. Not a
+					guarantee, and never an official decision.
 				</p>
 			</div>
 		</div>
@@ -79,17 +79,16 @@
 			<div>
 				<h3 class="text-sm font-bold text-slate-900">For entertainment and educational use</h3>
 				<p class="mt-1.5">
-					PredictAdmit exists to help you prepare — to rehearse the outcome, pressure-test your
-					application, and sharpen your essays. It cannot admit or reject you anywhere. Real
-					decisions come only from the universities themselves, through their official portals.
+					PredictAdmit is here to help you prepare: rehearse the moment, pressure-test your
+					application, sharpen your essays. It can't admit or reject you anywhere. A real decision
+					only ever comes from the university itself, through its own portal.
 				</p>
 			</div>
 			<div>
 				<h3 class="text-sm font-bold text-slate-900">Your data stays in your browser</h3>
 				<p class="mt-1.5">
-					The details you enter to run a simulation are stored locally in your browser, not tied to
-					any real application. No real university credentials are ever used or needed to open a
-					portal here.
+					Whatever you enter to run a simulation is stored locally in your browser, not tied to any
+					real application. You never use or need real university credentials to open a portal here.
 				</p>
 			</div>
 		</div>

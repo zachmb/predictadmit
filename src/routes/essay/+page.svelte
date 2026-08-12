@@ -5,20 +5,20 @@
 
 	const features = [
 		{
-			title: 'Institutional Alignment',
-			desc: 'Our AI is trained on specific freshman profiles for top-tier schools. It knows if you "sound" like a Stanford student or a UChicago scholar.'
+			title: 'Graded against the school you pick',
+			desc: 'The read is tuned to the kind of applicant a given school actually admits. What plays at Stanford is not what plays at UChicago.'
 		},
 		{
-			title: 'Brutal AO Feedback',
-			desc: 'No "good job" fluff. You get the harsh internal notes an Admissions Officer would actually write in your file.'
+			title: 'The notes, not the pep talk',
+			desc: 'No "great start!" filler. You get the blunt margin notes an admissions officer would jot in your file, and one concrete thing to fix.'
 		},
 		{
-			title: 'Categorized Scoring',
-			desc: 'Detailed 1-10 breakdowns on Major Fit, Writing Quality, and Growth—the exact metrics used in elite committee rooms.'
+			title: 'Scored 1-10 by category',
+			desc: 'Separate scores for major fit, writing, and growth, each with a reason. You see exactly which part is dragging the essay down.'
 		},
 		{
-			title: 'Unlimited Re-Drafts',
-			desc: 'Grade, edit, and re-grade. Polish your essay until the AI gives you a perfect Institutional Strength Score.'
+			title: 'Re-grade as many times as you want',
+			desc: 'Edit, paste it back, grade again. It gives feedback on every draft. It never writes a word of the essay for you.'
 		}
 	];
 </script>
@@ -30,16 +30,16 @@
 				<span
 					class="inline-block py-1 px-3 rounded-full bg-blue-50 text-blue-600 text-[10px] font-black uppercase tracking-widest mb-4"
 				>
-					Admissions Insider Access
+					Essay Grader
 				</span>
 				<h1
 					class="text-5xl md:text-6xl font-black text-slate-900 tracking-tighter mb-6 leading-tight"
 				>
-					Stop guessing. <span class="text-blue-600">Start winning.</span>
+					Find out where your essay <span class="text-blue-600">actually stands.</span>
 				</h1>
 				<p class="text-xl text-slate-600 font-medium leading-relaxed mb-10">
-					The difference between an Acceptance and a Waitlist is often a single paragraph. Get the
-					exact feedback you need to move from the "Maybe" pile to the "Must Admit" pile.
+					Waitlist versus accept often comes down to one paragraph. Paste your draft and see the
+					notes an admissions officer would write, plus what to change. The grader never writes the essay for you.
 				</p>
 
 				<div class="flex flex-col sm:flex-row gap-4 justify-center">
@@ -47,7 +47,7 @@
 						onclick={() => goto('/pro')}
 						class="px-8 py-4 bg-blue-600 text-white font-black rounded-2xl text-lg hover:bg-blue-700 hover:scale-105 transition-all shadow-xl shadow-blue-200"
 					>
-						Unlock Pro Access
+						Try it free for 7 days
 					</button>
 				</div>
 			</div>
@@ -89,27 +89,25 @@
 				>
 					<h2 class="text-white text-3xl font-black tracking-tight mb-4">See what they see.</h2>
 					<p class="text-slate-400 font-medium">
-						Human AO notes are coded, blunt, and fast. Pro gives you access to the analysis engine
-						configured to replicate that exact internal dialogue.
+						Real admissions notes are short, blunt, and unsentimental. This is what that sounds like when it's pointed at your draft.
 					</p>
 				</div>
 				<div class="md:col-span-3 p-10 bg-white/5 backdrop-blur-sm">
 					<div class="space-y-4">
 						<div class="p-4 bg-white/10 rounded-xl border border-white/10">
 							<p class="text-[10px] text-blue-400 font-black uppercase mb-1">
-								Self-Reflection Score: 3/10
+								Self-Reflection: 3/10
 							</p>
 							<p class="text-sm text-black-700 italic">
-								"The applicant lists achievements but fails to connect them to personal change.
-								Sounds like a resume, not a person."
+								"Lists a lot of wins, never says what any of them changed. Reads like a resume, not a person."
 							</p>
 						</div>
 						<div class="p-4 bg-white/10 rounded-xl border border-white/10 opacity-50">
 							<p class="text-[10px] text-emerald-700 font-black uppercase mb-1">
-								Growth Score: 8/10
+								Growth: 8/10
 							</p>
 							<p class="text-sm text-black-800 italic">
-								"Clear narrative arc here. Vulnerability is a strength in this draft..."
+								"The arc lands. Letting yourself look unsure early is doing real work here..."
 							</p>
 						</div>
 					</div>
@@ -119,7 +117,7 @@
 	</section>
 
 	<section class="max-w-3xl mx-auto px-6 mt-32 text-center">
-		<h2 class="py-10 text-4xl font-black text-slate-900 mb-6">Invest in your future.</h2>
+		<h2 class="py-10 text-4xl font-black text-slate-900 mb-6">Cheaper than one hour with a consultant.</h2>
 
 		<div
 			class="p-12 rounded-[2rem] bg-gradient-to-b from-blue-600 to-indigo-700 shadow-2xl shadow-blue-300 relative"
@@ -148,7 +146,7 @@
 							clip-rule="evenodd"
 						></path></svg
 					>
-					Unlimited Essay Grading
+					Grade as many drafts as you want
 				</li>
 				<li class="flex items-center text-white font-medium">
 					<svg class="w-5 h-5 mr-3 text-emerald-400" fill="currentColor" viewBox="0 0 20 20"
@@ -158,7 +156,7 @@
 							clip-rule="evenodd"
 						></path></svg
 					>
-					Supplemental Essay Support
+					Personal statement and supplements
 				</li>
 				<li class="flex items-center text-white font-medium">
 					<svg class="w-5 h-5 mr-3 text-emerald-400" fill="currentColor" viewBox="0 0 20 20"
@@ -168,7 +166,7 @@
 							clip-rule="evenodd"
 						></path></svg
 					>
-					24/7 AI Feedback
+					Feedback back in seconds, any hour
 				</li>
 			</ul>
 

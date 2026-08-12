@@ -189,9 +189,9 @@
 				hasDeepDiveAccess = true;
 				userProfile.update((u) => ({ ...u, isPro: true }));
 				promoCodeInput = ''; // Clear input on success
-				alert('Promo code applied! Deep Dive unlocked.');
+				alert('Code works. Pro is on.');
 			} else {
-				alert('Invalid promo code.');
+				alert('That code didn’t work.');
 			}
 		}
 	};
@@ -520,13 +520,13 @@
 		const myId = currentStoreVersion + 1;
 
 		if (!googleSignedIn) {
-			aiError = 'Please sign in with Google first to create your AI application.';
+			aiError = 'Sign in with Google first, then we can run this.';
 			return;
 		}
 
 		if (!ensureHasSomeInput()) {
 			aiError =
-				'Add at least one piece of application data (essay, activities, honors, or transcript text) before applying to the AI simulator.';
+				'Give it something to read first — an essay, your activities, honors, or transcript.';
 			return;
 		}
 
@@ -607,7 +607,7 @@
 
 			if (!aiDecisions.length) {
 				aiError =
-					'The AI did not return any decisions. Try adding more detail to your application.';
+					'No predictions came back. Add more detail and try again.';
 			} else {
 				hasUsedFreeSimulation = true;
 				if (typeof localStorage !== 'undefined') {
@@ -635,7 +635,7 @@
 			}
 		} catch (err: any) {
 			console.error(err);
-			aiError = 'Network or server error while calling the AI evaluator.';
+			aiError = 'Something broke on the way to the AI. Try running it again.';
 			return;
 		} finally {
 			if (currentStoreVersion === myValidId) {
@@ -703,7 +703,7 @@
 			const data = await res.json();
 
 			if (!res.ok) {
-				aiError = data?.error ?? 'Something went wrong generating the deep dive.';
+				aiError = data?.error ?? 'The deep dive didn’t come through.';
 				return;
 			}
 
@@ -714,7 +714,7 @@
 			}
 		} catch (err) {
 			console.error(err);
-			aiError = 'Network or server error while calling the AI deep dive.';
+			aiError = 'Couldn’t reach the deep dive. Give it another go.';
 		} finally {
 			deepDiveLoadingSlug = null;
 		}
@@ -752,7 +752,7 @@
 			if (!res.ok) {
 				const text = await res.text();
 				console.error('OCR error:', text);
-				ocrError = 'OCR failed on this file. Try another PDF or copy–paste manually.';
+				ocrError = 'That PDF didn’t read cleanly. Try a different one, or just paste the text.';
 				return;
 			}
 
@@ -760,7 +760,7 @@
 			ocrText = (data.text ?? '').trim();
 
 			if (!ocrText) {
-				ocrError = 'OCR completed but returned no text. The PDF might be image-only or locked.';
+				ocrError = 'Read the file but found no text — it’s probably a scanned image or locked.';
 			} else {
 				// Mark free OCR as used after a successful extraction
 				hasUsedFreePdfOcr = true;
@@ -773,7 +773,7 @@
 			}
 		} catch (err) {
 			console.error(err);
-			ocrError = 'Network error while calling OCR. Please try again.';
+			ocrError = 'Couldn’t reach the reader. Give it another shot.';
 		} finally {
 			ocrUploading = false;
 		}
@@ -853,7 +853,7 @@
 		parseNotice = '';
 		parsedFieldKeys = [];
 		if (source.length < 20) {
-			parseError = 'Add a bit more text first — a resume, brag sheet, or your Common App activities.';
+			parseError = 'Need a bit more to work with — paste a resume, a brag sheet, or your activities list.';
 			return;
 		}
 
@@ -867,13 +867,13 @@
 			});
 			const data = await res.json();
 			if (!res.ok) {
-				parseError = data?.error ?? 'Could not read your materials. Try pasting them again.';
+				parseError = data?.error ?? 'That didn’t parse. Paste it again?';
 				return;
 			}
 			fields = (data.fields ?? {}) as Record<string, string>;
 		} catch (err) {
 			console.error('parseAndFill error:', err);
-			parseError = 'Network error while reading your materials. Please try again.';
+			parseError = 'Connection dropped mid-read. Try again.';
 			return;
 		} finally {
 			parsing = false;
@@ -881,13 +881,13 @@
 
 		const present = FILL_ORDER.filter((k) => fields && fields[k]);
 		if (!present.length) {
-			parseError = "Couldn't find application details in that text. Try your resume or brag sheet.";
+			parseError = "Nothing in there looked like application details. A resume or brag sheet works better.";
 			return;
 		}
 		parsedFieldKeys = [...present];
 		// Watch every box get written in, one by one.
 		await animateFill(fields!);
-		parseNotice = `Filled ${present.length} field${present.length > 1 ? 's' : ''} — review and tweak anything below.`;
+		parseNotice = `Filled ${present.length} field${present.length > 1 ? 's' : ''}. Read them over and fix anything that's off.`;
 	}
 
 	// Glow applied to whichever field is currently being typed into.
@@ -903,7 +903,7 @@
 </script>
 
 <svelte:head>
-	<title>PredictAdmit – AI Admissions Inbox</title>
+	<title>Predict My Decisions – PredictAdmit</title>
 </svelte:head>
 
 <main
@@ -971,8 +971,8 @@
 							class="mb-10 flex flex-col items-center justify-between gap-4 border-b border-slate-200 pb-8 md:flex-row"
 						>
 							<div class="space-y-1.5">
-								<h2 class="font-bold text-xl text-slate-900 tracking-tight">Applicant Context</h2>
-								<p class="text-xs text-slate-500">Your information stays private</p>
+								<h2 class="font-bold text-xl text-slate-900 tracking-tight">Your application</h2>
+								<p class="text-xs text-slate-500">Stays on your side — we don't keep it</p>
 							</div>
 
 							<div class="flex items-center gap-3">
@@ -1054,9 +1054,9 @@
 												</svg>
 											</div>
 											<div>
-												<h3 class="text-sm font-bold text-slate-900">Autofill your application</h3>
+												<h3 class="text-sm font-bold text-slate-900">Autofill the boxes</h3>
 												<p class="text-xs text-slate-500 mt-0.5">
-													Upload a PDF or paste everything — we sort it into every field
+													Drop in a PDF or a wall of text. We split it into the fields below.
 												</p>
 											</div>
 										</div>
@@ -1097,10 +1097,10 @@
 															clip-rule="evenodd"
 														/>
 													</svg>
-													Text extracted successfully
+													Got the text
 												</span>
 											{:else}
-												Common App PDF only
+												Common App PDF works best
 											{/if}
 										</span>
 									</label>
@@ -1128,7 +1128,7 @@
 									{#if parsing}
 										<div class="mt-3 flex items-center gap-2 text-sm font-medium text-slate-600">
 											<span class="h-3.5 w-3.5 animate-spin rounded-full border-2 border-slate-300 border-t-blue-600"></span>
-											Reading your materials and sorting them into fields…
+											Reading it and sorting the pieces into fields…
 										</div>
 									{:else if fillingField}
 										<div class="mt-3 flex items-center gap-2 text-sm font-semibold text-blue-700">
@@ -1159,13 +1159,13 @@
 									<!-- Or paste one big blob -->
 									<div class="mt-4 pt-4 border-t border-slate-200/70">
 										<label for="paste-blob" class="block text-xs font-semibold text-slate-500 mb-2">
-											No PDF? Paste your resume, brag sheet, or Common App activities:
+											No PDF handy? Paste a resume, brag sheet, or your Common App activities:
 										</label>
 										<textarea
 											id="paste-blob"
 											bind:value={pasteBlob}
 											rows="4"
-											placeholder="Paste everything you've got — GPA, test scores, activities, awards, essay… we'll sort it into the right boxes."
+											placeholder="Dump it all here — GPA, scores, activities, awards, essay. We'll split it into the right boxes."
 											class="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 transition-all shadow-sm resize-y font-sans"
 										></textarea>
 										<button
@@ -1196,7 +1196,7 @@
 										type="text"
 										bind:value={major}
 										class="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 transition-all shadow-sm hover:border-slate-300 font-sans{fillClass('major')}"
-										placeholder="e.g. Computer Science, Comparative Literature..."
+										placeholder="e.g. Computer Science, Comparative Literature"
 										onfocus={() => (showMajorDropdown = true)}
 										onblur={() => setTimeout(() => (showMajorDropdown = false), 200)}
 									/>
@@ -1234,7 +1234,7 @@
 										bind:value={essay}
 										rows="6"
 										class="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 transition-all shadow-sm hover:border-slate-300 font-sans resize-y{fillClass('essay')}"
-										placeholder="Paste your personal statement here..."
+										placeholder="Paste your personal statement."
 									></textarea>
 								</div>
 
@@ -1255,7 +1255,7 @@
 													d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 5.757a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zM8 16v-1h4v1a2 2 0 11-4 0zM12 14c.015-.34.208-.646.477-.859a4 4 0 10-4.954 0c.27.213.462.519.476.859h4.002z"
 												/>
 											</svg>
-											AI Extrapolates
+One fills the rest
 										</span>
 									</div>
 
@@ -1274,8 +1274,8 @@
 											/>
 										</svg>
 										<p class="text-xs text-blue-800 leading-relaxed">
-											The supplemental you provide will be used as a quality baseline to extrapolate
-											your fit/why-us performance for <strong>all other schools</strong> in the simulation.
+											Write one supplemental well and we read it as your baseline, then estimate your
+											fit and why-us answer for <strong>every other school</strong> from it.
 										</p>
 									</div>
 
@@ -1298,7 +1298,7 @@
 
 									<textarea
 										bind:value={supplementals[activeSupTab]}
-										placeholder="Paste the supplemental for {activeSupTab} here..."
+										placeholder="Paste your {activeSupTab} supplemental."
 										class="w-full h-48 bg-white border-2 border-slate-200 rounded-xl p-4 text-sm text-slate-900 placeholder:text-slate-400 focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 outline-none shadow-sm hover:border-slate-300 transition-all font-sans resize-y"
 									></textarea>
 								</div>
@@ -1318,7 +1318,7 @@
 											type="text"
 											bind:value={promoCodeInput}
 											onkeydown={handlePromoCode}
-											placeholder="Enter code and press Enter..."
+											placeholder="Type a code, hit Enter"
 											class="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-amber-400/20 focus:border-amber-400 font-sans shadow-sm hover:border-slate-300 transition-all"
 										/>
 										{#if hasDeepDiveAccess}
@@ -1338,7 +1338,7 @@
 												clip-rule="evenodd"
 											/>
 										</svg>
-										Have a special access code? Enter it and press Enter to unlock premium features
+										Got an access code? Enter it and hit Enter to turn on Pro.
 									</p>
 								</div>
 
@@ -1356,7 +1356,7 @@
 										bind:value={activities}
 										rows="4"
 										class="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 resize-y font-sans shadow-sm hover:border-slate-300 transition-all{fillClass('activities')}"
-										placeholder="Paste your activities list or résumé bullets. If in PDF, copy-paste the text."
+										placeholder="Paste your activities list or résumé bullets. If it's a PDF, copy the text over."
 									></textarea>
 								</div>
 							</div>
@@ -1376,7 +1376,7 @@
 										bind:value={honors}
 										rows="3"
 										class="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 resize-y font-sans shadow-sm hover:border-slate-300 transition-all{fillClass('honors')}"
-										placeholder="List major competitions, scholarships, and distinctions..."
+										placeholder="Competitions, scholarships, anything you'd actually list."
 									></textarea>
 								</div>
 
@@ -1394,7 +1394,7 @@
 										bind:value={transcript}
 										rows="3"
 										class="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 resize-y font-sans shadow-sm hover:border-slate-300 transition-all{fillClass('transcript')}"
-										placeholder="Include GPA, course rigor, key grades, testing, and context..."
+										placeholder="GPA, course rigor, test scores, and any context that matters."
 									></textarea>
 								</div>
 							</div>
@@ -1428,7 +1428,7 @@
 												clip-rule="evenodd"
 											/>
 										</svg>
-										Binding choice • Reflects actual ED acceptance rates
+Picking one applies that school's real early-round odds
 									</p>
 								</div>
 
@@ -1448,9 +1448,9 @@
 											/>
 										</svg>
 										<p class="text-xs text-slate-600 leading-relaxed">
-											Your inputs are sent to our AI API for evaluation. We <strong
-												class="text-slate-900">do not store</strong
-											> your data. Nothing is sent to colleges.
+											Your inputs go to the AI to be scored, and that's it. We <strong
+												class="text-slate-900">don't keep them</strong
+											>, and nothing ever reaches a college.
 										</p>
 									</div>
 								</div>
@@ -1522,7 +1522,7 @@
 													<span
 														class="h-5 w-5 animate-spin rounded-full border-3 border-white/30 border-t-white"
 													></span>
-													<span>Admissions Officers Analyzing...</span>
+													<span>Reading your file...</span>
 												</span>
 											{:else if !hasDeepDiveAccess}
 												<span
@@ -1555,7 +1555,7 @@
 															d="M13 10V3L4 14h7v7l9-11h-7z"
 														/>
 													</svg>
-													Submit Application
+													Run my predictions
 												</span>
 											{/if}
 										</div>
@@ -1572,8 +1572,8 @@
 							</div>
 
 							<p class="mt-4 text-center text-xs leading-relaxed text-slate-500">
-								Reminder: this is only an AI prediction and it may be way off. Use it as a
-								rehearsal, not as something to spiral over.
+								It's a prediction, not a decision — and it can miss. Treat it as a dry run, not
+								a verdict to lose sleep over.
 							</p>
 
 							{#if applicantSummary}
@@ -1595,7 +1595,7 @@
 												d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
 											/>
 										</svg>
-										Preview extracted text
+See what we read from your file
 									</summary>
 									<pre
 										class="mt-3 max-h-48 overflow-auto whitespace-pre-wrap text-xs text-slate-600 border-2 border-slate-200 rounded-xl p-4 bg-slate-50/50 font-mono">{applicantSummary}</pre>
@@ -1616,9 +1616,8 @@
 					<p
 						class="px-6 py-2 text-[11px] leading-snug text-slate-500 bg-slate-50 border-b border-slate-100"
 					>
-						AI simulation for guidance only — these are estimated outcomes based on your inputs,
-						not real or official admissions decisions, and PredictAdmit is not affiliated with any
-						school.
+						These are the AI's best guess from what you gave it — estimates, not real or official
+						decisions. PredictAdmit isn't affiliated with any school.
 					</p>
 					{#if $userProfile.isSubmittingAI}
 						<div
@@ -1627,7 +1626,7 @@
 							<span
 								class="h-4 w-4 animate-spin rounded-full border-3 border-slate-300 border-t-blue-600"
 							></span>
-							<span class="font-semibold">Simulating decision committee...</span>
+							<span class="font-semibold">Scoring you school by school...</span>
 						</div>
 					{/if}
 
@@ -1695,12 +1694,11 @@
 											</svg>
 										</div>
 										<p class="text-sm font-bold uppercase tracking-wider text-slate-900">
-											Decision Analysis
+											Why you got that call
 										</p>
 									</div>
 									<p class="text-xs text-slate-600 max-w-xl leading-relaxed pl-10">
-										Confidential admissions committee breakdown explaining your admit, deny, or
-										waitlist decision
+A read on what pushed each school toward admit, deny, or waitlist for you
 									</p>
 								</div>
 							</div>
@@ -1817,11 +1815,11 @@
 					<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
 				</div>
 				<h3 class="mt-4 text-center text-xl font-bold text-slate-900">
-					{paywallMode === 'simulation' ? 'Start your free Pro trial' : paywallMode === 'deepDive' ? 'Deep dives are a Pro feature' : 'This is a Pro feature'}
+					{paywallMode === 'simulation' ? 'Predictions run on Pro' : paywallMode === 'deepDive' ? 'Deep dives are a Pro thing' : 'This one is Pro'}
 				</h3>
 				<p class="mx-auto mt-2 max-w-sm text-center text-sm text-slate-500">
-					Your 7-day free trial unlocks unlimited AI admissions rehearsals across every school, every
-					deep-dive decision analysis, unlimited essay grading, and the full counselor toolkit.
+					The 7-day free trial opens all 39 schools, every deep-dive breakdown, and unlimited
+					essay grading. Card up front so it can start; nothing hits it until day 7.
 				</p>
 				<div class="mt-6 space-y-2">
 					<button
@@ -1829,17 +1827,17 @@
 						disabled={checkoutLoading}
 						class="w-full rounded-xl bg-[#0052CC] px-4 py-3 text-sm font-bold text-white transition hover:bg-[#0047b3] disabled:opacity-50"
 					>
-						{checkoutLoading ? 'Starting secure checkout…' : 'Start 7-day free trial'}
+						{checkoutLoading ? 'Opening checkout…' : 'Start 7-day free trial'}
 					</button>
 					<p class="text-center text-[11px] text-slate-400">
-						Then $39/mo. Cancel anytime before day 7 and you won't be charged.
+						$39/mo after that. Cancel before day 7 and you pay nothing.
 					</p>
 					<button
 						onclick={() => startCheckout('lifetime')}
 						disabled={checkoutLoading}
 						class="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 disabled:opacity-50"
 					>
-						Or pay once — $99 Full Access, forever
+						Rather pay once? $99 for full access, forever
 					</button>
 					{#if paywallContextDecision}
 						<button
@@ -1850,8 +1848,8 @@
 							{paywallContextDecision.school} School Pass — $14.99 once
 						</button>
 						<p class="text-center text-[11px] text-slate-400">
-							School Pass unlocks the full deep-dive analysis and essay grading for
-							{paywallContextDecision.school} only.
+							Just want one school? This opens the deep dive and essay grading for
+							{paywallContextDecision.school} and nothing else.
 						</p>
 					{/if}
 				</div>

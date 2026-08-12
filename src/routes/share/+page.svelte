@@ -49,8 +49,8 @@
 
 	const metaDescription = $derived(
 		isAdmit
-			? `${name} rehearsed a ${schoolName} admissions outcome on PredictAdmit. Try your own clearly labeled rehearsal for free.`
-			: `See ${name}'s simulated ${schoolName} admissions decision on PredictAdmit. Run your own admissions rehearsal for free.`
+			? `${name} ran a ${schoolName} admissions simulation on PredictAdmit. It's an estimate, not a real decision. Run yours free.`
+			: `${name} ran a ${schoolName} admissions simulation on PredictAdmit. It's an estimate, not a real decision. Run yours free.`
 	);
 
 	// Personalized preview card (absolute URL required by crawlers). Points at the
@@ -128,11 +128,11 @@
 
 					<p class="mx-auto mt-4 max-w-md text-base leading-relaxed text-slate-500">
 						{#if isAdmit}
-							This decision was simulated on PredictAdmit's realistic admissions
-							simulator — the same engine top applicants use to see where they stand.
+							Simulated on PredictAdmit. This is an estimate of the odds, not a real
+							admissions decision. Plug in your own stats and see where you land.
 						{:else}
-							This decision was simulated on PredictAdmit's realistic admissions
-							simulator. A simulation isn't a verdict — it's a way to understand the odds.
+							Simulated on PredictAdmit. It's an estimate, not a verdict. A tough result
+							here tells you where the odds sit, not how the real decision goes.
 						{/if}
 					</p>
 
@@ -149,7 +149,7 @@
 							href="/ai"
 							class="inline-flex w-full items-center justify-center rounded-xl border border-slate-200 bg-white px-6 py-3.5 text-base font-semibold text-slate-700 transition-colors hover:bg-slate-50"
 						>
-							Try the free admissions predictor
+							Run the free predictor
 						</a>
 					</div>
 

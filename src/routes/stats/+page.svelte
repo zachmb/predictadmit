@@ -119,8 +119,7 @@
 					Tell us your academic profile
 				</h1>
 				<p class="mt-2 text-slate-600 max-w-xl mx-auto">
-					Every prediction is computed from <strong>your</strong> real stats — GPA, test scores,
-					rigor, and activities — not a coin flip. Enter it once; we reuse it for every school.
+					Predictions run off <strong>your</strong> actual numbers: GPA, tests, course rigor, activities. Nothing random. Enter it once and every school reuses it.
 				</p>
 			</header>
 
@@ -358,7 +357,7 @@
 
 								<!-- Live model read-out -->
 								<div class="rounded-xl border border-slate-200 bg-slate-50 p-5">
-									<h3 class="text-sm font-bold text-slate-900 mb-3">How the model reads you</h3>
+									<h3 class="text-sm font-bold text-slate-900 mb-3">How the model reads you so far</h3>
 									<div class="grid grid-cols-2 gap-4">
 										<div>
 											<div class="text-xs text-slate-500 mb-1">Academic Index</div>
@@ -374,9 +373,9 @@
 										</div>
 									</div>
 									<p class="mt-3 text-xs text-slate-500">
-										These feed a deterministic model that compares you against each school's
-										selectivity to produce your decision — the same stats always give the same
-										result.
+										These get compared against each school's selectivity to produce a
+										decision. It's an estimate, not a real outcome. Same stats in, same
+										result out.
 									</p>
 								</div>
 							</div>

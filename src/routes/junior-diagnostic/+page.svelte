@@ -40,9 +40,9 @@
 
 			<p class="mt-6 text-lg leading-relaxed text-slate-500 md:text-xl">
 				Junior year is the last full year admissions officers see before you apply. This guide
-				shows you how to run an honest diagnostic on your own application &mdash; find the gaps,
-				project your scores, build a balanced list, and fix the weaknesses while you still have the
-				time to do it.
+				walks you through running an honest diagnostic on your own application &mdash; find the gaps,
+				project your scores, build a balanced list, and fix what's weak while there's still
+				time to fix it.
 			</p>
 
 			<div class="mt-8 flex items-center gap-3 border-t border-slate-100 pt-6 text-sm text-slate-400">
@@ -56,7 +56,7 @@
 		<div class="space-y-10 text-[17px] leading-8 text-slate-700">
 			<section>
 				<h2 class="text-2xl font-bold tracking-tight text-slate-900">
-					Why junior year is the leverage point
+					Why junior year is where you have leverage
 				</h2>
 				<p class="mt-4">
 					Most of what a selective college evaluates is effectively locked in by the fall of senior
@@ -322,8 +322,8 @@
 				</h2>
 				<p class="mt-4 text-slate-600">
 					Everything in this guide &mdash; the gap analysis, the score projection, the balanced list
-					&mdash; runs on its own inside PredictAdmit Pro. Instead of eyeballing percentiles, Pro
-					does the math for you:
+					&mdash; runs on its own inside PredictAdmit Pro. You stop eyeballing percentiles and let it
+					do the math:
 				</p>
 				<ul class="mt-5 grid gap-3 sm:grid-cols-2">
 					<li class="flex gap-3 rounded-xl border border-slate-100 bg-white p-4 text-sm">

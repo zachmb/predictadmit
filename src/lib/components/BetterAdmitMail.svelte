@@ -339,7 +339,7 @@
 									</div>
 									<h3 class="text-slate-900 font-bold mb-1">Inbox Empty</h3>
 									<p class="text-slate-500 text-sm max-w-xs">
-										Decisions will arrive here automatically as the simulation progresses.
+										Decisions land here as the simulation plays out. Sit tight.
 									</p>
 								</div>
 							{:else}
@@ -485,18 +485,17 @@
 								<div class="prose prose-sm prose-slate max-w-none">
 									<p>Dear {displayName},</p>
 									<p>
-										This email is to notify you that there has been an update to your application
-										status for <strong>{selectedPortal.name}</strong>. For security reasons, we do
-										not release admission decisions via email.
+										Your application status for <strong>{selectedPortal.name}</strong> has
+										changed. We don't send the decision itself over email, so you'll need to
+										sign in to your portal to see it.
 									</p>
 									<p>
-										Please log in to your applicant portal using the credentials you created when
-										you first applied.
+										Log in with the credentials you set up when you applied.
 									</p>
 									<p class="not-prose rounded-lg border border-blue-100 bg-blue-50 px-4 py-2.5 text-sm text-slate-600">
-										<span class="font-semibold text-[#0052CC]">First time?</span> The portal is a
-										simulation — just tap <span class="font-semibold">Login</span> to reveal your
-										decision (your details are pre-filled, no real credentials needed).
+										<span class="font-semibold text-[#0052CC]">First time?</span> This is a
+										simulation, so just tap <span class="font-semibold">Login</span> to reveal your
+										decision. Your details are pre-filled and no real credentials are needed.
 									</p>
 
 									<div class="my-8 flex flex-wrap items-center gap-3">

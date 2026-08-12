@@ -154,10 +154,10 @@
 						>
 					</div>
 					<h2 class="text-3xl font-black text-slate-900 tracking-tight mb-4">
-						Unlock Premium Analysis
+						Sign in to grade your essay
 					</h2>
 					<p class="text-slate-500 font-medium leading-relaxed max-w-sm mx-auto mb-10">
-						Sign in to access the grading engine and get institutional feedback.
+						The grader reads your draft and tells you what an admissions officer would think. It never writes the essay for you.
 					</p>
 					<button
 						onclick={() => signIn('google', { callbackUrl: '/ai' })}
@@ -194,9 +194,9 @@
 							/></svg
 						>
 					</div>
-					<h2 class="text-3xl font-black text-slate-900 tracking-tight mb-4">Pro Feature Locked</h2>
+					<h2 class="text-3xl font-black text-slate-900 tracking-tight mb-4">This one's on Pro</h2>
 					<p class="text-slate-500 font-medium leading-relaxed max-w-sm mx-auto mb-10">
-						Access the institutional essay grader with PredictAdmit Pro.
+						The essay grader is part of Pro. Free for 7 days, then $39/month or $99 for lifetime access.
 					</p>
 					<button
 						onclick={() => goto('/pro')}
@@ -213,9 +213,9 @@
 				class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 pb-6"
 			>
 				<div>
-					<h2 class="text-3xl font-black text-slate-900 tracking-tight">Admissions Evaluation</h2>
+					<h2 class="text-3xl font-black text-slate-900 tracking-tight">Your read</h2>
 					<p class="text-slate-500 font-medium tracking-tight">
-						Reviewing for <span class="text-blue-600">{selectedSchool}</span> • {major}
+						Graded against <span class="text-blue-600">{selectedSchool}</span> • {major}
 					</p>
 				</div>
 				<button
@@ -327,9 +327,9 @@
 											{essay.average}
 										</div>
 										<div>
-											<p class="text-sm font-bold text-slate-900">Institutional Strength Score</p>
+											<p class="text-sm font-bold text-slate-900">Overall score</p>
 											<p class="text-xs text-slate-500">
-												Based on {selectedSchool}'s unique freshman profile.
+												Scored against the kind of applicant {selectedSchool} tends to admit.
 											</p>
 										</div>
 									</div>
@@ -345,7 +345,7 @@
 			<header>
 				<h1 class="text-4xl font-black text-slate-900 tracking-tight mb-2">Essay Grader</h1>
 				<p class="text-slate-500 font-medium italic">
-					"The admissions committee is now in session."
+					"Paste a draft. Get the notes an admissions officer would scribble in the margin. It won't rewrite it for you."
 				</p>
 			</header>
 

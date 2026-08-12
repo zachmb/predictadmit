@@ -69,15 +69,15 @@
 {#if schoolData && schoolData.academic_explanation !== 'N/A: random sim'}
 	<div class="min-h-screen bg-slate-50 text-slate-700 p-4 md:p-8 font-sans">
 		<header class="mb-8">
-			<h1 class="text-3xl font-bold text-slate-900 mb-2">School Match & Ethos Check</h1>
+			<h1 class="text-3xl font-bold text-slate-900 mb-2">Where you stand with this school</h1>
 			<p class="text-slate-500 text-sm italic">
-				Harsh grading based on your stored profile and supplemental essays.
+				A blunt read of your saved profile and essays. It's an estimate, not a real decision.
 			</p>
 		</header>
 
 		{#if !schoolData}
 			<div class="text-center py-20 border border-dashed border-slate-300 rounded-xl">
-				<p>No data found for this school. Please run an evaluation first.</p>
+				<p>Nothing here yet for this school. Run a simulation first.</p>
 			</div>
 		{:else}
 			<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 max-w-7xl mx-auto">

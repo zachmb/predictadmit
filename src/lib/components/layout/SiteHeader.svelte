@@ -82,7 +82,7 @@
 						class="inline-flex items-center gap-2 rounded-full bg-[#0052CC] px-4 py-2 text-sm font-semibold text-white no-underline transition-colors hover:bg-[#0041a3]"
 					>
 						<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m0 0 7 7m-7-7 7-7"/></svg>
-						Back to Inbox
+						Back to inbox
 					</a>
 				{:else}
 					<a href="/" class="text-xl font-[700] tracking-tight text-slate-900 transition-colors">

@@ -89,12 +89,12 @@
 	};
 
 	const signalLegend: { key: AdmissionsSignal; text: string }[] = [
-		{ key: 'Elite', text: 'Highly selective (often free) — a genuine spike on an application.' },
-		{ key: 'Strong', text: 'Selective and respected — meaningfully strengthens your story.' },
-		{ key: 'Moderate', text: 'Somewhat selective or large-cohort — useful, not a differentiator.' },
+		{ key: 'Elite', text: 'Hard to get into, usually free. Reads as a real spike to a reader.' },
+		{ key: 'Strong', text: 'Selective and known. Adds real weight to your file.' },
+		{ key: 'Moderate', text: 'Somewhat selective or a big cohort. Useful, but it won\'t set you apart.' },
 		{
 			key: 'Enrichment',
-			text: 'Open or near-open enrollment — great for exploring, but paying to attend is not a selectivity signal.'
+			text: 'Open or near-open enrollment. Fine for exploring, but paying your way in signals nothing about selectivity.'
 		}
 	];
 
@@ -107,7 +107,7 @@
 	<title>Summer Programs for High School Students — PredictAdmit</title>
 	<meta
 		name="description"
-		content="A hand-curated, verified catalog of summer programs for high-school students — one entry per program, honest cost tiers, typical deadlines, and a frank read on what each program signals to selective colleges."
+		content="A checked catalog of summer programs for high schoolers — one entry per program, real cost tiers, typical deadlines, and a straight read on what each one signals to selective colleges."
 	/>
 </svelte:head>
 
@@ -121,18 +121,18 @@
 				Summer Programs
 			</p>
 			<h1 class="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-4 text-balance">
-				Spend your summer on something that matters.
+				Spend your summer on something that counts.
 			</h1>
 			<p class="text-lg text-slate-500 leading-relaxed max-w-2xl">
-				{summerPrograms.length} hand-curated programs — {freeCount} free or stipend-funded — with an
-				honest read on what each one actually signals to selective colleges. No duplicates, no
-				invented prices, no fake deadlines.
+				{summerPrograms.length} programs, checked by hand. {freeCount} of them are free or come with a
+				stipend. Each one has a straight read on what it actually signals to selective colleges. No
+				duplicate listings, no made-up prices, no fake deadlines.
 			</p>
 			<p class="mt-4 max-w-2xl text-xs leading-relaxed text-slate-400">
-				How this list is built: every entry is a real program listed once, under its correct host
-				organization. Costs are shown as tiers and deadlines as typical windows from recent cycles
-				— <span class="font-semibold text-slate-500">always confirm the current deadline on the
-				program's official site</span> before planning around it.
+				How the list works: every program appears once, under the organization that actually runs it.
+				Costs are grouped into tiers, and deadlines are the typical windows from recent years —
+				<span class="font-semibold text-slate-500">check the current deadline on the program's own
+				site</span> before you plan around it.
 			</p>
 		</div>
 	</section>
@@ -160,7 +160,7 @@
 			<input
 				type="text"
 				bind:value={search}
-				placeholder="Search programs, hosts, keywords…"
+				placeholder="Search by program, host, or keyword…"
 				class="flex-1 rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:border-[#0052CC] focus:ring-1 focus:ring-[#0052CC]/30"
 			/>
 			<div class="flex flex-wrap items-center gap-2">
@@ -202,8 +202,8 @@
 			</div>
 		</div>
 		<p class="mt-3 text-xs text-slate-400">
-			{rows.length} of {summerPrograms.length} programs · sorted by typical deadline · saved
-			programs live only in your browser
+			{rows.length} of {summerPrograms.length} programs · sorted by typical deadline · anything you
+			save stays in this browser only
 		</p>
 	</section>
 
@@ -293,10 +293,10 @@
 	<!-- Invite-only pipelines -->
 	<section class="max-w-5xl mx-auto px-6 pb-8">
 		<div class="rounded-2xl border border-amber-200 bg-amber-50 p-6">
-			<h2 class="mb-2 font-bold text-amber-900">Programs you can't apply to directly</h2>
+			<h2 class="mb-2 font-bold text-amber-900">Programs you can't just apply to</h2>
 			<p class="mb-4 text-sm leading-relaxed text-amber-800">
-				Some famous programs have no application form — they're earned through competition
-				pipelines. If a catalog shows these with an "application deadline," it's wrong.
+				Some famous programs have no application form at all — you win your way up a
+				competition pipeline. Any catalog that shows these with an "application deadline" has it wrong.
 			</p>
 			<ul class="space-y-2 text-sm text-amber-900">
 				{#each inviteOnlyPipelines as p}
@@ -313,11 +313,11 @@
 	<section class="max-w-5xl mx-auto px-6 pb-16">
 		<div class="rounded-[2rem] bg-[#0052CC] p-10 text-center">
 			<h2 class="mb-3 text-2xl md:text-3xl font-bold tracking-tight text-white">
-				Landed a great summer? Make it count on your application.
+				Landed a great summer? Now make it count on the application.
 			</h2>
 			<p class="mx-auto mb-8 max-w-xl leading-relaxed text-white/80">
-				Use the free AI essay workshop to turn your summer into a story, and the chances predictor
-				to see how it shifts your list.
+				The free AI essay workshop helps you turn the summer into a story worth reading. Then the
+				chances predictor shows you how much it moves your odds.
 			</p>
 			<a
 				href="/pro"

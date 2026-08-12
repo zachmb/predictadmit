@@ -18,7 +18,7 @@
 			</div>
 			<h1 class="text-4xl font-bold tracking-tight text-slate-900">Get in touch</h1>
 			<p class="text-lg text-slate-500 max-w-lg mx-auto leading-relaxed">
-				Have questions about the simulation? Need help with your Pro account? We are here to help.
+				Question about how the simulation works, or a billing issue on your Pro account? Email us. A real person reads it.
 			</p>
 
 			<div class="py-8">
@@ -33,11 +33,11 @@
 			<div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left pt-4">
 				<div class="p-4 bg-slate-50 rounded-xl border border-slate-100">
 					<h3 class="font-bold text-slate-900 mb-1">Support</h3>
-					<p class="text-sm text-slate-500">For account issues and billing.</p>
+					<p class="text-sm text-slate-500">Account trouble, refunds, billing.</p>
 				</div>
 				<div class="p-4 bg-slate-50 rounded-xl border border-slate-100">
 					<h3 class="font-bold text-slate-900 mb-1">Partnerships</h3>
-					<p class="text-sm text-slate-500">For schools and counselors.</p>
+					<p class="text-sm text-slate-500">Schools and counselors, start here.</p>
 				</div>
 			</div>
 		</div>

@@ -493,10 +493,10 @@
 </script>
 
 <svelte:head>
-	<title>PredictAdmit — Simulate any university portal</title>
+	<title>PredictAdmit — See your decision before decision day</title>
 	<meta
 		name="description"
-		content="Open any top school's decision portal — a clearly-fictional, pixel-for-pixel replica — and live out decision day before it's real. Then grade your application with AI and see your real chances."
+		content="Open a pixel-for-pixel replica of any of 39 top-school decision portals and see accepted or denied today. Portal simulations are free. Want the AI to predict your actual decisions? That's Pro."
 	/>
 </svelte:head>
 
@@ -515,9 +515,9 @@
 				<p
 					class="text-xl md:text-2xl text-slate-500 max-w-2xl mx-auto leading-snug tracking-tight font-medium mt-6 animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-[200ms] fill-mode-both"
 				>
-					Open any top school's decision portal — a pixel-for-pixel, clearly-fictional replica — and
-					live out decision day before it's real. Then make your application as strong as it can be
-					with our AI tools.
+					Pick a school and open a pixel-for-pixel replica of its decision portal. You will see
+					accepted or denied right now, months before the real thing. It is a fake, but it feels
+					like the real day.
 				</p>
 			</div>
 
@@ -529,7 +529,7 @@
 				<div
 					class="mb-4 text-sm font-semibold text-slate-500 animate-in fade-in duration-700 delay-200 fill-mode-both"
 				>
-					Pick your dream school to open its decision portal →
+					Pick a school, hit search, and open its portal →
 				</div>
 				<div
 					class="w-full max-w-xl mx-auto relative z-20 animate-in fade-in slide-in-from-bottom-5 duration-700 delay-150 fill-mode-both"
@@ -618,14 +618,14 @@
 							class="inline-flex items-center gap-2 rounded-full border-2 border-[#0052CC]/20 bg-white px-6 py-3 text-base font-bold text-[#0052CC] transition-all hover:border-[#0052CC]/40 hover:bg-[#0052CC]/5 active:scale-95"
 						>
 							<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v2m0 14v2M3 12h2m14 0h2m-3.5-6.5-1.4 1.4M6.9 17.1l-1.4 1.4m0-13 1.4 1.4m11.6 11.6-1.4-1.4"/><circle cx="12" cy="12" r="4"/></svg>
-							Grade my real application with AI
+							Have the AI predict my actual decisions
 							<span aria-hidden="true">&rarr;</span>
 						</a>
 						<button
 							on:click={handleStartSimulationClick}
 							class="inline-flex items-center gap-2 text-sm font-semibold text-slate-400 hover:text-slate-700 transition-colors group"
 						>
-							Or run a full cycle simulation <span
+							Or run a whole application season start to finish <span
 								class="group-hover:translate-x-1 transition-transform">&rarr;</span
 							>
 						</button>
@@ -755,11 +755,11 @@
 			<!-- Headline -->
 			<div class="text-center max-w-2xl mx-auto mb-20 space-y-6">
 				<h2 class="text-5xl md:text-6xl font-bold tracking-tighter text-slate-900 leading-[1.05]">
-					Free Rehearsals. <br /> AI Strategy.
+					Rehearse decision day. <br /> Then fix your odds.
 				</h2>
 				<p class="text-lg text-slate-500">
-					Experience the rush of decision day without the risk. <span
-						class="text-[#0052CC] font-bold">Outcome rehearsals are 100% free — your first AI review is on us.</span
+					Open any of the 39 portals and read your letter before it is written. <span
+						class="text-[#0052CC] font-bold">Every portal simulation is free — the AI that predicts your real decisions is Pro.</span
 					>
 				</p>
 			</div>
@@ -871,15 +871,16 @@
 						>PredictAdmit Pro</span
 					>
 					<h2 class="text-4xl md:text-5xl font-bold tracking-tighter text-slate-900 leading-[1.05]">
-						Ivy League Essay <br /> Workshop.
+						The essay workshop, <br /> one school at a time.
 					</h2>
 					<p class="text-lg text-slate-500 leading-relaxed font-medium tracking-tight">
-						An advanced workshop, tailored per school, that takes in everything in your application
-						to help you craft essays perfectly tailored to you.
+						It reads your whole application, then works school by school — because what Harvard
+						wants and what MIT wants are not the same thing. You get feedback on your actual essays,
+						not a generic checklist.
 					</p>
 
 					<ul class="space-y-5 pt-4">
-						{#each ['Institutional Archtype Analysis', 'Deep-Dive Essay Grading', 'Application Strategy Mapping'] as feature}
+						{#each ['What each school actually weights', 'Line-by-line notes on your essays', 'Where to spend your remaining time'] as feature}
 							<li class="flex items-center gap-3 text-slate-700 font-medium tracking-tight">
 								<div
 									class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-900 border border-slate-200/60"
@@ -1038,9 +1039,9 @@
 	<section id="simulation-start" class="py-24 bg-white border-t border-slate-100">
 		<div class="max-w-[800px] mx-auto px-6 text-center space-y-8">
 			<div class="space-y-4">
-				<h2 class="text-3xl font-bold text-slate-900">Ready to begin?</h2>
+				<h2 class="text-3xl font-bold text-slate-900">Run the whole season</h2>
 				<p class="text-slate-500">
-					Create a temporary profile to start your free admissions outcome rehearsal or upgrade for the full workshop.
+					Make a throwaway profile and watch decisions land in an inbox, one school at a time, ED then RD. No real email needed. The rehearsal is free.
 				</p>
 			</div>
 
@@ -1108,7 +1109,7 @@
 								on:click={handleApply}
 								class="w-full py-3.5 bg-slate-900 text-white text-sm font-bold uppercase tracking-wide rounded-full hover:bg-black transition-all shadow-sm active:scale-95"
 							>
-								Start Outcome Rehearsal
+								Send the applications
 							</button>
 							<p class="text-[10px] text-center text-slate-400 mt-3">
 								By clicking Start, you agree to our terms. This is a simulation.
@@ -1130,7 +1131,7 @@
 							>
 						</div>
 						<p class="text-sm text-slate-500 font-medium">
-							The outcome rehearsal is always free. We fund it through our Pro tools.
+							The rehearsal is free, and stays free. Pro subscriptions pay for it.
 						</p>
 						<button
 							on:click={() => (showAccountForm = true)}

@@ -16,7 +16,7 @@
 	/>
 	<meta
 		property="og:description"
-		content="Why research moves the needle in admissions, the 5 types of high school research ranked by impact, a copy-ready cold-email template, and how to write about research on your application."
+		content="Why research carries weight in admissions, the 5 types of high school research ranked by impact, a copy-ready cold-email template, and how to write about research on your application."
 	/>
 	<meta property="og:site_name" content="PredictAdmit" />
 </svelte:head>
@@ -39,22 +39,20 @@
 
 		<!-- Intro -->
 		<p class="text-xl text-slate-600 leading-relaxed font-light mb-6">
-			Research is one of the few high school activities that admissions officers can't fake-detect.
-			A club presidency can be padded; a real research project — with data, a mentor, and an output
-			someone can read — is proof you can do college-level work before you get to college. The
-			problem is that almost no one tells you <em>how</em> to actually get a research role. This
-			guide fixes that.
+			Research is one of the few high school activities a reader can't wave off as padding. A club
+			presidency is easy to inflate. A real project — with data, a mentor, and something someone can
+			actually read at the end — proves you can do college-level work before you get to college.
+			Nobody tells you how to land one, though. That's what this guide is for.
 		</p>
 		<p class="text-lg text-slate-600 leading-relaxed mb-12">
-			Below, you'll learn why research moves the needle in admissions, the five types of research
-			ranked by impact, exactly how to cold-email a professor (with a template you can copy), what
-			to do when no lab will take you, and how to write about the whole thing on your application so
-			it reads like a spike instead of a résumé line.
+			We'll cover why research carries weight, the five kinds ranked by how much they help, how to
+			cold-email a professor without getting ignored (template included), what to do when no lab
+			bites, and how to write it up so it reads like a spike and not a résumé line.
 		</p>
 
 		<!-- Section: Why research -->
 		<h2 class="text-3xl font-bold tracking-tight text-slate-900 mt-16 mb-5">
-			Why research moves the needle in admissions
+			Why research carries so much weight
 		</h2>
 		<p class="text-lg text-slate-600 leading-relaxed mb-5">
 			Selective colleges aren't looking for well-rounded students so much as well-rounded
@@ -331,10 +329,10 @@
 			</li>
 		</ul>
 		<p class="text-lg text-slate-600 leading-relaxed mb-6">
-			If you want to see how much a research spike actually shifts your odds, run your profile
-			through <a href="/pro" class="text-blue-600 font-semibold hover:underline">PredictAdmit
-			Pro</a>'s AI predictor before and after — it models how admissions readers weigh a verified
-			research role against the rest of your application.
+			Want to see how much a research spike actually moves your odds? Run your profile through the AI
+			predictor in <a href="/pro" class="text-blue-600 font-semibold hover:underline">PredictAdmit
+			Pro</a> with and without it. It weighs a verified research role the way a reader would, against
+			the rest of your file.
 		</p>
 
 		<!-- Pro Callout -->
@@ -346,12 +344,12 @@
 					Available in PredictAdmit Pro
 				</div>
 				<h2 class="text-2xl md:text-3xl font-bold tracking-tight text-white">
-					Stop guessing. Get 50+ vetted research programs matched to your major.
+					50+ vetted research programs, matched to your major.
 				</h2>
 				<p class="text-blue-100 text-lg leading-relaxed max-w-xl">
-					PredictAdmit Pro's Research Hub surfaces 50+ hand-vetted research programs, labs, and
-					competitions — filtered to your intended major, GPA, and location, and sorted by deadline.
-					Skip the endless Googling and cold-email the right professors first.
+					The Research Hub in PredictAdmit Pro keeps a list of 50+ checked programs, labs, and
+					competitions, filtered by your intended major, GPA, and location, and sorted by deadline.
+					So you email the right professors instead of Googling for a week.
 				</p>
 				<div class="flex flex-col sm:flex-row gap-4 pt-2">
 					<a

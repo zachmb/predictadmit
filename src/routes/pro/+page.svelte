@@ -175,7 +175,7 @@
 		];
 		const randomTheme = themes[Math.floor(Math.random() * themes.length)];
 
-		mindMapAnalysis = `**Core Theme Detected: ${randomTheme}**\n\nBased on your notes, your application narrative circles around the idea of ${randomTheme.toLowerCase()}. Consider focusing your personal statement on how this trait has evolved over time.`;
+		mindMapAnalysis = `**Theme that keeps showing up: ${randomTheme}**\n\nReading your notes, most of them point back to ${randomTheme.toLowerCase()}. That's your thread. Write the personal statement about how it changed for you over time, not about the trait in the abstract.`;
 		isAnalyzingMindMap = false;
 	}
 
@@ -847,20 +847,20 @@
 	// ... kept faqs ...
 	const faqs = [
 		{
-			q: 'Does the simulation guarantee admission?',
-			a: 'No. PredictAdmit calculates probabilities based on historical data, but real admissions decisions involve human factors we cannot fully predict.'
+			q: 'Does a good prediction mean I get in?',
+			a: "No, and anyone who tells you otherwise is lying. We run the odds off real historical data. Admissions officers are humans reading on a Tuesday afternoon, and no model gets inside their heads. Treat the number as a sharp estimate, not a verdict."
 		},
 		{
 			q: 'Can I cancel the monthly plan?',
-			a: 'Yes, you can cancel your monthly subscription at any time from your account settings. You will retain access until the end of your billing period.'
+			a: 'Any time, from your account settings. You keep access through the end of the period you already paid for. No emailing support to beg out, no hoops.'
 		},
 		{
-			q: 'What is included in the Cycle Pass?',
-			a: 'The Cycle Pass is a one-time payment that gives you unlimited access to admissions rehearsals, essay grading, and deep dive analysis for the entire current application cycle.'
+			q: 'What does the single School Pass get me?',
+			a: "A one-time $14.99 payment that unlocks the full toolkit for one school: the AI decision simulation, the deep-dive analysis, and essay grading. Good if you only care about one place and don't want a subscription."
 		},
 		{
-			q: 'How accurate is the essay grader?',
-			a: "Our grader is trained on thousands of successful essays from Top 20 universities. It evaluates structure, tone, and 'fit' for specific schools, providing institutional-grade feedback."
+			q: 'How good is the essay grader, really?',
+			a: "It was built on thousands of essays that actually got people into Top 20 schools. It reads for structure, voice, and whether the essay fits the specific school you are targeting, then tells you where it is weak. It grades and gives notes. It never writes a line for you."
 		}
 	];
 
@@ -870,7 +870,11 @@
 </script>
 
 <svelte:head>
-	<title>PredictAdmit Pro</title>
+	<title>PredictAdmit Pro — see your real decisions before they land</title>
+	<meta
+		name="description"
+		content="Pro runs the AI on your actual profile: predicted decisions across 39 schools, deep-dive analysis, and blunt essay grading. 7 days free, then $39/mo or $99 once."
+	/>
 </svelte:head>
 
 {#if googleSignedIn}
@@ -1121,7 +1125,7 @@
 						<div class="bg-white rounded-xl shadow-2xl w-full max-w-lg relative z-10 p-6 space-y-4">
 							<h3 class="text-lg font-bold">Import Activities</h3>
 							<p class="text-sm text-slate-500">
-								Paste your resume activities here. One activity per line. <br />Format:
+								Paste straight from your resume, one activity per line. <br />We'll split each on the dashes:
 								<code class="bg-slate-100 px-1 rounded">Name - Role - Hours</code>
 							</p>
 							<textarea
@@ -1243,7 +1247,7 @@
 								<div>
 									<h2 class="text-xl font-bold text-slate-900">Applicant Profile</h2>
 									<p class="text-sm text-slate-500">
-										Update your stats to improve prediction accuracy.
+										The more of this you fill in, the closer the predictions get to reality.
 									</p>
 								</div>
 								<button
@@ -2190,7 +2194,7 @@
 											>
 										</div>
 										<p class="text-sm font-medium text-slate-400 max-w-[200px]">
-											Run an AI analysis to see feedback here.
+											Run the analysis and the notes show up here.
 										</p>
 									</div>
 								{/if}
@@ -2224,7 +2228,7 @@
 					<span class="text-slate-500">7 days free, then unlimited.</span>
 				</h1>
 				<p class="text-lg text-slate-500 max-w-xl mx-auto leading-relaxed mt-6">
-					Opening any school's decision portal is free. Getting PredictAdmit's AI to simulate your <span class="italic">real</span> admissions decisions — across every school, with deep-dive analysis and essay grading — is Pro. Start with a 7-day free trial; then $39/month, $99 once for lifetime, or $14.99 for a single School Pass.
+					Opening any school's decision portal is free. What costs money is pointing the AI at your <span class="italic">actual</span> profile and having it call your real decisions across every school, then break down why and grade your essays. That's Pro. Seven days free to try it, then $39/month, or $99 once and you're done paying. Just want one school? $14.99 for a single pass.
 				</p>
 			</div>
 
@@ -2235,7 +2239,7 @@
 					<div class="relative rounded-[2rem] bg-white p-10 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.1)] border border-slate-100 space-y-8">
 						<div class="space-y-4 text-center md:text-left">
 							<h2 class="text-2xl font-bold text-slate-900">Start your 7-day free trial</h2>
-							<p class="text-slate-500">Unlock unlimited AI decision simulations across every school. Cancel anytime before day 7 and you won't be charged — then it's $39/month.</p>
+							<p class="text-slate-500">Run the AI on every school as many times as you want for a week. Cancel before day 7 and we never charge you. After that it's $39/month.</p>
 						</div>
 
 						<button
@@ -2244,12 +2248,12 @@
 							class="w-full flex items-center justify-center gap-3 rounded-2xl bg-[#0052CC] px-6 py-5 text-lg font-bold text-white shadow-xl hover:bg-[#0047b3] hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:hover:scale-100"
 						>
 							<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-							<span>{isProcessing ? 'Starting secure checkout…' : 'Start 7-day free trial'}</span>
+							<span>{isProcessing ? 'Taking you to checkout…' : 'Start 7-day free trial'}</span>
 						</button>
 						<p class="-mt-4 text-center text-xs text-slate-400">
 							{googleSignedIn
-								? 'Secure checkout via Stripe · card required · cancel anytime'
-								: "You'll sign in with Google first, then start your trial."}
+								? 'Stripe checkout · card up front · cancel before day 7 and pay nothing'
+								: "Sign in with Google, then you're straight into the trial."}
 						</p>
 
 						<div class="pt-6 border-t border-slate-50 flex items-center justify-center gap-6 opacity-60">
@@ -2281,8 +2285,8 @@
 								<svg class="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.989-2.386l-.548-.547z" /></svg>
 							</div>
 							<div>
-								<p class="font-bold text-slate-900">AI Narrative Mind Map</p>
-								<p class="text-sm text-slate-500">Brainstorm and connect your life experiences into a cohesive application theme.</p>
+								<p class="font-bold text-slate-900">Narrative Mind Map</p>
+								<p class="text-sm text-slate-500">Dump the experiences, jobs, and obsessions that make you you onto a board, and the AI finds the thread that ties them into one application story.</p>
 							</div>
 						</div>
 						
@@ -2291,8 +2295,8 @@
 								<svg class="w-5 h-5 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
 							</div>
 							<div>
-								<p class="font-bold text-slate-900">AI Essay Feedback & IDE</p>
-								<p class="text-sm text-slate-500">Write and edit your essays, then get blunt institutional-grade feedback. You write every word — the AI never does.</p>
+								<p class="font-bold text-slate-900">Essay editor with AI feedback</p>
+								<p class="text-sm text-slate-500">Draft every supplement in one place, then hand it to the AI for the kind of notes an admissions reader would give. It marks up your lines and tells you what's weak. You write every word — it never writes for you.</p>
 							</div>
 						</div>
 
@@ -2301,8 +2305,8 @@
 								<svg class="w-5 h-5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
 							</div>
 							<div>
-								<p class="font-bold text-slate-900">University Strategy Database</p>
-								<p class="text-sm text-slate-500">Unlock specific admissions strategies for the top 50+ universities.</p>
+								<p class="font-bold text-slate-900">Per-school strategy notes</p>
+								<p class="text-sm text-slate-500">What each of the top 50+ schools actually weighs, and how to angle your application for that specific reader instead of writing one generic app for all of them.</p>
 							</div>
 						</div>
 
@@ -2313,10 +2317,10 @@
 							</div>
 							<div>
 								<div class="flex items-center gap-2">
-									<p class="font-bold text-slate-900">Unlimited with Pro</p>
+									<p class="font-bold text-slate-900">All of it, no limits, with Pro</p>
 									<span class="text-[10px] uppercase font-bold tracking-wide text-[#0052CC] bg-white border border-blue-100 rounded-full px-2 py-0.5">$39/mo · $99 lifetime</span>
 								</div>
-								<p class="text-sm text-slate-500">Unlimited AI admissions rehearsals, full deep-dive decision analyses, and unlimited essay grading. Starts with a 7-day free trial.</p>
+								<p class="text-sm text-slate-500">Run the decision simulation as often as you like, read the full deep-dive on every school, grade essays until they're right. The 7-day free trial covers all of it.</p>
 							</div>
 						</div>
 					</div>
@@ -2326,12 +2330,9 @@
 			<!-- Vision Section -->
 			<div class="pt-16 border-t border-slate-200">
 				<div class="bg-blue-900 rounded-[2.5rem] p-12 text-center text-white space-y-6">
-					<h3 class="text-3xl font-bold text-white">Elite admissions intelligence, priced for students.</h3>
+					<h3 class="text-3xl font-bold text-white">The consultant's read, without the consultant's bill.</h3>
 					<p class="text-blue-100 text-lg max-w-2xl mx-auto leading-relaxed">
-						We believe the price of admissions advice should not determine the quality of your education.
-						Private consultants charge thousands per season for the judgment Full Access gives you for $99, once — every
-						rehearsal, every deep dive, every essay tool, forever. Try it free first; upgrade only if
-						it earns it.
+						Private counselors charge thousands a season for the same judgment call: is this kid getting in, and what should they fix. Lifetime Pro is $99, once. Every simulation, every deep dive, every essay pass, for good. Try it free for a week first. Pay only if it's actually telling you something you didn't know.
 					</p>
 				</div>
 			</div>

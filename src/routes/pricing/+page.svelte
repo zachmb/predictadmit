@@ -207,7 +207,7 @@
 						unlimited, for less than half of one consultant hour. Only care about one dream school?
 						The School Pass gets you its full analysis for $14.99.
 					</p>
-					<p class="text-slate-500 italic">"Democratizing elite admissions through technology."</p>
+					<p class="text-slate-500 italic">"The read is the same either way. We just don't bill you by the hour for it."</p>
 				</div>
 			</div>
 		</section>

@@ -5,48 +5,48 @@
 		{ value: '5,000+', label: 'Students on PredictAdmit' },
 		{ value: '39', label: 'School scenarios' },
 		{ value: '$99', label: 'Lifetime Full Access' },
-		{ value: '1', label: 'Free rehearsal to start' }
+		{ value: '7-day', label: 'Free Pro trial' }
 	];
 
 	const differentiators = [
 		{
 			icon: '🎯',
-			title: 'Admissions outcome rehearsal',
-			body: 'Practice the emotional moment of decision day with clearly labeled fictional portals, status pages, and decision letters for 39 school scenarios. Every screen is marked as a simulation.'
+			title: 'Rehearse decision day',
+			body: 'Open a fictional portal, status page, or decision letter for any of 39 schools and feel the moment before it counts. Every screen says "simulation" on it. That is the point — you get to flinch here instead of on the real day.'
 		},
 		{
 			icon: '✍️',
-			title: 'Try everything free',
-			body: 'Every account starts with a free AI admissions rehearsal and a taste of the full toolkit — essay grader, AI counselor, chances predictor, and mind-map. No credit card required to start.'
+			title: 'The portal sims are free',
+			body: 'Open any decision portal and rehearse it — accepted, denied, waitlisted — as many times as you want, no card required. The AI tools (essay grader, counselor, chances predictor, mind-map) you can try before you pay for anything.'
 		},
 		{
 			icon: '⚡',
-			title: 'Pro unlocks it all',
-			body: 'PredictAdmit Pro removes every limit: unlimited AI admissions rehearsals, full deep-dive decision analyses, and unlimited essay grading — $39/month or $99 once for lifetime access. A single School Pass is $14.99. All of it costs less than one hour with a private consultant.'
+			title: 'Pro is the AI prediction',
+			body: 'Pro is where the AI reads your actual application and predicts your likely decision at every school, with the full analysis behind it and unlimited essay grading. $39/month, or $99 once and you own it. One school only? A School Pass is $14.99. Cheaper than an hour with a private consultant.'
 		},
 		{
 			icon: '🔍',
-			title: 'Honest by design',
-			body: 'Every simulated screen is labeled as fictional and independent. We never claim to guarantee admission or present any outcome as official. And the AI gives feedback on your writing — it never writes your essays for you. Your application stays 100% your own work.'
+			title: 'We tell you what is fake',
+			body: 'Every simulated screen is labeled fictional and independent. We do not guarantee admission and we never dress up a prediction as an official decision. The AI critiques your writing. It does not write it. The essay stays yours.'
 		}
 	];
 
 	const testimonials = [
 		{
 			quote:
-				'Opening the simulated Stanford portal was terrifying in the best way. It made me take my essays way more seriously before the real deadlines hit.',
+				'Opening the fake Stanford portal genuinely scared me. Then I went back and rewrote two essays I had thought were fine. Worth it.',
 			name: 'Priya',
 			role: 'Class of 2025 applicant'
 		},
 		{
 			quote:
-				'The essay grader caught the cliché opening I would have submitted. The deep dive on my rejection showed me exactly which part of my application was weakest.',
+				'The essay grader flagged the cliché opening I was about to submit. And the breakdown on my simulated rejection pointed straight at the weakest part of my application.',
 			name: 'Marcus',
 			role: 'First-gen applicant'
 		},
 		{
 			quote:
-				'Nine dollars for unlimited runs was the easiest decision of my application season. I stress-tested my list until every school on it made sense.',
+				'I ran my list against every school until the ones that did not fit fell off on their own. Easiest money I spent all season.',
 			name: 'Elena',
 			role: 'Class of 2026 applicant'
 		}
@@ -55,45 +55,45 @@
 	const faqs: { q: string; a: string; link?: { href: string; label: string } }[] = [
 		{
 			q: 'Is PredictAdmit free?',
-			a: 'You can start free: every account gets a free AI admissions rehearsal and access to try the tools, no credit card required. PredictAdmit Pro unlocks unlimited rehearsals, full deep-dive analyses, and unlimited essay grading for $39/month — or $99 once for lifetime Full Access. If you only care about one school, a School Pass unlocks its full analysis for $14.99.'
+			a: 'The portal decision simulations are free — open any school, rehearse the moment, no card required. The AI prediction is the paid part: it reads your real application and predicts your likely decision at each school. That is Pro — $39/month, or $99 once and you keep it. Care about one school only? A School Pass gets you its full analysis for $14.99.'
 		},
 		{
 			q: 'Are the decision letters real?',
-			a: 'No. The portals, status pages, and decision letters are fictional simulations built for practice, and every screen is clearly labeled as one. They exist to help you prepare for the real moment — they are not official communications from any university.'
+			a: 'No. The portals, status pages, and letters are made up, and every screen says so. They are here so decision day is not the first time you feel it. Nothing on this site comes from an actual university.'
 		},
 		{
-			q: 'What exactly does Pro include?',
-			a: 'Unlimited AI admissions rehearsals across all 39 universities, the full deep-dive analysis behind every decision (five scored dimensions plus improvement tips), unlimited essay grading, the AI counselor, and the mind-map planner. One payment covers everything — there are no add-ons.'
+			q: 'What does Pro include?',
+			a: 'The AI reading of your application across all 39 schools, the full analysis behind each prediction (five scored dimensions plus what to fix), unlimited essay grading, the AI counselor, and the mind-map planner. One payment, no add-ons.'
 		},
 		{
 			q: 'How accurate is the predictor?',
-			a: 'The chances predictor is a data-informed estimate, not a promise. It reflects how an application like yours tends to fare, and it is meant to help you build a balanced list and focus your effort — not to guarantee any outcome.'
+			a: 'It is an estimate, not a promise. It tells you how an application like yours tends to do so you can build a sane list and spend your effort where it moves the needle. No model can guarantee a real decision, and we do not pretend otherwise.'
 		},
 		{
 			q: 'Where does the prediction data come from?',
-			a: 'Our factor weights are based on the "Factors in the Admission Decision" survey published by NACAC — the National Association for College Admission Counseling, the professional association of 28,000+ admission officers and counselors — which reports how much four-year colleges weight grades, curriculum rigor, test scores, essays, and other factors. Those weights are calibrated against admitted-student profiles from HYPSM and Top-20 universities in the 2026 admissions cycle. NACAC is not affiliated with and does not endorse PredictAdmit.',
+			a: 'The factor weights come from NACAC — the National Association for College Admission Counseling, the professional body for 28,000+ admission officers and counselors — and their "Factors in the Admission Decision" survey, which reports how much four-year colleges weight grades, rigor, test scores, essays, and the rest. We then calibrate those weights against admitted-student profiles from HYPSM and Top-20 universities in the 2026 cycle, and against our own founding team\'s results. NACAC is independent and does not endorse PredictAdmit.',
 			link: { href: '/methodology', label: 'Read the full methodology →' }
 		}
 	];
 </script>
 
 <svelte:head>
-	<title>About PredictAdmit — Your unfair advantage in college admissions</title>
+	<title>About PredictAdmit — Rehearse decision day before it counts</title>
 	<meta
 		name="description"
-		content="PredictAdmit gives students an admissions outcome rehearsal tool, an AI essay workshop, and a chances predictor. Start with a free rehearsal; Full Access unlocks everything for $99 once. Everything simulated is clearly labeled."
+		content="PredictAdmit lets students rehearse decision day on fictional portals, grade essays with AI, and predict their real decisions. Portal sims are free; Pro is $39/mo or $99 once. Everything simulated is labeled."
 	/>
-	<meta property="og:title" content="About PredictAdmit — Your unfair advantage in college admissions" />
+	<meta property="og:title" content="About PredictAdmit — Rehearse decision day before it counts" />
 	<meta
 		property="og:description"
-		content="Practice with clearly labeled admissions outcome rehearsals and sharpen your essays with AI. One free rehearsal to start — Full Access unlocks unlimited for $99 once."
+		content="Rehearse decision day on clearly-labeled fictional portals and sharpen your essays with AI. Portal sims are free — Pro predicts your real decisions for $99 once."
 	/>
 	<meta property="og:type" content="website" />
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:title" content="About PredictAdmit" />
 	<meta
 		name="twitter:description"
-		content="An admissions outcome rehearsal tool, an AI essay workshop, and a chances predictor. Free to try — Full Access unlocks unlimited for $99 once."
+		content="Rehearse decision day on fictional portals, grade your essays with AI, predict your real decisions. Free to start — Pro is $99 once."
 	/>
 </svelte:head>
 
@@ -107,11 +107,11 @@
 				About PredictAdmit
 			</p>
 			<h1 class="text-4xl md:text-6xl font-bold tracking-tight text-slate-900 mb-6 text-balance">
-				Your unfair advantage in college admissions.
+				Feel decision day before it counts.
 			</h1>
 			<p class="text-lg md:text-xl text-slate-500 leading-relaxed max-w-2xl mx-auto mb-10">
-				We help students feel decision day before it's real, sharpen their essays with AI, and know
-				exactly where they stand — for less than the cost of lunch.
+				Rehearse the moment on a fictional portal. Grade your essays against a tough read. See where
+				you actually stand. All of it for less than lunch.
 			</p>
 			<div class="flex flex-col sm:flex-row gap-3 justify-center">
 				<a
@@ -148,11 +148,11 @@
 		<div class="max-w-5xl mx-auto px-6">
 			<div class="text-center max-w-2xl mx-auto mb-14">
 				<h2 class="text-3xl md:text-4xl font-bold tracking-tight text-slate-900 mb-4">
-					Why PredictAdmit is different
+					What makes this different
 				</h2>
 				<p class="text-lg text-slate-500 leading-relaxed">
-					A realistic outcome rehearsal and a full AI toolkit — priced for students, with one rule: total
-					honesty about what is real and what is practice.
+					A real decision-day rehearsal plus a full AI toolkit, priced for students. One rule we do
+					not bend: we are honest about what is simulated and what is not.
 				</p>
 			</div>
 			<div class="grid md:grid-cols-2 gap-5">
@@ -173,18 +173,18 @@
 	<section id="pro" class="max-w-6xl mx-auto px-6 py-24 scroll-mt-16">
 		<div class="text-center max-w-2xl mx-auto mb-14">
 			<h2 class="text-3xl md:text-4xl font-bold tracking-tight text-slate-900 mb-4">
-				One upgrade. Everything unlocked.
+				One upgrade. Every limit gone.
 			</h2>
 			<p class="text-lg text-slate-500 leading-relaxed">
-				Start with a free rehearsal. When you're ready, Pro removes every limit — for less than a
+				The portal sims are free. Pro is where the AI reads your real application — for less than a
 				private consultant charges per minute.
 			</p>
 		</div>
 		<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
 			{#each [
-				{ icon: '🔮', title: 'Unlimited AI rehearsals', body: 'Run your profile against all 39 school scenarios as many times as you want. Change your essay, rerun, and watch what moves — the feedback loop consultants bill by the hour.' },
-				{ icon: '🔬', title: 'Full deep-dive analyses', body: 'Every decision comes with five scored dimensions, a committee-style written critique, and a prioritized improvement plan for that school — the "why" behind the outcome, unblurred.' },
-				{ icon: '📝', title: 'Unlimited essay grading', body: 'Ten inline annotations plus a harsh and an honest admissions-officer read on every draft, for every essay — before a real committee sees it.' }
+				{ icon: '🔮', title: 'Unlimited AI predictions', body: 'Run your real profile against all 39 schools as often as you like. Change an essay, rerun, see what moved. That is the loop consultants bill by the hour.' },
+				{ icon: '🔬', title: 'The full analysis', body: 'Every prediction comes with five scored dimensions, a committee-style written critique, and a ranked list of what to fix for that school. The why, not just the verdict.' },
+				{ icon: '📝', title: 'Unlimited essay grading', body: 'Ten inline notes plus a harsh read and an honest admissions-officer read on every draft. See it before a real committee does.' }
 			] as f}
 				<div class="flex flex-col rounded-2xl border border-slate-100 bg-white p-6 hover:shadow-md transition-shadow">
 					<div class="text-3xl mb-3">{f.icon}</div>
@@ -209,7 +209,7 @@
 		<div class="max-w-5xl mx-auto px-6">
 			<div class="text-center max-w-2xl mx-auto mb-14">
 				<h2 class="text-3xl md:text-4xl font-bold tracking-tight text-slate-900 mb-4">
-					What students say
+					What students tell us
 				</h2>
 				<p class="text-sm text-slate-400">Illustrative quotes from students using PredictAdmit.</p>
 			</div>
@@ -259,10 +259,10 @@
 	<section class="bg-[#0052CC]">
 		<div class="max-w-4xl mx-auto px-6 py-24 text-center">
 			<h2 class="text-3xl md:text-4xl font-bold tracking-tight text-white mb-4">
-				Ready to see where you stand?
+				Want to see where you stand?
 			</h2>
 			<p class="text-lg text-white/80 leading-relaxed max-w-xl mx-auto mb-10">
-				Start with the free AI tools, or rehearse a fictional decision-day outcome before the real moment arrives.
+				Rehearse a fictional decision on any school, free. Try the AI tools while you are here.
 			</p>
 			<div class="flex flex-col sm:flex-row gap-3 justify-center">
 				<a

@@ -46,7 +46,7 @@
 	<title>Methodology — Where PredictAdmit's predictions come from</title>
 	<meta
 		name="description"
-		content="PredictAdmit's factor weights come from NACAC's Factors in the Admission Decision survey, calibrated against HYPSM and Top-20 admitted-student profiles from the 2026 admissions cycle."
+		content="PredictAdmit's factor weights come from NACAC's Factors in the Admission Decision survey, then calibrated against HYPSM and Top-20 admitted-student profiles from the 2026 cycle and our own team's results."
 	/>
 </svelte:head>
 
@@ -63,10 +63,10 @@
 				Where our predictions come from
 			</h1>
 			<p class="text-lg text-slate-500 leading-relaxed">
-				PredictAdmit doesn't guess how much each part of your application matters. Our factor
-				weights come from NACAC's national survey of what colleges actually say drives their
-				admission decisions, calibrated against admitted-student profiles from HYPSM and Top-20
-				universities in the 2026 admissions cycle.
+				We don't guess how much each part of your application counts. The factor weights come from
+				NACAC's national survey of what colleges themselves say drives their decisions. We then
+				calibrate those weights against admitted-student profiles from HYPSM and Top-20 universities
+				in the 2026 cycle — and against our own founding team's results.
 			</p>
 		</div>
 	</section>
@@ -83,16 +83,16 @@
 			read applications and make admission decisions.
 		</p>
 		<p class="text-slate-600 leading-relaxed mb-4">
-			As part of its <em>State of College Admission Report</em>, NACAC surveys its member four-year
-			colleges on how much importance they attribute to each factor in the admission decision. The
-			most recent factor survey ({NACAC_SOURCE.cycle}, {NACAC_SOURCE.sampleSize} colleges) is the
-			foundation of PredictAdmit's weighting: it is the closest thing that exists to admissions
-			officers, in aggregate, telling you what matters.
+			As part of its <em>State of College Admission Report</em>, NACAC asks its member four-year
+			colleges how much weight they put on each factor in the admission decision. The most recent
+			factor survey ({NACAC_SOURCE.cycle}, {NACAC_SOURCE.sampleSize} colleges) is what our weighting
+			is built on. It is about as close as you can get to admission officers, in aggregate, telling
+			you what actually moves a decision.
 		</p>
 		<p class="text-slate-600 leading-relaxed">
-			The headline finding is consistent year after year: <strong>grades in college-prep courses
-			and the strength of your curriculum matter more than everything else</strong> — more than
-			test scores, essays, recommendations, and extracurriculars.
+			The headline finding barely changes year to year: <strong>grades in college-prep courses and
+			the strength of your curriculum outweigh everything else</strong> — test scores, essays,
+			recommendations, extracurriculars, all of it.
 		</p>
 	</section>
 
@@ -155,15 +155,15 @@
 		<div class="space-y-6 text-slate-600 leading-relaxed">
 			<p>
 				<strong class="text-slate-900">Academic index.</strong> Your academic index (0–100) blends
-				weighted GPA and SAT/ACT. The split isn't hand-picked — it falls straight out of the table:
-				grades and curriculum strength versus admission tests works out to roughly
+				weighted GPA and SAT/ACT. We didn't pick the split by feel — it drops straight out of the
+				table. Grades and curriculum strength against admission tests lands at roughly
 				<strong>{Math.round(GPA_WEIGHT * 100)}% grades &amp; rigor / {Math.round(TEST_WEIGHT * 100)}%
 				test scores</strong>.
 			</p>
 			<p>
-				<strong class="text-slate-900">Holistic evaluation.</strong> The AI evaluation scores five
-				dimensions. Each dimension pools the NACAC factors it covers, and its share of your overall
-				read is that pool's share of the table:
+				<strong class="text-slate-900">Holistic read.</strong> The AI read scores five dimensions.
+				Each one pools the NACAC factors it covers, and how much it counts toward your overall read
+				is that pool's share of the table:
 			</p>
 			<div class="space-y-3">
 				{#each dims as d}
@@ -180,10 +180,10 @@
 				{/each}
 			</div>
 			<p>
-				<strong class="text-slate-900">Chance estimates &amp; reach/target/safety.</strong> Your
-				academic index is compared against each school's selectivity to produce a chance estimate
-				and a reach/target/safety label — so the NACAC weighting flows through everything from the
-				chances predictor to the AI counselor's advice.
+				<strong class="text-slate-900">Chance estimates &amp; reach/target/safety.</strong> We hold
+				your academic index up against each school's selectivity to get a chance estimate and a
+				reach/target/safety label. Same NACAC weighting behind it, whether you're looking at the
+				chances predictor or the counselor's advice.
 			</p>
 		</div>
 	</section>
@@ -196,17 +196,18 @@
 			</h2>
 			<div class="space-y-4 text-slate-600 leading-relaxed">
 				<p>
-					NACAC's survey covers four-year colleges of every selectivity level, and NACAC itself
-					notes that factor importance varies by institution type. PredictAdmit focuses on highly
-					selective admissions, so we calibrate the NACAC-derived weights against
+					NACAC's survey spans four-year colleges at every selectivity level, and NACAC itself says
+					factor importance shifts by institution type. We care about highly selective admissions,
+					so we calibrate the NACAC-derived weights against
 					<strong>admitted-student profiles from HYPSM (Harvard, Yale, Princeton, Stanford, MIT)
-					and Top-20 universities in the 2026 admissions cycle</strong>.
+					and Top-20 universities in the 2026 cycle</strong>, plus our own founding team's results.
 				</p>
 				<p>
-					That calibration is why our school baselines (average SAT/ACT and weighted GPA of admits,
-					acceptance rates) reflect the current cycle, and why academics act as a gate at the most
-					selective schools: near-perfect grades and rigor are the baseline there, and character,
-					essays, and extracurricular spikes decide among academically qualified applicants.
+					That's why our school baselines — average SAT/ACT and weighted GPA of admits, acceptance
+					rates — track the current cycle. It's also why academics act as a gate at the top: at
+					those schools near-perfect grades and rigor are just the price of entry, and it's
+					character, essays, and a real extracurricular spike that separate the applicants who
+					already cleared the bar.
 				</p>
 			</div>
 		</div>
@@ -217,17 +218,18 @@
 		<h2 class="text-2xl md:text-3xl font-bold tracking-tight text-slate-900 mb-4">Honest limits</h2>
 		<ul class="space-y-3 text-slate-600 leading-relaxed list-disc pl-5">
 			<li>
-				Predictions are <strong>data-informed estimates, not promises</strong>. No model can
-				guarantee an admission outcome, and real committees weigh context no simulator sees.
+				Predictions are <strong>estimates, not promises</strong>. No model can guarantee an
+				admission outcome, and a real committee weighs context — a compelling backstory, a program's
+				needs that year — that a simulator never sees.
 			</li>
 			<li>
 				NACAC is an independent professional association. It is
-				<strong>not affiliated with PredictAdmit and does not endorse</strong> this site — we build
-				on its published survey findings.
+				<strong>not affiliated with PredictAdmit and does not endorse</strong> this site. We just
+				build on its published survey findings.
 			</li>
 			<li>
-				School statistics are approximate, publicly known figures for the 2026 cycle, used for
-				realistic simulation.
+				School stats are approximate public figures for the 2026 cycle, used to make the simulation
+				feel real.
 			</li>
 		</ul>
 		<div class="mt-10 flex flex-col sm:flex-row gap-3">
