@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Confetti from '$lib/components/common/Confetti.svelte';
 	import BackToInboxButton from '$lib/components/common/BackToInboxButton.svelte';
+	import DeepDiveButton from '$lib/components/common/DeepDiveButton.svelte';
 
 	export let applicantName: string = 'Applicant';
 	export let schoolName: string = 'Western Washington University';
@@ -9,6 +10,8 @@
 </script>
 
 <Confetti primary={primaryColor} />
+
+<DeepDiveButton slug="wwu" color={primaryColor} />
 
 <div class="min-h-screen bg-[#f4f7f9] text-slate-900 font-sans flex flex-col">
 	<header class="bg-[#0a3a63] text-white">

@@ -174,7 +174,8 @@
 		{ school: 'University of Florida', slug: 'uf' },
 		{ school: 'University of Wisconsin–Madison', slug: 'wisconsin' },
 		{ school: 'Purdue University', slug: 'purdue' },
-		{ school: 'The Ohio State University', slug: 'osu' }
+		{ school: 'The Ohio State University', slug: 'osu' },
+		{ school: 'Western Washington University', slug: 'wwu' }
 	];
 
 	const handlePromoCode = (e: KeyboardEvent) => {

@@ -1,11 +1,14 @@
 <script lang="ts">
 	import BackToInboxButton from '$lib/components/common/BackToInboxButton.svelte';
+	import DeepDiveButton from '$lib/components/common/DeepDiveButton.svelte';
 
 	export let applicantName: string = 'Applicant';
 	export let schoolName: string = 'Western Washington University';
 	export let primaryColor: string = '#0a3a63';
 	export let footerDomain: string = 'wwu.edu';
 </script>
+
+<DeepDiveButton slug="wwu" color={primaryColor} />
 
 <div class="min-h-screen bg-[#f4f7f9] text-slate-900 font-sans flex flex-col">
 	<header class="text-white" style={`background-color: ${primaryColor};`}>

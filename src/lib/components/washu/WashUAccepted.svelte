@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Confetti from '$lib/components/common/Confetti.svelte';
+	import DeepDiveButton from '$lib/components/common/DeepDiveButton.svelte';
 	// Props passed from the portal route
 	export let applicantName: string;
 	export let schoolName = 'Washington University in St. Louis';
@@ -10,6 +11,8 @@
 </script>
 
 <Confetti primary={primaryColor} />
+
+<DeepDiveButton slug="wustl" color={primaryColor} />
 
 <svelte:head>
 	<title>{schoolName} - Admission Decision</title>

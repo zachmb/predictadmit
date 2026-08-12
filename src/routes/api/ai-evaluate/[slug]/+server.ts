@@ -50,7 +50,8 @@ const SCHOOL_MAP: Record<string, string> = {
 	uf: 'University of Florida',
 	wisconsin: 'University of Wisconsin–Madison',
 	purdue: 'Purdue University',
-	osu: 'The Ohio State University'
+	osu: 'The Ohio State University',
+	wwu: 'Western Washington University'
 };
 
 function truncateForModel(text: string, maxChars = 14000): string {

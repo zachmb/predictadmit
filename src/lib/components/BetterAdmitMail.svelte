@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { fly } from 'svelte/transition';
 	import type { PortalEmail, SentEmail } from '$lib/config/admitMail';
 
 	// DOM handle for scroll into view
@@ -54,8 +55,15 @@
 
 	// Share the decision from the inbox (native share, copy-link fallback) — sits
 	// alongside "View" and "Deep Dive" in one row so all three show at once and
-	// never overlap.
-	let shareCopied = false;
+	// never overlap. Feedback surfaces as a floating toast rather than mutating
+	// the button label (which read as a glitch).
+	let toastMsg = '';
+	let toastTimer: ReturnType<typeof setTimeout>;
+	function showToast(msg: string) {
+		toastMsg = msg;
+		clearTimeout(toastTimer);
+		toastTimer = setTimeout(() => (toastMsg = ''), 2400);
+	}
 	async function shareDecision(portal: PortalEmail) {
 		if (typeof window === 'undefined') return;
 		const url = `${window.location.origin}/portals/${portal.slug}`;
@@ -70,10 +78,9 @@
 		}
 		try {
 			await navigator.clipboard.writeText(url);
-			shareCopied = true;
-			setTimeout(() => (shareCopied = false), 2000);
+			showToast('Link copied to clipboard');
 		} catch {
-			/* ignore clipboard errors */
+			showToast('Couldn’t copy — please copy the URL manually');
 		}
 	}
 
@@ -505,7 +512,15 @@
 											on:click={() => shareDecision(selectedPortal)}
 											class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors"
 										>
-											{shareCopied ? 'Link copied!' : 'Share your decision'}
+											<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+												<path
+													stroke-linecap="round"
+													stroke-linejoin="round"
+													stroke-width="2"
+													d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"
+												/>
+											</svg>
+											Share your decision
 										</button>
 
 										{#if deepDiveItems && deepDiveItems.some((d) => d.slug === selectedPortal.slug)}
@@ -573,3 +588,17 @@
 		</div>
 	</div>
 </section>
+
+{#if toastMsg}
+	<div
+		class="fixed bottom-6 left-1/2 z-[60] flex -translate-x-1/2 items-center gap-2.5 rounded-full bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white shadow-xl ring-1 ring-black/5"
+		role="status"
+		aria-live="polite"
+		transition:fly={{ y: 24, duration: 220 }}
+	>
+		<svg class="h-4 w-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+			<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+		</svg>
+		{toastMsg}
+	</div>
+{/if}
