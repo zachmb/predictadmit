@@ -939,23 +939,9 @@
 				</h1>
 
 				<p class="text-lg text-slate-600 font-normal max-w-xl mx-auto leading-relaxed">
-					Get <span class="font-bold text-[#0052CC] relative">
-						your first AI simulation free
-						<svg
-							class="absolute -bottom-1 left-0 w-full h-2"
-							viewBox="0 0 100 10"
-							preserveAspectRatio="none"
-						>
-							<path
-								d="M0,7 Q25,3 50,7 T100,7"
-								stroke="currentColor"
-								stroke-width="2"
-								fill="none"
-								class="text-blue-300"
-							/>
-						</svg>
-					</span>. Every aspect of your application analyzed in depth—trained on real admissions
-					results.
+					PredictAdmit's AI reads every part of your application and predicts your decision at all 39
+					top schools — trained until it reproduced our founding team's own admissions results.
+					<span class="font-bold text-[#0052CC]">Sign in with Google to start.</span>
 				</p>
 
 				<p class="text-sm text-slate-500">
@@ -1028,7 +1014,7 @@
 												d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
 											/>
 										</svg>
-										<span>Continue with Google</span>
+										<span>Sign in with Google</span>
 									</button>
 								{/if}
 							</div>
@@ -1530,7 +1516,7 @@
 														d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
 													/>
 												</svg>
-												<span>Sign in with Google to Simulate</span>
+												<span>Sign in with Google</span>
 											{:else if $userProfile.isSubmittingAI}
 												<span class="flex items-center gap-3">
 													<span
@@ -1538,12 +1524,12 @@
 													></span>
 													<span>Admissions Officers Analyzing...</span>
 												</span>
-											{:else if hasUsedFreeSimulation && !hasDeepDiveAccess}
+											{:else if !hasDeepDiveAccess}
 												<span
 													onclick={(e) => {
 														e.preventDefault();
 														e.stopPropagation();
-														goto('/pro');
+														openPaywall('simulation');
 													}}
 													class="flex items-center gap-2.5"
 												>
@@ -1552,7 +1538,7 @@
 															d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
 														/>
 													</svg>
-													Upgrade to Pro (Unlimited Runs)
+													Start 7-day free trial
 												</span>
 											{:else}
 												<span class="flex items-center gap-2.5">

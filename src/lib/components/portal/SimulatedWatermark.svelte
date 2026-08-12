@@ -8,24 +8,25 @@
 </script>
 
 {#if show}
-	<!-- Tiled diagonal "SIMULATED" mark across the whole decision. Small per-tile
-	     but repeated everywhere, so it can't be cropped out of a screenshot.
-	     pointer-events-none so it never blocks the portal UI. -->
+	<!-- A single diagonal "SIMULATED" stamp across the decision. Noticeable but
+	     unobtrusive; pointer-events-none so it never blocks the portal UI. -->
 	<div
-		class="watermark pointer-events-none fixed inset-0 z-30 select-none"
+		class="watermark pointer-events-none fixed inset-0 z-30 flex select-none items-center justify-center"
 		aria-hidden="true"
-	></div>
+	>
+		<span
+			class="-rotate-[24deg] text-5xl font-black tracking-[0.3em] text-slate-900/15 uppercase sm:text-7xl"
+		>
+			Simulated
+		</span>
+	</div>
 {/if}
 
 <style>
-	.watermark {
-		background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='240'%20height='160'%3E%3Ctext%20x='120'%20y='84'%20font-family='Arial,Helvetica,sans-serif'%20font-size='20'%20font-weight='700'%20letter-spacing='3'%20text-anchor='middle'%20transform='rotate(-28%20120%2080)'%20fill='%230f172a'%20fill-opacity='0.13'%3ESIMULATED%3C/text%3E%3C/svg%3E");
-		background-repeat: repeat;
-	}
-	/* Keep the mark in screenshots AND printouts. */
+	/* Keep the mark in printouts (and any screenshot). */
 	@media print {
 		.watermark {
-			display: block !important;
+			display: flex !important;
 		}
 	}
 </style>
