@@ -23,15 +23,28 @@ export const GET: RequestHandler = async ({ url }) => {
 	}
 
 	try {
-		const session = await stripe.checkout.sessions.retrieve(sessionId);
+		const session = await stripe.checkout.sessions.retrieve(sessionId, {
+			expand: ['subscription']
+		});
+
+		// For a free-trial subscription the session completes with
+		// payment_status:'no_payment_required' (no charge yet), so the return page
+		// also needs the subscription status ('trialing'/'active') to confirm the
+		// trial actually started before granting Pro.
+		const sub =
+			session.subscription && typeof session.subscription !== 'string'
+				? session.subscription
+				: null;
 
 		// Return the plan/slug FROM STRIPE METADATA (not the client's URL) so the
 		// return page grants exactly what was paid for — a user can't replay a
 		// $14.99 school session while claiming plan=lifetime.
 		return json({
 			id: session.id,
+			mode: session.mode,
 			payment_status: session.payment_status,
 			status: session.status,
+			subscription_status: sub?.status ?? null,
 			plan: (session.metadata?.plan as string) ?? null,
 			slug: (session.metadata?.slug as string) ?? null,
 			customer_email: session.customer_details?.email ?? null

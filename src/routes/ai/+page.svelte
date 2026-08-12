@@ -369,9 +369,17 @@
 						`/api/checkout/session?session_id=${encodeURIComponent(sessionId)}`
 					);
 					const data = await res.json().catch(() => null);
-					const paid =
-						res.ok && data && data.payment_status === 'paid' && data.status === 'complete';
-					if (!paid) return; // payment not confirmed → do NOT unlock
+					// One-time / immediately-billed plans must be fully paid. A free
+					// trial completes with payment_status:'no_payment_required', so we
+					// instead confirm the subscription actually entered 'trialing'
+					// (or 'active') before unlocking Pro.
+					const complete = res.ok && data && data.status === 'complete';
+					const paid = complete && data.payment_status === 'paid';
+					const trialStarted =
+						complete &&
+						(data.subscription_status === 'trialing' ||
+							data.subscription_status === 'active');
+					if (!paid && !trialStarted) return; // not confirmed → do NOT unlock
 					const vPlan = data.plan as string | null;
 					const vSlug = data.slug as string | null;
 					if (vPlan === 'school' && vSlug) {
@@ -381,7 +389,11 @@
 								? u.proSchools
 								: [...u.proSchools, vSlug]
 						}));
-					} else if (vPlan === 'lifetime' || vPlan === 'monthly') {
+					} else if (
+						vPlan === 'lifetime' ||
+						vPlan === 'monthly' ||
+						(vPlan === 'trial' && trialStarted)
+					) {
 						userProfile.update((u) => ({ ...u, isPro: true }));
 					}
 				} catch (err) {
@@ -469,7 +481,10 @@
 	}
 
 	let checkoutLoading = $state(false);
-	async function startCheckout(plan: 'lifetime' | 'monthly' | 'school', decision?: AiDecision) {
+	async function startCheckout(
+		plan: 'lifetime' | 'monthly' | 'school' | 'trial',
+		decision?: AiDecision
+	) {
 		if (checkoutLoading) return;
 		if (!googleSignedIn) {
 			signIn('google', { callbackUrl: '/ai' });
@@ -515,8 +530,10 @@
 			return;
 		}
 
-		// Free tier: one full simulation per browser. Pro unlocks unlimited runs.
-		if (hasUsedFreeSimulation && !hasDeepDiveAccess) {
+		// AI simulations require a Pro plan — including the 7-day free trial.
+		// There is no ungated free run: non-Pro users are sent to the paywall to
+		// start their trial before any evaluation fires.
+		if (!hasDeepDiveAccess) {
 			openPaywall('simulation');
 			return;
 		}
@@ -1814,26 +1831,29 @@
 					<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
 				</div>
 				<h3 class="mt-4 text-center text-xl font-bold text-slate-900">
-					{paywallMode === 'simulation' ? "You've used your free rehearsal" : paywallMode === 'deepDive' ? 'Deep dives are a Pro feature' : 'This is a Pro feature'}
+					{paywallMode === 'simulation' ? 'Start your free Pro trial' : paywallMode === 'deepDive' ? 'Deep dives are a Pro feature' : 'This is a Pro feature'}
 				</h3>
 				<p class="mx-auto mt-2 max-w-sm text-center text-sm text-slate-500">
-					Full Access unlocks unlimited AI admissions rehearsals across every school, every deep-dive
-					decision analysis, unlimited essay grading, and the full counselor toolkit.
+					Your 7-day free trial unlocks unlimited AI admissions rehearsals across every school, every
+					deep-dive decision analysis, unlimited essay grading, and the full counselor toolkit.
 				</p>
 				<div class="mt-6 space-y-2">
 					<button
-						onclick={() => startCheckout('lifetime')}
+						onclick={() => startCheckout('trial')}
 						disabled={checkoutLoading}
 						class="w-full rounded-xl bg-[#0052CC] px-4 py-3 text-sm font-bold text-white transition hover:bg-[#0047b3] disabled:opacity-50"
 					>
-						{checkoutLoading ? 'Starting secure checkout…' : 'Full Access — $99 once, forever'}
+						{checkoutLoading ? 'Starting secure checkout…' : 'Start 7-day free trial'}
 					</button>
+					<p class="text-center text-[11px] text-slate-400">
+						Then $39/mo. Cancel anytime before day 7 and you won't be charged.
+					</p>
 					<button
-						onclick={() => startCheckout('monthly')}
+						onclick={() => startCheckout('lifetime')}
 						disabled={checkoutLoading}
 						class="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 disabled:opacity-50"
 					>
-						Full Access — $39/mo, cancel anytime
+						Or pay once — $99 Full Access, forever
 					</button>
 					{#if paywallContextDecision}
 						<button

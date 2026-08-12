@@ -62,6 +62,35 @@ export const POST: RequestHandler = async ({ request }) => {
 				success_url: `${origin}/ai?upgrade=success&plan=lifetime&session_id={CHECKOUT_SESSION_ID}`,
 				cancel_url: `${origin}/pro?canceled=1`
 			};
+		} else if (pricingMode === 'trial') {
+			// 7-day free trial of Full Access. Stripe collects a card upfront
+			// (payment_method_collection defaults to 'always' for subscriptions),
+			// charges nothing during the trial, then auto-converts to $39/mo.
+			sessionConfig = {
+				mode: 'subscription',
+				line_items: [
+					{
+						price_data: {
+							currency: 'usd',
+							product: STRIPE_PRODUCTS.monthly.productId, // "PredictAdmit Pro"
+							unit_amount: STRIPE_PRODUCTS.monthly.amountCents, // $39.00
+							recurring: {
+								interval: 'month'
+							}
+						},
+						quantity: 1
+					}
+				],
+				// Require a card up front so the trial auto-converts to $39/mo.
+				payment_method_collection: 'always',
+				subscription_data: {
+					trial_period_days: 7,
+					metadata: { plan: 'trial' }
+				},
+				metadata: { plan: 'trial' },
+				success_url: `${origin}/ai?upgrade=success&plan=trial&session_id={CHECKOUT_SESSION_ID}`,
+				cancel_url: `${origin}/pro?canceled=1`
+			};
 		} else if (pricingMode === 'monthly') {
 			// $39/month Full Access subscription.
 			sessionConfig = {
