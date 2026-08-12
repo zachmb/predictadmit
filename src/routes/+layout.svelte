@@ -4,6 +4,7 @@
 	import SiteHeader from '$lib/components/layout/SiteHeader.svelte';
 	import PortalShareLauncher from '$lib/components/portal/PortalShareLauncher.svelte';
 	import SimulationBadge from '$lib/components/portal/SimulationBadge.svelte';
+	import SimulatedWatermark from '$lib/components/portal/SimulatedWatermark.svelte';
 	import { page } from '$app/stores';
 	import { userProfile } from '$lib/stores/user';
 	import { portalDecisionHeaderVisible, portalDecisionViewed, headerVisible } from '$lib/stores/ui';
@@ -88,5 +89,6 @@
 	{@render children()}
 </div>
 
+<SimulatedWatermark />
 <PortalShareLauncher />
 <SimulationBadge />
