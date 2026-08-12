@@ -244,12 +244,13 @@
 	<!-- Floating launcher -->
 	<button
 		type="button"
-		class="share-launcher fixed right-5 bottom-5 z-50 flex items-center gap-2 rounded-full px-5 py-3 font-[Inter,system-ui,sans-serif] text-sm font-semibold text-white shadow-lg transition-transform hover:scale-105 focus:ring-4 focus:ring-black/10 focus:outline-none"
-		style="background-color: {color};"
+		class="share-launcher fixed right-4 z-50 flex items-center gap-2 rounded-full px-4 py-3 font-[Inter,system-ui,sans-serif] text-sm font-semibold text-white shadow-lg transition-transform hover:scale-105 focus:ring-4 focus:ring-black/10 focus:outline-none sm:right-5 sm:px-5"
+		style="background-color: {color}; bottom: calc(1.25rem + env(safe-area-inset-bottom));"
 		onclick={openModal}
 	>
 		<Share2 size={18} strokeWidth={2.4} />
-		Share your decision
+		<span class="hidden sm:inline">Share your decision</span>
+		<span class="sm:hidden">Share</span>
 	</button>
 
 	{#if open}
