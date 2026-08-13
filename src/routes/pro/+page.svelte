@@ -619,14 +619,13 @@
 	// --- ACTIONS ---
 
 	function handlePromo() {
-		if (promoCode.trim().toLowerCase() === 'strawberrylemonade') {
-			userProfile.update((u) => ({ ...u, isPro: true }));
-			alert('Promo code applied! Access Granted.');
-			// Refreshes the view automatically due to reactivity
-		} else {
-			promoError = 'Invalid promo code';
-			setTimeout(() => (promoError = ''), 3000);
-		}
+		// Promo codes no longer grant Pro from the client — the old
+		// `strawberrylemonade` string shipped in the JS bundle, so anyone could
+		// self-grant free Pro (and unlimited free sims). Pro now requires a real
+		// trial/subscription. For a promo, apply a Stripe coupon to the trial
+		// checkout (server-validated) instead of unlocking client-side.
+		promoError = 'To unlock, start your free trial above.';
+		setTimeout(() => (promoError = ''), 4000);
 	}
 
 	async function handleCheckout(plan: 'lifetime' | 'monthly' | 'trial') {
