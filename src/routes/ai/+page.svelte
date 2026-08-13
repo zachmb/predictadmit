@@ -87,6 +87,9 @@
 	let showPaywallModal = $state(false);
 	let paywallMode = $state<'simulation' | 'ocr' | 'deepDive' | null>(null);
 	let paywallContextDecision = $state<AiDecision | null>(null);
+	// Price is deferred — the paywall leads with value + the free trial, and only
+	// reveals $/plans when the user asks ("See pricing & plans").
+	let showPlans = $state(false);
 
 	// Pro access (in a real app this would come from your backend / Stripe webhook)
 
@@ -470,6 +473,7 @@
 	function openPaywall(mode: 'simulation' | 'ocr' | 'deepDive', decision?: AiDecision) {
 		paywallMode = mode;
 		paywallContextDecision = decision ?? null;
+		showPlans = false;
 		showPaywallModal = true;
 	}
 
@@ -477,6 +481,7 @@
 		showPaywallModal = false;
 		paywallMode = null;
 		paywallContextDecision = null;
+		showPlans = false;
 	}
 
 	let checkoutLoading = $state(false);
@@ -1860,6 +1865,37 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 			animation: spin-slow 3s linear infinite;
 		}
 
+		/* Paywall entrance — scrim fades, sheet rises (reads as a bottom-sheet on
+		   mobile and a gentle lift on desktop). */
+		.paywall-scrim {
+			animation: paywall-scrim-in 0.22s ease both;
+		}
+		.paywall-sheet {
+			animation: paywall-sheet-in 0.34s cubic-bezier(0.22, 1, 0.36, 1) both;
+		}
+		.paywall-plans {
+			animation: paywall-plans-in 0.2s ease both;
+		}
+		@keyframes paywall-scrim-in {
+			from { opacity: 0; }
+			to { opacity: 1; }
+		}
+		@keyframes paywall-sheet-in {
+			from { opacity: 0; transform: translateY(24px) scale(0.98); }
+			to { opacity: 1; transform: translateY(0) scale(1); }
+		}
+		@keyframes paywall-plans-in {
+			from { opacity: 0; transform: translateY(-4px); }
+			to { opacity: 1; transform: translateY(0); }
+		}
+		@media (prefers-reduced-motion: reduce) {
+			.paywall-scrim,
+			.paywall-sheet,
+			.paywall-plans {
+				animation: none;
+			}
+		}
+
 		/* Custom scrollbar styling */
 		.scrollbar-thin {
 			scrollbar-width: thin;
@@ -1874,55 +1910,108 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 	</style>
 </main>
 
-<!-- Pro paywall modal -->
+<!-- Pro paywall — value-first, price-deferred. Scrim sits ABOVE the nav
+     (z-[9999]) so the whole page, nav included, dims behind it. -->
 {#if showPaywallModal}
-	<div class="fixed inset-0 z-50 flex items-end justify-center bg-slate-900/60 p-0 backdrop-blur-sm sm:items-center sm:p-6" role="presentation">
+	<div
+		class="paywall-scrim fixed inset-0 z-[10000] flex items-end justify-center bg-slate-950/70 p-0 backdrop-blur-md sm:items-center sm:p-6"
+		role="presentation"
+	>
 		<button class="absolute inset-0 cursor-default" aria-label="Close" onclick={closePaywall}></button>
-		<div class="relative z-10 w-full max-w-md overflow-hidden rounded-t-2xl bg-white shadow-2xl sm:rounded-2xl" role="dialog" aria-modal="true" aria-label="Upgrade to Pro">
-			<div class="p-6">
-				<div class="mx-auto grid h-12 w-12 place-items-center rounded-2xl bg-[#0052CC]/10 text-[#0052CC]">
-					<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+
+		<div
+			class="paywall-sheet relative z-10 w-full max-w-md overflow-hidden rounded-t-3xl bg-white shadow-2xl sm:rounded-3xl"
+			role="dialog"
+			aria-modal="true"
+			aria-label="Unlock PredictAdmit Pro"
+		>
+			<button
+				onclick={closePaywall}
+				aria-label="Close"
+				class="absolute right-3.5 top-3.5 z-20 grid h-8 w-8 place-items-center rounded-full text-white/70 transition hover:bg-white/15 hover:text-white"
+			>
+				<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+			</button>
+
+			<!-- Hero -->
+			<div class="bg-[#0052CC] px-7 pt-9 pb-7 text-center text-white">
+				<div class="mx-auto grid h-12 w-12 place-items-center rounded-2xl bg-white/15 ring-1 ring-white/25">
+					<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
 				</div>
-				<h3 class="mt-4 text-center text-xl font-bold text-slate-900">
-					{paywallMode === 'simulation' ? 'Predictions run on Pro' : paywallMode === 'deepDive' ? 'Deep dives are a Pro thing' : 'This one is Pro'}
+				<p class="mt-4 text-[11px] font-bold uppercase tracking-[0.2em] text-blue-200">PredictAdmit Pro</p>
+				<h3 class="mt-1.5 text-2xl font-black leading-tight">
+					{paywallMode === 'deepDive' ? 'See exactly why' : 'Find out where you actually stand'}
 				</h3>
-				<p class="mx-auto mt-2 max-w-sm text-center text-sm text-slate-500">
-					The 7-day free trial opens all 39 schools, every deep-dive breakdown, and unlimited
-					essay grading. Card up front so it can start; nothing hits it until day 7.
+				<p class="mx-auto mt-2 max-w-[18rem] text-sm leading-relaxed text-blue-100">
+					{paywallMode === 'deepDive'
+						? 'Open the full breakdown of this decision — what drove it, and what would move it.'
+						: 'Point the AI at your real application and get your decision, school by school.'}
 				</p>
-				<div class="mt-6 space-y-2">
-					<button
-						onclick={() => startCheckout('trial')}
-						disabled={checkoutLoading}
-						class="w-full rounded-xl bg-[#0052CC] px-4 py-3 text-sm font-bold text-white transition hover:bg-[#0047b3] disabled:opacity-50"
-					>
-						{checkoutLoading ? 'Opening checkout…' : 'Start 7-day free trial'}
-					</button>
-					<p class="text-center text-[11px] text-slate-400">
-						$39/mo after that. Cancel before day 7 and you pay nothing.
-					</p>
-					<button
-						onclick={() => startCheckout('lifetime')}
-						disabled={checkoutLoading}
-						class="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 disabled:opacity-50"
-					>
-						Rather pay once? $99 for full access, forever
-					</button>
-					{#if paywallContextDecision}
+			</div>
+
+			<!-- Value -->
+			<div class="px-7 py-6">
+				<ul class="space-y-3">
+					{#each ['Your predicted decision — accept, deny, or waitlist — at all 39 top schools', 'The deep-dive on every verdict: exactly what drove it and what would move it', 'Unlimited essay grading and the AI counselor, on tap', 'Calibrated on real admissions results — not a generic ChatGPT guess'] as benefit}
+						<li class="flex items-start gap-3">
+							<span class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#0052CC]/10 text-[#0052CC]">
+								<svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+							</span>
+							<span class="text-sm leading-snug text-slate-700">{benefit}</span>
+						</li>
+					{/each}
+				</ul>
+
+				<p class="mt-5 rounded-xl bg-slate-50 px-4 py-3 text-center text-xs leading-relaxed text-slate-500">
+					We tuned it until it reproduced our founding team's own admissions results.
+				</p>
+
+				<!-- Primary CTA — no price here, just the free trial -->
+				<button
+					onclick={() => startCheckout('trial')}
+					disabled={checkoutLoading}
+					class="mt-5 w-full rounded-xl bg-[#0052CC] px-4 py-4 text-base font-bold text-white shadow-lg shadow-blue-600/25 transition hover:bg-[#0047b3] active:scale-[0.99] disabled:opacity-50"
+				>
+					{checkoutLoading ? 'Opening checkout…' : 'Start my 7-day free trial'}
+				</button>
+				<p class="mt-2 text-center text-xs text-slate-400">$0 today · cancel anytime before day 7</p>
+
+				<!-- Pricing deferred behind a tap -->
+				<button
+					onclick={() => (showPlans = !showPlans)}
+					class="mt-3 flex w-full items-center justify-center gap-1 text-center text-xs font-semibold text-slate-500 transition hover:text-slate-700"
+				>
+					{showPlans ? 'Hide pricing' : 'See pricing & plans'}
+					<svg class="h-3.5 w-3.5 transition-transform {showPlans ? 'rotate-180' : ''}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
+				</button>
+				{#if showPlans}
+					<div class="paywall-plans mt-3 space-y-1 rounded-xl border border-slate-200 p-2 text-sm">
+						<div class="flex items-center justify-between px-2 py-1.5">
+							<span class="text-slate-500">After the free trial</span>
+							<span class="font-semibold text-slate-900">$39/mo · cancel anytime</span>
+						</div>
 						<button
-							onclick={() => startCheckout('school', paywallContextDecision ?? undefined)}
+							onclick={() => startCheckout('lifetime')}
 							disabled={checkoutLoading}
-							class="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 disabled:opacity-50"
+							class="flex w-full items-center justify-between rounded-lg px-2 py-1.5 text-left transition hover:bg-slate-50 disabled:opacity-50"
 						>
-							{paywallContextDecision.school} School Pass — $14.99 once
+							<span class="text-slate-500">Pay once, keep it forever</span>
+							<span class="font-semibold text-[#0052CC]">$99 →</span>
 						</button>
-						<p class="text-center text-[11px] text-slate-400">
-							Just want one school? This opens the deep dive and essay grading for
-							{paywallContextDecision.school} and nothing else.
-						</p>
-					{/if}
-				</div>
-				<button onclick={closePaywall} class="mt-4 w-full text-center text-xs font-semibold text-slate-400 hover:text-slate-600">
+						{#if paywallContextDecision}
+							<button
+								onclick={() => startCheckout('school', paywallContextDecision ?? undefined)}
+								disabled={checkoutLoading}
+								class="flex w-full items-center justify-between rounded-lg px-2 py-1.5 text-left transition hover:bg-slate-50 disabled:opacity-50"
+							>
+								<span class="text-slate-500">Just {paywallContextDecision.school}? School Pass</span>
+								<span class="font-semibold text-[#0052CC]">$14.99 →</span>
+							</button>
+						{/if}
+					</div>
+				{/if}
+
+				<button onclick={closePaywall} class="mt-4 w-full text-center text-xs font-medium text-slate-400 transition hover:text-slate-600">
 					Maybe later
 				</button>
 			</div>
