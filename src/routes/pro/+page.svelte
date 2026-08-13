@@ -2279,8 +2279,22 @@
 
 				<!-- Features List -->
 				<div class="space-y-8">
-					<h3 class="text-2xl font-bold text-slate-900">What's inside</h3>
+					<h3 class="text-2xl font-bold text-slate-900">What Pro actually gives you</h3>
+					<p class="-mt-4 text-slate-500">Two things: <span class="font-semibold text-slate-700">unlimited simulations</span> to see exactly where you stand, and <span class="font-semibold text-slate-700">the workshop</span> to actually fix it.</p>
 					<div class="grid gap-6">
+						<!-- Pillar 1: unlimited AI simulations (the headline benefit) -->
+						<div class="flex items-start gap-4 rounded-2xl border border-blue-100 bg-blue-50/50 p-4 -m-4">
+							<div class="w-10 h-10 rounded-xl bg-[#0052CC] flex items-center justify-center shrink-0">
+								<svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
+							</div>
+							<div>
+								<p class="font-bold text-slate-900">Unlimited AI decision simulations</p>
+								<p class="text-sm text-slate-500">Run your real application through the AI and get your predicted decision — accept, deny, or waitlist — at all 39 top schools. Then change an essay, an activity, a score, and <span class="font-semibold text-slate-700">re-run it as many times as you want</span> to watch your odds move. Free accounts can't run a single one; Pro has no cap.</p>
+							</div>
+						</div>
+
+						<!-- Pillar 2: the workshop -->
+						<p class="text-xs font-bold uppercase tracking-wider text-slate-400 pt-1">The workshop — where you fix it</p>
 						<!-- Feature item -->
 						<div class="flex items-start gap-4">
 							<div class="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center shrink-0">

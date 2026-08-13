@@ -14,6 +14,8 @@
 	} from '$lib/config/admitMail';
 
 	import { userProfile } from '$lib/stores/user';
+	import { track, trackBeginCheckout, trackTrialStart, trackPurchase } from '$lib/analytics';
+	import { STRIPE_PRODUCTS } from '$lib/config/stripe-products';
 	import { majors } from '$lib/config/majors';
 
 	// NEW: store AI results globally so portals can read decisions
@@ -391,12 +393,22 @@
 								? u.proSchools
 								: [...u.proSchools, vSlug]
 						}));
+						trackPurchase('school', STRIPE_PRODUCTS.school.amountCents / 100, sessionId ?? undefined);
 					} else if (
 						vPlan === 'lifetime' ||
 						vPlan === 'monthly' ||
 						(vPlan === 'trial' && trialStarted)
 					) {
 						userProfile.update((u) => ({ ...u, isPro: true }));
+						// A trial start is a conversion event but $0 today — fire a
+						// distinct trial_start (value 0). Paid plans fire purchase.
+						if (vPlan === 'trial') trackTrialStart();
+						else
+							trackPurchase(
+								vPlan,
+								STRIPE_PRODUCTS[vPlan === 'lifetime' ? 'lifetime' : 'monthly'].amountCents / 100,
+								sessionId ?? undefined
+							);
 					}
 				} catch (err) {
 					console.error('Payment verification failed', err);
@@ -475,6 +487,7 @@
 		paywallContextDecision = decision ?? null;
 		showPlans = false;
 		showPaywallModal = true;
+		track('paywall_view', { mode, school: decision?.slug });
 	}
 
 	function closePaywall() {
@@ -491,10 +504,18 @@
 	) {
 		if (checkoutLoading) return;
 		if (!googleSignedIn) {
+			track('sign_in_click', { source: 'checkout', plan });
 			signIn('google', { callbackUrl: '/ai' });
 			return;
 		}
 		checkoutLoading = true;
+		const _amt =
+			plan === 'lifetime'
+				? STRIPE_PRODUCTS.lifetime.amountCents
+				: plan === 'school'
+					? STRIPE_PRODUCTS.school.amountCents
+					: STRIPE_PRODUCTS.monthly.amountCents;
+		trackBeginCheckout(plan, _amt / 100);
 		try {
 			const res = await fetch('/api/checkout', {
 				method: 'POST',
@@ -542,6 +563,7 @@
 			return;
 		}
 
+		track('simulation_start');
 		userProfile.update((u) => ({ ...u, isSubmittingAI: true }));
 		userProfile.update((u) => ({ ...u, usingAI: true }));
 
@@ -623,6 +645,7 @@
 				aiError =
 					'No predictions came back. Add more detail and try again.';
 			} else {
+				track('simulation_complete', { schools: aiDecisions.length });
 				hasUsedFreeSimulation = true;
 				if (typeof localStorage !== 'undefined') {
 					localStorage.setItem('predictadmit_hasUsedFreeSimulation', 'true');
@@ -1814,6 +1837,7 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 								<button
 									type="button"
 									onclick={() => {
+										track('sign_in_click', { source: 'ai_gate' });
 										saveToStore();
 										signIn('google', { callbackUrl: '/ai' });
 									}}
@@ -1978,7 +2002,7 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 
 				<!-- Pricing deferred behind a tap -->
 				<button
-					onclick={() => (showPlans = !showPlans)}
+					onclick={() => { showPlans = !showPlans; if (showPlans) track('view_pricing', { mode: paywallMode ?? 'simulation' }); }}
 					class="mt-3 flex w-full items-center justify-center gap-1 text-center text-xs font-semibold text-slate-500 transition hover:text-slate-700"
 				>
 					{showPlans ? 'Hide pricing' : 'See pricing & plans'}
