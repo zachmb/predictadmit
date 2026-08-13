@@ -10,6 +10,8 @@
 // GA4-recommended names (login, begin_checkout, purchase) are used where they
 // fit so GA's built-in reports light up; the rest are descriptive custom events.
 
+import { getAttribution } from './attribution';
+
 type Params = Record<string, string | number | boolean | undefined>;
 
 export function track(event: string, params: Params = {}): void {
@@ -17,7 +19,16 @@ export function track(event: string, params: Params = {}): void {
 	const gtag = (window as { gtag?: (...a: unknown[]) => void }).gtag;
 	if (typeof gtag !== 'function') return;
 	try {
-		gtag('event', event, params);
+		// Stamp first-touch source/campaign on EVERY event so the funnel (and
+		// revenue) can be sliced by acquisition source in GA — the OAuth roundtrip
+		// can otherwise strip the original UTM before a conversion fires.
+		const a = getAttribution();
+		gtag('event', event, {
+			...(a.source ? { source: a.source } : {}),
+			...(a.campaign ? { campaign: a.campaign } : {}),
+			...(a.medium ? { medium: a.medium } : {}),
+			...params
+		});
 	} catch {
 		/* analytics must never break the app */
 	}

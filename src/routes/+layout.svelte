@@ -8,6 +8,8 @@
 	import { userProfile } from '$lib/stores/user';
 	import { portalDecisionHeaderVisible, portalDecisionViewed, headerVisible } from '$lib/stores/ui';
 	import { captureReferral, redeemReferralIfJoined } from '$lib/referral';
+	import { captureAttribution } from '$lib/attribution';
+	import AiUpsell from '$lib/components/portal/AiUpsell.svelte';
 	import { decisionsBySlug } from '$lib/stores/results';
 	import { schoolConfigs } from '$lib/config/schools';
 	import { computeDecisionForSchool, hasEnoughToScore } from '$lib/scoring/model';
@@ -51,6 +53,7 @@
 	// then reward both sides once the visitor has an identity (signed in / named).
 	$effect(() => {
 		captureReferral($page.url);
+		captureAttribution($page.url); // first-touch source for revenue attribution
 	});
 
 	$effect(() => {
@@ -90,3 +93,4 @@
 
 <PortalShareLauncher />
 <SimulationBadge />
+<AiUpsell />
