@@ -9,7 +9,7 @@ const STRIPE_SECRET_KEY = env.STRIPE_SECRET_KEY;
 
 const STRIPE_PRICE_ID = env.STRIPE_PRICE_ID;
 
-export const POST: RequestHandler = async ({ request }) => {
+export const POST: RequestHandler = async ({ request, locals }) => {
 	try {
 		if (!STRIPE_SECRET_KEY) {
 			return json(
@@ -17,6 +17,10 @@ export const POST: RequestHandler = async ({ request }) => {
 				{ status: 500 }
 			);
 		}
+
+		// The signed-in email — link the Stripe customer to it so server-side
+		// entitlement (hasActivePlan) can find this purchase later by email.
+		const authedEmail = (await locals.auth?.())?.user?.email ?? undefined;
 
 		const body = await request.json();
 		const { isMonthly } = body;
@@ -145,6 +149,19 @@ export const POST: RequestHandler = async ({ request }) => {
 			}
 			// Default to error if no valid mode
 			return json({ error: 'Invalid pricing mode.' }, { status: 400 });
+		}
+
+		// Attach the customer to the signed-in email so entitlement lookups by
+		// email work for BOTH subscriptions (trial/monthly) and one-time buys
+		// (lifetime/school). Subscription mode always persists a customer;
+		// payment mode needs customer_creation:'always' to persist one.
+		if (authedEmail) {
+			// Lowercase so it matches the lowercased lookup in hasActivePlan
+			// (Stripe's customers.list email filter is an exact match).
+			sessionConfig.customer_email = authedEmail.toLowerCase();
+			if (sessionConfig.mode === 'payment') {
+				sessionConfig.customer_creation = 'always';
+			}
 		}
 
 		const session = await stripe.checkout.sessions.create(sessionConfig);

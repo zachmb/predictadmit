@@ -11,6 +11,7 @@
 // depth layered on top of auth. If a hard, cross-instance cap is later needed,
 // swap `buckets` for a shared store (Upstash/KV) behind the same interface.
 import { json, type RequestEvent } from '@sveltejs/kit';
+import { hasActivePlan } from './entitlement';
 
 type Bucket = { count: number; resetAt: number };
 const buckets = new Map<string, Bucket>();
@@ -39,7 +40,7 @@ export type GuardFail = { ok: false; response: Response };
  */
 export async function guardAi(
 	event: RequestEvent,
-	opts?: { max?: number; windowMs?: number }
+	opts?: { max?: number; windowMs?: number; requirePlan?: boolean }
 ): Promise<GuardOk | GuardFail> {
 	const session = await event.locals.auth?.();
 	const email = session?.user?.email;
@@ -60,6 +61,19 @@ export async function guardAi(
 			response: json(
 				{ error: 'You’re going a bit fast — give it a moment and try again.' },
 				{ status: 429 }
+			)
+		};
+	}
+	// Plan gate (the unforgeable cutoff): the client `isPro` flag lives in
+	// localStorage, so a forged flag could reach this route. Confirm a real plan
+	// with Stripe. hasActivePlan is cached + coalesced (one lookup per sim burst)
+	// and FAIL-OPEN, so a Stripe hiccup never blocks a paying customer.
+	if (opts?.requirePlan && !(await hasActivePlan(email))) {
+		return {
+			ok: false,
+			response: json(
+				{ error: 'Start your free trial to run predictions.', code: 'plan_required' },
+				{ status: 402 }
 			)
 		};
 	}

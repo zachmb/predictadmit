@@ -581,6 +581,16 @@
 
 				const data = await res.json();
 
+				// Server says no active plan (e.g. a trial that ended while the local
+				// isPro flag is stale) — the server is the source of truth, so drop
+				// the local Pro flag and send them to the paywall instead of grinding
+				// through 38 failing schools.
+				if (res.status === 402 || data?.code === 'plan_required') {
+					userProfile.update((u) => ({ ...u, isPro: false }));
+					openPaywall('simulation');
+					return;
+				}
+
 				if (!res.ok || !(myValidId === currentStoreVersion)) {
 					console.error(`Error evaluating ${slug}:`, data?.error);
 					continue; // Skip failed schools and move to the next

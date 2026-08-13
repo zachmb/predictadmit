@@ -67,7 +67,7 @@ export const POST: RequestHandler = async (event) => {
 	// One simulation fans out to ~38 schools in a burst, so allow a higher
 	// per-minute ceiling here than the default (still bounded against abuse; the
 	// free-sim/paywall gate limits how often a user can trigger a full run).
-	const g = await guardAi(event, { max: 60, windowMs: 60_000 });
+	const g = await guardAi(event, { max: 60, windowMs: 60_000, requirePlan: true });
 	if (!g.ok) return g.response;
 	const { params, request } = event;
 	const DEEPSEEK_API_KEY = env.DEEPSEEK_API_KEY;
