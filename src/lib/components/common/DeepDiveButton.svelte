@@ -3,7 +3,7 @@
 	import { fade } from 'svelte/transition';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { decisionsBySlug } from '$lib/stores/results';
+	import { aiDecisionsBySlug } from '$lib/stores/results';
 
 	export let slug: string;
 	export let color = '#003262';
@@ -20,9 +20,10 @@
 
 	$: session = $page.data.session;
 	$: googleSignedIn = !!session?.user;
-	// Surface on every decision the applicant received — any source — so the
-	// deep dive is reachable from all 39 schools' letters, not just AI ones.
-	$: decision = $decisionsBySlug[slug];
+	// Only show when THIS school has an AI-simulation decision (source:'ai').
+	// A manual/random portal sim has no AI breakdown to deep-dive into, so the
+	// button must not appear when the user didn't arrive from an AI decision.
+	$: decision = $aiDecisionsBySlug[slug];
 </script>
 
 {#if visible && googleSignedIn && decision}

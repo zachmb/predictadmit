@@ -54,7 +54,9 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 					{
 						price_data: {
 							currency: 'usd',
-							product: STRIPE_PRODUCTS.lifetime.productId, // "PredictAdmit Max"
+							// No live product for lifetime — create it inline by name so
+							// this never depends on a product id existing in the account.
+							product_data: { name: STRIPE_PRODUCTS.lifetime.name },
 							unit_amount: STRIPE_PRODUCTS.lifetime.amountCents // $99.00
 						},
 						quantity: 1
@@ -76,7 +78,10 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 					{
 						price_data: {
 							currency: 'usd',
-							product: STRIPE_PRODUCTS.monthly.productId, // "PredictAdmit Pro"
+							// Inline product (by name) so checkout is account-agnostic —
+							// works with whatever Stripe key/account is in prod, never
+							// depends on a product id existing in that account.
+							product_data: { name: STRIPE_PRODUCTS.monthly.name },
 							unit_amount: STRIPE_PRODUCTS.monthly.amountCents, // $39.00
 							recurring: {
 								interval: 'month'
@@ -103,7 +108,10 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 					{
 						price_data: {
 							currency: 'usd',
-							product: STRIPE_PRODUCTS.monthly.productId, // "PredictAdmit Pro"
+							// Inline product (by name) so checkout is account-agnostic —
+							// works with whatever Stripe key/account is in prod, never
+							// depends on a product id existing in that account.
+							product_data: { name: STRIPE_PRODUCTS.monthly.name },
 							unit_amount: STRIPE_PRODUCTS.monthly.amountCents, // $39.00
 							recurring: {
 								interval: 'month'
@@ -129,7 +137,8 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 					{
 						price_data: {
 							currency: 'usd',
-							product: STRIPE_PRODUCTS.school.productId, // "PredictAdmit One"
+							// No live product for the school pass — create it inline by name.
+							product_data: { name: STRIPE_PRODUCTS.school.name },
 							unit_amount: STRIPE_PRODUCTS.school.amountCents // $14.99
 						},
 						quantity: 1
