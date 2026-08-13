@@ -16,6 +16,7 @@
 	import { userProfile } from '$lib/stores/user';
 	import { track, trackBeginCheckout, trackTrialStart, trackPurchase } from '$lib/analytics';
 	import { STRIPE_PRODUCTS } from '$lib/config/stripe-products';
+	import { nextMilestonePhrase } from '$lib/admissionsCalendar';
 	import { majors } from '$lib/config/majors';
 
 	// NEW: store AI results globally so portals can read decisions
@@ -495,6 +496,30 @@
 		paywallMode = null;
 		paywallContextDecision = null;
 		showPlans = false;
+	}
+
+	// Parent-payer path: the applicant often isn't the card-holder. Let them hand
+	// the decision (and the $ vs a $200/hr counselor anchor) to a parent.
+	async function sendToParent() {
+		track('send_to_parent');
+		if (typeof window === 'undefined') return;
+		const url = `${window.location.origin}/pro`;
+		const text =
+			'I found PredictAdmit — its AI predicts my real admissions decisions across all 39 schools (way cheaper than a counselor). There’s a 7-day free trial. Can we?';
+		try {
+			if (navigator.share) {
+				await navigator.share({ title: 'PredictAdmit', text, url });
+				return;
+			}
+		} catch {
+			/* user cancelled — fall through to copy */
+		}
+		try {
+			await navigator.clipboard.writeText(`${text} ${url}`);
+			alert('Copied — paste it in a text to your parent.');
+		} catch {
+			window.location.href = `mailto:?subject=${encodeURIComponent('PredictAdmit')}&body=${encodeURIComponent(`${text} ${url}`)}`;
+		}
 	}
 
 	let checkoutLoading = $state(false);
@@ -1971,6 +1996,10 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 						? 'Open the full breakdown of this decision — what drove it, and what would move it.'
 						: 'Point the AI at your real application and get your decision, school by school.'}
 				</p>
+				<div class="mx-auto mt-3 inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-1 text-[11px] font-semibold ring-1 ring-white/20">
+					<svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+					{nextMilestonePhrase()}
+				</div>
 			</div>
 
 			<!-- Value -->
@@ -2035,7 +2064,13 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 					</div>
 				{/if}
 
-				<button onclick={closePaywall} class="mt-4 w-full text-center text-xs font-medium text-slate-400 transition hover:text-slate-600">
+				<button
+					onclick={sendToParent}
+					class="mt-4 w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-50"
+				>
+					Not your card? Send this to a parent →
+				</button>
+				<button onclick={closePaywall} class="mt-3 w-full text-center text-xs font-medium text-slate-400 transition hover:text-slate-600">
 					Maybe later
 				</button>
 			</div>
