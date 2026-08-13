@@ -19,6 +19,17 @@ const stripe = STRIPE_SECRET_KEY
 	? new Stripe(STRIPE_SECRET_KEY, { apiVersion: '2025-01-27.acacia' as any })
 	: null;
 
+// Manual grandfather / comp list (comma-separated emails, env-configurable). A
+// safety valve: any existing payer whose Stripe customer email doesn't match
+// their Google login (pre-`customer_email` checkouts), plus any staff/comp, is
+// always entitled — no code change needed to unblock someone.
+const GRANDFATHERED = new Set(
+	(env.PRO_GRANDFATHER_EMAILS ?? '')
+		.split(',')
+		.map((e) => e.trim().toLowerCase())
+		.filter(Boolean)
+);
+
 // A subscription in any of these states means full access (trial or paid
 // monthly) is currently usable.
 const ACTIVE_SUB = new Set(['trialing', 'active', 'past_due']);
@@ -63,6 +74,7 @@ async function lookupFromStripe(email: string): Promise<boolean> {
 export async function hasActivePlan(email: string): Promise<boolean> {
 	const key = email.trim().toLowerCase();
 	if (!key) return false;
+	if (GRANDFATHERED.has(key)) return true;
 	const now = Date.now();
 
 	const hit = cache.get(key);
