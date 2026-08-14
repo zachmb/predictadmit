@@ -79,3 +79,47 @@ export async function guardAi(
 	}
 	return { ok: true, email, ip };
 }
+
+// One free simulation, then the wall. A signed-in non-Pro user gets their FIRST
+// full run free — that's the aha moment that converts anxious applicants. We meter
+// it with an httpOnly cookie counting non-Pro evaluate calls: a single simulation
+// fans out to ~39 school requests, so a budget of 45 covers exactly one run (plus a
+// little slack for the odd retry) and then returns 402 plan_required.
+//
+// This is a CONVERSION gate, not a security boundary — the real cost ceiling is the
+// auth + rate limit inside guardAi. Clearing the cookie yields at most one more
+// metered run, an acceptable leak for a growth lever (and still auth'd + throttled).
+const FREE_SIM_CALL_BUDGET = 45;
+const FREE_COOKIE = 'pa_free_used';
+
+export async function guardEvaluation(event: RequestEvent): Promise<GuardOk | GuardFail> {
+	// Auth + per-user/IP rate limit — but NOT requirePlan, so the free run passes.
+	const g = await guardAi(event, { max: 60, windowMs: 60_000 });
+	if (!g.ok) return g;
+
+	// Pro / trial customers are unlimited.
+	if (await hasActivePlan(g.email)) return g;
+
+	// Non-Pro: meter the single free simulation.
+	const used = Number.parseInt(event.cookies.get(FREE_COOKIE) ?? '0', 10) || 0;
+	if (used >= FREE_SIM_CALL_BUDGET) {
+		return {
+			ok: false,
+			response: json(
+				{
+					error: 'That was your free prediction — start your trial for unlimited runs.',
+					code: 'plan_required'
+				},
+				{ status: 402 }
+			)
+		};
+	}
+	event.cookies.set(FREE_COOKIE, String(used + 1), {
+		path: '/',
+		httpOnly: true,
+		secure: true,
+		sameSite: 'lax',
+		maxAge: 60 * 60 * 24 * 365
+	});
+	return g;
+}

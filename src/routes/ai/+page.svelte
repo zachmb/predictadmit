@@ -580,10 +580,12 @@
 			return;
 		}
 
-		// AI simulations require a Pro plan — including the 7-day free trial.
-		// There is no ungated free run: non-Pro users are sent to the paywall to
-		// start their trial before any evaluation fires.
-		if (!hasDeepDiveAccess) {
+		// One free prediction, then the wall. A signed-in non-Pro user gets their
+		// FIRST full simulation free — the aha moment that converts. Once they've
+		// used it, any further run opens the paywall to start the trial. Pro/trial
+		// users are unlimited. The server enforces the same one-free window via an
+		// httpOnly cookie, so clearing localStorage can't grind out unlimited runs.
+		if (!hasDeepDiveAccess && hasUsedFreeSimulation) {
 			openPaywall('simulation');
 			return;
 		}
@@ -1003,7 +1005,7 @@
 				<p class="text-lg text-slate-600 font-normal max-w-xl mx-auto leading-relaxed">
 					PredictAdmit's AI reads every part of your application and predicts your decision at all 39
 					top schools — trained until it reproduced our founding team's own admissions results.
-					<span class="font-bold text-[#0052CC]">Sign in with Google to start.</span>
+					<span class="font-bold text-[#0052CC]">Your first prediction is free — sign in with Google to run it.</span>
 				</p>
 
 				<p class="text-sm text-slate-500">
@@ -1583,7 +1585,7 @@ Picking one applies that school's real early-round odds
 														d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
 													/>
 												</svg>
-												<span>Sign in with Google</span>
+												<span>Sign in — run your free prediction</span>
 											{:else if $userProfile.isSubmittingAI}
 												<span class="flex items-center gap-3">
 													<span
@@ -1591,7 +1593,7 @@ Picking one applies that school's real early-round odds
 													></span>
 													<span>Reading your file...</span>
 												</span>
-											{:else if !hasDeepDiveAccess}
+											{:else if !hasDeepDiveAccess && hasUsedFreeSimulation}
 												<span
 													onclick={(e) => {
 														e.preventDefault();
@@ -1606,6 +1608,14 @@ Picking one applies that school's real early-round odds
 														/>
 													</svg>
 													Start 7-day free trial
+												</span>
+											{:else if !hasDeepDiveAccess}
+												<!-- First run is on the house — this SUBMITS (runs the sim), no paywall. -->
+												<span class="flex items-center gap-2.5">
+													<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+														<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+													</svg>
+													Run my free prediction
 												</span>
 											{:else}
 												<span class="flex items-center gap-2.5">
@@ -1686,6 +1696,27 @@ See what we read from your file
 						These are the AI's best guess from what you gave it — estimates, not real or official
 						decisions. PredictAdmit isn't affiliated with any school.
 					</p>
+					<!-- Conversion moment: the free prediction has landed. A non-Pro user who has
+					     used their one free run gets a warm, specific upsell (not a cold wall) to
+					     start the trial for unlimited re-runs + deep dives. Pro users never see it. -->
+					{#if !hasDeepDiveAccess && hasUsedFreeSimulation && !$userProfile.isSubmittingAI && aiDecisions.length}
+						<div class="border-b-2 border-blue-100 bg-gradient-to-r from-blue-50 to-indigo-50/40 px-6 py-4">
+							<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+								<div>
+									<p class="text-sm font-bold text-slate-900">That was your free prediction.</p>
+									<p class="mt-0.5 text-xs leading-relaxed text-slate-600">Start a 7-day free trial to re-run after every essay edit, open the deep-dive on any school, and keep all 39 predictions.</p>
+								</div>
+								<button
+									type="button"
+									onclick={() => openPaywall('simulation')}
+									class="shrink-0 inline-flex items-center justify-center rounded-xl bg-[#0052CC] px-5 py-2.5 text-sm font-bold text-white transition hover:bg-[#0047b3] active:scale-[0.99]"
+								>
+									Start 7-day free trial
+								</button>
+							</div>
+						</div>
+					{/if}
+
 					{#if $userProfile.isSubmittingAI}
 						<div
 							class="border-b-2 border-slate-100 bg-gradient-to-r from-slate-50 to-blue-50/30 px-6 py-4 flex items-center gap-3 text-sm text-slate-700"

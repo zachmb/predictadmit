@@ -1,7 +1,7 @@
 import type { RequestHandler } from './$types';
 import { json } from '@sveltejs/kit';
 import { env } from '$env/dynamic/private';
-import { guardAi } from '$lib/server/guard';
+import { guardEvaluation } from '$lib/server/guard';
 import {
 	dimensionWeightSummary,
 	factorTableForPrompt,
@@ -64,10 +64,11 @@ function truncateForModel(text: string, maxChars = 14000): string {
 export const config = { maxDuration: 60 };
 
 export const POST: RequestHandler = async (event) => {
-	// One simulation fans out to ~38 schools in a burst, so allow a higher
-	// per-minute ceiling here than the default (still bounded against abuse; the
-	// free-sim/paywall gate limits how often a user can trigger a full run).
-	const g = await guardAi(event, { max: 60, windowMs: 60_000, requirePlan: true });
+	// One simulation fans out to ~39 schools in a burst. guardEvaluation gives a
+	// signed-in non-Pro user their FIRST full run free (the aha moment), meters it
+	// server-side via an httpOnly cookie, then walls further runs with 402
+	// plan_required. Pro/trial users are unlimited. Auth + rate limit still apply.
+	const g = await guardEvaluation(event);
 	if (!g.ok) return g.response;
 	const { params, request } = event;
 	const DEEPSEEK_API_KEY = env.DEEPSEEK_API_KEY;
