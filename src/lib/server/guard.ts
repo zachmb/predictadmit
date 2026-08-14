@@ -72,7 +72,7 @@ export async function guardAi(
 		return {
 			ok: false,
 			response: json(
-				{ error: 'Start your free trial to run predictions.', code: 'plan_required' },
+				{ error: 'Unlock Full Season to run predictions.', code: 'plan_required' },
 				{ status: 402 }
 			)
 		};

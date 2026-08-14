@@ -8,30 +8,59 @@
 // checkout ACCOUNT-AGNOSTIC — it works with whatever Stripe key is in prod, so a
 // cross-account / test-vs-live id mismatch can NEVER break revenue again.
 // `productId` below is unused (kept only for reference); amounts mirror /pro.
+// PRICING MODEL (2026-08-14): freemium → one-time "season pass", NO subscription.
+// College admissions is a bounded, seasonal life event — a monthly sub churns the
+// day decisions drop, and a recurring "free trial" was the exact friction that
+// converted 0/18 in live Stripe. One-time payment removes the "it'll bill me later"
+// fear AND fits the season. Anchored against private-counselor spend ($5k–$7k), not
+// the free chancing calculators. Good-better-best 3 tiers; `season` is the target.
 export const STRIPE_PRODUCTS = {
-	// $39/month subscription — Full Access. Also backs the 7-day free trial.
-	monthly: {
-		productId: '', // unused — checkout uses product_data.name (account-agnostic)
-		name: 'PredictAdmit Pro — Full Access (Monthly)',
-		amountCents: 3900,
-		recurring: true
+	// $29 one-time — one school's full deep-dive + verdict. Per-school (sets
+	// proSchools), does NOT grant full access. The low anchor / downsell.
+	single: {
+		productId: '', // none in live — checkout uses product_data.name (account-agnostic)
+		name: 'PredictAdmit — Single School Deep-Dive',
+		amountCents: 2900,
+		recurring: false
 	},
-	// $99 one-time — everything, forever. Checkout creates it inline via
-	// price_data.product_data.name (see checkout
-	// +server.ts). `productId` is intentionally unused for one-time plans.
-	lifetime: {
+	// $99 one-time — THE TARGET. Full access: all 39 schools, unlimited re-runs the
+	// whole cycle, every deep-dive, the essay workshop + AI counselor. Sets isPro.
+	season: {
 		productId: '', // none in live — checkout uses product_data.name below
+		name: 'PredictAdmit — Full Season (All 39 Schools)',
+		amountCents: 9900,
+		recurring: false
+	},
+	// $249 one-time — everything in Season plus hands-on essay review. The high
+	// anchor that makes $99 read as the smart-money pick. Sets isPro.
+	seasonPlus: {
+		productId: '', // none in live — checkout uses product_data.name below
+		name: 'PredictAdmit — Full Season + Essay Review',
+		amountCents: 24900,
+		recurring: false
+	},
+
+	// ── LEGACY (retired offers) — kept ONLY so entitlement + the return handler
+	//    still honor purchases made before the 2026-08-14 model change. Never
+	//    surfaced in new checkout. `lifetime` = old $99 full access (== season);
+	//    `school` = old $14.99 single school; `monthly`/trial = old subscription.
+	lifetime: {
+		productId: '',
 		name: 'PredictAdmit Pro — Full Access (Lifetime)',
 		amountCents: 9900,
 		recurring: false
 	},
-	// $14.99 one-time — full Pro analysis for a single school. Same as lifetime:
-	// no live product, checkout creates it inline via product_data.name.
 	school: {
-		productId: '', // none in live — checkout uses product_data.name below
+		productId: '',
 		name: 'PredictAdmit School Pass',
 		amountCents: 1499,
 		recurring: false
+	},
+	monthly: {
+		productId: '',
+		name: 'PredictAdmit Pro — Full Access (Monthly)',
+		amountCents: 3900,
+		recurring: true
 	}
 } as const;
 

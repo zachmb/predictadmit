@@ -44,92 +44,57 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 			// Legacy isMonthly branch kept for compatibility
 		}
 
-		const { pricingMode } = body; // 'lifetime' | 'monthly' | 'school'
+		const { pricingMode } = body; // 'season' | 'season_plus' | 'single'
 
-		if (pricingMode === 'lifetime') {
-			// $99 Full Access — one-time payment, everything forever.
+		// ALL plans are ONE-TIME payments (no subscription). One-time removes the
+		// "free trial that bills me later" fear that converted 0/18, and fits a
+		// seasonal, one-and-done event. Every price is created INLINE by name so
+		// checkout stays account-agnostic (never depends on a live product id).
+		if (pricingMode === 'season') {
+			// $99 — THE TARGET. Full access: all 39 schools, unlimited re-runs the
+			// whole cycle, every deep-dive, the essay workshop.
 			sessionConfig = {
 				mode: 'payment',
 				line_items: [
 					{
 						price_data: {
 							currency: 'usd',
-							// No live product for lifetime — create it inline by name so
-							// this never depends on a product id existing in the account.
-							product_data: { name: STRIPE_PRODUCTS.lifetime.name },
-							unit_amount: STRIPE_PRODUCTS.lifetime.amountCents // $99.00
+							product_data: { name: STRIPE_PRODUCTS.season.name },
+							unit_amount: STRIPE_PRODUCTS.season.amountCents // $99.00
 						},
 						quantity: 1
 					}
 				],
-				metadata: { plan: 'lifetime' },
+				metadata: { plan: 'season' },
 				// {CHECKOUT_SESSION_ID} lets the return page verify payment_status
 				// with Stripe BEFORE unlocking Pro (no unlock on the URL param alone).
-				success_url: `${origin}/ai?upgrade=success&plan=lifetime&session_id={CHECKOUT_SESSION_ID}`,
+				success_url: `${origin}/ai?upgrade=success&plan=season&session_id={CHECKOUT_SESSION_ID}`,
 				cancel_url: `${origin}/pro?canceled=1`
 			};
-		} else if (pricingMode === 'trial') {
-			// 7-day free trial of Full Access. Stripe collects a card upfront
-			// (payment_method_collection defaults to 'always' for subscriptions),
-			// charges nothing during the trial, then auto-converts to $39/mo.
+		} else if (pricingMode === 'season_plus') {
+			// $249 — everything in Season plus hands-on essay review (the high anchor).
 			sessionConfig = {
-				mode: 'subscription',
+				mode: 'payment',
 				line_items: [
 					{
 						price_data: {
 							currency: 'usd',
-							// Inline product (by name) so checkout is account-agnostic —
-							// works with whatever Stripe key/account is in prod, never
-							// depends on a product id existing in that account.
-							product_data: { name: STRIPE_PRODUCTS.monthly.name },
-							unit_amount: STRIPE_PRODUCTS.monthly.amountCents, // $39.00
-							recurring: {
-								interval: 'month'
-							}
+							product_data: { name: STRIPE_PRODUCTS.seasonPlus.name },
+							unit_amount: STRIPE_PRODUCTS.seasonPlus.amountCents // $249.00
 						},
 						quantity: 1
 					}
 				],
-				// Require a card up front so the trial auto-converts to $39/mo.
-				payment_method_collection: 'always',
-				subscription_data: {
-					trial_period_days: 7,
-					metadata: { plan: 'trial' }
-				},
-				metadata: { plan: 'trial' },
-				success_url: `${origin}/ai?upgrade=success&plan=trial&session_id={CHECKOUT_SESSION_ID}`,
+				metadata: { plan: 'season_plus' },
+				success_url: `${origin}/ai?upgrade=success&plan=season_plus&session_id={CHECKOUT_SESSION_ID}`,
 				cancel_url: `${origin}/pro?canceled=1`
 			};
-		} else if (pricingMode === 'monthly') {
-			// $39/month Full Access subscription.
-			sessionConfig = {
-				mode: 'subscription',
-				line_items: [
-					{
-						price_data: {
-							currency: 'usd',
-							// Inline product (by name) so checkout is account-agnostic —
-							// works with whatever Stripe key/account is in prod, never
-							// depends on a product id existing in that account.
-							product_data: { name: STRIPE_PRODUCTS.monthly.name },
-							unit_amount: STRIPE_PRODUCTS.monthly.amountCents, // $39.00
-							recurring: {
-								interval: 'month'
-							}
-						},
-						quantity: 1
-					}
-				],
-				metadata: { plan: 'monthly' },
-				success_url: `${origin}/ai?upgrade=success&plan=monthly&session_id={CHECKOUT_SESSION_ID}`,
-				cancel_url: `${origin}/pro?canceled=1`
-			};
-		} else if (pricingMode === 'school') {
-			// $14.99 School Pass — one-time, unlocks full Pro analysis for one school.
+		} else if (pricingMode === 'single') {
+			// $29 — one school's full deep-dive + verdict (per-school; not full access).
 			const slug = String(body.slug || '');
 			const schoolName = String(body.schoolName || '').slice(0, 80);
 			if (!/^[a-z0-9-]{2,32}$/.test(slug) || !schoolName) {
-				return json({ error: 'Invalid school for School Pass.' }, { status: 400 });
+				return json({ error: 'Invalid school for the single-school deep-dive.' }, { status: 400 });
 			}
 			sessionConfig = {
 				mode: 'payment',
@@ -137,26 +102,19 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 					{
 						price_data: {
 							currency: 'usd',
-							// No live product for the school pass — create it inline by name.
-							product_data: { name: STRIPE_PRODUCTS.school.name },
-							unit_amount: STRIPE_PRODUCTS.school.amountCents // $14.99
+							product_data: { name: STRIPE_PRODUCTS.single.name },
+							unit_amount: STRIPE_PRODUCTS.single.amountCents // $29.00
 						},
 						quantity: 1
 					}
 				],
-				// The single "PredictAdmit One" product backs every school pass; the
-				// specific school rides in metadata (and the success_url slug) for
-				// attribution instead of minting a per-school ad-hoc product.
-				metadata: { plan: 'school', slug, schoolName },
-				success_url: `${origin}/ai?upgrade=success&plan=school&slug=${slug}&session_id={CHECKOUT_SESSION_ID}`,
+				// One product backs every single-school unlock; the specific school
+				// rides in metadata (and the success_url slug) for attribution.
+				metadata: { plan: 'single', slug, schoolName },
+				success_url: `${origin}/ai?upgrade=success&plan=single&slug=${slug}&session_id={CHECKOUT_SESSION_ID}`,
 				cancel_url: `${origin}/pro?canceled=1`
 			};
 		} else {
-			// Fallback or Legacy (if existing calls use isMonthly)
-			if (isMonthly) {
-				// ... legacy code if needed, or error
-			}
-			// Default to error if no valid mode
 			return json({ error: 'Invalid pricing mode.' }, { status: 400 });
 		}
 

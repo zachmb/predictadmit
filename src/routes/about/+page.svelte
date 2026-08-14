@@ -4,8 +4,8 @@
 	const stats = [
 		{ value: '5,000+', label: 'Students on PredictAdmit' },
 		{ value: '39', label: 'School scenarios' },
-		{ value: '$99', label: 'Lifetime Full Access' },
-		{ value: '7-day', label: 'Free Pro trial' }
+		{ value: '$99', label: 'Full Season, one-time' },
+		{ value: 'Free', label: 'First prediction' }
 	];
 
 	const differentiators = [
@@ -22,7 +22,7 @@
 		{
 			icon: '⚡',
 			title: 'Pro is the AI prediction',
-			body: 'Pro is where the AI reads your actual application and predicts your likely decision at every school, with the full analysis behind it and unlimited essay grading. $39/month, or $99 once and you own it. One school only? A School Pass is $14.99. Cheaper than an hour with a private consultant.'
+			body: 'Pro is where the AI reads your actual application and predicts your likely decision at every school, with the full analysis behind it and unlimited essay grading. Your first prediction is free; Full Season is a one-time $99 (no subscription), or $29 for a single school. Cheaper than an hour with a private consultant.'
 		},
 		{
 			icon: '🔍',
@@ -55,7 +55,7 @@
 	const faqs: { q: string; a: string; link?: { href: string; label: string } }[] = [
 		{
 			q: 'Is PredictAdmit free?',
-			a: 'The portal decision simulations are free — open any school, rehearse the moment, no card required. The AI prediction is the paid part: it reads your real application and predicts your likely decision at each school. That is Pro — $39/month, or $99 once and you keep it. Care about one school only? A School Pass gets you its full analysis for $14.99.'
+			a: 'The portal decision simulations are free — open any school, rehearse the moment, no card required. Your first AI prediction is free too. After that, Full Season is a one-time $99 (no subscription) for all 39 schools, unlimited re-runs, and the essay workshop. Care about one school only? A single-school unlock is $29.'
 		},
 		{
 			q: 'Are the decision letters real?',
@@ -81,7 +81,7 @@
 	<title>About PredictAdmit — Rehearse decision day before it counts</title>
 	<meta
 		name="description"
-		content="PredictAdmit lets students rehearse decision day on fictional portals, grade essays with AI, and predict their real decisions. Portal sims are free; Pro is $39/mo or $99 once. Everything simulated is labeled."
+		content="PredictAdmit lets students rehearse decision day on fictional portals, grade essays with AI, and predict their real decisions. Portal sims are free and your first prediction is free; Full Season is a one-time $99, no subscription. Everything simulated is labeled."
 	/>
 	<meta property="og:title" content="About PredictAdmit — Rehearse decision day before it counts" />
 	<meta
@@ -198,7 +198,7 @@
 				href="/pricing"
 				class="inline-flex items-center justify-center font-semibold text-sm bg-[#0052CC] text-white px-8 py-3.5 rounded-lg hover:bg-[#003d99] transition-colors shadow-lg shadow-[#0052CC]/20"
 			>
-				Get Full Access — $39/mo or $99 lifetime →
+				Get Full Season — $99 once, no subscription →
 			</a>
 			<span class="text-sm text-slate-400">Free simulation included. No credit card to start.</span>
 		</div>

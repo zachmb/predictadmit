@@ -90,8 +90,8 @@
 	let showPaywallModal = $state(false);
 	let paywallMode = $state<'simulation' | 'ocr' | 'deepDive' | null>(null);
 	let paywallContextDecision = $state<AiDecision | null>(null);
-	// Price is deferred — the paywall leads with value + the free trial, and only
-	// reveals $/plans when the user asks ("See pricing & plans").
+	// Retained for compatibility; the paywall now shows the one-time tiers directly
+	// (no deferred-pricing toggle), so this is effectively unused.
 	let showPlans = $state(false);
 
 	// Pro access (in a real app this would come from your backend / Stripe webhook)
@@ -197,7 +197,7 @@
 			// require a real trial/subscription. To offer a promo, apply a Stripe
 			// coupon to the trial checkout instead (server-validated).
 			promoCodeInput = '';
-			alert('To run predictions, start your free trial.');
+			alert('To run predictions, unlock Full Season.');
 		}
 	};
 
@@ -387,29 +387,43 @@
 					if (!paid && !trialStarted) return; // not confirmed → do NOT unlock
 					const vPlan = data.plan as string | null;
 					const vSlug = data.slug as string | null;
-					if (vPlan === 'school' && vSlug) {
+					// Per-school unlock (new 'single' $29, or legacy 'school' $14.99):
+					// grants ONE school's deep-dive, not full access.
+					if ((vPlan === 'single' || vPlan === 'school') && vSlug) {
 						userProfile.update((u) => ({
 							...u,
 							proSchools: u.proSchools.includes(vSlug)
 								? u.proSchools
 								: [...u.proSchools, vSlug]
 						}));
-						trackPurchase('school', STRIPE_PRODUCTS.school.amountCents / 100, sessionId ?? undefined);
+						trackPurchase(
+							vPlan,
+							STRIPE_PRODUCTS[vPlan === 'single' ? 'single' : 'school'].amountCents / 100,
+							sessionId ?? undefined
+						);
 					} else if (
+						// Full-access one-time passes (new + legacy) → Pro.
+						vPlan === 'season' ||
+						vPlan === 'season_plus' ||
 						vPlan === 'lifetime' ||
 						vPlan === 'monthly' ||
 						(vPlan === 'trial' && trialStarted)
 					) {
 						userProfile.update((u) => ({ ...u, isPro: true }));
-						// A trial start is a conversion event but $0 today — fire a
-						// distinct trial_start (value 0). Paid plans fire purchase.
+						// A legacy trial start is $0 today — fire trial_start (value 0);
+						// paid plans fire purchase with their real amount.
 						if (vPlan === 'trial') trackTrialStart();
-						else
-							trackPurchase(
-								vPlan,
-								STRIPE_PRODUCTS[vPlan === 'lifetime' ? 'lifetime' : 'monthly'].amountCents / 100,
-								sessionId ?? undefined
-							);
+						else {
+							const amt =
+								vPlan === 'season'
+									? STRIPE_PRODUCTS.season.amountCents
+									: vPlan === 'season_plus'
+										? STRIPE_PRODUCTS.seasonPlus.amountCents
+										: vPlan === 'lifetime'
+											? STRIPE_PRODUCTS.lifetime.amountCents
+											: STRIPE_PRODUCTS.monthly.amountCents;
+							trackPurchase(vPlan, amt / 100, sessionId ?? undefined);
+						}
 					}
 				} catch (err) {
 					console.error('Payment verification failed', err);
@@ -505,7 +519,7 @@
 		if (typeof window === 'undefined') return;
 		const url = `${window.location.origin}/pro`;
 		const text =
-			'I found PredictAdmit — its AI predicts my real admissions decisions across all 39 schools (way cheaper than a counselor). There’s a 7-day free trial. Can we?';
+			'I found PredictAdmit — its AI predicts my real admissions decisions across all 39 schools. It’s a one-time $99, way cheaper than a counselor. Can we?';
 		try {
 			if (navigator.share) {
 				await navigator.share({ title: 'PredictAdmit', text, url });
@@ -524,7 +538,7 @@
 
 	let checkoutLoading = $state(false);
 	async function startCheckout(
-		plan: 'lifetime' | 'monthly' | 'school' | 'trial',
+		plan: 'season' | 'season_plus' | 'single',
 		decision?: AiDecision
 	) {
 		if (checkoutLoading) return;
@@ -535,18 +549,18 @@
 		}
 		checkoutLoading = true;
 		const _amt =
-			plan === 'lifetime'
-				? STRIPE_PRODUCTS.lifetime.amountCents
-				: plan === 'school'
-					? STRIPE_PRODUCTS.school.amountCents
-					: STRIPE_PRODUCTS.monthly.amountCents;
+			plan === 'season'
+				? STRIPE_PRODUCTS.season.amountCents
+				: plan === 'season_plus'
+					? STRIPE_PRODUCTS.seasonPlus.amountCents
+					: STRIPE_PRODUCTS.single.amountCents;
 		trackBeginCheckout(plan, _amt / 100);
 		try {
 			const res = await fetch('/api/checkout', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(
-					plan === 'school' && decision
+					plan === 'single' && decision
 						? { pricingMode: plan, slug: decision.slug, schoolName: decision.school }
 						: { pricingMode: plan }
 				)
@@ -1023,11 +1037,12 @@
 				</p>
 			</header>
 
-			<!-- Anyone can fill in their application below; RUNNING the simulation
-			     requires an active trial/plan — the submit button flips to "Start
-			     7-day free trial" for non-Pro users, runEvaluation double-checks,
-			     and the AI route is server-enforced. Letting people invest the effort
-			     of entering stats BEFORE the wall lifts trial conversion. -->
+			<!-- Anyone can fill in their application below and run ONE free prediction.
+			     After that, RUNNING again requires Full Season — the submit button
+			     flips to "Unlock all 39 schools" for used-free non-Pro users,
+			     runEvaluation double-checks, and the AI route is server-enforced
+			     (guardEvaluation meters the one free run). Letting people invest the
+			     effort + feel the aha BEFORE the wall lifts conversion. -->
 			<!-- Application builder + AI controls -->
 			<section class="max-w-2xl mx-auto">
 				<!-- Application card -->
@@ -1607,7 +1622,7 @@ Picking one applies that school's real early-round odds
 															d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
 														/>
 													</svg>
-													Start 7-day free trial
+													Unlock all 39 schools
 												</span>
 											{:else if !hasDeepDiveAccess}
 												<!-- First run is on the house — this SUBMITS (runs the sim), no paywall. -->
@@ -1704,14 +1719,14 @@ See what we read from your file
 							<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
 								<div>
 									<p class="text-sm font-bold text-slate-900">That was your free prediction.</p>
-									<p class="mt-0.5 text-xs leading-relaxed text-slate-600">Start a 7-day free trial to re-run after every essay edit, open the deep-dive on any school, and keep all 39 predictions.</p>
+									<p class="mt-0.5 text-xs leading-relaxed text-slate-600">Unlock all 39 schools — one payment, no subscription — to re-run after every essay edit and open the deep-dive on any school.</p>
 								</div>
 								<button
 									type="button"
 									onclick={() => openPaywall('simulation')}
 									class="shrink-0 inline-flex items-center justify-center rounded-xl bg-[#0052CC] px-5 py-2.5 text-sm font-bold text-white transition hover:bg-[#0047b3] active:scale-[0.99]"
 								>
-									Start 7-day free trial
+									Unlock all 39 schools
 								</button>
 							</div>
 						</div>
@@ -1994,50 +2009,53 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 					We tuned it until it reproduced our founding team's own admissions results.
 				</p>
 
-				<!-- Primary CTA — no price here, just the free trial -->
-				<button
-					onclick={() => startCheckout('trial')}
-					disabled={checkoutLoading}
-					class="mt-5 w-full rounded-xl bg-[#0052CC] px-4 py-4 text-base font-bold text-white shadow-lg shadow-blue-600/25 transition hover:bg-[#0047b3] active:scale-[0.99] disabled:opacity-50"
-				>
-					{checkoutLoading ? 'Opening checkout…' : 'Start my 7-day free trial'}
-				</button>
-				<p class="mt-2 text-center text-xs text-slate-400">$0 today · cancel anytime before day 7</p>
+				<!-- One-time pricing — good-better-best, anchored against a private
+				     counselor. No subscription: one payment, no "billed later" fear. -->
+				<p class="mt-5 text-center text-xs leading-relaxed text-slate-500">
+					A private admissions counselor runs <span class="font-semibold text-slate-700">$5,000+</span>.
+					This is one payment — no subscription.
+				</p>
 
-				<!-- Pricing deferred behind a tap -->
+				<!-- Full Season — the target -->
 				<button
-					onclick={() => { showPlans = !showPlans; if (showPlans) track('view_pricing', { mode: paywallMode ?? 'simulation' }); }}
-					class="mt-3 flex w-full items-center justify-center gap-1 text-center text-xs font-semibold text-slate-500 transition hover:text-slate-700"
+					onclick={() => startCheckout('season')}
+					disabled={checkoutLoading}
+					class="relative mt-4 w-full overflow-hidden rounded-2xl border-2 border-[#0052CC] bg-[#0052CC] px-5 py-4 text-left text-white shadow-lg shadow-blue-600/25 transition hover:bg-[#0047b3] active:scale-[0.99] disabled:opacity-50"
 				>
-					{showPlans ? 'Hide pricing' : 'See pricing & plans'}
-					<svg class="h-3.5 w-3.5 transition-transform {showPlans ? 'rotate-180' : ''}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
+					<span class="absolute right-3 top-3 rounded-full bg-white/20 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide ring-1 ring-white/30">Most popular</span>
+					<span class="block text-base font-black">{checkoutLoading ? 'Opening checkout…' : 'Full Season — $99'}</span>
+					<span class="mt-0.5 block max-w-[15rem] text-xs leading-relaxed text-blue-100">All 39 schools, unlimited re-runs all cycle, every deep-dive, and the essay workshop.</span>
 				</button>
-				{#if showPlans}
-					<div class="paywall-plans mt-3 space-y-1 rounded-xl border border-slate-200 p-2 text-sm">
-						<div class="flex items-center justify-between px-2 py-1.5">
-							<span class="text-slate-500">After the free trial</span>
-							<span class="font-semibold text-slate-900">$39/mo · cancel anytime</span>
-						</div>
-						<button
-							onclick={() => startCheckout('lifetime')}
-							disabled={checkoutLoading}
-							class="flex w-full items-center justify-between rounded-lg px-2 py-1.5 text-left transition hover:bg-slate-50 disabled:opacity-50"
-						>
-							<span class="text-slate-500">Pay once, keep it forever</span>
-							<span class="font-semibold text-[#0052CC]">$99 →</span>
-						</button>
-						{#if paywallContextDecision}
-							<button
-								onclick={() => startCheckout('school', paywallContextDecision ?? undefined)}
-								disabled={checkoutLoading}
-								class="flex w-full items-center justify-between rounded-lg px-2 py-1.5 text-left transition hover:bg-slate-50 disabled:opacity-50"
-							>
-								<span class="text-slate-500">Just {paywallContextDecision.school}? School Pass</span>
-								<span class="font-semibold text-[#0052CC]">$14.99 →</span>
-							</button>
-						{/if}
-					</div>
+
+				<!-- Season + Essay — the high anchor -->
+				<button
+					onclick={() => startCheckout('season_plus')}
+					disabled={checkoutLoading}
+					class="mt-2.5 w-full rounded-2xl border border-slate-200 px-5 py-3.5 text-left transition hover:border-slate-300 hover:bg-slate-50 disabled:opacity-50"
+				>
+					<span class="flex items-baseline justify-between gap-2">
+						<span class="text-sm font-bold text-slate-900">Season + Essay Review</span>
+						<span class="text-sm font-bold text-slate-900">$249</span>
+					</span>
+					<span class="mt-0.5 block text-xs leading-relaxed text-slate-500">Everything in Full Season, plus hands-on review of your essays.</span>
+				</button>
+
+				<!-- Single school — the floor / downsell (only from a specific school) -->
+				{#if paywallContextDecision}
+					<button
+						onclick={() => startCheckout('single', paywallContextDecision ?? undefined)}
+						disabled={checkoutLoading}
+						class="mt-2.5 w-full rounded-2xl border border-slate-200 px-5 py-3.5 text-left transition hover:border-slate-300 hover:bg-slate-50 disabled:opacity-50"
+					>
+						<span class="flex items-baseline justify-between gap-2">
+							<span class="text-sm font-bold text-slate-900">Just {paywallContextDecision.school}?</span>
+							<span class="text-sm font-bold text-slate-900">$29</span>
+						</span>
+						<span class="mt-0.5 block text-xs leading-relaxed text-slate-500">Unlock the full deep-dive for this one school.</span>
+					</button>
 				{/if}
+
+				<p class="mt-3 text-center text-[11px] text-slate-400">One-time payment · instant access · secure checkout by Stripe</p>
 
 				<button
 					onclick={sendToParent}

@@ -196,7 +196,7 @@
 					</div>
 					<h2 class="text-3xl font-black text-slate-900 tracking-tight mb-4">This one's on Pro</h2>
 					<p class="text-slate-500 font-medium leading-relaxed max-w-sm mx-auto mb-10">
-						The essay grader is part of Pro. Free for 7 days, then $39/month or $99 for lifetime access.
+						The essay grader is part of Pro. Your first prediction is free; Full Season is a one-time $99, no subscription.
 					</p>
 					<button
 						onclick={() => goto('/pro')}

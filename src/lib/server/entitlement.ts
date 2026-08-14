@@ -33,11 +33,13 @@ const GRANDFATHERED = new Set(
 // A subscription in any of these states means full access (trial or paid
 // monthly) is currently usable.
 const ACTIVE_SUB = new Set(['trialing', 'active', 'past_due']);
-// One-time purchases that grant FULL access. NOTE: a $14.99 'school' pass unlocks
-// ONE school's deep-dive only (tracked per-school in proSchools), NOT the full
-// simulator — so it is intentionally excluded here, matching the client gate
-// (which requires isPro, and a school pass does not set isPro).
-const PAID_ONE_TIME = new Set(['lifetime']);
+// One-time purchases that grant FULL access. `season`/`season_plus` are the
+// current full-access passes; `lifetime` is the retired equivalent (still honored
+// for pre-2026-08-14 buyers). NOTE: the 'single'/'school' per-school deep-dive
+// unlock is intentionally EXCLUDED — it unlocks ONE school (tracked per-school in
+// proSchools), not the full simulator, matching the client gate (which requires
+// isPro, and a single-school unlock does not set isPro).
+const PAID_ONE_TIME = new Set(['season', 'season_plus', 'lifetime']);
 
 type Entry = { entitled: boolean; expiresAt: number };
 const cache = new Map<string, Entry>();

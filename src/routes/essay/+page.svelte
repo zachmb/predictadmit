@@ -47,7 +47,7 @@
 						onclick={() => goto('/pro')}
 						class="px-8 py-4 bg-blue-600 text-white font-black rounded-2xl text-lg hover:bg-blue-700 hover:scale-105 transition-all shadow-xl shadow-blue-200"
 					>
-						Try it free for 7 days
+						Run your first prediction free
 					</button>
 				</div>
 			</div>
@@ -177,7 +177,7 @@
 				Upgrade Now
 			</button>
 			<p class="text-white text-xs mt-6 font-bold uppercase tracking-widest">
-				Start with a 7-day free trial · then $39/mo, or $99 once
+				Your first prediction is free · then one-time $99 for the whole season
 			</p>
 		</div>
 	</section>

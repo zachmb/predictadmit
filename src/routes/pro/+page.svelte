@@ -624,11 +624,11 @@
 		// self-grant free Pro (and unlimited free sims). Pro now requires a real
 		// trial/subscription. For a promo, apply a Stripe coupon to the trial
 		// checkout (server-validated) instead of unlocking client-side.
-		promoError = 'To unlock, start your free trial above.';
+		promoError = 'To unlock, choose a plan above.';
 		setTimeout(() => (promoError = ''), 4000);
 	}
 
-	async function handleCheckout(plan: 'lifetime' | 'monthly' | 'trial') {
+	async function handleCheckout(plan: 'season' | 'season_plus') {
 		if (isProcessing) return;
 
 		if (!googleSignedIn) {
@@ -850,12 +850,12 @@
 			a: "No, and anyone who tells you otherwise is lying. We run the odds off real historical data. Admissions officers are humans reading on a Tuesday afternoon, and no model gets inside their heads. Treat the number as a sharp estimate, not a verdict."
 		},
 		{
-			q: 'Can I cancel the monthly plan?',
-			a: 'Any time, from your account settings. You keep access through the end of the period you already paid for. No emailing support to beg out, no hoops.'
+			q: 'Is this a subscription?',
+			a: "No. Full Season is a single $99 payment — no recurring charge, nothing to cancel. It covers all 39 schools, unlimited re-runs, and the essay workshop for the whole application cycle. Your first prediction is free, so you see the value before you pay."
 		},
 		{
-			q: 'What does the single School Pass get me?',
-			a: "A one-time $14.99 payment that unlocks the full toolkit for one school: the AI decision simulation, the deep-dive analysis, and essay grading. Good if you only care about one place and don't want a subscription."
+			q: 'What if I only care about one school?',
+			a: "Run your free prediction first, then unlock the full deep-dive for any one school for a one-time $29 — the AI decision simulation, the breakdown of why, and essay grading for that school."
 		},
 		{
 			q: 'How good is the essay grader, really?',
@@ -872,7 +872,7 @@
 	<title>PredictAdmit Pro — see your real decisions before they land</title>
 	<meta
 		name="description"
-		content="Pro runs the AI on your actual profile: predicted decisions across 39 schools, deep-dive analysis, and blunt essay grading. 7 days free, then $39/mo or $99 once."
+		content="Pro runs the AI on your actual profile: predicted decisions across 39 schools, deep-dive analysis, and blunt essay grading. Your first prediction is free, then a one-time $99 for the whole season — no subscription."
 	/>
 </svelte:head>
 
@@ -2221,59 +2221,69 @@
 		<div class="max-w-4xl w-full mx-auto space-y-16 relative z-10">
 			<!-- Hero Header -->
 			<div class="text-center space-y-6 max-w-3xl mx-auto">
-				<div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-50 border border-emerald-100 backdrop-blur-sm mb-4">
-					<span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
-					<span class="text-xs font-bold text-emerald-700 tracking-wide uppercase">7-Day Free Trial · Cancel Anytime</span>
+				<div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-100 backdrop-blur-sm mb-4">
+					<span class="w-2 h-2 bg-[#0052CC] rounded-full animate-pulse"></span>
+					<span class="text-xs font-bold text-[#0052CC] tracking-wide uppercase">One payment · No subscription</span>
 				</div>
 				<h1 class="text-4xl md:text-6xl font-black tracking-tight text-slate-900 leading-tight">
 					PredictAdmit <span class="text-[#0052CC]">Pro</span><br />
-					<span class="text-slate-500">7 days free, then unlimited.</span>
+					<span class="text-slate-500">Your whole season. One payment.</span>
 				</h1>
 				<p class="text-lg text-slate-500 max-w-xl mx-auto leading-relaxed mt-6">
-					Opening any school's decision portal is free. What costs money is pointing the AI at your <span class="italic">actual</span> profile and having it call your real decisions across every school, then break down why and grade your essays. That's Pro. Seven days free to try it, then $39/month, or $99 once and you're done paying. Just want one school? $14.99 for a single pass.
+					Your first prediction is free. Full access — the AI reading your <span class="italic">actual</span> profile and calling your decisions across every school, then breaking down why and grading your essays — is a one-time payment. No subscription, and a fraction of what a private counselor charges.
 				</p>
 			</div>
 
 			<!-- Main Content Grid -->
 			<div class="grid md:grid-cols-2 gap-12 items-center">
-				<!-- Sign In Card -->
+				<!-- Pricing card — good-better-best, one-time -->
 				<div class="relative group group/card perspective-1000">
-					<div class="relative rounded-[2rem] bg-white p-10 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.1)] border border-slate-100 space-y-8">
-						<div class="space-y-4 text-center md:text-left">
-							<h2 class="text-2xl font-bold text-slate-900">Start your 7-day free trial</h2>
-							<p class="text-slate-500">Run the AI on every school as many times as you want for a week. Cancel before day 7 and we never charge you. After that it's $39/month.</p>
-						</div>
-
-						<button
-							onclick={() => handleCheckout('trial')}
-							disabled={isProcessing}
-							class="w-full flex items-center justify-center gap-3 rounded-2xl bg-[#0052CC] px-6 py-5 text-lg font-bold text-white shadow-xl hover:bg-[#0047b3] hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:hover:scale-100"
-						>
-							<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-							<span>{isProcessing ? 'Taking you to checkout…' : 'Start 7-day free trial'}</span>
-						</button>
-						<p class="-mt-4 text-center text-xs text-slate-400">
-							{googleSignedIn
-								? 'Stripe checkout · card up front · cancel before day 7 and pay nothing'
-								: "Sign in with Google, then you're straight into the trial."}
+					<div class="relative rounded-[2rem] bg-white p-8 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.1)] border border-slate-100 space-y-4">
+						<p class="text-center text-xs leading-relaxed text-slate-500">
+							A private admissions counselor runs <span class="font-semibold text-slate-700">$5,000+</span> a season. Pick one payment:
 						</p>
 
-						<div class="pt-6 border-t border-slate-50 flex items-center justify-center gap-6 opacity-60">
-							<div class="flex flex-col items-center">
-								<span class="text-xl font-bold text-slate-900">7 days</span>
-								<span class="text-[10px] uppercase font-bold text-slate-400">Free trial</span>
-							</div>
-							<div class="w-px h-8 bg-slate-100"></div>
-							<div class="flex flex-col items-center">
-								<span class="text-xl font-bold text-slate-900">$99</span>
-								<span class="text-[10px] uppercase font-bold text-slate-400">Lifetime Pro</span>
-							</div>
-							<div class="w-px h-8 bg-slate-100"></div>
-							<div class="flex flex-col items-center">
-								<span class="text-xl font-bold text-slate-900">∞</span>
-								<span class="text-[10px] uppercase font-bold text-slate-400">Pro Runs</span>
-							</div>
-						</div>
+						<!-- Full Season — the target -->
+						<button
+							onclick={() => handleCheckout('season')}
+							disabled={isProcessing}
+							class="relative w-full overflow-hidden rounded-2xl border-2 border-[#0052CC] bg-[#0052CC] px-6 py-5 text-left text-white shadow-xl transition hover:bg-[#0047b3] hover:scale-[1.01] disabled:opacity-50 disabled:hover:scale-100"
+						>
+							<span class="absolute right-4 top-4 rounded-full bg-white/20 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide ring-1 ring-white/30">Most popular</span>
+							<span class="block text-2xl font-black">{isProcessing ? 'Taking you to checkout…' : 'Full Season — $99'}</span>
+							<span class="mt-1 block max-w-[18rem] text-sm leading-relaxed text-blue-100">All 39 schools, unlimited re-runs all cycle, every deep-dive, and the essay workshop.</span>
+						</button>
+
+						<!-- Season + Essay — the high anchor -->
+						<button
+							onclick={() => handleCheckout('season_plus')}
+							disabled={isProcessing}
+							class="w-full rounded-2xl border border-slate-200 px-6 py-4 text-left transition hover:border-slate-300 hover:bg-slate-50 disabled:opacity-50"
+						>
+							<span class="flex items-baseline justify-between gap-2">
+								<span class="text-base font-bold text-slate-900">Season + Essay Review</span>
+								<span class="text-base font-bold text-slate-900">$249</span>
+							</span>
+							<span class="mt-0.5 block text-sm leading-relaxed text-slate-500">Everything in Full Season, plus hands-on review of your essays.</span>
+						</button>
+
+						<!-- Single school — the floor (needs a chosen school, so start free in /ai) -->
+						<a
+							href="/ai"
+							class="block w-full rounded-2xl border border-slate-200 px-6 py-4 text-left transition hover:border-slate-300 hover:bg-slate-50"
+						>
+							<span class="flex items-baseline justify-between gap-2">
+								<span class="text-base font-bold text-slate-900">Just one school</span>
+								<span class="text-base font-bold text-slate-900">$29</span>
+							</span>
+							<span class="mt-0.5 block text-sm leading-relaxed text-slate-500">Run your free prediction first, then unlock the deep-dive for any one school.</span>
+						</a>
+
+						<p class="text-center text-xs text-slate-400">
+							{googleSignedIn
+								? 'One-time payment · instant access · secure checkout by Stripe'
+								: 'Sign in with Google at checkout — then it’s yours.'}
+						</p>
 					</div>
 				</div>
 
@@ -2334,9 +2344,9 @@
 							<div>
 								<div class="flex items-center gap-2">
 									<p class="font-bold text-slate-900">All of it, no limits, with Pro</p>
-									<span class="text-[10px] uppercase font-bold tracking-wide text-[#0052CC] bg-white border border-blue-100 rounded-full px-2 py-0.5">$39/mo · $99 lifetime</span>
+									<span class="text-[10px] uppercase font-bold tracking-wide text-[#0052CC] bg-white border border-blue-100 rounded-full px-2 py-0.5">$99 · one-time</span>
 								</div>
-								<p class="text-sm text-slate-500">Run the decision simulation as often as you like, read the full deep-dive on every school, grade essays until they're right. The 7-day free trial covers all of it.</p>
+								<p class="text-sm text-slate-500">Run the decision simulation as often as you like, read the full deep-dive on every school, grade essays until they're right. Your first prediction is free; one payment unlocks the rest for the whole season.</p>
 							</div>
 						</div>
 					</div>
@@ -2348,7 +2358,7 @@
 				<div class="bg-blue-900 rounded-[2.5rem] p-12 text-center text-white space-y-6">
 					<h3 class="text-3xl font-bold text-white">The consultant's read, without the consultant's bill.</h3>
 					<p class="text-blue-100 text-lg max-w-2xl mx-auto leading-relaxed">
-						Private counselors charge thousands a season for the same judgment call: is this kid getting in, and what should they fix. Lifetime Pro is $99, once. Every simulation, every deep dive, every essay pass, for good. Try it free for a week first. Pay only if it's actually telling you something you didn't know.
+						Private counselors charge thousands a season for the same judgment call: is this kid getting in, and what should they fix. Full Season is $99, once — no subscription. Every simulation, every deep dive, every essay pass, all cycle. Your first prediction is free, so you only pay once it's already told you something you didn't know.
 					</p>
 				</div>
 			</div>

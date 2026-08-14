@@ -68,8 +68,8 @@
 				<h2 class="mt-3 text-base font-bold text-slate-900">AI decision predictions</h2>
 				<p class="mt-1.5 text-sm leading-relaxed text-slate-600">
 					Having the AI read your real application and predict your likely decision at each school is
-					a Pro feature — 7-day free trial, then $39/month or $99 once. It's an estimate. Not a
-					guarantee, and never an official decision.
+					a Pro feature — your first prediction is free, then a one-time $99 for the whole season.
+					It's an estimate. Not a guarantee, and never an official decision.
 				</p>
 			</div>
 		</div>
