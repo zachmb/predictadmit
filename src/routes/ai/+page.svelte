@@ -1021,10 +1021,11 @@
 				</p>
 			</header>
 
-			<!-- The AI simulator is Pro-only: you must start the free trial (or hold a
-			     paid plan) to use it AT ALL. Signed-out -> sign in; signed-in free ->
-			     start-trial wall; Pro/trialing -> the full builder + inbox below. -->
-			{#if hasDeepDiveAccess}
+			<!-- Anyone can fill in their application below; RUNNING the simulation
+			     requires an active trial/plan — the submit button flips to "Start
+			     7-day free trial" for non-Pro users, runEvaluation double-checks,
+			     and the AI route is server-enforced. Letting people invest the effort
+			     of entering stats BEFORE the wall lifts trial conversion. -->
 			<!-- Application builder + AI controls -->
 			<section class="max-w-2xl mx-auto">
 				<!-- Application card -->
@@ -1838,63 +1839,6 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 							</div>
 						</div>
 					{/if}
-				</section>
-			{/if}
-			{:else}
-				<!-- Trial gate: the tool is not usable without an active plan. -->
-				<section class="max-w-lg mx-auto">
-					<Card
-						class="bg-white/80 backdrop-blur-xl border border-slate-200/60 shadow-2xl text-slate-900 rounded-3xl overflow-hidden"
-					>
-						<div class="p-8 md:p-10 text-center">
-							<div class="mx-auto grid h-12 w-12 place-items-center rounded-2xl bg-[#0052CC]/10 text-[#0052CC]">
-								<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-							</div>
-							<h2 class="mt-4 text-2xl font-black tracking-tight text-slate-900">
-								Start your free trial to run predictions
-							</h2>
-							<p class="mx-auto mt-3 max-w-md text-sm leading-relaxed text-slate-600">
-								Opening any school's decision portal is free. Having the AI read your real
-								application and call your decision across all 39 schools is Pro — it opens with a
-								7-day free trial.
-							</p>
-							{#if !googleSignedIn}
-								<button
-									type="button"
-									onclick={() => {
-										track('sign_in_click', { source: 'ai_gate' });
-										saveToStore();
-										signIn('google', { callbackUrl: '/ai' });
-									}}
-									class="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#0052CC] px-5 py-3.5 text-base font-bold text-white transition hover:bg-[#0047b3]"
-								>
-									<svg class="h-5 w-5" viewBox="0 0 24 24"><path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
-									Sign in with Google
-								</button>
-								<p class="mt-3 text-xs text-slate-400">You'll sign in first, then start your free trial.</p>
-							{:else}
-								<button
-									type="button"
-									onclick={() => startCheckout('trial')}
-									disabled={checkoutLoading}
-									class="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#0052CC] px-5 py-3.5 text-base font-bold text-white transition hover:bg-[#0047b3] disabled:opacity-50"
-								>
-									{checkoutLoading ? 'Starting secure checkout…' : 'Start 7-day free trial'}
-								</button>
-								<p class="mt-3 text-xs text-slate-400">
-									Then $39/mo. Cancel anytime before day 7 and you won't be charged.
-								</p>
-								<button
-									type="button"
-									onclick={() => startCheckout('lifetime')}
-									disabled={checkoutLoading}
-									class="mt-3 w-full rounded-xl border border-slate-200 px-5 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 disabled:opacity-50"
-								>
-									Or pay once — $99 Full Access, forever
-								</button>
-							{/if}
-						</div>
-					</Card>
 				</section>
 			{/if}
 		</div>
