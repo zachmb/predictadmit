@@ -7,7 +7,7 @@
 	let isProcessing = $state(false);
 	let passSchoolSlug = $state(portals[0]?.slug ?? '');
 
-	async function startCheckout(plan: 'season' | 'season_plus' | 'single') {
+	async function startCheckout(plan: 'single' | 'monthly' | 'lifetime') {
 		if (isProcessing) return;
 		if (!$page.data.session?.user) {
 			signIn('google', { callbackUrl: '/pricing' });
@@ -67,7 +67,7 @@
 	<title>PredictAdmit – Pricing</title>
 	<meta
 		name="description"
-		content="Your first AI admissions rehearsal is free. Unlock one school for $9, or get Full Season — every school, every tool, all cycle — for a one-time $29. No subscription."
+		content="Your first AI admissions rehearsal is free. Unlock one school for $4.99, or get Lifetime access — every school, every tool, forever — for $25 once (or $9.99/mo)."
 	/>
 </svelte:head>
 
@@ -79,7 +79,7 @@
 			</h1>
 			<p class="text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
 				Private admissions consultants run $200–500 an hour and $5,000+ per application season.
-				Full Season is $29 — once. Start free and see where you stand first.
+				Lifetime access is $25 — once (or $9.99/mo). Start free and see where you stand first.
 			</p>
 		</header>
 
@@ -111,7 +111,7 @@
 			<div class="rounded-[1.5rem] bg-white p-8 border border-slate-200 flex flex-col">
 				<h2 class="text-sm font-bold text-slate-500 tracking-[0.25em] uppercase">Single School</h2>
 				<div class="mt-4 flex items-end gap-1">
-					<span class="text-5xl font-bold tracking-tighter">$9</span>
+					<span class="text-5xl font-bold tracking-tighter">$4.99</span>
 					<span class="text-sm text-slate-400 font-medium mb-1.5">once, per school</span>
 				</div>
 				<p class="mt-2 text-xs text-slate-500">
@@ -138,7 +138,7 @@
 					disabled={isProcessing}
 					class="mt-3 w-full rounded-2xl border border-slate-200 px-6 py-3.5 text-sm font-bold text-slate-700 hover:bg-slate-50 transition-colors disabled:opacity-50"
 				>
-					Unlock this school — $9
+					Unlock this school — $4.99
 				</button>
 			</div>
 
@@ -147,13 +147,13 @@
 				<span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#0052CC] text-white text-[10px] uppercase font-bold tracking-[0.2em] px-4 py-1.5 rounded-full">
 					Best value
 				</span>
-				<h2 class="text-sm font-bold text-[#0052CC] tracking-[0.25em] uppercase">Full Season</h2>
+				<h2 class="text-sm font-bold text-[#0052CC] tracking-[0.25em] uppercase">Lifetime</h2>
 				<div class="mt-4 flex items-end gap-1">
-					<span class="text-5xl font-bold tracking-tighter">$29</span>
-					<span class="text-sm text-slate-400 font-medium mb-1.5">once, all cycle</span>
+					<span class="text-5xl font-bold tracking-tighter">$25</span>
+					<span class="text-sm text-slate-400 font-medium mb-1.5">once, forever</span>
 				</div>
 				<p class="mt-2 text-xs text-slate-500">
-					One payment — no subscription, nothing to cancel.
+					One payment, nothing to cancel — or go monthly at $9.99/mo below.
 				</p>
 				<ul class="mt-5 space-y-3 text-sm text-slate-600 flex-1">
 					{#each fullFeatures as f}
@@ -164,18 +164,18 @@
 					{/each}
 				</ul>
 				<button
-					onclick={() => startCheckout('season')}
+					onclick={() => startCheckout('lifetime')}
 					disabled={isProcessing}
 					class="mt-8 w-full rounded-2xl bg-[#0052CC] px-6 py-3.5 text-sm font-bold text-white shadow-xl hover:bg-[#0047b3] hover:-translate-y-0.5 transition-all disabled:opacity-50"
 				>
-					{isProcessing ? 'Starting checkout…' : 'Get Full Season — $29 once →'}
+					{isProcessing ? 'Starting checkout…' : 'Get Lifetime — $25 once →'}
 				</button>
 				<button
-					onclick={() => startCheckout('season_plus')}
+					onclick={() => startCheckout('monthly')}
 					disabled={isProcessing}
 					class="mt-2 w-full rounded-2xl border border-slate-200 px-6 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors disabled:opacity-50"
 				>
-					Or add hands-on essay review — $59
+					Or go Monthly — $9.99/mo
 				</button>
 			</div>
 		</section>
@@ -191,8 +191,8 @@
 				<div class="mt-1 text-xs text-slate-500">One hour of consultant essay review</div>
 			</div>
 			<div class="rounded-2xl border border-[#0052CC]/30 bg-blue-50/50 p-5">
-				<div class="text-2xl font-bold text-[#0052CC]">$29</div>
-				<div class="mt-1 text-xs text-slate-600">Full Season — every school, every tool, forever</div>
+				<div class="text-2xl font-bold text-[#0052CC]">$25</div>
+				<div class="mt-1 text-xs text-slate-600">Lifetime — every school, every tool, forever</div>
 			</div>
 		</section>
 
@@ -203,9 +203,9 @@
 					<h3 class="text-2xl font-bold text-blue-900">Why this pricing?</h3>
 					<p class="text-lg text-slate-600 font-medium leading-relaxed">
 						The feedback loop consultants sell by the hour — a blunt read of your application,
-						school by school, with a concrete plan to fix it — is what Full Season gives you
-						unlimited, for less than half of one consultant hour. Only care about one dream school?
-						The School Pass gets you its full analysis for $9.
+						school by school, with a concrete plan to fix it — is what Lifetime gives you
+						unlimited, for less than one-tenth of a single consultant hour. Only care about one dream school?
+						A single-school unlock gets you its full analysis for $4.99.
 					</p>
 					<p class="text-slate-500 italic">"The read is the same either way. We just don't bill you by the hour for it."</p>
 				</div>

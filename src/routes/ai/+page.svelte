@@ -197,7 +197,7 @@
 			// require a real trial/subscription. To offer a promo, apply a Stripe
 			// coupon to the trial checkout instead (server-validated).
 			promoCodeInput = '';
-			alert('To run predictions, unlock Full Season.');
+			alert('To run predictions, unlock Pro.');
 		}
 	};
 
@@ -519,7 +519,7 @@
 		if (typeof window === 'undefined') return;
 		const url = `${window.location.origin}/pro`;
 		const text =
-			'I found PredictAdmit — its AI predicts my real admissions decisions across all 39 schools. It’s a one-time $29, way cheaper than a counselor. Can we?';
+			'I found PredictAdmit — its AI predicts my real admissions decisions across all 39 schools. Lifetime is $25 (or $9.99/mo), way cheaper than a counselor. Can we?';
 		try {
 			if (navigator.share) {
 				await navigator.share({ title: 'PredictAdmit', text, url });
@@ -538,7 +538,7 @@
 
 	let checkoutLoading = $state(false);
 	async function startCheckout(
-		plan: 'season' | 'season_plus' | 'single',
+		plan: 'single' | 'monthly' | 'lifetime',
 		decision?: AiDecision
 	) {
 		if (checkoutLoading) return;
@@ -549,10 +549,10 @@
 		}
 		checkoutLoading = true;
 		const _amt =
-			plan === 'season'
-				? STRIPE_PRODUCTS.season.amountCents
-				: plan === 'season_plus'
-					? STRIPE_PRODUCTS.seasonPlus.amountCents
+			plan === 'lifetime'
+				? STRIPE_PRODUCTS.lifetime.amountCents
+				: plan === 'monthly'
+					? STRIPE_PRODUCTS.monthly.amountCents
 					: STRIPE_PRODUCTS.single.amountCents;
 		trackBeginCheckout(plan, _amt / 100);
 		try {
@@ -1719,7 +1719,7 @@ See what we read from your file
 							<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
 								<div>
 									<p class="text-sm font-bold text-slate-900">That was your free prediction.</p>
-									<p class="mt-0.5 text-xs leading-relaxed text-slate-600">Unlock all 39 schools — one payment, no subscription — to re-run after every essay edit and open the deep-dive on any school.</p>
+									<p class="mt-0.5 text-xs leading-relaxed text-slate-600">Unlock all 39 schools — $25 once (or $9.99/mo) — to re-run after every essay edit and open the deep-dive on any school.</p>
 								</div>
 								<button
 									type="button"
@@ -2009,35 +2009,35 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 					We tuned it until it reproduced our founding team's own admissions results.
 				</p>
 
-				<!-- One-time pricing — good-better-best, anchored against a private
-				     counselor. No subscription: one payment, no "billed later" fear. -->
+				<!-- Ladder: Lifetime $25 (target) · Monthly $9.99 · One School $4.99.
+				     Anchored against a private counselor so $25 reads as a no-brainer. -->
 				<p class="mt-5 text-center text-xs leading-relaxed text-slate-500">
 					A private admissions counselor runs <span class="font-semibold text-slate-700">$5,000+</span>.
-					This is one payment — no subscription.
+					Lifetime access is <span class="font-semibold text-slate-700">$25, once</span>.
 				</p>
 
-				<!-- Full Season — the target -->
+				<!-- Lifetime — the target -->
 				<button
-					onclick={() => startCheckout('season')}
+					onclick={() => startCheckout('lifetime')}
 					disabled={checkoutLoading}
 					class="relative mt-4 w-full overflow-hidden rounded-2xl border-2 border-[#0052CC] bg-[#0052CC] px-5 py-4 text-left text-white shadow-lg shadow-blue-600/25 transition hover:bg-[#0047b3] active:scale-[0.99] disabled:opacity-50"
 				>
-					<span class="absolute right-3 top-3 rounded-full bg-white/20 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide ring-1 ring-white/30">Most popular</span>
-					<span class="block text-base font-black">{checkoutLoading ? 'Opening checkout…' : 'Full Season — $29'}</span>
-					<span class="mt-0.5 block max-w-[15rem] text-xs leading-relaxed text-blue-100">All 39 schools, unlimited re-runs all cycle, every deep-dive, and the essay workshop.</span>
+					<span class="absolute right-3 top-3 rounded-full bg-white/20 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide ring-1 ring-white/30">Best value</span>
+					<span class="block text-base font-black">{checkoutLoading ? 'Opening checkout…' : 'Lifetime — $25 once'}</span>
+					<span class="mt-0.5 block max-w-[15rem] text-xs leading-relaxed text-blue-100">All 39 schools, unlimited re-runs, every deep-dive, and the essay workshop — forever, no subscription.</span>
 				</button>
 
-				<!-- Season + Essay — the high anchor -->
+				<!-- Monthly -->
 				<button
-					onclick={() => startCheckout('season_plus')}
+					onclick={() => startCheckout('monthly')}
 					disabled={checkoutLoading}
 					class="mt-2.5 w-full rounded-2xl border border-slate-200 px-5 py-3.5 text-left transition hover:border-slate-300 hover:bg-slate-50 disabled:opacity-50"
 				>
 					<span class="flex items-baseline justify-between gap-2">
-						<span class="text-sm font-bold text-slate-900">Season + Essay Review</span>
-						<span class="text-sm font-bold text-slate-900">$59</span>
+						<span class="text-sm font-bold text-slate-900">Monthly</span>
+						<span class="text-sm font-bold text-slate-900">$9.99<span class="text-xs font-medium text-slate-400">/mo</span></span>
 					</span>
-					<span class="mt-0.5 block text-xs leading-relaxed text-slate-500">Everything in Full Season, plus hands-on review of your essays.</span>
+					<span class="mt-0.5 block text-xs leading-relaxed text-slate-500">Full access while you're applying. Cancel anytime.</span>
 				</button>
 
 				<!-- Single school — the floor / downsell (only from a specific school) -->
@@ -2049,13 +2049,13 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 					>
 						<span class="flex items-baseline justify-between gap-2">
 							<span class="text-sm font-bold text-slate-900">Just {paywallContextDecision.school}?</span>
-							<span class="text-sm font-bold text-slate-900">$9</span>
+							<span class="text-sm font-bold text-slate-900">$4.99</span>
 						</span>
 						<span class="mt-0.5 block text-xs leading-relaxed text-slate-500">Unlock the full deep-dive for this one school.</span>
 					</button>
 				{/if}
 
-				<p class="mt-3 text-center text-[11px] text-slate-400">One-time payment · instant access · secure checkout by Stripe</p>
+				<p class="mt-3 text-center text-[11px] text-slate-400">Instant access · secure checkout by Stripe</p>
 
 				<button
 					onclick={sendToParent}

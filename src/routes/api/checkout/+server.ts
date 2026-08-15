@@ -44,53 +44,55 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 			// Legacy isMonthly branch kept for compatibility
 		}
 
-		const { pricingMode } = body; // 'season' | 'season_plus' | 'single'
+		const { pricingMode } = body; // 'single' | 'monthly' | 'lifetime'
 
-		// ALL plans are ONE-TIME payments (no subscription). One-time removes the
-		// "free trial that bills me later" fear that converted 0/18, and fits a
-		// seasonal, one-and-done event. Every price is created INLINE by name so
+		// Ladder: One School $4.99 (one-time) · Monthly $9.99/mo · Lifetime $25 (one-time).
+		// Free first prediction is the hook. Every price is built INLINE by name so
 		// checkout stays account-agnostic (never depends on a live product id).
-		if (pricingMode === 'season') {
-			// $29 — THE TARGET. Full access: all 39 schools, unlimited re-runs the
-			// whole cycle, every deep-dive, the essay workshop.
+		if (pricingMode === 'lifetime') {
+			// $25 — THE TARGET. Full access forever.
 			sessionConfig = {
 				mode: 'payment',
 				line_items: [
 					{
 						price_data: {
 							currency: 'usd',
-							product_data: { name: STRIPE_PRODUCTS.season.name },
-							unit_amount: STRIPE_PRODUCTS.season.amountCents // $99.00
+							product_data: { name: STRIPE_PRODUCTS.lifetime.name },
+							unit_amount: STRIPE_PRODUCTS.lifetime.amountCents // $25.00
 						},
 						quantity: 1
 					}
 				],
-				metadata: { plan: 'season' },
+				metadata: { plan: 'lifetime' },
 				// {CHECKOUT_SESSION_ID} lets the return page verify payment_status
 				// with Stripe BEFORE unlocking Pro (no unlock on the URL param alone).
-				success_url: `${origin}/ai?upgrade=success&plan=season&session_id={CHECKOUT_SESSION_ID}`,
+				success_url: `${origin}/ai?upgrade=success&plan=lifetime&session_id={CHECKOUT_SESSION_ID}`,
 				cancel_url: `${origin}/pro?canceled=1`
 			};
-		} else if (pricingMode === 'season_plus') {
-			// $59 — everything in Season plus hands-on essay review (the high anchor).
+		} else if (pricingMode === 'monthly') {
+			// $9.99/month — full access while subscribed. No trial (charges the first
+			// month immediately, so there's no "bills me later" surprise). The free
+			// first prediction already delivered the aha before this wall.
 			sessionConfig = {
-				mode: 'payment',
+				mode: 'subscription',
 				line_items: [
 					{
 						price_data: {
 							currency: 'usd',
-							product_data: { name: STRIPE_PRODUCTS.seasonPlus.name },
-							unit_amount: STRIPE_PRODUCTS.seasonPlus.amountCents // $249.00
+							product_data: { name: STRIPE_PRODUCTS.monthly.name },
+							unit_amount: STRIPE_PRODUCTS.monthly.amountCents, // $9.99
+							recurring: { interval: 'month' }
 						},
 						quantity: 1
 					}
 				],
-				metadata: { plan: 'season_plus' },
-				success_url: `${origin}/ai?upgrade=success&plan=season_plus&session_id={CHECKOUT_SESSION_ID}`,
+				metadata: { plan: 'monthly' },
+				subscription_data: { metadata: { plan: 'monthly' } },
+				success_url: `${origin}/ai?upgrade=success&plan=monthly&session_id={CHECKOUT_SESSION_ID}`,
 				cancel_url: `${origin}/pro?canceled=1`
 			};
 		} else if (pricingMode === 'single') {
-			// $29 — one school's full deep-dive + verdict (per-school; not full access).
+			// $4.99 — one school's full deep-dive + verdict (per-school; not full access).
 			const slug = String(body.slug || '');
 			const schoolName = String(body.schoolName || '').slice(0, 80);
 			if (!/^[a-z0-9-]{2,32}$/.test(slug) || !schoolName) {
@@ -103,7 +105,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 						price_data: {
 							currency: 'usd',
 							product_data: { name: STRIPE_PRODUCTS.single.name },
-							unit_amount: STRIPE_PRODUCTS.single.amountCents // $29.00
+							unit_amount: STRIPE_PRODUCTS.single.amountCents // $4.99
 						},
 						quantity: 1
 					}

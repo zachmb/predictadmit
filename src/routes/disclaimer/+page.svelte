@@ -68,7 +68,7 @@
 				<h2 class="mt-3 text-base font-bold text-slate-900">AI decision predictions</h2>
 				<p class="mt-1.5 text-sm leading-relaxed text-slate-600">
 					Having the AI read your real application and predict your likely decision at each school is
-					a Pro feature — your first prediction is free, then a one-time $29 for the whole season.
+					a Pro feature — your first prediction is free, then $25 once for lifetime access (or $9.99/mo).
 					It's an estimate. Not a guarantee, and never an official decision.
 				</p>
 			</div>

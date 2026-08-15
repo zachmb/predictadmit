@@ -7,48 +7,50 @@
 // so every checkout 500'd with "No such product". Inline `product_data` makes
 // checkout ACCOUNT-AGNOSTIC — it works with whatever Stripe key is in prod, so a
 // cross-account / test-vs-live id mismatch can NEVER break revenue again.
-// `productId` below is unused (kept only for reference); amounts mirror /pro.
-// PRICING MODEL (2026-08-14): freemium → one-time "season pass", NO subscription.
-// College admissions is a bounded, seasonal life event — a monthly sub churns the
-// day decisions drop, and a recurring "free trial" was the exact friction that
-// converted 0/18 in live Stripe. One-time payment removes the "it'll bill me later"
-// fear AND fits the season. Anchored against private-counselor spend ($5k–$7k), not
-// the free chancing calculators. Good-better-best 3 tiers; `season` is the target.
+// PRICING MODEL (2026-08-15, Zach): impulse-priced good-better-best.
+//   One School $4.99 (one-time) · Monthly $9.99/mo · Lifetime $25 (one-time).
+// Free first prediction is the hook; then this ladder. Lifetime is the TARGET —
+// 2.5 months of Monthly already equals it, so Monthly makes Lifetime the obvious
+// buy. `productId` is unused (checkout builds the price inline via product_data.name).
 export const STRIPE_PRODUCTS = {
-	// $9 one-time — one school's full deep-dive + verdict. Per-school (sets
-	// proSchools), does NOT grant full access. The low anchor / downsell.
+	// $4.99 one-time — one school's full deep-dive + verdict. Per-school (sets
+	// proSchools), does NOT grant full access. The floor / downsell.
 	single: {
 		productId: '', // none in live — checkout uses product_data.name (account-agnostic)
 		name: 'PredictAdmit — Single School Deep-Dive',
-		amountCents: 900,
+		amountCents: 499,
 		recurring: false
 	},
-	// $29 one-time — THE TARGET. Full access: all 39 schools, unlimited re-runs the
-	// whole cycle, every deep-dive, the essay workshop + AI counselor. Sets isPro.
-	// Impulse-priced (2026-08-15, Zach: "waaay lower") against the $5k counselor anchor.
-	season: {
+	// $9.99 / month — full access while subscribed (all 39 schools, unlimited
+	// re-runs, deep-dives, essay workshop). Sets isPro while active. No trial.
+	monthly: {
 		productId: '', // none in live — checkout uses product_data.name below
-		name: 'PredictAdmit — Full Season (All 39 Schools)',
-		amountCents: 2900,
-		recurring: false
+		name: 'PredictAdmit Pro — Monthly',
+		amountCents: 999,
+		recurring: true
 	},
-	// $59 one-time — everything in Season plus hands-on essay review. The high
-	// anchor that makes $29 read as the smart-money pick. Sets isPro.
-	seasonPlus: {
+	// $25 one-time — THE TARGET. Full access forever: all 39 schools, unlimited
+	// re-runs, every deep-dive, the essay workshop + AI counselor. Sets isPro.
+	lifetime: {
 		productId: '', // none in live — checkout uses product_data.name below
-		name: 'PredictAdmit — Full Season + Essay Review',
-		amountCents: 5900,
+		name: 'PredictAdmit Pro — Lifetime',
+		amountCents: 2500,
 		recurring: false
 	},
 
 	// ── LEGACY (retired offers) — kept ONLY so entitlement + the return handler
-	//    still honor purchases made before the 2026-08-14 model change. Never
-	//    surfaced in new checkout. `lifetime` = old $99 full access (== season);
-	//    `school` = old $14.99 single school; `monthly`/trial = old subscription.
-	lifetime: {
+	//    still honor earlier purchases. Never surfaced in new checkout.
+	//    season/seasonPlus = the 2026-08-14 one-time passes; school = old $14.99 single.
+	season: {
 		productId: '',
-		name: 'PredictAdmit Pro — Full Access (Lifetime)',
-		amountCents: 9900,
+		name: 'PredictAdmit — Full Season (All 39 Schools)',
+		amountCents: 2900,
+		recurring: false
+	},
+	seasonPlus: {
+		productId: '',
+		name: 'PredictAdmit — Full Season + Essay Review',
+		amountCents: 5900,
 		recurring: false
 	},
 	school: {
@@ -56,12 +58,6 @@ export const STRIPE_PRODUCTS = {
 		name: 'PredictAdmit School Pass',
 		amountCents: 1499,
 		recurring: false
-	},
-	monthly: {
-		productId: '',
-		name: 'PredictAdmit Pro — Full Access (Monthly)',
-		amountCents: 3900,
-		recurring: true
 	}
 } as const;
 
