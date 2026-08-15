@@ -2077,26 +2077,10 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 				</div>
 			</div>
 
-			<!-- Value -->
+			<!-- Options — kept short + clean; the full benefit tour lives in the
+			     carousel that the Lifetime/Monthly buttons launch. -->
 			<div class="px-7 py-6">
-				<ul class="space-y-3">
-					{#each ['Your predicted decision — accept, deny, or waitlist — at all 39 top schools', 'The deep-dive on every verdict: exactly what drove it and what would move it', 'Unlimited essay grading and the AI counselor, on tap', 'Calibrated on real admissions results — not a generic ChatGPT guess'] as benefit}
-						<li class="flex items-start gap-3">
-							<span class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#0052CC]/10 text-[#0052CC]">
-								<svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
-							</span>
-							<span class="text-sm leading-snug text-slate-700">{benefit}</span>
-						</li>
-					{/each}
-				</ul>
-
-				<p class="mt-5 rounded-xl bg-slate-50 px-4 py-3 text-center text-xs leading-relaxed text-slate-500">
-					We tuned it until it reproduced our founding team's own admissions results.
-				</p>
-
-				<!-- Ladder: Lifetime $25 (target) · Monthly $9.99 · One School $4.99.
-				     Anchored against a private counselor so $25 reads as a no-brainer. -->
-				<p class="mt-5 text-center text-xs leading-relaxed text-slate-500">
+				<p class="text-center text-xs leading-relaxed text-slate-500">
 					A private admissions counselor runs <span class="font-semibold text-slate-700">$5,000+</span>.
 					Lifetime access is <span class="font-semibold text-slate-700">$25, once</span>.
 				</p>
