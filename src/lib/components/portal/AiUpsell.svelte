@@ -36,7 +36,7 @@
 
 {#if show}
 	<div
-		class="fixed bottom-4 left-1/2 z-[60] w-[calc(100%-2rem)] max-w-sm -translate-x-1/2"
+		class="fixed bottom-16 left-4 z-[60] w-[calc(100%-2rem)] max-w-xs"
 		transition:fly={{ y: 26, duration: 280 }}
 	>
 		<div class="relative overflow-hidden rounded-2xl bg-[#0052CC] p-4 pr-10 text-white shadow-2xl shadow-blue-900/30 ring-1 ring-white/10">

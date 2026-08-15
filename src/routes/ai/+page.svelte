@@ -1073,10 +1073,10 @@
 	<!-- Decorative background elements -->
 	<div class="absolute inset-0 overflow-hidden pointer-events-none">
 		<div
-			class="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-br from-blue-100/40 to-transparent rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"
+			class="absolute top-0 right-0 w-[800px] h-[800px] bg-transparent rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"
 		></div>
 		<div
-			class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-to-tr from-blue-100/25 to-transparent rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2"
+			class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-transparent rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2"
 		></div>
 	</div>
 
@@ -1088,7 +1088,7 @@
 				<div
 					class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-100"
 				>
-					<span class="w-1.5 h-1.5 bg-[#0052CC] rounded-full"></span>
+					
 					<span class="text-[11px] font-bold text-[#0052CC] tracking-[0.14em] uppercase">AI Admissions Simulator</span>
 				</div>
 
@@ -1206,12 +1206,12 @@
 							<!-- PDF info + OCR upload area -->
 							<div class="grid gap-6">
 								<div
-									class="group rounded-2xl bg-gradient-to-br from-slate-50 to-blue-50/30 p-6 border border-slate-200/60 hover:border-blue-300/40 transition-all duration-300"
+									class="group rounded-2xl bg-slate-50 p-6 border border-slate-200/60 hover:border-blue-300/40 transition-all duration-300"
 								>
 									<div class="flex items-center justify-between mb-4">
 										<div class="flex items-center gap-3">
 											<div
-												class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-500/25"
+												class="w-10 h-10 rounded-xl bg-[#0052CC] flex items-center justify-center "
 											>
 												<svg
 													class="w-5 h-5 text-white"
@@ -1237,7 +1237,7 @@
 										<span
 											class="inline-flex items-center gap-1.5 text-[10px] uppercase font-bold tracking-wider text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-full border border-emerald-200/60 shadow-sm"
 										>
-											<span class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span>
+											
 											OCR Beta
 										</span>
 									</div>
@@ -1362,7 +1362,7 @@
 										for="major"
 										class="block text-sm font-bold text-slate-900 flex items-center gap-2"
 									>
-										<span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span>
+										
 										Intended Major
 									</label>
 									<input
@@ -1400,7 +1400,7 @@
 										for="essay"
 										class="block text-sm font-bold text-slate-900 flex items-center gap-2"
 									>
-										<span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span>
+										
 										Personal Essay
 									</label>
 									<textarea
@@ -1415,16 +1415,16 @@
 								<!-- Supplements -->
 								<details class="rounded-2xl border border-slate-200/60 bg-slate-50/40">
 									<summary class="cursor-pointer px-5 py-4 text-sm font-bold text-slate-900 flex items-center gap-2">
-										<span class="w-1.5 h-1.5 bg-[#0052CC] rounded-full"></span>
+										
 										Supplemental essays <span class="ml-1 text-xs font-normal text-slate-500">— optional, sharpens per-school fit</span>
 									</summary>
 									<div class="px-2 pb-2">
 								<div
-									class="space-y-4 bg-gradient-to-br from-white to-slate-50/50 p-6 rounded-2xl border border-slate-200/60"
+									class="space-y-4 bg-white p-6 rounded-2xl border border-slate-200/60"
 								>
 									<div class="flex items-center justify-between gap-3">
 										<div class="flex items-center gap-2.5">
-											<span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span>
+											
 											<h3 class="text-base font-bold text-slate-900">Supplemental Essays</h3>
 										</div>
 										<span
@@ -1515,7 +1515,7 @@ One fills the rest
 										for="activities"
 										class="block text-sm font-bold text-slate-900 flex items-center gap-2"
 									>
-										<span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span>
+										
 										Activities / Résumé
 									</label>
 									<textarea
@@ -1535,7 +1535,7 @@ One fills the rest
 										for="honors"
 										class="block text-sm font-bold text-slate-900 flex items-center gap-2"
 									>
-										<span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span>
+										
 										Honors & Awards
 									</label>
 									<textarea
@@ -1553,7 +1553,7 @@ One fills the rest
 										for="transcript"
 										class="block text-sm font-bold text-slate-900 flex items-center gap-2"
 									>
-										<span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span>
+										
 										Transcript / GPA
 									</label>
 									<textarea
@@ -1573,7 +1573,7 @@ One fills the rest
 										for="edSchool"
 										class="block text-sm font-bold text-slate-900 flex items-center gap-2"
 									>
-										<span class="w-1.5 h-1.5 bg-amber-500 rounded-full"></span>
+										
 										Early Decision / REA
 										<span class="text-xs font-normal text-slate-500">(Optional)</span>
 									</label>
@@ -1650,17 +1650,9 @@ Picking one applies that school's real early-round odds
 									onclick={!googleSignedIn
 										? () => signIn('google', { callbackUrl: '/ai' })
 										: undefined}
-									class="group relative w-full rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed"
+									class="group relative w-full rounded-2xl bg-[#0052CC] shadow-lg shadow-blue-600/25 transition-all duration-200 hover:bg-[#0047b3] active:scale-[0.99] disabled:opacity-60 disabled:cursor-not-allowed"
 								>
-									<!-- Animated border gradient -->
-									<div
-										class="absolute inset-[-200%] bg-[conic-gradient(from_90deg_at_50%_50%,#E2E8F0_0%,#3B82F6_50%,#8B5CF6_75%,#E2E8F0_100%)] opacity-0 group-hover:opacity-100 animate-spin-slow transition-opacity duration-300 pointer-events-none"
-									></div>
-
-									<!-- Button content -->
-									<div
-										class="relative m-[2px] rounded-[calc(1rem-2px)] bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-600 px-8 py-5 transition-all duration-300"
-									>
+									<div class="px-8 py-5">
 										<div
 											class="text-base font-bold uppercase tracking-widest text-white flex items-center justify-center gap-3"
 										>
@@ -1776,7 +1768,7 @@ See what we read from your file
 					     used their one free run gets a warm, specific upsell (not a cold wall) to
 					     start the trial for unlimited re-runs + deep dives. Pro users never see it. -->
 					{#if !hasDeepDiveAccess && hasUsedFreeSimulation && !$userProfile.isSubmittingAI && aiDecisions.length}
-						<div class="border-b-2 border-blue-100 bg-gradient-to-r from-blue-50 to-indigo-50/40 px-6 py-4">
+						<div class="border-b-2 border-blue-100 bg-blue-50 px-6 py-4">
 							<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
 								<div>
 									<p class="text-sm font-bold text-slate-900">Your predictions are in — open any one free.</p>
@@ -1795,7 +1787,7 @@ See what we read from your file
 
 					{#if $userProfile.isSubmittingAI}
 						<div
-							class="border-b-2 border-slate-100 bg-gradient-to-r from-slate-50 to-blue-50/30 px-6 py-4 flex items-center gap-3 text-sm text-slate-700"
+							class="border-b-2 border-slate-100 bg-slate-50 px-6 py-4 flex items-center gap-3 text-sm text-slate-700"
 						>
 							<span
 								class="h-4 w-4 animate-spin rounded-full border-3 border-slate-300 border-t-blue-600"
@@ -1846,13 +1838,13 @@ See what we read from your file
 
 					{#if deepDiveItems.length}
 						<div
-							class="border-t-2 border-slate-100 bg-gradient-to-br from-slate-50 to-blue-50/20 px-6 py-8 space-y-6"
+							class="border-t-2 border-slate-100 bg-slate-50 px-6 py-8 space-y-6"
 						>
 							<div class="flex items-center justify-between gap-3">
 								<div class="space-y-1.5">
 									<div class="flex items-center gap-2">
 										<div
-											class="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-blue-600 flex items-center justify-center shadow-lg shadow-indigo-500/25"
+											class="w-8 h-8 rounded-lg bg-[#0052CC] flex items-center justify-center "
 										>
 											<svg
 												class="w-4 h-4 text-white"
