@@ -163,12 +163,14 @@
 							<h2 class="mb-2 text-sm font-black uppercase tracking-wide {toneChip[g.tone]}">{g.label} · {g.rows.length}</h2>
 							<div class="overflow-hidden rounded-2xl border border-slate-200 bg-white">
 								{#each g.rows as r}
-									<div class="flex items-center gap-3 border-b border-slate-100 px-4 py-3 last:border-b-0">
-										<span class="w-40 shrink-0 truncate text-sm font-semibold text-slate-800">{r.school}</span>
-										<div class="h-2 flex-1 overflow-hidden rounded-full bg-slate-100">
-											<div class="h-full rounded-full {toneBar[g.tone]}" style="width: {Math.max(4, r.odds)}%"></div>
+									<div class="border-b border-slate-100 px-4 py-3 last:border-b-0">
+										<div class="flex items-baseline justify-between gap-3">
+											<span class="min-w-0 truncate text-sm font-semibold text-slate-800">{r.school}</span>
+											<span class="shrink-0 text-sm font-black tabular-nums {toneChip[g.tone]}">{r.odds}%</span>
 										</div>
-										<span class="w-10 shrink-0 text-right text-sm font-black tabular-nums text-slate-900">{r.odds}%</span>
+										<div class="mt-2 h-2.5 overflow-hidden rounded-full bg-slate-100">
+											<div class="h-full rounded-full {toneBar[g.tone]} transition-all duration-500" style="width: {Math.max(3, r.odds)}%"></div>
+										</div>
 									</div>
 								{/each}
 							</div>
