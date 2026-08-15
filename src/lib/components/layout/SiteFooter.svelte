@@ -40,6 +40,13 @@
 				<ul class="space-y-3 text-sm text-slate-600">
 					<li>
 						<a
+							href="/chances"
+							class="hover:text-slate-900 hover:font-bold transition-all p-1 block"
+							>Chances Calculator</a
+						>
+					</li>
+					<li>
+						<a
 							href="/junior-diagnostic"
 							class="hover:text-slate-900 hover:font-bold transition-all p-1 block"
 							>Junior Diagnostic</a
