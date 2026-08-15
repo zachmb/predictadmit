@@ -7,6 +7,7 @@
 
 	// NEW: bring in AdmitMail + types from the existing simulator
 	import BetterAdmitMail from '$lib/components/BetterAdmitMail.svelte';
+	import UpgradeCarousel from '$lib/components/UpgradeCarousel.svelte';
 	import {
 		sentEmails as baseSentEmails,
 		type PortalEmail,
@@ -86,9 +87,13 @@
 	// Free-tier limits (persisted per browser)
 	let hasUsedFreeSimulation = $state(false);
 	let hasUsedFreePdfOcr = $state(false);
+	// The ONE decision a non-Pro user may open for free. Once set, opening any OTHER
+	// locked decision requires $4.99 (that school → proSchools, deep dive included) or
+	// an upgrade. Persisted per browser; server-side truth is Stripe (proSchools/isPro).
+	let freeOpenedDecisionSlug = $state<string | null>(null);
 	let promoCodeInput = $state('');
 	let showPaywallModal = $state(false);
-	let paywallMode = $state<'simulation' | 'ocr' | 'deepDive' | null>(null);
+	let paywallMode = $state<'simulation' | 'ocr' | 'deepDive' | 'decision' | null>(null);
 	let paywallContextDecision = $state<AiDecision | null>(null);
 	// Retained for compatibility; the paywall now shows the one-time tiers directly
 	// (no deferred-pricing toggle), so this is effectively unused.
@@ -287,7 +292,36 @@
 
 	// Callbacks that AdmitMail expects
 
+	// Can this decision be OPENED? Pro/lifetime/monthly → all of them. A $4.99
+	// single unlock (proSchools) → that one. Otherwise you get exactly ONE free
+	// open (the first decision you tap becomes your free one).
+	function canOpenDecision(slug: string): boolean {
+		if ($userProfile.isPro) return true;
+		if (($userProfile.proSchools ?? []).includes(slug)) return true;
+		if (freeOpenedDecisionSlug === slug) return true;
+		if (!freeOpenedDecisionSlug) return true; // no free open used yet → this is it
+		return false;
+	}
+
 	function selectPortal(portal: PortalEmail) {
+		// Gate: open ONE free, then $4.99 per decision (deep dive included) or upgrade.
+		if (!canOpenDecision(portal.slug)) {
+			const decision = aiDecisions.find((d) => d.slug === portal.slug);
+			openPaywall('decision', decision ?? ({ slug: portal.slug, school: portal.name } as AiDecision));
+			return;
+		}
+		// Claim the free open on the first locked decision a non-Pro user reads.
+		if (
+			!$userProfile.isPro &&
+			!($userProfile.proSchools ?? []).includes(portal.slug) &&
+			!freeOpenedDecisionSlug
+		) {
+			freeOpenedDecisionSlug = portal.slug;
+			if (typeof localStorage !== 'undefined')
+				localStorage.setItem('predictadmit_freeOpenedDecisionSlug', portal.slug);
+			track('free_decision_opened', { school: portal.slug });
+		}
+
 		selectedPortal = portal;
 		selectedSent = null;
 		mailActiveFolder = 'inbox';
@@ -317,6 +351,11 @@
 	function openInboxList() {
 		mailViewMode = 'inbox';
 		saveAiInboxState();
+		// Auto-scroll back to the inbox so the user doesn't have to scroll down the
+		// long /ai page every time they tap the back arrow out of a decision.
+		requestAnimationFrame(() =>
+			inboxSection?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+		);
 	}
 
 	// This is *not* the full simulator reset — just clears the AI inbox state.
@@ -437,6 +476,7 @@
 		// Restore free-tier usage flags (still used for non-Pro users)
 		hasUsedFreeSimulation = localStorage.getItem('predictadmit_hasUsedFreeSimulation') === 'true';
 		hasUsedFreePdfOcr = localStorage.getItem('predictadmit_hasUsedFreePdfOcr') === 'true';
+		freeOpenedDecisionSlug = localStorage.getItem('predictadmit_freeOpenedDecisionSlug') || null;
 
 		// Restore AI inbox state (visiblePortals, read flags, selected email, etc.)
 
@@ -536,6 +576,19 @@
 		}
 	}
 
+	// Pre-checkout benefit carousel: the paywall's Monthly/Lifetime buttons open
+	// this FIRST (a few screens showcasing everything Pro includes), and only its
+	// final "Continue" fires the real Stripe checkout. The $4.99 per-decision buy
+	// is a micro-purchase and skips the carousel.
+	let showUpgradeCarousel = $state(false);
+	let carouselPlan = $state<'monthly' | 'lifetime'>('lifetime');
+	function startUpgrade(plan: 'monthly' | 'lifetime') {
+		carouselPlan = plan;
+		showPaywallModal = false;
+		showUpgradeCarousel = true;
+		track('upgrade_carousel_view', { plan });
+	}
+
 	let checkoutLoading = $state(false);
 	async function startCheckout(
 		plan: 'single' | 'monthly' | 'lifetime',
@@ -594,15 +647,11 @@
 			return;
 		}
 
-		// One free prediction, then the wall. A signed-in non-Pro user gets their
-		// FIRST full simulation free — the aha moment that converts. Once they've
-		// used it, any further run opens the paywall to start the trial. Pro/trial
-		// users are unlimited. The server enforces the same one-free window via an
-		// httpOnly cookie, so clearing localStorage can't grind out unlimited runs.
-		if (!hasDeepDiveAccess && hasUsedFreeSimulation) {
-			openPaywall('simulation');
-			return;
-		}
+		// Running the simulation is FREE (2026-08-15 model): anyone signed in can run
+		// it and see all 39 predicted verdicts in the inbox. The paywall is now on
+		// OPENING decisions — you read ONE free, then it's $4.99 per decision (deep
+		// dive included) or an upgrade. See canOpenDecision()/selectPortal below.
+		// Server still meters raw AI cost per email via guardEvaluation.
 
 		track('simulation_start');
 		userProfile.update((u) => ({ ...u, isSubmittingAI: true }));
@@ -1608,31 +1657,9 @@ Picking one applies that school's real early-round odds
 													></span>
 													<span>Reading your file...</span>
 												</span>
-											{:else if !hasDeepDiveAccess && hasUsedFreeSimulation}
-												<span
-													onclick={(e) => {
-														e.preventDefault();
-														e.stopPropagation();
-														openPaywall('simulation');
-													}}
-													class="flex items-center gap-2.5"
-												>
-													<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-														<path
-															d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-														/>
-													</svg>
-													Unlock all 39 schools
-												</span>
-											{:else if !hasDeepDiveAccess}
-												<!-- First run is on the house — this SUBMITS (runs the sim), no paywall. -->
-												<span class="flex items-center gap-2.5">
-													<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-														<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-													</svg>
-													Run my free prediction
-												</span>
 											{:else}
+												<!-- Running is free for everyone signed in; the paywall is on
+												     OPENING decisions, not on running the simulation. -->
 												<span class="flex items-center gap-2.5">
 													<svg
 														class="w-5 h-5"
@@ -1718,15 +1745,15 @@ See what we read from your file
 						<div class="border-b-2 border-blue-100 bg-gradient-to-r from-blue-50 to-indigo-50/40 px-6 py-4">
 							<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
 								<div>
-									<p class="text-sm font-bold text-slate-900">That was your free prediction.</p>
-									<p class="mt-0.5 text-xs leading-relaxed text-slate-600">Unlock all 39 schools — $25 once (or $9.99/mo) — to re-run after every essay edit and open the deep-dive on any school.</p>
+									<p class="text-sm font-bold text-slate-900">Your predictions are in — open any one free.</p>
+									<p class="mt-0.5 text-xs leading-relaxed text-slate-600">Reading more is $4.99 each (deep-dive included), or unlock all 39 + unlimited essay editing for $25 once ($9.99/mo).</p>
 								</div>
 								<button
 									type="button"
 									onclick={() => openPaywall('simulation')}
 									class="shrink-0 inline-flex items-center justify-center rounded-xl bg-[#0052CC] px-5 py-2.5 text-sm font-bold text-white transition hover:bg-[#0047b3] active:scale-[0.99]"
 								>
-									Unlock all 39 schools
+									Unlock everything
 								</button>
 							</div>
 						</div>
@@ -1979,12 +2006,18 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 				</div>
 				<p class="mt-4 text-[11px] font-bold uppercase tracking-[0.2em] text-blue-200">PredictAdmit Pro</p>
 				<h3 class="mt-1.5 text-2xl font-black leading-tight">
-					{paywallMode === 'deepDive' ? 'See exactly why' : 'Find out where you actually stand'}
+					{paywallMode === 'decision'
+						? `Open ${paywallContextDecision?.school ?? 'this'} decision`
+						: paywallMode === 'deepDive'
+							? 'See exactly why'
+							: 'Find out where you actually stand'}
 				</h3>
 				<p class="mx-auto mt-2 max-w-[18rem] text-sm leading-relaxed text-blue-100">
-					{paywallMode === 'deepDive'
-						? 'Open the full breakdown of this decision — what drove it, and what would move it.'
-						: 'Point the AI at your real application and get your decision, school by school.'}
+					{paywallMode === 'decision'
+						? 'You’ve used your one free decision. Open this one for $4.99 (deep-dive included), or unlock all 39.'
+						: paywallMode === 'deepDive'
+							? 'Open the full breakdown of this decision — what drove it, and what would move it.'
+							: 'Point the AI at your real application and get your decision, school by school.'}
 				</p>
 				<div class="mx-auto mt-3 inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-1 text-[11px] font-semibold ring-1 ring-white/20">
 					<svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
@@ -2018,7 +2051,7 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 
 				<!-- Lifetime — the target -->
 				<button
-					onclick={() => startCheckout('lifetime')}
+					onclick={() => startUpgrade('lifetime')}
 					disabled={checkoutLoading}
 					class="relative mt-4 w-full overflow-hidden rounded-2xl border-2 border-[#0052CC] bg-[#0052CC] px-5 py-4 text-left text-white shadow-lg shadow-blue-600/25 transition hover:bg-[#0047b3] active:scale-[0.99] disabled:opacity-50"
 				>
@@ -2029,7 +2062,7 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 
 				<!-- Monthly -->
 				<button
-					onclick={() => startCheckout('monthly')}
+					onclick={() => startUpgrade('monthly')}
 					disabled={checkoutLoading}
 					class="mt-2.5 w-full rounded-2xl border border-slate-200 px-5 py-3.5 text-left transition hover:border-slate-300 hover:bg-slate-50 disabled:opacity-50"
 				>
@@ -2048,10 +2081,12 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 						class="mt-2.5 w-full rounded-2xl border border-slate-200 px-5 py-3.5 text-left transition hover:border-slate-300 hover:bg-slate-50 disabled:opacity-50"
 					>
 						<span class="flex items-baseline justify-between gap-2">
-							<span class="text-sm font-bold text-slate-900">Just {paywallContextDecision.school}?</span>
+							<span class="text-sm font-bold text-slate-900">
+								{paywallMode === 'decision' ? `Open ${paywallContextDecision.school}` : `Just ${paywallContextDecision.school}?`}
+							</span>
 							<span class="text-sm font-bold text-slate-900">$4.99</span>
 						</span>
-						<span class="mt-0.5 block text-xs leading-relaxed text-slate-500">Unlock the full deep-dive for this one school.</span>
+						<span class="mt-0.5 block text-xs leading-relaxed text-slate-500">Opens this decision and its full deep-dive — yours to keep.</span>
 					</button>
 				{/if}
 
@@ -2070,5 +2105,13 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 		</div>
 	</div>
 {/if}
+
+<!-- Pre-checkout benefit carousel (Monthly/Lifetime upgrade path) -->
+<UpgradeCarousel
+	bind:open={showUpgradeCarousel}
+	plan={carouselPlan}
+	loading={checkoutLoading}
+	oncontinue={() => startCheckout(carouselPlan)}
+/>
 
 <SiteFooter />
