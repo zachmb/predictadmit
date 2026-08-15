@@ -87,10 +87,12 @@
 	// Free-tier limits (persisted per browser)
 	let hasUsedFreeSimulation = $state(false);
 	let hasUsedFreePdfOcr = $state(false);
-	// The ONE decision a non-Pro user may open for free. Once set, opening any OTHER
-	// locked decision requires $4.99 (that school → proSchools, deep dive included) or
-	// an upgrade. Persisted per browser; server-side truth is Stripe (proSchools/isPro).
-	let freeOpenedDecisionSlug = $state<string | null>(null);
+	// A/B TEST (2026-08-15): does 1 or 2 free decision opens convert better? Each
+	// browser is randomly assigned abFreeDecisions ∈ {1,2} (persisted). A non-Pro
+	// user may open that many decisions free; opening more needs $4.99 (that school →
+	// proSchools, deep dive included) or an upgrade. Variant is tagged on GA events.
+	let abFreeDecisions = $state(1);
+	let freeOpenedSlugs = $state<string[]>([]);
 	let promoCodeInput = $state('');
 	let showPaywallModal = $state(false);
 	let paywallMode = $state<'simulation' | 'ocr' | 'deepDive' | 'decision' | null>(null);
@@ -292,34 +294,38 @@
 
 	// Callbacks that AdmitMail expects
 
-	// Can this decision be OPENED? Pro/lifetime/monthly → all of them. A $4.99
-	// single unlock (proSchools) → that one. Otherwise you get exactly ONE free
-	// open (the first decision you tap becomes your free one).
+	// Can this decision be OPENED? Pro/lifetime/monthly → all of them. A $4.99 single
+	// unlock (proSchools) → that one. Otherwise you get abFreeDecisions free opens
+	// (the A/B variant); the ones you've already opened stay open.
 	function canOpenDecision(slug: string): boolean {
 		if ($userProfile.isPro) return true;
 		if (($userProfile.proSchools ?? []).includes(slug)) return true;
-		if (freeOpenedDecisionSlug === slug) return true;
-		if (!freeOpenedDecisionSlug) return true; // no free open used yet → this is it
-		return false;
+		if (freeOpenedSlugs.includes(slug)) return true;
+		return freeOpenedSlugs.length < abFreeDecisions; // free opens remaining
 	}
 
 	function selectPortal(portal: PortalEmail) {
-		// Gate: open ONE free, then $4.99 per decision (deep dive included) or upgrade.
+		// Gate: open your free allotment (1 or 2 per the A/B variant), then $4.99 per
+		// decision (deep dive included) or upgrade.
 		if (!canOpenDecision(portal.slug)) {
 			const decision = aiDecisions.find((d) => d.slug === portal.slug);
 			openPaywall('decision', decision ?? ({ slug: portal.slug, school: portal.name } as AiDecision));
 			return;
 		}
-		// Claim the free open on the first locked decision a non-Pro user reads.
+		// Claim a free open on a not-yet-opened locked decision for a non-Pro user.
 		if (
 			!$userProfile.isPro &&
 			!($userProfile.proSchools ?? []).includes(portal.slug) &&
-			!freeOpenedDecisionSlug
+			!freeOpenedSlugs.includes(portal.slug)
 		) {
-			freeOpenedDecisionSlug = portal.slug;
+			freeOpenedSlugs = [...freeOpenedSlugs, portal.slug];
 			if (typeof localStorage !== 'undefined')
-				localStorage.setItem('predictadmit_freeOpenedDecisionSlug', portal.slug);
-			track('free_decision_opened', { school: portal.slug });
+				localStorage.setItem('predictadmit_freeOpenedSlugs', JSON.stringify(freeOpenedSlugs));
+			track('free_decision_opened', {
+				school: portal.slug,
+				variant: abFreeDecisions,
+				opened_count: freeOpenedSlugs.length
+			});
 		}
 
 		selectedPortal = portal;
@@ -426,6 +432,12 @@
 					if (!paid && !trialStarted) return; // not confirmed → do NOT unlock
 					const vPlan = data.plan as string | null;
 					const vSlug = data.slug as string | null;
+					// A/B conversion event tagged with the free-decisions variant so we can
+					// compare upgrade rate for 1 vs 2 free opens (localStorage, order-safe).
+					track('conversion', {
+						plan: vPlan,
+						variant: Number(localStorage.getItem('predictadmit_ab_free_decisions')) || 1
+					});
 					// Per-school unlock (new 'single' $9, or legacy 'school' $14.99):
 					// grants ONE school's deep-dive, not full access.
 					if ((vPlan === 'single' || vPlan === 'school') && vSlug) {
@@ -476,7 +488,24 @@
 		// Restore free-tier usage flags (still used for non-Pro users)
 		hasUsedFreeSimulation = localStorage.getItem('predictadmit_hasUsedFreeSimulation') === 'true';
 		hasUsedFreePdfOcr = localStorage.getItem('predictadmit_hasUsedFreePdfOcr') === 'true';
-		freeOpenedDecisionSlug = localStorage.getItem('predictadmit_freeOpenedDecisionSlug') || null;
+
+		// A/B assignment: sticky per browser. Assign 1 or 2 free opens on first visit.
+		const savedAb = localStorage.getItem('predictadmit_ab_free_decisions');
+		if (savedAb === '1' || savedAb === '2') {
+			abFreeDecisions = Number(savedAb);
+		} else {
+			abFreeDecisions = Math.random() < 0.5 ? 1 : 2;
+			localStorage.setItem('predictadmit_ab_free_decisions', String(abFreeDecisions));
+			track('ab_assign', { experiment: 'free_decisions', variant: abFreeDecisions });
+		}
+		// Migrate the old single-slug key; then load the opened list.
+		const legacyOne = localStorage.getItem('predictadmit_freeOpenedDecisionSlug');
+		try {
+			freeOpenedSlugs = JSON.parse(localStorage.getItem('predictadmit_freeOpenedSlugs') || '[]');
+		} catch {
+			freeOpenedSlugs = [];
+		}
+		if (legacyOne && !freeOpenedSlugs.includes(legacyOne)) freeOpenedSlugs = [...freeOpenedSlugs, legacyOne];
 
 		// Restore AI inbox state (visiblePortals, read flags, selected email, etc.)
 
@@ -492,6 +521,11 @@
 
 	// Reactive Pro check
 	let hasDeepDiveAccess = $derived($userProfile.isPro);
+
+	// Decisions the user can no longer open for free → shown with a $4.99 lock chip.
+	let lockedSlugs = $derived(
+		new Set(aiDecisions.filter((d) => !canOpenDecision(d.slug)).map((d) => d.slug))
+	);
 
 	function outcomeLabel(outcome: DecisionOutcome): string {
 		if (outcome === 'admit') return 'Admitted';
@@ -542,7 +576,7 @@
 		paywallContextDecision = decision ?? null;
 		showPlans = false;
 		showPaywallModal = true;
-		track('paywall_view', { mode, school: decision?.slug });
+		track('paywall_view', { mode, school: decision?.slug, variant: abFreeDecisions });
 	}
 
 	function closePaywall() {
@@ -1784,6 +1818,7 @@ See what we read from your file
 								{edEmailMustBeViewed}
 								{hasViewedEdEmail}
 								{readPortalSlugs}
+								{lockedSlugs}
 								{selectedPortal}
 								{selectedSent}
 								{sentEmails}

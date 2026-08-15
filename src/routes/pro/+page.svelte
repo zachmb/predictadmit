@@ -18,6 +18,7 @@
 	import SchoolsExplorer from '$lib/components/pro/SchoolsExplorer.svelte';
 	import ChanceMeProfile from '$lib/components/pro/ChanceMeProfile.svelte';
 	import SettingsView from '$lib/components/pro/SettingsView.svelte';
+	import UpgradeCarousel from '$lib/components/UpgradeCarousel.svelte';
 
 	// --- RUNES STATE ---
 	let { data } = $props();
@@ -626,6 +627,14 @@
 		// checkout (server-validated) instead of unlocking client-side.
 		promoError = 'To unlock, choose a plan above.';
 		setTimeout(() => (promoError = ''), 4000);
+	}
+
+	// Show the benefit carousel before Stripe on the upgrade tiers (same as /ai).
+	let showUpgradeCarousel = $state(false);
+	let carouselPlan = $state<'monthly' | 'lifetime'>('lifetime');
+	function startUpgrade(plan: 'monthly' | 'lifetime') {
+		carouselPlan = plan;
+		showUpgradeCarousel = true;
 	}
 
 	async function handleCheckout(plan: 'monthly' | 'lifetime') {
@@ -2245,7 +2254,7 @@
 
 						<!-- Lifetime — the target -->
 						<button
-							onclick={() => handleCheckout('lifetime')}
+							onclick={() => startUpgrade('lifetime')}
 							disabled={isProcessing}
 							class="relative w-full overflow-hidden rounded-2xl border-2 border-[#0052CC] bg-[#0052CC] px-6 py-5 text-left text-white shadow-xl transition hover:bg-[#0047b3] hover:scale-[1.01] disabled:opacity-50 disabled:hover:scale-100"
 						>
@@ -2256,7 +2265,7 @@
 
 						<!-- Monthly -->
 						<button
-							onclick={() => handleCheckout('monthly')}
+							onclick={() => startUpgrade('monthly')}
 							disabled={isProcessing}
 							class="w-full rounded-2xl border border-slate-200 px-6 py-4 text-left transition hover:border-slate-300 hover:bg-slate-50 disabled:opacity-50"
 						>
@@ -2365,6 +2374,14 @@
 		</div>
 	</main>
 {/if}
+
+<!-- Pre-checkout benefit carousel (Monthly/Lifetime upgrade path) -->
+<UpgradeCarousel
+	bind:open={showUpgradeCarousel}
+	plan={carouselPlan}
+	loading={isProcessing}
+	oncontinue={() => handleCheckout(carouselPlan)}
+/>
 
 <style>
 	/* Styling for the IDE scrollbars */

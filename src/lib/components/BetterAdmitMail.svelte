@@ -22,6 +22,9 @@
 
 	// selections + read tracking
 	export let readPortalSlugs: Set<string>;
+	// Slugs the (non-Pro) user can't open for free anymore — shown with a $4.99 lock
+	// chip; tapping routes to the paywall (handled in the parent's selectPortal).
+	export let lockedSlugs: Set<string> = new Set();
 	export let selectedPortal: PortalEmail | null;
 	export let selectedSent: SentEmail | null;
 
@@ -385,10 +388,17 @@
 												</div>
 												{#if deepDiveItems && deepDiveItems.some((d) => d.slug === portal.slug)}
 													<span
-														class="shrink-0 inline-flex items-center gap-1 rounded-full border border-violet-200 bg-violet-50 px-2 py-[1px] text-[9px] text-violet-700"
+														class="shrink-0 inline-flex items-center gap-1 rounded-full border border-blue-200 bg-blue-50 px-2 py-[1px] text-[9px] text-blue-700"
 													>
-														<span class="h-1.5 w-1.5 rounded-full bg-violet-500"></span>
+														<span class="h-1.5 w-1.5 rounded-full bg-blue-500"></span>
 														Deep Dive
+													</span>
+												{:else if lockedSlugs.has(portal.slug)}
+													<span
+														class="shrink-0 inline-flex items-center gap-1 rounded-full border border-slate-200 bg-slate-100 px-2 py-[1px] text-[9px] font-bold text-slate-500"
+													>
+														<svg class="h-2.5 w-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+														$4.99
 													</span>
 												{/if}
 											</div>
