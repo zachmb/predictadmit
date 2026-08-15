@@ -2308,7 +2308,7 @@
 							</div>
 							<div>
 								<p class="font-bold text-slate-900">Unlimited AI decision simulations</p>
-								<p class="text-sm text-slate-500">Run your real application through the AI and get your predicted decision — accept, deny, or waitlist — at all 39 top schools. Then change an essay, an activity, a score, and <span class="font-semibold text-slate-700">re-run it as many times as you want</span> to watch your odds move. Free accounts can't run a single one; Pro has no cap.</p>
+								<p class="text-sm text-slate-500">Run your real application through the AI and get your predicted decision — accept, deny, or waitlist — at all 39 top schools. Then change an essay, an activity, a score, and <span class="font-semibold text-slate-700">re-run it as many times as you want</span> to watch your odds move. Running the simulation is free; Pro unlocks every decision to read plus the deep-dive on each — no cap.</p>
 							</div>
 						</div>
 

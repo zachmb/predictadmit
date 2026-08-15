@@ -56,9 +56,9 @@
 	];
 
 	const freeFeatures = [
-		'1 full AI admissions rehearsal (all 39 schools)',
+		'Run the AI across all 39 schools — free',
+		'Open your first predicted decision free',
 		'Clearly labeled fictional portals and decision letters',
-		'Chances predictor preview',
 		'No credit card required'
 	];
 </script>

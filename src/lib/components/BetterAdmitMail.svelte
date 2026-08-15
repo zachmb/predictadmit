@@ -1,6 +1,24 @@
 <script lang="ts">
 	import { fly } from 'svelte/transition';
+	import { onDestroy } from 'svelte';
+	import { pushOverlay, popOverlay } from '$lib/stores/ui';
 	import type { PortalEmail, SentEmail } from '$lib/config/admitMail';
+
+	// Dim the nav while the toast is visible (per the global overlay rule).
+	let toastShown = false;
+	$: {
+		const show = !!toastMsg;
+		if (show && !toastShown) {
+			toastShown = true;
+			pushOverlay();
+		} else if (!show && toastShown) {
+			toastShown = false;
+			popOverlay();
+		}
+	}
+	onDestroy(() => {
+		if (toastShown) popOverlay();
+	});
 
 	// DOM handle for scroll into view
 	export let inboxSection: HTMLElement | null;

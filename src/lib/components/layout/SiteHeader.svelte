@@ -1,6 +1,11 @@
 <script lang="ts">
 	import { userProfile } from '$lib/stores/user';
-	import { headerVisible, portalDecisionHeaderVisible, portalDecisionViewed } from '$lib/stores/ui';
+	import {
+		headerVisible,
+		portalDecisionHeaderVisible,
+		portalDecisionViewed,
+		overlayActive
+	} from '$lib/stores/ui';
 	import { page } from '$app/stores';
 	import { onDestroy } from 'svelte';
 
@@ -21,6 +26,9 @@
 	let timer: ReturnType<typeof setTimeout> | undefined;
 
 	$: session = $page.data.session;
+	// When any overlay/toast is up, the nav grays out + goes non-interactive so it
+	// never competes with the overlay. Driven by the global overlayActive counter.
+	$: dimmed = $overlayActive > 0;
 	$: isLandingPage = $page.url.pathname === '/';
 	// Portal decision pages get the floating "dynamic island" pill (the header
 	// only ever shows there after a decision is viewed), matching the home page.
@@ -62,6 +70,9 @@
 	{/if}
 
 	<header
+		class:opacity-30={dimmed}
+		class:pointer-events-none={dimmed}
+		class:grayscale={dimmed}
 		class="fixed left-1/2 -translate-x-1/2 z-[9999] bg-white/80 backdrop-blur-xl transition-all duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden
 		{floatingIsland
 			? 'top-6 h-[68px] border border-slate-200/80 rounded-full px-2'

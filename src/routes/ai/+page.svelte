@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount, tick } from 'svelte';
+	import { pushOverlay, popOverlay } from '$lib/stores/ui';
 	import { signIn } from '@auth/sveltekit/client';
 	import { goto } from '$app/navigation';
 	import type { PageData } from './$types';
@@ -516,6 +517,14 @@
 			if (!activities && savedProfile.activities) activities = savedProfile.activities;
 			if (!honors && savedProfile.awards) honors = savedProfile.awards;
 			if (!transcript && savedProfile.rigor) transcript = savedProfile.rigor;
+		}
+	});
+
+	// Gray out the nav whenever the paywall modal is open.
+	$effect(() => {
+		if (showPaywallModal) {
+			pushOverlay();
+			return popOverlay;
 		}
 	});
 

@@ -5,6 +5,7 @@
 	// benefit per screen, big icon + bold title + subtitle, dots, Next → final
 	// confirm → checkout. Non-subscription micro-buys ($4.99/decision) skip this.
 	import { fade, fly } from 'svelte/transition';
+	import { pushOverlay, popOverlay } from '$lib/stores/ui';
 
 	let {
 		open = $bindable(false),
@@ -67,6 +68,13 @@
 	// Reset to the first screen whenever it (re)opens.
 	$effect(() => {
 		if (open) step = 0;
+	});
+	// Gray out the nav while the sequence is open.
+	$effect(() => {
+		if (open) {
+			pushOverlay();
+			return popOverlay;
+		}
 	});
 </script>
 
