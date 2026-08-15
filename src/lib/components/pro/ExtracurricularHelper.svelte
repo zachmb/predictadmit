@@ -104,6 +104,23 @@
 		{/if}
 	</div>
 
+	{#if !analysis && !loading}
+		<!-- Value preview so the tool sells itself before the first run. -->
+		<div class="mt-6 rounded-2xl border border-slate-200 bg-slate-50/60 p-5">
+			<h2 class="text-xs font-bold uppercase tracking-wide text-slate-500">What you'll get</h2>
+			<p class="mt-1.5 text-sm text-slate-600">Every activity sorted into the four tiers admissions officers actually use:</p>
+			<div class="mt-3 grid gap-2 sm:grid-cols-2">
+				{#each [['Standout', 'National impact — the rare, résumé-defining kind', 'bg-[#0052CC] text-white'], ['Strong', 'State/regional leadership or real, sustained results', 'bg-emerald-100 text-emerald-800'], ['Solid', 'School-level involvement — good, but expected', 'bg-slate-200 text-slate-700'], ['Filler', 'Brief or passive — little real impact', 'bg-amber-100 text-amber-800']] as [tier, desc, cls]}
+					<div class="flex items-start gap-2.5 rounded-xl border border-slate-200 bg-white p-3">
+						<span class="shrink-0 rounded-full px-2.5 py-0.5 text-[11px] font-bold {cls}">{tier}</span>
+						<span class="text-xs leading-snug text-slate-600">{desc}</span>
+					</div>
+				{/each}
+			</div>
+			<p class="mt-3 text-xs text-slate-400">Plus your <span class="font-semibold text-slate-600">spike</span> (the theme tying it together) and one concrete move to raise each activity.</p>
+		</div>
+	{/if}
+
 	{#if analysis}
 		<div class="mt-6 space-y-5">
 			<div class="rounded-2xl border border-slate-200 bg-slate-50 p-5">

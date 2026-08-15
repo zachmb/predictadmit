@@ -1500,7 +1500,7 @@
 											<button onclick={addActivity} class="text-xs font-bold text-[#0052CC]"
 												>+ Actv.</button
 											>
-											<button onclick={addHonor} class="text-xs font-bold text-purple-600"
+											<button onclick={addHonor} class="text-xs font-bold text-[#0052CC]"
 												>+ Honor</button
 											>
 										</div>
@@ -1544,7 +1544,7 @@
 										{/each}
 										{#each profile.honors as honor (honor.id)}
 											<div
-												class="flex gap-2 items-start p-3 bg-slate-50 rounded-lg border border-slate-200 border-l-purple-400 border-l-4"
+												class="flex gap-2 items-start p-3 bg-slate-50 rounded-lg border border-slate-200 border-l-[#0052CC] border-l-4"
 											>
 												<div class="flex-1 space-y-2">
 													<div class="flex gap-2">
@@ -1624,7 +1624,7 @@
 							<button
 								onclick={generateMindMap}
 								disabled={isGeneratingMindMap}
-								class="px-4 py-2 bg-indigo-50 text-indigo-600 font-bold rounded-lg hover:bg-indigo-100 disabled:opacity-50 transition-all flex items-center gap-2 text-sm"
+								class="px-4 py-2 bg-blue-50 text-[#0052CC] font-bold rounded-lg hover:bg-blue-100 disabled:opacity-50 transition-all flex items-center gap-2 text-sm"
 							>
 								{#if isGeneratingMindMap}
 									<svg class="animate-spin h-4 w-4" viewBox="0 0 24 24"
@@ -1658,7 +1658,7 @@
 							<button
 								onclick={analyzeMindMap}
 								disabled={isAnalyzingMindMap || mindMapNodes.length === 0}
-								class="px-4 py-2 bg-purple-600 text-white font-bold rounded-lg shadow-lg hover:bg-purple-700 disabled:opacity-50 transition-all flex items-center gap-2 text-sm"
+								class="px-4 py-2 bg-[#0052CC] text-white font-bold rounded-lg shadow-lg hover:bg-[#0047b3] disabled:opacity-50 transition-all flex items-center gap-2 text-sm"
 							>
 								{#if isAnalyzingMindMap}
 									<svg class="animate-spin h-4 w-4" viewBox="0 0 24 24"
@@ -1754,16 +1754,24 @@
 
 						{#if mindMapNodes.length === 0}
 							<div
-								class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-40"
+								class="absolute inset-0 flex flex-col items-center justify-center gap-3 px-6 text-center pointer-events-none"
 							>
-								<p class="text-xl font-bold text-slate-400">Click anywhere to add ideas</p>
+								<div class="grid h-14 w-14 place-items-center rounded-2xl bg-[#0052CC]/10 text-[#0052CC]">
+									<svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.989-2.386l-.548-.547z" /></svg>
+								</div>
+								<p class="text-lg font-bold text-slate-700">Map the story behind your application</p>
+								<p class="max-w-xs text-sm leading-relaxed text-slate-400">
+									Click anywhere to drop an idea — an experience, an obsession, a value — or hit
+									<span class="font-semibold text-[#0052CC]">AI&nbsp;Brainstorm</span> to auto-generate themes from your profile, then
+									<span class="font-semibold text-[#0052CC]">Analyze&nbsp;Themes</span> to find the thread that ties them together.
+								</p>
 							</div>
 						{/if}
 					</div>
 
 					{#if mindMapAnalysis}
-						<div class="h-48 bg-purple-50 border-t border-purple-100 p-6 overflow-y-auto">
-							<h3 class="text-xs font-bold uppercase text-purple-600 mb-2">AI Analysis</h3>
+						<div class="h-48 bg-blue-50 border-t border-blue-100 p-6 overflow-y-auto">
+							<h3 class="text-xs font-bold uppercase text-[#0052CC] mb-2">AI Analysis</h3>
 							<p class="text-sm text-slate-800 whitespace-pre-line">{mindMapAnalysis}</p>
 						</div>
 					{/if}
@@ -2062,7 +2070,7 @@
 										</div>
 
 										<div
-											class="space-y-1 pl-4 border-l-2 border-indigo-500/30 opacity-80 bg-slate-900 rounded-r-lg p-2 font-mono text-[10px] text-green-400 shadow-inner"
+											class="space-y-1 pl-4 border-l-2 border-[#0052CC]/30 opacity-80 bg-slate-900 rounded-r-lg p-2 font-mono text-[10px] text-green-400 shadow-inner"
 										>
 											{#each buildOutput.slice(-4) as line}
 												<div class="truncate">
@@ -2188,9 +2196,9 @@
 													{/if}
 
 													{#if essay.honest_feedback}
-														<div class="p-5 bg-indigo-50 rounded-xl border border-indigo-100">
+														<div class="p-5 bg-blue-50 rounded-xl border border-blue-100">
 															<h3
-																class="text-xs font-bold text-indigo-700 uppercase tracking-widest mb-2 flex items-center gap-2"
+																class="text-xs font-bold text-[#003d99] uppercase tracking-widest mb-2 flex items-center gap-2"
 															>
 																<svg
 																	class="w-4 h-4"
@@ -2355,8 +2363,8 @@
 						</div>
 						
 						<div class="flex items-start gap-4">
-							<div class="w-10 h-10 rounded-xl bg-indigo-100 flex items-center justify-center shrink-0">
-								<svg class="w-5 h-5 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
+							<div class="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center shrink-0">
+								<svg class="w-5 h-5 text-[#0052CC]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
 							</div>
 							<div>
 								<p class="font-bold text-slate-900">Essay editor with AI feedback</p>
