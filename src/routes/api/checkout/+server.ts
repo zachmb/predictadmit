@@ -51,7 +51,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 		// seasonal, one-and-done event. Every price is created INLINE by name so
 		// checkout stays account-agnostic (never depends on a live product id).
 		if (pricingMode === 'season') {
-			// $99 — THE TARGET. Full access: all 39 schools, unlimited re-runs the
+			// $29 — THE TARGET. Full access: all 39 schools, unlimited re-runs the
 			// whole cycle, every deep-dive, the essay workshop.
 			sessionConfig = {
 				mode: 'payment',
@@ -72,7 +72,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 				cancel_url: `${origin}/pro?canceled=1`
 			};
 		} else if (pricingMode === 'season_plus') {
-			// $249 — everything in Season plus hands-on essay review (the high anchor).
+			// $59 — everything in Season plus hands-on essay review (the high anchor).
 			sessionConfig = {
 				mode: 'payment',
 				line_items: [

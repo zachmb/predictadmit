@@ -4,7 +4,7 @@
 	const stats = [
 		{ value: '5,000+', label: 'Students on PredictAdmit' },
 		{ value: '39', label: 'School scenarios' },
-		{ value: '$99', label: 'Full Season, one-time' },
+		{ value: '$29', label: 'Full Season, one-time' },
 		{ value: 'Free', label: 'First prediction' }
 	];
 
@@ -22,7 +22,7 @@
 		{
 			icon: '⚡',
 			title: 'Pro is the AI prediction',
-			body: 'Pro is where the AI reads your actual application and predicts your likely decision at every school, with the full analysis behind it and unlimited essay grading. Your first prediction is free; Full Season is a one-time $99 (no subscription), or $29 for a single school. Cheaper than an hour with a private consultant.'
+			body: 'Pro is where the AI reads your actual application and predicts your likely decision at every school, with the full analysis behind it and unlimited essay grading. Your first prediction is free; Full Season is a one-time $29 (no subscription), or $9 for a single school. Cheaper than an hour with a private consultant.'
 		},
 		{
 			icon: '🔍',
@@ -55,7 +55,7 @@
 	const faqs: { q: string; a: string; link?: { href: string; label: string } }[] = [
 		{
 			q: 'Is PredictAdmit free?',
-			a: 'The portal decision simulations are free — open any school, rehearse the moment, no card required. Your first AI prediction is free too. After that, Full Season is a one-time $99 (no subscription) for all 39 schools, unlimited re-runs, and the essay workshop. Care about one school only? A single-school unlock is $29.'
+			a: 'The portal decision simulations are free — open any school, rehearse the moment, no card required. Your first AI prediction is free too. After that, Full Season is a one-time $29 (no subscription) for all 39 schools, unlimited re-runs, and the essay workshop. Care about one school only? A single-school unlock is $9.'
 		},
 		{
 			q: 'Are the decision letters real?',
@@ -81,19 +81,19 @@
 	<title>About PredictAdmit — Rehearse decision day before it counts</title>
 	<meta
 		name="description"
-		content="PredictAdmit lets students rehearse decision day on fictional portals, grade essays with AI, and predict their real decisions. Portal sims are free and your first prediction is free; Full Season is a one-time $99, no subscription. Everything simulated is labeled."
+		content="PredictAdmit lets students rehearse decision day on fictional portals, grade essays with AI, and predict their real decisions. Portal sims are free and your first prediction is free; Full Season is a one-time $29, no subscription. Everything simulated is labeled."
 	/>
 	<meta property="og:title" content="About PredictAdmit — Rehearse decision day before it counts" />
 	<meta
 		property="og:description"
-		content="Rehearse decision day on clearly-labeled fictional portals and sharpen your essays with AI. Portal sims are free — Pro predicts your real decisions for $99 once."
+		content="Rehearse decision day on clearly-labeled fictional portals and sharpen your essays with AI. Portal sims are free — Pro predicts your real decisions for $29 once."
 	/>
 	<meta property="og:type" content="website" />
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:title" content="About PredictAdmit" />
 	<meta
 		name="twitter:description"
-		content="Rehearse decision day on fictional portals, grade your essays with AI, predict your real decisions. Free to start — Pro is $99 once."
+		content="Rehearse decision day on fictional portals, grade your essays with AI, predict your real decisions. Free to start — Pro is $29 once."
 	/>
 </svelte:head>
 
@@ -198,7 +198,7 @@
 				href="/pricing"
 				class="inline-flex items-center justify-center font-semibold text-sm bg-[#0052CC] text-white px-8 py-3.5 rounded-lg hover:bg-[#003d99] transition-colors shadow-lg shadow-[#0052CC]/20"
 			>
-				Get Full Season — $99 once, no subscription →
+				Get Full Season — $29 once, no subscription →
 			</a>
 			<span class="text-sm text-slate-400">Free simulation included. No credit card to start.</span>
 		</div>

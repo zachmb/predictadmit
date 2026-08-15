@@ -851,11 +851,11 @@
 		},
 		{
 			q: 'Is this a subscription?',
-			a: "No. Full Season is a single $99 payment — no recurring charge, nothing to cancel. It covers all 39 schools, unlimited re-runs, and the essay workshop for the whole application cycle. Your first prediction is free, so you see the value before you pay."
+			a: "No. Full Season is a single $29 payment — no recurring charge, nothing to cancel. It covers all 39 schools, unlimited re-runs, and the essay workshop for the whole application cycle. Your first prediction is free, so you see the value before you pay."
 		},
 		{
 			q: 'What if I only care about one school?',
-			a: "Run your free prediction first, then unlock the full deep-dive for any one school for a one-time $29 — the AI decision simulation, the breakdown of why, and essay grading for that school."
+			a: "Run your free prediction first, then unlock the full deep-dive for any one school for a one-time $9 — the AI decision simulation, the breakdown of why, and essay grading for that school."
 		},
 		{
 			q: 'How good is the essay grader, really?',
@@ -872,7 +872,7 @@
 	<title>PredictAdmit Pro — see your real decisions before they land</title>
 	<meta
 		name="description"
-		content="Pro runs the AI on your actual profile: predicted decisions across 39 schools, deep-dive analysis, and blunt essay grading. Your first prediction is free, then a one-time $99 for the whole season — no subscription."
+		content="Pro runs the AI on your actual profile: predicted decisions across 39 schools, deep-dive analysis, and blunt essay grading. Your first prediction is free, then a one-time $29 for the whole season — no subscription."
 	/>
 </svelte:head>
 
@@ -2250,7 +2250,7 @@
 							class="relative w-full overflow-hidden rounded-2xl border-2 border-[#0052CC] bg-[#0052CC] px-6 py-5 text-left text-white shadow-xl transition hover:bg-[#0047b3] hover:scale-[1.01] disabled:opacity-50 disabled:hover:scale-100"
 						>
 							<span class="absolute right-4 top-4 rounded-full bg-white/20 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide ring-1 ring-white/30">Most popular</span>
-							<span class="block text-2xl font-black">{isProcessing ? 'Taking you to checkout…' : 'Full Season — $99'}</span>
+							<span class="block text-2xl font-black">{isProcessing ? 'Taking you to checkout…' : 'Full Season — $29'}</span>
 							<span class="mt-1 block max-w-[18rem] text-sm leading-relaxed text-blue-100">All 39 schools, unlimited re-runs all cycle, every deep-dive, and the essay workshop.</span>
 						</button>
 
@@ -2262,7 +2262,7 @@
 						>
 							<span class="flex items-baseline justify-between gap-2">
 								<span class="text-base font-bold text-slate-900">Season + Essay Review</span>
-								<span class="text-base font-bold text-slate-900">$249</span>
+								<span class="text-base font-bold text-slate-900">$59</span>
 							</span>
 							<span class="mt-0.5 block text-sm leading-relaxed text-slate-500">Everything in Full Season, plus hands-on review of your essays.</span>
 						</button>
@@ -2274,7 +2274,7 @@
 						>
 							<span class="flex items-baseline justify-between gap-2">
 								<span class="text-base font-bold text-slate-900">Just one school</span>
-								<span class="text-base font-bold text-slate-900">$29</span>
+								<span class="text-base font-bold text-slate-900">$9</span>
 							</span>
 							<span class="mt-0.5 block text-sm leading-relaxed text-slate-500">Run your free prediction first, then unlock the deep-dive for any one school.</span>
 						</a>
@@ -2344,7 +2344,7 @@
 							<div>
 								<div class="flex items-center gap-2">
 									<p class="font-bold text-slate-900">All of it, no limits, with Pro</p>
-									<span class="text-[10px] uppercase font-bold tracking-wide text-[#0052CC] bg-white border border-blue-100 rounded-full px-2 py-0.5">$99 · one-time</span>
+									<span class="text-[10px] uppercase font-bold tracking-wide text-[#0052CC] bg-white border border-blue-100 rounded-full px-2 py-0.5">$29 · one-time</span>
 								</div>
 								<p class="text-sm text-slate-500">Run the decision simulation as often as you like, read the full deep-dive on every school, grade essays until they're right. Your first prediction is free; one payment unlocks the rest for the whole season.</p>
 							</div>
@@ -2358,7 +2358,7 @@
 				<div class="bg-blue-900 rounded-[2.5rem] p-12 text-center text-white space-y-6">
 					<h3 class="text-3xl font-bold text-white">The consultant's read, without the consultant's bill.</h3>
 					<p class="text-blue-100 text-lg max-w-2xl mx-auto leading-relaxed">
-						Private counselors charge thousands a season for the same judgment call: is this kid getting in, and what should they fix. Full Season is $99, once — no subscription. Every simulation, every deep dive, every essay pass, all cycle. Your first prediction is free, so you only pay once it's already told you something you didn't know.
+						Private counselors charge thousands a season for the same judgment call: is this kid getting in, and what should they fix. Full Season is $29, once — no subscription. Every simulation, every deep dive, every essay pass, all cycle. Your first prediction is free, so you only pay once it's already told you something you didn't know.
 					</p>
 				</div>
 			</div>

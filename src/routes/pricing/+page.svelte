@@ -67,7 +67,7 @@
 	<title>PredictAdmit – Pricing</title>
 	<meta
 		name="description"
-		content="Your first AI admissions rehearsal is free. Unlock one school for $29, or get Full Season — every school, every tool, all cycle — for a one-time $99. No subscription."
+		content="Your first AI admissions rehearsal is free. Unlock one school for $9, or get Full Season — every school, every tool, all cycle — for a one-time $29. No subscription."
 	/>
 </svelte:head>
 
@@ -79,7 +79,7 @@
 			</h1>
 			<p class="text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
 				Private admissions consultants run $200–500 an hour and $5,000+ per application season.
-				Full Season is $99 — once. Start free and see where you stand first.
+				Full Season is $29 — once. Start free and see where you stand first.
 			</p>
 		</header>
 
@@ -111,7 +111,7 @@
 			<div class="rounded-[1.5rem] bg-white p-8 border border-slate-200 flex flex-col">
 				<h2 class="text-sm font-bold text-slate-500 tracking-[0.25em] uppercase">Single School</h2>
 				<div class="mt-4 flex items-end gap-1">
-					<span class="text-5xl font-bold tracking-tighter">$29</span>
+					<span class="text-5xl font-bold tracking-tighter">$9</span>
 					<span class="text-sm text-slate-400 font-medium mb-1.5">once, per school</span>
 				</div>
 				<p class="mt-2 text-xs text-slate-500">
@@ -138,7 +138,7 @@
 					disabled={isProcessing}
 					class="mt-3 w-full rounded-2xl border border-slate-200 px-6 py-3.5 text-sm font-bold text-slate-700 hover:bg-slate-50 transition-colors disabled:opacity-50"
 				>
-					Unlock this school — $29
+					Unlock this school — $9
 				</button>
 			</div>
 
@@ -149,7 +149,7 @@
 				</span>
 				<h2 class="text-sm font-bold text-[#0052CC] tracking-[0.25em] uppercase">Full Season</h2>
 				<div class="mt-4 flex items-end gap-1">
-					<span class="text-5xl font-bold tracking-tighter">$99</span>
+					<span class="text-5xl font-bold tracking-tighter">$29</span>
 					<span class="text-sm text-slate-400 font-medium mb-1.5">once, all cycle</span>
 				</div>
 				<p class="mt-2 text-xs text-slate-500">
@@ -168,14 +168,14 @@
 					disabled={isProcessing}
 					class="mt-8 w-full rounded-2xl bg-[#0052CC] px-6 py-3.5 text-sm font-bold text-white shadow-xl hover:bg-[#0047b3] hover:-translate-y-0.5 transition-all disabled:opacity-50"
 				>
-					{isProcessing ? 'Starting checkout…' : 'Get Full Season — $99 once →'}
+					{isProcessing ? 'Starting checkout…' : 'Get Full Season — $29 once →'}
 				</button>
 				<button
 					onclick={() => startCheckout('season_plus')}
 					disabled={isProcessing}
 					class="mt-2 w-full rounded-2xl border border-slate-200 px-6 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors disabled:opacity-50"
 				>
-					Or add hands-on essay review — $249
+					Or add hands-on essay review — $59
 				</button>
 			</div>
 		</section>
@@ -191,7 +191,7 @@
 				<div class="mt-1 text-xs text-slate-500">One hour of consultant essay review</div>
 			</div>
 			<div class="rounded-2xl border border-[#0052CC]/30 bg-blue-50/50 p-5">
-				<div class="text-2xl font-bold text-[#0052CC]">$99</div>
+				<div class="text-2xl font-bold text-[#0052CC]">$29</div>
 				<div class="mt-1 text-xs text-slate-600">Full Season — every school, every tool, forever</div>
 			</div>
 		</section>
@@ -205,7 +205,7 @@
 						The feedback loop consultants sell by the hour — a blunt read of your application,
 						school by school, with a concrete plan to fix it — is what Full Season gives you
 						unlimited, for less than half of one consultant hour. Only care about one dream school?
-						The School Pass gets you its full analysis for $29.
+						The School Pass gets you its full analysis for $9.
 					</p>
 					<p class="text-slate-500 italic">"The read is the same either way. We just don't bill you by the hour for it."</p>
 				</div>

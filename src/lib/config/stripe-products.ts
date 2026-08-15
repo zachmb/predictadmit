@@ -15,28 +15,29 @@
 // fear AND fits the season. Anchored against private-counselor spend ($5k–$7k), not
 // the free chancing calculators. Good-better-best 3 tiers; `season` is the target.
 export const STRIPE_PRODUCTS = {
-	// $29 one-time — one school's full deep-dive + verdict. Per-school (sets
+	// $9 one-time — one school's full deep-dive + verdict. Per-school (sets
 	// proSchools), does NOT grant full access. The low anchor / downsell.
 	single: {
 		productId: '', // none in live — checkout uses product_data.name (account-agnostic)
 		name: 'PredictAdmit — Single School Deep-Dive',
-		amountCents: 2900,
+		amountCents: 900,
 		recurring: false
 	},
-	// $99 one-time — THE TARGET. Full access: all 39 schools, unlimited re-runs the
+	// $29 one-time — THE TARGET. Full access: all 39 schools, unlimited re-runs the
 	// whole cycle, every deep-dive, the essay workshop + AI counselor. Sets isPro.
+	// Impulse-priced (2026-08-15, Zach: "waaay lower") against the $5k counselor anchor.
 	season: {
 		productId: '', // none in live — checkout uses product_data.name below
 		name: 'PredictAdmit — Full Season (All 39 Schools)',
-		amountCents: 9900,
+		amountCents: 2900,
 		recurring: false
 	},
-	// $249 one-time — everything in Season plus hands-on essay review. The high
-	// anchor that makes $99 read as the smart-money pick. Sets isPro.
+	// $59 one-time — everything in Season plus hands-on essay review. The high
+	// anchor that makes $29 read as the smart-money pick. Sets isPro.
 	seasonPlus: {
 		productId: '', // none in live — checkout uses product_data.name below
 		name: 'PredictAdmit — Full Season + Essay Review',
-		amountCents: 24900,
+		amountCents: 5900,
 		recurring: false
 	},
 

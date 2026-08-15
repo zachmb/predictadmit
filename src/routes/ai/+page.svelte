@@ -387,7 +387,7 @@
 					if (!paid && !trialStarted) return; // not confirmed → do NOT unlock
 					const vPlan = data.plan as string | null;
 					const vSlug = data.slug as string | null;
-					// Per-school unlock (new 'single' $29, or legacy 'school' $14.99):
+					// Per-school unlock (new 'single' $9, or legacy 'school' $14.99):
 					// grants ONE school's deep-dive, not full access.
 					if ((vPlan === 'single' || vPlan === 'school') && vSlug) {
 						userProfile.update((u) => ({
@@ -519,7 +519,7 @@
 		if (typeof window === 'undefined') return;
 		const url = `${window.location.origin}/pro`;
 		const text =
-			'I found PredictAdmit — its AI predicts my real admissions decisions across all 39 schools. It’s a one-time $99, way cheaper than a counselor. Can we?';
+			'I found PredictAdmit — its AI predicts my real admissions decisions across all 39 schools. It’s a one-time $29, way cheaper than a counselor. Can we?';
 		try {
 			if (navigator.share) {
 				await navigator.share({ title: 'PredictAdmit', text, url });
@@ -2023,7 +2023,7 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 					class="relative mt-4 w-full overflow-hidden rounded-2xl border-2 border-[#0052CC] bg-[#0052CC] px-5 py-4 text-left text-white shadow-lg shadow-blue-600/25 transition hover:bg-[#0047b3] active:scale-[0.99] disabled:opacity-50"
 				>
 					<span class="absolute right-3 top-3 rounded-full bg-white/20 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide ring-1 ring-white/30">Most popular</span>
-					<span class="block text-base font-black">{checkoutLoading ? 'Opening checkout…' : 'Full Season — $99'}</span>
+					<span class="block text-base font-black">{checkoutLoading ? 'Opening checkout…' : 'Full Season — $29'}</span>
 					<span class="mt-0.5 block max-w-[15rem] text-xs leading-relaxed text-blue-100">All 39 schools, unlimited re-runs all cycle, every deep-dive, and the essay workshop.</span>
 				</button>
 
@@ -2035,7 +2035,7 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 				>
 					<span class="flex items-baseline justify-between gap-2">
 						<span class="text-sm font-bold text-slate-900">Season + Essay Review</span>
-						<span class="text-sm font-bold text-slate-900">$249</span>
+						<span class="text-sm font-bold text-slate-900">$59</span>
 					</span>
 					<span class="mt-0.5 block text-xs leading-relaxed text-slate-500">Everything in Full Season, plus hands-on review of your essays.</span>
 				</button>
@@ -2049,7 +2049,7 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 					>
 						<span class="flex items-baseline justify-between gap-2">
 							<span class="text-sm font-bold text-slate-900">Just {paywallContextDecision.school}?</span>
-							<span class="text-sm font-bold text-slate-900">$29</span>
+							<span class="text-sm font-bold text-slate-900">$9</span>
 						</span>
 						<span class="mt-0.5 block text-xs leading-relaxed text-slate-500">Unlock the full deep-dive for this one school.</span>
 					</button>
