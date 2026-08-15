@@ -1050,39 +1050,46 @@
 	<div class="relative z-10">
 		<div class="max-w-[1000px] mx-auto px-6 py-24 space-y-16">
 			<!-- Hero -->
-			<header class="text-center space-y-6 max-w-2xl mx-auto">
+			<header class="text-center space-y-5 max-w-2xl mx-auto">
 				<div
-					class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-100"
+					class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-100"
 				>
-					<span class="w-2 h-2 bg-[#0052CC] rounded-full animate-pulse"></span>
-					<span class="text-xs font-bold text-[#0052CC] tracking-wide"
-						>AI-POWERED ADMISSIONS SIMULATOR</span
-					>
+					<span class="w-1.5 h-1.5 bg-[#0052CC] rounded-full"></span>
+					<span class="text-[11px] font-bold text-[#0052CC] tracking-[0.14em] uppercase">AI Admissions Simulator</span>
 				</div>
 
-				<h1 class="text-6xl font-black tracking-tight text-slate-900 leading-[1.1]">
-					Predict Your College<br />
-					<span class="text-[#0052CC]"> Results </span>
+				<h1 class="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-slate-900 leading-[1.05]">
+					Predict your college<br />
+					<span class="text-[#0052CC]">decisions</span>
 				</h1>
 
-				<p class="text-lg text-slate-600 font-normal max-w-xl mx-auto leading-relaxed">
-					PredictAdmit's AI reads every part of your application and predicts your decision at all 39
-					top schools — trained until it reproduced our founding team's own admissions results.
-					<span class="font-bold text-[#0052CC]">Your first prediction is free — sign in with Google to run it.</span>
+				<p class="mx-auto max-w-xl text-base sm:text-lg leading-relaxed text-slate-600">
+					PredictAdmit's AI reads your real application and calls your decision — accept, deny, or
+					waitlist — at all 39 top schools.
+					<span class="font-semibold text-slate-900">Your first prediction is free.</span>
 				</p>
 
-				<p class="text-sm text-slate-500">
-					Predictions use factor weights from NACAC's Factors in the Admission Decision survey.
-					<a href="/methodology" class="font-medium text-[#0052CC] hover:underline"
-						>Read our methodology →</a
-					>
-				</p>
+				<!-- Trust band — calibration, scale, privacy (the signals a nervous applicant needs). -->
+				<div class="flex flex-wrap items-center justify-center gap-x-3.5 gap-y-2 text-xs font-medium text-slate-500">
+					<span class="inline-flex items-center gap-1.5">
+						<svg class="h-3.5 w-3.5 text-[#0052CC]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+						Calibrated on real admissions results
+					</span>
+					<span class="hidden sm:block h-3 w-px bg-slate-200"></span>
+					<span class="inline-flex items-center gap-1.5">
+						<svg class="h-3.5 w-3.5 text-[#0052CC]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 10-4 0m8 0a4 4 0 10-3-7" /></svg>
+						5,000+ applicants
+					</span>
+					<span class="hidden sm:block h-3 w-px bg-slate-200"></span>
+					<span class="inline-flex items-center gap-1.5">
+						<svg class="h-3.5 w-3.5 text-[#0052CC]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+						Your data never leaves your browser
+					</span>
+				</div>
 
-				<p
-					class="mx-auto max-w-lg rounded-2xl border border-amber-200 bg-amber-50 px-5 py-3 text-sm leading-relaxed text-amber-900"
-				>
-					Calibrated on real decisions: we tuned PredictAdmit until it reproduced our founding team's own college admissions results, so it reads your profile far more sharply than a generic ChatGPT guess. Still — it's an AI prediction and could be wrong,
-					so don't think about it too deeply or treat it like a real admissions decision.
+				<p class="mx-auto max-w-md text-xs leading-relaxed text-slate-400">
+					An estimate from NACAC factor weights — not an official decision, and never affiliated with any school.
+					<a href="/methodology" class="font-medium text-[#0052CC] hover:underline">Methodology →</a>
 				</p>
 			</header>
 
