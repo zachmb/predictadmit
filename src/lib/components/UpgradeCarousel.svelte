@@ -26,6 +26,7 @@
 		body: string;
 		icon: 'bolt' | 'pencil' | 'search' | 'chat';
 		shot?: string;
+		mock?: 'essay' | 'chat'; // designed visual for the screens without a screenshot
 	};
 
 	// Essay editing is screen 3 on purpose — rising seniors pay for that specifically.
@@ -51,14 +52,16 @@
 			eyebrow: 'The workshop',
 			title: 'Pro essay editing',
 			body: "Line-by-line AI feedback on every supplement — the honest read an admissions officer would give. You write every word; it just makes them land.",
-			icon: 'pencil'
+			icon: 'pencil',
+			mock: 'essay'
 		},
 		{
 			kind: 'benefit',
 			eyebrow: 'Talk to us',
 			title: 'Advice from the founding team',
 			body: 'Stuck on your list or an essay? Message the people who got into these schools and calibrated the AI on real admissions results.',
-			icon: 'chat'
+			icon: 'chat',
+			mock: 'chat'
 		}
 	];
 
@@ -181,6 +184,34 @@
 									</div>
 									<img src={s.shot} alt="PredictAdmit Pro" class="block w-full object-cover object-top" style="max-height:340px;" />
 								</div>
+							{:else if s.mock === 'essay'}
+								<!-- Essay-editing demo: a line with an AI margin note. -->
+								<div class="mx-auto mt-7 w-full max-w-[300px] rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+									<p class="text-[13px] leading-relaxed text-slate-700">
+										Ever since I was little, I have <span class="rounded bg-amber-100 px-0.5 text-amber-900 line-through decoration-amber-400/70">always been passionate about</span> helping people.
+									</p>
+									<div class="mt-3 flex items-start gap-2 rounded-xl bg-[#0052CC]/[0.06] p-3">
+										<div class="grid h-5 w-5 flex-none place-items-center rounded-full bg-[#0052CC] text-white">
+											<svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+										</div>
+										<p class="text-[12px] leading-snug text-slate-700">
+											Cliché opener. Start on the <span class="font-semibold">specific moment</span> — the reader has seen “passionate about helping” a thousand times.
+										</p>
+									</div>
+								</div>
+							{:else if s.mock === 'chat'}
+								<!-- Founder-advice demo: a short chat exchange. -->
+								<div class="mx-auto mt-7 w-full max-w-[300px] space-y-2.5">
+									<div class="ml-auto max-w-[80%] rounded-2xl rounded-br-md bg-slate-100 px-4 py-2.5 text-[13px] leading-snug text-slate-700">
+										Is my list too top-heavy? 9 reaches, 2 targets.
+									</div>
+									<div class="flex items-end gap-2">
+										<div class="grid h-7 w-7 flex-none place-items-center rounded-full bg-[#0052CC] text-[11px] font-bold text-white">PA</div>
+										<div class="max-w-[80%] rounded-2xl rounded-bl-md bg-[#0052CC] px-4 py-2.5 text-[13px] leading-snug text-white">
+											Yes — add 3–4 targets where your profile is above their median. Want me to name them?
+										</div>
+									</div>
+								</div>
 							{/if}
 						</div>
 					{/key}
@@ -202,7 +233,10 @@
 							{#each testimonials as t}
 								<div class="rounded-2xl border border-slate-200 bg-slate-50/60 p-4">
 									<p class="text-[13.5px] leading-relaxed text-slate-700">“{t.quote}”</p>
-									<p class="mt-2 text-xs font-semibold text-slate-500">{t.name} · <span class="font-normal text-slate-400">{t.role}</span></p>
+									<div class="mt-2.5 flex items-center gap-2">
+										<div class="grid h-6 w-6 flex-none place-items-center rounded-full bg-[#0052CC] text-[11px] font-bold text-white">{t.name[0]}</div>
+										<p class="text-xs font-semibold text-slate-600">{t.name} <span class="font-normal text-slate-400">· {t.role}</span></p>
+									</div>
 								</div>
 							{/each}
 						</div>
