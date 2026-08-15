@@ -98,7 +98,11 @@
 
 <SiteHeader />
 
-<div class="relative z-10 min-h-screen">
+<!-- NB: no z-index here. `relative z-10` created a stacking context that trapped
+     every in-page modal (paywall/carousel, z-10000+) BELOW the fixed nav (z-9999),
+     so overlays could never cover or dim the nav. `relative` alone (no z-index) is
+     a positioning context but NOT a stacking context, so modals reach the root. -->
+<div class="relative min-h-screen">
 	{@render children()}
 </div>
 

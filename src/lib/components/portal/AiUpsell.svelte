@@ -13,8 +13,15 @@
 	let ready = $state(false);
 
 	const onPortal = $derived($page.url.pathname.startsWith('/portals/'));
+	// Don't pitch "want your real one?" once they've run the AI — the decision they're
+	// looking at IS their real predicted one. Only for pure portal-simulator viewers.
 	const show = $derived(
-		onPortal && $portalDecisionViewed && !$userProfile.isPro && !dismissed && ready
+		onPortal &&
+			$portalDecisionViewed &&
+			!$userProfile.isPro &&
+			!$userProfile.usingAI &&
+			!dismissed &&
+			ready
 	);
 
 	// Let the simulated decision land first (~2.6s), then surface the upsell.

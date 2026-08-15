@@ -358,11 +358,14 @@
 	function openInboxList() {
 		mailViewMode = 'inbox';
 		saveAiInboxState();
-		// Auto-scroll back to the inbox so the user doesn't have to scroll down the
-		// long /ai page every time they tap the back arrow out of a decision.
-		requestAnimationFrame(() =>
-			inboxSection?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-		);
+		// Auto-scroll back down to the AImail section so the user doesn't have to
+		// scroll the long /ai page every time they tab out of a decision. Wait for
+		// the inbox view to render, then scroll (id fallback in case the bound ref
+		// hasn't attached yet).
+		setTimeout(() => {
+			const el = inboxSection ?? document.getElementById('inboxSection');
+			el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+		}, 60);
 	}
 
 	// This is *not* the full simulator reset — just clears the AI inbox state.
