@@ -79,6 +79,17 @@
 			};
 		});
 	});
+
+	// Lifecycle capture: once per signed-in browser, register the user in our Resend
+	// audience + send the honest "your predictions are ready" welcome. Fire-and-forget
+	// and dormant server-side until Resend creds are set, so it's a safe no-op today.
+	$effect(() => {
+		const email = $page.data.session?.user?.email;
+		if (!email || typeof localStorage === 'undefined') return;
+		if (localStorage.getItem('predictadmit_lifecycle_captured') === email) return;
+		localStorage.setItem('predictadmit_lifecycle_captured', email);
+		fetch('/api/lifecycle', { method: 'POST' }).catch(() => {});
+	});
 </script>
 
 <svelte:head>
