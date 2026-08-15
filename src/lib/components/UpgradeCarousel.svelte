@@ -62,14 +62,36 @@
 		}
 	];
 
-	const total = screens.length; // step === total is the plan picker
+	// Real testimonials (also shown on /about) — social proof was GPT-vision's #1 ask.
+	const testimonials = [
+		{
+			quote: 'Opening the fake Stanford portal genuinely scared me. Then I went back and rewrote two essays I thought were fine. Worth it.',
+			name: 'Priya',
+			role: 'Class of 2025'
+		},
+		{
+			quote: 'The essay grader flagged the cliché opening I was about to submit — and the breakdown pointed straight at my weakest spot.',
+			name: 'Marcus',
+			role: 'First-gen applicant'
+		},
+		{
+			quote: 'Easiest money I spent all season.',
+			name: 'Elena',
+			role: 'Class of 2026'
+		}
+	];
+
+	// Steps: benefits (0..n-1) → social proof (n) → plan picker (n+1).
+	const nBenefits = screens.length;
+	const lastStep = nBenefits + 1;
 	let step = $state(0);
-	const onPlans = $derived(step >= total);
+	const onSocial = $derived(step === nBenefits);
+	const onPlans = $derived(step > nBenefits);
 
 	let selectedPlan = $state<'monthly' | 'lifetime'>('lifetime');
 
 	function next() {
-		if (step < total) step += 1;
+		if (step < lastStep) step += 1;
 		else oncontinue?.(selectedPlan);
 	}
 	function back() {
@@ -113,7 +135,7 @@
 					<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" /></svg>
 				</button>
 				<div class="flex flex-1 items-center justify-center gap-1.5">
-					{#each Array(total + 1) as _, i}
+					{#each Array(lastStep + 1) as _, i}
 						<span class="h-1.5 rounded-full transition-all duration-300 {i === step ? 'w-7 bg-[#0052CC]' : 'w-1.5 bg-slate-200'}"></span>
 					{/each}
 				</div>
@@ -128,7 +150,7 @@
 
 			<!-- Body -->
 			<div class="flex flex-1 flex-col overflow-y-auto px-7 pb-4 pt-4">
-				{#if !onPlans}
+				{#if step < nBenefits}
 					{@const s = screens[step]}
 					{#key step}
 						<div in:fly={{ x: 18, duration: 240 }} class="flex flex-1 flex-col">
@@ -162,6 +184,29 @@
 							{/if}
 						</div>
 					{/key}
+				{:else if onSocial}
+					<!-- Social proof (GPT-vision's top ask) — real applicant quotes + scale. -->
+					<div in:fly={{ x: 18, duration: 240 }} class="flex flex-1 flex-col">
+						<div class="text-center">
+							<div class="flex items-center justify-center gap-0.5 text-[#0052CC]">
+								{#each Array(5) as _}
+									<svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.07 3.3a1 1 0 00.95.68h3.46c.97 0 1.37 1.24.59 1.81l-2.8 2.03a1 1 0 00-.36 1.12l1.07 3.29c.3.92-.76 1.69-1.54 1.12l-2.8-2.03a1 1 0 00-1.18 0l-2.8 2.03c-.78.57-1.83-.2-1.54-1.12l1.07-3.29a1 1 0 00-.36-1.12L2.4 8.72c-.78-.57-.38-1.81.59-1.81h3.46a1 1 0 00.95-.68l1.07-3.3z" /></svg>
+								{/each}
+							</div>
+							<h2 class="mt-4 text-[26px] font-black leading-[1.1] tracking-tight text-slate-900">Applicants like you</h2>
+							<p class="mx-auto mt-2 max-w-xs text-[15px] leading-relaxed text-slate-500">
+								Join <span class="font-semibold text-slate-700">5,000+ students</span> who pressure-tested their application here first.
+							</p>
+						</div>
+						<div class="mt-6 space-y-3">
+							{#each testimonials as t}
+								<div class="rounded-2xl border border-slate-200 bg-slate-50/60 p-4">
+									<p class="text-[13.5px] leading-relaxed text-slate-700">“{t.quote}”</p>
+									<p class="mt-2 text-xs font-semibold text-slate-500">{t.name} · <span class="font-normal text-slate-400">{t.role}</span></p>
+								</div>
+							{/each}
+						</div>
+					</div>
 				{:else}
 					<!-- Plan picker (final step) — mymind pattern: tap a card, then continue -->
 					<div in:fly={{ x: 18, duration: 240 }}>
@@ -197,7 +242,7 @@
 								<div class="flex items-center justify-between gap-3">
 									<div>
 										<div class="text-base font-black text-slate-900">Monthly</div>
-										<div class="mt-0.5 text-xs text-slate-500">Full access while you're applying. Cancel anytime.</div>
+										<div class="mt-0.5 text-xs text-slate-500">Full access while you're applying. Just 2½ months = Lifetime.</div>
 									</div>
 									<div class="text-right">
 										<div class="text-xl font-black text-slate-900">$9.99</div>
