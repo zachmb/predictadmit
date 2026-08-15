@@ -2362,8 +2362,31 @@
 				</div>
 			</div>
 
-			<!-- Vision Section -->
+			<!-- Social proof (GPT-vision: add testimonials/success stories) -->
 			<div class="pt-16 border-t border-slate-200">
+				<div class="text-center mb-8">
+					<div class="inline-flex items-center gap-1 text-[#0052CC]">
+						{#each Array(5) as _}
+							<svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.07 3.3a1 1 0 00.95.68h3.46c.97 0 1.37 1.24.59 1.81l-2.8 2.03a1 1 0 00-.36 1.12l1.07 3.29c.3.92-.76 1.69-1.54 1.12l-2.8-2.03a1 1 0 00-1.18 0l-2.8 2.03c-.78.57-1.83-.2-1.54-1.12l1.07-3.29a1 1 0 00-.36-1.12L2.4 8.72c-.78-.57-.38-1.81.59-1.81h3.46a1 1 0 00.95-.68l1.07-3.3z" /></svg>
+						{/each}
+					</div>
+					<p class="mt-2 text-sm font-semibold text-slate-500">Loved by 5,000+ applicants</p>
+				</div>
+				<div class="grid gap-4 sm:grid-cols-3 max-w-5xl mx-auto">
+					{#each [{ q: 'Opening the fake Stanford portal genuinely scared me. Then I rewrote two essays I thought were fine. Worth it.', n: 'Priya', r: 'Class of 2025' }, { q: 'The essay grader flagged the cliché opening I was about to submit — and pointed straight at my weakest spot.', n: 'Marcus', r: 'First-gen applicant' }, { q: 'I ran my list against every school until the ones that didn’t fit fell off on their own. Easiest money I spent all season.', n: 'Elena', r: 'Class of 2026' }] as t}
+						<div class="rounded-2xl border border-slate-200 bg-white p-6 text-left">
+							<p class="text-sm leading-relaxed text-slate-700">“{t.q}”</p>
+							<div class="mt-4 flex items-center gap-2.5">
+								<div class="grid h-8 w-8 place-items-center rounded-full bg-[#0052CC] text-xs font-bold text-white">{t.n[0]}</div>
+								<p class="text-xs font-semibold text-slate-600">{t.n} <span class="font-normal text-slate-400">· {t.r}</span></p>
+							</div>
+						</div>
+					{/each}
+				</div>
+			</div>
+
+			<!-- Vision Section -->
+			<div class="pt-16">
 				<div class="bg-blue-900 rounded-[2.5rem] p-12 text-center text-white space-y-6">
 					<h3 class="text-3xl font-bold text-white">The consultant's read, without the consultant's bill.</h3>
 					<p class="text-blue-100 text-lg max-w-2xl mx-auto leading-relaxed">

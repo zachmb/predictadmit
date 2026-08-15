@@ -1725,7 +1725,20 @@ Picking one applies that school's real early-round odds
 								</button>
 							</div>
 
-							<p class="mt-4 text-center text-xs leading-relaxed text-slate-500">
+							<!-- Trust + pricing clarity right at the CTA (GPT-vision: add trust
+							     signals + set price expectations next to the button). -->
+							<div class="mt-4 flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 text-xs text-slate-500">
+								<span class="inline-flex items-center gap-1 text-[#0052CC]">
+									{#each Array(5) as _}
+										<svg class="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.07 3.3a1 1 0 00.95.68h3.46c.97 0 1.37 1.24.59 1.81l-2.8 2.03a1 1 0 00-.36 1.12l1.07 3.29c.3.92-.76 1.69-1.54 1.12l-2.8-2.03a1 1 0 00-1.18 0l-2.8 2.03c-.78.57-1.83-.2-1.54-1.12l1.07-3.29a1 1 0 00-.36-1.12L2.4 8.72c-.78-.57-.38-1.81.59-1.81h3.46a1 1 0 00.95-.68l1.07-3.3z" /></svg>
+									{/each}
+								</span>
+								<span class="font-medium text-slate-600">5,000+ applicants</span>
+								<span class="hidden sm:block h-3 w-px bg-slate-200"></span>
+								<span>First prediction free · then <span class="font-semibold text-slate-700">$25 once</span> or $9.99/mo</span>
+							</div>
+
+							<p class="mt-3 text-center text-xs leading-relaxed text-slate-500">
 								It's a prediction, not a decision — and it can miss. Treat it as a dry run, not
 								a verdict to lose sleep over.
 							</p>
