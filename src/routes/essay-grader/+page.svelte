@@ -194,16 +194,25 @@
 							/></svg
 						>
 					</div>
-					<h2 class="text-3xl font-black text-slate-900 tracking-tight mb-4">This one's on Pro</h2>
-					<p class="text-slate-500 font-medium leading-relaxed max-w-sm mx-auto mb-10">
-						The essay grader is part of Pro. Your first prediction is free; then $25 once for lifetime access (or $9.99/mo).
+					<h2 class="text-3xl font-black text-slate-900 tracking-tight mb-3">Read like an admissions officer would</h2>
+					<p class="text-slate-500 font-medium leading-relaxed max-w-sm mx-auto mb-6">
+						Line-by-line notes on every supplement — the honest read a reader gives, with the weak lines marked and why. You write every word; it just makes them land.
 					</p>
+					<ul class="mx-auto mb-8 max-w-xs space-y-2 text-left">
+						{#each ['10 inline annotations per draft', 'Blunt, specific AO-style critique', 'Targeted to each school you apply to'] as f}
+							<li class="flex items-center gap-2.5 text-sm text-slate-600">
+								<svg class="h-4 w-4 flex-none text-[#0052CC]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+								{f}
+							</li>
+						{/each}
+					</ul>
 					<button
 						onclick={() => goto('/pro')}
-						class="group relative flex items-center justify-center gap-3 w-full max-w-xs mx-auto py-4 px-6 bg-slate-900 text-white rounded-2xl font-bold hover:bg-slate-800 transition-all shadow-xl shadow-slate-200"
+						class="group relative flex items-center justify-center gap-3 w-full max-w-xs mx-auto py-4 px-6 bg-[#0052CC] text-white rounded-2xl font-bold hover:bg-[#0047b3] transition-all shadow-xl shadow-blue-600/25"
 					>
-						Upgrade to Pro
+						Unlock essay editing — $25 once
 					</button>
+					<p class="mt-3 text-xs text-slate-400">Your first prediction is free · then $25 once or $9.99/mo</p>
 				</div>
 			</Card>
 		</div>

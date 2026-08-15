@@ -142,8 +142,8 @@
 				</button>
 			</div>
 
-			<!-- Full Season (featured) -->
-			<div class="relative rounded-[1.5rem] bg-white p-8 border-2 border-[#0052CC] shadow-[0_20px_50px_-12px_rgba(0,82,204,0.25)] flex flex-col">
+			<!-- Full Season (featured) — lifted above the other cards for clear hierarchy -->
+			<div class="relative rounded-[1.5rem] bg-white p-8 border-2 border-[#0052CC] shadow-[0_28px_60px_-12px_rgba(0,82,204,0.35)] ring-4 ring-[#0052CC]/10 flex flex-col md:scale-[1.04] md:z-10">
 				<span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#0052CC] text-white text-[10px] uppercase font-bold tracking-[0.2em] px-4 py-1.5 rounded-full">
 					Best value
 				</span>
