@@ -2174,3 +2174,9 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 {/if}
 
 <SiteFooter />
+
+<!-- Mobile-only spacer so the fixed sticky CTA above never covers the footer's
+     last line (the NACAC disclaimer). Only present while the bar is shown. -->
+{#if !$userProfile.usingAI && !showPaywallModal && !showUpgradeCarousel}
+	<div class="h-20 sm:hidden" aria-hidden="true"></div>
+{/if}
