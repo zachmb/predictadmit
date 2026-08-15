@@ -144,40 +144,6 @@
 		isAutoLoggingIn = false;
 	};
 
-	const handleLoadSavedLogin = () => {
-		if (!profile.email || !profile.password) {
-			emailInput = 'john.doe@gmail.com';
-			passwordInput = 'password123';
-			error = '';
-			return;
-		}
-		emailInput = profile.email;
-		passwordInput = profile.password;
-		error = '';
-	};
-
-	const handleLogin = (event: SubmitEvent) => {
-		event.preventDefault();
-
-		if (!school) {
-			error = 'Unknown portal.';
-			authenticated = false;
-			return;
-		}
-
-		// This is a pure simulation — there is no real auth and no real data. Any
-		// non-empty email + password lets you in, so direct visitors (from search, a
-		// shared link, or the chances calculator) never hit a dead end. (The homepage
-		// flow still auto-fills the "saved" creds for the rehearsal-feels-real touch.)
-		if (emailInput.trim() && passwordInput) {
-			authenticated = true;
-			error = '';
-		} else {
-			error = 'Enter an email and password to continue.';
-			authenticated = false;
-		}
-	};
-
 	const handleViewUpdate = () => {
 		hasViewedUpdate = true;
 		portalDecisionViewed.set(true);
@@ -292,9 +258,8 @@
 						</div>
 
 						<p class="pt-4 text-[10px] leading-relaxed text-slate-600 max-w-xl">
-							For this simulation, use the same email address and password that you saved on the
-							PredictAdmit.com home page. No real application data is used, and all information is
-							stored only in your browser.
+							This is a simulation — enter any email and password (or just click Login) to open your
+							practice decision. No real application data is used, and everything stays in your browser.
 						</p>
 					</form>
 				</div>
