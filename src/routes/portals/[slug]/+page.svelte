@@ -165,17 +165,15 @@
 			return;
 		}
 
-		if (!profile.email || !profile.password) {
-			error = 'Please set your PredictAdmit email and password on the main page.';
-			authenticated = false;
-			return;
-		}
-
-		if (emailInput.trim() === profile.email && passwordInput === profile.password) {
+		// This is a pure simulation — there is no real auth and no real data. Any
+		// non-empty email + password lets you in, so direct visitors (from search, a
+		// shared link, or the chances calculator) never hit a dead end. (The homepage
+		// flow still auto-fills the "saved" creds for the rehearsal-feels-real touch.)
+		if (emailInput.trim() && passwordInput) {
 			authenticated = true;
 			error = '';
 		} else {
-			error = 'Invalid email or password.';
+			error = 'Enter an email and password to continue.';
 			authenticated = false;
 		}
 	};
