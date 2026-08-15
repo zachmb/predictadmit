@@ -2145,9 +2145,8 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 <!-- Pre-checkout benefit carousel (Monthly/Lifetime upgrade path) -->
 <UpgradeCarousel
 	bind:open={showUpgradeCarousel}
-	plan={carouselPlan}
 	loading={checkoutLoading}
-	oncontinue={() => startCheckout(carouselPlan)}
+	oncontinue={(plan) => startCheckout(plan)}
 />
 
 <SiteFooter />

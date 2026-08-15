@@ -2378,9 +2378,8 @@
 <!-- Pre-checkout benefit carousel (Monthly/Lifetime upgrade path) -->
 <UpgradeCarousel
 	bind:open={showUpgradeCarousel}
-	plan={carouselPlan}
 	loading={isProcessing}
-	oncontinue={() => handleCheckout(carouselPlan)}
+	oncontinue={(plan) => handleCheckout(plan)}
 />
 
 <style>

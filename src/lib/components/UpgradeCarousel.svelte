@@ -1,75 +1,87 @@
 <script lang="ts">
-	// Pre-checkout benefit carousel — the user taps through a few screens that
-	// showcase everything Pro includes BEFORE they ever see Stripe's card page.
-	// Pattern from Mobbin (Spotify "Your benefits" / Apple News+ onboarding): one
-	// benefit per screen, big icon + bold title + subtitle, dots, Next → final
-	// confirm → checkout. Non-subscription micro-buys ($4.99/decision) skip this.
+	// Premium onboarding paywall sequence (mymind / Cal-AI pattern from Mobbin):
+	// tap through benefit screens — some showing the REAL Pro dashboard — then land
+	// on a plan picker as the final step, and only then go to Stripe. Launched from
+	// /pro's CTA and from the /ai paywall. Zero slop: flat single brand blue, real
+	// product screenshots framed in device chrome, editorial type, smooth motion.
 	import { fade, fly } from 'svelte/transition';
 	import { pushOverlay, popOverlay } from '$lib/stores/ui';
 
 	let {
 		open = $bindable(false),
-		plan = 'lifetime',
 		loading = false,
 		oncontinue,
 		onclose
 	}: {
 		open?: boolean;
-		plan?: 'monthly' | 'lifetime';
 		loading?: boolean;
-		oncontinue?: () => void;
+		oncontinue?: (plan: 'monthly' | 'lifetime') => void;
 		onclose?: () => void;
 	} = $props();
 
-	// Icon keys map to inline SVGs below. Essay editing is featured 2nd on purpose —
-	// rising seniors pay for essay help, and it's included in paid PredictAdmit.
-	const benefits = [
+	type Screen = {
+		kind: 'benefit';
+		eyebrow: string;
+		title: string;
+		body: string;
+		icon: 'bolt' | 'pencil' | 'search' | 'chat';
+		shot?: string;
+	};
+
+	// Essay editing is screen 3 on purpose — rising seniors pay for that specifically.
+	const screens: Screen[] = [
 		{
+			kind: 'benefit',
+			eyebrow: 'PredictAdmit Pro',
+			title: 'See your decisions before they land',
+			body: "The AI reads your real application and calls your verdict — accept, deny, or waitlist — at all 39 top schools, then shows you exactly why.",
 			icon: 'bolt',
-			title: 'Unlimited predictions',
-			body: 'Run your real application against all 39 top schools as many times as you want. Change an essay, a score, an activity — re-run and watch your odds move.'
+			shot: '/onboarding/dashboard.png'
 		},
 		{
-			icon: 'pencil',
-			title: 'Pro essay editing',
-			body: 'Line-by-line AI feedback on every supplement — the honest read an admissions officer would give. It marks up your weak lines and tells you why. You write every word; it just makes them land.'
-		},
-		{
+			kind: 'benefit',
+			eyebrow: 'Unlimited',
+			title: 'Run it as many times as you want',
+			body: 'Change an essay, a score, an activity — re-run across all 39 schools and watch your odds move in real time.',
 			icon: 'search',
-			title: 'The deep-dive on every verdict',
-			body: 'Not just accept or deny — the five scored dimensions behind each decision and the concrete changes that would actually move it.'
+			shot: '/onboarding/schools.png'
 		},
 		{
-			icon: 'chat',
+			kind: 'benefit',
+			eyebrow: 'The workshop',
+			title: 'Pro essay editing',
+			body: "Line-by-line AI feedback on every supplement — the honest read an admissions officer would give. You write every word; it just makes them land.",
+			icon: 'pencil'
+		},
+		{
+			kind: 'benefit',
+			eyebrow: 'Talk to us',
 			title: 'Advice from the founding team',
-			body: 'Stuck on your list or an essay? Message the team that got into these schools and calibrated the AI on real admissions results.'
+			body: 'Stuck on your list or an essay? Message the people who got into these schools and calibrated the AI on real admissions results.',
+			icon: 'chat'
 		}
 	];
 
+	const total = screens.length; // step === total is the plan picker
 	let step = $state(0);
-	const total = benefits.length; // benefit steps; step === total is the confirm screen
-	const onConfirm = $derived(step >= total);
+	const onPlans = $derived(step >= total);
 
-	const priceLabel = $derived(plan === 'monthly' ? '$9.99/mo' : '$25 once');
-	const planName = $derived(plan === 'monthly' ? 'Monthly' : 'Lifetime');
+	let selectedPlan = $state<'monthly' | 'lifetime'>('lifetime');
 
 	function next() {
 		if (step < total) step += 1;
-		else oncontinue?.();
+		else oncontinue?.(selectedPlan);
 	}
 	function back() {
 		if (step > 0) step -= 1;
 	}
 	function close() {
-		step = 0;
 		open = false;
 		onclose?.();
 	}
-	// Reset to the first screen whenever it (re)opens.
 	$effect(() => {
 		if (open) step = 0;
 	});
-	// Gray out the nav while the sequence is open.
 	$effect(() => {
 		if (open) {
 			pushOverlay();
@@ -87,94 +99,151 @@
 		aria-label="What PredictAdmit Pro includes"
 	>
 		<div
-			class="relative flex w-full max-w-md flex-col bg-white sm:max-h-[92vh] sm:rounded-3xl sm:shadow-2xl"
-			transition:fly={{ y: 24, duration: 240 }}
+			class="relative flex w-full max-w-md flex-col bg-white sm:max-h-[94vh] sm:rounded-[28px] sm:shadow-2xl overflow-hidden"
+			transition:fly={{ y: 24, duration: 260 }}
 		>
-			<!-- Top bar: back + progress + close -->
+			<!-- Top bar: back · progress · close -->
 			<div class="flex items-center gap-3 px-5 pt-5">
 				<button
 					onclick={back}
 					disabled={step === 0}
 					aria-label="Back"
-					class="grid h-8 w-8 place-items-center rounded-full text-slate-400 transition hover:bg-slate-100 hover:text-slate-700 disabled:opacity-0"
+					class="grid h-9 w-9 place-items-center rounded-full text-slate-400 transition hover:bg-slate-100 hover:text-slate-700 disabled:opacity-0"
 				>
 					<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" /></svg>
 				</button>
 				<div class="flex flex-1 items-center justify-center gap-1.5">
 					{#each Array(total + 1) as _, i}
-						<span class="h-1.5 rounded-full transition-all duration-300 {i === step ? 'w-6 bg-[#0052CC]' : 'w-1.5 bg-slate-200'}"></span>
+						<span class="h-1.5 rounded-full transition-all duration-300 {i === step ? 'w-7 bg-[#0052CC]' : 'w-1.5 bg-slate-200'}"></span>
 					{/each}
 				</div>
 				<button
 					onclick={close}
 					aria-label="Close"
-					class="grid h-8 w-8 place-items-center rounded-full text-slate-400 transition hover:bg-slate-100 hover:text-slate-700"
+					class="grid h-9 w-9 place-items-center rounded-full text-slate-400 transition hover:bg-slate-100 hover:text-slate-700"
 				>
 					<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
 				</button>
 			</div>
 
 			<!-- Body -->
-			<div class="flex flex-1 flex-col justify-center px-7 py-10">
-				{#if !onConfirm}
+			<div class="flex flex-1 flex-col overflow-y-auto px-7 pb-4 pt-4">
+				{#if !onPlans}
+					{@const s = screens[step]}
 					{#key step}
-						<div in:fly={{ x: 20, duration: 220 }} class="text-center">
-							<div class="mx-auto grid h-16 w-16 place-items-center rounded-2xl bg-[#0052CC]/10 text-[#0052CC]">
-								{#if benefits[step].icon === 'bolt'}
-									<svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-								{:else if benefits[step].icon === 'pencil'}
-									<svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
-								{:else if benefits[step].icon === 'search'}
-									<svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-								{:else}
-									<svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12a9 9 0 01-9 9c-1.6 0-3.1-.42-4.4-1.15L3 21l1.15-4.6A8.96 8.96 0 013 12a9 9 0 019-9 9 9 0 019 9z" /></svg>
-								{/if}
+						<div in:fly={{ x: 18, duration: 240 }} class="flex flex-1 flex-col">
+							<div class="text-center">
+								<div class="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-[#0052CC]/10 text-[#0052CC]">
+									{#if s.icon === 'bolt'}
+										<svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+									{:else if s.icon === 'pencil'}
+										<svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
+									{:else if s.icon === 'search'}
+										<svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+									{:else}
+										<svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12a9 9 0 01-9 9c-1.6 0-3.1-.42-4.4-1.15L3 21l1.15-4.6A8.96 8.96 0 013 12a9 9 0 019-9 9 9 0 019 9z" /></svg>
+									{/if}
+								</div>
+								<p class="mt-4 text-[11px] font-bold uppercase tracking-[0.18em] text-[#0052CC]">{s.eyebrow}</p>
+								<h2 class="mt-1.5 text-[26px] font-black leading-[1.1] tracking-tight text-slate-900">{s.title}</h2>
+								<p class="mx-auto mt-3 max-w-xs text-[15px] leading-relaxed text-slate-500">{s.body}</p>
 							</div>
-							<p class="mt-5 text-[11px] font-bold uppercase tracking-[0.2em] text-[#0052CC]">Included with Pro</p>
-							<h2 class="mt-2 text-2xl font-black tracking-tight text-slate-900">{benefits[step].title}</h2>
-							<p class="mx-auto mt-3 max-w-xs text-sm leading-relaxed text-slate-500">{benefits[step].body}</p>
+
+							{#if s.shot}
+								<!-- Real Pro screenshot, framed in device chrome (top bar hides the browser nav) -->
+								<div class="relative mx-auto mt-6 w-full max-w-[264px] overflow-hidden rounded-[26px] border border-slate-200 bg-slate-900 shadow-xl">
+									<div class="flex items-center gap-1.5 px-4 py-2.5">
+										<span class="h-2 w-2 rounded-full bg-white/25"></span>
+										<span class="h-2 w-2 rounded-full bg-white/25"></span>
+										<span class="h-2 w-2 rounded-full bg-white/25"></span>
+									</div>
+									<img src={s.shot} alt="PredictAdmit Pro" class="block w-full object-cover object-top" style="max-height:340px;" />
+								</div>
+							{/if}
 						</div>
 					{/key}
 				{:else}
-					<!-- Confirm screen: everything, one price -->
-					<div in:fly={{ x: 20, duration: 220 }} class="text-center">
-						<div class="mx-auto grid h-16 w-16 place-items-center rounded-2xl bg-[#0052CC] text-white">
-							<svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+					<!-- Plan picker (final step) — mymind pattern: tap a card, then continue -->
+					<div in:fly={{ x: 18, duration: 240 }}>
+						<div class="text-center">
+							<h2 class="text-[26px] font-black leading-[1.1] tracking-tight text-slate-900">Pick your plan</h2>
+							<p class="mx-auto mt-2 max-w-xs text-[15px] leading-relaxed text-slate-500">
+								Your first prediction is free. This unlocks all 39, forever.
+							</p>
 						</div>
-						<h2 class="mt-5 text-2xl font-black tracking-tight text-slate-900">Everything above — {priceLabel}</h2>
-						<p class="mx-auto mt-2 max-w-xs text-sm leading-relaxed text-slate-500">
-							{planName} unlocks all 39 decisions, unlimited re-runs, every deep-dive, unlimited essay editing, and the AI counselor.
-						</p>
-						<ul class="mx-auto mt-5 max-w-[16rem] space-y-2 text-left">
-							{#each benefits as b}
-								<li class="flex items-start gap-2.5 text-sm text-slate-700">
-									<svg class="mt-0.5 h-4 w-4 flex-none text-[#0052CC]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
-									{b.title}
+
+						<div class="mt-6 space-y-3">
+							<button
+								onclick={() => (selectedPlan = 'lifetime')}
+								class="relative w-full rounded-2xl border-2 px-5 py-4 text-left transition {selectedPlan === 'lifetime' ? 'border-[#0052CC] bg-[#0052CC]/[0.04]' : 'border-slate-200 hover:border-slate-300'}"
+							>
+								<span class="absolute -top-2.5 left-5 rounded-full bg-[#0052CC] px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">Best value</span>
+								<div class="flex items-center justify-between gap-3">
+									<div>
+										<div class="text-base font-black text-slate-900">Lifetime</div>
+										<div class="mt-0.5 text-xs text-slate-500">All 39 schools, unlimited, forever — no subscription</div>
+									</div>
+									<div class="text-right">
+										<div class="text-xl font-black text-slate-900">$25</div>
+										<div class="text-[10px] font-medium text-slate-400">once</div>
+									</div>
+								</div>
+							</button>
+
+							<button
+								onclick={() => (selectedPlan = 'monthly')}
+								class="w-full rounded-2xl border-2 px-5 py-4 text-left transition {selectedPlan === 'monthly' ? 'border-[#0052CC] bg-[#0052CC]/[0.04]' : 'border-slate-200 hover:border-slate-300'}"
+							>
+								<div class="flex items-center justify-between gap-3">
+									<div>
+										<div class="text-base font-black text-slate-900">Monthly</div>
+										<div class="mt-0.5 text-xs text-slate-500">Full access while you're applying. Cancel anytime.</div>
+									</div>
+									<div class="text-right">
+										<div class="text-xl font-black text-slate-900">$9.99</div>
+										<div class="text-[10px] font-medium text-slate-400">/mo</div>
+									</div>
+								</div>
+							</button>
+						</div>
+
+						<ul class="mx-auto mt-5 max-w-[17rem] space-y-1.5">
+							{#each ['All 39 predicted decisions', 'Unlimited re-runs', 'Deep-dive on every verdict', 'Unlimited essay editing', 'AI counselor + founder advice'] as f}
+								<li class="flex items-center gap-2.5 text-sm text-slate-600">
+									<svg class="h-4 w-4 flex-none text-[#0052CC]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+									{f}
 								</li>
 							{/each}
 						</ul>
-						<p class="mx-auto mt-5 max-w-xs text-xs text-slate-400">A private admissions counselor runs $5,000+ a season.</p>
+
+						<p class="mx-auto mt-5 max-w-xs text-center text-xs text-slate-400">
+							$25 is <span class="font-semibold text-slate-600">10% of a single $100 application fee</span> — a fraction of one school.
+						</p>
 					</div>
 				{/if}
 			</div>
 
 			<!-- Footer CTA -->
-			<div class="px-7 pb-8 pt-2">
+			<div class="border-t border-slate-100 px-7 pb-8 pt-4">
 				<button
 					onclick={next}
 					disabled={loading}
 					class="w-full rounded-2xl bg-[#0052CC] px-6 py-4 text-base font-bold text-white shadow-lg shadow-blue-600/25 transition hover:bg-[#0047b3] active:scale-[0.99] disabled:opacity-50"
 				>
-					{#if onConfirm}
-						{loading ? 'Opening secure checkout…' : `Continue — ${priceLabel}`}
+					{#if onPlans}
+						{loading
+							? 'Opening secure checkout…'
+							: selectedPlan === 'monthly'
+								? 'Continue — $9.99/mo'
+								: 'Continue — $25 once'}
 					{:else}
-						Next
+						Continue
 					{/if}
 				</button>
-				{#if onConfirm}
-					<p class="mt-2 text-center text-[11px] text-slate-400">Secure checkout by Stripe · cancel anytime{plan === 'monthly' ? '' : ' — or one payment, forever'}</p>
+				{#if onPlans}
+					<p class="mt-2 text-center text-[11px] text-slate-400">Secure checkout by Stripe · cancel anytime</p>
 				{:else}
-					<button onclick={() => (step = total)} class="mt-3 w-full text-center text-xs font-semibold text-slate-400 transition hover:text-slate-600">Skip to checkout</button>
+					<button onclick={() => (step = total)} class="mt-3 w-full text-center text-xs font-semibold text-slate-400 transition hover:text-slate-600">Skip to plans</button>
 				{/if}
 			</div>
 		</div>
