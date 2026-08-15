@@ -18,6 +18,7 @@
 	import SchoolsExplorer from '$lib/components/pro/SchoolsExplorer.svelte';
 	import ChanceMeProfile from '$lib/components/pro/ChanceMeProfile.svelte';
 	import SettingsView from '$lib/components/pro/SettingsView.svelte';
+	import ExtracurricularHelper from '$lib/components/pro/ExtracurricularHelper.svelte';
 	import UpgradeCarousel from '$lib/components/UpgradeCarousel.svelte';
 
 	// --- RUNES STATE ---
@@ -97,6 +98,7 @@
 		| 'counselor'
 		| 'schools'
 		| 'chanceme'
+		| 'extracurricular'
 		| 'settings'
 	>('dashboard');
 
@@ -1064,6 +1066,31 @@
 						>
 					</span>
 					<span class="text-[13px] font-medium truncate">Chance Me</span>
+				</button>
+
+				<!-- EXTRACURRICULAR HELPER TAB -->
+				<button
+					onclick={() => (currentView = 'extracurricular')}
+					class="w-full h-9 flex items-center rounded-md text-left transition-colors {currentView ===
+					'extracurricular'
+						? 'bg-slate-100 text-slate-900'
+						: 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'}"
+				>
+					<span
+						class="w-9 h-9 grid place-content-center shrink-0 {currentView === 'extracurricular'
+							? 'text-[#0052CC]'
+							: ''}"
+					>
+						<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+							><path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M13 10V3L4 14h7v7l9-11h-7z"
+							/></svg
+						>
+					</span>
+					<span class="text-[13px] font-medium truncate">Activities</span>
 				</button>
 
 				<div class="mt-5 mb-1 px-3 flex items-center justify-between">
@@ -2219,6 +2246,8 @@
 					<SchoolsExplorer />
 				{:else if currentView === 'chanceme'}
 					<ChanceMeProfile />
+				{:else if currentView === 'extracurricular'}
+					<ExtracurricularHelper />
 				{:else if currentView === 'settings'}
 					<SettingsView />
 			{/if}
