@@ -1372,6 +1372,12 @@
 								</div>
 
 								<!-- Supplements -->
+								<details class="rounded-2xl border border-slate-200/60 bg-slate-50/40">
+									<summary class="cursor-pointer px-5 py-4 text-sm font-bold text-slate-900 flex items-center gap-2">
+										<span class="w-1.5 h-1.5 bg-[#0052CC] rounded-full"></span>
+										Supplemental essays <span class="ml-1 text-xs font-normal text-slate-500">— optional, sharpens per-school fit</span>
+									</summary>
+									<div class="px-2 pb-2">
 								<div
 									class="space-y-4 bg-gradient-to-br from-white to-slate-50/50 p-6 rounded-2xl border border-slate-200/60"
 								>
@@ -1435,45 +1441,32 @@ One fills the rest
 										class="w-full h-48 bg-white border-2 border-slate-200 rounded-xl p-4 text-sm text-slate-900 placeholder:text-slate-400 focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 outline-none shadow-sm hover:border-slate-300 transition-all font-sans resize-y"
 									></textarea>
 								</div>
+									</div>
+								</details>
 
-								<!-- Promo Code -->
-								<div class="space-y-2.5 border-t-2 border-slate-100 pt-6">
-									<label
-										for="promoCode"
-										class="block text-sm font-bold text-slate-900 flex items-center gap-2"
-									>
-										<span class="w-1.5 h-1.5 bg-amber-500 rounded-full"></span>
-										Promo Code <span class="text-xs font-normal text-slate-500">(Optional)</span>
-									</label>
-									<div class="relative max-w-xs">
+								<!-- Promo Code — tucked into a disclosure so it doesn't clutter the
+								     core form (most people never have a code). -->
+								<details class="border-t border-slate-100 pt-4">
+									<summary class="cursor-pointer text-xs font-semibold text-slate-500 hover:text-slate-700 transition-colors">
+										Have an access code?
+									</summary>
+									<div class="relative mt-3 max-w-xs">
 										<input
 											id="promoCode"
 											type="text"
 											bind:value={promoCodeInput}
 											onkeydown={handlePromoCode}
 											placeholder="Type a code, hit Enter"
-											class="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-amber-400/20 focus:border-amber-400 font-sans shadow-sm hover:border-slate-300 transition-all"
+											class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 font-sans transition-all"
 										/>
 										{#if hasDeepDiveAccess}
-											<div
-												class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1.5"
-											>
-												<span class="w-2 h-2 bg-emerald-500 rounded-full"></span>
-												<span class="text-xs text-emerald-600 font-bold">Active</span>
+											<div class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
+												<span class="w-2 h-2 bg-[#0052CC] rounded-full"></span>
+												<span class="text-xs text-[#0052CC] font-bold">Active</span>
 											</div>
 										{/if}
 									</div>
-									<p class="text-xs text-slate-500 flex items-center gap-1.5">
-										<svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
-											<path
-												fill-rule="evenodd"
-												d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-												clip-rule="evenodd"
-											/>
-										</svg>
-										Got an access code? Enter it and hit Enter to turn on Pro.
-									</p>
-								</div>
+								</details>
 
 								<!-- Activities -->
 								<div class="space-y-2.5">
