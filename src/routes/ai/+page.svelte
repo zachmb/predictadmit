@@ -2162,4 +2162,28 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 	oncontinue={(plan) => startCheckout(plan)}
 />
 
+<!-- Mobile sticky run CTA — keeps the primary action in reach on the long builder
+     (GPT-vision kept flagging CTA prominence). Hidden once results are showing and
+     behind overlays (z-40 < the paywall/carousel scrims). -->
+{#if !$userProfile.usingAI && !showPaywallModal && !showUpgradeCarousel}
+	<div
+		class="fixed inset-x-0 bottom-0 z-40 border-t border-slate-200 bg-white/95 px-4 py-3 backdrop-blur sm:hidden"
+		style="padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));"
+	>
+		<button
+			onclick={googleSignedIn ? runEvaluation : () => signIn('google', { callbackUrl: '/ai' })}
+			disabled={$userProfile.isSubmittingAI}
+			class="flex w-full items-center justify-center gap-2 rounded-xl bg-[#0052CC] py-3.5 text-base font-bold text-white shadow-lg shadow-blue-600/25 transition active:scale-[0.99] disabled:opacity-60"
+		>
+			{#if $userProfile.isSubmittingAI}
+				<span class="h-5 w-5 animate-spin rounded-full border-2 border-white/30 border-t-white"></span>
+				Reading your file…
+			{:else}
+				<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+				{googleSignedIn ? 'Run my predictions' : 'Sign in — run your free prediction'}
+			{/if}
+		</button>
+	</div>
+{/if}
+
 <SiteFooter />

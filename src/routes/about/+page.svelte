@@ -127,7 +127,14 @@
 					See Pro pricing
 				</a>
 			</div>
-			<p class="mt-6 text-sm text-slate-400">Trusted by 5,000+ students.</p>
+			<div class="mt-6 flex items-center justify-center gap-2 text-sm text-slate-400">
+				<span class="inline-flex items-center gap-0.5 text-[#0052CC]">
+					{#each Array(5) as _}
+						<svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.07 3.3a1 1 0 00.95.68h3.46c.97 0 1.37 1.24.59 1.81l-2.8 2.03a1 1 0 00-.36 1.12l1.07 3.29c.3.92-.76 1.69-1.54 1.12l-2.8-2.03a1 1 0 00-1.18 0l-2.8 2.03c-.78.57-1.83-.2-1.54-1.12l1.07-3.29a1 1 0 00-.36-1.12L2.4 8.72c-.78-.57-.38-1.81.59-1.81h3.46a1 1 0 00.95-.68l1.07-3.3z" /></svg>
+					{/each}
+				</span>
+				Trusted by 5,000+ students
+			</div>
 		</div>
 	</section>
 
