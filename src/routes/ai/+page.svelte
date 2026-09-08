@@ -16,7 +16,14 @@
 	} from '$lib/config/admitMail';
 
 	import { userProfile } from '$lib/stores/user';
-	import { track, trackBeginCheckout, trackTrialStart, trackPurchase } from '$lib/analytics';
+	import {
+		track,
+		trackViewItem,
+		trackAddToCart,
+		trackBeginCheckout,
+		trackTrialStart,
+		trackPurchase
+	} from '$lib/analytics';
 	import { STRIPE_PRODUCTS } from '$lib/config/stripe-products';
 	import { nextMilestonePhrase } from '$lib/admissionsCalendar';
 	import { majors } from '$lib/config/majors';
@@ -589,6 +596,9 @@
 		showPlans = false;
 		showPaywallModal = true;
 		track('paywall_view', { mode, school: decision?.slug, variant: abFreeDecisions });
+		// GA4 funnel Step 2 "View product" — the paywall is the product view. Anchor
+		// on the Lifetime offer (the primary product) so the ecommerce funnel lights up.
+		trackViewItem('lifetime', STRIPE_PRODUCTS.lifetime.amountCents / 100);
 	}
 
 	function closePaywall() {
@@ -633,6 +643,9 @@
 		showPaywallModal = false;
 		showUpgradeCarousel = true;
 		track('upgrade_carousel_view', { plan });
+		// GA4 funnel Step 3 "Add to cart" — user picked a plan (before Stripe).
+		const cents = plan === 'monthly' ? STRIPE_PRODUCTS.monthly.amountCents : STRIPE_PRODUCTS.lifetime.amountCents;
+		trackAddToCart(plan, cents / 100);
 	}
 
 	let checkoutLoading = $state(false);
@@ -653,6 +666,9 @@
 				: plan === 'monthly'
 					? STRIPE_PRODUCTS.monthly.amountCents
 					: STRIPE_PRODUCTS.single.amountCents;
+		// The single ($4.99) micro-buy skips the carousel/startUpgrade, so fire its
+		// "add to cart" here; monthly/lifetime already fired it in startUpgrade().
+		if (plan === 'single') trackAddToCart('single', _amt / 100);
 		trackBeginCheckout(plan, _amt / 100);
 		try {
 			const res = await fetch('/api/checkout', {

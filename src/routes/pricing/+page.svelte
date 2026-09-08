@@ -3,9 +3,22 @@
 	import { signIn } from '@auth/sveltekit/client';
 	import { page } from '$app/stores';
 	import { portals } from '$lib/config/admitMail';
+	import { onMount } from 'svelte';
+	import { trackViewItem, trackAddToCart, trackBeginCheckout } from '$lib/analytics';
+	import { STRIPE_PRODUCTS } from '$lib/config/stripe-products';
 
 	let isProcessing = $state(false);
 	let passSchoolSlug = $state(portals[0]?.slug ?? '');
+
+	// GA4 funnel Step 2 "View product" — the pricing page is a product view.
+	onMount(() => trackViewItem('lifetime', STRIPE_PRODUCTS.lifetime.amountCents / 100));
+
+	const planCents = (plan: 'single' | 'monthly' | 'lifetime') =>
+		plan === 'single'
+			? STRIPE_PRODUCTS.single.amountCents
+			: plan === 'monthly'
+				? STRIPE_PRODUCTS.monthly.amountCents
+				: STRIPE_PRODUCTS.lifetime.amountCents;
 
 	async function startCheckout(plan: 'single' | 'monthly' | 'lifetime') {
 		if (isProcessing) return;
@@ -14,6 +27,9 @@
 			return;
 		}
 		isProcessing = true;
+		// GA4 funnel Steps 3 + 4 — plan picked, then Stripe checkout opening.
+		trackAddToCart(plan, planCents(plan) / 100);
+		trackBeginCheckout(plan, planCents(plan) / 100);
 		try {
 			const school = portals.find((p) => p.slug === passSchoolSlug);
 			const res = await fetch('/api/checkout', {

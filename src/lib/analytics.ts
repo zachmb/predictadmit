@@ -12,7 +12,7 @@
 
 import { getAttribution } from './attribution';
 
-type Params = Record<string, string | number | boolean | undefined>;
+type Params = Record<string, unknown>;
 
 export function track(event: string, params: Params = {}): void {
 	if (typeof window === 'undefined') return;
@@ -35,19 +35,50 @@ export function track(event: string, params: Params = {}): void {
 }
 
 // Convenience wrappers for the money path (value/currency populate GA revenue).
+//
+// CRITICAL: GA4's ecommerce reports + the default "Purchase journey" funnel
+// (View product → Add to cart → Begin checkout → Purchase) only count these
+// events when they carry the ecommerce `items` array. Bare events with just
+// value/currency are recorded but IGNORED by the ecommerce funnel — that's why
+// the funnel read 0 across every step. Every money event below now ships `items`.
+function planItems(plan: string, valueUsd: number) {
+	return [
+		{
+			item_id: plan,
+			item_name: `PredictAdmit ${plan}`,
+			item_category: 'subscription',
+			price: valueUsd,
+			quantity: 1
+		}
+	];
+}
+
+/** Step 2 — "View product": the paywall / pricing / upgrade page is shown. */
+export function trackViewItem(plan: string, valueUsd: number): void {
+	track('view_item', { currency: 'USD', value: valueUsd, items: planItems(plan, valueUsd) });
+}
+
+/** Step 3 — "Add to cart": the user picks a plan (before Stripe). */
+export function trackAddToCart(plan: string, valueUsd: number): void {
+	track('add_to_cart', { currency: 'USD', value: valueUsd, items: planItems(plan, valueUsd) });
+}
+
+/** Step 4 — "Begin checkout": Stripe checkout is about to open. */
 export function trackBeginCheckout(plan: string, valueUsd: number): void {
-	track('begin_checkout', { plan, value: valueUsd, currency: 'USD' });
+	track('begin_checkout', { plan, currency: 'USD', value: valueUsd, items: planItems(plan, valueUsd) });
 }
 
 export function trackTrialStart(): void {
 	track('trial_start', { plan: 'trial', value: 0, currency: 'USD' });
 }
 
+/** Step 5 — "Purchase": payment confirmed (fired on the /ai return handler). */
 export function trackPurchase(plan: string, valueUsd: number, transactionId?: string): void {
 	track('purchase', {
 		plan,
 		value: valueUsd,
 		currency: 'USD',
-		transaction_id: transactionId
+		transaction_id: transactionId,
+		items: planItems(plan, valueUsd)
 	});
 }

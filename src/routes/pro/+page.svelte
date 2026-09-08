@@ -20,6 +20,8 @@
 	import SettingsView from '$lib/components/pro/SettingsView.svelte';
 	import ExtracurricularHelper from '$lib/components/pro/ExtracurricularHelper.svelte';
 	import UpgradeCarousel from '$lib/components/UpgradeCarousel.svelte';
+	import { trackViewItem, trackAddToCart, trackBeginCheckout } from '$lib/analytics';
+	import { STRIPE_PRODUCTS } from '$lib/config/stripe-products';
 
 	// --- RUNES STATE ---
 	let { data } = $props();
@@ -64,6 +66,9 @@
 	// Auth & Pro State
 	let session = $derived($page.data.session);
 	let googleSignedIn = $derived(!!session?.user);
+
+	// GA4 funnel Step 2 "View product" — the /pro upgrade page is a product view.
+	onMount(() => trackViewItem('lifetime', STRIPE_PRODUCTS.lifetime.amountCents / 100));
 	let isPro = $derived($userProfile.isPro);
 
 	// Mobile navigation: the workspace sidebar collapses into an off-canvas drawer
@@ -637,6 +642,9 @@
 	function startUpgrade(plan: 'monthly' | 'lifetime') {
 		carouselPlan = plan;
 		showUpgradeCarousel = true;
+		// GA4 funnel Step 3 "Add to cart" — user picked a plan (before Stripe).
+		const cents = plan === 'monthly' ? STRIPE_PRODUCTS.monthly.amountCents : STRIPE_PRODUCTS.lifetime.amountCents;
+		trackAddToCart(plan, cents / 100);
 	}
 
 	async function handleCheckout(plan: 'monthly' | 'lifetime') {
@@ -648,6 +656,11 @@
 		}
 
 		isProcessing = true;
+		// GA4 funnel Step 4 "Begin checkout" — Stripe checkout opening.
+		{
+			const cents = plan === 'monthly' ? STRIPE_PRODUCTS.monthly.amountCents : STRIPE_PRODUCTS.lifetime.amountCents;
+			trackBeginCheckout(plan, cents / 100);
+		}
 		try {
 			const res = await fetch('/api/checkout', {
 				method: 'POST',
