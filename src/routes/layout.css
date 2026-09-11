@@ -10,12 +10,14 @@
 	--color-brand-navy: #00356b; /* Yale/Authority */
 	--color-brand-gold: #cfb87c; /* Prestige */
 
-	/* Typography (Kolly-inspired, 2026-09-11): Plus Jakarta Sans for body/UI,
-	   Newsreader serif for display headings. The app already splits font-sans vs
-	   font-serif, so defining these assigns the new faces app-wide. */
-	--font-sans: 'Plus Jakarta Sans', 'Inter', ui-sans-serif, system-ui, sans-serif;
+	/* Typography (Kolly-matched, 2026-09-11): Kolly's marketing site uses Söhne
+	   (a paid Klim font) for sans + Newsreader for serif. We can't ship Söhne's
+	   licensed files, so the sans stack leads with 'Söhne' (auto-applies if a
+	   licensed copy is ever self-hosted) then falls back to Hanken Grotesk, the
+	   closest free neo-grotesque. Serif = Newsreader, matching Kolly. */
+	--font-sans: 'Söhne', 'Hanken Grotesk', 'Inter', ui-sans-serif, system-ui, sans-serif;
 	--font-serif: 'Newsreader', ui-serif, Georgia, 'Times New Roman', serif;
-	--font-inter: 'Plus Jakarta Sans', 'Inter', ui-sans-serif, system-ui, sans-serif;
+	--font-inter: 'Söhne', 'Hanken Grotesk', 'Inter', ui-sans-serif, system-ui, sans-serif;
 
 	/* Shadows */
 	--shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
