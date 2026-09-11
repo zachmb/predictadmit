@@ -55,11 +55,19 @@
 		improvement_tips: string; // NEW: Detailed actionable feedback
 	};
 
+	type CommitteeReader = { role: string; take: string; lean: 'for' | 'against' | 'mixed' };
 	type DeepDiveItem = {
 		school: string;
 		slug: string;
 		outcome: DecisionOutcome;
 		explanation: string;
+		// Committee simulation: each reader's take, the point they disagree on, the
+		// chair's synthesis, and concrete next steps. Optional so older cached items
+		// (and the markdown fallback) still render.
+		readers?: CommitteeReader[];
+		tension?: string;
+		chair?: string;
+		advice?: string[];
 	};
 	// Application inputs (can be typed or filled via OCR)
 	let essay = $state('');
@@ -2013,11 +2021,65 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 											</span>
 										</div>
 
-										<div
-											class="text-sm leading-relaxed text-slate-700 whitespace-pre-wrap font-sans bg-slate-50/50 rounded-xl p-4 border border-slate-100"
-										>
-											{item.explanation}
-										</div>
+										{#if item.readers && item.readers.length}
+											<!-- Committee deliberation: each reader's take, the disagreement,
+											     the chair's verdict, and what would move it. -->
+											<div class="space-y-3">
+												<div class="grid gap-3 sm:grid-cols-2">
+													{#each item.readers as r}
+														<div class="rounded-xl border border-slate-200 bg-white p-4">
+															<div class="flex items-center justify-between gap-2">
+																<p class="text-[11px] font-bold uppercase tracking-wide text-slate-500">{r.role}</p>
+																<span
+																	class="shrink-0 rounded-full px-2 py-0.5 text-[10px] font-bold {r.lean === 'for'
+																		? 'bg-emerald-50 text-emerald-700'
+																		: r.lean === 'against'
+																			? 'bg-rose-50 text-rose-700'
+																			: 'bg-amber-50 text-amber-700'}"
+																>
+																	{r.lean === 'for' ? 'For' : r.lean === 'against' ? 'Against' : 'Mixed'}
+																</span>
+															</div>
+															<p class="mt-2 text-sm leading-relaxed text-slate-700">{r.take}</p>
+														</div>
+													{/each}
+												</div>
+
+												{#if item.tension}
+													<div class="rounded-xl border border-amber-200 bg-amber-50/60 p-4">
+														<p class="text-[11px] font-bold uppercase tracking-wide text-amber-700">Where the room split</p>
+														<p class="mt-1 text-sm leading-relaxed text-slate-700">{item.tension}</p>
+													</div>
+												{/if}
+
+												{#if item.chair}
+													<div class="rounded-xl bg-slate-900 p-4 text-white">
+														<p class="text-[11px] font-bold uppercase tracking-wide text-blue-200">The chair weighs the room</p>
+														<p class="mt-1 text-sm leading-relaxed text-slate-100">{item.chair}</p>
+													</div>
+												{/if}
+
+												{#if item.advice && item.advice.length}
+													<div class="rounded-xl border border-slate-200 bg-white p-4">
+														<p class="text-[11px] font-bold uppercase tracking-wide text-slate-500">What would move it</p>
+														<ul class="mt-2 space-y-1.5">
+															{#each item.advice as a}
+																<li class="flex items-start gap-2 text-sm text-slate-700">
+																	<span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#1A4CFF]"></span>
+																	{a}
+																</li>
+															{/each}
+														</ul>
+													</div>
+												{/if}
+											</div>
+										{:else}
+											<div
+												class="text-sm leading-relaxed text-slate-700 whitespace-pre-wrap font-sans bg-slate-50/50 rounded-xl p-4 border border-slate-100"
+											>
+												{item.explanation}
+											</div>
+										{/if}
 									</article>
 								{/each}
 							</div>

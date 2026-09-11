@@ -52,30 +52,34 @@ export const POST: RequestHandler = async (event) => {
 		);
 	}
 
-	const systemPrompt = `You are an experienced admissions officer at ${school}.
-You are writing a confidential, internal-style explanation for why this applicant received their decision.
-Be candid, nuanced, and constructive – but always professional and humane.
-ACADEMIC-INTEGRITY HARD RULE: your advice describes WHAT to improve and WHY — never write, rewrite, or suggest replacement essay wording or any text the student could paste into an application.`;
+	const systemPrompt = `You simulate a full admissions committee at ${school} deliberating over one applicant's file.
+The committee has five readers, each with their own lens. They do NOT always agree — that tension is the point.
+After the readers speak, the committee chair weighs the room and explains the decision.
+Be candid, nuanced, specific to THIS applicant, and humane. No generic filler.
+ACADEMIC-INTEGRITY HARD RULE: advice describes WHAT to improve and WHY — never write, rewrite, or suggest replacement essay wording or any text the student could paste into an application.
+Return ONLY valid JSON (no markdown, no code fences).`;
 
-	const userPrompt = `You are simulating ${school}'s admissions committee explaining why they chose to ${outcome.toUpperCase()} this applicant.
+	const userPrompt = `The committee at ${school} has decided to ${outcome.toUpperCase()} this applicant.
 
-Decision outcome: ${outcome}
-Short summary of rationale from the prediction engine: ${short_reason ?? '(none provided)'}
+Rationale from the prediction engine: ${short_reason ?? '(none provided)'}
 
-Applicant materials (summary – treat this as confidential application content):
+Applicant materials (confidential application content):
 ${applicantSummary}
 
-Write a detailed explanation of this decision AS IF you were the admissions committee at ${school}.
-Structure your answer with short markdown headings and clear sections, covering at least:
-
-1. Academic preparation (rigor, grades, context).
-2. Extracurricular impact and leadership.
-3. Personal qualities, background, and context.
-4. Overall fit with ${school}'s institutional priorities.
-5. Concrete advice for what this student could do next (appeals, transfers, future apps, etc.).
-
-Speak directly to the student in the second person, but keep a professional, steady tone.
-Do not include JSON – just write readable markdown text.`;
+Produce the committee's deliberation as JSON with EXACTLY this shape:
+{
+  "readers": [
+    { "role": "Academic reader", "lean": "for" | "against" | "mixed", "take": "2-3 sentences on rigor, grades, and academic context for THIS file" },
+    { "role": "Essays & narrative reader", "lean": "for|against|mixed", "take": "2-3 sentences on the writing and story" },
+    { "role": "Activities & impact reader", "lean": "for|against|mixed", "take": "2-3 sentences on extracurricular depth and impact" },
+    { "role": "Fit reader", "lean": "for|against|mixed", "take": "2-3 sentences on fit with ${school}'s specific priorities" },
+    { "role": "Character reader", "lean": "for|against|mixed", "take": "2-3 sentences on personal qualities and context" }
+  ],
+  "tension": "1-2 sentences naming the specific point the readers disagreed on for this file",
+  "chair": "3-4 sentences on how the chair weighed the room and why the decision landed on ${outcome}",
+  "advice": ["3 to 5 concrete next steps, each describing what to improve and why, NEVER replacement essay text"]
+}
+Speak to the student in second person inside the takes and chair. Every field must be specific to this applicant, not boilerplate.`;
 
 	try {
 		const response = await fetch('https://api.deepseek.com/chat/completions', {
@@ -91,7 +95,8 @@ Do not include JSON – just write readable markdown text.`;
 					{ role: 'user', content: userPrompt }
 				],
 				temperature: 0.65,
-				max_tokens: 3000
+				max_tokens: 3000,
+				response_format: { type: 'json_object' }
 			})
 		});
 
@@ -111,12 +116,50 @@ Do not include JSON – just write readable markdown text.`;
 			return json({ error: 'DeepSeek returned empty content for deep dive.' }, { status: 502 });
 		}
 
+		// Parse the committee JSON. Strip any stray code fences, and fall back to
+		// rendering the raw content as the explanation if it isn't valid JSON, so a
+		// malformed model response still produces a usable deep dive.
+		const stripFences = (t: string) =>
+			t.trim().replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/i, '').trim();
+
+		let readers: unknown = undefined;
+		let tension: unknown = undefined;
+		let chair: unknown = undefined;
+		let advice: unknown = undefined;
+		let explanation = content;
+
+		try {
+			const parsed = JSON.parse(stripFences(content));
+			if (parsed && Array.isArray(parsed.readers)) {
+				readers = parsed.readers;
+				tension = typeof parsed.tension === 'string' ? parsed.tension : undefined;
+				chair = typeof parsed.chair === 'string' ? parsed.chair : undefined;
+				advice = Array.isArray(parsed.advice) ? parsed.advice : undefined;
+				// Build a plain-text fallback from the structured parts.
+				explanation = [
+					...(parsed.readers as Array<{ role?: string; take?: string }>).map(
+						(r) => `${r.role}: ${r.take}`
+					),
+					tension ? `Where they disagreed: ${tension}` : '',
+					chair ? `The chair: ${chair}` : ''
+				]
+					.filter(Boolean)
+					.join('\n\n');
+			}
+		} catch {
+			// Not JSON: keep the raw content as the explanation (markdown fallback).
+		}
+
 		return json({
 			deepDive: {
 				school,
 				slug,
 				outcome,
-				explanation: content
+				explanation,
+				readers,
+				tension,
+				chair,
+				advice
 			}
 		});
 	} catch (error) {
