@@ -107,6 +107,19 @@
 					: 'PredictAdmit Pro'
 	);
 
+	// Compact label for the header pill.
+	const planPill = $derived(
+		billing?.plan === 'monthly'
+			? 'Pro · Monthly'
+			: billing?.plan === 'lifetime'
+				? 'Pro · Lifetime'
+				: billing?.plan === 'single'
+					? 'One school unlocked'
+					: billing && !billing.billingConfigured
+						? 'Pro · Unlocked'
+						: 'Free plan'
+	);
+
 	function fmtDate(unix: number | null | undefined): string {
 		if (!unix) return '';
 		try {
@@ -146,20 +159,11 @@
 
 <div class="flex-1 min-h-0 overflow-y-auto bg-slate-50">
 	<div class="max-w-6xl mx-auto px-6 md:px-10 py-8">
-		<!-- Header -->
-		<header class="mb-8">
-			<h1 class="text-2xl font-bold tracking-tight text-slate-900">Settings</h1>
-			<p class="mt-1 text-sm text-slate-500">
-				Manage your account, plan, and preferences.
-			</p>
-		</header>
-
-		<div class="grid gap-6">
-			<!-- Account -->
-			<section class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm md:p-8">
-				<h2 class="text-xs font-semibold uppercase tracking-wide text-slate-500">Account</h2>
-
-				<div class="mt-5 flex items-center gap-4">
+		<!-- Profile hero -->
+		<div class="mb-8">
+			<p class="text-sm font-medium text-slate-500">Settings</p>
+			<div class="mt-3 flex flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between md:p-8">
+				<div class="flex items-center gap-4">
 					{#if avatarImage}
 						<img
 							src={avatarImage}
@@ -176,7 +180,7 @@
 					{/if}
 					<div class="min-w-0">
 						<div class="flex items-center gap-2">
-							<p class="truncate text-lg font-semibold text-slate-900">{displayName}</p>
+							<h1 class="truncate text-xl font-bold tracking-tight text-slate-900">{displayName}</h1>
 							<span
 								class="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-0.5 text-xs font-medium text-emerald-700 ring-1 ring-inset ring-emerald-200"
 							>
@@ -193,8 +197,20 @@
 						<p class="truncate text-sm text-slate-500">{displayEmail}</p>
 					</div>
 				</div>
+				{#if !billingLoading}
+					<span class="self-start rounded-full bg-[#0052CC]/10 px-3 py-1.5 text-xs font-bold text-[#0052CC] sm:self-auto">
+						{planPill}
+					</span>
+				{/if}
+			</div>
+		</div>
 
-				<dl class="mt-6 divide-y divide-slate-100 border-t border-slate-100">
+		<div class="grid gap-6">
+			<!-- Account -->
+			<section class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm md:p-8">
+				<h2 class="text-xs font-semibold uppercase tracking-wide text-slate-500">Account</h2>
+
+				<dl class="mt-5 divide-y divide-slate-100 border-t border-slate-100">
 					<div class="flex items-center justify-between py-3">
 						<dt class="text-sm text-slate-500">Role</dt>
 						<dd class="text-sm font-medium text-slate-900">Applicant</dd>
