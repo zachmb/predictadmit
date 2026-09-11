@@ -2,6 +2,7 @@
 	import { userProfile } from '$lib/stores/user';
 	import { page } from '$app/stores';
 	import { browser } from '$app/environment';
+	import { onMount } from 'svelte';
 	import { signOut } from '@auth/sveltekit/client';
 
 	const PREFS_KEY = 'predictadmit:pro:prefs';
@@ -42,6 +43,82 @@
 			}
 		}
 	};
+
+	// Billing — real plan status + the Stripe portal for editing/cancelling.
+	type BillingStatus = {
+		signedIn: boolean;
+		plan: 'monthly' | 'lifetime' | 'single' | 'none' | 'unknown';
+		hasBilling: boolean;
+		billingConfigured: boolean;
+		subscription?: { status: string; cancelAtPeriodEnd: boolean; currentPeriodEnd: number | null } | null;
+		error?: boolean;
+	};
+
+	let billing = $state<BillingStatus | null>(null);
+	let billingLoading = $state(true);
+	let portalLoading = $state(false);
+	let portalError = $state('');
+
+	onMount(async () => {
+		try {
+			const res = await fetch('/api/billing/status');
+			billing = await res.json();
+		} catch {
+			billing = {
+				signedIn: true,
+				plan: 'unknown',
+				hasBilling: false,
+				billingConfigured: true,
+				error: true
+			};
+		} finally {
+			billingLoading = false;
+		}
+	});
+
+	// Open Stripe's hosted portal, where the customer can update their card,
+	// cancel, or download invoices. Cancellation happens in Stripe, never here.
+	async function openBillingPortal() {
+		if (portalLoading) return;
+		portalLoading = true;
+		portalError = '';
+		try {
+			const res = await fetch('/api/billing/portal', { method: 'POST' });
+			const data = await res.json();
+			if (res.ok && data.url) {
+				window.location.href = data.url;
+				return;
+			}
+			portalError = data.message || data.error || 'Could not open the billing portal.';
+		} catch {
+			portalError = 'Could not open the billing portal. Please try again.';
+		} finally {
+			portalLoading = false;
+		}
+	}
+
+	const planName = $derived(
+		billing?.plan === 'monthly'
+			? 'PredictAdmit Pro, Monthly'
+			: billing?.plan === 'lifetime'
+				? 'PredictAdmit Pro, Lifetime'
+				: billing?.plan === 'single'
+					? 'Single-school unlock'
+					: 'PredictAdmit Pro'
+	);
+
+	function fmtDate(unix: number | null | undefined): string {
+		if (!unix) return '';
+		try {
+			return new Date(unix * 1000).toLocaleDateString(undefined, {
+				month: 'long',
+				day: 'numeric',
+				year: 'numeric'
+			});
+		} catch {
+			return '';
+		}
+	}
 
 	// Danger zone — delete flow.
 	let confirmingDelete = $state(false);
@@ -151,38 +228,118 @@
 			<section class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm md:p-8">
 				<h2 class="text-xs font-semibold uppercase tracking-wide text-slate-500">Current plan</h2>
 
-				<div class="mt-5 flex flex-col gap-4 rounded-xl border border-slate-200 bg-slate-50/60 p-5 sm:flex-row sm:items-center sm:justify-between">
-					<div class="flex items-start gap-4">
-						<div
-							class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-white shadow"
-							style="background-color: #0052CC;"
-						>
-							<svg viewBox="0 0 20 20" fill="currentColor" class="h-6 w-6" aria-hidden="true">
-								<path
-									d="m9.653 2.298-1.6 3.243-3.58.52a.75.75 0 0 0-.416 1.28l2.59 2.524-.611 3.566a.75.75 0 0 0 1.088.79L10 12.518l3.204 1.684a.75.75 0 0 0 1.088-.79l-.611-3.566 2.59-2.525a.75.75 0 0 0-.416-1.28l-3.58-.519-1.6-3.243a.75.75 0 0 0-1.346 0Z"
-								/>
-							</svg>
-						</div>
-						<div>
-							<div class="flex items-center gap-2">
-								<p class="text-base font-semibold text-slate-900">PredictAdmit Pro</p>
-								<span
-									class="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-semibold text-emerald-700 ring-1 ring-inset ring-emerald-200"
-								>
-									<span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-									Active
-								</span>
+				{#if billingLoading}
+					<div class="mt-5 flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-50/60 p-5 text-sm text-slate-500">
+						<span class="h-4 w-4 animate-spin rounded-full border-2 border-slate-300 border-t-[#0052CC]"></span>
+						Checking your plan...
+					</div>
+				{:else}
+					{@const plan = billing?.plan ?? 'unknown'}
+					{@const sub = billing?.subscription ?? null}
+					<div class="mt-5 flex flex-col gap-4 rounded-xl border border-slate-200 bg-slate-50/60 p-5 sm:flex-row sm:items-center sm:justify-between">
+						<div class="flex items-start gap-4">
+							<div
+								class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-white shadow"
+								style="background-color: #0052CC;"
+							>
+								<svg viewBox="0 0 20 20" fill="currentColor" class="h-6 w-6" aria-hidden="true">
+									<path
+										d="m9.653 2.298-1.6 3.243-3.58.52a.75.75 0 0 0-.416 1.28l2.59 2.524-.611 3.566a.75.75 0 0 0 1.088.79L10 12.518l3.204 1.684a.75.75 0 0 0 1.088-.79l-.611-3.566 2.59-2.525a.75.75 0 0 0-.416-1.28l-3.58-.519-1.6-3.243a.75.75 0 0 0-1.346 0Z"
+									/>
+								</svg>
 							</div>
-							<p class="mt-1 text-sm font-medium text-slate-700">Free · unlocked</p>
-							<p class="mt-0.5 text-sm text-slate-500">
-								Every Pro feature is included. No card, no limits.
-							</p>
+							<div>
+								<div class="flex flex-wrap items-center gap-2">
+									<p class="text-base font-semibold text-slate-900">{planName}</p>
+									{#if plan === 'monthly' && sub?.cancelAtPeriodEnd}
+										<span class="inline-flex items-center gap-1.5 rounded-full bg-amber-50 px-2.5 py-0.5 text-xs font-semibold text-amber-700 ring-1 ring-inset ring-amber-200">
+											Cancels soon
+										</span>
+									{:else if plan !== 'none'}
+										<span class="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-semibold text-emerald-700 ring-1 ring-inset ring-emerald-200">
+											<span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+											Active
+										</span>
+									{/if}
+								</div>
+
+								{#if plan === 'monthly'}
+									<p class="mt-1 text-sm font-medium text-slate-700">$9.99 per month</p>
+									<p class="mt-0.5 text-sm text-slate-500">
+										{#if sub?.cancelAtPeriodEnd && sub?.currentPeriodEnd}
+											Your access stays on until {fmtDate(sub.currentPeriodEnd)}, then it will not renew.
+										{:else if sub?.currentPeriodEnd}
+											Renews {fmtDate(sub.currentPeriodEnd)}. Cancel anytime.
+										{:else}
+											Full access while you're subscribed. Cancel anytime.
+										{/if}
+									</p>
+								{:else if plan === 'lifetime'}
+									<p class="mt-1 text-sm font-medium text-slate-700">Paid once. Yours forever.</p>
+									<p class="mt-0.5 text-sm text-slate-500">Every Pro feature, no subscription and nothing to renew.</p>
+								{:else if plan === 'single'}
+									<p class="mt-1 text-sm font-medium text-slate-700">One school unlocked</p>
+									<p class="mt-0.5 text-sm text-slate-500">Upgrade to full Pro for every school and the whole workshop.</p>
+								{:else if billing && !billing.billingConfigured}
+									<p class="mt-1 text-sm font-medium text-slate-700">Unlocked</p>
+									<p class="mt-0.5 text-sm text-slate-500">Every Pro feature is included right now.</p>
+								{:else}
+									<p class="mt-1 text-sm font-medium text-slate-700">Free plan</p>
+									<p class="mt-0.5 text-sm text-slate-500">Your first prediction is free. Upgrade to unlock every school and the workshop.</p>
+								{/if}
+							</div>
+						</div>
+
+						<div class="text-right">
+							{#if plan === 'monthly'}
+								<p class="text-2xl font-bold text-slate-900">$9.99<span class="text-sm font-medium text-slate-400">/mo</span></p>
+							{:else if plan === 'lifetime'}
+								<p class="text-2xl font-bold text-slate-900">$25<span class="text-sm font-medium text-slate-400"> once</span></p>
+							{/if}
 						</div>
 					</div>
-					<div class="text-right">
-						<p class="text-2xl font-bold text-slate-900">$0<span class="text-sm font-medium text-slate-400">/mo</span></p>
+
+					<!-- Actions: manage in Stripe if there's billing on file, otherwise upgrade. -->
+					<div class="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center">
+						{#if billing?.hasBilling}
+							<button
+								type="button"
+								onclick={openBillingPortal}
+								disabled={portalLoading}
+								class="inline-flex items-center justify-center gap-2 rounded-lg bg-[#0052CC] px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#0047b3] active:scale-[0.99] disabled:opacity-50"
+							>
+								{#if portalLoading}
+									<span class="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white"></span>
+									Opening...
+								{:else}
+									{plan === 'monthly' ? 'Manage subscription' : 'Manage billing'}
+								{/if}
+							</button>
+							<p class="text-xs text-slate-500 sm:ml-1">
+								{plan === 'monthly'
+									? 'Update your card, cancel, or download invoices in Stripe.'
+									: 'Update your card or download invoices in Stripe.'}
+							</p>
+							{#if plan === 'single'}
+								<a href="/pro" class="text-sm font-semibold text-[#0052CC] hover:underline sm:ml-auto">Upgrade to full Pro</a>
+							{/if}
+						{:else if billing && !billing.billingConfigured}
+							<p class="text-xs text-slate-500">Billing is not set up yet, so there's nothing to manage.</p>
+						{:else}
+							<a
+								href="/pro"
+								class="inline-flex items-center justify-center gap-2 rounded-lg bg-[#0052CC] px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#0047b3] active:scale-[0.99]"
+							>
+								Upgrade to Pro
+							</a>
+							<p class="text-xs text-slate-500 sm:ml-1">Lifetime is $25 once, or $9.99 a month.</p>
+						{/if}
 					</div>
-				</div>
+
+					{#if portalError}
+						<p class="mt-3 rounded-lg bg-rose-50 px-3 py-2 text-sm text-rose-700 ring-1 ring-inset ring-rose-200">{portalError}</p>
+					{/if}
+				{/if}
 			</section>
 
 			<!-- Preferences -->
