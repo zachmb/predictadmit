@@ -95,10 +95,10 @@
 	// Free-tier limits (persisted per browser)
 	let hasUsedFreeSimulation = $state(false);
 	let hasUsedFreePdfOcr = $state(false);
-	// A/B TEST (2026-08-15): does 1 or 2 free decision opens convert better? Each
-	// browser is randomly assigned abFreeDecisions ∈ {1,2} (persisted). A non-Pro
-	// user may open that many decisions free; opening more needs $4.99 (that school →
-	// proSchools, deep dive included) or an upgrade. Variant is tagged on GA events.
+	// Free tier is ONE school (Zach, 2026-09-11): a non-Pro user runs one free
+	// simulation and unlocks exactly ONE school's results. Unlocking any more needs
+	// $4.99 for that school (→ proSchools, deep dive included) or Pro (unlimited
+	// simulations + the workshop). The old 1-vs-2 A/B test is retired; this is always 1.
 	let abFreeDecisions = $state(1);
 	let freeOpenedSlugs = $state<string[]>([]);
 	let promoCodeInput = $state('');
@@ -511,15 +511,8 @@
 		hasUsedFreeSimulation = localStorage.getItem('predictadmit_hasUsedFreeSimulation') === 'true';
 		hasUsedFreePdfOcr = localStorage.getItem('predictadmit_hasUsedFreePdfOcr') === 'true';
 
-		// A/B assignment: sticky per browser. Assign 1 or 2 free opens on first visit.
-		const savedAb = localStorage.getItem('predictadmit_ab_free_decisions');
-		if (savedAb === '1' || savedAb === '2') {
-			abFreeDecisions = Number(savedAb);
-		} else {
-			abFreeDecisions = Math.random() < 0.5 ? 1 : 2;
-			localStorage.setItem('predictadmit_ab_free_decisions', String(abFreeDecisions));
-			track('ab_assign', { experiment: 'free_decisions', variant: abFreeDecisions });
-		}
+		// Free tier is exactly ONE school unlock for everyone (A/B test retired).
+		abFreeDecisions = 1;
 		// Migrate the old single-slug key; then load the opened list.
 		const legacyOne = localStorage.getItem('predictadmit_freeOpenedDecisionSlug');
 		try {
@@ -1154,7 +1147,7 @@
 				<p class="mx-auto max-w-xl text-base sm:text-lg leading-relaxed text-slate-600">
 					PredictAdmit's AI reads your real application and calls your decision (accept, deny, or
 					waitlist) at all 39 top schools.
-					<span class="font-semibold text-slate-900">Your first prediction is free.</span>
+					<span class="font-semibold text-slate-900">Your first simulation is free, and you can unlock one school's results.</span>
 				</p>
 
 				<!-- Trust band — calibration, scale, privacy (the signals a nervous applicant needs). -->
@@ -1780,7 +1773,7 @@ Picking one applies that school's real early-round odds
 								</span>
 								<span class="font-medium text-slate-600">5,000+ applicants</span>
 								<span class="hidden sm:block h-3 w-px bg-slate-200"></span>
-								<span>First prediction free · then <span class="font-semibold text-slate-700">$25 once</span> or $9.99/mo</span>
+								<span>Free: one school unlocked · <span class="font-semibold text-slate-700">Pro: unlimited simulations + the workshop</span></span>
 							</div>
 
 							<p class="mt-3 text-center text-xs leading-relaxed text-slate-500">
@@ -1840,8 +1833,8 @@ See what we read from your file
 						<div class="border-b-2 border-[#0047b3] bg-[#0052CC] px-6 py-4">
 							<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
 								<div>
-									<p class="text-sm font-bold text-white">Your predictions are in. Open any one free.</p>
-									<p class="mt-0.5 text-xs leading-relaxed text-blue-100">Reading more is $4.99 each (deep-dive included), or unlock all 39 + unlimited essay editing for $25 once ($9.99/mo).</p>
+									<p class="text-sm font-bold text-white">Your predictions are in. Unlock one school free.</p>
+									<p class="mt-0.5 text-xs leading-relaxed text-blue-100">Any other school is $4.99 (deep-dive included). Or go Pro for unlimited simulations and the full essay workshop. $25 once, or $9.99/mo.</p>
 								</div>
 								<button
 									type="button"
