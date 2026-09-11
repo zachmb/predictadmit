@@ -233,7 +233,7 @@
 				<div class="flex items-center gap-3">
 					<div
 						class="flex h-9 w-9 items-center justify-center rounded-full text-sm font-bold text-white"
-						style="background-color:#0052CC"
+						style="background-color:#1A4CFF"
 						aria-hidden="true"
 					>
 						AI
@@ -275,7 +275,7 @@
 					>
 						<div
 							class="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl text-lg font-bold text-white shadow-sm"
-							style="background-color:#0052CC"
+							style="background-color:#1A4CFF"
 							aria-hidden="true"
 						>
 							AI
@@ -291,10 +291,10 @@
 								<button
 									type="button"
 									onclick={() => handleSuggestion(prompt)}
-									class="group flex items-center gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3 text-left text-sm font-medium text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-[#0052CC] hover:text-slate-900 hover:shadow"
+									class="group flex items-center gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3 text-left text-sm font-medium text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-[#1A4CFF] hover:text-slate-900 hover:shadow"
 								>
 									<span
-										class="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-[#0052CC] transition group-hover:bg-[#0052CC] group-hover:text-white"
+										class="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-[#1A4CFF] transition group-hover:bg-[#1A4CFF] group-hover:text-white"
 									>
 										<svg
 											width="16"
@@ -322,7 +322,7 @@
 								<div class="flex justify-end">
 									<div
 										class="max-w-[85%] whitespace-pre-wrap break-words rounded-2xl rounded-br-md px-4 py-2.5 text-sm text-white shadow-sm"
-										style="background-color:#0052CC"
+										style="background-color:#1A4CFF"
 									>
 										{message.content}
 									</div>
@@ -331,7 +331,7 @@
 								<div class="flex items-start gap-2.5">
 									<div
 										class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[11px] font-bold text-white"
-										style="background-color:#0052CC"
+										style="background-color:#1A4CFF"
 										aria-hidden="true"
 									>
 										AI
@@ -350,7 +350,7 @@
 							<div class="flex items-start gap-2.5">
 								<div
 									class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[11px] font-bold text-white"
-									style="background-color:#0052CC"
+									style="background-color:#1A4CFF"
 									aria-hidden="true"
 								>
 									AI
@@ -397,7 +397,7 @@
 
 				<form
 					onsubmit={handleSubmit}
-					class="flex items-end gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2 transition focus-within:border-[#0052CC] focus-within:bg-white"
+					class="flex items-end gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2 transition focus-within:border-[#1A4CFF] focus-within:bg-white"
 				>
 					<textarea
 						bind:this={textareaEl}
@@ -414,7 +414,7 @@
 						disabled={isThinking || draft.trim() === ''}
 						aria-label="Send message"
 						class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-white transition disabled:cursor-not-allowed disabled:opacity-40"
-						style="background-color:#0052CC"
+						style="background-color:#1A4CFF"
 					>
 						<svg
 							width="18"

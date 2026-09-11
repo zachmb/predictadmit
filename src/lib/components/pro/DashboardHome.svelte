@@ -150,7 +150,7 @@
 		<div class="grid grid-cols-1 lg:grid-cols-5 gap-5 mb-8">
 			<!-- AI Counselor hero -->
 			<div
-				class="lg:col-span-3 relative overflow-hidden rounded-2xl border border-[#0052CC]/20 bg-gradient-to-br from-[#0052CC] to-[#0a63e6] p-7 md:p-8 shadow-sm"
+				class="lg:col-span-3 relative overflow-hidden rounded-2xl border border-[#1A4CFF]/20 bg-gradient-to-br from-[#1A4CFF] to-[#0a63e6] p-7 md:p-8 shadow-sm"
 			>
 				<div
 					class="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/10 blur-2xl"
@@ -180,7 +180,7 @@
 					<button
 						type="button"
 						onclick={() => setView('counselor')}
-						class="mt-6 inline-flex items-center gap-2 rounded-xl bg-white px-5 py-2.5 text-sm font-semibold text-[#0052CC] shadow-sm transition hover:bg-slate-100 active:scale-[0.98]"
+						class="mt-6 inline-flex items-center gap-2 rounded-xl bg-white px-5 py-2.5 text-sm font-semibold text-[#1A4CFF] shadow-sm transition hover:bg-slate-100 active:scale-[0.98]"
 					>
 						Chat with PredictAI
 						<svg
@@ -205,12 +205,12 @@
 						<p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Countdown</p>
 						<h3 class="mt-0.5 text-lg font-bold text-slate-900">Early Deadlines · Nov 1, 2026</h3>
 					</div>
-					<span class="flex items-center gap-1.5 text-xs font-semibold text-[#0052CC]">
+					<span class="flex items-center gap-1.5 text-xs font-semibold text-[#1A4CFF]">
 						<span class="relative flex h-2 w-2">
 							<span
-								class="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#0052CC] opacity-75"
+								class="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#1A4CFF] opacity-75"
 							></span>
-							<span class="relative inline-flex h-2 w-2 rounded-full bg-[#0052CC]"></span>
+							<span class="relative inline-flex h-2 w-2 rounded-full bg-[#1A4CFF]"></span>
 						</span>
 						LIVE
 					</span>
@@ -246,11 +246,11 @@
 					{#if rec.href}
 						<a
 							href={rec.href}
-							class="group flex flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-[#0052CC]/40 hover:shadow-md"
+							class="group flex flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-[#1A4CFF]/40 hover:shadow-md"
 						>
 							<div class="flex items-start justify-between">
 								<div
-									class="flex h-10 w-10 items-center justify-center rounded-xl bg-[#0052CC]/10 text-[#0052CC]"
+									class="flex h-10 w-10 items-center justify-center rounded-xl bg-[#1A4CFF]/10 text-[#1A4CFF]"
 								>
 									{@render icon(rec.icon)}
 								</div>
@@ -264,7 +264,7 @@
 							<h3 class="mt-4 font-semibold text-slate-900">{rec.title}</h3>
 							<p class="mt-1 text-sm text-slate-500 leading-relaxed">{rec.desc}</p>
 							<span
-								class="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-[#0052CC] group-hover:gap-2 transition-all"
+								class="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-[#1A4CFF] group-hover:gap-2 transition-all"
 							>
 								Open →
 							</span>
@@ -273,11 +273,11 @@
 						<button
 							type="button"
 							onclick={rec.action}
-							class="group flex flex-col rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:border-[#0052CC]/40 hover:shadow-md"
+							class="group flex flex-col rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:border-[#1A4CFF]/40 hover:shadow-md"
 						>
 							<div class="flex items-start justify-between">
 								<div
-									class="flex h-10 w-10 items-center justify-center rounded-xl bg-[#0052CC]/10 text-[#0052CC]"
+									class="flex h-10 w-10 items-center justify-center rounded-xl bg-[#1A4CFF]/10 text-[#1A4CFF]"
 								>
 									{@render icon(rec.icon)}
 								</div>
@@ -291,7 +291,7 @@
 							<h3 class="mt-4 font-semibold text-slate-900">{rec.title}</h3>
 							<p class="mt-1 text-sm text-slate-500 leading-relaxed">{rec.desc}</p>
 							<span
-								class="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-[#0052CC] group-hover:gap-2 transition-all"
+								class="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-[#1A4CFF] group-hover:gap-2 transition-all"
 							>
 								Open →
 							</span>
@@ -315,7 +315,7 @@
 						</div>
 						<div class="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-slate-100">
 							<div
-								class="h-full rounded-full bg-[#0052CC]"
+								class="h-full rounded-full bg-[#1A4CFF]"
 								style="width: {academicIndex}%"
 							></div>
 						</div>
@@ -324,7 +324,7 @@
 						<button
 							type="button"
 							onclick={() => setView('chanceme')}
-							class="mt-3 text-sm font-semibold text-[#0052CC] hover:underline"
+							class="mt-3 text-sm font-semibold text-[#1A4CFF] hover:underline"
 						>
 							Complete profile →
 						</button>
@@ -335,7 +335,7 @@
 				<button
 					type="button"
 					onclick={() => setView('schools')}
-					class="rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:border-[#0052CC]/40 hover:shadow-md"
+					class="rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:border-[#1A4CFF]/40 hover:shadow-md"
 				>
 					<p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Schools on list</p>
 					<div class="mt-2 text-3xl font-bold text-slate-900">{schoolCount}</div>
@@ -348,7 +348,7 @@
 				<button
 					type="button"
 					onclick={() => setView('editor')}
-					class="rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:border-[#0052CC]/40 hover:shadow-md"
+					class="rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:border-[#1A4CFF]/40 hover:shadow-md"
 				>
 					<p class="text-xs font-semibold uppercase tracking-wide text-slate-500">
 						Essays in progress

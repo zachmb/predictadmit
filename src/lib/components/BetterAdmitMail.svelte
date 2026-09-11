@@ -521,7 +521,7 @@
 										Log in with the credentials you set up when you applied.
 									</p>
 									<p class="not-prose rounded-lg border border-blue-100 bg-blue-50 px-4 py-2.5 text-sm text-slate-600">
-										<span class="font-semibold text-[#0052CC]">First time?</span> This is a
+										<span class="font-semibold text-[#1A4CFF]">First time?</span> This is a
 										simulation, so just tap <span class="font-semibold">Login</span> to reveal your
 										decision. Your details are pre-filled and no real credentials are needed.
 									</p>

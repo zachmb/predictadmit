@@ -12,7 +12,7 @@
 			class="max-w-2xl w-full bg-white border border-slate-200 rounded-3xl p-12 shadow-xl shadow-slate-200/50 text-center space-y-8"
 		>
 			<div
-				class="w-16 h-16 bg-blue-50 text-[#0052CC] rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4"
+				class="w-16 h-16 bg-blue-50 text-[#1A4CFF] rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4"
 			>
 				✉️
 			</div>
@@ -24,7 +24,7 @@
 			<div class="py-8">
 				<a
 					href="mailto:hello@predictadmit.com"
-					class="inline-flex items-center gap-3 text-2xl font-bold text-[#0052CC] hover:text-blue-700 transition-colors border-b-2 border-blue-100 hover:border-[#0052CC] pb-1"
+					class="inline-flex items-center gap-3 text-2xl font-bold text-[#1A4CFF] hover:text-blue-700 transition-colors border-b-2 border-blue-100 hover:border-[#1A4CFF] pb-1"
 				>
 					hello@predictadmit.com
 				</a>

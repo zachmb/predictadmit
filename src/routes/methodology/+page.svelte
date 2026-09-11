@@ -55,7 +55,7 @@
 	<section class="border-b border-slate-100">
 		<div class="max-w-3xl mx-auto px-6 py-20 md:py-28">
 			<p
-				class="inline-block mb-6 text-xs font-semibold tracking-widest uppercase text-[#0052CC] bg-[#0052CC]/10 px-3 py-1 rounded-full"
+				class="inline-block mb-6 text-xs font-semibold tracking-widest uppercase text-[#1A4CFF] bg-[#1A4CFF]/10 px-3 py-1 rounded-full"
 			>
 				Methodology
 			</p>
@@ -123,14 +123,14 @@
 						{#each sortedFactors as f}
 							<tr>
 								<td class="px-4 py-3 font-medium text-slate-900">{f.label}</td>
-								<td class="px-4 py-3 text-right font-semibold text-[#0052CC]">{pct(f.considerable)}</td>
+								<td class="px-4 py-3 text-right font-semibold text-[#1A4CFF]">{pct(f.considerable)}</td>
 								<td class="px-4 py-3 text-right text-slate-600 hidden sm:table-cell">{pct(f.moderate)}</td>
 								<td class="px-4 py-3 text-right text-slate-600 hidden md:table-cell">{pct(f.limited)}</td>
 								<td class="px-4 py-3 text-right text-slate-600 hidden md:table-cell">{pct(f.none)}</td>
 								<td class="px-4 py-3 hidden sm:table-cell">
 									<div class="h-2 rounded-full bg-slate-100">
 										<div
-											class="h-2 rounded-full bg-[#0052CC]"
+											class="h-2 rounded-full bg-[#1A4CFF]"
 											style="width: {(factorScore(f) / maxScore) * 100}%"
 										></div>
 									</div>
@@ -170,10 +170,10 @@
 					<div class="rounded-xl border border-slate-100 bg-slate-50 p-4">
 						<div class="flex items-center justify-between mb-1">
 							<span class="font-semibold text-slate-900">{d.label}</span>
-							<span class="font-bold text-[#0052CC]">~{d.weight}%</span>
+							<span class="font-bold text-[#1A4CFF]">~{d.weight}%</span>
 						</div>
 						<div class="mb-2 h-2 rounded-full bg-slate-200">
-							<div class="h-2 rounded-full bg-[#0052CC]" style="width: {d.weight}%"></div>
+							<div class="h-2 rounded-full bg-[#1A4CFF]" style="width: {d.weight}%"></div>
 						</div>
 						<p class="text-xs text-slate-500">{d.covers}</p>
 					</div>
@@ -235,7 +235,7 @@
 		<div class="mt-10 flex flex-col sm:flex-row gap-3">
 			<a
 				href="/pro"
-				class="inline-flex items-center justify-center font-semibold text-sm bg-[#0052CC] text-white px-8 py-3.5 rounded-lg hover:bg-[#003d99] transition-colors shadow-lg shadow-[#0052CC]/20"
+				class="inline-flex items-center justify-center font-semibold text-sm bg-[#1A4CFF] text-white px-8 py-3.5 rounded-lg hover:bg-[#003d99] transition-colors shadow-lg shadow-[#1A4CFF]/20"
 			>
 				See your chances →
 			</a>

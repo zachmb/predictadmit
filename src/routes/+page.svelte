@@ -510,7 +510,7 @@
 				<h1
 					class="text-5xl sm:text-6xl md:text-[5.5rem] font-bold tracking-tighter leading-[0.95] text-slate-900 animate-in fade-in slide-in-from-bottom-6 duration-1000 fill-mode-both"
 				>
-					Simulate Any <br class="hidden md:block" /> University <span class="text-[#0052CC]">Portal</span>
+					Simulate Any <br class="hidden md:block" /> University <span class="text-[#1A4CFF]">Portal</span>
 				</h1>
 				<p
 					class="text-xl md:text-2xl text-slate-500 max-w-2xl mx-auto leading-snug tracking-tight font-medium mt-6 animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-[200ms] fill-mode-both"
@@ -615,7 +615,7 @@
 					<div class="mt-8 flex flex-col items-center gap-4">
 						<a
 							href="/ai"
-							class="inline-flex items-center gap-2 rounded-full border-2 border-[#0052CC]/20 bg-white px-6 py-3 text-base font-bold text-[#0052CC] transition-all hover:border-[#0052CC]/40 hover:bg-[#0052CC]/5 active:scale-95"
+							class="inline-flex items-center gap-2 rounded-full border-2 border-[#1A4CFF]/20 bg-white px-6 py-3 text-base font-bold text-[#1A4CFF] transition-all hover:border-[#1A4CFF]/40 hover:bg-[#1A4CFF]/5 active:scale-95"
 						>
 							<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v2m0 14v2M3 12h2m14 0h2m-3.5-6.5-1.4 1.4M6.9 17.1l-1.4 1.4m0-13 1.4 1.4m11.6 11.6-1.4-1.4"/><circle cx="12" cy="12" r="4"/></svg>
 							Have the AI predict my actual decisions
@@ -734,7 +734,7 @@
 					</div>
 				</div>
 				<div class="flex flex-col items-center md:items-start justify-center gap-0.5 mt-2 md:mt-0">
-					<div class="flex gap-1 text-[#0052CC]">
+					<div class="flex gap-1 text-[#1A4CFF]">
 						{#each Array(5) as _}
 							<svg class="w-4 h-4 fill-current drop-shadow-sm" viewBox="0 0 20 20">
 								<path
@@ -759,7 +759,7 @@
 				</h2>
 				<p class="text-lg text-slate-500">
 					Open any of the 39 portals and read your letter before it is written. <span
-						class="text-[#0052CC] font-bold">Every portal simulation is free. The AI that predicts your real decisions is Pro.</span
+						class="text-[#1A4CFF] font-bold">Every portal simulation is free. The AI that predicts your real decisions is Pro.</span
 					>
 				</p>
 			</div>
@@ -825,7 +825,7 @@
 								</p>
 								<div class="mt-3">
 									<span
-										class="text-xs font-bold uppercase tracking-widest text-[#0052CC] hover:text-blue-700 cursor-pointer"
+										class="text-xs font-bold uppercase tracking-widest text-[#1A4CFF] hover:text-blue-700 cursor-pointer"
 										>View Update &rarr;</span
 									>
 								</div>
@@ -902,7 +902,7 @@
 					<div class="pt-8">
 						<a
 							href="/pro"
-							class="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-[#0052CC] hover:text-blue-700 hover:gap-3 transition-all"
+							class="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-[#1A4CFF] hover:text-blue-700 hover:gap-3 transition-all"
 						>
 							Enter Workshop <span class="text-xl">&rarr;</span>
 						</a>
@@ -1000,9 +1000,9 @@
 									>
 										Acad. Index
 									</div>
-									<div class="text-xl font-black text-[#0052CC] leading-none mt-2">214</div>
+									<div class="text-xl font-black text-[#1A4CFF] leading-none mt-2">214</div>
 									<div class="w-full bg-slate-100 h-1 rounded-full mt-2 overflow-hidden">
-										<div class="bg-[#0052CC] h-full" style="width: 89%"></div>
+										<div class="bg-[#1A4CFF] h-full" style="width: 89%"></div>
 									</div>
 								</div>
 
@@ -1149,7 +1149,7 @@
 	<section class="py-24 bg-[#001F3F] text-white">
 		<div class="max-w-[1200px] mx-auto px-6 text-center">
 			<div class="max-w-3xl mx-auto space-y-8">
-				<div class="flex justify-center text-[#0052CC]">
+				<div class="flex justify-center text-[#1A4CFF]">
 					{#each Array(5) as _}
 						<svg class="w-6 h-6 fill-current" viewBox="0 0 20 20"
 							><path
@@ -1198,7 +1198,7 @@
 				being simulated. PredictAdmit does not access, connect to, or interact with any
 				university's actual application systems or applicant data. If you represent an institution
 				and have questions or concerns, please
-				<a href="/contact" class="font-semibold text-[#0052CC] underline hover:text-[#003d99]"
+				<a href="/contact" class="font-semibold text-[#1A4CFF] underline hover:text-[#003d99]"
 					>contact us</a
 				>.
 			</p>
@@ -1213,7 +1213,7 @@
 				<button
 					type="button"
 					on:click={acknowledgeSimDisclosure}
-					class="rounded-lg bg-[#0052CC] px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-[#0052CC]/20 transition-colors hover:bg-[#003d99]"
+					class="rounded-lg bg-[#1A4CFF] px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-[#1A4CFF]/20 transition-colors hover:bg-[#003d99]"
 				>
 					I understand, view the rehearsal →
 				</button>

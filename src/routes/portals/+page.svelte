@@ -192,7 +192,7 @@
 					     academic profile has been entered. Nudge accordingly. -->
 					<div
 						class="mt-4 rounded-lg border px-4 py-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 {hasStats
-							? 'border-[#0052CC]/20 bg-[#0052CC]/5'
+							? 'border-[#1A4CFF]/20 bg-[#1A4CFF]/5'
 							: 'border-amber-300 bg-amber-50'}"
 					>
 						<div class="text-sm">
@@ -210,7 +210,7 @@
 						</div>
 						<a
 							href="/stats"
-							class="shrink-0 inline-flex items-center justify-center gap-1.5 rounded-lg bg-[#0052CC] px-4 py-2 text-sm font-bold text-white hover:bg-[#003d99] transition-colors"
+							class="shrink-0 inline-flex items-center justify-center gap-1.5 rounded-lg bg-[#1A4CFF] px-4 py-2 text-sm font-bold text-white hover:bg-[#003d99] transition-colors"
 						>
 							{hasStats ? 'Edit my stats' : 'Enter my stats'} →
 						</a>
@@ -233,7 +233,7 @@
 							identify the institution being simulated. PredictAdmit does not access, connect to, or
 							interact with any university's actual application systems or applicant data. If you
 							represent an institution and have questions or concerns, please
-							<a href="/contact" class="font-semibold text-[#0052CC] underline hover:text-[#003d99]"
+							<a href="/contact" class="font-semibold text-[#1A4CFF] underline hover:text-[#003d99]"
 								>contact us</a
 							>.
 						</p>

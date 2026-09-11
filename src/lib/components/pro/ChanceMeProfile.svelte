@@ -244,7 +244,7 @@
 				{:else}
 					<div
 						class="h-14 w-14 rounded-full grid place-items-center text-white font-semibold text-lg shadow-sm"
-						style="background:#0052CC"
+						style="background:#1A4CFF"
 					>
 						{initials || 'FA'}
 					</div>
@@ -272,7 +272,7 @@
 				<div class="mt-2 h-2.5 w-full rounded-full bg-slate-100 overflow-hidden">
 					<div
 						class="h-full rounded-full transition-all duration-500"
-						style="width:{completionPct}%;background:#0052CC"
+						style="width:{completionPct}%;background:#1A4CFF"
 					></div>
 				</div>
 				<p class="mt-2 text-xs text-slate-500">
@@ -298,7 +298,7 @@
 				value={$userProfile.name}
 				placeholder="Your name"
 				oninput={(e) => setNameField(e.currentTarget.value)}
-				class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#0052CC]/40 focus:border-[#0052CC]"
+				class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/40 focus:border-[#1A4CFF]"
 			/>
 			<p class="mt-1.5 text-xs text-slate-400">
 				{#if $page.data?.session?.user?.name}
@@ -322,7 +322,7 @@
 							{#if section.complete}
 								<span
 									class="grid place-items-center h-8 w-8 rounded-full text-white shrink-0"
-									style="background:#0052CC"
+									style="background:#1A4CFF"
 									aria-label="Complete"
 								>
 									<svg
@@ -357,8 +357,8 @@
 									onclick={() => toggleSection(section.id)}
 									class="shrink-0 rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors {openSection ===
 									section.id
-										? 'bg-[#0052CC] text-white'
-										: 'text-[#0052CC] hover:bg-blue-50'}"
+										? 'bg-[#1A4CFF] text-white'
+										: 'text-[#1A4CFF] hover:bg-blue-50'}"
 								>
 									{openSection === section.id
 										? 'Done'
@@ -378,7 +378,7 @@
 										value={bio}
 										placeholder="Tell your story in a few sentences: who you are, what drives you..."
 										oninput={(e) => setLoose('bio', e.currentTarget.value)}
-										class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#0052CC]/40 focus:border-[#0052CC]"
+										class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/40 focus:border-[#1A4CFF]"
 									></textarea>
 								{:else if section.id === 'gradmajor'}
 									<div class="grid sm:grid-cols-2 gap-4">
@@ -392,7 +392,7 @@
 												id="cm-gradyear"
 												value={gradYear}
 												onchange={(e) => setLoose('gradYear', e.currentTarget.value)}
-												class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#0052CC]/40 focus:border-[#0052CC]"
+												class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/40 focus:border-[#1A4CFF]"
 											>
 												<option value="">Select…</option>
 												{#each gradYears as y}
@@ -412,7 +412,7 @@
 												value={intendedMajor}
 												placeholder="e.g. Computer Science"
 												oninput={(e) => setLoose('intendedMajor', e.currentTarget.value)}
-												class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#0052CC]/40 focus:border-[#0052CC]"
+												class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/40 focus:border-[#1A4CFF]"
 											/>
 										</div>
 									</div>
@@ -427,7 +427,7 @@
 										value={$userProfile.applicationProfile.activities}
 										placeholder="List your extracurriculars: role, organization, and impact for each."
 										oninput={(e) => setAppProfile('activities', e.currentTarget.value)}
-										class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#0052CC]/40 focus:border-[#0052CC]"
+										class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/40 focus:border-[#1A4CFF]"
 									></textarea>
 								{:else if section.id === 'awards'}
 									<textarea
@@ -435,7 +435,7 @@
 										value={$userProfile.applicationProfile.awards}
 										placeholder="List honors and awards, with the level (school / regional / national)."
 										oninput={(e) => setAppProfile('awards', e.currentTarget.value)}
-										class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#0052CC]/40 focus:border-[#0052CC]"
+										class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/40 focus:border-[#1A4CFF]"
 									></textarea>
 								{:else if section.id === 'essays'}
 									<textarea
@@ -443,7 +443,7 @@
 										value={$userProfile.applicationProfile.essays}
 										placeholder="Paste your personal statement draft or notes here."
 										oninput={(e) => setAppProfile('essays', e.currentTarget.value)}
-										class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#0052CC]/40 focus:border-[#0052CC]"
+										class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/40 focus:border-[#1A4CFF]"
 									></textarea>
 								{/if}
 							</div>
@@ -473,7 +473,7 @@
 							value={academics.sat}
 							placeholder="—"
 							oninput={(e) => (academics.sat = clampNum(e.currentTarget.value, 400, 1600))}
-							class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#0052CC]/40 focus:border-[#0052CC]"
+							class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/40 focus:border-[#1A4CFF]"
 						/>
 					</div>
 					<div>
@@ -488,7 +488,7 @@
 							value={academics.act}
 							placeholder="—"
 							oninput={(e) => (academics.act = clampNum(e.currentTarget.value, 1, 36))}
-							class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#0052CC]/40 focus:border-[#0052CC]"
+							class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/40 focus:border-[#1A4CFF]"
 						/>
 					</div>
 					<div>
@@ -505,7 +505,7 @@
 							placeholder="—"
 							oninput={(e) =>
 								(academics.weightedGpa = clampNum(e.currentTarget.value, 0, 5))}
-							class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#0052CC]/40 focus:border-[#0052CC]"
+							class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/40 focus:border-[#1A4CFF]"
 						/>
 					</div>
 					<div>
@@ -522,7 +522,7 @@
 							placeholder="—"
 							oninput={(e) =>
 								(academics.unweightedGpa = clampNum(e.currentTarget.value, 0, 4))}
-							class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#0052CC]/40 focus:border-[#0052CC]"
+							class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/40 focus:border-[#1A4CFF]"
 						/>
 					</div>
 				</div>
@@ -565,7 +565,7 @@
 			{#if value !== ''}
 				<span
 					class="text-xs font-bold px-2 py-0.5 rounded-full"
-					style="background:rgba(0,82,204,0.1);color:#0052CC"
+					style="background:rgba(0,82,204,0.1);color:#1A4CFF"
 				>
 					You: {value}{unit ? ' ' + unit : ''}
 				</span>
@@ -578,7 +578,7 @@
 				<div class="flex-1 flex flex-col items-center justify-end h-full">
 					<span
 						class="text-[10px] font-semibold mb-1 {i === activeIdx
-							? 'text-[#0052CC]'
+							? 'text-[#1A4CFF]'
 							: 'text-slate-400'}"
 					>
 						{b.pct}%
@@ -588,7 +588,7 @@
 							? ''
 							: 'bg-slate-200'}"
 						style="height:{Math.max(4, (b.pct / max) * 100)}%;{i === activeIdx
-							? 'background:#0052CC'
+							? 'background:#1A4CFF'
 							: ''}"
 					></div>
 				</div>
@@ -600,7 +600,7 @@
 			{#each buckets as b, i}
 				<div
 					class="flex-1 text-center text-[9px] leading-tight {i === activeIdx
-						? 'text-[#0052CC] font-semibold'
+						? 'text-[#1A4CFF] font-semibold'
 						: 'text-slate-400'}"
 				>
 					{b.label}
@@ -613,7 +613,7 @@
 			{#if value === ''}
 				Enter your {title} above to see where you land.
 			{:else}
-				You're in the <span class="font-semibold text-[#0052CC]"
+				You're in the <span class="font-semibold text-[#1A4CFF]"
 					>top {topPercent(buckets, activeIdx)}%</span
 				>
 				of admitted students by {title}.

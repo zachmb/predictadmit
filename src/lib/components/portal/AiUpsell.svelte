@@ -46,7 +46,7 @@
 		class="fixed bottom-16 left-4 z-[60] w-[calc(100%-2rem)] max-w-xs"
 		transition:fly={{ y: 26, duration: 280 }}
 	>
-		<div class="relative overflow-hidden rounded-2xl bg-[#0052CC] p-4 pr-10 text-white shadow-2xl shadow-blue-900/30 ring-1 ring-white/10">
+		<div class="relative overflow-hidden rounded-2xl bg-[#1A4CFF] p-4 pr-10 text-white shadow-2xl shadow-blue-900/30 ring-1 ring-white/10">
 			<button
 				onclick={() => (dismissed = true)}
 				aria-label="Dismiss"
@@ -61,7 +61,7 @@
 			</p>
 			<button
 				onclick={go}
-				class="mt-3 w-full rounded-xl bg-white px-4 py-2.5 text-sm font-bold text-[#0052CC] transition hover:bg-blue-50 active:scale-[0.99]"
+				class="mt-3 w-full rounded-xl bg-white px-4 py-2.5 text-sm font-bold text-[#1A4CFF] transition hover:bg-blue-50 active:scale-[0.99]"
 			>
 				See my real odds →
 			</button>

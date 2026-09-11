@@ -925,7 +925,7 @@
 			<div class="h-14 px-4 flex items-center shrink-0">
 				<div class="flex items-center gap-2.5 min-w-0">
 					<!-- Logo Icon -->
-					<div class="w-6 h-6 rounded-md bg-[#0052CC] flex items-center justify-center shrink-0">
+					<div class="w-6 h-6 rounded-md bg-[#1A4CFF] flex items-center justify-center shrink-0">
 						<svg class="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"
 							><path
 								stroke-linecap="round"
@@ -939,7 +939,7 @@
 						>PredictAdmit</span
 					>
 					<span
-						class="rounded-md border border-blue-100 bg-blue-50 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[#0052CC]"
+						class="rounded-md border border-blue-100 bg-blue-50 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[#1A4CFF]"
 						>Pro</span
 					>
 				</div>
@@ -961,7 +961,7 @@
 				>
 					<span
 						class="w-9 h-9 grid place-content-center shrink-0 {currentView === 'dashboard'
-							? 'text-[#0052CC]'
+							? 'text-[#1A4CFF]'
 							: ''}"
 					>
 						<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
@@ -986,7 +986,7 @@
 				>
 					<span
 						class="w-9 h-9 grid place-content-center shrink-0 {currentView === 'mindmap'
-							? 'text-[#0052CC]'
+							? 'text-[#1A4CFF]'
 							: ''}"
 					>
 						<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1011,7 +1011,7 @@
 				>
 					<span
 						class="w-9 h-9 grid place-content-center shrink-0 {currentView === 'counselor'
-							? 'text-[#0052CC]'
+							? 'text-[#1A4CFF]'
 							: ''}"
 					>
 						<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
@@ -1036,7 +1036,7 @@
 				>
 					<span
 						class="w-9 h-9 grid place-content-center shrink-0 {currentView === 'schools'
-							? 'text-[#0052CC]'
+							? 'text-[#1A4CFF]'
 							: ''}"
 					>
 						<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
@@ -1066,7 +1066,7 @@
 				>
 					<span
 						class="w-9 h-9 grid place-content-center shrink-0 {currentView === 'chanceme'
-							? 'text-[#0052CC]'
+							? 'text-[#1A4CFF]'
 							: ''}"
 					>
 						<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
@@ -1091,7 +1091,7 @@
 				>
 					<span
 						class="w-9 h-9 grid place-content-center shrink-0 {currentView === 'extracurricular'
-							? 'text-[#0052CC]'
+							? 'text-[#1A4CFF]'
 							: ''}"
 					>
 						<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
@@ -1134,7 +1134,7 @@
 					>
 						<svg
 							class="w-3.5 h-3.5 shrink-0 {currentView === 'editor' && activeFileIndex === i
-								? 'text-[#0052CC]'
+								? 'text-[#1A4CFF]'
 								: 'text-slate-400'}"
 							fill="none"
 							viewBox="0 0 24 24"
@@ -1181,7 +1181,7 @@
 							</p>
 							<textarea
 								bind:value={importText}
-								class="w-full h-40 border border-slate-200 rounded-lg p-3 text-sm focus:ring-2 focus:ring-[#0052CC] outline-none"
+								class="w-full h-40 border border-slate-200 rounded-lg p-3 text-sm focus:ring-2 focus:ring-[#1A4CFF] outline-none"
 								placeholder="Debate Club - Captain - 5&#10;Varsity Soccer - Starter - 10"
 							></textarea>
 							<div class="flex justify-end gap-2">
@@ -1191,7 +1191,7 @@
 								>
 								<button
 									onclick={parseAndImportActivities}
-									class="px-4 py-2 bg-[#0052CC] text-white font-bold rounded-lg text-sm"
+									class="px-4 py-2 bg-[#1A4CFF] text-white font-bold rounded-lg text-sm"
 									>Import</button
 								>
 							</div>
@@ -1222,7 +1222,7 @@
 						/>
 					{:else}
 						<div
-							class="w-6 h-6 rounded-full bg-[#0052CC] flex items-center justify-center text-[11px] font-semibold text-white shrink-0"
+							class="w-6 h-6 rounded-full bg-[#1A4CFF] flex items-center justify-center text-[11px] font-semibold text-white shrink-0"
 						>
 							{session?.user?.name?.[0] || 'U'}
 						</div>
@@ -1274,7 +1274,7 @@
 				<div class="flex items-center gap-2 min-w-0">
 					<span class="text-sm font-semibold tracking-tight text-slate-900 truncate">PredictAdmit</span>
 					<span
-						class="rounded-md border border-blue-100 bg-blue-50 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[#0052CC]"
+						class="rounded-md border border-blue-100 bg-blue-50 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[#1A4CFF]"
 						>Pro</span
 					>
 				</div>
@@ -1335,7 +1335,7 @@
 												bind:value={profile.gpa_uw}
 												type="text"
 												placeholder="4.0"
-												class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#0052CC] font-bold text-slate-900"
+												class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#1A4CFF] font-bold text-slate-900"
 											/>
 										</div>
 										<div>
@@ -1346,7 +1346,7 @@
 												bind:value={profile.gpa_w}
 												type="text"
 												placeholder="4.5"
-												class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#0052CC] font-bold text-slate-900"
+												class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#1A4CFF] font-bold text-slate-900"
 											/>
 										</div>
 										<div>
@@ -1357,7 +1357,7 @@
 												bind:value={profile.testScore}
 												type="text"
 												placeholder="1500"
-												class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#0052CC] font-bold text-slate-900"
+												class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#1A4CFF] font-bold text-slate-900"
 											/>
 										</div>
 										<div>
@@ -1366,7 +1366,7 @@
 											>
 											<select
 												bind:value={profile.rigor}
-												class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#0052CC] font-bold text-slate-900"
+												class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#1A4CFF] font-bold text-slate-900"
 											>
 												<option>Regular</option><option>Honors</option><option>AP/IB</option>
 											</select>
@@ -1377,7 +1377,7 @@
 											>
 											<select
 												bind:value={profile.gradeTrend}
-												class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#0052CC] font-bold text-slate-900"
+												class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#1A4CFF] font-bold text-slate-900"
 											>
 												<option>Rising</option><option>Steady</option><option>Dipping</option>
 											</select>
@@ -1388,7 +1388,7 @@
 											>
 											<select
 												bind:value={profile.lowestGrade}
-												class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#0052CC] font-bold text-slate-900"
+												class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#1A4CFF] font-bold text-slate-900"
 											>
 												<option>A</option><option>A-</option><option>B+</option><option>B</option
 												><option>B-</option><option>C+</option><option>C</option><option>C-</option
@@ -1405,7 +1405,7 @@
 												onblur={() => setTimeout(() => (showMajorDropdown = false), 200)}
 												type="text"
 												placeholder="Computer Science"
-												class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#0052CC] font-bold text-slate-900"
+												class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#1A4CFF] font-bold text-slate-900"
 											/>
 											{#if showMajorDropdown && majorSuggestions.length > 0}
 												<div
@@ -1446,7 +1446,7 @@
 													onblur={() => setTimeout(() => (showStateSuggestions = false), 200)}
 													type="text"
 													placeholder="e.g. California"
-													class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#0052CC] font-bold text-slate-900"
+													class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#1A4CFF] font-bold text-slate-900"
 												/>
 												{#if showStateSuggestions && filteredStates.length > 0}
 													<div
@@ -1471,7 +1471,7 @@
 											>
 											<select
 												bind:value={profile.environment}
-												class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#0052CC] font-bold text-slate-900"
+												class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#1A4CFF] font-bold text-slate-900"
 											>
 												<option>Urban</option><option>Suburban</option><option>Rural</option>
 											</select>
@@ -1485,7 +1485,7 @@
 													<button
 														class="flex-1 py-2 text-xs font-bold rounded-lg border transition-all {profile.living ===
 														opt
-															? 'bg-[#0052CC] text-white border-[#0052CC]'
+															? 'bg-[#1A4CFF] text-white border-[#1A4CFF]'
 															: 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100'}"
 														onclick={() =>
 															(profile.living = opt as 'On Campus' | 'Off Campus' | 'Commuter')}
@@ -1510,10 +1510,10 @@
 												onclick={() => (showImportModal = true)}
 												class="text-xs font-bold text-slate-500 hover:text-slate-900">Import</button
 											>
-											<button onclick={addActivity} class="text-xs font-bold text-[#0052CC]"
+											<button onclick={addActivity} class="text-xs font-bold text-[#1A4CFF]"
 												>+ Actv.</button
 											>
-											<button onclick={addHonor} class="text-xs font-bold text-[#0052CC]"
+											<button onclick={addHonor} class="text-xs font-bold text-[#1A4CFF]"
 												>+ Honor</button
 											>
 										</div>
@@ -1557,7 +1557,7 @@
 										{/each}
 										{#each profile.honors as honor (honor.id)}
 											<div
-												class="flex gap-2 items-start p-3 bg-slate-50 rounded-lg border border-slate-200 border-l-[#0052CC] border-l-4"
+												class="flex gap-2 items-start p-3 bg-slate-50 rounded-lg border border-slate-200 border-l-[#1A4CFF] border-l-4"
 											>
 												<div class="flex-1 space-y-2">
 													<div class="flex gap-2">
@@ -1599,7 +1599,7 @@
 							<div class="p-6 bg-slate-50 border-t border-slate-200 flex justify-end">
 								<button
 									onclick={() => (showProfileEditor = false)}
-									class="bg-[#0052CC] hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-md transition-colors shadow-sm"
+									class="bg-[#1A4CFF] hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-md transition-colors shadow-sm"
 								>
 									Done
 								</button>
@@ -1637,7 +1637,7 @@
 							<button
 								onclick={generateMindMap}
 								disabled={isGeneratingMindMap}
-								class="px-4 py-2 bg-blue-50 text-[#0052CC] font-bold rounded-lg hover:bg-blue-100 disabled:opacity-50 transition-all flex items-center gap-2 text-sm"
+								class="px-4 py-2 bg-blue-50 text-[#1A4CFF] font-bold rounded-lg hover:bg-blue-100 disabled:opacity-50 transition-all flex items-center gap-2 text-sm"
 							>
 								{#if isGeneratingMindMap}
 									<svg class="animate-spin h-4 w-4" viewBox="0 0 24 24"
@@ -1671,7 +1671,7 @@
 							<button
 								onclick={analyzeMindMap}
 								disabled={isAnalyzingMindMap || mindMapNodes.length === 0}
-								class="px-4 py-2 bg-[#0052CC] text-white font-bold rounded-lg shadow-lg hover:bg-[#0047b3] disabled:opacity-50 transition-all flex items-center gap-2 text-sm"
+								class="px-4 py-2 bg-[#1A4CFF] text-white font-bold rounded-lg shadow-lg hover:bg-[#1540E0] disabled:opacity-50 transition-all flex items-center gap-2 text-sm"
 							>
 								{#if isAnalyzingMindMap}
 									<svg class="animate-spin h-4 w-4" viewBox="0 0 24 24"
@@ -1769,14 +1769,14 @@
 							<div
 								class="absolute inset-0 flex flex-col items-center justify-center gap-3 px-6 text-center pointer-events-none"
 							>
-								<div class="grid h-14 w-14 place-items-center rounded-2xl bg-[#0052CC]/10 text-[#0052CC]">
+								<div class="grid h-14 w-14 place-items-center rounded-2xl bg-[#1A4CFF]/10 text-[#1A4CFF]">
 									<svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.989-2.386l-.548-.547z" /></svg>
 								</div>
 								<p class="text-lg font-bold text-slate-700">Map the story behind your application</p>
 								<p class="max-w-xs text-sm leading-relaxed text-slate-400">
 									Click anywhere to drop an idea, whether an experience, an obsession, or a value, or hit
-									<span class="font-semibold text-[#0052CC]">AI&nbsp;Brainstorm</span> to auto-generate themes from your profile, then
-									<span class="font-semibold text-[#0052CC]">Analyze&nbsp;Themes</span> to find the thread that ties them together.
+									<span class="font-semibold text-[#1A4CFF]">AI&nbsp;Brainstorm</span> to auto-generate themes from your profile, then
+									<span class="font-semibold text-[#1A4CFF]">Analyze&nbsp;Themes</span> to find the thread that ties them together.
 								</p>
 							</div>
 						{/if}
@@ -1784,7 +1784,7 @@
 
 					{#if mindMapAnalysis}
 						<div class="h-48 bg-blue-50 border-t border-blue-100 p-6 overflow-y-auto">
-							<h3 class="text-xs font-bold uppercase text-[#0052CC] mb-2">AI Analysis</h3>
+							<h3 class="text-xs font-bold uppercase text-[#1A4CFF] mb-2">AI Analysis</h3>
 							<p class="text-sm text-slate-800 whitespace-pre-line">{mindMapAnalysis}</p>
 						</div>
 					{/if}
@@ -1930,7 +1930,7 @@
 									<div class="relative group flex-1 flex flex-col">
 										<textarea
 											bind:value={activeFile.content}
-											class="w-full flex-1 bg-white text-slate-800 p-4 md:p-8 rounded-2xl border border-slate-200 focus:border-[#0052CC] focus:ring-4 focus:ring-blue-500/10 outline-none font-serif text-base md:text-lg leading-loose shadow-sm transition-all resize-none"
+											class="w-full flex-1 bg-white text-slate-800 p-4 md:p-8 rounded-2xl border border-slate-200 focus:border-[#1A4CFF] focus:ring-4 focus:ring-blue-500/10 outline-none font-serif text-base md:text-lg leading-loose shadow-sm transition-all resize-none"
 											placeholder="# Prompt\nPaste prompt here...\n\n# Response\nStart writing..."
 											spellcheck="false"
 										></textarea>
@@ -1985,7 +1985,7 @@
 								<button
 									onclick={runBuild}
 									disabled={isBuilding}
-									class="flex items-center justify-center gap-3 w-full md:w-auto px-5 md:px-8 py-3.5 md:py-4 bg-[#0052CC] text-white rounded-xl font-bold hover:bg-blue-700 transition-all shadow-xl shadow-blue-200 disabled:opacity-50 disabled:shadow-none transform active:scale-95 duration-200 text-base md:text-lg"
+									class="flex items-center justify-center gap-3 w-full md:w-auto px-5 md:px-8 py-3.5 md:py-4 bg-[#1A4CFF] text-white rounded-xl font-bold hover:bg-blue-700 transition-all shadow-xl shadow-blue-200 disabled:opacity-50 disabled:shadow-none transform active:scale-95 duration-200 text-base md:text-lg"
 								>
 									{#if isBuilding}
 										<svg class="animate-spin h-4 w-4" viewBox="0 0 24 24"
@@ -2060,7 +2060,7 @@
 													cy="64"
 												/>
 												<circle
-													class="text-[#0052CC] transition-all duration-500 ease-out"
+													class="text-[#1A4CFF] transition-all duration-500 ease-out"
 													stroke-width="8"
 													stroke-dasharray={365}
 													stroke-dashoffset={365 - (365 * progressPercent) / 100}
@@ -2083,7 +2083,7 @@
 										</div>
 
 										<div
-											class="space-y-1 pl-4 border-l-2 border-[#0052CC]/30 opacity-80 bg-slate-900 rounded-r-lg p-2 font-mono text-[10px] text-green-400 shadow-inner"
+											class="space-y-1 pl-4 border-l-2 border-[#1A4CFF]/30 opacity-80 bg-slate-900 rounded-r-lg p-2 font-mono text-[10px] text-green-400 shadow-inner"
 										>
 											{#each buildOutput.slice(-4) as line}
 												<div class="truncate">
@@ -2136,7 +2136,7 @@
 															}))}
 															size={220}
 															max={100}
-															color="text-[#0052CC]"
+															color="text-[#1A4CFF]"
 														/>
 													</div>
 												{/if}
@@ -2283,11 +2283,11 @@
 				<!-- Left: copy, price, CTAs -->
 				<div class="text-center lg:text-left">
 					<div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-100">
-						<span class="w-2 h-2 bg-[#0052CC] rounded-full animate-pulse"></span>
-						<span class="text-xs font-bold text-[#0052CC] tracking-wide uppercase">PredictAdmit Pro</span>
+						<span class="w-2 h-2 bg-[#1A4CFF] rounded-full animate-pulse"></span>
+						<span class="text-xs font-bold text-[#1A4CFF] tracking-wide uppercase">PredictAdmit Pro</span>
 					</div>
 					<h1 class="mt-5 text-4xl md:text-5xl xl:text-6xl font-black tracking-tight text-slate-900 leading-[1.05]">
-						Less than a pizza.<br /><span class="text-[#0052CC]">Yours for good.</span>
+						Less than a pizza.<br /><span class="text-[#1A4CFF]">Yours for good.</span>
 					</h1>
 					<p class="mt-4 mx-auto lg:mx-0 max-w-xl text-lg text-slate-500 leading-relaxed">
 						Your first prediction is free. Pro reads your <span class="italic">real</span> application, calls your decision at every school, shows you exactly why, and grades your essays. A private counselor charges thousands for the same read.
@@ -2305,7 +2305,7 @@
 						<button
 							onclick={() => startUpgrade('lifetime')}
 							disabled={isProcessing}
-							class="w-full sm:w-auto rounded-2xl bg-[#0052CC] px-7 py-3.5 text-base font-black text-white shadow-lg shadow-blue-600/25 transition hover:bg-[#0047b3] active:scale-[0.99] disabled:opacity-50"
+							class="w-full sm:w-auto rounded-2xl bg-[#1A4CFF] px-7 py-3.5 text-base font-black text-white shadow-lg shadow-blue-600/25 transition hover:bg-[#1540E0] active:scale-[0.99] disabled:opacity-50"
 						>
 							{isProcessing ? 'Taking you to checkout…' : 'Get Lifetime for $25'}
 						</button>
@@ -2328,7 +2328,7 @@
 
 				<!-- Right: product preview. The decision AND the deep-dive (the two core Pro things). -->
 				<div class="relative">
-					<div class="relative overflow-hidden rounded-3xl bg-[#0052CC] p-6 shadow-2xl shadow-blue-600/20 sm:p-8">
+					<div class="relative overflow-hidden rounded-3xl bg-[#1A4CFF] p-6 shadow-2xl shadow-blue-600/20 sm:p-8">
 						<div class="pointer-events-none absolute -top-20 -right-16 h-56 w-56 rounded-full bg-white/10 blur-3xl"></div>
 						<div class="relative">
 							<!-- Decision card with a deep-dive breakdown. -->
@@ -2350,7 +2350,7 @@
 												<span>{row.l}</span><span>{row.s}/10</span>
 											</div>
 											<div class="mt-1 h-1.5 rounded-full bg-slate-100">
-												<div class="h-1.5 rounded-full bg-[#0052CC]" style="width: {row.s * 10}%"></div>
+												<div class="h-1.5 rounded-full bg-[#1A4CFF]" style="width: {row.s * 10}%"></div>
 											</div>
 										</div>
 									{/each}
@@ -2377,7 +2377,7 @@
 					{ n: '3', t: 'Fix what is weak, re-run', d: 'Use the workshop to tighten essays and framing, then run it again and watch your odds move.' }
 				] as step}
 					<div class="rounded-2xl border border-slate-200 bg-white p-5">
-						<div class="grid h-8 w-8 place-items-center rounded-full bg-[#0052CC] text-sm font-black text-white">{step.n}</div>
+						<div class="grid h-8 w-8 place-items-center rounded-full bg-[#1A4CFF] text-sm font-black text-white">{step.n}</div>
 						<p class="mt-3 font-bold text-slate-900">{step.t}</p>
 						<p class="mt-1 text-sm leading-relaxed text-slate-500">{step.d}</p>
 					</div>
@@ -2391,9 +2391,9 @@
 				</p>
 				<div class="mt-6 grid gap-4 md:grid-cols-3 md:items-stretch">
 					<!-- Lifetime: the target -->
-					<div class="relative flex flex-col rounded-3xl border-2 border-[#0052CC] bg-white p-6 shadow-xl shadow-blue-600/10 md:-mt-2 md:mb-2">
-						<span class="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-[#0052CC] px-3 py-1 text-[10px] font-black uppercase tracking-wide text-white shadow">Best value</span>
-						<p class="text-sm font-bold text-[#0052CC] uppercase tracking-wide">Lifetime</p>
+					<div class="relative flex flex-col rounded-3xl border-2 border-[#1A4CFF] bg-white p-6 shadow-xl shadow-blue-600/10 md:-mt-2 md:mb-2">
+						<span class="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-[#1A4CFF] px-3 py-1 text-[10px] font-black uppercase tracking-wide text-white shadow">Best value</span>
+						<p class="text-sm font-bold text-[#1A4CFF] uppercase tracking-wide">Lifetime</p>
 						<p class="mt-2 flex items-baseline gap-1">
 							<span class="text-4xl font-black text-slate-900">$25</span>
 							<span class="text-sm font-semibold text-slate-400">once</span>
@@ -2402,7 +2402,7 @@
 						<button
 							onclick={() => startUpgrade('lifetime')}
 							disabled={isProcessing}
-							class="mt-5 w-full rounded-2xl bg-[#0052CC] px-5 py-3.5 text-base font-black text-white shadow-lg shadow-blue-600/25 transition hover:bg-[#0047b3] active:scale-[0.99] disabled:opacity-50"
+							class="mt-5 w-full rounded-2xl bg-[#1A4CFF] px-5 py-3.5 text-base font-black text-white shadow-lg shadow-blue-600/25 transition hover:bg-[#1540E0] active:scale-[0.99] disabled:opacity-50"
 						>
 							{isProcessing ? 'Taking you to checkout…' : 'Get Lifetime'}
 						</button>
@@ -2456,7 +2456,7 @@
 
 				<!-- Group 1: see where you stand -->
 				<div>
-					<p class="text-xs font-bold uppercase tracking-wider text-[#0052CC]">See exactly where you stand</p>
+					<p class="text-xs font-bold uppercase tracking-wider text-[#1A4CFF]">See exactly where you stand</p>
 					<div class="mt-4 grid gap-4 sm:grid-cols-2">
 						{#each [
 							{ t: 'Unlimited decision simulations', d: 'Run your real application through the AI and get a predicted accept, waitlist, or deny at all 39 top schools. Change an essay, an activity, or a score and re-run it as many times as you want. No cap.', d1: 'M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15' },
@@ -2465,7 +2465,7 @@
 							{ t: 'Chance Me profile and stats', d: 'Save your profile once and see your realistic odds at any school, with a clear read on where you are strong and where you are thin.', d1: 'M16 8v8m-4-5v5M8 14v2m-2 5h12a2 2 0 002-2V5a2 2 0 00-2-2H6a2 2 0 00-2 2v14a2 2 0 002 2z' }
 						] as f}
 							<div class="flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-5">
-								<div class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-[#0052CC]">
+								<div class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-[#1A4CFF]">
 									<svg class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d={f.d1} /></svg>
 								</div>
 								<div>
@@ -2479,7 +2479,7 @@
 
 				<!-- Group 2: the workshop -->
 				<div>
-					<p class="text-xs font-bold uppercase tracking-wider text-[#0052CC]">The workshop, where you fix it</p>
+					<p class="text-xs font-bold uppercase tracking-wider text-[#1A4CFF]">The workshop, where you fix it</p>
 					<div class="mt-4 grid gap-4 sm:grid-cols-2">
 						{#each [
 							{ t: 'Essay editor with AI feedback', d: 'Draft every supplement in one place, then hand it to the AI for the notes an admissions reader would give. It marks up weak lines and tells you why. You write every word. It never writes for you.', d1: 'M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z' },
@@ -2489,7 +2489,7 @@
 						] as f}
 							<div class="flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-5">
 								<div class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-blue-100">
-									<svg class="h-5 w-5 text-[#0052CC]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d={f.d1} /></svg>
+									<svg class="h-5 w-5 text-[#1A4CFF]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d={f.d1} /></svg>
 								</div>
 								<div>
 									<p class="font-bold text-slate-900">{f.t}</p>
@@ -2509,7 +2509,7 @@
 					<button
 						onclick={() => startUpgrade('lifetime')}
 						disabled={isProcessing}
-						class="w-full shrink-0 rounded-2xl bg-[#0052CC] px-6 py-3 text-sm font-black text-white shadow-lg shadow-blue-600/25 transition hover:bg-[#0047b3] active:scale-[0.99] disabled:opacity-50 sm:w-auto"
+						class="w-full shrink-0 rounded-2xl bg-[#1A4CFF] px-6 py-3 text-sm font-black text-white shadow-lg shadow-blue-600/25 transition hover:bg-[#1540E0] active:scale-[0.99] disabled:opacity-50 sm:w-auto"
 					>
 						Get Lifetime · $25
 					</button>
@@ -2519,7 +2519,7 @@
 			<!-- Social proof -->
 			<div class="pt-4">
 				<div class="text-center mb-8">
-					<div class="inline-flex items-center gap-1 text-[#0052CC]">
+					<div class="inline-flex items-center gap-1 text-[#1A4CFF]">
 						{#each Array(5) as _}
 							<svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.07 3.3a1 1 0 00.95.68h3.46c.97 0 1.37 1.24.59 1.81l-2.8 2.03a1 1 0 00-.36 1.12l1.07 3.29c.3.92-.76 1.69-1.54 1.12l-2.8-2.03a1 1 0 00-1.18 0l-2.8 2.03c-.78.57-1.83-.2-1.54-1.12l1.07-3.29a1 1 0 00-.36-1.12L2.4 8.72c-.78-.57-.38-1.81.59-1.81h3.46a1 1 0 00.95-.68l1.07-3.3z" /></svg>
 						{/each}
@@ -2531,7 +2531,7 @@
 						<div class="rounded-2xl border border-slate-200 bg-white p-6 text-left">
 							<p class="text-sm leading-relaxed text-slate-700">“{t.q}”</p>
 							<div class="mt-4 flex items-center gap-2.5">
-								<div class="grid h-8 w-8 place-items-center rounded-full bg-[#0052CC] text-xs font-bold text-white">{t.n[0]}</div>
+								<div class="grid h-8 w-8 place-items-center rounded-full bg-[#1A4CFF] text-xs font-bold text-white">{t.n[0]}</div>
 								<p class="text-xs font-semibold text-slate-600">{t.n} <span class="font-normal text-slate-400">· {t.r}</span></p>
 							</div>
 						</div>
@@ -2549,7 +2549,7 @@
 					<button
 						onclick={() => startUpgrade('lifetime')}
 						disabled={isProcessing}
-						class="rounded-2xl bg-white px-7 py-3.5 text-base font-black text-[#0052CC] shadow-lg transition hover:bg-blue-50 active:scale-[0.99] disabled:opacity-50"
+						class="rounded-2xl bg-white px-7 py-3.5 text-base font-black text-[#1A4CFF] shadow-lg transition hover:bg-blue-50 active:scale-[0.99] disabled:opacity-50"
 					>
 						{isProcessing ? 'Taking you to checkout…' : 'Get Lifetime for $25'}
 					</button>

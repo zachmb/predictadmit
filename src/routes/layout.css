@@ -10,7 +10,12 @@
 	--color-brand-navy: #00356b; /* Yale/Authority */
 	--color-brand-gold: #cfb87c; /* Prestige */
 
-	--font-inter: 'Inter', sans-serif;
+	/* Typography (Kolly-inspired, 2026-09-11): Plus Jakarta Sans for body/UI,
+	   Newsreader serif for display headings. The app already splits font-sans vs
+	   font-serif, so defining these assigns the new faces app-wide. */
+	--font-sans: 'Plus Jakarta Sans', 'Inter', ui-sans-serif, system-ui, sans-serif;
+	--font-serif: 'Newsreader', ui-serif, Georgia, 'Times New Roman', serif;
+	--font-inter: 'Plus Jakarta Sans', 'Inter', ui-sans-serif, system-ui, sans-serif;
 
 	/* Shadows */
 	--shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
@@ -24,7 +29,7 @@
 --color-brand-primary: #0f172a; /* Slate 900 - Main Text/Header */
 
 :root {
-	font-family: var(--font-inter);
+	font-family: var(--font-sans);
 	background-color: var(--color-brand-bg);
 	color: var(--color-brand-text);
 	/* color-scheme: light; -- Defaulting to light */

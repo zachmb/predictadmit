@@ -6,7 +6,7 @@
 // the CAN-SPAM footer (physical address + unsubscribe).
 import { env } from '$env/dynamic/private';
 
-const BLUE = '#0052CC';
+const BLUE = '#1A4CFF';
 const SITE = 'https://predictadmit.com';
 // CAN-SPAM requires a real physical postal address on commercial email. Set this
 // in env before going live; the placeholder is intentionally obvious.

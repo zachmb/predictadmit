@@ -110,9 +110,9 @@
 			<!-- Header -->
 			<header class="text-center mb-8">
 				<span
-					class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#0052CC]/10 text-[#0052CC] text-xs font-bold tracking-wide"
+					class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#1A4CFF]/10 text-[#1A4CFF] text-xs font-bold tracking-wide"
 				>
-					<span class="w-1.5 h-1.5 rounded-full bg-[#0052CC]"></span>
+					<span class="w-1.5 h-1.5 rounded-full bg-[#1A4CFF]"></span>
 					STEP {step} OF {totalSteps} · {stepTitles[step - 1].toUpperCase()}
 				</span>
 				<h1 class="mt-4 text-3xl md:text-4xl font-black tracking-tight text-slate-900">
@@ -128,7 +128,7 @@
 				<div class="h-2 w-full rounded-full bg-slate-200 overflow-hidden">
 					<div
 						class="h-full rounded-full transition-all duration-500"
-						style="width:{(step / totalSteps) * 100}%;background:#0052CC"
+						style="width:{(step / totalSteps) * 100}%;background:#1A4CFF"
 					></div>
 				</div>
 			</div>
@@ -149,7 +149,7 @@
 										type="text"
 										bind:value={name}
 										placeholder="e.g. Jordan Lee"
-										class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#0052CC]/30 focus:border-[#0052CC]"
+										class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/30 focus:border-[#1A4CFF]"
 									/>
 								</div>
 
@@ -168,7 +168,7 @@
 											oninput={(e) =>
 												(stats.gpaUnweighted = clamp(e.currentTarget.value, 0, 4))}
 											placeholder="e.g. 3.9"
-											class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0052CC]/30 focus:border-[#0052CC]"
+											class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/30 focus:border-[#1A4CFF]"
 										/>
 									</div>
 									<div>
@@ -184,7 +184,7 @@
 											bind:value={stats.gpaWeighted}
 											oninput={(e) => (stats.gpaWeighted = clamp(e.currentTarget.value, 0, 5))}
 											placeholder="e.g. 4.4"
-											class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0052CC]/30 focus:border-[#0052CC]"
+											class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/30 focus:border-[#1A4CFF]"
 										/>
 									</div>
 								</div>
@@ -202,7 +202,7 @@
 											bind:value={stats.sat}
 											oninput={(e) => (stats.sat = clamp(e.currentTarget.value, 400, 1600))}
 											placeholder="e.g. 1500"
-											class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0052CC]/30 focus:border-[#0052CC]"
+											class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/30 focus:border-[#1A4CFF]"
 										/>
 									</div>
 									<div>
@@ -217,7 +217,7 @@
 											bind:value={stats.act}
 											oninput={(e) => (stats.act = clamp(e.currentTarget.value, 1, 36))}
 											placeholder="e.g. 34"
-											class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0052CC]/30 focus:border-[#0052CC]"
+											class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/30 focus:border-[#1A4CFF]"
 										/>
 									</div>
 								</div>
@@ -239,7 +239,7 @@
 												onclick={() => (stats.rigor = opt)}
 												class="px-4 py-2 rounded-xl text-sm font-semibold border transition-colors {stats.rigor ===
 												opt
-													? 'bg-[#0052CC] text-white border-[#0052CC]'
+													? 'bg-[#1A4CFF] text-white border-[#1A4CFF]'
 													: 'bg-white text-slate-700 border-slate-200 hover:border-slate-300'}"
 											>
 												{opt}
@@ -256,7 +256,7 @@
 												onclick={() => (stats.gradeTrend = opt)}
 												class="px-4 py-2 rounded-xl text-sm font-semibold border transition-colors {stats.gradeTrend ===
 												opt
-													? 'bg-[#0052CC] text-white border-[#0052CC]'
+													? 'bg-[#1A4CFF] text-white border-[#1A4CFF]'
 													: 'bg-white text-slate-700 border-slate-200 hover:border-slate-300'}"
 											>
 												{opt}
@@ -271,7 +271,7 @@
 									<select
 										id="s-low"
 										bind:value={stats.lowestGrade}
-										class="w-full sm:w-48 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0052CC]/30 focus:border-[#0052CC]"
+										class="w-full sm:w-48 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/30 focus:border-[#1A4CFF]"
 									>
 										{#each lowestOptions as g}
 											<option value={g}>{g}</option>
@@ -291,7 +291,7 @@
 										rows="5"
 										bind:value={stats.activities}
 										placeholder="List clubs, jobs, projects. Include role, organization, and impact for each. Leadership and state/national scope help most."
-										class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0052CC]/30 focus:border-[#0052CC]"
+										class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/30 focus:border-[#1A4CFF]"
 									></textarea>
 								</div>
 								<div>
@@ -303,7 +303,7 @@
 										rows="3"
 										bind:value={stats.awards}
 										placeholder="Competitions, scholarships, distinctions, with the level for each (school / state / national)."
-										class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0052CC]/30 focus:border-[#0052CC]"
+										class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/30 focus:border-[#1A4CFF]"
 									></textarea>
 								</div>
 								<div>
@@ -315,7 +315,7 @@
 										rows="4"
 										bind:value={stats.essay}
 										placeholder="Paste your personal statement draft here."
-										class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0052CC]/30 focus:border-[#0052CC]"
+										class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/30 focus:border-[#1A4CFF]"
 									></textarea>
 								</div>
 							</div>
@@ -333,7 +333,7 @@
 										placeholder="e.g. Computer Science"
 										onfocus={() => (showMajorDropdown = true)}
 										onblur={() => setTimeout(() => (showMajorDropdown = false), 150)}
-										class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0052CC]/30 focus:border-[#0052CC]"
+										class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/30 focus:border-[#1A4CFF]"
 									/>
 									{#if showMajorDropdown && majorSuggestions.length > 0}
 										<div
@@ -346,7 +346,7 @@
 														stats.major = m;
 														showMajorDropdown = false;
 													}}
-													class="w-full text-left px-4 py-2.5 text-sm text-slate-700 hover:bg-blue-50 hover:text-[#0052CC] border-b border-slate-100 last:border-0"
+													class="w-full text-left px-4 py-2.5 text-sm text-slate-700 hover:bg-blue-50 hover:text-[#1A4CFF] border-b border-slate-100 last:border-0"
 												>
 													{m}
 												</button>
@@ -361,13 +361,13 @@
 									<div class="grid grid-cols-2 gap-4">
 										<div>
 											<div class="text-xs text-slate-500 mb-1">Academic Index</div>
-											<div class="text-2xl font-black text-[#0052CC]">
+											<div class="text-2xl font-black text-[#1A4CFF]">
 												{academicIndex}<span class="text-sm text-slate-400 font-semibold"> / 240</span>
 											</div>
 										</div>
 										<div>
 											<div class="text-xs text-slate-500 mb-1">Activity strength</div>
-											<div class="text-2xl font-black text-[#0052CC]">
+											<div class="text-2xl font-black text-[#1A4CFF]">
 												{ecScore}<span class="text-sm text-slate-400 font-semibold"> / 10</span>
 											</div>
 										</div>
@@ -399,7 +399,7 @@
 							type="button"
 							onclick={next}
 							disabled={step === 1 && !step1Valid}
-							class="px-6 py-2.5 rounded-xl text-sm font-bold text-white bg-[#0052CC] hover:bg-[#003d99] disabled:opacity-40 disabled:cursor-not-allowed transition-colors shadow-sm"
+							class="px-6 py-2.5 rounded-xl text-sm font-bold text-white bg-[#1A4CFF] hover:bg-[#003d99] disabled:opacity-40 disabled:cursor-not-allowed transition-colors shadow-sm"
 						>
 							Continue
 						</button>
@@ -408,7 +408,7 @@
 							type="button"
 							onclick={finish}
 							disabled={!canScore}
-							class="px-6 py-2.5 rounded-xl text-sm font-bold text-white bg-[#0052CC] hover:bg-[#003d99] disabled:opacity-40 disabled:cursor-not-allowed transition-colors shadow-sm"
+							class="px-6 py-2.5 rounded-xl text-sm font-bold text-white bg-[#1A4CFF] hover:bg-[#003d99] disabled:opacity-40 disabled:cursor-not-allowed transition-colors shadow-sm"
 						>
 							See my decisions →
 						</button>

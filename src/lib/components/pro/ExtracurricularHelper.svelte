@@ -14,7 +14,7 @@
 	let analysis = $state<Analysis | null>(null);
 
 	const tierStyle: Record<string, string> = {
-		Standout: 'bg-[#0052CC] text-white',
+		Standout: 'bg-[#1A4CFF] text-white',
 		Strong: 'bg-emerald-100 text-emerald-800',
 		Solid: 'bg-slate-100 text-slate-700',
 		Filler: 'bg-amber-100 text-amber-800'
@@ -78,19 +78,19 @@
 			id="ec-major"
 			bind:value={major}
 			placeholder="e.g. Computer Science"
-			class="mt-1.5 w-full max-w-xs rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none focus:border-[#0052CC] focus:ring-4 focus:ring-blue-600/10"
+			class="mt-1.5 w-full max-w-xs rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none focus:border-[#1A4CFF] focus:ring-4 focus:ring-blue-600/10"
 		/>
 		<label for="ec-acts" class="mt-4 block text-xs font-bold uppercase tracking-wide text-slate-500">Your activities / résumé</label>
 		<textarea
 			id="ec-acts"
 			bind:value={activities}
 			placeholder="One per line: role, organization, and what you did (hours/weeks and any awards if you have them)."
-			class="mt-1.5 h-44 w-full resize-y rounded-xl border border-slate-200 p-3 text-sm outline-none focus:border-[#0052CC] focus:ring-4 focus:ring-blue-600/10"
+			class="mt-1.5 h-44 w-full resize-y rounded-xl border border-slate-200 p-3 text-sm outline-none focus:border-[#1A4CFF] focus:ring-4 focus:ring-blue-600/10"
 		></textarea>
 		<button
 			onclick={analyze}
 			disabled={loading}
-			class="mt-4 inline-flex items-center gap-2 rounded-xl bg-[#0052CC] px-5 py-3 text-sm font-bold text-white shadow-lg shadow-blue-600/25 transition hover:bg-[#0047b3] active:scale-[0.99] disabled:opacity-60"
+			class="mt-4 inline-flex items-center gap-2 rounded-xl bg-[#1A4CFF] px-5 py-3 text-sm font-bold text-white shadow-lg shadow-blue-600/25 transition hover:bg-[#1540E0] active:scale-[0.99] disabled:opacity-60"
 		>
 			{#if loading}
 				<span class="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white"></span>
@@ -110,7 +110,7 @@
 			<h2 class="text-xs font-bold uppercase tracking-wide text-slate-500">What you'll get</h2>
 			<p class="mt-1.5 text-sm text-slate-600">Every activity sorted into the four tiers admissions officers actually use:</p>
 			<div class="mt-3 grid gap-2 sm:grid-cols-2">
-				{#each [['Standout', 'National impact: the rare, résumé-defining kind', 'bg-[#0052CC] text-white'], ['Strong', 'State/regional leadership or real, sustained results', 'bg-emerald-100 text-emerald-800'], ['Solid', 'School-level involvement: good, but expected', 'bg-slate-200 text-slate-700'], ['Filler', 'Brief or passive: little real impact', 'bg-amber-100 text-amber-800']] as [tier, desc, cls]}
+				{#each [['Standout', 'National impact: the rare, résumé-defining kind', 'bg-[#1A4CFF] text-white'], ['Strong', 'State/regional leadership or real, sustained results', 'bg-emerald-100 text-emerald-800'], ['Solid', 'School-level involvement: good, but expected', 'bg-slate-200 text-slate-700'], ['Filler', 'Brief or passive: little real impact', 'bg-amber-100 text-amber-800']] as [tier, desc, cls]}
 					<div class="flex items-start gap-2.5 rounded-xl border border-slate-200 bg-white p-3">
 						<span class="shrink-0 rounded-full px-2.5 py-0.5 text-[11px] font-bold {cls}">{tier}</span>
 						<span class="text-xs leading-snug text-slate-600">{desc}</span>
@@ -126,8 +126,8 @@
 			<div class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
 				<h2 class="text-xs font-bold uppercase tracking-wide text-slate-500">The read</h2>
 				<p class="mt-2 text-sm leading-relaxed text-slate-800">{analysis.overall}</p>
-				<div class="mt-3 rounded-xl border border-[#0052CC]/20 bg-[#0052CC]/[0.05] px-4 py-3">
-					<span class="text-xs font-bold uppercase tracking-wide text-[#0052CC]">Your spike</span>
+				<div class="mt-3 rounded-xl border border-[#1A4CFF]/20 bg-[#1A4CFF]/[0.05] px-4 py-3">
+					<span class="text-xs font-bold uppercase tracking-wide text-[#1A4CFF]">Your spike</span>
 					<p class="mt-1 text-sm text-slate-800">{analysis.spike}</p>
 				</div>
 			</div>
@@ -141,7 +141,7 @@
 						</div>
 						<p class="mt-1.5 text-sm leading-relaxed text-slate-600">{a.why}</p>
 						<p class="mt-2 flex items-start gap-2 text-sm leading-relaxed text-slate-800">
-							<svg class="mt-0.5 h-4 w-4 flex-none text-[#0052CC]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+							<svg class="mt-0.5 h-4 w-4 flex-none text-[#1A4CFF]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
 							<span><span class="font-semibold">Raise it:</span> {a.improve}</span>
 						</p>
 					</div>
@@ -154,7 +154,7 @@
 					<ol class="mt-3 space-y-2">
 						{#each analysis.next_moves as m, i}
 							<li class="flex items-start gap-3 text-sm text-slate-800">
-								<span class="grid h-5 w-5 flex-none place-items-center rounded-full bg-[#0052CC] text-[11px] font-bold text-white">{i + 1}</span>
+								<span class="grid h-5 w-5 flex-none place-items-center rounded-full bg-[#1A4CFF] text-[11px] font-bold text-white">{i + 1}</span>
 								{m}
 							</li>
 						{/each}

@@ -139,7 +139,7 @@
 				</button>
 				<div class="flex flex-1 items-center justify-center gap-1.5">
 					{#each Array(lastStep + 1) as _, i}
-						<span class="h-1.5 rounded-full transition-all duration-300 {i === step ? 'w-7 bg-[#0052CC]' : 'w-1.5 bg-slate-200'}"></span>
+						<span class="h-1.5 rounded-full transition-all duration-300 {i === step ? 'w-7 bg-[#1A4CFF]' : 'w-1.5 bg-slate-200'}"></span>
 					{/each}
 				</div>
 				<button
@@ -158,7 +158,7 @@
 					{#key step}
 						<div in:fly={{ x: 18, duration: 240 }} class="flex flex-1 flex-col">
 							<div class="text-center">
-								<div class="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-[#0052CC]/10 text-[#0052CC]">
+								<div class="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-[#1A4CFF]/10 text-[#1A4CFF]">
 									{#if s.icon === 'bolt'}
 										<svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
 									{:else if s.icon === 'pencil'}
@@ -169,7 +169,7 @@
 										<svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12a9 9 0 01-9 9c-1.6 0-3.1-.42-4.4-1.15L3 21l1.15-4.6A8.96 8.96 0 013 12a9 9 0 019-9 9 9 0 019 9z" /></svg>
 									{/if}
 								</div>
-								<p class="mt-4 text-[11px] font-bold uppercase tracking-[0.18em] text-[#0052CC]">{s.eyebrow}</p>
+								<p class="mt-4 text-[11px] font-bold uppercase tracking-[0.18em] text-[#1A4CFF]">{s.eyebrow}</p>
 								<h2 class="mt-1.5 text-[26px] font-black leading-[1.1] tracking-tight text-slate-900">{s.title}</h2>
 								<p class="mx-auto mt-3 max-w-xs text-[15px] leading-relaxed text-slate-500">{s.body}</p>
 							</div>
@@ -190,8 +190,8 @@
 									<p class="text-[13px] leading-relaxed text-slate-700">
 										Ever since I was little, I have <span class="rounded bg-amber-100 px-0.5 text-amber-900 line-through decoration-amber-400/70">always been passionate about</span> helping people.
 									</p>
-									<div class="mt-3 flex items-start gap-2 rounded-xl bg-[#0052CC]/[0.06] p-3">
-										<div class="grid h-5 w-5 flex-none place-items-center rounded-full bg-[#0052CC] text-white">
+									<div class="mt-3 flex items-start gap-2 rounded-xl bg-[#1A4CFF]/[0.06] p-3">
+										<div class="grid h-5 w-5 flex-none place-items-center rounded-full bg-[#1A4CFF] text-white">
 											<svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
 										</div>
 										<p class="text-[12px] leading-snug text-slate-700">
@@ -206,8 +206,8 @@
 										Is my list too top-heavy? 9 reaches, 2 targets.
 									</div>
 									<div class="flex items-end gap-2">
-										<div class="grid h-7 w-7 flex-none place-items-center rounded-full bg-[#0052CC] text-[11px] font-bold text-white">PA</div>
-										<div class="max-w-[80%] rounded-2xl rounded-bl-md bg-[#0052CC] px-4 py-2.5 text-[13px] leading-snug text-white">
+										<div class="grid h-7 w-7 flex-none place-items-center rounded-full bg-[#1A4CFF] text-[11px] font-bold text-white">PA</div>
+										<div class="max-w-[80%] rounded-2xl rounded-bl-md bg-[#1A4CFF] px-4 py-2.5 text-[13px] leading-snug text-white">
 											Yes. Add 3–4 targets where your profile is above their median. Want me to name them?
 										</div>
 									</div>
@@ -219,7 +219,7 @@
 					<!-- Social proof (GPT-vision's top ask) — real applicant quotes + scale. -->
 					<div in:fly={{ x: 18, duration: 240 }} class="flex flex-1 flex-col">
 						<div class="text-center">
-							<div class="flex items-center justify-center gap-0.5 text-[#0052CC]">
+							<div class="flex items-center justify-center gap-0.5 text-[#1A4CFF]">
 								{#each Array(5) as _}
 									<svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.07 3.3a1 1 0 00.95.68h3.46c.97 0 1.37 1.24.59 1.81l-2.8 2.03a1 1 0 00-.36 1.12l1.07 3.29c.3.92-.76 1.69-1.54 1.12l-2.8-2.03a1 1 0 00-1.18 0l-2.8 2.03c-.78.57-1.83-.2-1.54-1.12l1.07-3.29a1 1 0 00-.36-1.12L2.4 8.72c-.78-.57-.38-1.81.59-1.81h3.46a1 1 0 00.95-.68l1.07-3.3z" /></svg>
 								{/each}
@@ -234,7 +234,7 @@
 								<div class="rounded-2xl border border-slate-200 bg-slate-50/60 p-4">
 									<p class="text-[13.5px] leading-relaxed text-slate-700">“{t.quote}”</p>
 									<div class="mt-2.5 flex items-center gap-2">
-										<div class="grid h-6 w-6 flex-none place-items-center rounded-full bg-[#0052CC] text-[11px] font-bold text-white">{t.name[0]}</div>
+										<div class="grid h-6 w-6 flex-none place-items-center rounded-full bg-[#1A4CFF] text-[11px] font-bold text-white">{t.name[0]}</div>
 										<p class="text-xs font-semibold text-slate-600">{t.name} <span class="font-normal text-slate-400">· {t.role}</span></p>
 									</div>
 								</div>
@@ -254,9 +254,9 @@
 						<div class="mt-6 space-y-3">
 							<button
 								onclick={() => (selectedPlan = 'lifetime')}
-								class="relative w-full rounded-2xl border-2 px-5 py-4 text-left transition {selectedPlan === 'lifetime' ? 'border-[#0052CC] bg-[#0052CC]/[0.04]' : 'border-slate-200 hover:border-slate-300'}"
+								class="relative w-full rounded-2xl border-2 px-5 py-4 text-left transition {selectedPlan === 'lifetime' ? 'border-[#1A4CFF] bg-[#1A4CFF]/[0.04]' : 'border-slate-200 hover:border-slate-300'}"
 							>
-								<span class="absolute -top-2.5 left-5 rounded-full bg-[#0052CC] px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">Best value</span>
+								<span class="absolute -top-2.5 left-5 rounded-full bg-[#1A4CFF] px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">Best value</span>
 								<div class="flex items-center justify-between gap-3">
 									<div>
 										<div class="text-base font-black text-slate-900">Lifetime</div>
@@ -271,7 +271,7 @@
 
 							<button
 								onclick={() => (selectedPlan = 'monthly')}
-								class="w-full rounded-2xl border-2 px-5 py-4 text-left transition {selectedPlan === 'monthly' ? 'border-[#0052CC] bg-[#0052CC]/[0.04]' : 'border-slate-200 hover:border-slate-300'}"
+								class="w-full rounded-2xl border-2 px-5 py-4 text-left transition {selectedPlan === 'monthly' ? 'border-[#1A4CFF] bg-[#1A4CFF]/[0.04]' : 'border-slate-200 hover:border-slate-300'}"
 							>
 								<div class="flex items-center justify-between gap-3">
 									<div>
@@ -289,7 +289,7 @@
 						<ul class="mx-auto mt-5 max-w-[17rem] space-y-1.5">
 							{#each ['All 39 predicted decisions', 'Unlimited re-runs', 'Deep-dive on every verdict', 'Unlimited essay editing', 'AI counselor + founder advice'] as f}
 								<li class="flex items-center gap-2.5 text-sm text-slate-600">
-									<svg class="h-4 w-4 flex-none text-[#0052CC]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+									<svg class="h-4 w-4 flex-none text-[#1A4CFF]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
 									{f}
 								</li>
 							{/each}
@@ -307,7 +307,7 @@
 				<button
 					onclick={next}
 					disabled={loading}
-					class="w-full rounded-2xl bg-[#0052CC] px-6 py-4 text-base font-bold text-white shadow-lg shadow-blue-600/25 transition hover:bg-[#0047b3] active:scale-[0.99] disabled:opacity-50"
+					class="w-full rounded-2xl bg-[#1A4CFF] px-6 py-4 text-base font-bold text-white shadow-lg shadow-blue-600/25 transition hover:bg-[#1540E0] active:scale-[0.99] disabled:opacity-50"
 				>
 					{#if onPlans}
 						{loading

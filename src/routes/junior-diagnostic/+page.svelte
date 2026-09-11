@@ -26,9 +26,9 @@
 		<!-- Header -->
 		<header class="mb-12">
 			<div
-				class="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50 px-3 py-1 text-xs font-bold uppercase tracking-wide text-[#0052CC]"
+				class="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50 px-3 py-1 text-xs font-bold uppercase tracking-wide text-[#1A4CFF]"
 			>
-				<span class="h-1.5 w-1.5 rounded-full bg-[#0052CC]"></span>
+				<span class="h-1.5 w-1.5 rounded-full bg-[#1A4CFF]"></span>
 				College Admissions Guide
 			</div>
 
@@ -86,7 +86,7 @@
 				</p>
 				<ul class="mt-4 space-y-3">
 					<li class="flex gap-3">
-						<span class="mt-1 font-bold text-[#0052CC]">1.</span>
+						<span class="mt-1 font-bold text-[#1A4CFF]">1.</span>
 						<span
 							><strong class="text-slate-900">Academic rigor &amp; GPA.</strong> Not just your unweighted
 							average, but how demanding your schedule is relative to what your school offers. Taking
@@ -94,7 +94,7 @@
 						>
 					</li>
 					<li class="flex gap-3">
-						<span class="mt-1 font-bold text-[#0052CC]">2.</span>
+						<span class="mt-1 font-bold text-[#1A4CFF]">2.</span>
 						<span
 							><strong class="text-slate-900">Standardized testing.</strong> Where your SAT/ACT
 							sits relative to a school's middle-50% range. Increasingly optional, but a strong score
@@ -102,7 +102,7 @@
 						>
 					</li>
 					<li class="flex gap-3">
-						<span class="mt-1 font-bold text-[#0052CC]">3.</span>
+						<span class="mt-1 font-bold text-[#1A4CFF]">3.</span>
 						<span
 							><strong class="text-slate-900">Extracurricular depth.</strong> Depth and impact beat
 							a long list. One activity where you built, led, or achieved something real outweighs
@@ -110,14 +110,14 @@
 						>
 					</li>
 					<li class="flex gap-3">
-						<span class="mt-1 font-bold text-[#0052CC]">4.</span>
+						<span class="mt-1 font-bold text-[#1A4CFF]">4.</span>
 						<span
 							><strong class="text-slate-900">Narrative &amp; essays.</strong> A coherent story
 							that ties your interests together. Officers remember a through-line, not a résumé.</span
 						>
 					</li>
 					<li class="flex gap-3">
-						<span class="mt-1 font-bold text-[#0052CC]">5.</span>
+						<span class="mt-1 font-bold text-[#1A4CFF]">5.</span>
 						<span
 							><strong class="text-slate-900">Context &amp; fit.</strong> How you compare within your
 							own high school, region, and applicant pool &mdash; and whether the school reads you as
@@ -143,23 +143,23 @@
 					</h3>
 					<ul class="mt-4 space-y-3 text-slate-700">
 						<li class="flex gap-3">
-							<span class="text-[#0052CC]">&#10003;</span> Pull your school's course catalog and count
+							<span class="text-[#1A4CFF]">&#10003;</span> Pull your school's course catalog and count
 							how many of the most rigorous classes you've actually taken.
 						</li>
 						<li class="flex gap-3">
-							<span class="text-[#0052CC]">&#10003;</span> Look up the middle-50% test range for each
+							<span class="text-[#1A4CFF]">&#10003;</span> Look up the middle-50% test range for each
 							target school and mark where your current score falls.
 						</li>
 						<li class="flex gap-3">
-							<span class="text-[#0052CC]">&#10003;</span> Rank your activities by real impact, not by
+							<span class="text-[#1A4CFF]">&#10003;</span> Rank your activities by real impact, not by
 							title. Circle the one you'd talk about in an interview.
 						</li>
 						<li class="flex gap-3">
-							<span class="text-[#0052CC]">&#10003;</span> Write one sentence describing your "hook"
+							<span class="text-[#1A4CFF]">&#10003;</span> Write one sentence describing your "hook"
 							or narrative. If you can't, that's a gap.
 						</li>
 						<li class="flex gap-3">
-							<span class="text-[#0052CC]">&#10003;</span> For each target school, note whether you're
+							<span class="text-[#1A4CFF]">&#10003;</span> For each target school, note whether you're
 							above, at, or below its admitted-student profile.
 						</li>
 					</ul>
@@ -170,7 +170,7 @@
 					<em>applicant</em> instead of the average <em>admit</em>. The admit bar is meaningfully
 					higher, and it's the only bar that matters. If doing this by hand feels imprecise, this is
 					exactly the comparison
-					<a href="/pro" class="font-semibold text-[#0052CC] underline decoration-blue-200 underline-offset-2 hover:decoration-blue-500">PredictAdmit Pro</a>
+					<a href="/pro" class="font-semibold text-[#1A4CFF] underline decoration-blue-200 underline-offset-2 hover:decoration-blue-500">PredictAdmit Pro</a>
 					automates &mdash; it plots your profile against real admit distributions instead of leaving
 					you to eyeball it.
 				</p>
@@ -187,19 +187,19 @@
 				</p>
 				<ul class="mt-4 space-y-2">
 					<li class="flex gap-3">
-						<span class="text-[#0052CC]">&bull;</span> Take a full-length, timed diagnostic under real
+						<span class="text-[#1A4CFF]">&bull;</span> Take a full-length, timed diagnostic under real
 						conditions to get a true baseline.
 					</li>
 					<li class="flex gap-3">
-						<span class="text-[#0052CC]">&bull;</span> Assume realistic gains: 50&ndash;100 points on the
+						<span class="text-[#1A4CFF]">&bull;</span> Assume realistic gains: 50&ndash;100 points on the
 						SAT from disciplined prep is typical; 200+ is rare and shouldn't anchor your plan.
 					</li>
 					<li class="flex gap-3">
-						<span class="text-[#0052CC]">&bull;</span> Plan your test dates <em>backward</em> from application
+						<span class="text-[#1A4CFF]">&bull;</span> Plan your test dates <em>backward</em> from application
 						deadlines so your last attempt lands before you apply.
 					</li>
 					<li class="flex gap-3">
-						<span class="text-[#0052CC]">&bull;</span> Decide test-optional strategy per school: if your
+						<span class="text-[#1A4CFF]">&bull;</span> Decide test-optional strategy per school: if your
 						projected score won't clear the 25th percentile, that school may read better without it.
 					</li>
 				</ul>
@@ -270,28 +270,28 @@
 				</p>
 				<ul class="mt-4 space-y-3">
 					<li class="flex gap-3">
-						<span class="text-[#0052CC]">&bull;</span>
+						<span class="text-[#1A4CFF]">&bull;</span>
 						<span
 							><strong class="text-slate-900">Coasting in junior spring.</strong> This semester's grades
 							are the freshest data on your transcript. A dip here is expensive.</span
 						>
 					</li>
 					<li class="flex gap-3">
-						<span class="text-[#0052CC]">&bull;</span>
+						<span class="text-[#1A4CFF]">&bull;</span>
 						<span
 							><strong class="text-slate-900">Collecting titles instead of impact.</strong> "President"
 							of a club that meets twice a year reads as filler. Depth wins.</span
 						>
 					</li>
 					<li class="flex gap-3">
-						<span class="text-[#0052CC]">&bull;</span>
+						<span class="text-[#1A4CFF]">&bull;</span>
 						<span
 							><strong class="text-slate-900">A top-heavy list.</strong> Eight reaches and one safety
 							isn't ambition &mdash; it's a coin flip you're likely to lose.</span
 						>
 					</li>
 					<li class="flex gap-3">
-						<span class="text-[#0052CC]">&bull;</span>
+						<span class="text-[#1A4CFF]">&bull;</span>
 						<span
 							><strong class="text-slate-900">Ignoring the narrative until essay season.</strong> The
 							story your activities tell should be intentional by the end of junior year, not
@@ -299,7 +299,7 @@
 						>
 					</li>
 					<li class="flex gap-3">
-						<span class="text-[#0052CC]">&bull;</span>
+						<span class="text-[#1A4CFF]">&bull;</span>
 						<span
 							><strong class="text-slate-900">Guessing at your odds.</strong> Vibes are not a strategy.
 							Every fixable gap you don't measure is one you won't fix in time.</span
@@ -313,7 +313,7 @@
 				class="rounded-3xl border border-blue-100 bg-gradient-to-br from-blue-50 to-white p-8 md:p-10"
 			>
 				<div
-					class="inline-flex items-center gap-2 rounded-full bg-[#0052CC] px-3 py-1 text-xs font-bold uppercase tracking-wide text-white"
+					class="inline-flex items-center gap-2 rounded-full bg-[#1A4CFF] px-3 py-1 text-xs font-bold uppercase tracking-wide text-white"
 				>
 					Built into PredictAdmit Pro
 				</div>
@@ -327,28 +327,28 @@
 				</p>
 				<ul class="mt-5 grid gap-3 sm:grid-cols-2">
 					<li class="flex gap-3 rounded-xl border border-slate-100 bg-white p-4 text-sm">
-						<span class="text-[#0052CC]">&#10003;</span>
+						<span class="text-[#1A4CFF]">&#10003;</span>
 						<span
 							>Computes your <strong class="text-slate-900">academic index</strong> and projects it forward
 							from your current trajectory.</span
 						>
 					</li>
 					<li class="flex gap-3 rounded-xl border border-slate-100 bg-white p-4 text-sm">
-						<span class="text-[#0052CC]">&#10003;</span>
+						<span class="text-[#1A4CFF]">&#10003;</span>
 						<span
 							>Plots you against real <strong class="text-slate-900">admit distributions</strong> for every
 							school on your list.</span
 						>
 					</li>
 					<li class="flex gap-3 rounded-xl border border-slate-100 bg-white p-4 text-sm">
-						<span class="text-[#0052CC]">&#10003;</span>
+						<span class="text-[#1A4CFF]">&#10003;</span>
 						<span
 							>Generates <strong class="text-slate-900">personalized chances</strong> and flags your biggest
 							fixable gaps.</span
 						>
 					</li>
 					<li class="flex gap-3 rounded-xl border border-slate-100 bg-white p-4 text-sm">
-						<span class="text-[#0052CC]">&#10003;</span>
+						<span class="text-[#1A4CFF]">&#10003;</span>
 						<span
 							>Pairs it with an <strong class="text-slate-900">AI counselor</strong> that turns each gap
 							into a concrete next step.</span
@@ -358,13 +358,13 @@
 				<div class="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
 					<a
 						href="/pro"
-						class="inline-flex items-center justify-center rounded-xl bg-[#0052CC] px-6 py-3.5 text-base font-bold text-white shadow-lg shadow-blue-200 transition-all hover:-translate-y-0.5 hover:bg-blue-700"
+						class="inline-flex items-center justify-center rounded-xl bg-[#1A4CFF] px-6 py-3.5 text-base font-bold text-white shadow-lg shadow-blue-200 transition-all hover:-translate-y-0.5 hover:bg-blue-700"
 					>
 						Run your diagnostic in PredictAdmit Pro &rarr;
 					</a>
 					<div class="flex items-center gap-5 text-sm font-semibold text-slate-600">
-						<a href="/portals" class="hover:text-[#0052CC]">Explore all portals</a>
-						<a href="/ai" class="hover:text-[#0052CC]">Meet the AI counselor</a>
+						<a href="/portals" class="hover:text-[#1A4CFF]">Explore all portals</a>
+						<a href="/ai" class="hover:text-[#1A4CFF]">Meet the AI counselor</a>
 					</div>
 				</div>
 			</section>
@@ -420,7 +420,7 @@
 						<p class="mt-2 text-slate-600">
 							A great counselor is invaluable, but most manage hundreds of students and can't run a
 							data-driven, per-school projection for each one. That's the specific job
-							<a href="/pro" class="font-semibold text-[#0052CC] underline decoration-blue-200 underline-offset-2 hover:decoration-blue-500">PredictAdmit Pro</a>
+							<a href="/pro" class="font-semibold text-[#1A4CFF] underline decoration-blue-200 underline-offset-2 hover:decoration-blue-500">PredictAdmit Pro</a>
 							is built to handle &mdash; the number-crunching, so your counselor can focus on the
 							human guidance.
 						</p>
@@ -434,7 +434,7 @@
 					Junior year is the one window where seeing your gaps still lets you close them. Run the
 					diagnostic, fix what's fixable, and walk into senior fall knowing exactly where you stand.
 					When you're ready to skip the manual math,
-					<a href="/pro" class="font-semibold text-[#0052CC] underline decoration-blue-200 underline-offset-2 hover:decoration-blue-500">PredictAdmit Pro</a>
+					<a href="/pro" class="font-semibold text-[#1A4CFF] underline decoration-blue-200 underline-offset-2 hover:decoration-blue-500">PredictAdmit Pro</a>
 					does all of it in minutes.
 				</p>
 			</section>

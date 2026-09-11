@@ -54,7 +54,7 @@ export const GET: RequestHandler = async ({ url }) => {
 
 	const schoolName =
 		schoolConfigs[slug]?.schoolName ?? schoolStats[slug]?.name ?? 'a top university';
-	const accent = schoolConfigs[slug]?.primaryColor ?? schoolStats[slug]?.color ?? '#0052CC';
+	const accent = schoolConfigs[slug]?.primaryColor ?? schoolStats[slug]?.color ?? '#1A4CFF';
 	const fg = readableOn(accent);
 	const isAdmit = outcome === 'admit';
 

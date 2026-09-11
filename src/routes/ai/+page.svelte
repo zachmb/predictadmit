@@ -1136,12 +1136,12 @@
 					class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-100"
 				>
 					
-					<span class="text-[11px] font-bold text-[#0052CC] tracking-[0.14em] uppercase">AI Admissions Simulator</span>
+					<span class="text-[11px] font-bold text-[#1A4CFF] tracking-[0.14em] uppercase">AI Admissions Simulator</span>
 				</div>
 
 				<h1 class="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-slate-900 leading-[1.05]">
 					Predict your college<br />
-					<span class="text-[#0052CC]">decisions</span>
+					<span class="text-[#1A4CFF]">decisions</span>
 				</h1>
 
 				<p class="mx-auto max-w-xl text-base sm:text-lg leading-relaxed text-slate-600">
@@ -1153,24 +1153,24 @@
 				<!-- Trust band — calibration, scale, privacy (the signals a nervous applicant needs). -->
 				<div class="flex flex-wrap items-center justify-center gap-x-3.5 gap-y-2 text-xs font-medium text-slate-500">
 					<span class="inline-flex items-center gap-1.5">
-						<svg class="h-3.5 w-3.5 text-[#0052CC]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+						<svg class="h-3.5 w-3.5 text-[#1A4CFF]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
 						Calibrated on real admissions results
 					</span>
 					<span class="hidden sm:block h-3 w-px bg-slate-200"></span>
 					<span class="inline-flex items-center gap-1.5">
-						<svg class="h-3.5 w-3.5 text-[#0052CC]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 10-4 0m8 0a4 4 0 10-3-7" /></svg>
+						<svg class="h-3.5 w-3.5 text-[#1A4CFF]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 10-4 0m8 0a4 4 0 10-3-7" /></svg>
 						5,000+ applicants
 					</span>
 					<span class="hidden sm:block h-3 w-px bg-slate-200"></span>
 					<span class="inline-flex items-center gap-1.5">
-						<svg class="h-3.5 w-3.5 text-[#0052CC]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+						<svg class="h-3.5 w-3.5 text-[#1A4CFF]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
 						Your data never leaves your browser
 					</span>
 				</div>
 
 				<p class="mx-auto max-w-md text-xs leading-relaxed text-slate-400">
 					An estimate from NACAC factor weights. Not an official decision, and never affiliated with any school.
-					<a href="/methodology" class="font-medium text-[#0052CC] hover:underline">Methodology →</a>
+					<a href="/methodology" class="font-medium text-[#1A4CFF] hover:underline">Methodology →</a>
 				</p>
 			</header>
 
@@ -1258,7 +1258,7 @@
 									<div class="flex items-center justify-between mb-4">
 										<div class="flex items-center gap-3">
 											<div
-												class="w-10 h-10 rounded-xl bg-[#0052CC] flex items-center justify-center "
+												class="w-10 h-10 rounded-xl bg-[#1A4CFF] flex items-center justify-center "
 											>
 												<svg
 													class="w-5 h-5 text-white"
@@ -1549,8 +1549,8 @@ One fills the rest
 										/>
 										{#if hasDeepDiveAccess}
 											<div class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
-												<span class="w-2 h-2 bg-[#0052CC] rounded-full"></span>
-												<span class="text-xs text-[#0052CC] font-bold">Active</span>
+												<span class="w-2 h-2 bg-[#1A4CFF] rounded-full"></span>
+												<span class="text-xs text-[#1A4CFF] font-bold">Active</span>
 											</div>
 										{/if}
 									</div>
@@ -1697,7 +1697,7 @@ Picking one applies that school's real early-round odds
 									onclick={!googleSignedIn
 										? () => signIn('google', { callbackUrl: '/ai' })
 										: undefined}
-									class="group relative w-full rounded-2xl bg-[#0052CC] shadow-lg shadow-blue-600/25 transition-all duration-200 hover:bg-[#0047b3] active:scale-[0.99] disabled:opacity-60 disabled:cursor-not-allowed"
+									class="group relative w-full rounded-2xl bg-[#1A4CFF] shadow-lg shadow-blue-600/25 transition-all duration-200 hover:bg-[#1540E0] active:scale-[0.99] disabled:opacity-60 disabled:cursor-not-allowed"
 								>
 									<div class="px-8 py-5">
 										<div
@@ -1766,7 +1766,7 @@ Picking one applies that school's real early-round odds
 							<!-- Trust + pricing clarity right at the CTA (GPT-vision: add trust
 							     signals + set price expectations next to the button). -->
 							<div class="mt-4 flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 text-xs text-slate-500">
-								<span class="inline-flex items-center gap-1 text-[#0052CC]">
+								<span class="inline-flex items-center gap-1 text-[#1A4CFF]">
 									{#each Array(5) as _}
 										<svg class="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.07 3.3a1 1 0 00.95.68h3.46c.97 0 1.37 1.24.59 1.81l-2.8 2.03a1 1 0 00-.36 1.12l1.07 3.29c.3.92-.76 1.69-1.54 1.12l-2.8-2.03a1 1 0 00-1.18 0l-2.8 2.03c-.78.57-1.83-.2-1.54-1.12l1.07-3.29a1 1 0 00-.36-1.12L2.4 8.72c-.78-.57-.38-1.81.59-1.81h3.46a1 1 0 00.95-.68l1.07-3.3z" /></svg>
 									{/each}
@@ -1830,7 +1830,7 @@ See what we read from your file
 					{#if !hasDeepDiveAccess && hasUsedFreeSimulation && !$userProfile.isSubmittingAI && aiDecisions.length}
 						<!-- Readability: solid brand blue with WHITE text (matches the AiUpsell
 						     toast). Never dark text on a blue tint, which reads poorly. -->
-						<div class="border-b-2 border-[#0047b3] bg-[#0052CC] px-6 py-4">
+						<div class="border-b-2 border-[#1540E0] bg-[#1A4CFF] px-6 py-4">
 							<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
 								<div>
 									<p class="text-sm font-bold text-white">Your predictions are in. Unlock one school free.</p>
@@ -1839,7 +1839,7 @@ See what we read from your file
 								<button
 									type="button"
 									onclick={() => openPaywall('simulation')}
-									class="shrink-0 inline-flex items-center justify-center rounded-xl bg-white px-5 py-2.5 text-sm font-bold text-[#0052CC] shadow-sm transition hover:bg-blue-50 active:scale-[0.99]"
+									class="shrink-0 inline-flex items-center justify-center rounded-xl bg-white px-5 py-2.5 text-sm font-bold text-[#1A4CFF] shadow-sm transition hover:bg-blue-50 active:scale-[0.99]"
 								>
 									Unlock everything
 								</button>
@@ -1906,7 +1906,7 @@ See what we read from your file
 								<div class="space-y-1.5">
 									<div class="flex items-center gap-2">
 										<div
-											class="w-8 h-8 rounded-lg bg-[#0052CC] flex items-center justify-center "
+											class="w-8 h-8 rounded-lg bg-[#1A4CFF] flex items-center justify-center "
 										>
 											<svg
 												class="w-4 h-4 text-white"
@@ -2090,7 +2090,7 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 
 			<!-- Hero. Solid brand blue, white text. The deadline pill sits up top as
 			     the urgency anchor before any price is shown. -->
-			<div class="relative overflow-hidden bg-[#0052CC] px-7 pt-8 pb-7 text-center text-white">
+			<div class="relative overflow-hidden bg-[#1A4CFF] px-7 pt-8 pb-7 text-center text-white">
 				<div class="pointer-events-none absolute -top-20 -right-16 h-48 w-48 rounded-full bg-white/10 blur-2xl"></div>
 				<div class="relative">
 					<div class="mx-auto flex w-fit items-center gap-1.5 rounded-full bg-white/15 px-3 py-1 text-[11px] font-semibold ring-1 ring-white/25">
@@ -2124,7 +2124,7 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 					</div>
 					<svg class="h-4 w-4 shrink-0 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
 					<div class="leading-tight">
-						<p class="text-[11px] font-bold uppercase tracking-wide text-[#0052CC]">Lifetime access</p>
+						<p class="text-[11px] font-bold uppercase tracking-wide text-[#1A4CFF]">Lifetime access</p>
 						<p class="text-lg font-black text-slate-900">$25, once</p>
 					</div>
 				</div>
@@ -2134,7 +2134,7 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 				<ul class="mt-5 space-y-2">
 					{#each ['All 39 top schools, scored', 'Unlimited re-runs as you edit', 'Every deep-dive breakdown', 'The full essay workshop'] as benefit}
 						<li class="flex items-center gap-2.5 text-sm text-slate-700">
-							<span class="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#0052CC]/10 text-[#0052CC]">
+							<span class="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#1A4CFF]/10 text-[#1A4CFF]">
 								<svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
 							</span>
 							{benefit}
@@ -2150,15 +2150,15 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 						type="button"
 						onclick={() => (selectedPlan = 'lifetime')}
 						aria-pressed={selectedPlan === 'lifetime'}
-						class="relative flex w-full items-center gap-3 rounded-2xl px-4 py-3.5 text-left transition {selectedPlan === 'lifetime' ? 'border-2 border-[#0052CC] bg-blue-50 shadow-sm' : 'border border-slate-200 hover:border-slate-300'}"
+						class="relative flex w-full items-center gap-3 rounded-2xl px-4 py-3.5 text-left transition {selectedPlan === 'lifetime' ? 'border-2 border-[#1A4CFF] bg-blue-50 shadow-sm' : 'border border-slate-200 hover:border-slate-300'}"
 					>
-						<span class="grid h-5 w-5 shrink-0 place-items-center rounded-full border-2 {selectedPlan === 'lifetime' ? 'border-[#0052CC] bg-[#0052CC]' : 'border-slate-300'}">
+						<span class="grid h-5 w-5 shrink-0 place-items-center rounded-full border-2 {selectedPlan === 'lifetime' ? 'border-[#1A4CFF] bg-[#1A4CFF]' : 'border-slate-300'}">
 							{#if selectedPlan === 'lifetime'}<span class="h-2 w-2 rounded-full bg-white"></span>{/if}
 						</span>
 						<span class="min-w-0 flex-1">
 							<span class="flex items-center gap-2">
 								<span class="text-sm font-bold text-slate-900">Lifetime</span>
-								<span class="rounded-full bg-[#0052CC] px-2 py-0.5 text-[9px] font-black uppercase tracking-wide text-white">Best value</span>
+								<span class="rounded-full bg-[#1A4CFF] px-2 py-0.5 text-[9px] font-black uppercase tracking-wide text-white">Best value</span>
 							</span>
 							<span class="mt-0.5 block text-xs leading-relaxed text-slate-500">Everything above, forever. No subscription.</span>
 						</span>
@@ -2173,9 +2173,9 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 						type="button"
 						onclick={() => (selectedPlan = 'monthly')}
 						aria-pressed={selectedPlan === 'monthly'}
-						class="flex w-full items-center gap-3 rounded-2xl px-4 py-3.5 text-left transition {selectedPlan === 'monthly' ? 'border-2 border-[#0052CC] bg-blue-50 shadow-sm' : 'border border-slate-200 hover:border-slate-300'}"
+						class="flex w-full items-center gap-3 rounded-2xl px-4 py-3.5 text-left transition {selectedPlan === 'monthly' ? 'border-2 border-[#1A4CFF] bg-blue-50 shadow-sm' : 'border border-slate-200 hover:border-slate-300'}"
 					>
-						<span class="grid h-5 w-5 shrink-0 place-items-center rounded-full border-2 {selectedPlan === 'monthly' ? 'border-[#0052CC] bg-[#0052CC]' : 'border-slate-300'}">
+						<span class="grid h-5 w-5 shrink-0 place-items-center rounded-full border-2 {selectedPlan === 'monthly' ? 'border-[#1A4CFF] bg-[#1A4CFF]' : 'border-slate-300'}">
 							{#if selectedPlan === 'monthly'}<span class="h-2 w-2 rounded-full bg-white"></span>{/if}
 						</span>
 						<span class="min-w-0 flex-1">
@@ -2194,9 +2194,9 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 							type="button"
 							onclick={() => (selectedPlan = 'single')}
 							aria-pressed={selectedPlan === 'single'}
-							class="flex w-full items-center gap-3 rounded-2xl px-4 py-3.5 text-left transition {selectedPlan === 'single' ? 'border-2 border-[#0052CC] bg-blue-50 shadow-sm' : 'border border-slate-200 hover:border-slate-300'}"
+							class="flex w-full items-center gap-3 rounded-2xl px-4 py-3.5 text-left transition {selectedPlan === 'single' ? 'border-2 border-[#1A4CFF] bg-blue-50 shadow-sm' : 'border border-slate-200 hover:border-slate-300'}"
 						>
-							<span class="grid h-5 w-5 shrink-0 place-items-center rounded-full border-2 {selectedPlan === 'single' ? 'border-[#0052CC] bg-[#0052CC]' : 'border-slate-300'}">
+							<span class="grid h-5 w-5 shrink-0 place-items-center rounded-full border-2 {selectedPlan === 'single' ? 'border-[#1A4CFF] bg-[#1A4CFF]' : 'border-slate-300'}">
 								{#if selectedPlan === 'single'}<span class="h-2 w-2 rounded-full bg-white"></span>{/if}
 							</span>
 							<span class="min-w-0 flex-1">
@@ -2216,7 +2216,7 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 				<button
 					onclick={continuePlan}
 					disabled={checkoutLoading}
-					class="mt-4 w-full rounded-2xl bg-[#0052CC] px-5 py-4 text-base font-black text-white shadow-lg shadow-blue-600/25 transition hover:bg-[#0047b3] active:scale-[0.99] disabled:opacity-50"
+					class="mt-4 w-full rounded-2xl bg-[#1A4CFF] px-5 py-4 text-base font-black text-white shadow-lg shadow-blue-600/25 transition hover:bg-[#1540E0] active:scale-[0.99] disabled:opacity-50"
 				>
 					{checkoutLoading
 						? 'Opening checkout…'
@@ -2264,7 +2264,7 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 		<button
 			onclick={googleSignedIn ? runEvaluation : () => signIn('google', { callbackUrl: '/ai' })}
 			disabled={$userProfile.isSubmittingAI}
-			class="flex w-full items-center justify-center gap-2 rounded-xl bg-[#0052CC] py-3.5 text-base font-bold text-white shadow-lg shadow-blue-600/25 transition active:scale-[0.99] disabled:opacity-60"
+			class="flex w-full items-center justify-center gap-2 rounded-xl bg-[#1A4CFF] py-3.5 text-base font-bold text-white shadow-lg shadow-blue-600/25 transition active:scale-[0.99] disabled:opacity-60"
 		>
 			{#if $userProfile.isSubmittingAI}
 				<span class="h-5 w-5 animate-spin rounded-full border-2 border-white/30 border-t-white"></span>

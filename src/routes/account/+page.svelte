@@ -25,7 +25,7 @@
 		>
 			<div class="w-full max-w-[400px]">
 				<a href="/" class="inline-flex items-center gap-2.5">
-					<span class="grid h-9 w-9 place-items-center rounded-xl bg-[#0052CC] text-white shadow-sm">
+					<span class="grid h-9 w-9 place-items-center rounded-xl bg-[#1A4CFF] text-white shadow-sm">
 						<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
 							<path d="M4 18h16l-3-4H7l-3 4z" />
 							<path d="M7 12h10l-2-3H9l-2 3z" />
@@ -45,7 +45,7 @@
 
 				<button
 					on:click={handleGoogleSignIn}
-					class="mt-8 w-full flex items-center justify-center gap-2.5 rounded-xl bg-[#0052CC] px-4 py-3.5 text-[15px] font-semibold text-white shadow-lg shadow-blue-600/25 transition hover:bg-[#0047b3] active:scale-[0.99]"
+					class="mt-8 w-full flex items-center justify-center gap-2.5 rounded-xl bg-[#1A4CFF] px-4 py-3.5 text-[15px] font-semibold text-white shadow-lg shadow-blue-600/25 transition hover:bg-[#1540E0] active:scale-[0.99]"
 				>
 					<span class="grid h-5 w-5 place-items-center rounded-full bg-white">
 						<svg class="w-3.5 h-3.5" viewBox="0 0 24 24">
@@ -64,15 +64,15 @@
 
 				<p class="mt-10 text-[12px] leading-[1.6] text-slate-400">
 					By continuing you agree to our
-					<a href="/terms" class="font-medium text-[#0052CC] hover:underline">Terms</a> and
-					<a href="/privacy" class="font-medium text-[#0052CC] hover:underline">Privacy Policy</a>.
+					<a href="/terms" class="font-medium text-[#1A4CFF] hover:underline">Terms</a> and
+					<a href="/privacy" class="font-medium text-[#1A4CFF] hover:underline">Privacy Policy</a>.
 				</p>
 			</div>
 		</main>
 
 		<!-- Right: brand-blue product preview (the decision inbox). Hidden on mobile. -->
 		<div
-			class="hidden md:flex md:w-1/2 lg:w-[55%] relative overflow-hidden bg-[#0052CC] flex-col justify-center p-12 lg:p-16"
+			class="hidden md:flex md:w-1/2 lg:w-[55%] relative overflow-hidden bg-[#1A4CFF] flex-col justify-center p-12 lg:p-16"
 		>
 			<div class="pointer-events-none absolute -top-24 -right-24 h-72 w-72 rounded-full bg-white/10 blur-3xl"></div>
 			<div class="pointer-events-none absolute -bottom-32 -left-24 h-80 w-80 rounded-full bg-black/10 blur-3xl"></div>

@@ -102,7 +102,7 @@
 	<section class="relative overflow-hidden border-b border-slate-100">
 		<div class="max-w-4xl mx-auto px-6 py-24 md:py-32 text-center">
 			<p
-				class="inline-block mb-6 text-xs font-semibold tracking-widest uppercase text-[#0052CC] bg-[#0052CC]/10 px-3 py-1 rounded-full"
+				class="inline-block mb-6 text-xs font-semibold tracking-widest uppercase text-[#1A4CFF] bg-[#1A4CFF]/10 px-3 py-1 rounded-full"
 			>
 				About PredictAdmit
 			</p>
@@ -116,7 +116,7 @@
 			<div class="flex flex-col sm:flex-row gap-3 justify-center">
 				<a
 					href="/pro"
-					class="inline-flex items-center justify-center font-semibold text-sm bg-[#0052CC] text-white px-8 py-3.5 rounded-lg hover:bg-[#003d99] transition-colors shadow-lg shadow-[#0052CC]/20"
+					class="inline-flex items-center justify-center font-semibold text-sm bg-[#1A4CFF] text-white px-8 py-3.5 rounded-lg hover:bg-[#003d99] transition-colors shadow-lg shadow-[#1A4CFF]/20"
 				>
 					Start free →
 				</a>
@@ -128,7 +128,7 @@
 				</a>
 			</div>
 			<div class="mt-6 flex items-center justify-center gap-2 text-sm text-slate-400">
-				<span class="inline-flex items-center gap-0.5 text-[#0052CC]">
+				<span class="inline-flex items-center gap-0.5 text-[#1A4CFF]">
 					{#each Array(5) as _}
 						<svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.07 3.3a1 1 0 00.95.68h3.46c.97 0 1.37 1.24.59 1.81l-2.8 2.03a1 1 0 00-.36 1.12l1.07 3.29c.3.92-.76 1.69-1.54 1.12l-2.8-2.03a1 1 0 00-1.18 0l-2.8 2.03c-.78.57-1.83-.2-1.54-1.12l1.07-3.29a1 1 0 00-.36-1.12L2.4 8.72c-.78-.57-.38-1.81.59-1.81h3.46a1 1 0 00.95-.68l1.07-3.3z" /></svg>
 					{/each}
@@ -143,7 +143,7 @@
 		<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
 			{#each stats as stat}
 				<div class="rounded-2xl border border-slate-100 bg-slate-50 p-6 text-center">
-					<div class="text-3xl md:text-4xl font-bold text-[#0052CC] mb-1">{stat.value}</div>
+					<div class="text-3xl md:text-4xl font-bold text-[#1A4CFF] mb-1">{stat.value}</div>
 					<div class="text-sm text-slate-500 leading-snug">{stat.label}</div>
 				</div>
 			{/each}
@@ -165,7 +165,7 @@
 			<div class="grid md:grid-cols-2 gap-5">
 				{#each differentiators as item}
 					<div
-						class="rounded-2xl bg-white border border-slate-100 p-8 hover:border-[#0052CC]/30 hover:shadow-sm transition-all"
+						class="rounded-2xl bg-white border border-slate-100 p-8 hover:border-[#1A4CFF]/30 hover:shadow-sm transition-all"
 					>
 						<div class="text-3xl mb-4">{item.icon}</div>
 						<h3 class="text-xl font-bold text-slate-900 mb-2">{item.title}</h3>
@@ -203,7 +203,7 @@
 		<div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
 			<a
 				href="/pricing"
-				class="inline-flex items-center justify-center font-semibold text-sm bg-[#0052CC] text-white px-8 py-3.5 rounded-lg hover:bg-[#003d99] transition-colors shadow-lg shadow-[#0052CC]/20"
+				class="inline-flex items-center justify-center font-semibold text-sm bg-[#1A4CFF] text-white px-8 py-3.5 rounded-lg hover:bg-[#003d99] transition-colors shadow-lg shadow-[#1A4CFF]/20"
 			>
 				Get Lifetime for $25 once →
 			</a>
@@ -246,13 +246,13 @@
 						class="flex cursor-pointer items-center justify-between gap-4 font-semibold text-slate-900 list-none"
 					>
 						{faq.q}
-						<span class="text-[#0052CC] text-xl transition-transform group-open:rotate-45">+</span>
+						<span class="text-[#1A4CFF] text-xl transition-transform group-open:rotate-45">+</span>
 					</summary>
 					<p class="mt-3 text-slate-500 leading-relaxed">{faq.a}</p>
 					{#if faq.link}
 						<a
 							href={faq.link.href}
-							class="mt-2 inline-block text-sm font-semibold text-[#0052CC] hover:underline"
+							class="mt-2 inline-block text-sm font-semibold text-[#1A4CFF] hover:underline"
 						>
 							{faq.link.label}
 						</a>
@@ -263,7 +263,7 @@
 	</section>
 
 	<!-- Closing CTA -->
-	<section class="bg-[#0052CC]">
+	<section class="bg-[#1A4CFF]">
 		<div class="max-w-4xl mx-auto px-6 py-24 text-center">
 			<h2 class="text-3xl md:text-4xl font-bold tracking-tight text-white mb-4">
 				Want to see where you stand?
@@ -274,7 +274,7 @@
 			<div class="flex flex-col sm:flex-row gap-3 justify-center">
 				<a
 					href="/pro"
-					class="inline-flex items-center justify-center font-semibold text-sm bg-white text-[#0052CC] px-8 py-3.5 rounded-lg hover:bg-slate-100 transition-colors shadow-lg"
+					class="inline-flex items-center justify-center font-semibold text-sm bg-white text-[#1A4CFF] px-8 py-3.5 rounded-lg hover:bg-slate-100 transition-colors shadow-lg"
 				>
 					Start free →
 				</a>

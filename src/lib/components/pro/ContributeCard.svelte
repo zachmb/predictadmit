@@ -7,7 +7,7 @@
 	const CONTRIBUTIONS_KEY = 'predictadmit:pro:contributions';
 	const CONTRIBUTED_FLAG = 'predictadmit:pro:contributed';
 
-	const ACCENT = '#0052CC';
+	const ACCENT = '#1A4CFF';
 
 	type Academics = {
 		sat: number | '';
@@ -280,7 +280,7 @@
 						bind:value={displayName}
 						disabled={anonymous}
 						placeholder={anonymous ? 'Anonymous applicant' : 'Your name'}
-						class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[#0052CC] focus:ring-2 focus:ring-[#0052CC]/20 disabled:bg-slate-100 disabled:text-slate-400"
+						class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[#1A4CFF] focus:ring-2 focus:ring-[#1A4CFF]/20 disabled:bg-slate-100 disabled:text-slate-400"
 					/>
 				</label>
 				<label class="block">
@@ -289,7 +289,7 @@
 						type="number"
 						bind:value={gradYear}
 						placeholder="2026"
-						class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[#0052CC] focus:ring-2 focus:ring-[#0052CC]/20"
+						class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[#1A4CFF] focus:ring-2 focus:ring-[#1A4CFF]/20"
 					/>
 				</label>
 				<label class="block sm:col-span-2">
@@ -298,7 +298,7 @@
 						type="text"
 						bind:value={major}
 						placeholder="e.g. Computer Science"
-						class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[#0052CC] focus:ring-2 focus:ring-[#0052CC]/20"
+						class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[#1A4CFF] focus:ring-2 focus:ring-[#1A4CFF]/20"
 					/>
 				</label>
 			</div>
@@ -388,7 +388,7 @@
 			<input
 				type="checkbox"
 				bind:checked={consent}
-				class="mt-0.5 h-4 w-4 shrink-0 rounded border-slate-300 accent-[#0052CC]"
+				class="mt-0.5 h-4 w-4 shrink-0 rounded border-slate-300 accent-[#1A4CFF]"
 			/>
 			<span class="text-sm text-slate-700">
 				I agree to share this data to help improve predictions and the Community Admits corpus. I can

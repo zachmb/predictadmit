@@ -124,7 +124,7 @@
 			<p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Invite friends</p>
 			<span
 				class="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-semibold text-white"
-				style="background-color:#0052CC;"
+				style="background-color:#1A4CFF;"
 			>
 				+{INVITE_REWARD.points}
 			</span>
@@ -136,7 +136,7 @@
 			Share your link. You both get rewarded when they join.
 		</p>
 		{#if $points.total > 0}
-			<p class="mt-1 text-xs font-semibold text-[#0052CC]">
+			<p class="mt-1 text-xs font-semibold text-[#1A4CFF]">
 				🎉 You've earned {$points.total} points
 			</p>
 		{/if}
@@ -145,7 +145,7 @@
 				type="button"
 				onclick={copyLink}
 				class="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg px-3 py-2 text-sm font-semibold text-white transition-opacity hover:opacity-90"
-				style="background-color:#0052CC;"
+				style="background-color:#1A4CFF;"
 			>
 				{#if copied}
 					<svg
@@ -218,7 +218,7 @@
 				<button
 					type="button"
 					onclick={() => (wizardOpen = true)}
-					class="text-xs font-semibold text-[#0052CC] hover:underline"
+					class="text-xs font-semibold text-[#1A4CFF] hover:underline"
 				>
 					Edit
 				</button>
@@ -247,7 +247,7 @@
 				type="button"
 				onclick={() => (wizardOpen = true)}
 				class="mt-4 inline-flex w-full items-center justify-center gap-1.5 rounded-lg px-3 py-2 text-sm font-semibold text-white transition-opacity hover:opacity-90"
-				style="background-color:#0052CC;"
+				style="background-color:#1A4CFF;"
 			>
 				Enter my stats
 				<span aria-hidden="true">→</span>

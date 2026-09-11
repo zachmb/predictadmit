@@ -118,7 +118,7 @@
 			{#each steps as _, i}
 				<div
 					class="h-1.5 flex-1 rounded-full transition-colors"
-					style="background-color: {i <= step ? '#0052CC' : '#e2e8f0'};"
+					style="background-color: {i <= step ? '#1A4CFF' : '#e2e8f0'};"
 				></div>
 			{/each}
 		</div>
@@ -138,7 +138,7 @@
 							step="0.01"
 							placeholder="3.85"
 							bind:value={academics.unweightedGpa}
-							class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:border-[#0052CC] focus:ring-2 focus:ring-blue-500/20"
+							class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:border-[#1A4CFF] focus:ring-2 focus:ring-blue-500/20"
 						/>
 					</label>
 					<label class="block">
@@ -150,7 +150,7 @@
 							step="0.01"
 							placeholder="4.3"
 							bind:value={academics.weightedGpa}
-							class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:border-[#0052CC] focus:ring-2 focus:ring-blue-500/20"
+							class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:border-[#1A4CFF] focus:ring-2 focus:ring-blue-500/20"
 						/>
 					</label>
 				</div>
@@ -165,7 +165,7 @@
 							step="10"
 							placeholder="1450"
 							bind:value={academics.sat}
-							class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:border-[#0052CC] focus:ring-2 focus:ring-blue-500/20"
+							class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:border-[#1A4CFF] focus:ring-2 focus:ring-blue-500/20"
 						/>
 					</label>
 					<label class="block">
@@ -176,7 +176,7 @@
 							max="36"
 							placeholder="32"
 							bind:value={academics.act}
-							class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:border-[#0052CC] focus:ring-2 focus:ring-blue-500/20"
+							class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:border-[#1A4CFF] focus:ring-2 focus:ring-blue-500/20"
 						/>
 					</label>
 				</div>
@@ -188,7 +188,7 @@
 							onclick={() => (rigor = option)}
 							class="w-full rounded-lg border px-4 py-2.5 text-left text-sm font-semibold transition-colors {rigor ===
 							option
-								? 'border-[#0052CC] bg-blue-50 text-[#0052CC]'
+								? 'border-[#1A4CFF] bg-blue-50 text-[#1A4CFF]'
 								: 'border-slate-200 text-slate-600 hover:bg-slate-50'}"
 						>
 							{option}
@@ -200,14 +200,14 @@
 					bind:value={activities}
 					rows="6"
 					placeholder="Debate Club, Captain&#10;Varsity Soccer, Starter&#10;Part-time job at local cafe"
-					class="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:border-[#0052CC] focus:ring-2 focus:ring-blue-500/20"
+					class="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:border-[#1A4CFF] focus:ring-2 focus:ring-blue-500/20"
 				></textarea>
 			{:else}
 				<textarea
 					bind:value={awards}
 					rows="6"
 					placeholder="National Merit Semifinalist&#10;AP Scholar with Distinction"
-					class="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:border-[#0052CC] focus:ring-2 focus:ring-blue-500/20"
+					class="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:border-[#1A4CFF] focus:ring-2 focus:ring-blue-500/20"
 				></textarea>
 			{/if}
 		</div>
@@ -228,7 +228,7 @@
 				type="button"
 				onclick={next}
 				class="rounded-lg px-6 py-2 text-sm font-semibold text-white transition-opacity hover:opacity-90"
-				style="background-color:#0052CC;"
+				style="background-color:#1A4CFF;"
 			>
 				{isLast ? 'Save my stats' : 'Next'}
 			</button>

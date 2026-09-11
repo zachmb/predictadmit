@@ -173,7 +173,7 @@
 					{:else}
 						<div
 							class="flex h-16 w-16 items-center justify-center rounded-full text-2xl font-semibold text-white shadow"
-							style="background-color: #0052CC;"
+							style="background-color: #1A4CFF;"
 						>
 							{initial}
 						</div>
@@ -198,7 +198,7 @@
 					</div>
 				</div>
 				{#if !billingLoading}
-					<span class="self-start rounded-full bg-[#0052CC]/10 px-3 py-1.5 text-xs font-bold text-[#0052CC] sm:self-auto">
+					<span class="self-start rounded-full bg-[#1A4CFF]/10 px-3 py-1.5 text-xs font-bold text-[#1A4CFF] sm:self-auto">
 						{planPill}
 					</span>
 				{/if}
@@ -246,7 +246,7 @@
 
 				{#if billingLoading}
 					<div class="mt-5 flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-50/60 p-5 text-sm text-slate-500">
-						<span class="h-4 w-4 animate-spin rounded-full border-2 border-slate-300 border-t-[#0052CC]"></span>
+						<span class="h-4 w-4 animate-spin rounded-full border-2 border-slate-300 border-t-[#1A4CFF]"></span>
 						Checking your plan...
 					</div>
 				{:else}
@@ -256,7 +256,7 @@
 						<div class="flex items-start gap-4">
 							<div
 								class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-white shadow"
-								style="background-color: #0052CC;"
+								style="background-color: #1A4CFF;"
 							>
 								<svg viewBox="0 0 20 20" fill="currentColor" class="h-6 w-6" aria-hidden="true">
 									<path
@@ -322,7 +322,7 @@
 								type="button"
 								onclick={openBillingPortal}
 								disabled={portalLoading}
-								class="inline-flex items-center justify-center gap-2 rounded-lg bg-[#0052CC] px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#0047b3] active:scale-[0.99] disabled:opacity-50"
+								class="inline-flex items-center justify-center gap-2 rounded-lg bg-[#1A4CFF] px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#1540E0] active:scale-[0.99] disabled:opacity-50"
 							>
 								{#if portalLoading}
 									<span class="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white"></span>
@@ -337,14 +337,14 @@
 									: 'Update your card or download invoices in Stripe.'}
 							</p>
 							{#if plan === 'single'}
-								<a href="/pro" class="text-sm font-semibold text-[#0052CC] hover:underline sm:ml-auto">Upgrade to full Pro</a>
+								<a href="/pro" class="text-sm font-semibold text-[#1A4CFF] hover:underline sm:ml-auto">Upgrade to full Pro</a>
 							{/if}
 						{:else if billing && !billing.billingConfigured}
 							<p class="text-xs text-slate-500">Billing is not set up yet, so there's nothing to manage.</p>
 						{:else}
 							<a
 								href="/pro"
-								class="inline-flex items-center justify-center gap-2 rounded-lg bg-[#0052CC] px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#0047b3] active:scale-[0.99]"
+								class="inline-flex items-center justify-center gap-2 rounded-lg bg-[#1A4CFF] px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#1540E0] active:scale-[0.99]"
 							>
 								Upgrade to Pro
 							</a>
@@ -376,7 +376,7 @@
 							aria-label="Transactional emails (always on)"
 							disabled
 							class="relative inline-flex h-6 w-11 shrink-0 cursor-not-allowed rounded-full transition-colors"
-							style="background-color: #0052CC; opacity: 0.55;"
+							style="background-color: #1A4CFF; opacity: 0.55;"
 						>
 							<span class="inline-block h-5 w-5 translate-x-[22px] transform rounded-full bg-white shadow transition mt-0.5 ml-0.5"></span>
 						</button>
@@ -395,7 +395,7 @@
 							aria-label="Marketing emails"
 							onclick={toggleMarketing}
 							class="relative inline-flex h-6 w-11 shrink-0 rounded-full transition-colors {marketing ? '' : 'bg-slate-200'}"
-							style={marketing ? 'background-color: #0052CC;' : ''}
+							style={marketing ? 'background-color: #1A4CFF;' : ''}
 						>
 							<span
 								class="inline-block h-5 w-5 transform rounded-full bg-white shadow transition mt-0.5 ml-0.5 {marketing ? 'translate-x-[22px]' : 'translate-x-0'}"

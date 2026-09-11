@@ -201,14 +201,14 @@
 					<ul class="mx-auto mb-8 max-w-xs space-y-2 text-left">
 						{#each ['10 inline annotations per draft', 'Blunt, specific AO-style critique', 'Targeted to each school you apply to'] as f}
 							<li class="flex items-center gap-2.5 text-sm text-slate-600">
-								<svg class="h-4 w-4 flex-none text-[#0052CC]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+								<svg class="h-4 w-4 flex-none text-[#1A4CFF]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
 								{f}
 							</li>
 						{/each}
 					</ul>
 					<button
 						onclick={() => goto('/pro')}
-						class="group relative flex items-center justify-center gap-3 w-full max-w-xs mx-auto py-4 px-6 bg-[#0052CC] text-white rounded-2xl font-bold hover:bg-[#0047b3] transition-all shadow-xl shadow-blue-600/25"
+						class="group relative flex items-center justify-center gap-3 w-full max-w-xs mx-auto py-4 px-6 bg-[#1A4CFF] text-white rounded-2xl font-bold hover:bg-[#1540E0] transition-all shadow-xl shadow-blue-600/25"
 					>
 						Unlock essay editing · $25 once
 					</button>

@@ -70,7 +70,7 @@
 			return {
 				slug: stat.slug,
 				name: cfg?.schoolName ?? stat.name ?? stat.slug,
-				color: cfg?.primaryColor ?? stat.color ?? '#0052CC',
+				color: cfg?.primaryColor ?? stat.color ?? '#1A4CFF',
 				stat,
 				chance: 0,
 				likelihood: 'Target' as Likelihood
@@ -178,13 +178,13 @@
 			<p class="mt-1 text-xs text-slate-400">
 				Chances use factor weights from NACAC's Factors in the Admission Decision survey,
 				calibrated on 2026-cycle HYPSM &amp; T20 admits.
-				<a href="/methodology" class="font-medium text-[#0052CC] hover:underline" target="_blank"
+				<a href="/methodology" class="font-medium text-[#1A4CFF] hover:underline" target="_blank"
 					>How it works →</a
 				>
 			</p>
 			{#if !hasStats}
 				<div
-					class="mt-3 inline-flex items-center gap-2 rounded-lg bg-blue-50 px-3 py-1.5 text-xs font-medium text-[#0052CC] ring-1 ring-blue-100"
+					class="mt-3 inline-flex items-center gap-2 rounded-lg bg-blue-50 px-3 py-1.5 text-xs font-medium text-[#1A4CFF] ring-1 ring-blue-100"
 				>
 					<svg
 						viewBox="0 0 24 24"
@@ -246,7 +246,7 @@
 					type="text"
 					bind:value={search}
 					placeholder="Search by school or location…"
-					class="w-full rounded-xl border border-slate-200 bg-slate-50 py-2 pl-9 pr-3 text-sm text-slate-900 placeholder:text-slate-400 focus:border-[#0052CC] focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-100"
+					class="w-full rounded-xl border border-slate-200 bg-slate-50 py-2 pl-9 pr-3 text-sm text-slate-900 placeholder:text-slate-400 focus:border-[#1A4CFF] focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-100"
 				/>
 			</div>
 
@@ -255,7 +255,7 @@
 					<span class="hidden sm:inline">Size</span>
 					<select
 						bind:value={sizeFilter}
-						class="rounded-xl border border-slate-200 bg-white py-2 pl-3 pr-8 text-sm font-medium text-slate-700 focus:border-[#0052CC] focus:outline-none focus:ring-2 focus:ring-blue-100"
+						class="rounded-xl border border-slate-200 bg-white py-2 pl-3 pr-8 text-sm font-medium text-slate-700 focus:border-[#1A4CFF] focus:outline-none focus:ring-2 focus:ring-blue-100"
 					>
 						<option value="All">All sizes</option>
 						<option value="Small">Small</option>
@@ -268,7 +268,7 @@
 					<span class="hidden sm:inline">Setting</span>
 					<select
 						bind:value={settingFilter}
-						class="rounded-xl border border-slate-200 bg-white py-2 pl-3 pr-8 text-sm font-medium text-slate-700 focus:border-[#0052CC] focus:outline-none focus:ring-2 focus:ring-blue-100"
+						class="rounded-xl border border-slate-200 bg-white py-2 pl-3 pr-8 text-sm font-medium text-slate-700 focus:border-[#1A4CFF] focus:outline-none focus:ring-2 focus:ring-blue-100"
 					>
 						<option value="All">All settings</option>
 						<option value="Urban">Urban</option>
@@ -282,7 +282,7 @@
 					<span class="hidden sm:inline">Sort by</span>
 					<select
 						bind:value={sortBy}
-						class="rounded-xl border border-slate-200 bg-white py-2 pl-3 pr-8 text-sm font-medium text-slate-700 focus:border-[#0052CC] focus:outline-none focus:ring-2 focus:ring-blue-100"
+						class="rounded-xl border border-slate-200 bg-white py-2 pl-3 pr-8 text-sm font-medium text-slate-700 focus:border-[#1A4CFF] focus:outline-none focus:ring-2 focus:ring-blue-100"
 					>
 						<option value="Rank">Rank</option>
 						<option value="Acceptance rate">Acceptance rate</option>
@@ -394,7 +394,7 @@
 						<!-- Bottom: chance + action -->
 						<div class="flex items-center justify-between gap-3">
 							<div class="flex items-center gap-2">
-								<span class="text-2xl font-bold tabular-nums text-[#0052CC]">{row.chance}%</span>
+								<span class="text-2xl font-bold tabular-nums text-[#1A4CFF]">{row.chance}%</span>
 								<span class="text-xs font-medium leading-tight text-slate-500"
 									>your<br />chance</span
 								>
@@ -405,7 +405,7 @@
 								class="inline-flex items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-semibold transition
 									{onList
 									? 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200 hover:bg-emerald-100'
-									: 'bg-[#0052CC] text-white hover:bg-[#0047b3]'}"
+									: 'bg-[#1A4CFF] text-white hover:bg-[#1540E0]'}"
 							>
 								{#if onList}
 									<svg

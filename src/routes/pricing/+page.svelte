@@ -91,7 +91,7 @@
 	<div class="max-w-6xl mx-auto px-4 py-16 space-y-14">
 		<header class="text-center space-y-4">
 			<h1 class="text-5xl font-bold tracking-tight text-slate-900">
-				Your admissions strategist, <span class="text-[#0052CC]">not your consultant's invoice.</span>
+				Your admissions strategist, <span class="text-[#1A4CFF]">not your consultant's invoice.</span>
 			</h1>
 			<p class="text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
 				Private admissions consultants run $200–500 an hour and $5,000+ per application season.
@@ -143,7 +143,7 @@
 				</ul>
 				<select
 					bind:value={passSchoolSlug}
-					class="mt-6 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-900 focus:border-[#0052CC] focus:outline-none"
+					class="mt-6 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-900 focus:border-[#1A4CFF] focus:outline-none"
 				>
 					{#each portals as p}
 						<option value={p.slug}>{p.name}</option>
@@ -159,11 +159,11 @@
 			</div>
 
 			<!-- Full Season (featured) — lifted above the other cards for clear hierarchy -->
-			<div class="relative rounded-[1.5rem] bg-white p-8 border-2 border-[#0052CC] shadow-[0_28px_60px_-12px_rgba(0,82,204,0.35)] ring-4 ring-[#0052CC]/10 flex flex-col md:scale-[1.04] md:z-10">
-				<span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#0052CC] text-white text-[10px] uppercase font-bold tracking-[0.2em] px-4 py-1.5 rounded-full">
+			<div class="relative rounded-[1.5rem] bg-white p-8 border-2 border-[#1A4CFF] shadow-[0_28px_60px_-12px_rgba(0,82,204,0.35)] ring-4 ring-[#1A4CFF]/10 flex flex-col md:scale-[1.04] md:z-10">
+				<span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#1A4CFF] text-white text-[10px] uppercase font-bold tracking-[0.2em] px-4 py-1.5 rounded-full">
 					Best value
 				</span>
-				<h2 class="text-sm font-bold text-[#0052CC] tracking-[0.25em] uppercase">Lifetime</h2>
+				<h2 class="text-sm font-bold text-[#1A4CFF] tracking-[0.25em] uppercase">Lifetime</h2>
 				<div class="mt-4 flex items-end gap-1">
 					<span class="text-5xl font-bold tracking-tighter">$25</span>
 					<span class="text-sm text-slate-400 font-medium mb-1.5">once, forever</span>
@@ -174,7 +174,7 @@
 				<ul class="mt-5 space-y-3 text-sm text-slate-600 flex-1">
 					{#each fullFeatures as f}
 						<li class="flex items-start gap-2">
-							<svg class="mt-0.5 h-4 w-4 flex-none text-[#0052CC]" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.7-9.3a1 1 0 00-1.4-1.4L9 10.6 7.7 9.3a1 1 0 00-1.4 1.4l2 2a1 1 0 001.4 0l4-4z" clip-rule="evenodd"/></svg>
+							<svg class="mt-0.5 h-4 w-4 flex-none text-[#1A4CFF]" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.7-9.3a1 1 0 00-1.4-1.4L9 10.6 7.7 9.3a1 1 0 00-1.4 1.4l2 2a1 1 0 001.4 0l4-4z" clip-rule="evenodd"/></svg>
 							{f}
 						</li>
 					{/each}
@@ -182,7 +182,7 @@
 				<button
 					onclick={() => startCheckout('lifetime')}
 					disabled={isProcessing}
-					class="mt-8 w-full rounded-2xl bg-[#0052CC] px-6 py-3.5 text-sm font-bold text-white shadow-xl hover:bg-[#0047b3] hover:-translate-y-0.5 transition-all disabled:opacity-50"
+					class="mt-8 w-full rounded-2xl bg-[#1A4CFF] px-6 py-3.5 text-sm font-bold text-white shadow-xl hover:bg-[#1540E0] hover:-translate-y-0.5 transition-all disabled:opacity-50"
 				>
 					{isProcessing ? 'Starting checkout…' : 'Get Lifetime for $25 once →'}
 				</button>
@@ -206,8 +206,8 @@
 				<div class="text-2xl font-bold text-slate-900">$200–500</div>
 				<div class="mt-1 text-xs text-slate-500">One hour of consultant essay review</div>
 			</div>
-			<div class="rounded-2xl border border-[#0052CC]/30 bg-blue-50/50 p-5">
-				<div class="text-2xl font-bold text-[#0052CC]">$25</div>
+			<div class="rounded-2xl border border-[#1A4CFF]/30 bg-blue-50/50 p-5">
+				<div class="text-2xl font-bold text-[#1A4CFF]">$25</div>
 				<div class="mt-1 text-xs text-slate-600">Lifetime: every school, every tool, forever</div>
 			</div>
 		</section>
