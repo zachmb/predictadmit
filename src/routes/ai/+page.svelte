@@ -2063,13 +2063,13 @@ A read on what pushed each school toward admit, deny, or waitlist for you
      (z-[9999]) so the whole page, nav included, dims behind it. -->
 {#if showPaywallModal}
 	<div
-		class="paywall-scrim fixed inset-0 z-[10000] flex items-end justify-center bg-slate-950/70 p-0 backdrop-blur-md sm:items-center sm:p-6"
+		class="paywall-scrim fixed inset-0 z-[10000] flex items-end justify-center overflow-y-auto bg-slate-950/70 p-0 backdrop-blur-md sm:items-center sm:p-6"
 		role="presentation"
 	>
 		<button class="absolute inset-0 cursor-default" aria-label="Close" onclick={closePaywall}></button>
 
 		<div
-			class="paywall-sheet relative z-10 w-full max-w-md overflow-hidden rounded-t-3xl bg-white shadow-2xl sm:rounded-3xl"
+			class="paywall-sheet relative z-10 flex max-h-[95dvh] w-full max-w-md flex-col overflow-hidden rounded-t-3xl bg-white shadow-2xl sm:max-h-[90dvh] sm:rounded-3xl"
 			role="dialog"
 			aria-modal="true"
 			aria-label="Unlock PredictAdmit Pro"
@@ -2084,14 +2084,14 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 
 			<!-- Hero. Solid brand blue, white text. The deadline pill sits up top as
 			     the urgency anchor before any price is shown. -->
-			<div class="relative overflow-hidden bg-slate-900 px-7 pt-8 pb-7 text-center text-white">
+			<div class="relative shrink-0 overflow-hidden bg-slate-900 px-7 pt-8 pb-7 text-center text-white">
 				<div class="pointer-events-none absolute -top-20 -right-16 h-48 w-48 rounded-full bg-white/10 blur-2xl"></div>
 				<div class="relative">
 					<div class="mx-auto flex w-fit items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-[11px] font-semibold ring-1 ring-white/20">
 						<svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
 						{nextMilestonePhrase()}
 					</div>
-					<h3 class="mt-4 font-serif text-[1.9rem] font-medium leading-[1.15] tracking-tight">
+					<h3 class="mt-4 font-serif text-[1.9rem] font-medium leading-[1.15] tracking-tight text-white">
 						{paywallMode === 'decision'
 							? `Open ${paywallContextDecision?.school ?? 'this'} decision`
 							: paywallMode === 'deepDive'
@@ -2108,15 +2108,17 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 				</div>
 			</div>
 
-			<!-- Body. Value anchor, scannable benefit list, then the plan tiles. -->
-			<div class="px-7 pt-6 pb-6">
+			<!-- Body. Value anchor, scannable benefit list, then the plan tiles.
+			     Scrolls independently so the hero stays pinned and the CTA is always
+			     reachable on short laptops / mobile. -->
+			<div class="flex-1 overflow-y-auto px-7 pt-6 pb-6">
 				<!-- Value anchor: what it's worth vs what it costs. -->
 				<div class="flex items-center justify-center gap-3 text-center">
 					<div class="leading-tight">
-						<p class="text-[11px] font-medium uppercase tracking-wide text-slate-400">Private counselor</p>
-						<p class="text-sm font-bold text-slate-400 line-through decoration-slate-300">$5,000+</p>
+						<p class="text-[11px] font-semibold uppercase tracking-wide text-slate-500">Private counselor</p>
+						<p class="text-sm font-bold text-slate-500 line-through decoration-slate-400">$5,000+</p>
 					</div>
-					<svg class="h-4 w-4 shrink-0 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+					<svg class="h-4 w-4 shrink-0 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
 					<div class="leading-tight">
 						<p class="text-[11px] font-bold uppercase tracking-wide text-[#1A4CFF]">Lifetime access</p>
 						<p class="text-lg font-black text-slate-900">$25, once</p>
@@ -2125,11 +2127,11 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 
 				<!-- What's included: the benefits pulled out of button copy so they're
 				     scannable at a glance (proven paywall pattern). -->
-				<ul class="mt-5 space-y-2">
+				<ul class="mt-4 grid grid-cols-1 gap-x-3 gap-y-2 sm:grid-cols-2">
 					{#each ['All 39 top schools, scored', 'Unlimited re-runs as you edit', 'Every deep-dive breakdown', 'The full essay workshop'] as benefit}
-						<li class="flex items-center gap-2.5 text-sm text-slate-700">
-							<span class="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#1A4CFF]/10 text-[#1A4CFF]">
-								<svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+						<li class="flex items-center gap-2 text-[13px] text-slate-700">
+							<span class="grid h-4 w-4 shrink-0 place-items-center rounded-full bg-[#1A4CFF]/10 text-[#1A4CFF]">
+								<svg class="h-2.5 w-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
 							</span>
 							{benefit}
 						</li>
@@ -2158,7 +2160,7 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 						</span>
 						<span class="shrink-0 text-right leading-tight">
 							<span class="block text-base font-black text-slate-900">$25</span>
-							<span class="block text-[10px] font-semibold uppercase tracking-wide text-slate-400">once</span>
+							<span class="block text-[10px] font-semibold uppercase tracking-wide text-slate-500">once</span>
 						</span>
 					</button>
 
@@ -2178,7 +2180,7 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 						</span>
 						<span class="shrink-0 text-right leading-tight">
 							<span class="block text-base font-black text-slate-900">$9.99</span>
-							<span class="block text-[10px] font-semibold uppercase tracking-wide text-slate-400">per month</span>
+							<span class="block text-[10px] font-semibold uppercase tracking-wide text-slate-500">per month</span>
 						</span>
 					</button>
 
@@ -2221,7 +2223,7 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 								: 'Continue · $4.99'}
 				</button>
 
-				<p class="mt-3 flex items-center justify-center gap-1.5 text-[11px] font-medium text-slate-400">
+				<p class="mt-3 flex items-center justify-center gap-1.5 text-[11px] font-medium text-slate-500">
 					<svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
 					Instant access · secure checkout by Stripe
 				</p>
@@ -2232,7 +2234,7 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 				>
 					Not your card? Send this to a parent →
 				</button>
-				<button onclick={closePaywall} class="mt-3 w-full text-center text-xs font-medium text-slate-400 transition hover:text-slate-600">
+				<button onclick={closePaywall} class="mt-3 w-full text-center text-xs font-medium text-slate-500 transition hover:text-slate-700">
 					Maybe later
 				</button>
 			</div>

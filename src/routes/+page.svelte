@@ -594,9 +594,10 @@
 				<p
 					class="text-xl md:text-2xl text-slate-500 max-w-2xl mx-auto leading-snug tracking-tight font-medium mt-6 animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-[200ms] fill-mode-both"
 				>
-					Pick a school and open a pixel-for-pixel replica of its decision portal. You will see
-					accepted or denied right now, months before the real thing. It is a fake, but it feels
-					like the real day.
+					Open a pixel-for-pixel replica of any school's decision portal and read your letter months
+					before the real thing. That part is free. Then Pro points the AI at your real application:
+					it predicts every decision, sits a full admissions committee on your file to show you exactly
+					why, and helps you fix your essays and strategy before you submit.
 				</p>
 			</div>
 
