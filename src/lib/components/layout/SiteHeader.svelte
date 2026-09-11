@@ -16,11 +16,21 @@
 	$: mailMode = isPortal && $userProfile.usingAI;
 	// Active-route highlight for the primary nav (exact match or a sub-path).
 	$: path = $page.url.pathname;
-	const isActive = (p: string) => path === p || path.startsWith(p + '/');
 	// The "Portal Simulator" chip lights only on the simulator index — NOT on an
 	// individual school's portal/decision page (/portals/stanford), where a filled
 	// nav chip reads as a stuck highlight after you've "tried one portal".
 	$: isPortalsIndex = path === '/portals';
+
+	// Reactive nav model. IMPORTANT: reference `path` directly here so Svelte tracks
+	// it. Calling isActive('/pro') inside the template only tracks the isActive const
+	// (which never changes), so the active highlight went stale after client-side
+	// navigation — that was the "glitched highlight". Deriving off `path` fixes it.
+	$: navLinks = [
+		{ href: '/ai', label: 'Predict My Decisions', active: path === '/ai' || path.startsWith('/ai/') },
+		{ href: '/portals', label: 'Portal Simulator', active: path === '/portals' },
+		{ href: '/pro', label: 'Go Pro', active: path === '/pro' || path.startsWith('/pro/') },
+		{ href: '/about', label: 'About', active: path === '/about' || path.startsWith('/about/') }
+	];
 
 	let showHeader = true;
 	let timer: ReturnType<typeof setTimeout> | undefined;
@@ -73,7 +83,7 @@
 		class:opacity-30={dimmed}
 		class:pointer-events-none={dimmed}
 		class:grayscale={dimmed}
-		class="fixed left-1/2 -translate-x-1/2 z-[9999] bg-white/80 backdrop-blur-xl transition-all duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden
+		class="fixed left-1/2 -translate-x-1/2 z-[9999] bg-white/80 backdrop-blur-xl transition-[width,max-width,height,top,border-radius,padding,box-shadow] duration-300 ease-out shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden
 		{floatingIsland
 			? 'top-6 h-[68px] border border-slate-200/80 rounded-full px-2'
 			: 'top-0 h-[76px] border-b border-transparent lg:border-slate-200/80 rounded-none px-4'}"
@@ -82,7 +92,7 @@
 			: '100%'};"
 	>
 		<div
-			class="w-full h-full flex items-center justify-between mx-auto transition-all duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
+			class="w-full h-full flex items-center justify-between mx-auto transition-[width,max-width,height,top,border-radius,padding,box-shadow] duration-300 ease-out"
 			style="max-width: {floatingIsland ? '100%' : '1200px'};"
 		>
 			<div class="pl-4">
@@ -110,7 +120,7 @@
 			<!-- Consistent nav: all four links share one size/weight/padding, the same
 			     light-grey hover chip, and the same filled black active chip. -->
 			<nav class="hidden lg:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
-				{#each [{ href: '/ai', label: 'Predict My Decisions', active: isActive('/ai') }, { href: '/portals', label: 'Portal Simulator', active: isPortalsIndex }, { href: '/pro', label: 'Go Pro', active: isActive('/pro') }, { href: '/about', label: 'About', active: isActive('/about') }] as link}
+				{#each navLinks as link}
 					<a
 						href={link.href}
 						aria-current={link.active ? 'page' : undefined}

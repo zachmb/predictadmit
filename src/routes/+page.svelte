@@ -508,9 +508,9 @@
 			<!-- Headline -->
 			<div class="space-y-6 max-w-4xl mx-auto mb-10">
 				<h1
-					class="text-5xl sm:text-6xl md:text-[5.5rem] font-bold tracking-tighter leading-[0.95] text-slate-900 animate-in fade-in slide-in-from-bottom-6 duration-1000 fill-mode-both"
+					class="font-serif text-5xl sm:text-6xl md:text-[5.5rem] font-medium tracking-tight leading-[1.0] text-slate-900 animate-in fade-in slide-in-from-bottom-6 duration-1000 fill-mode-both"
 				>
-					Simulate Any <br class="hidden md:block" /> University <span class="text-[#1A4CFF]">Portal</span>
+					Simulate Any <br class="hidden md:block" /> University Portal
 				</h1>
 				<p
 					class="text-xl md:text-2xl text-slate-500 max-w-2xl mx-auto leading-snug tracking-tight font-medium mt-6 animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-[200ms] fill-mode-both"
@@ -615,7 +615,7 @@
 					<div class="mt-8 flex flex-col items-center gap-4">
 						<a
 							href="/ai"
-							class="inline-flex items-center gap-2 rounded-full border-2 border-[#1A4CFF]/20 bg-white px-6 py-3 text-base font-bold text-[#1A4CFF] transition-all hover:border-[#1A4CFF]/40 hover:bg-[#1A4CFF]/5 active:scale-95"
+							class="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white px-6 py-3 text-base font-semibold text-slate-900 transition-all hover:border-slate-400 hover:bg-slate-50 active:scale-95"
 						>
 							<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v2m0 14v2M3 12h2m14 0h2m-3.5-6.5-1.4 1.4M6.9 17.1l-1.4 1.4m0-13 1.4 1.4m11.6 11.6-1.4-1.4"/><circle cx="12" cy="12" r="4"/></svg>
 							Have the AI predict my actual decisions
@@ -734,9 +734,9 @@
 					</div>
 				</div>
 				<div class="flex flex-col items-center md:items-start justify-center gap-0.5 mt-2 md:mt-0">
-					<div class="flex gap-1 text-[#1A4CFF]">
+					<div class="flex gap-1 text-slate-900">
 						{#each Array(5) as _}
-							<svg class="w-4 h-4 fill-current drop-shadow-sm" viewBox="0 0 20 20">
+							<svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
 								<path
 									d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
 								/>
@@ -754,7 +754,7 @@
 		<div class="max-w-[1200px] mx-auto px-6 relative z-10">
 			<!-- Headline -->
 			<div class="text-center max-w-2xl mx-auto mb-20 space-y-6">
-				<h2 class="text-5xl md:text-6xl font-bold tracking-tighter text-slate-900 leading-[1.05]">
+				<h2 class="text-5xl md:text-6xl font-serif font-medium tracking-tight text-slate-900 leading-[1.05]">
 					Rehearse decision day. <br /> Then fix your odds.
 				</h2>
 				<p class="text-lg text-slate-500">
@@ -870,7 +870,7 @@
 						class="inline-block px-3 py-1 bg-slate-50 border border-slate-200 text-slate-600 text-[10px] font-bold uppercase tracking-widest rounded-full"
 						>PredictAdmit Pro</span
 					>
-					<h2 class="text-4xl md:text-5xl font-bold tracking-tighter text-slate-900 leading-[1.05]">
+					<h2 class="text-4xl md:text-5xl font-serif font-medium tracking-tight text-slate-900 leading-[1.05]">
 						The essay workshop, <br /> one school at a time.
 					</h2>
 					<p class="text-lg text-slate-500 leading-relaxed font-medium tracking-tight">
@@ -1039,7 +1039,7 @@
 	<section id="simulation-start" class="py-24 bg-white border-t border-slate-100">
 		<div class="max-w-[800px] mx-auto px-6 text-center space-y-8">
 			<div class="space-y-4">
-				<h2 class="text-3xl font-bold text-slate-900">Run the whole season</h2>
+				<h2 class="font-serif text-3xl md:text-4xl font-medium tracking-tight text-slate-900">Run the whole season</h2>
 				<p class="text-slate-500">
 					Make a throwaway profile and watch decisions land in an inbox, one school at a time, ED then RD. No real email needed. The rehearsal is free.
 				</p>

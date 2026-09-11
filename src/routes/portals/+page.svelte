@@ -188,34 +188,6 @@
 						Explore clearly labeled admissions outcome rehearsals. Choose a result for any school scenario, or use rehearsal mode to update every portal at once.
 					</p>
 
-					<!-- Funnel entry point: portals are only meaningful once a real
-					     academic profile has been entered. Nudge accordingly. -->
-					<div
-						class="mt-4 rounded-lg border px-4 py-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 {hasStats
-							? 'border-[#1A4CFF]/20 bg-[#1A4CFF]/5'
-							: 'border-amber-300 bg-amber-50'}"
-					>
-						<div class="text-sm">
-							{#if hasStats}
-								<span class="font-semibold text-slate-900">Your decisions are computed from your stats.</span>
-								<span class="text-slate-600">
-									Each portal below shows a real outcome derived from your GPA, scores, rigor, and activities.
-								</span>
-							{:else}
-								<span class="font-semibold text-slate-900">Enter your stats first.</span>
-								<span class="text-slate-700">
-									Portal decisions are computed from your GPA, test scores, rigor, and activities — not at random.
-								</span>
-							{/if}
-						</div>
-						<a
-							href="/stats"
-							class="shrink-0 inline-flex items-center justify-center gap-1.5 rounded-lg bg-[#1A4CFF] px-4 py-2 text-sm font-bold text-white hover:bg-[#003d99] transition-colors"
-						>
-							{hasStats ? 'Edit my stats' : 'Enter my stats'} →
-						</a>
-					</div>
-
 					<div
 						class="mt-3 rounded-md border border-slate-300 bg-slate-50 px-4 py-3 text-[11px] leading-relaxed text-slate-600"
 					>
