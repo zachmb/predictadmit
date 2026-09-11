@@ -1019,6 +1019,101 @@
 		</div>
 	</section>
 
+	<!-- SECTION 3: COMPARISON TABLE -->
+	<section class="py-32 bg-slate-50 border-t border-slate-100">
+		<div class="max-w-[1000px] mx-auto px-6">
+			<div class="max-w-2xl mx-auto text-center space-y-4 mb-14">
+				<h2 class="font-serif text-4xl md:text-5xl font-medium tracking-tight text-slate-900 leading-[1.05]">
+					A counselor's coverage, <span class="text-[#1A4CFF]">at a student's price.</span>
+				</h2>
+				<p class="text-lg text-slate-500 leading-relaxed">
+					The same read a private counselor sells for thousands. One payment, or free to start.
+				</p>
+			</div>
+
+			<div class="overflow-x-auto rounded-3xl border border-slate-200 bg-white shadow-sm">
+				<table class="w-full min-w-[560px] text-left">
+					<thead>
+						<tr class="border-b border-slate-200">
+							<th class="p-5 text-sm font-semibold text-slate-500"></th>
+							<th class="p-5 text-center">
+								<div class="text-sm font-bold text-slate-900">Free</div>
+								<div class="text-xs text-slate-400">$0</div>
+							</th>
+							<th class="p-5 text-center bg-[#1A4CFF]/[0.04]">
+								<div class="text-sm font-bold text-[#1A4CFF]">PredictAdmit Pro</div>
+								<div class="text-xs text-slate-500">$25 once</div>
+							</th>
+							<th class="p-5 text-center">
+								<div class="text-sm font-bold text-slate-900">Private counselor</div>
+								<div class="text-xs text-slate-400">$5,000+</div>
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						{#each [
+							{ f: 'Predicted decisions at 39 schools', free: 'One school', pro: true, con: 'Guesswork' },
+							{ f: 'Committee-style deep-dive on every verdict', free: 'One school', pro: true, con: 'Sometimes' },
+							{ f: 'Unlimited re-runs as you edit', free: false, pro: true, con: false },
+							{ f: 'Line-by-line essay feedback', free: false, pro: true, con: true },
+							{ f: 'Per-school strategy for 50+ schools', free: false, pro: true, con: true },
+							{ f: 'A counselor to ask any time', free: false, pro: true, con: 'By appointment' },
+							{ f: 'Answer in seconds, not a week', free: true, pro: true, con: false }
+						] as row}
+							<tr class="border-b border-slate-100 last:border-0">
+								<td class="p-5 text-sm font-medium text-slate-700">{row.f}</td>
+								{#each [row.free, row.pro, row.con] as cell, i}
+									<td class="p-5 text-center align-middle {i === 1 ? 'bg-[#1A4CFF]/[0.04]' : ''}">
+										{#if cell === true}
+											<svg class="mx-auto h-5 w-5 {i === 1 ? 'text-[#1A4CFF]' : 'text-slate-900'}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+										{:else if cell === false}
+											<span class="text-slate-300">&mdash;</span>
+										{:else}
+											<span class="text-xs font-medium text-slate-500">{cell}</span>
+										{/if}
+									</td>
+								{/each}
+							</tr>
+						{/each}
+					</tbody>
+				</table>
+			</div>
+
+			<div class="mt-10 text-center">
+				<a href="/pro" class="inline-flex items-center justify-center rounded-full bg-slate-900 px-8 py-4 text-base font-semibold text-white transition hover:bg-slate-800 active:scale-[0.99]">
+					Start free, upgrade for $25
+				</a>
+			</div>
+		</div>
+	</section>
+
+	<!-- SECTION 4: FAQ -->
+	<section class="py-32 bg-white border-t border-slate-100">
+		<div class="max-w-[760px] mx-auto px-6">
+			<h2 class="font-serif text-4xl md:text-5xl font-medium tracking-tight text-slate-900 text-center mb-14">
+				Questions, answered
+			</h2>
+			<div class="divide-y divide-slate-200 border-t border-slate-200">
+				{#each [
+					{ q: 'Can an AI really predict my admissions decision?', a: 'It predicts, it does not promise. The read is trained on real admitted-student profiles and the factors committees actually weigh, then it scores your file the way five readers would. Treat it as a sharp dry run, not a verdict to lose sleep over.' },
+					{ q: 'What do I get for free?', a: 'Run one full simulation across all 39 schools, unlock one school’s results, and open one full committee deep-dive. No card, no account beyond a Google sign-in. You only pay once it has already shown you something you did not know.' },
+					{ q: 'Does it just predict, or does it help me improve?', a: 'Both, and the improving is the point. Pro reads your essays line by line, tells you what each school weighs, and answers your questions like a counselor. The prediction shows where you stand; the workshop is how you move.' },
+					{ q: 'Will it write my essays for me?', a: 'No, on purpose. It marks what is weak and asks the questions a reader would, but it never writes or rewrites a sentence you could paste in. Colleges can revoke an offer over AI-written text, and the work has to sound like you.' },
+					{ q: 'Is this affiliated with the universities?', a: 'No. The decision portals are clearly labeled simulations, and PredictAdmit is not affiliated with, endorsed by, or connected to any school.' },
+					{ q: 'How much does it cost?', a: 'Your first prediction is free. Full access is $25 once for lifetime, or $9.99 a month. A private counselor runs thousands.' }
+				] as item}
+					<details class="group py-5">
+						<summary class="flex cursor-pointer items-center justify-between gap-4 list-none">
+							<span class="text-base font-semibold text-slate-900">{item.q}</span>
+							<svg class="h-5 w-5 shrink-0 text-slate-400 transition-transform group-open:rotate-45" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" /></svg>
+						</summary>
+						<p class="mt-3 text-slate-500 leading-relaxed">{item.a}</p>
+					</details>
+				{/each}
+			</div>
+		</div>
+	</section>
+
 	<!-- TESTIMONIAL (NAVY) -->
 	<section class="py-24 bg-[#001F3F] text-white">
 		<div class="max-w-[1200px] mx-auto px-6 text-center">
