@@ -2103,7 +2103,7 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 							? 'You’ve used your one free decision. Open this one for $4.99 (deep-dive included), or unlock all 39.'
 							: paywallMode === 'deepDive'
 								? 'Open the full breakdown of this decision. What drove it, and what would move it.'
-								: 'Point the AI at your real application and get your decision, school by school.'}
+								: 'Point the AI at your real application: predicted decisions at every school, a committee-style deep-dive on each, and an essay editor to fix what is weak.'}
 					</p>
 				</div>
 			</div>
@@ -2128,7 +2128,7 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 				<!-- What's included: the benefits pulled out of button copy so they're
 				     scannable at a glance (proven paywall pattern). -->
 				<ul class="mt-4 grid grid-cols-1 gap-x-3 gap-y-2 sm:grid-cols-2">
-					{#each ['All 39 top schools, scored', 'Unlimited re-runs as you edit', 'Every deep-dive breakdown', 'The full essay workshop'] as benefit}
+					{#each ['Decisions across all 39 top schools', 'Committee-style deep-dive on every verdict', 'AI essay editor with reader feedback', 'Per-school strategy for 50+ schools', 'AI counselor, available any time', 'Unlimited re-runs as you edit'] as benefit}
 						<li class="flex items-center gap-2 text-[13px] text-slate-700">
 							<span class="grid h-4 w-4 shrink-0 place-items-center rounded-full bg-[#1A4CFF]/10 text-[#1A4CFF]">
 								<svg class="h-2.5 w-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
