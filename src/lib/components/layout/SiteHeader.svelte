@@ -90,7 +90,7 @@
 					<!-- Mail-nav mode: one tap back to the decision inbox. -->
 					<a
 						href="/ai"
-						class="inline-flex items-center gap-2 rounded-full bg-[#1A4CFF] px-4 py-2 text-sm font-semibold text-white no-underline transition-colors hover:bg-[#0041a3]"
+						class="inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white no-underline transition-colors hover:bg-slate-800"
 					>
 						<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m0 0 7 7m-7-7 7-7"/></svg>
 						Back to inbox
@@ -107,47 +107,21 @@
 			     odds, run every school's real portal, and upgrade. Bigger + clearer;
 			     each carries a small glyph, and "Go Pro" is an accent pill so the
 			     paid action reads instantly. Active route gets a filled chip. -->
-			<nav class="hidden lg:flex items-center gap-1.5 absolute left-1/2 -translate-x-1/2">
-				<a
-					href="/ai"
-					aria-current={isActive('/ai') ? 'page' : undefined}
-					on:click={(e) => e.currentTarget.blur()}
-					class="inline-flex items-center gap-1.5 whitespace-nowrap shrink-0 text-[15px] font-semibold px-4 py-2.5 rounded-full transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1A4CFF]/40 {isActive('/ai')
-						? 'text-[#1A4CFF]'
-						: 'text-slate-600 hover:text-slate-900'}"
-				>
-					<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v2m0 14v2M3 12h2m14 0h2m-3.5-6.5-1.4 1.4M6.9 17.1l-1.4 1.4m0-13 1.4 1.4m11.6 11.6-1.4-1.4"/><circle cx="12" cy="12" r="4"/></svg>
-					Predict My Decisions</a
-				>
-				<a
-					href="/portals"
-					aria-current={isPortalsIndex ? 'page' : undefined}
-					on:click={(e) => e.currentTarget.blur()}
-					class="inline-flex items-center gap-1.5 whitespace-nowrap shrink-0 text-[15px] font-semibold px-4 py-2.5 rounded-full transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1A4CFF]/40 {isPortalsIndex
-						? 'text-[#1A4CFF]'
-						: 'text-slate-600 hover:text-slate-900'}"
-				>
-					<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-					Portal Simulator</a
-				>
-				<a
-					href="/pro"
-					aria-current={isActive('/pro') ? 'page' : undefined}
-					on:click={(e) => e.currentTarget.blur()}
-					class="inline-flex items-center gap-1.5 whitespace-nowrap shrink-0 text-[15px] font-bold px-4 py-2.5 rounded-full transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1A4CFF]/40 {isActive('/pro')
-						? 'text-white bg-[#1A4CFF]'
-						: 'text-[#1A4CFF] bg-[#1A4CFF]/10 hover:bg-[#1A4CFF]/15'}"
-				>
-					<svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 2.4 7.4H22l-6 4.6 2.3 7.4L12 17l-6.3 4.4L8 14 2 9.4h7.6z"/></svg>
-					Go Pro</a
-				>
-				<a
-					href="/about"
-					aria-current={isActive('/about') ? 'page' : undefined}
-					on:click={(e) => e.currentTarget.blur()}
-					class="whitespace-nowrap shrink-0 text-[14px] font-medium text-slate-400 hover:text-slate-700 px-3 py-2.5 rounded-full transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1A4CFF]/40"
-					>About</a
-				>
+			<!-- Consistent nav: all four links share one size/weight/padding, the same
+			     light-grey hover chip, and the same filled black active chip. -->
+			<nav class="hidden lg:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
+				{#each [{ href: '/ai', label: 'Predict My Decisions', active: isActive('/ai') }, { href: '/portals', label: 'Portal Simulator', active: isPortalsIndex }, { href: '/pro', label: 'Go Pro', active: isActive('/pro') }, { href: '/about', label: 'About', active: isActive('/about') }] as link}
+					<a
+						href={link.href}
+						aria-current={link.active ? 'page' : undefined}
+						on:click={(e) => e.currentTarget.blur()}
+						class="whitespace-nowrap shrink-0 text-[15px] font-medium px-4 py-2 rounded-full transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-300 {link.active
+							? 'bg-slate-900 text-white'
+							: 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'}"
+					>
+						{link.label}
+					</a>
+				{/each}
 			</nav>
 
 			<div class="flex items-center pr-1">

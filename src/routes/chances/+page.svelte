@@ -100,11 +100,11 @@
 <main class="min-h-screen bg-slate-50 text-slate-900">
 	<div class="mx-auto max-w-2xl px-5 py-14 sm:py-20">
 		<header class="text-center">
-			<div class="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50 px-3.5 py-1.5">
+			<div class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-100 px-3.5 py-1.5">
 				<span class="h-1.5 w-1.5 rounded-full bg-[#1A4CFF]"></span>
-				<span class="text-[11px] font-bold uppercase tracking-[0.14em] text-[#1A4CFF]">Free · No sign-up</span>
+				<span class="text-[11px] font-bold uppercase tracking-[0.14em] text-slate-600">Free · No sign-up</span>
 			</div>
-			<h1 class="mt-5 text-4xl font-black tracking-tight text-slate-900 sm:text-5xl">
+			<h1 class="mt-5 font-serif text-4xl font-medium tracking-tight text-slate-900 sm:text-5xl">
 				College Chances Calculator
 			</h1>
 			<p class="mx-auto mt-4 max-w-lg text-base leading-relaxed text-slate-500 sm:text-lg">
@@ -118,22 +118,22 @@
 			<div class="grid gap-5 sm:grid-cols-2">
 				<div>
 					<label for="c-gpa" class="block text-xs font-bold uppercase tracking-wide text-slate-500">Unweighted GPA</label>
-					<input id="c-gpa" bind:value={gpa} inputmode="decimal" placeholder="3.9" class="mt-1.5 w-full rounded-xl border border-slate-200 px-3.5 py-2.5 text-sm outline-none focus:border-[#1A4CFF] focus:ring-4 focus:ring-blue-600/10" />
+					<input id="c-gpa" bind:value={gpa} inputmode="decimal" placeholder="3.9" class="mt-1.5 w-full rounded-xl border border-slate-200 px-3.5 py-2.5 text-sm outline-none focus:border-slate-400 focus:ring-4 focus:ring-slate-300/40" />
 				</div>
 				<div>
 					<span class="block text-xs font-bold uppercase tracking-wide text-slate-500">Test score</span>
 					<div class="mt-1.5 flex gap-2">
 						<div class="flex rounded-xl border border-slate-200 p-0.5">
 							{#each ['SAT', 'ACT'] as t}
-								<button type="button" onclick={() => (testType = t as 'SAT' | 'ACT')} class="rounded-lg px-3 py-2 text-xs font-bold transition {testType === t ? 'bg-[#1A4CFF] text-white' : 'text-slate-500'}">{t}</button>
+								<button type="button" onclick={() => (testType = t as 'SAT' | 'ACT')} class="rounded-lg px-3 py-2 text-xs font-bold transition {testType === t ? 'bg-slate-900 text-white' : 'text-slate-500'}">{t}</button>
 							{/each}
 						</div>
-						<input bind:value={testScore} inputmode="numeric" placeholder={testType === 'SAT' ? '1500' : '34'} class="w-full rounded-xl border border-slate-200 px-3.5 py-2.5 text-sm outline-none focus:border-[#1A4CFF] focus:ring-4 focus:ring-blue-600/10" />
+						<input bind:value={testScore} inputmode="numeric" placeholder={testType === 'SAT' ? '1500' : '34'} class="w-full rounded-xl border border-slate-200 px-3.5 py-2.5 text-sm outline-none focus:border-slate-400 focus:ring-4 focus:ring-slate-300/40" />
 					</div>
 				</div>
 				<div>
 					<label for="c-rigor" class="block text-xs font-bold uppercase tracking-wide text-slate-500">Course rigor</label>
-					<select id="c-rigor" bind:value={rigor} class="mt-1.5 w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm outline-none focus:border-[#1A4CFF] focus:ring-4 focus:ring-blue-600/10">
+					<select id="c-rigor" bind:value={rigor} class="mt-1.5 w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm outline-none focus:border-slate-400 focus:ring-4 focus:ring-slate-300/40">
 						<option value="AP/IB">Most rigorous (many APs/IB)</option>
 						<option value="Honors">Honors-heavy</option>
 						<option value="Regular">Mostly regular</option>
@@ -141,14 +141,14 @@
 				</div>
 				<div>
 					<label for="c-major" class="block text-xs font-bold uppercase tracking-wide text-slate-500">Intended major</label>
-					<input id="c-major" bind:value={major} placeholder="Computer Science" class="mt-1.5 w-full rounded-xl border border-slate-200 px-3.5 py-2.5 text-sm outline-none focus:border-[#1A4CFF] focus:ring-4 focus:ring-blue-600/10" />
+					<input id="c-major" bind:value={major} placeholder="Computer Science" class="mt-1.5 w-full rounded-xl border border-slate-200 px-3.5 py-2.5 text-sm outline-none focus:border-slate-400 focus:ring-4 focus:ring-slate-300/40" />
 				</div>
 			</div>
 			<div class="mt-5">
 				<label for="c-acts" class="block text-xs font-bold uppercase tracking-wide text-slate-500">Top activities & awards <span class="font-normal normal-case text-slate-400">(optional, boosts accuracy)</span></label>
-				<textarea id="c-acts" bind:value={activities} placeholder="e.g. Robotics captain, state finals · Research intern · Varsity soccer" class="mt-1.5 h-20 w-full resize-y rounded-xl border border-slate-200 p-3 text-sm outline-none focus:border-[#1A4CFF] focus:ring-4 focus:ring-blue-600/10"></textarea>
+				<textarea id="c-acts" bind:value={activities} placeholder="e.g. Robotics captain, state finals · Research intern · Varsity soccer" class="mt-1.5 h-20 w-full resize-y rounded-xl border border-slate-200 p-3 text-sm outline-none focus:border-slate-400 focus:ring-4 focus:ring-slate-300/40"></textarea>
 			</div>
-			<button onclick={calculate} class="mt-5 w-full rounded-2xl bg-[#1A4CFF] px-6 py-4 text-base font-bold text-white shadow-lg shadow-blue-600/25 transition hover:bg-[#1540E0] active:scale-[0.99]">
+			<button onclick={calculate} class="mt-5 w-full rounded-full bg-slate-900 px-6 py-4 text-base font-semibold text-white transition hover:bg-slate-800 active:scale-[0.99]">
 				Calculate my chances →
 			</button>
 			{#if error}<p class="mt-3 text-center text-sm font-semibold text-rose-600">{error}</p>{/if}
@@ -160,7 +160,7 @@
 				{#each grouped as g}
 					{#if g.rows.length}
 						<div>
-							<h2 class="mb-2 text-sm font-black uppercase tracking-wide {toneChip[g.tone]}">{g.label} · {g.rows.length}</h2>
+							<h2 class="mb-2 text-sm font-bold uppercase tracking-wide {toneChip[g.tone]}">{g.label} · {g.rows.length}</h2>
 							<div class="overflow-hidden rounded-2xl border border-slate-200 bg-white">
 								{#each g.rows as r}
 									<div class="border-b border-slate-100 px-4 py-3 last:border-b-0">
@@ -179,12 +179,12 @@
 				{/each}
 
 				<!-- Conversion to the real (AI) product -->
-				<div class="rounded-3xl bg-[#1A4CFF] p-6 text-center text-white sm:p-8">
-					<h3 class="text-xl font-black sm:text-2xl">That's the fast math. Want the real read?</h3>
-					<p class="mx-auto mt-2 max-w-md text-sm leading-relaxed text-blue-100">
+				<div class="rounded-3xl bg-slate-900 p-6 text-center text-white sm:p-8">
+					<h3 class="font-serif text-xl font-medium sm:text-2xl">That's the fast math. Want the real read?</h3>
+					<p class="mx-auto mt-2 max-w-md text-sm leading-relaxed text-slate-300">
 						This calculator uses your stats alone. PredictAdmit's AI reads your <span class="font-semibold text-white">actual essays and activities</span> and calls your decision (accept, deny, or waitlist) school by school. Your first prediction is free.
 					</p>
-					<a href="/ai" onclick={() => track('chances_to_ai_click')} class="mt-5 inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3.5 text-base font-bold text-[#1A4CFF] transition hover:bg-blue-50 active:scale-[0.99]">
+					<a href="/ai" onclick={() => track('chances_to_ai_click')} class="mt-5 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3.5 text-base font-semibold text-slate-900 transition hover:bg-slate-100 active:scale-[0.99]">
 						Run my real prediction, free →
 					</a>
 				</div>

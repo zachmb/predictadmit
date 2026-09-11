@@ -102,11 +102,11 @@
 	<section class="relative overflow-hidden border-b border-slate-100">
 		<div class="max-w-4xl mx-auto px-6 py-24 md:py-32 text-center">
 			<p
-				class="inline-block mb-6 text-xs font-semibold tracking-widest uppercase text-[#1A4CFF] bg-[#1A4CFF]/10 px-3 py-1 rounded-full"
+				class="inline-block mb-6 text-xs font-semibold tracking-widest uppercase text-slate-500 bg-slate-100 px-3 py-1 rounded-full"
 			>
 				About PredictAdmit
 			</p>
-			<h1 class="text-4xl md:text-6xl font-bold tracking-tight text-slate-900 mb-6 text-balance">
+			<h1 class="font-serif text-4xl md:text-6xl font-medium tracking-tight text-slate-900 mb-6 text-balance">
 				Feel decision day before it counts.
 			</h1>
 			<p class="text-lg md:text-xl text-slate-500 leading-relaxed max-w-2xl mx-auto mb-10">
@@ -116,19 +116,19 @@
 			<div class="flex flex-col sm:flex-row gap-3 justify-center">
 				<a
 					href="/pro"
-					class="inline-flex items-center justify-center font-semibold text-sm bg-[#1A4CFF] text-white px-8 py-3.5 rounded-lg hover:bg-[#003d99] transition-colors shadow-lg shadow-[#1A4CFF]/20"
+					class="inline-flex items-center justify-center font-semibold text-sm bg-slate-900 text-white px-8 py-3.5 rounded-full hover:bg-slate-800 transition-colors shadow-sm"
 				>
 					Start free →
 				</a>
 				<a
 					href="/pricing"
-					class="inline-flex items-center justify-center font-semibold text-sm bg-white text-slate-900 px-8 py-3.5 rounded-lg border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-colors"
+					class="inline-flex items-center justify-center font-semibold text-sm bg-white text-slate-900 px-8 py-3.5 rounded-full border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-colors"
 				>
 					See Pro pricing
 				</a>
 			</div>
 			<div class="mt-6 flex items-center justify-center gap-2 text-sm text-slate-400">
-				<span class="inline-flex items-center gap-0.5 text-[#1A4CFF]">
+				<span class="inline-flex items-center gap-0.5 text-slate-900">
 					{#each Array(5) as _}
 						<svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.07 3.3a1 1 0 00.95.68h3.46c.97 0 1.37 1.24.59 1.81l-2.8 2.03a1 1 0 00-.36 1.12l1.07 3.29c.3.92-.76 1.69-1.54 1.12l-2.8-2.03a1 1 0 00-1.18 0l-2.8 2.03c-.78.57-1.83-.2-1.54-1.12l1.07-3.29a1 1 0 00-.36-1.12L2.4 8.72c-.78-.57-.38-1.81.59-1.81h3.46a1 1 0 00.95-.68l1.07-3.3z" /></svg>
 					{/each}
@@ -143,7 +143,7 @@
 		<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
 			{#each stats as stat}
 				<div class="rounded-2xl border border-slate-100 bg-slate-50 p-6 text-center">
-					<div class="text-3xl md:text-4xl font-bold text-[#1A4CFF] mb-1">{stat.value}</div>
+					<div class="text-3xl md:text-4xl font-bold text-slate-900 mb-1">{stat.value}</div>
 					<div class="text-sm text-slate-500 leading-snug">{stat.label}</div>
 				</div>
 			{/each}
@@ -154,7 +154,7 @@
 	<section class="bg-slate-50 border-y border-slate-100 py-24">
 		<div class="max-w-5xl mx-auto px-6">
 			<div class="text-center max-w-2xl mx-auto mb-14">
-				<h2 class="text-3xl md:text-4xl font-bold tracking-tight text-slate-900 mb-4">
+				<h2 class="font-serif text-3xl md:text-4xl font-medium tracking-tight text-slate-900 mb-4">
 					What makes this different
 				</h2>
 				<p class="text-lg text-slate-500 leading-relaxed">
@@ -165,7 +165,7 @@
 			<div class="grid md:grid-cols-2 gap-5">
 				{#each differentiators as item}
 					<div
-						class="rounded-2xl bg-white border border-slate-100 p-8 hover:border-[#1A4CFF]/30 hover:shadow-sm transition-all"
+						class="rounded-2xl bg-white border border-slate-100 p-8 hover:border-slate-300 hover:shadow-sm transition-all"
 					>
 						<div class="text-3xl mb-4">{item.icon}</div>
 						<h3 class="text-xl font-bold text-slate-900 mb-2">{item.title}</h3>
@@ -179,7 +179,7 @@
 	<!-- Pro -->
 	<section id="pro" class="max-w-6xl mx-auto px-6 py-24 scroll-mt-16">
 		<div class="text-center max-w-2xl mx-auto mb-14">
-			<h2 class="text-3xl md:text-4xl font-bold tracking-tight text-slate-900 mb-4">
+			<h2 class="font-serif text-3xl md:text-4xl font-medium tracking-tight text-slate-900 mb-4">
 				One upgrade. Every limit gone.
 			</h2>
 			<p class="text-lg text-slate-500 leading-relaxed">
@@ -203,7 +203,7 @@
 		<div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
 			<a
 				href="/pricing"
-				class="inline-flex items-center justify-center font-semibold text-sm bg-[#1A4CFF] text-white px-8 py-3.5 rounded-lg hover:bg-[#003d99] transition-colors shadow-lg shadow-[#1A4CFF]/20"
+				class="inline-flex items-center justify-center font-semibold text-sm bg-slate-900 text-white px-8 py-3.5 rounded-full hover:bg-slate-800 transition-colors shadow-sm"
 			>
 				Get Lifetime for $25 once →
 			</a>
@@ -215,7 +215,7 @@
 	<section class="bg-slate-50 border-y border-slate-100 py-24">
 		<div class="max-w-5xl mx-auto px-6">
 			<div class="text-center max-w-2xl mx-auto mb-14">
-				<h2 class="text-3xl md:text-4xl font-bold tracking-tight text-slate-900 mb-4">
+				<h2 class="font-serif text-3xl md:text-4xl font-medium tracking-tight text-slate-900 mb-4">
 					What students tell us
 				</h2>
 				<p class="text-sm text-slate-400">Illustrative quotes from students using PredictAdmit.</p>
@@ -236,7 +236,7 @@
 
 	<!-- FAQ -->
 	<section class="max-w-3xl mx-auto px-6 py-24">
-		<h2 class="text-3xl md:text-4xl font-bold tracking-tight text-slate-900 mb-12 text-center">
+		<h2 class="font-serif text-3xl md:text-4xl font-medium tracking-tight text-slate-900 mb-12 text-center">
 			Frequently asked questions
 		</h2>
 		<div class="divide-y divide-slate-100 border-y border-slate-100">
@@ -246,7 +246,7 @@
 						class="flex cursor-pointer items-center justify-between gap-4 font-semibold text-slate-900 list-none"
 					>
 						{faq.q}
-						<span class="text-[#1A4CFF] text-xl transition-transform group-open:rotate-45">+</span>
+						<span class="text-slate-900 text-xl transition-transform group-open:rotate-45">+</span>
 					</summary>
 					<p class="mt-3 text-slate-500 leading-relaxed">{faq.a}</p>
 					{#if faq.link}
@@ -263,9 +263,9 @@
 	</section>
 
 	<!-- Closing CTA -->
-	<section class="bg-[#1A4CFF]">
+	<section class="bg-slate-900">
 		<div class="max-w-4xl mx-auto px-6 py-24 text-center">
-			<h2 class="text-3xl md:text-4xl font-bold tracking-tight text-white mb-4">
+			<h2 class="font-serif text-3xl md:text-4xl font-medium tracking-tight text-white mb-4">
 				Want to see where you stand?
 			</h2>
 			<p class="text-lg text-white/80 leading-relaxed max-w-xl mx-auto mb-10">
@@ -274,13 +274,13 @@
 			<div class="flex flex-col sm:flex-row gap-3 justify-center">
 				<a
 					href="/pro"
-					class="inline-flex items-center justify-center font-semibold text-sm bg-white text-[#1A4CFF] px-8 py-3.5 rounded-lg hover:bg-slate-100 transition-colors shadow-lg"
+					class="inline-flex items-center justify-center font-semibold text-sm bg-white text-slate-900 px-8 py-3.5 rounded-full hover:bg-slate-100 transition-colors shadow-sm"
 				>
 					Start free →
 				</a>
 				<a
 					href="/portals"
-					class="inline-flex items-center justify-center font-semibold text-sm bg-transparent text-white px-8 py-3.5 rounded-lg border border-white/40 hover:bg-white/10 transition-colors"
+					class="inline-flex items-center justify-center font-semibold text-sm bg-transparent text-white px-8 py-3.5 rounded-full border border-white/40 hover:bg-white/10 transition-colors"
 				>
 					Try the rehearsal
 				</a>

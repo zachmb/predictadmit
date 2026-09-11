@@ -106,10 +106,10 @@
 
 <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
 	<div
-		class="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] bg-blue-500/5 rounded-full blur-[120px]"
+		class="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] bg-slate-500/5 rounded-full blur-[120px]"
 	></div>
 	<div
-		class="absolute top-[20%] -right-[5%] w-[30%] h-[30%] bg-indigo-500/5 rounded-full blur-[120px]"
+		class="absolute top-[20%] -right-[5%] w-[30%] h-[30%] bg-slate-400/5 rounded-full blur-[120px]"
 	></div>
 </div>
 
@@ -136,7 +136,7 @@
 					class="relative z-10 text-center py-16 px-8 border border-slate-100 rounded-[1.5rem] bg-white"
 				>
 					<div
-						class="w-20 h-20 bg-gradient-to-br from-blue-50 to-indigo-50 text-blue-600 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-inner border border-blue-100/50 transform -rotate-3 hover:rotate-0 transition-transform duration-500"
+						class="w-20 h-20 bg-slate-100 text-slate-700 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-inner border border-slate-200 transform -rotate-3 hover:rotate-0 transition-transform duration-500"
 					>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -153,7 +153,7 @@
 							/></svg
 						>
 					</div>
-					<h2 class="text-3xl font-black text-slate-900 tracking-tight mb-4">
+					<h2 class="text-3xl font-serif font-medium text-slate-900 tracking-tight mb-4">
 						Sign in to grade your essay
 					</h2>
 					<p class="text-slate-500 font-medium leading-relaxed max-w-sm mx-auto mb-10">
@@ -161,7 +161,7 @@
 					</p>
 					<button
 						onclick={() => signIn('google', { callbackUrl: '/ai' })}
-						class="group relative flex items-center justify-center gap-3 w-full max-w-xs mx-auto py-4 px-6 bg-slate-900 text-white rounded-2xl font-bold hover:bg-slate-800 transition-all shadow-xl shadow-slate-200"
+						class="group relative flex items-center justify-center gap-3 w-full max-w-xs mx-auto py-4 px-6 bg-slate-900 text-white rounded-full font-semibold hover:bg-slate-800 transition-all shadow-xl shadow-slate-200"
 					>
 						Continue with Google
 					</button>
@@ -177,7 +177,7 @@
 					class="relative z-10 text-center py-16 px-8 border border-slate-100 rounded-[1.5rem] bg-white"
 				>
 					<div
-						class="w-20 h-20 bg-gradient-to-br from-purple-50 to-pink-50 text-purple-600 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-inner border border-purple-100/50 transform rotate-3 hover:rotate-0 transition-transform duration-500"
+						class="w-20 h-20 bg-slate-100 text-slate-700 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-inner border border-slate-200 transform rotate-3 hover:rotate-0 transition-transform duration-500"
 					>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -194,21 +194,21 @@
 							/></svg
 						>
 					</div>
-					<h2 class="text-3xl font-black text-slate-900 tracking-tight mb-3">Read like an admissions officer would</h2>
+					<h2 class="text-3xl font-serif font-medium text-slate-900 tracking-tight mb-3">Read like an admissions officer would</h2>
 					<p class="text-slate-500 font-medium leading-relaxed max-w-sm mx-auto mb-6">
 						Line-by-line notes on every supplement: the honest read a reader gives, with the weak lines marked and why. You write every word; it just makes them land.
 					</p>
 					<ul class="mx-auto mb-8 max-w-xs space-y-2 text-left">
 						{#each ['10 inline annotations per draft', 'Blunt, specific AO-style critique', 'Targeted to each school you apply to'] as f}
 							<li class="flex items-center gap-2.5 text-sm text-slate-600">
-								<svg class="h-4 w-4 flex-none text-[#1A4CFF]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+								<svg class="h-4 w-4 flex-none text-slate-900" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
 								{f}
 							</li>
 						{/each}
 					</ul>
 					<button
 						onclick={() => goto('/pro')}
-						class="group relative flex items-center justify-center gap-3 w-full max-w-xs mx-auto py-4 px-6 bg-[#1A4CFF] text-white rounded-2xl font-bold hover:bg-[#1540E0] transition-all shadow-xl shadow-blue-600/25"
+						class="group relative flex items-center justify-center gap-3 w-full max-w-xs mx-auto py-4 px-6 bg-slate-900 text-white rounded-full font-semibold hover:bg-slate-800 transition-all shadow-xl shadow-slate-200"
 					>
 						Unlock essay editing · $25 once
 					</button>
@@ -222,9 +222,9 @@
 				class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 pb-6"
 			>
 				<div>
-					<h2 class="text-3xl font-black text-slate-900 tracking-tight">Your read</h2>
+					<h2 class="text-3xl font-serif font-medium text-slate-900 tracking-tight">Your read</h2>
 					<p class="text-slate-500 font-medium tracking-tight">
-						Graded against <span class="text-blue-600">{selectedSchool}</span> • {major}
+						Graded against <span class="text-slate-900 font-semibold">{selectedSchool}</span> • {major}
 					</p>
 				</div>
 				<button
@@ -290,12 +290,12 @@
 
 							<div class="p-8 space-y-10">
 								{#if essayType === 'supplemental' && essay.prompt}
-									<div class="p-4 bg-blue-50/50 border border-blue-100 rounded-xl">
+									<div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
 										<label
-											class="block text-[10px] font-black text-blue-400 uppercase tracking-widest mb-1"
+											class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1"
 											>Detected Prompt</label
 										>
-										<p class="text-sm text-blue-900 italic">"{essay.prompt}"</p>
+										<p class="text-sm text-slate-700 italic">"{essay.prompt}"</p>
 									</div>
 								{/if}
 
@@ -352,7 +352,7 @@
 	{:else}
 		<div class="max-w-3xl mx-auto space-y-8 animate-in fade-in duration-500">
 			<header>
-				<h1 class="text-4xl font-black text-slate-900 tracking-tight mb-2">Essay Grader</h1>
+				<h1 class="text-4xl font-serif font-medium text-slate-900 tracking-tight mb-2">Essay Grader</h1>
 				<p class="text-slate-500 font-medium italic">
 					"Paste a draft. Get the notes an admissions officer would scribble in the margin. It won't rewrite it for you."
 				</p>
@@ -367,7 +367,7 @@
 						<input
 							bind:value={major}
 							placeholder="e.g. Finance, Biology"
-							class="w-full bg-slate-50 border border-slate-200 p-4 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+							class="w-full bg-slate-50 border border-slate-200 p-4 rounded-xl focus:ring-2 focus:ring-slate-300 outline-none transition-all"
 						/>
 					</div>
 					<div class="space-y-2">
@@ -376,7 +376,7 @@
 						>
 						<select
 							bind:value={selectedSchool}
-							class="w-full bg-slate-50 border border-slate-200 p-4 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all appearance-none"
+							class="w-full bg-slate-50 border border-slate-200 p-4 rounded-xl focus:ring-2 focus:ring-slate-300 outline-none transition-all appearance-none"
 						>
 							{#each selectableSchools as school}
 								<option value={school.name}>{school.name}</option>
@@ -399,7 +399,7 @@
 						<button
 							onclick={() => (essayType = 'personal')}
 							class="py-4 border-2 rounded-xl font-bold transition-all {essayType === 'personal'
-								? 'border-blue-600 bg-blue-50 text-blue-600'
+								? 'border-slate-900 bg-slate-900 text-white'
 								: 'border-slate-100 text-slate-400 hover:border-slate-200'}"
 						>
 							Common App Personal
@@ -407,7 +407,7 @@
 						<button
 							onclick={() => (essayType = 'supplemental')}
 							class="py-4 border-2 rounded-xl font-bold transition-all {essayType === 'supplemental'
-								? 'border-blue-600 bg-blue-50 text-blue-600'
+								? 'border-slate-900 bg-slate-900 text-white'
 								: 'border-slate-100 text-slate-400 hover:border-slate-200'}"
 						>
 							School Supplements
@@ -425,7 +425,7 @@
 						placeholder={essayType === 'personal'
 							? 'Paste your 650-word statement here...'
 							: 'Prompt 1: Why NYU?\nResponse: [Your text]\n\nPrompt 2: ...'}
-						class="w-full bg-slate-50 border border-slate-200 p-6 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all font-serif text-lg leading-relaxed"
+						class="w-full bg-slate-50 border border-slate-200 p-6 rounded-xl focus:ring-2 focus:ring-slate-300 outline-none transition-all font-serif text-lg leading-relaxed"
 					></textarea>
 				</div>
 
@@ -465,7 +465,7 @@
 					<button
 						disabled={!major || !content}
 						onclick={handleAnalyze}
-						class="w-full bg-blue-600 text-white py-8 rounded-2xl font-black text-xl hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-xl shadow-blue-200"
+						class="w-full bg-slate-900 text-white py-8 rounded-full font-semibold text-xl hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-xl shadow-slate-200"
 					>
 						Analyze My Essays
 					</button>

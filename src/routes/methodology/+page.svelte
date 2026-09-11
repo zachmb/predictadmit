@@ -55,11 +55,11 @@
 	<section class="border-b border-slate-100">
 		<div class="max-w-3xl mx-auto px-6 py-20 md:py-28">
 			<p
-				class="inline-block mb-6 text-xs font-semibold tracking-widest uppercase text-[#1A4CFF] bg-[#1A4CFF]/10 px-3 py-1 rounded-full"
+				class="inline-block mb-6 text-xs font-semibold tracking-widest uppercase text-slate-500 bg-slate-100 px-3 py-1 rounded-full"
 			>
 				Methodology
 			</p>
-			<h1 class="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-6 text-balance">
+			<h1 class="font-serif text-4xl md:text-5xl font-medium tracking-tight text-slate-900 mb-6 text-balance">
 				Where our predictions come from
 			</h1>
 			<p class="text-lg text-slate-500 leading-relaxed">
@@ -73,7 +73,7 @@
 
 	<!-- What is NACAC -->
 	<section class="max-w-3xl mx-auto px-6 py-16">
-		<h2 class="text-2xl md:text-3xl font-bold tracking-tight text-slate-900 mb-4">
+		<h2 class="font-serif text-2xl md:text-3xl font-medium tracking-tight text-slate-900 mb-4">
 			Our primary source: NACAC
 		</h2>
 		<p class="text-slate-600 leading-relaxed mb-4">
@@ -99,7 +99,7 @@
 	<!-- Factor table -->
 	<section class="bg-slate-50 border-y border-slate-100 py-16">
 		<div class="max-w-4xl mx-auto px-6">
-			<h2 class="text-2xl md:text-3xl font-bold tracking-tight text-slate-900 mb-2">
+			<h2 class="font-serif text-2xl md:text-3xl font-medium tracking-tight text-slate-900 mb-2">
 				What colleges say matters
 			</h2>
 			<p class="text-sm text-slate-500 mb-8">
@@ -149,7 +149,7 @@
 
 	<!-- How we use it -->
 	<section class="max-w-3xl mx-auto px-6 py-16">
-		<h2 class="text-2xl md:text-3xl font-bold tracking-tight text-slate-900 mb-4">
+		<h2 class="font-serif text-2xl md:text-3xl font-medium tracking-tight text-slate-900 mb-4">
 			How the table becomes our formulas
 		</h2>
 		<div class="space-y-6 text-slate-600 leading-relaxed">
@@ -191,7 +191,7 @@
 	<!-- Calibration -->
 	<section class="bg-slate-50 border-y border-slate-100 py-16">
 		<div class="max-w-3xl mx-auto px-6">
-			<h2 class="text-2xl md:text-3xl font-bold tracking-tight text-slate-900 mb-4">
+			<h2 class="font-serif text-2xl md:text-3xl font-medium tracking-tight text-slate-900 mb-4">
 				Calibrated on HYPSM &amp; Top-20 admits, 2026 cycle
 			</h2>
 			<div class="space-y-4 text-slate-600 leading-relaxed">
@@ -215,7 +215,7 @@
 
 	<!-- Honest limits -->
 	<section class="max-w-3xl mx-auto px-6 py-16">
-		<h2 class="text-2xl md:text-3xl font-bold tracking-tight text-slate-900 mb-4">Honest limits</h2>
+		<h2 class="font-serif text-2xl md:text-3xl font-medium tracking-tight text-slate-900 mb-4">Honest limits</h2>
 		<ul class="space-y-3 text-slate-600 leading-relaxed list-disc pl-5">
 			<li>
 				Predictions are <strong>estimates, not promises</strong>. No model can guarantee an
@@ -235,13 +235,13 @@
 		<div class="mt-10 flex flex-col sm:flex-row gap-3">
 			<a
 				href="/pro"
-				class="inline-flex items-center justify-center font-semibold text-sm bg-[#1A4CFF] text-white px-8 py-3.5 rounded-lg hover:bg-[#003d99] transition-colors shadow-lg shadow-[#1A4CFF]/20"
+				class="inline-flex items-center justify-center font-semibold text-sm bg-slate-900 text-white px-8 py-3.5 rounded-full hover:bg-slate-800 transition-colors shadow-sm"
 			>
 				See your chances →
 			</a>
 			<a
 				href="/about"
-				class="inline-flex items-center justify-center font-semibold text-sm bg-white text-slate-900 px-8 py-3.5 rounded-lg border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-colors"
+				class="inline-flex items-center justify-center font-semibold text-sm bg-white text-slate-900 px-8 py-3.5 rounded-full border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-colors"
 			>
 				About PredictAdmit
 			</a>

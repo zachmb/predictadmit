@@ -83,7 +83,7 @@
 	// ---- Presentation helpers -----------------------------------------------------
 	const signalChip: Record<AdmissionsSignal, string> = {
 		Elite: 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200',
-		Strong: 'bg-blue-50 text-blue-700 ring-1 ring-blue-200',
+		Strong: 'bg-slate-100 text-slate-700 ring-1 ring-slate-200',
 		Moderate: 'bg-amber-50 text-amber-700 ring-1 ring-amber-200',
 		Enrichment: 'bg-slate-100 text-slate-600 ring-1 ring-slate-200'
 	};
@@ -116,11 +116,11 @@
 	<section class="border-b border-slate-100 bg-slate-50">
 		<div class="max-w-5xl mx-auto px-6 py-16 md:py-20">
 			<p
-				class="inline-block mb-5 text-xs font-semibold tracking-widest uppercase text-[#1A4CFF] bg-[#1A4CFF]/10 px-3 py-1 rounded-full"
+				class="inline-block mb-5 text-xs font-semibold tracking-widest uppercase text-slate-500 bg-slate-100 px-3 py-1 rounded-full"
 			>
 				Summer Programs
 			</p>
-			<h1 class="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-4 text-balance">
+			<h1 class="text-4xl md:text-5xl font-serif font-medium tracking-tight text-slate-900 mb-4 text-balance">
 				Spend your summer on something that counts.
 			</h1>
 			<p class="text-lg text-slate-500 leading-relaxed max-w-2xl">
@@ -161,7 +161,7 @@
 				type="text"
 				bind:value={search}
 				placeholder="Search by program, host, or keyword…"
-				class="flex-1 rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:border-[#1A4CFF] focus:ring-1 focus:ring-[#1A4CFF]/30"
+				class="flex-1 rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-300"
 			/>
 			<div class="flex flex-wrap items-center gap-2">
 				<select
@@ -194,7 +194,7 @@
 					type="button"
 					onclick={() => (savedOnly = !savedOnly)}
 					class="rounded-lg border px-3 py-2 text-sm font-semibold transition-colors {savedOnly
-						? 'border-[#1A4CFF] bg-[#1A4CFF]/10 text-[#1A4CFF]'
+						? 'border-slate-900 bg-slate-900 text-white'
 						: 'border-slate-200 bg-white text-slate-600 hover:bg-slate-50'}"
 				>
 					★ Saved ({saved.size})
@@ -311,8 +311,8 @@
 
 	<!-- CTA -->
 	<section class="max-w-5xl mx-auto px-6 pb-16">
-		<div class="rounded-[2rem] bg-[#1A4CFF] p-10 text-center">
-			<h2 class="mb-3 text-2xl md:text-3xl font-bold tracking-tight text-white">
+		<div class="rounded-[2rem] bg-slate-900 p-10 text-center">
+			<h2 class="mb-3 text-2xl md:text-3xl font-serif font-medium tracking-tight text-white">
 				Landed a great summer? Now make it count on the application.
 			</h2>
 			<p class="mx-auto mb-8 max-w-xl leading-relaxed text-white/80">
@@ -321,7 +321,7 @@
 			</p>
 			<a
 				href="/pro"
-				class="inline-flex items-center justify-center rounded-lg bg-white px-8 py-3.5 text-sm font-semibold text-[#1A4CFF] shadow-lg transition-colors hover:bg-slate-100"
+				class="inline-flex items-center justify-center rounded-full bg-white px-8 py-3.5 text-sm font-semibold text-slate-900 shadow-lg transition-colors hover:bg-slate-100"
 			>
 				Open PredictAdmit Pro →
 			</a>

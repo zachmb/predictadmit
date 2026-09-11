@@ -24,12 +24,12 @@
 <main class="min-h-screen bg-white font-sans flex flex-col text-slate-800">
 	<article class="flex-1 w-full max-w-3xl mx-auto px-6 py-16 md:py-24">
 		<!-- Breadcrumb / eyebrow -->
-		<div class="text-sm font-semibold text-blue-600 uppercase tracking-wide mb-4">
+		<div class="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-4">
 			Admissions Guide
 		</div>
 
 		<!-- H1 -->
-		<h1 class="text-4xl md:text-5xl font-black tracking-tight text-slate-900 leading-[1.1] mb-6">
+		<h1 class="text-4xl md:text-5xl font-serif font-medium tracking-tight text-slate-900 leading-[1.1] mb-6">
 			How to Find Research Opportunities in High School
 		</h1>
 
@@ -107,25 +107,25 @@
 						<td class="px-4 py-3 font-semibold text-slate-900">University lab (in person)</td>
 						<td class="px-4 py-3">High</td>
 						<td class="px-4 py-3">Free (often paid)</td>
-						<td class="px-4 py-3 font-semibold text-blue-600">Very high</td>
+						<td class="px-4 py-3 font-semibold text-slate-900">Very high</td>
 					</tr>
 					<tr>
 						<td class="px-4 py-3 font-semibold text-slate-900">Independent / self-directed</td>
 						<td class="px-4 py-3">Self-selected</td>
 						<td class="px-4 py-3">Free–low</td>
-						<td class="px-4 py-3 font-semibold text-blue-600">High (if finished)</td>
+						<td class="px-4 py-3 font-semibold text-slate-900">High (if finished)</td>
 					</tr>
 					<tr>
 						<td class="px-4 py-3 font-semibold text-slate-900">Competitions (ISEF, Regeneron)</td>
 						<td class="px-4 py-3">Very high</td>
 						<td class="px-4 py-3">Low</td>
-						<td class="px-4 py-3 font-semibold text-blue-600">Very high</td>
+						<td class="px-4 py-3 font-semibold text-slate-900">Very high</td>
 					</tr>
 					<tr>
 						<td class="px-4 py-3 font-semibold text-slate-900">Free / selective summer programs</td>
 						<td class="px-4 py-3">Very high</td>
 						<td class="px-4 py-3">Free</td>
-						<td class="px-4 py-3 font-semibold text-blue-600">High</td>
+						<td class="px-4 py-3 font-semibold text-slate-900">High</td>
 					</tr>
 					<tr>
 						<td class="px-4 py-3 font-semibold text-slate-900">Paid "research" programs</td>
@@ -209,7 +209,7 @@
 
 		<!-- Email template block -->
 		<div class="bg-slate-50 border border-slate-200 rounded-2xl p-6 md:p-8 mb-4 shadow-sm">
-			<div class="text-xs font-bold text-blue-600 uppercase tracking-wide mb-4">
+			<div class="text-xs font-bold text-slate-500 uppercase tracking-wide mb-4">
 				Copy-ready cold-email template
 			</div>
 			<div class="font-mono text-sm text-slate-700 leading-relaxed space-y-3">
@@ -337,16 +337,16 @@
 
 		<!-- Pro Callout -->
 		<section
-			class="bg-gradient-to-br from-[#001F3F] to-[#003366] rounded-3xl p-8 md:p-10 text-white relative overflow-hidden shadow-2xl my-16"
+			class="bg-slate-900 rounded-3xl p-8 md:p-10 text-white relative overflow-hidden shadow-2xl my-16"
 		>
 			<div class="relative z-10 space-y-6">
-				<div class="text-xs font-bold uppercase tracking-widest text-blue-200">
+				<div class="text-xs font-bold uppercase tracking-widest text-slate-400">
 					Available in PredictAdmit Pro
 				</div>
-				<h2 class="text-2xl md:text-3xl font-bold tracking-tight text-white">
+				<h2 class="text-2xl md:text-3xl font-serif font-medium tracking-tight text-white">
 					50+ vetted research programs, matched to your major.
 				</h2>
-				<p class="text-blue-100 text-lg leading-relaxed max-w-xl">
+				<p class="text-slate-300 text-lg leading-relaxed max-w-xl">
 					The Research Hub in PredictAdmit Pro keeps a list of 50+ checked programs, labs, and
 					competitions, filtered by your intended major, GPA, and location, and sorted by deadline.
 					So you email the right professors instead of Googling for a week.
@@ -354,18 +354,18 @@
 				<div class="flex flex-col sm:flex-row gap-4 pt-2">
 					<a
 						href="/pro"
-						class="inline-block bg-white text-[#001F3F] hover:bg-blue-50 px-7 py-3.5 rounded-xl font-bold text-base transition-all transform hover:-translate-y-0.5 shadow-lg text-center"
+						class="inline-block bg-white text-slate-900 hover:bg-slate-100 px-7 py-3.5 rounded-full font-semibold text-base transition-all transform hover:-translate-y-0.5 shadow-lg text-center"
 					>
 						Explore the Research Hub in PredictAdmit Pro →
 					</a>
-					<div class="flex items-center gap-5 text-sm font-semibold text-blue-100">
+					<div class="flex items-center gap-5 text-sm font-semibold text-slate-300">
 						<a href="/portals" class="hover:text-white transition-colors">See all portals</a>
 						<a href="/ai" class="hover:text-white transition-colors">Try the AI predictor</a>
 					</div>
 				</div>
 			</div>
 			<div
-				class="absolute top-0 right-0 w-full h-full opacity-30 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-400 via-transparent to-transparent pointer-events-none"
+				class="absolute top-0 right-0 w-full h-full opacity-30 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-slate-700 via-transparent to-transparent pointer-events-none"
 			></div>
 		</section>
 
