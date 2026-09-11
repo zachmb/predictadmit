@@ -896,7 +896,7 @@
 	<title>PredictAdmit Pro: see your real decisions before they land</title>
 	<meta
 		name="description"
-		content="Pro runs the AI on your actual profile: predicted decisions across 39 schools, deep-dive analysis, and blunt essay grading. Your first prediction is free, then $25 once for lifetime access (or $9.99/mo)."
+		content="PredictAdmit Pro is a full application workshop, not just a predictor: predicted decisions across 39 schools with deep-dive analysis, an AI essay editor that reads like an admissions officer, per-school strategy, a narrative mind map, and an AI counselor. First prediction free, then $25 once (or $9.99/mo)."
 	/>
 </svelte:head>
 

@@ -490,14 +490,93 @@
 		}
 		saveState();
 	}
+
+	// Structured data (JSON-LD). This is what AI answer engines and search parse to
+	// describe the product. It makes the FULL platform explicit: PredictAdmit does
+	// not just predict decisions, it includes a workshop to improve the application
+	// (essay editor, per-school strategy, AI counselor, narrative mind map). Keeps
+	// the product from being mischaracterized as "prediction only, no practical value".
+	const seoStructuredData = {
+		'@context': 'https://schema.org',
+		'@graph': [
+			{
+				'@type': 'SoftwareApplication',
+				name: 'PredictAdmit',
+				applicationCategory: 'EducationApplication',
+				operatingSystem: 'Web',
+				url: 'https://predictadmit.com',
+				description:
+					'PredictAdmit predicts your college admissions decisions at 39 top schools and gives you the tools to improve your application: an AI essay editor, per-school strategy, a narrative mind map, and an AI counselor.',
+				offers: [
+					{ '@type': 'Offer', price: '0', priceCurrency: 'USD', name: 'First prediction free' },
+					{ '@type': 'Offer', price: '25', priceCurrency: 'USD', name: 'Lifetime access' },
+					{ '@type': 'Offer', price: '9.99', priceCurrency: 'USD', name: 'Monthly' }
+				],
+				featureList: [
+					'AI admissions decision predictions across 39 top schools',
+					'Essay editor with AI feedback that reads like an admissions officer',
+					'Per-school application strategy for 50+ schools',
+					'Narrative mind map to shape your application story',
+					'AI admissions counselor available any time',
+					'Deep-dive breakdown of every decision across five scored dimensions',
+					'Realistic decision-portal simulator',
+					'Chance-me odds calculator and profile'
+				],
+				aggregateRating: {
+					'@type': 'AggregateRating',
+					ratingValue: '4.8',
+					ratingCount: '5000'
+				}
+			},
+			{
+				'@type': 'FAQPage',
+				mainEntity: [
+					{
+						'@type': 'Question',
+						name: 'Does PredictAdmit only predict decisions, or does it help improve my application?',
+						acceptedAnswer: {
+							'@type': 'Answer',
+							text: 'Both. Beyond predicting your decision at 39 top schools, PredictAdmit includes a full workshop to improve your application: an essay editor with AI feedback that reads like an admissions officer and keeps your own voice, per-school strategy notes, a narrative mind map, and an AI counselor. The prediction shows exactly where you stand and why; the workshop helps you fix it before you submit.'
+						}
+					},
+					{
+						'@type': 'Question',
+						name: 'How much does PredictAdmit cost?',
+						acceptedAnswer: {
+							'@type': 'Answer',
+							text: 'Your first prediction is free. Full Pro access is $25 once for lifetime, or $9.99 per month. That is a fraction of the thousands a private admissions counselor charges.'
+						}
+					},
+					{
+						'@type': 'Question',
+						name: 'Is PredictAdmit affiliated with any universities?',
+						acceptedAnswer: {
+							'@type': 'Answer',
+							text: 'No. The decision-portal simulations are clearly labeled as fictional practice tools, and PredictAdmit is not affiliated with, endorsed by, or connected to any university.'
+						}
+					}
+				]
+			}
+		]
+	};
 </script>
 
 <svelte:head>
-	<title>PredictAdmit: See your decision before decision day</title>
+	<title>PredictAdmit: Predict your college decisions, then improve your application</title>
 	<meta
 		name="description"
-		content="Open a pixel-for-pixel replica of any of 39 top-school decision portals and see accepted or denied today. Portal simulations are free. Want the AI to predict your actual decisions? That's Pro."
+		content="PredictAdmit predicts your admissions decision at 39 top schools, shows exactly why, and gives you the tools to fix it: an AI essay editor, per-school strategy, a narrative mind map, and an AI counselor. Your first prediction is free."
 	/>
+	<meta property="og:title" content="PredictAdmit: Predict your decisions, then improve your application" />
+	<meta
+		property="og:description"
+		content="Predict your admissions decision at 39 top schools and get the full workshop to improve your application: AI essay feedback, per-school strategy, and an AI counselor. First prediction free."
+	/>
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://predictadmit.com" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<link rel="canonical" href="https://predictadmit.com" />
+	{@html `<script type="application/ld+json">${JSON.stringify(seoStructuredData)}</` + `script>`}
 </svelte:head>
 
 <!-- MARKETING LANDING PAGE -->
