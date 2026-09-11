@@ -1135,7 +1135,7 @@
 				<p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">AI Admissions Simulator</p>
 
 				<h1 class="font-serif text-4xl sm:text-5xl md:text-6xl font-medium tracking-tight text-slate-900 leading-[1.05]">
-					Predict your college decisions
+					Predict your college <span class="text-[#1A4CFF]">decisions</span>
 				</h1>
 
 				<p class="mx-auto max-w-xl text-base sm:text-lg leading-relaxed text-slate-600">
@@ -2128,7 +2128,7 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 				<ul class="mt-5 space-y-2">
 					{#each ['All 39 top schools, scored', 'Unlimited re-runs as you edit', 'Every deep-dive breakdown', 'The full essay workshop'] as benefit}
 						<li class="flex items-center gap-2.5 text-sm text-slate-700">
-							<span class="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-slate-900 text-white">
+							<span class="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#1A4CFF]/10 text-[#1A4CFF]">
 								<svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
 							</span>
 							{benefit}

@@ -510,7 +510,7 @@
 				<h1
 					class="font-serif text-5xl sm:text-6xl md:text-[5.5rem] font-medium tracking-tight leading-[1.0] text-slate-900 animate-in fade-in slide-in-from-bottom-6 duration-1000 fill-mode-both"
 				>
-					Simulate Any <br class="hidden md:block" /> University Portal
+					Simulate Any <br class="hidden md:block" /> University <span class="text-[#1A4CFF]">Portal</span>
 				</h1>
 				<p
 					class="text-xl md:text-2xl text-slate-500 max-w-2xl mx-auto leading-snug tracking-tight font-medium mt-6 animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-[200ms] fill-mode-both"
@@ -1159,7 +1159,7 @@
 					{/each}
 				</div>
 				<blockquote class="text-2xl md:text-4xl font-serif leading-relaxed opacity-90">
-					"ts was lowkey scary accurate"
+					"ts was lowkey genuinely accurate"
 				</blockquote>
 				<div class="pt-4">
 					<div class="font-bold">Miao S.</div>

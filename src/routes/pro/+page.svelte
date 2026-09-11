@@ -2284,7 +2284,7 @@
 				<div class="text-center lg:text-left">
 					<p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">PredictAdmit Pro</p>
 					<h1 class="mt-5 font-serif text-5xl md:text-6xl font-medium tracking-tight text-slate-900 leading-[1.05]">
-						See your decisions before they land.
+						See your <span class="text-[#1A4CFF]">decisions</span> before they land.
 					</h1>
 					<p class="mt-5 mx-auto lg:mx-0 max-w-xl text-lg text-slate-500 leading-relaxed">
 						PredictAdmit reads your real application, predicts your verdict at every top school, tells you exactly what's driving it, and grades your essays while there's still time to fix them. Your first prediction is free.
@@ -2452,8 +2452,8 @@
 							{ t: 'Chance Me profile and stats', d: 'Save your profile once and see your realistic odds at any school, with a clear read on where you are strong and where you are thin.', d1: 'M16 8v8m-4-5v5M8 14v2m-2 5h12a2 2 0 002-2V5a2 2 0 00-2-2H6a2 2 0 00-2 2v14a2 2 0 002 2z' }
 						] as f}
 							<div class="flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-5">
-								<div class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-slate-100">
-									<svg class="h-5 w-5 text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d={f.d1} /></svg>
+								<div class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-[#1A4CFF]/10">
+									<svg class="h-5 w-5 text-[#1A4CFF]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d={f.d1} /></svg>
 								</div>
 								<div>
 									<p class="font-bold text-slate-900">{f.t}</p>
@@ -2475,8 +2475,8 @@
 							{ t: 'Per-school strategy notes', d: 'What each of the top 50+ schools actually weighs, and how to angle your application for that specific reader instead of writing one generic app for all of them.', d1: 'M12 14l9-5-9-5-9 5 9 5z M12 14l6.16-3.42a12 12 0 01.84 4.42 12 12 0 01-14 0 12 12 0 01.84-4.42L12 14z' }
 						] as f}
 							<div class="flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-5">
-								<div class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-slate-100">
-									<svg class="h-5 w-5 text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d={f.d1} /></svg>
+								<div class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-[#1A4CFF]/10">
+									<svg class="h-5 w-5 text-[#1A4CFF]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d={f.d1} /></svg>
 								</div>
 								<div>
 									<p class="font-bold text-slate-900">{f.t}</p>
