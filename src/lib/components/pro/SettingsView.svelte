@@ -173,7 +173,7 @@
 					{:else}
 						<div
 							class="flex h-16 w-16 items-center justify-center rounded-full text-2xl font-semibold text-white shadow"
-							style="background-color: #1A4CFF;"
+							style="background-color: #0f172a;"
 						>
 							{initial}
 						</div>
@@ -198,7 +198,7 @@
 					</div>
 				</div>
 				{#if !billingLoading}
-					<span class="self-start rounded-full bg-[#1A4CFF]/10 px-3 py-1.5 text-xs font-bold text-[#1A4CFF] sm:self-auto">
+					<span class="self-start rounded-full bg-slate-100 px-3 py-1.5 text-xs font-bold text-slate-700 sm:self-auto">
 						{planPill}
 					</span>
 				{/if}
@@ -322,7 +322,7 @@
 								type="button"
 								onclick={openBillingPortal}
 								disabled={portalLoading}
-								class="inline-flex items-center justify-center gap-2 rounded-lg bg-[#1A4CFF] px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#1540E0] active:scale-[0.99] disabled:opacity-50"
+								class="inline-flex items-center justify-center gap-2 rounded-full bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800 active:scale-[0.99] disabled:opacity-50"
 							>
 								{#if portalLoading}
 									<span class="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white"></span>
@@ -344,7 +344,7 @@
 						{:else}
 							<a
 								href="/pro"
-								class="inline-flex items-center justify-center gap-2 rounded-lg bg-[#1A4CFF] px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#1540E0] active:scale-[0.99]"
+								class="inline-flex items-center justify-center gap-2 rounded-full bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800 active:scale-[0.99]"
 							>
 								Upgrade to Pro
 							</a>

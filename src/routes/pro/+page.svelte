@@ -2284,10 +2284,10 @@
 				<div class="text-center lg:text-left">
 					<p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">PredictAdmit Pro</p>
 					<h1 class="mt-5 font-serif text-5xl md:text-6xl font-medium tracking-tight text-slate-900 leading-[1.05]">
-						Less than a pizza. Yours for good.
+						See your decisions before they land.
 					</h1>
 					<p class="mt-5 mx-auto lg:mx-0 max-w-xl text-lg text-slate-500 leading-relaxed">
-						Your first prediction is free. Pro reads your real application, calls your decision at every school, shows you exactly why, and grades your essays. A private counselor charges thousands for the same read.
+						PredictAdmit reads your real application, predicts your verdict at every top school, tells you exactly what's driving it, and grades your essays while there's still time to fix them. Your first prediction is free.
 					</p>
 
 					<div class="mt-7 flex items-baseline justify-center lg:justify-start gap-2.5">

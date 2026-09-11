@@ -45,7 +45,7 @@
 
 				<button
 					on:click={handleGoogleSignIn}
-					class="mt-8 w-full flex items-center justify-center gap-2.5 rounded-xl bg-[#1A4CFF] px-4 py-3.5 text-[15px] font-semibold text-white shadow-lg shadow-blue-600/25 transition hover:bg-[#1540E0] active:scale-[0.99]"
+					class="mt-8 w-full flex items-center justify-center gap-2.5 rounded-full bg-slate-900 px-4 py-3.5 text-[15px] font-semibold text-white shadow-lg shadow-blue-600/25 transition hover:bg-slate-800 active:scale-[0.99]"
 				>
 					<span class="grid h-5 w-5 place-items-center rounded-full bg-white">
 						<svg class="w-3.5 h-3.5" viewBox="0 0 24 24">
@@ -72,13 +72,13 @@
 
 		<!-- Right: brand-blue product preview (the decision inbox). Hidden on mobile. -->
 		<div
-			class="hidden md:flex md:w-1/2 lg:w-[55%] relative overflow-hidden bg-[#1A4CFF] flex-col justify-center p-12 lg:p-16"
+			class="hidden md:flex md:w-1/2 lg:w-[55%] relative overflow-hidden bg-slate-900 flex-col justify-center p-12 lg:p-16"
 		>
 			<div class="pointer-events-none absolute -top-24 -right-24 h-72 w-72 rounded-full bg-white/10 blur-3xl"></div>
 			<div class="pointer-events-none absolute -bottom-32 -left-24 h-80 w-80 rounded-full bg-black/10 blur-3xl"></div>
 
 			<div class="relative z-10 max-w-md">
-				<h2 class="text-white text-3xl lg:text-[38px] font-black leading-[1.1] tracking-tight">
+				<h2 class="text-white text-3xl lg:text-[38px] font-serif font-medium leading-[1.1] tracking-tight">
 					See your real decisions before they land.
 				</h2>
 				<p class="mt-3 text-blue-100 text-base leading-relaxed">

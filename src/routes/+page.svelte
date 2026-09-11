@@ -579,9 +579,9 @@
 									{#each filteredUniversities as university, i}
 										<li>
 											<button
-												class="w-full px-4 py-3 flex items-center justify-between hover:bg-blue-50 transition-colors {i ===
+												class="w-full px-4 py-3 flex items-center justify-between hover:bg-slate-100 transition-colors {i ===
 												selectedIndex
-													? 'bg-blue-50'
+													? 'bg-slate-100'
 													: ''}"
 												on:click={() => handleUniversitySelect(university.slug)}
 											>
@@ -759,7 +759,7 @@
 				</h2>
 				<p class="text-lg text-slate-500">
 					Open any of the 39 portals and read your letter before it is written. <span
-						class="text-[#1A4CFF] font-bold">Every portal simulation is free. The AI that predicts your real decisions is Pro.</span
+						class="text-slate-900 font-bold">Every portal simulation is free. The AI that predicts your real decisions is Pro.</span
 					>
 				</p>
 			</div>
@@ -978,7 +978,7 @@
 										Explore Features
 									</div>
 									<div class="flex gap-2">
-										<div class="flex-1 bg-blue-50/50 border border-blue-100 rounded-lg p-3 h-20">
+										<div class="flex-1 bg-slate-100 border border-slate-200 rounded-lg p-3 h-20">
 											<div class="text-[11px] font-bold text-blue-900 mt-2">Outcome Predictor</div>
 											<div class="text-[9px] text-blue-700/60 mt-0.5">See your chances</div>
 										</div>
@@ -1213,7 +1213,7 @@
 				<button
 					type="button"
 					on:click={acknowledgeSimDisclosure}
-					class="rounded-lg bg-[#1A4CFF] px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-[#1A4CFF]/20 transition-colors hover:bg-[#003d99]"
+					class="rounded-full bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-slate-800"
 				>
 					I understand, view the rehearsal →
 				</button>

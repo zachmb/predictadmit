@@ -1258,7 +1258,7 @@
 									<div class="flex items-center justify-between mb-4">
 										<div class="flex items-center gap-3">
 											<div
-												class="w-10 h-10 rounded-xl bg-[#1A4CFF] flex items-center justify-center "
+												class="w-10 h-10 rounded-xl bg-slate-900 flex items-center justify-center "
 											>
 												<svg
 													class="w-5 h-5 text-white"
@@ -1393,7 +1393,7 @@
 											type="button"
 											onclick={() => parseAndFill(pasteBlob)}
 											disabled={parsing || !!fillingField || pasteBlob.trim().length < 20}
-											class="mt-2 inline-flex items-center gap-2 rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-bold text-white shadow-sm transition-all hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-40"
+											class="mt-2 inline-flex items-center gap-2 rounded-full bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-40"
 										>
 											<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3v4M3 5h4M6 17v4m-2-2h4"/><path d="M13 3l3.5 8.5L21 13l-8.5 1.5L11 23l-1.5-8.5L1 13l8.5-1.5z"/></svg>
 											{parsing ? 'Reading…' : fillingField ? 'Autofilling…' : 'Autofill my application'}
@@ -1514,7 +1514,7 @@ One fills the rest
 												type="button"
 												class="px-4 py-2 rounded-full border-2 transition-all duration-200 font-medium text-sm whitespace-nowrap
                 {activeSupTab === slug
-													? 'bg-blue-600 text-white border-blue-600 shadow-lg shadow-blue-600/25'
+													? 'bg-slate-900 text-white border-slate-900 shadow-sm'
 													: 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50 hover:border-slate-300'}"
 												onclick={() => (activeSupTab = slug)}
 											>
@@ -1697,7 +1697,7 @@ Picking one applies that school's real early-round odds
 									onclick={!googleSignedIn
 										? () => signIn('google', { callbackUrl: '/ai' })
 										: undefined}
-									class="group relative w-full rounded-2xl bg-[#1A4CFF] shadow-lg shadow-blue-600/25 transition-all duration-200 hover:bg-[#1540E0] active:scale-[0.99] disabled:opacity-60 disabled:cursor-not-allowed"
+									class="group relative w-full rounded-full bg-slate-900 shadow-sm transition-all duration-200 hover:bg-slate-800 active:scale-[0.99] disabled:opacity-60 disabled:cursor-not-allowed"
 								>
 									<div class="px-8 py-5">
 										<div
@@ -1830,16 +1830,16 @@ See what we read from your file
 					{#if !hasDeepDiveAccess && hasUsedFreeSimulation && !$userProfile.isSubmittingAI && aiDecisions.length}
 						<!-- Readability: solid brand blue with WHITE text (matches the AiUpsell
 						     toast). Never dark text on a blue tint, which reads poorly. -->
-						<div class="border-b-2 border-[#1540E0] bg-[#1A4CFF] px-6 py-4">
+						<div class="border-b border-slate-200 bg-slate-50 px-6 py-4">
 							<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
 								<div>
-									<p class="text-sm font-bold text-white">Your predictions are in. Unlock one school free.</p>
-									<p class="mt-0.5 text-xs leading-relaxed text-blue-100">Any other school is $4.99 (deep-dive included). Or go Pro for unlimited simulations and the full essay workshop. $25 once, or $9.99/mo.</p>
+									<p class="text-sm font-bold text-slate-900">Your predictions are in. Unlock one school free.</p>
+									<p class="mt-0.5 text-xs leading-relaxed text-slate-500">Any other school is $4.99 (deep-dive included). Or go Pro for unlimited simulations and the full essay workshop. $25 once, or $9.99/mo.</p>
 								</div>
 								<button
 									type="button"
 									onclick={() => openPaywall('simulation')}
-									class="shrink-0 inline-flex items-center justify-center rounded-xl bg-white px-5 py-2.5 text-sm font-bold text-[#1A4CFF] shadow-sm transition hover:bg-blue-50 active:scale-[0.99]"
+									class="shrink-0 inline-flex items-center justify-center rounded-full bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800 active:scale-[0.99]"
 								>
 									Unlock everything
 								</button>
@@ -1906,7 +1906,7 @@ See what we read from your file
 								<div class="space-y-1.5">
 									<div class="flex items-center gap-2">
 										<div
-											class="w-8 h-8 rounded-lg bg-[#1A4CFF] flex items-center justify-center "
+											class="w-8 h-8 rounded-lg bg-slate-900 flex items-center justify-center "
 										>
 											<svg
 												class="w-4 h-4 text-white"
@@ -2090,21 +2090,21 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 
 			<!-- Hero. Solid brand blue, white text. The deadline pill sits up top as
 			     the urgency anchor before any price is shown. -->
-			<div class="relative overflow-hidden bg-[#1A4CFF] px-7 pt-8 pb-7 text-center text-white">
+			<div class="relative overflow-hidden bg-slate-900 px-7 pt-8 pb-7 text-center text-white">
 				<div class="pointer-events-none absolute -top-20 -right-16 h-48 w-48 rounded-full bg-white/10 blur-2xl"></div>
 				<div class="relative">
-					<div class="mx-auto flex w-fit items-center gap-1.5 rounded-full bg-white/15 px-3 py-1 text-[11px] font-semibold ring-1 ring-white/25">
+					<div class="mx-auto flex w-fit items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-[11px] font-semibold ring-1 ring-white/20">
 						<svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
 						{nextMilestonePhrase()}
 					</div>
-					<h3 class="mt-4 text-[1.7rem] font-black leading-[1.15] tracking-tight">
+					<h3 class="mt-4 font-serif text-[1.9rem] font-medium leading-[1.15] tracking-tight">
 						{paywallMode === 'decision'
 							? `Open ${paywallContextDecision?.school ?? 'this'} decision`
 							: paywallMode === 'deepDive'
 								? 'See exactly why'
 								: 'Find out where you actually stand'}
 					</h3>
-					<p class="mx-auto mt-2 max-w-[19rem] text-sm leading-relaxed text-blue-100">
+					<p class="mx-auto mt-2 max-w-[19rem] text-sm leading-relaxed text-slate-300">
 						{paywallMode === 'decision'
 							? 'You’ve used your one free decision. Open this one for $4.99 (deep-dive included), or unlock all 39.'
 							: paywallMode === 'deepDive'
@@ -2134,7 +2134,7 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 				<ul class="mt-5 space-y-2">
 					{#each ['All 39 top schools, scored', 'Unlimited re-runs as you edit', 'Every deep-dive breakdown', 'The full essay workshop'] as benefit}
 						<li class="flex items-center gap-2.5 text-sm text-slate-700">
-							<span class="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#1A4CFF]/10 text-[#1A4CFF]">
+							<span class="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-slate-900 text-white">
 								<svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
 							</span>
 							{benefit}
@@ -2150,15 +2150,15 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 						type="button"
 						onclick={() => (selectedPlan = 'lifetime')}
 						aria-pressed={selectedPlan === 'lifetime'}
-						class="relative flex w-full items-center gap-3 rounded-2xl px-4 py-3.5 text-left transition {selectedPlan === 'lifetime' ? 'border-2 border-[#1A4CFF] bg-blue-50 shadow-sm' : 'border border-slate-200 hover:border-slate-300'}"
+						class="relative flex w-full items-center gap-3 rounded-2xl px-4 py-3.5 text-left transition {selectedPlan === 'lifetime' ? 'border-2 border-slate-900 bg-slate-50 shadow-sm' : 'border border-slate-200 hover:border-slate-300'}"
 					>
-						<span class="grid h-5 w-5 shrink-0 place-items-center rounded-full border-2 {selectedPlan === 'lifetime' ? 'border-[#1A4CFF] bg-[#1A4CFF]' : 'border-slate-300'}">
+						<span class="grid h-5 w-5 shrink-0 place-items-center rounded-full border-2 {selectedPlan === 'lifetime' ? 'border-slate-900 bg-slate-900' : 'border-slate-300'}">
 							{#if selectedPlan === 'lifetime'}<span class="h-2 w-2 rounded-full bg-white"></span>{/if}
 						</span>
 						<span class="min-w-0 flex-1">
 							<span class="flex items-center gap-2">
 								<span class="text-sm font-bold text-slate-900">Lifetime</span>
-								<span class="rounded-full bg-[#1A4CFF] px-2 py-0.5 text-[9px] font-black uppercase tracking-wide text-white">Best value</span>
+								<span class="rounded-full bg-slate-900 px-2 py-0.5 text-[9px] font-black uppercase tracking-wide text-white">Best value</span>
 							</span>
 							<span class="mt-0.5 block text-xs leading-relaxed text-slate-500">Everything above, forever. No subscription.</span>
 						</span>
@@ -2173,9 +2173,9 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 						type="button"
 						onclick={() => (selectedPlan = 'monthly')}
 						aria-pressed={selectedPlan === 'monthly'}
-						class="flex w-full items-center gap-3 rounded-2xl px-4 py-3.5 text-left transition {selectedPlan === 'monthly' ? 'border-2 border-[#1A4CFF] bg-blue-50 shadow-sm' : 'border border-slate-200 hover:border-slate-300'}"
+						class="flex w-full items-center gap-3 rounded-2xl px-4 py-3.5 text-left transition {selectedPlan === 'monthly' ? 'border-2 border-slate-900 bg-slate-50 shadow-sm' : 'border border-slate-200 hover:border-slate-300'}"
 					>
-						<span class="grid h-5 w-5 shrink-0 place-items-center rounded-full border-2 {selectedPlan === 'monthly' ? 'border-[#1A4CFF] bg-[#1A4CFF]' : 'border-slate-300'}">
+						<span class="grid h-5 w-5 shrink-0 place-items-center rounded-full border-2 {selectedPlan === 'monthly' ? 'border-slate-900 bg-slate-900' : 'border-slate-300'}">
 							{#if selectedPlan === 'monthly'}<span class="h-2 w-2 rounded-full bg-white"></span>{/if}
 						</span>
 						<span class="min-w-0 flex-1">
@@ -2194,9 +2194,9 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 							type="button"
 							onclick={() => (selectedPlan = 'single')}
 							aria-pressed={selectedPlan === 'single'}
-							class="flex w-full items-center gap-3 rounded-2xl px-4 py-3.5 text-left transition {selectedPlan === 'single' ? 'border-2 border-[#1A4CFF] bg-blue-50 shadow-sm' : 'border border-slate-200 hover:border-slate-300'}"
+							class="flex w-full items-center gap-3 rounded-2xl px-4 py-3.5 text-left transition {selectedPlan === 'single' ? 'border-2 border-slate-900 bg-slate-50 shadow-sm' : 'border border-slate-200 hover:border-slate-300'}"
 						>
-							<span class="grid h-5 w-5 shrink-0 place-items-center rounded-full border-2 {selectedPlan === 'single' ? 'border-[#1A4CFF] bg-[#1A4CFF]' : 'border-slate-300'}">
+							<span class="grid h-5 w-5 shrink-0 place-items-center rounded-full border-2 {selectedPlan === 'single' ? 'border-slate-900 bg-slate-900' : 'border-slate-300'}">
 								{#if selectedPlan === 'single'}<span class="h-2 w-2 rounded-full bg-white"></span>{/if}
 							</span>
 							<span class="min-w-0 flex-1">
@@ -2216,7 +2216,7 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 				<button
 					onclick={continuePlan}
 					disabled={checkoutLoading}
-					class="mt-4 w-full rounded-2xl bg-[#1A4CFF] px-5 py-4 text-base font-black text-white shadow-lg shadow-blue-600/25 transition hover:bg-[#1540E0] active:scale-[0.99] disabled:opacity-50"
+					class="mt-4 w-full rounded-full bg-slate-900 px-5 py-4 text-base font-semibold text-white transition hover:bg-slate-800 active:scale-[0.99] disabled:opacity-50"
 				>
 					{checkoutLoading
 						? 'Opening checkout…'
@@ -2264,7 +2264,7 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 		<button
 			onclick={googleSignedIn ? runEvaluation : () => signIn('google', { callbackUrl: '/ai' })}
 			disabled={$userProfile.isSubmittingAI}
-			class="flex w-full items-center justify-center gap-2 rounded-xl bg-[#1A4CFF] py-3.5 text-base font-bold text-white shadow-lg shadow-blue-600/25 transition active:scale-[0.99] disabled:opacity-60"
+			class="flex w-full items-center justify-center gap-2 rounded-full bg-slate-900 py-3.5 text-base font-semibold text-white shadow-sm transition active:scale-[0.99] disabled:opacity-60"
 		>
 			{#if $userProfile.isSubmittingAI}
 				<span class="h-5 w-5 animate-spin rounded-full border-2 border-white/30 border-t-white"></span>
