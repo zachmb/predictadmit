@@ -20,11 +20,10 @@ function estimateChance(acceptanceRate: number, academicIndex: number): number {
 }
 
 /**
- * PredictAI admissions counselor chat.
- * Mirrors the essay-grader Anthropic integration (x-api-key, sonnet -> haiku
- * fallback) so it uses the same CLAUDE_API_KEY and works in the same env.
+ * PredictAdmit admissions counselor chat. Uses DeepSeek (the single AI provider
+ * across the app) via the OpenAI-compatible chat/completions endpoint.
  */
-// Claude Sonnet calls can run long; lift the serverless timeout off the default
+// Model calls can run long; lift the serverless timeout off the default
 // so a slow model response doesn't 504 mid-answer (60s is the Hobby-tier max).
 export const config = { maxDuration: 60 };
 
@@ -98,51 +97,45 @@ Guidelines:
 
 ${profileContext}`;
 
-	if (!env.CLAUDE_API_KEY) {
-		return json({ error: 'Server Config Error: Missing CLAUDE_API_KEY' }, { status: 500 });
+	if (!env.DEEPSEEK_API_KEY) {
+		return json({ error: 'Server Config Error: Missing DEEPSEEK_API_KEY' }, { status: 500 });
 	}
 
 	const apiMessages = messages
 		.filter((m) => m && (m.role === 'user' || m.role === 'assistant') && typeof m.content === 'string')
 		.map((m) => ({ role: m.role, content: m.content }));
 
-	const models = ['claude-sonnet-4-6', 'claude-haiku-4-5'];
-	let lastError: unknown;
+	try {
+		const res = await fetch('https://api.deepseek.com/chat/completions', {
+			method: 'POST',
+			headers: {
+				Authorization: `Bearer ${env.DEEPSEEK_API_KEY}`,
+				'content-type': 'application/json'
+			},
+			body: JSON.stringify({
+				model: 'deepseek-chat',
+				max_tokens: 2048,
+				temperature: 0.6,
+				messages: [{ role: 'system', content: system }, ...apiMessages]
+			})
+		});
 
-	for (const model of models) {
-		try {
-			const res = await fetch('https://api.anthropic.com/v1/messages', {
-				method: 'POST',
-				headers: {
-					'x-api-key': env.CLAUDE_API_KEY || '',
-					'anthropic-version': '2023-06-01',
-					'content-type': 'application/json'
-				},
-				body: JSON.stringify({
-					model,
-					max_tokens: 2048,
-					system,
-					messages: apiMessages
-				})
-			});
-
-			if (!res.ok) {
-				const errText = await res.text();
-				lastError = new Error(`Claude API Error (${model}): ${res.status} - ${errText}`);
-				continue;
-			}
-
-			const data = await res.json();
-			const reply =
-				Array.isArray(data?.content) && data.content[0]?.text
-					? data.content[0].text
-					: 'Sorry, I had trouble generating a response. Please try again.';
-			return json({ reply });
-		} catch (e) {
-			lastError = e;
+		if (!res.ok) {
+			const errText = await res.text();
+			console.error('[AI Counselor] DeepSeek error', res.status, errText);
+			return json(
+				{ error: 'AI counselor is temporarily unavailable. Please try again.' },
+				{ status: 502 }
+			);
 		}
-	}
 
-	console.error('[AI Counselor] All models failed', lastError);
-	return json({ error: 'AI counselor is temporarily unavailable. Please try again.' }, { status: 502 });
+		const data = await res.json();
+		const reply =
+			data?.choices?.[0]?.message?.content?.trim() ||
+			'Sorry, I had trouble generating a response. Please try again.';
+		return json({ reply });
+	} catch (e) {
+		console.error('[AI Counselor] DeepSeek request failed', e);
+		return json({ error: 'AI counselor is temporarily unavailable. Please try again.' }, { status: 502 });
+	}
 };

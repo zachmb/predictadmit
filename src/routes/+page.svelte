@@ -593,10 +593,8 @@
 				<p
 					class="text-xl md:text-2xl text-slate-500 max-w-2xl mx-auto leading-snug tracking-tight font-medium mt-6 animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-[200ms] fill-mode-both"
 				>
-					Open a pixel-for-pixel replica of any school's decision portal and read your letter months
-					before the real thing. That part is free. Then Pro points the AI at your real application:
-					it predicts every decision, sits a full admissions committee on your file to show you exactly
-					why, and helps you fix your essays and strategy before you submit.
+					Open any school's decision portal and read your letter months early, free. Then let the AI
+					run your real application past a full admissions committee, and fix what they flag before you submit.
 				</p>
 			</div>
 
@@ -942,7 +940,7 @@
 					Everything a counselor does. <span class="text-[#1A4CFF]">In one app.</span>
 				</h2>
 				<p class="text-lg text-slate-500 leading-relaxed">
-					The prediction is the hook. Pro is the whole workshop: a committee reads your file, an editor sharpens your essays, and a counselor tells you where to spend your time.
+					The prediction gets you in the door. Then Pro does the work a $5,000 counselor does: reads your file like a committee, tears into your essays, and tells you what to fix first.
 				</p>
 			</div>
 
@@ -964,7 +962,7 @@
 						</div>
 					</div>
 					<h3 class="mt-6 text-xl font-bold tracking-tight text-slate-900">A committee, not a single guess</h3>
-					<p class="mt-2 text-slate-500 leading-relaxed">Five readers score your file across the dimensions real committees weigh, then reach a verdict. You see exactly which reader is dragging you down.</p>
+					<p class="mt-2 text-slate-500 leading-relaxed">Five readers argue over your file the way a real committee does, then land a verdict. You find out which one is holding you back, and exactly why.</p>
 				</div>
 
 				<!-- Essay editor with AI feedback -->
@@ -982,7 +980,7 @@
 						</div>
 					</div>
 					<h3 class="mt-6 text-xl font-bold tracking-tight text-slate-900">Essay feedback, line by line</h3>
-					<p class="mt-2 text-slate-500 leading-relaxed">Draft every supplement in one place, then get the notes an admissions reader would write. It marks what is weak. You write every word.</p>
+					<p class="mt-2 text-slate-500 leading-relaxed">Every supplement in one place. Hand it over and it marks the weak lines like an admissions reader would, and tells you why. It never writes a word for you.</p>
 				</div>
 
 				<!-- Per-school strategy -->
@@ -996,7 +994,7 @@
 						{/each}
 					</div>
 					<h3 class="mt-6 text-xl font-bold tracking-tight text-slate-900">Per-school strategy for 50+ schools</h3>
-					<p class="mt-2 text-slate-500 leading-relaxed">What each school actually weighs, and how to angle your application for that reader, instead of one generic app for all of them.</p>
+					<p class="mt-2 text-slate-500 leading-relaxed">Stanford and MIT do not want the same thing. See what each one actually weighs, then aim your application at that reader instead of sending one generic app everywhere.</p>
 				</div>
 
 				<!-- AI counselor -->
@@ -1008,8 +1006,8 @@
 							<div class="rounded-2xl rounded-bl-md bg-white border border-slate-200 px-3.5 py-2 text-[13px] leading-relaxed text-slate-700">A little. Add two matches where your profile is above their median. Want me to name them?</div>
 						</div>
 					</div>
-					<h3 class="mt-6 text-xl font-bold tracking-tight text-slate-900">An AI counselor, any hour</h3>
-					<p class="mt-2 text-slate-500 leading-relaxed">Ask the questions you would pay a consultant for. Where to apply, how to frame a gap, what a school wants. Answered in plain language, whenever.</p>
+					<h3 class="mt-6 text-xl font-bold tracking-tight text-slate-900">A counselor in your pocket</h3>
+					<p class="mt-2 text-slate-500 leading-relaxed">Ask the stuff you would pay a consultant $300 an hour for. Where to apply, how to explain a rough semester, what a school is really looking for. Any time, no appointment.</p>
 				</div>
 			</div>
 

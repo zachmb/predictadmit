@@ -43,18 +43,25 @@ export const POST: RequestHandler = async (event) => {
         
         Generate a mind map for this student.`;
 
-		const response = await fetch('https://api.anthropic.com/v1/messages', {
+		if (!env.DEEPSEEK_API_KEY) {
+			return json({ error: 'Server Config Error: Missing DEEPSEEK_API_KEY' }, { status: 500 });
+		}
+
+		const response = await fetch('https://api.deepseek.com/chat/completions', {
 			method: 'POST',
 			headers: {
-				'x-api-key': env.CLAUDE_API_KEY || '',
-				'anthropic-version': '2023-06-01',
+				Authorization: `Bearer ${env.DEEPSEEK_API_KEY}`,
 				'content-type': 'application/json'
 			},
 			body: JSON.stringify({
-				model: 'claude-sonnet-4-6',
+				model: 'deepseek-chat',
 				max_tokens: 4096,
-				system: systemPrompt,
-				messages: [{ role: 'user', content: userPrompt }]
+				temperature: 0.7,
+				response_format: { type: 'json_object' },
+				messages: [
+					{ role: 'system', content: systemPrompt },
+					{ role: 'user', content: userPrompt }
+				]
 			})
 		});
 
@@ -65,7 +72,7 @@ export const POST: RequestHandler = async (event) => {
 		}
 
 		const data = await response.json();
-		const textContent = data.content[0].text;
+		const textContent = data?.choices?.[0]?.message?.content ?? '';
 
 		// Extract JSON
 		const jsonMatch = textContent.match(/\{[\s\S]*\}/);

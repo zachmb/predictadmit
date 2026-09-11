@@ -48,9 +48,9 @@ export const POST: RequestHandler = async ({ request }) => {
 
 	const { major, selectedSchool, essayType, content, profile } = requestData;
 
-	if (!env.CLAUDE_API_KEY) {
-		console.error('[Essay Grader] Missing CLAUDE_API_KEY');
-		return json({ error: 'Server Config Error: Missing CLAUDE_API_KEY' }, { status: 500 });
+	if (!env.DEEPSEEK_API_KEY) {
+		console.error('[Essay Grader] Missing DEEPSEEK_API_KEY');
+		return json({ error: 'Server Config Error: Missing DEEPSEEK_API_KEY' }, { status: 500 });
 	}
 
 	// Construct Profile Context with Activities
@@ -128,102 +128,38 @@ export const POST: RequestHandler = async ({ request }) => {
 	const userPrompt = `${profileContext}\nContent (may contain multiple essays separated by delimiters):\n${content}`;
 
 	try {
-		// Helper to call Claude with fallback
-		async function callClaudeWithFallback(prompt: string) {
-			const models = ['claude-sonnet-4-6', 'claude-haiku-4-5'];
-			let lastError;
-
-			for (const model of models) {
-				try {
-					console.log(`[Essay Grader] Attempting Claude model: ${model}`);
-					const res = await fetch('https://api.anthropic.com/v1/messages', {
-						method: 'POST',
-						headers: {
-							'x-api-key': env.CLAUDE_API_KEY || '',
-							'anthropic-version': '2023-06-01',
-							'content-type': 'application/json'
-						},
-						body: JSON.stringify({
-							model,
-							max_tokens: 4096,
-							system: claudeSystemPrompt,
-							messages: [{ role: 'user', content: prompt }]
-						})
-					});
-
-					if (!res.ok) {
-						const errText = await res.text();
-						console.warn(`[Essay Grader] Model ${model} failed (${res.status}): ${errText}`);
-						lastError = new Error(`Claude API Error (${model}): ${res.status} - ${errText}`);
-						continue; // Try next model
-					}
-
-					return res;
-				} catch (e) {
-					console.error(`[Essay Grader] Network error for ${model}`, e);
-					lastError = e;
-				}
-			}
-			throw lastError || new Error('All Claude models failed');
+		if (!env.DEEPSEEK_API_KEY) {
+			return json({ error: 'Server Config Error: Missing DEEPSEEK_API_KEY' }, { status: 500 });
 		}
 
-		// Parallel execution: Claude (with fallback) and DeepSeek
-		const promises: Promise<Response | null>[] = [callClaudeWithFallback(userPrompt)];
+		const res = await fetch('https://api.deepseek.com/chat/completions', {
+			method: 'POST',
+			headers: {
+				Authorization: `Bearer ${env.DEEPSEEK_API_KEY}`,
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				model: 'deepseek-chat',
+				max_tokens: 4096,
+				messages: [
+					{ role: 'system', content: claudeSystemPrompt },
+					{ role: 'user', content: userPrompt }
+				],
+				response_format: { type: 'json_object' }
+			})
+		});
 
-		// Add DeepSeek promise only if key exists
-		if (env.DEEPSEEK_API_KEY) {
-			promises.push(
-				fetch('https://api.deepseek.com/chat/completions', {
-					method: 'POST',
-					headers: {
-						Authorization: `Bearer ${env.DEEPSEEK_API_KEY}`,
-						'Content-Type': 'application/json'
-					},
-					body: JSON.stringify({
-						model: 'deepseek-chat',
-						messages: [
-							{ role: 'system', content: deepSeekSystemPrompt },
-							{ role: 'user', content: userPrompt }
-						],
-						response_format: { type: 'json_object' }
-					})
-				}).catch((e) => {
-					console.error('[Essay Grader] DeepSeek Network Error', e);
-					return null;
-				})
+		if (!res.ok) {
+			const errText = await res.text();
+			console.error('[Essay Grader] DeepSeek error', res.status, errText);
+			return json(
+				{ error: 'The essay grader is temporarily unavailable. Please try again.' },
+				{ status: 502 }
 			);
-		} else {
-			console.log('[Essay Grader] Skipping DeepSeek (No API Key)');
-			promises.push(Promise.resolve(null));
 		}
 
-		const [claudeRes, deepSeekRes] = await Promise.all(promises);
-
-		// Claude is mandatory
-		if (!claudeRes) throw new Error('Claude Response is null'); // Should be caught by the .then throw above
-
-		const claudeData = await claudeRes.json();
-		const claudeText = claudeData.content?.[0]?.text || '';
-
-		console.log('[Essay Grader] Claude Raw Response:', claudeText.substring(0, 200) + '...');
-
-		// DeepSeek is optional
-		let deepSeekFeedback = '';
-		if (deepSeekRes && deepSeekRes.ok) {
-			try {
-				const deepSeekData = await deepSeekRes.json();
-				const dsContent = deepSeekData.choices?.[0]?.message?.content;
-				if (dsContent) {
-					const dsJson = JSON.parse(dsContent);
-					deepSeekFeedback = dsJson.harsh_feedback;
-				}
-			} catch (e) {
-				console.error('[Essay Grader] DeepSeek Parse Error', e);
-			}
-		} else if (deepSeekRes) {
-			const errText = await deepSeekRes.text();
-			console.warn('[Essay Grader] DeepSeek API Error:', deepSeekRes.status, errText);
-		}
+		const data = await res.json();
+		const rawText = data?.choices?.[0]?.message?.content || '';
 
 		// Parse Claude JSON safely
 		let parsedContent: AIResponsePayload;
@@ -231,20 +167,20 @@ export const POST: RequestHandler = async ({ request }) => {
 			// Find JSON object start/end
 			// Updated regex to handle potentially nested braces slightly better or just capture specifically the main object
 			// Also, we'll try to fallback if the regex fails to match a full object.
-			const jsonMatch = claudeText.match(/\{[\s\S]*\}/);
-			const jsonStr = jsonMatch ? jsonMatch[0] : claudeText;
+			const jsonMatch = rawText.match(/\{[\s\S]*\}/);
+			const jsonStr = jsonMatch ? jsonMatch[0] : rawText;
 			parsedContent = JSON.parse(jsonStr) as AIResponsePayload;
 		} catch (e) {
 			console.error('[Essay Grader] Claude JSON Parse Failed:', e);
-			console.error('[Essay Grader] Raw Text:', claudeText);
+			console.error('[Essay Grader] Raw Text:', rawText);
 
 			// ATTEMPT REPAIR: Sometimes it outputs text before the JSON or markdown blocks.
 			// Try to find the FIRST "{" and LAST "}"
 			try {
-				const firstBrace = claudeText.indexOf('{');
-				const lastBrace = claudeText.lastIndexOf('}');
+				const firstBrace = rawText.indexOf('{');
+				const lastBrace = rawText.lastIndexOf('}');
 				if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
-					const extracted = claudeText.substring(firstBrace, lastBrace + 1);
+					const extracted = rawText.substring(firstBrace, lastBrace + 1);
 					parsedContent = JSON.parse(extracted) as AIResponsePayload;
 				} else {
 					throw e; // Original Error
@@ -255,16 +191,11 @@ export const POST: RequestHandler = async ({ request }) => {
 						error: 'Failed to parse AI grading response.',
 						details:
 							'AI response was not valid JSON. Please try again or simplify your essay format.',
-						raw: claudeText.substring(0, 500) // Send snippet for client debug if needed
+						raw: rawText.substring(0, 500) // Send snippet for client debug if needed
 					},
 					{ status: 500 }
 				);
 			}
-		}
-
-		// Merge DeepSeek feedback
-		if (parsedContent.essays && parsedContent.essays.length > 0) {
-			parsedContent.essays[0].harsh_feedback = deepSeekFeedback;
 		}
 
 		return json(parsedContent);
