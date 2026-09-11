@@ -12,12 +12,12 @@
 		{
 			icon: '🎯',
 			title: 'Rehearse decision day',
-			body: 'Open a fictional portal, status page, or decision letter for any of 39 schools and feel the moment before it counts. Every screen says "simulation" on it. That is the point — you get to flinch here instead of on the real day.'
+			body: 'Open a fictional portal, status page, or decision letter for any of 39 schools and feel the moment before it counts. Every screen says "simulation" on it. That is the point: you get to flinch here instead of on the real day.'
 		},
 		{
 			icon: '✍️',
 			title: 'The portal sims are free',
-			body: 'Open any decision portal and rehearse it — accepted, denied, waitlisted — as many times as you want, no card required. The AI tools (essay grader, counselor, chances predictor, mind-map) you can try before you pay for anything.'
+			body: 'Open any decision portal and rehearse it (accepted, denied, waitlisted) as many times as you want, no card required. The AI tools (essay grader, counselor, chances predictor, mind-map) you can try before you pay for anything.'
 		},
 		{
 			icon: '⚡',
@@ -55,7 +55,7 @@
 	const faqs: { q: string; a: string; link?: { href: string; label: string } }[] = [
 		{
 			q: 'Is PredictAdmit free?',
-			a: 'The portal decision simulations are free — open any school, rehearse the moment, no card required. Your first AI prediction is free too. After that, Lifetime access is $25 once (or $9.99/mo) for all 39 schools, unlimited re-runs, and the essay workshop. Care about one school only? A single-school unlock is $4.99.'
+			a: 'The portal decision simulations are free. Open any school, rehearse the moment, no card required. Your first AI prediction is free too. After that, Lifetime access is $25 once (or $9.99/mo) for all 39 schools, unlimited re-runs, and the essay workshop. Care about one school only? A single-school unlock is $4.99.'
 		},
 		{
 			q: 'Are the decision letters real?',
@@ -71,29 +71,29 @@
 		},
 		{
 			q: 'Where does the prediction data come from?',
-			a: 'The factor weights come from NACAC — the National Association for College Admission Counseling, the professional body for 28,000+ admission officers and counselors — and their "Factors in the Admission Decision" survey, which reports how much four-year colleges weight grades, rigor, test scores, essays, and the rest. We then calibrate those weights against admitted-student profiles from HYPSM and Top-20 universities in the 2026 cycle, and against our own founding team\'s results. NACAC is independent and does not endorse PredictAdmit.',
+			a: 'The factor weights come from NACAC (the National Association for College Admission Counseling, the professional body for 28,000+ admission officers and counselors) and their "Factors in the Admission Decision" survey, which reports how much four-year colleges weight grades, rigor, test scores, essays, and the rest. We then calibrate those weights against admitted-student profiles from HYPSM and Top-20 universities in the 2026 cycle, and against our own founding team\'s results. NACAC is independent and does not endorse PredictAdmit.',
 			link: { href: '/methodology', label: 'Read the full methodology →' }
 		}
 	];
 </script>
 
 <svelte:head>
-	<title>About PredictAdmit — Rehearse decision day before it counts</title>
+	<title>About PredictAdmit: Rehearse decision day before it counts</title>
 	<meta
 		name="description"
 		content="PredictAdmit lets students rehearse decision day on fictional portals, grade essays with AI, and predict their real decisions. Portal sims are free and your first prediction is free; Lifetime access is $25 once (or $9.99/mo). Everything simulated is labeled."
 	/>
-	<meta property="og:title" content="About PredictAdmit — Rehearse decision day before it counts" />
+	<meta property="og:title" content="About PredictAdmit: Rehearse decision day before it counts" />
 	<meta
 		property="og:description"
-		content="Rehearse decision day on clearly-labeled fictional portals and sharpen your essays with AI. Portal sims are free — Pro predicts your real decisions for $25 once (or $9.99/mo)."
+		content="Rehearse decision day on clearly-labeled fictional portals and sharpen your essays with AI. Portal sims are free. Pro predicts your real decisions for $25 once (or $9.99/mo)."
 	/>
 	<meta property="og:type" content="website" />
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:title" content="About PredictAdmit" />
 	<meta
 		name="twitter:description"
-		content="Rehearse decision day on fictional portals, grade your essays with AI, predict your real decisions. Free to start — Pro is $25 once (or $9.99/mo)."
+		content="Rehearse decision day on fictional portals, grade your essays with AI, predict your real decisions. Free to start. Pro is $25 once (or $9.99/mo)."
 	/>
 </svelte:head>
 
@@ -183,7 +183,7 @@
 				One upgrade. Every limit gone.
 			</h2>
 			<p class="text-lg text-slate-500 leading-relaxed">
-				The portal sims are free. Pro is where the AI reads your real application — for less than a
+				The portal sims are free. Pro is where the AI reads your real application, for less than a
 				private consultant charges per minute.
 			</p>
 		</div>
@@ -205,7 +205,7 @@
 				href="/pricing"
 				class="inline-flex items-center justify-center font-semibold text-sm bg-[#0052CC] text-white px-8 py-3.5 rounded-lg hover:bg-[#003d99] transition-colors shadow-lg shadow-[#0052CC]/20"
 			>
-				Get Lifetime — $25 once →
+				Get Lifetime for $25 once →
 			</a>
 			<span class="text-sm text-slate-400">Free simulation included. No credit card to start.</span>
 		</div>

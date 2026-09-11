@@ -59,6 +59,17 @@ function truncateForModel(text: string, maxChars = 14000): string {
 	return text.slice(0, maxChars) + '\n\n[Truncated for length]';
 }
 
+// DeepSeek occasionally wraps JSON in ```json fences despite response_format —
+// strip them before parsing so a well-formed answer isn't lost to a fence.
+function stripCodeFences(raw: string): string {
+	const t = raw.trim();
+	if (!t.startsWith('```')) return t;
+	return t
+		.replace(/^```(?:json)?\s*/i, '')
+		.replace(/\s*```$/i, '')
+		.trim();
+}
+
 // DeepSeek call — lift the serverless timeout off the default so a slow model
 // response doesn't 504 (60s = Hobby-tier max).
 export const config = { maxDuration: 60 };
@@ -81,7 +92,16 @@ export const POST: RequestHandler = async (event) => {
 	}
 
 	if (!DEEPSEEK_API_KEY) {
-		return json({ error: 'DEEPSEEK_API_KEY is not set.' }, { status: 500 });
+		// A config outage is on us, not the applicant — flag it as an engine failure
+		// so the client shows the honest "try again, you weren't charged" message.
+		console.error('DEEPSEEK_API_KEY is not set — cannot run evaluations.');
+		return json(
+			{
+				error: 'The prediction engine is temporarily unavailable. Please try again shortly.',
+				code: 'ai_upstream'
+			},
+			{ status: 502 }
+		);
 	}
 
 	let body: any;
@@ -168,43 +188,99 @@ Metadata:
 - Intended Major: ${major || 'Undecided'}
 - This school is the applicant's ED/REA choice: ${edSlug === slug ? 'YES' : 'NO'}`;
 
-	try {
-		const response = await fetch('https://api.deepseek.com/chat/completions', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${DEEPSEEK_API_KEY}`
-			},
-			body: JSON.stringify({
-				model: 'deepseek-chat',
-				messages: [
-					{ role: 'system', content: systemPrompt },
-					{ role: 'user', content: userPrompt }
-				],
-				temperature: 0.3,
-				response_format: { type: 'json_object' }
-			})
-		});
+	// A single simulation fans out to ~39 of these calls, so a paying customer only
+	// gets a full inbox if this route is resilient. The old code did
+	// `JSON.parse(completion.choices[0].message.content)` with NO upstream-status
+	// check — so ANY DeepSeek error (depleted balance → 402, rate limit → 429,
+	// bad key → 401, transient 5xx) or empty/fenced content threw and every school
+	// returned a generic 500. The client silently skipped all 39 and showed "No
+	// predictions came back. Add more detail and try again." — blaming the user for
+	// an outage they paid to avoid. We now (a) check response.ok, (b) retry
+	// transient upstream failures, (c) guard empty/fenced content, and (d) surface a
+	// distinct `code: 'ai_upstream'` (502) so the client can say "our engine is
+	// down, you weren't charged" instead of "your input is too thin."
+	const MAX_ATTEMPTS = 3;
+	let lastUpstreamDetail = 'unknown error';
 
-		const completion = await response.json();
-		const content = completion?.choices?.[0]?.message?.content;
-		const decision = JSON.parse(content);
+	for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+		try {
+			const response = await fetch('https://api.deepseek.com/chat/completions', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${DEEPSEEK_API_KEY}`
+				},
+				body: JSON.stringify({
+					model: 'deepseek-chat',
+					messages: [
+						{ role: 'system', content: systemPrompt },
+						{ role: 'user', content: userPrompt }
+					],
+					temperature: 0.3,
+					response_format: { type: 'json_object' }
+				})
+			});
 
-		// Normalize outcome. HONESTY: never fabricate a rejection when the model
-		// didn't actually return a clear verdict — fall back to the neutral
-		// 'waitlist' and flag it uncertain rather than showing a hard 'deny' the
-		// model never gave.
-		const normalized = String(decision.outcome || '').toLowerCase();
-		if (['admit', 'deny', 'waitlist', 'defer'].includes(normalized)) {
-			decision.outcome = normalized;
-		} else {
-			decision.outcome = 'waitlist';
-			decision.uncertain = true;
+			if (!response.ok) {
+				// Read the upstream body for logs (best-effort) so we can see WHY.
+				const detail = await response.text().catch(() => '');
+				lastUpstreamDetail = `HTTP ${response.status} ${detail.slice(0, 500)}`;
+				console.error(`DeepSeek ${response.status} for ${slug} (attempt ${attempt}):`, detail);
+				// 429/5xx are transient — retry. Everything else (401 bad key, 402
+				// insufficient balance, 400 bad request) won't fix itself on retry.
+				const retryable = response.status === 429 || response.status >= 500;
+				if (retryable && attempt < MAX_ATTEMPTS) continue;
+				break;
+			}
+
+			const completion = await response.json();
+			const content = completion?.choices?.[0]?.message?.content;
+			if (!content || !String(content).trim()) {
+				lastUpstreamDetail = 'empty completion content';
+				console.error(`DeepSeek returned empty content for ${slug} (attempt ${attempt}).`);
+				if (attempt < MAX_ATTEMPTS) continue;
+				break;
+			}
+
+			let decision: any;
+			try {
+				decision = JSON.parse(stripCodeFences(String(content)));
+			} catch (parseErr) {
+				lastUpstreamDetail = 'unparseable model output';
+				console.error(`Unparseable DeepSeek output for ${slug} (attempt ${attempt}):`, content);
+				if (attempt < MAX_ATTEMPTS) continue;
+				break;
+			}
+
+			// Normalize outcome. HONESTY: never fabricate a rejection when the model
+			// didn't actually return a clear verdict — fall back to the neutral
+			// 'waitlist' and flag it uncertain rather than showing a hard 'deny' the
+			// model never gave.
+			const normalized = String(decision.outcome || '').toLowerCase();
+			if (['admit', 'deny', 'waitlist', 'defer'].includes(normalized)) {
+				decision.outcome = normalized;
+			} else {
+				decision.outcome = 'waitlist';
+				decision.uncertain = true;
+			}
+
+			return json({ decision, applicantSummary });
+		} catch (error) {
+			// Network-level throw (fetch rejected, JSON body read failed). Retry.
+			lastUpstreamDetail = error instanceof Error ? error.message : String(error);
+			console.error(`Error in ${slug} evaluation (attempt ${attempt}):`, error);
+			if (attempt < MAX_ATTEMPTS) continue;
 		}
-
-		return json({ decision, applicantSummary });
-	} catch (error) {
-		console.error(`Error in ${slug} evaluation:`, error);
-		return json({ error: `Evaluation for ${schoolName} failed.` }, { status: 500 });
 	}
+
+	// All attempts exhausted: this is an UPSTREAM/engine failure, not bad user
+	// input. The distinct code lets the client show an honest, non-blaming message.
+	return json(
+		{
+			error: `The prediction engine didn't respond for ${schoolName}. This is on us, not your application. Please try again in a moment.`,
+			code: 'ai_upstream',
+			detail: lastUpstreamDetail
+		},
+		{ status: 502 }
+	);
 };

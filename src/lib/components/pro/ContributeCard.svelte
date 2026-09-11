@@ -225,7 +225,7 @@
 				<path d="M20 6 9 17l-5-5" />
 			</svg>
 		</div>
-		<h3 class="mt-3 text-lg font-semibold text-slate-900">Thank you — you're helping the next class 💙</h3>
+		<h3 class="mt-3 text-lg font-semibold text-slate-900">Thank you. You're helping the next class 💙</h3>
 		<p class="mx-auto mt-1 max-w-md text-sm text-slate-500">
 			Your {anonymous ? 'anonymized' : ''} profile is now part of the community corpus. It powers
 			Community Admits and sharper predictions for everyone.
@@ -248,7 +248,7 @@
 				</svg>
 			</div>
 			<div class="min-w-0">
-				<h3 class="text-lg font-semibold text-slate-900">Help the next class — share your results</h3>
+				<h3 class="text-lg font-semibold text-slate-900">Help the next class: share your results</h3>
 				<p class="mt-0.5 text-sm text-slate-500">
 					Your anonymized profile powers Community Admits and better predictions for everyone.
 				</p>
@@ -318,7 +318,7 @@
 					<span class="rounded-full border border-slate-200 bg-white px-2.5 py-1 text-xs text-slate-700">ACT {act}</span>
 				{/if}
 				{#if gpaWeighted == null && gpaUnweighted == null && sat == null && act == null}
-					<span class="text-xs italic text-slate-400">No academics on file — add them in your profile to enrich your contribution.</span>
+					<span class="text-xs italic text-slate-400">No academics on file. Add them in your profile to enrich your contribution.</span>
 				{/if}
 			</div>
 
@@ -364,7 +364,7 @@
 		<div class="mt-4 flex items-center justify-between rounded-xl border border-slate-200 p-3">
 			<div class="pr-4">
 				<p class="text-sm font-medium text-slate-900">Share anonymously</p>
-				<p class="text-xs text-slate-500">Hide your name — only your stats &amp; outcomes are shared.</p>
+				<p class="text-xs text-slate-500">Hide your name. Only your stats &amp; outcomes are shared.</p>
 			</div>
 			<button
 				type="button"

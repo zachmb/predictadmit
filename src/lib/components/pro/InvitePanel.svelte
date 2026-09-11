@@ -43,7 +43,7 @@
 	}
 
 	async function shareLink() {
-		const shareText = `Chart your college admissions odds with PredictAdmit — join me and earn +${INVITE_REWARD.points} points.`;
+		const shareText = `Chart your college admissions odds with PredictAdmit. Join me and earn +${INVITE_REWARD.points} points.`;
 		if (typeof navigator !== 'undefined' && typeof navigator.share === 'function') {
 			try {
 				await navigator.share({ title: 'PredictAdmit', text: shareText, url: referralLink });
@@ -133,7 +133,7 @@
 			Invite friends, earn +{INVITE_REWARD.points} points
 		</p>
 		<p class="mt-1 text-xs leading-snug text-slate-500">
-			Share your link — you both get rewarded when they join.
+			Share your link. You both get rewarded when they join.
 		</p>
 		{#if $points.total > 0}
 			<p class="mt-1 text-xs font-semibold text-[#0052CC]">
@@ -241,7 +241,7 @@
 		{:else}
 			<p class="mt-3 text-sm font-semibold text-slate-900">Add your stats</p>
 			<p class="mt-1 text-xs leading-snug text-slate-500">
-				GPA, test scores, activities & awards sharpen every prediction — takes under a minute.
+				GPA, test scores, activities & awards sharpen every prediction. Takes under a minute.
 			</p>
 			<button
 				type="button"

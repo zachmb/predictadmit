@@ -493,7 +493,7 @@
 </script>
 
 <svelte:head>
-	<title>PredictAdmit — See your decision before decision day</title>
+	<title>PredictAdmit: See your decision before decision day</title>
 	<meta
 		name="description"
 		content="Open a pixel-for-pixel replica of any of 39 top-school decision portals and see accepted or denied today. Portal simulations are free. Want the AI to predict your actual decisions? That's Pro."
@@ -759,7 +759,7 @@
 				</h2>
 				<p class="text-lg text-slate-500">
 					Open any of the 39 portals and read your letter before it is written. <span
-						class="text-[#0052CC] font-bold">Every portal simulation is free — the AI that predicts your real decisions is Pro.</span
+						class="text-[#0052CC] font-bold">Every portal simulation is free. The AI that predicts your real decisions is Pro.</span
 					>
 				</p>
 			</div>
@@ -874,7 +874,7 @@
 						The essay workshop, <br /> one school at a time.
 					</h2>
 					<p class="text-lg text-slate-500 leading-relaxed font-medium tracking-tight">
-						It reads your whole application, then works school by school — because what Harvard
+						It reads your whole application, then works school by school, because what Harvard
 						wants and what MIT wants are not the same thing. You get feedback on your actual essays,
 						not a generic checklist.
 					</p>
@@ -1185,7 +1185,7 @@
 				id="sim-disclosure-title"
 				class="mb-3 text-xs font-bold uppercase tracking-wider text-slate-500"
 			>
-				Important disclosure — simulation only
+				Important disclosure: simulation only
 			</p>
 			<p class="text-[13px] leading-relaxed text-slate-600">
 				PredictAdmit is an independent educational tool and is <strong>not affiliated with,
@@ -1215,7 +1215,7 @@
 					on:click={acknowledgeSimDisclosure}
 					class="rounded-lg bg-[#0052CC] px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-[#0052CC]/20 transition-colors hover:bg-[#003d99]"
 				>
-					I understand — view the rehearsal →
+					I understand, view the rehearsal →
 				</button>
 			</div>
 		</div>

@@ -40,8 +40,8 @@
 		<!-- Intro -->
 		<p class="text-xl text-slate-600 leading-relaxed font-light mb-6">
 			Research is one of the few high school activities a reader can't wave off as padding. A club
-			presidency is easy to inflate. A real project — with data, a mentor, and something someone can
-			actually read at the end — proves you can do college-level work before you get to college.
+			presidency is easy to inflate. A real project (with data, a mentor, and something someone can
+			actually read at the end) proves you can do college-level work before you get to college.
 			Nobody tells you how to land one, though. That's what this guide is for.
 		</p>
 		<p class="text-lg text-slate-600 leading-relaxed mb-12">
@@ -56,7 +56,7 @@
 		</h2>
 		<p class="text-lg text-slate-600 leading-relaxed mb-5">
 			Selective colleges aren't looking for well-rounded students so much as well-rounded
-			<em>classes</em> built from students who are pointy — deeply committed to something. Research
+			<em>classes</em> built from students who are pointy, meaning deeply committed to something. Research
 			is the cleanest signal of pointiness for a simple reason: it's hard, it's specific, and it
 			produces artifacts. When an admissions reader sees a co-authored paper, a science fair award,
 			or an independent project with real methodology, they read it as evidence of three things at
@@ -141,14 +141,14 @@
 		<p class="text-lg text-slate-600 leading-relaxed mb-4">
 			The gold standard. You work under a professor or graduate student on an active project,
 			usually starting with grunt work (cleaning data, running assays) and earning responsibility.
-			These are hardest to land — but they're often <em>free or paid</em>, and they generate the
+			These are hardest to land, but they're often <em>free or paid</em>, and they generate the
 			best letters. Most students find these by cold-emailing (see below), not by applying to a
 			posting.
 		</p>
 
 		<h3 class="text-xl font-bold text-slate-900 mt-8 mb-3">2. Independent research</h3>
 		<p class="text-lg text-slate-600 leading-relaxed mb-4">
-			You design and run your own project — a data analysis, a computational model, a literature
+			You design and run your own project: a data analysis, a computational model, a literature
 			review that leads to an original hypothesis. Zero gatekeepers, which means the ceiling is your
 			own discipline. A finished, well-documented independent project can rival a lab position; an
 			abandoned one is worth nothing.
@@ -157,7 +157,7 @@
 		<h3 class="text-xl font-bold text-slate-900 mt-8 mb-3">3. Competitions</h3>
 		<p class="text-lg text-slate-600 leading-relaxed mb-4">
 			Regeneron STS, ISEF, and their regional feeders give your work a verifiable, prestigious
-			stamp. They pair beautifully with lab or independent work — the research is the substance, the
+			stamp. They pair beautifully with lab or independent work: the research is the substance, the
 			competition is the credential.
 		</p>
 
@@ -171,7 +171,7 @@
 		<p class="text-lg text-slate-600 leading-relaxed mb-6">
 			Programs that charge thousands to "guarantee" a publication are the weakest path. Admissions
 			officers know which ones are pay-to-play. If your family is spending real money, spend it on
-			access and mentorship — not on a byline that readers discount on sight.
+			access and mentorship, not on a byline that readers discount on sight.
 		</p>
 
 		<!-- Section: cold email -->
@@ -214,13 +214,13 @@
 			</div>
 			<div class="font-mono text-sm text-slate-700 leading-relaxed space-y-3">
 				<p>
-					<span class="text-slate-400">Subject:</span> Prospective high school research assistant —
+					<span class="text-slate-400">Subject:</span> Prospective high school research assistant,
 					interested in your [topic] work
 				</p>
 				<p>Dear Professor [Last Name],</p>
 				<p>
 					I'm a junior at [High School] planning to study [intended major]. I read your recent paper
-					on [specific paper / finding] and was struck by [one specific, genuine detail] — it's the
+					on [specific paper / finding] and was struck by [one specific, genuine detail]. It's the
 					kind of question I'd love to work on.
 				</p>
 				<p>
@@ -245,7 +245,7 @@
 			Independent research when no lab will take you
 		</h2>
 		<p class="text-lg text-slate-600 leading-relaxed mb-5">
-			If 40 emails go unanswered — which happens — you don't need permission to do research. Some of
+			If 40 emails go unanswered (which happens), you don't need permission to do research. Some of
 			the most impressive high school projects are self-directed. The trick is to pick a question
 			narrow enough to finish and to leave a paper trail.
 		</p>
@@ -268,8 +268,8 @@
 			</li>
 		</ul>
 		<p class="text-lg text-slate-600 leading-relaxed mb-6">
-			Finish it. A completed independent project — posted publicly, entered in a competition, or
-			submitted to a high school research journal — beats a lab role you quit in three weeks.
+			Finish it. A completed independent project (posted publicly, entered in a competition, or
+			submitted to a high school research journal) beats a lab role you quit in three weeks.
 		</p>
 
 		<!-- Section: competitions and summer programs -->
@@ -282,19 +282,19 @@
 		</p>
 		<ul class="list-disc pl-6 space-y-2 text-lg text-slate-600 mb-5">
 			<li>
-				<strong class="text-slate-900">Regeneron STS &amp; ISEF</strong> — the most recognized STEM
+				<strong class="text-slate-900">Regeneron STS &amp; ISEF:</strong> the most recognized STEM
 				research competitions in the U.S. Elite, but even regional science fairs feed them.
 			</li>
 			<li>
-				<strong class="text-slate-900">RSI (Research Science Institute)</strong> — free, exceptionally
+				<strong class="text-slate-900">RSI (Research Science Institute):</strong> free, exceptionally
 				selective, and a near-magic line on any application.
 			</li>
 			<li>
-				<strong class="text-slate-900">SSP, Garcia, Clark Scholars, PRIMES</strong> — mentored,
+				<strong class="text-slate-900">SSP, Garcia, Clark Scholars, PRIMES:</strong> mentored,
 				low-cost or free summer research across the sciences and math.
 			</li>
 			<li>
-				<strong class="text-slate-900">Subject-specific journals &amp; olympiads</strong> — from the
+				<strong class="text-slate-900">Subject-specific journals &amp; olympiads:</strong> from the
 				Concord Review (history) to student research journals in biology and CS.
 			</li>
 		</ul>
@@ -380,7 +380,7 @@
 					When should I start looking for research?
 				</h3>
 				<p class="text-lg text-slate-600 leading-relaxed">
-					Sophomore spring or the summer before junior year is ideal — early enough to finish a
+					Sophomore spring or the summer before junior year is ideal: early enough to finish a
 					meaningful project before applications, late enough to have real skills. That said, a
 					focused junior-year start still works if you move fast.
 				</p>
@@ -400,7 +400,7 @@
 					Are paid research programs worth it?
 				</h3>
 				<p class="text-lg text-slate-600 leading-relaxed">
-					Sometimes — but for the mentorship and access, not the "guaranteed publication."
+					Sometimes, but for the mentorship and access, not the "guaranteed publication."
 					Admissions officers discount pay-to-play credentials. If you can land a free lab role or
 					run a strong independent project, that carries far more weight.
 				</p>

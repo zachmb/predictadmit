@@ -6,7 +6,7 @@
 	<title>How PredictAdmit simulations work · Disclaimer</title>
 	<meta
 		name="description"
-		content="PredictAdmit's admission portals are unofficial simulations for practice — not real decisions, not affiliated with any university. Here's how it works and what's free."
+		content="PredictAdmit's admission portals are unofficial simulations for practice. They're not real decisions and not affiliated with any university. Here's how it works and what's free."
 	/>
 </svelte:head>
 
@@ -51,7 +51,7 @@
 				</div>
 				<h2 class="mt-3 text-base font-bold text-slate-900">Portal decision simulations</h2>
 				<p class="mt-1.5 text-sm leading-relaxed text-slate-600">
-					Open any school's portal and rehearse opening day — accepted, denied, waitlisted. As many
+					Open any school's portal and rehearse opening day: accepted, denied, waitlisted. As many
 					times as you want, no card required.
 				</p>
 			</div>
@@ -68,7 +68,7 @@
 				<h2 class="mt-3 text-base font-bold text-slate-900">AI decision predictions</h2>
 				<p class="mt-1.5 text-sm leading-relaxed text-slate-600">
 					Having the AI read your real application and predict your likely decision at each school is
-					a Pro feature — your first prediction is free, then $25 once for lifetime access (or $9.99/mo).
+					a Pro feature. Your first prediction is free, then $25 once for lifetime access (or $9.99/mo).
 					It's an estimate. Not a guarantee, and never an official decision.
 				</p>
 			</div>

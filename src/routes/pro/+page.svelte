@@ -875,11 +875,11 @@
 		},
 		{
 			q: 'Is this a subscription?',
-			a: "Two ways: Lifetime is a single $25 payment — no recurring charge, nothing to cancel, yours forever. Or Monthly at $9.99/mo while you're applying (2½ months of Monthly = Lifetime, so most people just get Lifetime). Both cover all 39 schools, unlimited re-runs, and the essay workshop. Your first prediction is free, so you see the value before you pay."
+			a: "You have two options. Lifetime is a single $25 payment. No recurring charge, nothing to cancel, yours forever. Or Monthly at $9.99 a month while you're applying. About two and a half months of Monthly costs the same as Lifetime, so most people just get Lifetime. Both cover all 39 schools, unlimited re-runs, and the essay workshop. Your first prediction is free, so you see the value before you pay."
 		},
 		{
 			q: 'What if I only care about one school?',
-			a: "Run your free prediction first, then unlock the full deep-dive for any one school for a one-time $4.99 — the AI decision simulation, the breakdown of why, and essay grading for that school."
+			a: "Run your free prediction first, then unlock the full deep-dive for any one school for a one-time $4.99. That covers the AI decision simulation, the breakdown of why, and essay grading for that school."
 		},
 		{
 			q: 'How good is the essay grader, really?',
@@ -893,7 +893,7 @@
 </script>
 
 <svelte:head>
-	<title>PredictAdmit Pro — see your real decisions before they land</title>
+	<title>PredictAdmit Pro: see your real decisions before they land</title>
 	<meta
 		name="description"
 		content="Pro runs the AI on your actual profile: predicted decisions across 39 schools, deep-dive analysis, and blunt essay grading. Your first prediction is free, then $25 once for lifetime access (or $9.99/mo)."
@@ -1774,7 +1774,7 @@
 								</div>
 								<p class="text-lg font-bold text-slate-700">Map the story behind your application</p>
 								<p class="max-w-xs text-sm leading-relaxed text-slate-400">
-									Click anywhere to drop an idea — an experience, an obsession, a value — or hit
+									Click anywhere to drop an idea, whether an experience, an obsession, or a value, or hit
 									<span class="font-semibold text-[#0052CC]">AI&nbsp;Brainstorm</span> to auto-generate themes from your profile, then
 									<span class="font-semibold text-[#0052CC]">Analyze&nbsp;Themes</span> to find the thread that ties them together.
 								</p>
@@ -2276,144 +2276,194 @@
 	</div>
 {:else}
 	<!-- SIGN IN PROMPT -->
-	<main class="min-h-screen bg-slate-50 font-sans text-slate-900 flex flex-col items-center pt-24 pb-24 px-6 relative overflow-hidden">
-		<div class="max-w-4xl w-full mx-auto space-y-16 relative z-10">
-			<!-- Hero Header -->
+	<main class="min-h-screen bg-slate-50 font-sans text-slate-900 flex flex-col items-center pt-20 pb-24 px-6 relative overflow-hidden">
+		<div class="max-w-5xl w-full mx-auto space-y-20 relative z-10">
+			<!-- Hero -->
 			<div class="text-center space-y-6 max-w-3xl mx-auto">
-				<div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-100 backdrop-blur-sm mb-4">
+				<div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-100">
 					<span class="w-2 h-2 bg-[#0052CC] rounded-full animate-pulse"></span>
 					<span class="text-xs font-bold text-[#0052CC] tracking-wide uppercase">Lifetime access · $25 once</span>
 				</div>
-				<h1 class="text-4xl md:text-6xl font-black tracking-tight text-slate-900 leading-tight">
+				<h1 class="text-4xl md:text-6xl font-black tracking-tight text-slate-900 leading-[1.05]">
 					PredictAdmit <span class="text-[#0052CC]">Pro</span><br />
-					<span class="text-slate-500">Less than a pizza. For good.</span>
+					<span class="text-slate-500">Less than a pizza. Yours for good.</span>
 				</h1>
-				<p class="text-lg text-slate-500 max-w-xl mx-auto leading-relaxed mt-6">
-					Your first prediction is free. Full access — the AI reading your <span class="italic">actual</span> profile and calling your decisions across every school, then breaking down why and grading your essays — is <span class="font-semibold text-slate-700">$25 once</span> (or $9.99/mo). A fraction of what a private counselor charges.
+				<p class="text-lg text-slate-500 max-w-xl mx-auto leading-relaxed">
+					Your first prediction is free. Pro points the AI at your <span class="italic">real</span> application, calls your decision at every school, shows you exactly why, and grades your essays. It's <span class="font-semibold text-slate-700">$25 once</span>, or $9.99 a month. A private counselor charges thousands for the same read.
+				</p>
+				<div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+					<button
+						onclick={() => startUpgrade('lifetime')}
+						disabled={isProcessing}
+						class="w-full sm:w-auto rounded-2xl bg-[#0052CC] px-7 py-3.5 text-base font-black text-white shadow-lg shadow-blue-600/25 transition hover:bg-[#0047b3] active:scale-[0.99] disabled:opacity-50"
+					>
+						{isProcessing ? 'Taking you to checkout…' : 'Get Lifetime for $25'}
+					</button>
+					<a
+						href="/ai"
+						class="w-full sm:w-auto rounded-2xl border border-slate-300 bg-white px-7 py-3.5 text-center text-base font-bold text-slate-700 transition hover:border-slate-400 hover:bg-slate-50"
+					>
+						Try your first prediction free
+					</a>
+				</div>
+				<p class="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-xs font-medium text-slate-400">
+					<span>First prediction free</span>
+					<span class="text-slate-300">·</span>
+					<span>Nothing to install</span>
+					<span class="text-slate-300">·</span>
+					<span>Secure checkout by Stripe</span>
 				</p>
 			</div>
 
-			<!-- Main Content Grid -->
-			<div class="grid md:grid-cols-2 gap-12 items-center">
-				<!-- Pricing card — good-better-best, one-time -->
-				<div class="relative group group/card perspective-1000">
-					<div class="relative rounded-[2rem] bg-white p-8 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.1)] border border-slate-100 space-y-4">
-						<p class="text-center text-xs leading-relaxed text-slate-500">
-							A private admissions counselor runs <span class="font-semibold text-slate-700">$5,000+</span> a season. Pick your plan:
-						</p>
+			<!-- How it works: three concrete steps so the product is tangible. -->
+			<div class="grid gap-4 sm:grid-cols-3">
+				{#each [
+					{ n: '1', t: 'Paste your application', d: 'Drop in your essays, activities, honors, and scores. Or upload the file and let the AI read it.' },
+					{ n: '2', t: 'Get your decisions', d: 'Watch accept, waitlist, and deny letters land in a real-feeling inbox across all 39 top schools.' },
+					{ n: '3', t: 'Fix what is weak, re-run', d: 'Use the workshop to tighten essays and framing, then run it again and watch your odds move.' }
+				] as step}
+					<div class="rounded-2xl border border-slate-200 bg-white p-5">
+						<div class="grid h-8 w-8 place-items-center rounded-full bg-[#0052CC] text-sm font-black text-white">{step.n}</div>
+						<p class="mt-3 font-bold text-slate-900">{step.t}</p>
+						<p class="mt-1 text-sm leading-relaxed text-slate-500">{step.d}</p>
+					</div>
+				{/each}
+			</div>
 
-						<!-- Lifetime — the target -->
+			<!-- Pricing: three plans, Lifetime elevated. -->
+			<div>
+				<p class="text-center text-sm text-slate-500">
+					A private admissions counselor runs <span class="font-semibold text-slate-700">$5,000+</span> a season. Pick your plan.
+				</p>
+				<div class="mt-6 grid gap-4 md:grid-cols-3 md:items-stretch">
+					<!-- Lifetime: the target -->
+					<div class="relative flex flex-col rounded-3xl border-2 border-[#0052CC] bg-white p-6 shadow-xl shadow-blue-600/10 md:-mt-2 md:mb-2">
+						<span class="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-[#0052CC] px-3 py-1 text-[10px] font-black uppercase tracking-wide text-white shadow">Best value</span>
+						<p class="text-sm font-bold text-[#0052CC] uppercase tracking-wide">Lifetime</p>
+						<p class="mt-2 flex items-baseline gap-1">
+							<span class="text-4xl font-black text-slate-900">$25</span>
+							<span class="text-sm font-semibold text-slate-400">once</span>
+						</p>
+						<p class="mt-2 text-sm leading-relaxed text-slate-500">Everything below, forever. No subscription and nothing to renew.</p>
 						<button
 							onclick={() => startUpgrade('lifetime')}
 							disabled={isProcessing}
-							class="relative w-full overflow-hidden rounded-2xl border-2 border-[#0052CC] bg-[#0052CC] px-6 py-5 text-left text-white shadow-xl transition hover:bg-[#0047b3] hover:scale-[1.01] disabled:opacity-50 disabled:hover:scale-100"
+							class="mt-5 w-full rounded-2xl bg-[#0052CC] px-5 py-3.5 text-base font-black text-white shadow-lg shadow-blue-600/25 transition hover:bg-[#0047b3] active:scale-[0.99] disabled:opacity-50"
 						>
-							<span class="absolute right-4 top-4 rounded-full bg-white/20 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide ring-1 ring-white/30">Best value</span>
-							<span class="block text-2xl font-black">{isProcessing ? 'Taking you to checkout…' : 'Lifetime — $25 once'}</span>
-							<span class="mt-1 block max-w-[18rem] text-sm leading-relaxed text-blue-100">All 39 schools, unlimited re-runs, every deep-dive, and the essay workshop — forever, no subscription.</span>
+							{isProcessing ? 'Taking you to checkout…' : 'Get Lifetime'}
 						</button>
+					</div>
 
-						<!-- Monthly -->
+					<!-- Monthly -->
+					<div class="flex flex-col rounded-3xl border border-slate-200 bg-white p-6">
+						<p class="text-sm font-bold text-slate-500 uppercase tracking-wide">Monthly</p>
+						<p class="mt-2 flex items-baseline gap-1">
+							<span class="text-4xl font-black text-slate-900">$9.99</span>
+							<span class="text-sm font-semibold text-slate-400">per month</span>
+						</p>
+						<p class="mt-2 text-sm leading-relaxed text-slate-500">Full access while you're applying. Cancel anytime. About two and a half months costs the same as Lifetime.</p>
 						<button
 							onclick={() => startUpgrade('monthly')}
 							disabled={isProcessing}
-							class="w-full rounded-2xl border border-slate-200 px-6 py-4 text-left transition hover:border-slate-300 hover:bg-slate-50 disabled:opacity-50"
+							class="mt-auto w-full rounded-2xl border-2 border-slate-200 px-5 py-3.5 text-base font-bold text-slate-900 transition hover:border-slate-300 hover:bg-slate-50 disabled:opacity-50"
 						>
-							<span class="flex items-baseline justify-between gap-2">
-								<span class="text-base font-bold text-slate-900">Monthly</span>
-								<span class="text-base font-bold text-slate-900">$9.99<span class="text-sm font-medium text-slate-400">/mo</span></span>
-							</span>
-							<span class="mt-0.5 block text-sm leading-relaxed text-slate-500">Full access while you're applying. Cancel anytime. (2½ months = Lifetime.)</span>
+							Start Monthly
 						</button>
+					</div>
 
-						<!-- Single school — the floor (needs a chosen school, so start free in /ai) -->
+					<!-- Single school: the floor. Needs a chosen school, so start free in /ai. -->
+					<div class="flex flex-col rounded-3xl border border-slate-200 bg-white p-6">
+						<p class="text-sm font-bold text-slate-500 uppercase tracking-wide">Just one school</p>
+						<p class="mt-2 flex items-baseline gap-1">
+							<span class="text-4xl font-black text-slate-900">$4.99</span>
+						</p>
+						<p class="mt-2 text-sm leading-relaxed text-slate-500">Run your free prediction first, then unlock the full deep-dive for any single school.</p>
 						<a
 							href="/ai"
-							class="block w-full rounded-2xl border border-slate-200 px-6 py-4 text-left transition hover:border-slate-300 hover:bg-slate-50"
+							class="mt-auto w-full rounded-2xl border-2 border-slate-200 px-5 py-3.5 text-center text-base font-bold text-slate-900 transition hover:border-slate-300 hover:bg-slate-50"
 						>
-							<span class="flex items-baseline justify-between gap-2">
-								<span class="text-base font-bold text-slate-900">Just one school</span>
-								<span class="text-base font-bold text-slate-900">$4.99</span>
-							</span>
-							<span class="mt-0.5 block text-sm leading-relaxed text-slate-500">Run your free prediction first, then unlock the deep-dive for any one school.</span>
+							Start free, then unlock one
 						</a>
+					</div>
+				</div>
+				<p class="mt-4 text-center text-xs text-slate-400">
+					{googleSignedIn
+						? 'One-time payment · instant access · secure checkout by Stripe'
+						: 'Sign in with Google at checkout, then it is yours.'}
+				</p>
+			</div>
 
-						<p class="text-center text-xs text-slate-400">
-							{googleSignedIn
-								? 'One-time payment · instant access · secure checkout by Stripe'
-								: 'Sign in with Google at checkout — then it’s yours.'}
-						</p>
+			<!-- Everything you get: the full feature set, in two honest groups. -->
+			<div class="space-y-10">
+				<div class="text-center max-w-2xl mx-auto">
+					<h2 class="text-3xl font-black tracking-tight text-slate-900">Everything Pro gives you</h2>
+					<p class="mt-3 text-slate-500">Two jobs, done properly. See exactly where you stand today, then fix what's holding you back. Both come with Lifetime.</p>
+				</div>
+
+				<!-- Group 1: see where you stand -->
+				<div>
+					<p class="text-xs font-bold uppercase tracking-wider text-[#0052CC]">See exactly where you stand</p>
+					<div class="mt-4 grid gap-4 sm:grid-cols-2">
+						{#each [
+							{ t: 'Unlimited decision simulations', d: 'Run your real application through the AI and get a predicted accept, waitlist, or deny at all 39 top schools. Change an essay, an activity, or a score and re-run it as many times as you want. No cap.', d1: 'M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15' },
+							{ t: 'Real portal simulator', d: 'Open a realistic acceptance or rejection portal for any school and feel the moment before it is real. It is the rehearsal that makes people actually fix their application.', d1: 'M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z' },
+							{ t: 'Deep-dive on every decision', d: 'A five-part breakdown of each verdict: academics, activities, fit, intellect, and character. It names what is dragging you down and the one change that would move it.', d1: 'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z' },
+							{ t: 'Chance Me profile and stats', d: 'Save your profile once and see your realistic odds at any school, with a clear read on where you are strong and where you are thin.', d1: 'M16 8v8m-4-5v5M8 14v2m-2 5h12a2 2 0 002-2V5a2 2 0 00-2-2H6a2 2 0 00-2 2v14a2 2 0 002 2z' }
+						] as f}
+							<div class="flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-5">
+								<div class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-[#0052CC]">
+									<svg class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d={f.d1} /></svg>
+								</div>
+								<div>
+									<p class="font-bold text-slate-900">{f.t}</p>
+									<p class="mt-1 text-sm leading-relaxed text-slate-500">{f.d}</p>
+								</div>
+							</div>
+						{/each}
 					</div>
 				</div>
 
-				<!-- Features List -->
-				<div class="space-y-8">
-					<h3 class="text-2xl font-bold text-slate-900">What Pro actually gives you</h3>
-					<p class="-mt-4 text-slate-500">Two things: <span class="font-semibold text-slate-700">unlimited simulations</span> to see exactly where you stand, and <span class="font-semibold text-slate-700">the workshop</span> to actually fix it.</p>
-					<div class="grid gap-6">
-						<!-- Pillar 1: unlimited AI simulations (the headline benefit) -->
-						<div class="flex items-start gap-4 rounded-2xl border border-blue-100 bg-blue-50/50 p-4 -m-4">
-							<div class="w-10 h-10 rounded-xl bg-[#0052CC] flex items-center justify-center shrink-0">
-								<svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
-							</div>
-							<div>
-								<p class="font-bold text-slate-900">Unlimited AI decision simulations</p>
-								<p class="text-sm text-slate-500">Run your real application through the AI and get your predicted decision — accept, deny, or waitlist — at all 39 top schools. Then change an essay, an activity, a score, and <span class="font-semibold text-slate-700">re-run it as many times as you want</span> to watch your odds move. Running the simulation is free; Pro unlocks every decision to read plus the deep-dive on each — no cap.</p>
-							</div>
-						</div>
-
-						<!-- Pillar 2: the workshop -->
-						<p class="text-xs font-bold uppercase tracking-wider text-slate-400 pt-1">The workshop — where you fix it</p>
-						<!-- Feature item -->
-						<div class="flex items-start gap-4">
-							<div class="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center shrink-0">
-								<svg class="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.989-2.386l-.548-.547z" /></svg>
-							</div>
-							<div>
-								<p class="font-bold text-slate-900">Narrative Mind Map</p>
-								<p class="text-sm text-slate-500">Dump the experiences, jobs, and obsessions that make you you onto a board, and the AI finds the thread that ties them into one application story.</p>
-							</div>
-						</div>
-						
-						<div class="flex items-start gap-4">
-							<div class="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center shrink-0">
-								<svg class="w-5 h-5 text-[#0052CC]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
-							</div>
-							<div>
-								<p class="font-bold text-slate-900">Essay editor with AI feedback</p>
-								<p class="text-sm text-slate-500">Draft every supplement in one place, then hand it to the AI for the kind of notes an admissions reader would give. It marks up your lines and tells you what's weak. You write every word — it never writes for you.</p>
-							</div>
-						</div>
-
-						<div class="flex items-start gap-4">
-							<div class="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center shrink-0">
-								<svg class="w-5 h-5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
-							</div>
-							<div>
-								<p class="font-bold text-slate-900">Per-school strategy notes</p>
-								<p class="text-sm text-slate-500">What each of the top 50+ schools actually weighs, and how to angle your application for that specific reader instead of writing one generic app for all of them.</p>
-							</div>
-						</div>
-
-						<!-- Pro tier -->
-						<div class="flex items-start gap-4 rounded-2xl border border-blue-100 bg-blue-50/50 p-4 -m-4">
-							<div class="w-10 h-10 rounded-xl bg-[#0052CC] flex items-center justify-center shrink-0">
-								<svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-							</div>
-							<div>
-								<div class="flex items-center gap-2">
-									<p class="font-bold text-slate-900">All of it, no limits, with Pro</p>
-									<span class="text-[10px] uppercase font-bold tracking-wide text-[#0052CC] bg-white border border-blue-100 rounded-full px-2 py-0.5">$25 lifetime</span>
+				<!-- Group 2: the workshop -->
+				<div>
+					<p class="text-xs font-bold uppercase tracking-wider text-[#0052CC]">The workshop, where you fix it</p>
+					<div class="mt-4 grid gap-4 sm:grid-cols-2">
+						{#each [
+							{ t: 'Essay editor with AI feedback', d: 'Draft every supplement in one place, then hand it to the AI for the notes an admissions reader would give. It marks up weak lines and tells you why. You write every word. It never writes for you.', d1: 'M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z' },
+							{ t: 'Narrative Mind Map', d: 'Dump the experiences, jobs, and obsessions that make you you onto a board, and the AI finds the thread that ties them into one clear application story.', d1: 'M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z' },
+							{ t: 'AI counselor, any hour', d: 'Ask the questions you would pay a consultant for. Where to apply, how to frame a gap, what a school wants. It answers in plain language, whenever you need it.', d1: 'M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 3v-3z' },
+							{ t: 'Per-school strategy notes', d: 'What each of the top 50+ schools actually weighs, and how to angle your application for that specific reader instead of writing one generic app for all of them.', d1: 'M12 14l9-5-9-5-9 5 9 5z M12 14l6.16-3.42a12 12 0 01.84 4.42 12 12 0 01-14 0 12 12 0 01.84-4.42L12 14z' }
+						] as f}
+							<div class="flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-5">
+								<div class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-blue-100">
+									<svg class="h-5 w-5 text-[#0052CC]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d={f.d1} /></svg>
 								</div>
-								<p class="text-sm text-slate-500">Run the decision simulation as often as you like, read the full deep-dive on every school, grade essays until they're right. Your first prediction is free; $25 once (or $9.99/mo) unlocks the rest.</p>
+								<div>
+									<p class="font-bold text-slate-900">{f.t}</p>
+									<p class="mt-1 text-sm leading-relaxed text-slate-500">{f.d}</p>
+								</div>
 							</div>
-						</div>
+						{/each}
 					</div>
+				</div>
+
+				<!-- Everything, no limits, banner. -->
+				<div class="flex flex-col items-center gap-3 rounded-3xl border border-blue-100 bg-blue-50 p-6 text-center sm:flex-row sm:justify-between sm:text-left">
+					<div>
+						<p class="font-black text-slate-900">All of it, no limits, with Lifetime</p>
+						<p class="mt-0.5 text-sm text-slate-600">Run the simulation as often as you like, read every deep-dive, and grade essays until they're right. Your first prediction is free. $25 once unlocks the rest.</p>
+					</div>
+					<button
+						onclick={() => startUpgrade('lifetime')}
+						disabled={isProcessing}
+						class="w-full shrink-0 rounded-2xl bg-[#0052CC] px-6 py-3 text-sm font-black text-white shadow-lg shadow-blue-600/25 transition hover:bg-[#0047b3] active:scale-[0.99] disabled:opacity-50 sm:w-auto"
+					>
+						Get Lifetime · $25
+					</button>
 				</div>
 			</div>
 
-			<!-- Social proof (GPT-vision: add testimonials/success stories) -->
-			<div class="pt-16 border-t border-slate-200">
+			<!-- Social proof -->
+			<div class="pt-4">
 				<div class="text-center mb-8">
 					<div class="inline-flex items-center gap-1 text-[#0052CC]">
 						{#each Array(5) as _}
@@ -2423,7 +2473,7 @@
 					<p class="mt-2 text-sm font-semibold text-slate-500">Loved by 5,000+ applicants</p>
 				</div>
 				<div class="grid gap-4 sm:grid-cols-3 max-w-5xl mx-auto">
-					{#each [{ q: 'Opening the fake Stanford portal genuinely scared me. Then I rewrote two essays I thought were fine. Worth it.', n: 'Priya', r: 'Class of 2025' }, { q: 'The essay grader flagged the cliché opening I was about to submit — and pointed straight at my weakest spot.', n: 'Marcus', r: 'First-gen applicant' }, { q: 'I ran my list against every school until the ones that didn’t fit fell off on their own. Easiest money I spent all season.', n: 'Elena', r: 'Class of 2026' }] as t}
+					{#each [{ q: 'Opening the fake Stanford portal genuinely scared me. Then I rewrote two essays I thought were fine. Worth it.', n: 'Priya', r: 'Class of 2025' }, { q: 'The essay grader caught the cliché opening I was about to submit, then pointed straight at my weakest spot.', n: 'Marcus', r: 'First-gen applicant' }, { q: 'I ran my list against every school until the ones that did not fit fell off on their own. Easiest money I spent all season.', n: 'Elena', r: 'Class of 2026' }] as t}
 						<div class="rounded-2xl border border-slate-200 bg-white p-6 text-left">
 							<p class="text-sm leading-relaxed text-slate-700">“{t.q}”</p>
 							<div class="mt-4 flex items-center gap-2.5">
@@ -2435,13 +2485,20 @@
 				</div>
 			</div>
 
-			<!-- Vision Section -->
-			<div class="pt-16">
+			<!-- Closing CTA -->
+			<div>
 				<div class="bg-blue-900 rounded-[2.5rem] p-12 text-center text-white space-y-6">
 					<h3 class="text-3xl font-bold text-white">The consultant's read, without the consultant's bill.</h3>
 					<p class="text-blue-100 text-lg max-w-2xl mx-auto leading-relaxed">
-						Private counselors charge thousands a season for the same judgment call: is this kid getting in, and what should they fix. Lifetime access is $25, once. Every simulation, every deep dive, every essay pass, forever. Your first prediction is free, so you only pay once it's already told you something you didn't know.
+						Private counselors charge thousands a season for one judgment call: is this student getting in, and what should they fix. Lifetime access is $25, once. Every simulation, every deep-dive, every essay pass, forever. Your first prediction is free, so you only pay once it has already told you something you didn't know.
 					</p>
+					<button
+						onclick={() => startUpgrade('lifetime')}
+						disabled={isProcessing}
+						class="rounded-2xl bg-white px-7 py-3.5 text-base font-black text-[#0052CC] shadow-lg transition hover:bg-blue-50 active:scale-[0.99] disabled:opacity-50"
+					>
+						{isProcessing ? 'Taking you to checkout…' : 'Get Lifetime for $25'}
+					</button>
 				</div>
 			</div>
 		</div>

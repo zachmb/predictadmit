@@ -173,7 +173,7 @@
 									Active
 								</span>
 							</div>
-							<p class="mt-1 text-sm font-medium text-slate-700">Free — unlocked</p>
+							<p class="mt-1 text-sm font-medium text-slate-700">Free · unlocked</p>
 							<p class="mt-0.5 text-sm text-slate-500">
 								Every Pro feature is included. No card, no limits.
 							</p>

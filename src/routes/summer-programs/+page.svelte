@@ -104,10 +104,10 @@
 </script>
 
 <svelte:head>
-	<title>Summer Programs for High School Students — PredictAdmit</title>
+	<title>Summer Programs for High School Students | PredictAdmit</title>
 	<meta
 		name="description"
-		content="A checked catalog of summer programs for high schoolers — one entry per program, real cost tiers, typical deadlines, and a straight read on what each one signals to selective colleges."
+		content="A checked catalog of summer programs for high schoolers: one entry per program, real cost tiers, typical deadlines, and a straight read on what each one signals to selective colleges."
 	/>
 </svelte:head>
 
@@ -130,8 +130,8 @@
 			</p>
 			<p class="mt-4 max-w-2xl text-xs leading-relaxed text-slate-400">
 				How the list works: every program appears once, under the organization that actually runs it.
-				Costs are grouped into tiers, and deadlines are the typical windows from recent years —
-				<span class="font-semibold text-slate-500">check the current deadline on the program's own
+				Costs are grouped into tiers, and deadlines are the typical windows from recent years.
+				<span class="font-semibold text-slate-500">Check the current deadline on the program's own
 				site</span> before you plan around it.
 			</p>
 		</div>
@@ -295,7 +295,7 @@
 		<div class="rounded-2xl border border-amber-200 bg-amber-50 p-6">
 			<h2 class="mb-2 font-bold text-amber-900">Programs you can't just apply to</h2>
 			<p class="mb-4 text-sm leading-relaxed text-amber-800">
-				Some famous programs have no application form at all — you win your way up a
+				Some famous programs have no application form at all. You win your way up a
 				competition pipeline. Any catalog that shows these with an "application deadline" has it wrong.
 			</p>
 			<ul class="space-y-2 text-sm text-amber-900">

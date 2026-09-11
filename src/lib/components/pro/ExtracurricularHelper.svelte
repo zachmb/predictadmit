@@ -43,7 +43,7 @@
 			});
 			const data = await res.json();
 			if (!res.ok) {
-				error = data?.error ?? 'That didn’t go through — try again.';
+				error = data?.error ?? 'That didn’t go through. Try again.';
 				return;
 			}
 			analysis = data.analysis as Analysis;
@@ -67,7 +67,7 @@
 	<header class="mb-6">
 		<h1 class="text-2xl font-black tracking-tight text-slate-900">Extracurricular Helper</h1>
 		<p class="mt-1 text-sm text-slate-500">
-			A blunt, AO-style read of your activities — tiered by real impact, with the one move that
+			A blunt, AO-style read of your activities, tiered by real impact, with the one move that
 			raises each. It grades what you list; it never invents anything.
 		</p>
 	</header>
@@ -84,7 +84,7 @@
 		<textarea
 			id="ec-acts"
 			bind:value={activities}
-			placeholder="One per line — role, organization, and what you did (hours/weeks and any awards if you have them)."
+			placeholder="One per line: role, organization, and what you did (hours/weeks and any awards if you have them)."
 			class="mt-1.5 h-44 w-full resize-y rounded-xl border border-slate-200 p-3 text-sm outline-none focus:border-[#0052CC] focus:ring-4 focus:ring-blue-600/10"
 		></textarea>
 		<button
@@ -110,7 +110,7 @@
 			<h2 class="text-xs font-bold uppercase tracking-wide text-slate-500">What you'll get</h2>
 			<p class="mt-1.5 text-sm text-slate-600">Every activity sorted into the four tiers admissions officers actually use:</p>
 			<div class="mt-3 grid gap-2 sm:grid-cols-2">
-				{#each [['Standout', 'National impact — the rare, résumé-defining kind', 'bg-[#0052CC] text-white'], ['Strong', 'State/regional leadership or real, sustained results', 'bg-emerald-100 text-emerald-800'], ['Solid', 'School-level involvement — good, but expected', 'bg-slate-200 text-slate-700'], ['Filler', 'Brief or passive — little real impact', 'bg-amber-100 text-amber-800']] as [tier, desc, cls]}
+				{#each [['Standout', 'National impact: the rare, résumé-defining kind', 'bg-[#0052CC] text-white'], ['Strong', 'State/regional leadership or real, sustained results', 'bg-emerald-100 text-emerald-800'], ['Solid', 'School-level involvement: good, but expected', 'bg-slate-200 text-slate-700'], ['Filler', 'Brief or passive: little real impact', 'bg-amber-100 text-amber-800']] as [tier, desc, cls]}
 					<div class="flex items-start gap-2.5 rounded-xl border border-slate-200 bg-white p-3">
 						<span class="shrink-0 rounded-full px-2.5 py-0.5 text-[11px] font-bold {cls}">{tier}</span>
 						<span class="text-xs leading-snug text-slate-600">{desc}</span>

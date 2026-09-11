@@ -80,7 +80,7 @@
 					<h2 class="text-[28px] font-normal text-slate-800 tracking-tight mb-2">
 						Sign in to PredictAdmit
 					</h2>
-					<p class="text-[15px] text-slate-600">One tap with Google — we don't do passwords.</p>
+					<p class="text-[15px] text-slate-600">One tap with Google. We don't do passwords.</p>
 				</div>
 
 					<!-- Google-only auth -->
@@ -99,7 +99,7 @@
 						</button>
 
 						<p class="text-[13px] text-slate-500 text-center leading-relaxed">
-							PredictAdmit uses Google sign-in only — no passwords to create or remember.
+							PredictAdmit uses Google sign-in only. No passwords to create or remember.
 						</p>
 
 						<p class="text-[12px] text-slate-400 text-center leading-[1.6]">

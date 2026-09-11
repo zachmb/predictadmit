@@ -57,22 +57,22 @@
 
 	const fullFeatures = [
 		'Unlimited AI admissions rehearsals across all 39 schools',
-		'Every deep-dive decision analysis — 5 scored dimensions, AO-style critique, and an improvement plan per school',
+		'Every deep-dive decision analysis: 5 scored dimensions, AO-style critique, and an improvement plan per school',
 		'Unlimited essay grading: 10 inline annotations + harsh and honest AO reads on every draft',
 		'AI counselor with your full application in context',
 		'Narrative mind-map, schools explorer, and chance-me profile',
-		'Every future school and tool we add — included'
+		'Every future school and tool we add, included'
 	];
 
 	const schoolFeatures = [
-		'Full deep-dive analysis for your school — 5 scored dimensions + improvement plan',
+		'Full deep-dive analysis for your school: 5 scored dimensions + improvement plan',
 		'Unblurred decision breakdown on the results page',
 		'Unlimited essay grading targeted at your school',
-		'Yours forever — one payment, no subscription'
+		'Yours forever. One payment, no subscription'
 	];
 
 	const freeFeatures = [
-		'Run the AI across all 39 schools — free',
+		'Run the AI across all 39 schools, free',
 		'Open your first predicted decision free',
 		'Clearly labeled fictional portals and decision letters',
 		'No credit card required'
@@ -80,10 +80,10 @@
 </script>
 
 <svelte:head>
-	<title>PredictAdmit – Pricing</title>
+	<title>PredictAdmit: Pricing</title>
 	<meta
 		name="description"
-		content="Your first AI admissions rehearsal is free. Unlock one school for $4.99, or get Lifetime access — every school, every tool, forever — for $25 once (or $9.99/mo)."
+		content="Your first AI admissions rehearsal is free. Unlock one school for $4.99, or get Lifetime access (every school, every tool, forever) for $25 once (or $9.99/mo)."
 	/>
 </svelte:head>
 
@@ -95,7 +95,7 @@
 			</h1>
 			<p class="text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
 				Private admissions consultants run $200–500 an hour and $5,000+ per application season.
-				Lifetime access is $25 — once (or $9.99/mo). Start free and see where you stand first.
+				Lifetime access is $25, once (or $9.99/mo). Start free and see where you stand first.
 			</p>
 		</header>
 
@@ -131,7 +131,7 @@
 					<span class="text-sm text-slate-400 font-medium mb-1.5">once, per school</span>
 				</div>
 				<p class="mt-2 text-xs text-slate-500">
-					Everything Pro knows about one school — the one you actually care about.
+					Everything Pro knows about one school: the one you actually care about.
 				</p>
 				<ul class="mt-5 space-y-3 text-sm text-slate-600 flex-1">
 					{#each schoolFeatures as f}
@@ -154,7 +154,7 @@
 					disabled={isProcessing}
 					class="mt-3 w-full rounded-2xl border border-slate-200 px-6 py-3.5 text-sm font-bold text-slate-700 hover:bg-slate-50 transition-colors disabled:opacity-50"
 				>
-					Unlock this school — $4.99
+					Unlock this school for $4.99
 				</button>
 			</div>
 
@@ -169,7 +169,7 @@
 					<span class="text-sm text-slate-400 font-medium mb-1.5">once, forever</span>
 				</div>
 				<p class="mt-2 text-xs text-slate-500">
-					One payment, nothing to cancel — or go monthly at $9.99/mo below.
+					One payment, nothing to cancel. Or go monthly at $9.99/mo below.
 				</p>
 				<ul class="mt-5 space-y-3 text-sm text-slate-600 flex-1">
 					{#each fullFeatures as f}
@@ -184,14 +184,14 @@
 					disabled={isProcessing}
 					class="mt-8 w-full rounded-2xl bg-[#0052CC] px-6 py-3.5 text-sm font-bold text-white shadow-xl hover:bg-[#0047b3] hover:-translate-y-0.5 transition-all disabled:opacity-50"
 				>
-					{isProcessing ? 'Starting checkout…' : 'Get Lifetime — $25 once →'}
+					{isProcessing ? 'Starting checkout…' : 'Get Lifetime for $25 once →'}
 				</button>
 				<button
 					onclick={() => startCheckout('monthly')}
 					disabled={isProcessing}
 					class="mt-2 w-full rounded-2xl border border-slate-200 px-6 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors disabled:opacity-50"
 				>
-					Or go Monthly — $9.99/mo
+					Or go Monthly at $9.99/mo
 				</button>
 			</div>
 		</section>
@@ -208,7 +208,7 @@
 			</div>
 			<div class="rounded-2xl border border-[#0052CC]/30 bg-blue-50/50 p-5">
 				<div class="text-2xl font-bold text-[#0052CC]">$25</div>
-				<div class="mt-1 text-xs text-slate-600">Lifetime — every school, every tool, forever</div>
+				<div class="mt-1 text-xs text-slate-600">Lifetime: every school, every tool, forever</div>
 			</div>
 		</section>
 
@@ -218,8 +218,8 @@
 				<div class="space-y-4">
 					<h3 class="text-2xl font-bold text-blue-900">Why this pricing?</h3>
 					<p class="text-lg text-slate-600 font-medium leading-relaxed">
-						The feedback loop consultants sell by the hour — a blunt read of your application,
-						school by school, with a concrete plan to fix it — is what Lifetime gives you
+						The feedback loop consultants sell by the hour (a blunt read of your application,
+						school by school, with a concrete plan to fix it) is what Lifetime gives you
 						unlimited, for less than one-tenth of a single consultant hour. Only care about one dream school?
 						A single-school unlock gets you its full analysis for $4.99.
 					</p>

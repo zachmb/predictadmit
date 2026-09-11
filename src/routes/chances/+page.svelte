@@ -76,13 +76,13 @@
 </script>
 
 <svelte:head>
-	<title>Free College Chances Calculator — Your Odds at 39 Top Schools | PredictAdmit</title>
+	<title>Free College Chances Calculator: Your Odds at 39 Top Schools | PredictAdmit</title>
 	<meta
 		name="description"
-		content="Free college chances calculator — no sign-up. Enter your GPA, test score, and activities to see your admission odds at Harvard, Stanford, MIT and 36 other top schools in seconds, sorted into likely, target, and reach."
+		content="Free college chances calculator, no sign-up. Enter your GPA, test score, and activities to see your admission odds at Harvard, Stanford, MIT and 36 other top schools in seconds, sorted into likely, target, and reach."
 	/>
 	<link rel="canonical" href="https://predictadmit.com/chances" />
-	<meta property="og:title" content="Free College Chances Calculator — Your Odds at 39 Top Schools" />
+	<meta property="og:title" content="Free College Chances Calculator: Your Odds at 39 Top Schools" />
 	<meta property="og:description" content="See your admission odds at 39 top schools in seconds. No sign-up." />
 	<meta property="og:url" content="https://predictadmit.com/chances" />
 	<script type="application/ld+json">
@@ -109,7 +109,7 @@
 			</h1>
 			<p class="mx-auto mt-4 max-w-lg text-base leading-relaxed text-slate-500 sm:text-lg">
 				See your admission odds at <span class="font-semibold text-slate-700">39 top schools</span> in
-				about 10 seconds. No account, no credit card — just the math.
+				about 10 seconds. No account, no credit card, just the math.
 			</p>
 		</header>
 
@@ -146,7 +146,7 @@
 			</div>
 			<div class="mt-5">
 				<label for="c-acts" class="block text-xs font-bold uppercase tracking-wide text-slate-500">Top activities & awards <span class="font-normal normal-case text-slate-400">(optional, boosts accuracy)</span></label>
-				<textarea id="c-acts" bind:value={activities} placeholder="e.g. Robotics captain — state finals · Research intern · Varsity soccer" class="mt-1.5 h-20 w-full resize-y rounded-xl border border-slate-200 p-3 text-sm outline-none focus:border-[#0052CC] focus:ring-4 focus:ring-blue-600/10"></textarea>
+				<textarea id="c-acts" bind:value={activities} placeholder="e.g. Robotics captain, state finals · Research intern · Varsity soccer" class="mt-1.5 h-20 w-full resize-y rounded-xl border border-slate-200 p-3 text-sm outline-none focus:border-[#0052CC] focus:ring-4 focus:ring-blue-600/10"></textarea>
 			</div>
 			<button onclick={calculate} class="mt-5 w-full rounded-2xl bg-[#0052CC] px-6 py-4 text-base font-bold text-white shadow-lg shadow-blue-600/25 transition hover:bg-[#0047b3] active:scale-[0.99]">
 				Calculate my chances →
@@ -182,10 +182,10 @@
 				<div class="rounded-3xl bg-[#0052CC] p-6 text-center text-white sm:p-8">
 					<h3 class="text-xl font-black sm:text-2xl">That's the fast math. Want the real read?</h3>
 					<p class="mx-auto mt-2 max-w-md text-sm leading-relaxed text-blue-100">
-						This calculator uses your stats alone. PredictAdmit's AI reads your <span class="font-semibold text-white">actual essays and activities</span> and calls your decision — accept, deny, or waitlist — school by school. Your first prediction is free.
+						This calculator uses your stats alone. PredictAdmit's AI reads your <span class="font-semibold text-white">actual essays and activities</span> and calls your decision (accept, deny, or waitlist) school by school. Your first prediction is free.
 					</p>
 					<a href="/ai" onclick={() => track('chances_to_ai_click')} class="mt-5 inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3.5 text-base font-bold text-[#0052CC] transition hover:bg-blue-50 active:scale-[0.99]">
-						Run my real prediction — free →
+						Run my real prediction, free →
 					</a>
 				</div>
 			</div>

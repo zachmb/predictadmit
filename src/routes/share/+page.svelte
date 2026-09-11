@@ -43,8 +43,8 @@
 	// --- Meta for link previews ---
 	const metaTitle = $derived(
 		isAdmit
-			? `${name} got into ${schoolName}! 🎉 — PredictAdmit`
-			: `${name}'s ${schoolName} decision — PredictAdmit`
+			? `${name} got into ${schoolName}! 🎉 · PredictAdmit`
+			: `${name}'s ${schoolName} decision · PredictAdmit`
 	);
 
 	const metaDescription = $derived(

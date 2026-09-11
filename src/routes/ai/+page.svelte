@@ -105,6 +105,17 @@
 	let showPaywallModal = $state(false);
 	let paywallMode = $state<'simulation' | 'ocr' | 'deepDive' | 'decision' | null>(null);
 	let paywallContextDecision = $state<AiDecision | null>(null);
+	// Paywall uses the proven select-then-continue pattern (Quizlet/Calm/TIDE):
+	// the user picks a plan tile, then one persistent CTA advances. Lifetime is
+	// pre-selected as the best-value default.
+	let selectedPlan = $state<'lifetime' | 'monthly' | 'single'>('lifetime');
+	function continuePlan() {
+		if (selectedPlan === 'single' && paywallContextDecision) {
+			startCheckout('single', paywallContextDecision);
+		} else if (selectedPlan === 'monthly' || selectedPlan === 'lifetime') {
+			startUpgrade(selectedPlan);
+		}
+	}
 	// Retained for compatibility; the paywall now shows the one-time tiers directly
 	// (no deferred-pricing toggle), so this is effectively unused.
 	let showPlans = $state(false);
@@ -590,9 +601,10 @@
 		}));
 	}
 
-	function openPaywall(mode: 'simulation' | 'ocr' | 'deepDive', decision?: AiDecision) {
+	function openPaywall(mode: 'simulation' | 'ocr' | 'deepDive' | 'decision', decision?: AiDecision) {
 		paywallMode = mode;
 		paywallContextDecision = decision ?? null;
+		selectedPlan = 'lifetime';
 		showPlans = false;
 		showPaywallModal = true;
 		track('paywall_view', { mode, school: decision?.slug, variant: abFreeDecisions });
@@ -615,7 +627,7 @@
 		if (typeof window === 'undefined') return;
 		const url = `${window.location.origin}/pro`;
 		const text =
-			'I found PredictAdmit — its AI predicts my real admissions decisions across all 39 schools. Lifetime is $25 (or $9.99/mo), way cheaper than a counselor. Can we?';
+			'I found PredictAdmit. Its AI predicts my real admissions decisions across all 39 schools. Lifetime is $25 (or $9.99/mo), way cheaper than a counselor. Can we?';
 		try {
 			if (navigator.share) {
 				await navigator.share({ title: 'PredictAdmit', text, url });
@@ -626,7 +638,7 @@
 		}
 		try {
 			await navigator.clipboard.writeText(`${text} ${url}`);
-			alert('Copied — paste it in a text to your parent.');
+			alert('Copied. Paste it in a text to your parent.');
 		} catch {
 			window.location.href = `mailto:?subject=${encodeURIComponent('PredictAdmit')}&body=${encodeURIComponent(`${text} ${url}`)}`;
 		}
@@ -705,7 +717,7 @@
 
 		if (!ensureHasSomeInput()) {
 			aiError =
-				'Give it something to read first — an essay, your activities, honors, or transcript.';
+				'Give it something to read first: an essay, your activities, honors, or transcript.';
 			return;
 		}
 
@@ -742,6 +754,12 @@
 				googleName
 			};
 
+			// Count schools that failed because OUR engine misfired (upstream/server
+			// error), as opposed to simply returning nothing. If every school fails
+			// this way we must NOT tell a paying customer to "add more detail" — the
+			// problem is on our side, so we say so honestly (and they weren't charged).
+			let upstreamFailures = 0;
+
 			// 3. Loop through each school slug
 			// Note: Ensure SCHOOLS is imported or defined in your script
 			for (const { slug } of SCHOOLS) {
@@ -771,6 +789,11 @@
 				}
 
 				if (!res.ok || !(myValidId === currentStoreVersion)) {
+					// An engine/upstream failure (our fault) vs. a benign skip. 502 +
+					// code:'ai_upstream' from the server means DeepSeek/config misfired.
+					if (data?.code === 'ai_upstream' || res.status >= 500) {
+						upstreamFailures++;
+					}
 					console.error(`Error evaluating ${slug}:`, data?.error);
 					continue; // Skip failed schools and move to the next
 				}
@@ -794,8 +817,11 @@
 			// --- Post-Loop Logic (Finalizing the run) ---
 
 			if (!aiDecisions.length) {
-				aiError =
-					'No predictions came back. Add more detail and try again.';
+				// Honesty rule: if our engine misfired, don't blame the applicant's
+				// input. Tell them it's on us and they weren't charged.
+				aiError = upstreamFailures
+					? "Our prediction engine hit a snag and couldn't finish. This is on us, not your application. You haven't been charged, so please try again in a moment."
+					: 'No predictions came back. Add more detail and try again.';
 			} else {
 				track('simulation_complete', { schools: aiDecisions.length });
 				hasUsedFreeSimulation = true;
@@ -949,7 +975,7 @@
 			ocrText = (data.text ?? '').trim();
 
 			if (!ocrText) {
-				ocrError = 'Read the file but found no text — it’s probably a scanned image or locked.';
+				ocrError = 'Read the file but found no text. It’s probably a scanned image or locked.';
 			} else {
 				// Mark free OCR as used after a successful extraction
 				hasUsedFreePdfOcr = true;
@@ -1042,7 +1068,7 @@
 		parseNotice = '';
 		parsedFieldKeys = [];
 		if (source.length < 20) {
-			parseError = 'Need a bit more to work with — paste a resume, a brag sheet, or your activities list.';
+			parseError = 'Need a bit more to work with. Paste a resume, a brag sheet, or your activities list.';
 			return;
 		}
 
@@ -1126,8 +1152,8 @@
 				</h1>
 
 				<p class="mx-auto max-w-xl text-base sm:text-lg leading-relaxed text-slate-600">
-					PredictAdmit's AI reads your real application and calls your decision — accept, deny, or
-					waitlist — at all 39 top schools.
+					PredictAdmit's AI reads your real application and calls your decision (accept, deny, or
+					waitlist) at all 39 top schools.
 					<span class="font-semibold text-slate-900">Your first prediction is free.</span>
 				</p>
 
@@ -1150,7 +1176,7 @@
 				</div>
 
 				<p class="mx-auto max-w-md text-xs leading-relaxed text-slate-400">
-					An estimate from NACAC factor weights — not an official decision, and never affiliated with any school.
+					An estimate from NACAC factor weights. Not an official decision, and never affiliated with any school.
 					<a href="/methodology" class="font-medium text-[#0052CC] hover:underline">Methodology →</a>
 				</p>
 			</header>
@@ -1174,7 +1200,7 @@
 						>
 							<div class="space-y-1.5">
 								<h2 class="font-bold text-xl text-slate-900 tracking-tight">Your application</h2>
-								<p class="text-xs text-slate-500">Stays on your side — we don't keep it</p>
+								<p class="text-xs text-slate-500">Stays on your side. We don't keep it</p>
 							</div>
 
 							<div class="flex items-center gap-3">
@@ -1367,7 +1393,7 @@
 											id="paste-blob"
 											bind:value={pasteBlob}
 											rows="4"
-											placeholder="Dump it all here — GPA, scores, activities, awards, essay. We'll split it into the right boxes."
+											placeholder="Dump it all here: GPA, scores, activities, awards, essay. We'll split it into the right boxes."
 											class="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 transition-all shadow-sm resize-y font-sans"
 										></textarea>
 										<button
@@ -1444,7 +1470,7 @@
 								<details class="rounded-2xl border border-slate-200/60 bg-slate-50/40">
 									<summary class="cursor-pointer px-5 py-4 text-sm font-bold text-slate-900 flex items-center gap-2">
 										
-										Supplemental essays <span class="ml-1 text-xs font-normal text-slate-500">— optional, sharpens per-school fit</span>
+										Supplemental essays <span class="ml-1 text-xs font-normal text-slate-500">(optional, sharpens per-school fit)</span>
 									</summary>
 									<div class="px-2 pb-2">
 								<div
@@ -1703,7 +1729,7 @@ Picking one applies that school's real early-round odds
 														d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
 													/>
 												</svg>
-												<span>Sign in — run your free prediction</span>
+												<span>Sign in to run your free prediction</span>
 											{:else if $userProfile.isSubmittingAI}
 												<span class="flex items-center gap-3">
 													<span
@@ -1758,7 +1784,7 @@ Picking one applies that school's real early-round odds
 							</div>
 
 							<p class="mt-3 text-center text-xs leading-relaxed text-slate-500">
-								It's a prediction, not a decision — and it can miss. Treat it as a dry run, not
+								It's a prediction, not a decision, and it can miss. Treat it as a dry run, not
 								a verdict to lose sleep over.
 							</p>
 
@@ -1802,23 +1828,25 @@ See what we read from your file
 					<p
 						class="px-6 py-2 text-[11px] leading-snug text-slate-500 bg-slate-50 border-b border-slate-100"
 					>
-						These are the AI's best guess from what you gave it — estimates, not real or official
+						These are the AI's best guess from what you gave it. Estimates, not real or official
 						decisions. PredictAdmit isn't affiliated with any school.
 					</p>
 					<!-- Conversion moment: the free prediction has landed. A non-Pro user who has
 					     used their one free run gets a warm, specific upsell (not a cold wall) to
 					     start the trial for unlimited re-runs + deep dives. Pro users never see it. -->
 					{#if !hasDeepDiveAccess && hasUsedFreeSimulation && !$userProfile.isSubmittingAI && aiDecisions.length}
-						<div class="border-b-2 border-blue-100 bg-blue-50 px-6 py-4">
+						<!-- Readability: solid brand blue with WHITE text (matches the AiUpsell
+						     toast). Never dark text on a blue tint, which reads poorly. -->
+						<div class="border-b-2 border-[#0047b3] bg-[#0052CC] px-6 py-4">
 							<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
 								<div>
-									<p class="text-sm font-bold text-slate-900">Your predictions are in — open any one free.</p>
-									<p class="mt-0.5 text-xs leading-relaxed text-slate-600">Reading more is $4.99 each (deep-dive included), or unlock all 39 + unlimited essay editing for $25 once ($9.99/mo).</p>
+									<p class="text-sm font-bold text-white">Your predictions are in. Open any one free.</p>
+									<p class="mt-0.5 text-xs leading-relaxed text-blue-100">Reading more is $4.99 each (deep-dive included), or unlock all 39 + unlimited essay editing for $25 once ($9.99/mo).</p>
 								</div>
 								<button
 									type="button"
 									onclick={() => openPaywall('simulation')}
-									class="shrink-0 inline-flex items-center justify-center rounded-xl bg-[#0052CC] px-5 py-2.5 text-sm font-bold text-white transition hover:bg-[#0047b3] active:scale-[0.99]"
+									class="shrink-0 inline-flex items-center justify-center rounded-xl bg-white px-5 py-2.5 text-sm font-bold text-[#0052CC] shadow-sm transition hover:bg-blue-50 active:scale-[0.99]"
 								>
 									Unlock everything
 								</button>
@@ -2067,82 +2095,149 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 				<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
 			</button>
 
-			<!-- Hero -->
-			<div class="bg-[#0052CC] px-7 pt-9 pb-7 text-center text-white">
-				<div class="mx-auto grid h-12 w-12 place-items-center rounded-2xl bg-white/15 ring-1 ring-white/25">
-					<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-				</div>
-				<p class="mt-4 text-[11px] font-bold uppercase tracking-[0.2em] text-blue-200">PredictAdmit Pro</p>
-				<h3 class="mt-1.5 text-2xl font-black leading-tight">
-					{paywallMode === 'decision'
-						? `Open ${paywallContextDecision?.school ?? 'this'} decision`
-						: paywallMode === 'deepDive'
-							? 'See exactly why'
-							: 'Find out where you actually stand'}
-				</h3>
-				<p class="mx-auto mt-2 max-w-[18rem] text-sm leading-relaxed text-blue-100">
-					{paywallMode === 'decision'
-						? 'You’ve used your one free decision. Open this one for $4.99 (deep-dive included), or unlock all 39.'
-						: paywallMode === 'deepDive'
-							? 'Open the full breakdown of this decision — what drove it, and what would move it.'
-							: 'Point the AI at your real application and get your decision, school by school.'}
-				</p>
-				<div class="mx-auto mt-3 inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-1 text-[11px] font-semibold ring-1 ring-white/20">
-					<svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-					{nextMilestonePhrase()}
+			<!-- Hero. Solid brand blue, white text. The deadline pill sits up top as
+			     the urgency anchor before any price is shown. -->
+			<div class="relative overflow-hidden bg-[#0052CC] px-7 pt-8 pb-7 text-center text-white">
+				<div class="pointer-events-none absolute -top-20 -right-16 h-48 w-48 rounded-full bg-white/10 blur-2xl"></div>
+				<div class="relative">
+					<div class="mx-auto flex w-fit items-center gap-1.5 rounded-full bg-white/15 px-3 py-1 text-[11px] font-semibold ring-1 ring-white/25">
+						<svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+						{nextMilestonePhrase()}
+					</div>
+					<h3 class="mt-4 text-[1.7rem] font-black leading-[1.15] tracking-tight">
+						{paywallMode === 'decision'
+							? `Open ${paywallContextDecision?.school ?? 'this'} decision`
+							: paywallMode === 'deepDive'
+								? 'See exactly why'
+								: 'Find out where you actually stand'}
+					</h3>
+					<p class="mx-auto mt-2 max-w-[19rem] text-sm leading-relaxed text-blue-100">
+						{paywallMode === 'decision'
+							? 'You’ve used your one free decision. Open this one for $4.99 (deep-dive included), or unlock all 39.'
+							: paywallMode === 'deepDive'
+								? 'Open the full breakdown of this decision. What drove it, and what would move it.'
+								: 'Point the AI at your real application and get your decision, school by school.'}
+					</p>
 				</div>
 			</div>
 
-			<!-- Options — kept short + clean; the full benefit tour lives in the
-			     carousel that the Lifetime/Monthly buttons launch. -->
-			<div class="px-7 py-6">
-				<p class="text-center text-xs leading-relaxed text-slate-500">
-					A private admissions counselor runs <span class="font-semibold text-slate-700">$5,000+</span>.
-					Lifetime access is <span class="font-semibold text-slate-700">$25, once</span>.
-				</p>
+			<!-- Body. Value anchor, scannable benefit list, then the plan tiles. -->
+			<div class="px-7 pt-6 pb-6">
+				<!-- Value anchor: what it's worth vs what it costs. -->
+				<div class="flex items-center justify-center gap-3 text-center">
+					<div class="leading-tight">
+						<p class="text-[11px] font-medium uppercase tracking-wide text-slate-400">Private counselor</p>
+						<p class="text-sm font-bold text-slate-400 line-through decoration-slate-300">$5,000+</p>
+					</div>
+					<svg class="h-4 w-4 shrink-0 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+					<div class="leading-tight">
+						<p class="text-[11px] font-bold uppercase tracking-wide text-[#0052CC]">Lifetime access</p>
+						<p class="text-lg font-black text-slate-900">$25, once</p>
+					</div>
+				</div>
 
-				<!-- Lifetime — the target -->
-				<button
-					onclick={() => startUpgrade('lifetime')}
-					disabled={checkoutLoading}
-					class="relative mt-4 w-full overflow-hidden rounded-2xl border-2 border-[#0052CC] bg-[#0052CC] px-5 py-4 text-left text-white shadow-lg shadow-blue-600/25 transition hover:bg-[#0047b3] active:scale-[0.99] disabled:opacity-50"
-				>
-					<span class="absolute right-3 top-3 rounded-full bg-white/20 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide ring-1 ring-white/30">Best value</span>
-					<span class="block text-base font-black">{checkoutLoading ? 'Opening checkout…' : 'Lifetime — $25 once'}</span>
-					<span class="mt-0.5 block max-w-[15rem] text-xs leading-relaxed text-blue-100">All 39 schools, unlimited re-runs, every deep-dive, and the essay workshop — forever, no subscription.</span>
-				</button>
-
-				<!-- Monthly -->
-				<button
-					onclick={() => startUpgrade('monthly')}
-					disabled={checkoutLoading}
-					class="mt-2.5 w-full rounded-2xl border border-slate-200 px-5 py-3.5 text-left transition hover:border-slate-300 hover:bg-slate-50 disabled:opacity-50"
-				>
-					<span class="flex items-baseline justify-between gap-2">
-						<span class="text-sm font-bold text-slate-900">Monthly</span>
-						<span class="text-sm font-bold text-slate-900">$9.99<span class="text-xs font-medium text-slate-400">/mo</span></span>
-					</span>
-					<span class="mt-0.5 block text-xs leading-relaxed text-slate-500">Full access while you're applying. Cancel anytime.</span>
-				</button>
-
-				<!-- Single school — the floor / downsell (only from a specific school) -->
-				{#if paywallContextDecision}
-					<button
-						onclick={() => startCheckout('single', paywallContextDecision ?? undefined)}
-						disabled={checkoutLoading}
-						class="mt-2.5 w-full rounded-2xl border border-slate-200 px-5 py-3.5 text-left transition hover:border-slate-300 hover:bg-slate-50 disabled:opacity-50"
-					>
-						<span class="flex items-baseline justify-between gap-2">
-							<span class="text-sm font-bold text-slate-900">
-								{paywallMode === 'decision' ? `Open ${paywallContextDecision.school}` : `Just ${paywallContextDecision.school}?`}
+				<!-- What's included: the benefits pulled out of button copy so they're
+				     scannable at a glance (proven paywall pattern). -->
+				<ul class="mt-5 space-y-2">
+					{#each ['All 39 top schools, scored', 'Unlimited re-runs as you edit', 'Every deep-dive breakdown', 'The full essay workshop'] as benefit}
+						<li class="flex items-center gap-2.5 text-sm text-slate-700">
+							<span class="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#0052CC]/10 text-[#0052CC]">
+								<svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
 							</span>
-							<span class="text-sm font-bold text-slate-900">$4.99</span>
-						</span>
-						<span class="mt-0.5 block text-xs leading-relaxed text-slate-500">Opens this decision and its full deep-dive — yours to keep.</span>
-					</button>
-				{/if}
+							{benefit}
+						</li>
+					{/each}
+				</ul>
 
-				<p class="mt-3 text-center text-[11px] text-slate-400">Instant access · secure checkout by Stripe</p>
+				<!-- Selectable plan tiles + one persistent CTA (Quizlet/Calm/TIDE
+				     pattern). Lifetime is pre-selected as best value. -->
+				<div class="mt-5 space-y-2.5">
+					<!-- Lifetime: the target -->
+					<button
+						type="button"
+						onclick={() => (selectedPlan = 'lifetime')}
+						aria-pressed={selectedPlan === 'lifetime'}
+						class="relative flex w-full items-center gap-3 rounded-2xl px-4 py-3.5 text-left transition {selectedPlan === 'lifetime' ? 'border-2 border-[#0052CC] bg-blue-50 shadow-sm' : 'border border-slate-200 hover:border-slate-300'}"
+					>
+						<span class="grid h-5 w-5 shrink-0 place-items-center rounded-full border-2 {selectedPlan === 'lifetime' ? 'border-[#0052CC] bg-[#0052CC]' : 'border-slate-300'}">
+							{#if selectedPlan === 'lifetime'}<span class="h-2 w-2 rounded-full bg-white"></span>{/if}
+						</span>
+						<span class="min-w-0 flex-1">
+							<span class="flex items-center gap-2">
+								<span class="text-sm font-bold text-slate-900">Lifetime</span>
+								<span class="rounded-full bg-[#0052CC] px-2 py-0.5 text-[9px] font-black uppercase tracking-wide text-white">Best value</span>
+							</span>
+							<span class="mt-0.5 block text-xs leading-relaxed text-slate-500">Everything above, forever. No subscription.</span>
+						</span>
+						<span class="shrink-0 text-right leading-tight">
+							<span class="block text-base font-black text-slate-900">$25</span>
+							<span class="block text-[10px] font-semibold uppercase tracking-wide text-slate-400">once</span>
+						</span>
+					</button>
+
+					<!-- Monthly -->
+					<button
+						type="button"
+						onclick={() => (selectedPlan = 'monthly')}
+						aria-pressed={selectedPlan === 'monthly'}
+						class="flex w-full items-center gap-3 rounded-2xl px-4 py-3.5 text-left transition {selectedPlan === 'monthly' ? 'border-2 border-[#0052CC] bg-blue-50 shadow-sm' : 'border border-slate-200 hover:border-slate-300'}"
+					>
+						<span class="grid h-5 w-5 shrink-0 place-items-center rounded-full border-2 {selectedPlan === 'monthly' ? 'border-[#0052CC] bg-[#0052CC]' : 'border-slate-300'}">
+							{#if selectedPlan === 'monthly'}<span class="h-2 w-2 rounded-full bg-white"></span>{/if}
+						</span>
+						<span class="min-w-0 flex-1">
+							<span class="text-sm font-bold text-slate-900">Monthly</span>
+							<span class="mt-0.5 block text-xs leading-relaxed text-slate-500">Full access while you're applying. Cancel anytime.</span>
+						</span>
+						<span class="shrink-0 text-right leading-tight">
+							<span class="block text-base font-black text-slate-900">$9.99</span>
+							<span class="block text-[10px] font-semibold uppercase tracking-wide text-slate-400">per month</span>
+						</span>
+					</button>
+
+					<!-- Single school: the floor / downsell (only from a specific school). -->
+					{#if paywallContextDecision}
+						<button
+							type="button"
+							onclick={() => (selectedPlan = 'single')}
+							aria-pressed={selectedPlan === 'single'}
+							class="flex w-full items-center gap-3 rounded-2xl px-4 py-3.5 text-left transition {selectedPlan === 'single' ? 'border-2 border-[#0052CC] bg-blue-50 shadow-sm' : 'border border-slate-200 hover:border-slate-300'}"
+						>
+							<span class="grid h-5 w-5 shrink-0 place-items-center rounded-full border-2 {selectedPlan === 'single' ? 'border-[#0052CC] bg-[#0052CC]' : 'border-slate-300'}">
+								{#if selectedPlan === 'single'}<span class="h-2 w-2 rounded-full bg-white"></span>{/if}
+							</span>
+							<span class="min-w-0 flex-1">
+								<span class="text-sm font-bold text-slate-900">
+									{paywallMode === 'decision' ? `Just ${paywallContextDecision.school}` : `Only ${paywallContextDecision.school}`}
+								</span>
+								<span class="mt-0.5 block text-xs leading-relaxed text-slate-500">This decision and its full deep-dive. Yours to keep.</span>
+							</span>
+							<span class="shrink-0 text-right leading-tight">
+								<span class="block text-base font-black text-slate-900">$4.99</span>
+							</span>
+						</button>
+					{/if}
+				</div>
+
+				<!-- One persistent CTA. Its label reflects the chosen plan. -->
+				<button
+					onclick={continuePlan}
+					disabled={checkoutLoading}
+					class="mt-4 w-full rounded-2xl bg-[#0052CC] px-5 py-4 text-base font-black text-white shadow-lg shadow-blue-600/25 transition hover:bg-[#0047b3] active:scale-[0.99] disabled:opacity-50"
+				>
+					{checkoutLoading
+						? 'Opening checkout…'
+						: selectedPlan === 'lifetime'
+							? 'Get Lifetime · $25 once'
+							: selectedPlan === 'monthly'
+								? 'Continue · $9.99/mo'
+								: 'Continue · $4.99'}
+				</button>
+
+				<p class="mt-3 flex items-center justify-center gap-1.5 text-[11px] font-medium text-slate-400">
+					<svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+					Instant access · secure checkout by Stripe
+				</p>
 
 				<button
 					onclick={sendToParent}
@@ -2183,7 +2278,7 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 				Reading your file…
 			{:else}
 				<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-				{googleSignedIn ? 'Run my predictions' : 'Sign in — run your free prediction'}
+				{googleSignedIn ? 'Run my predictions' : 'Sign in to run your free prediction'}
 			{/if}
 		</button>
 	</div>

@@ -9,7 +9,7 @@
 				<p class="text-sm text-slate-500 leading-relaxed mb-6">
 					A practice run for admissions decisions. Everything's labeled as a simulation, and every result shows the reasoning behind it.
 				</p>
-				<div class="text-xs text-slate-400">&copy; 2025 PredictAdmit.</div>
+				<div class="text-xs text-slate-400">&copy; 2026 PredictAdmit.</div>
 			</div>
 
 			<!-- Links Column 1 -->

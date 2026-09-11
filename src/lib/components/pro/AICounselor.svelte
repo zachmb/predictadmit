@@ -122,7 +122,7 @@
 				errorMsg = 'Your counselor returned an empty response. Please try again.';
 			}
 		} catch {
-			errorMsg = 'Network error — check your connection and try again.';
+			errorMsg = 'Network error. Check your connection and try again.';
 		} finally {
 			isThinking = false;
 			requestAnimationFrame(() => textareaEl?.focus());

@@ -277,9 +277,9 @@
 				</div>
 				<p class="mt-2 text-xs text-slate-500">
 					{#if completeCount === totalCount}
-						All set — your profile is complete!
+						All set. Your profile is complete!
 					{:else}
-						{completionPct}% complete — keep going.
+						{completionPct}% complete. Keep going.
 					{/if}
 				</p>
 			</div>
@@ -376,7 +376,7 @@
 									<textarea
 										rows="4"
 										value={bio}
-										placeholder="Tell your story in a few sentences — who you are, what drives you..."
+										placeholder="Tell your story in a few sentences: who you are, what drives you..."
 										oninput={(e) => setLoose('bio', e.currentTarget.value)}
 										class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#0052CC]/40 focus:border-[#0052CC]"
 									></textarea>
@@ -425,7 +425,7 @@
 									<textarea
 										rows="5"
 										value={$userProfile.applicationProfile.activities}
-										placeholder="List your extracurriculars — role, organization, and impact for each."
+										placeholder="List your extracurriculars: role, organization, and impact for each."
 										oninput={(e) => setAppProfile('activities', e.currentTarget.value)}
 										class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#0052CC]/40 focus:border-[#0052CC]"
 									></textarea>
@@ -535,7 +535,7 @@
 				Admit distributions
 			</h2>
 			<p class="text-sm text-slate-500 mb-4 -mt-1">
-				How admitted students at competitive universities are distributed — your value is
+				How admitted students at competitive universities are distributed. Your value is
 				highlighted in blue.
 			</p>
 

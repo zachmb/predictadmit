@@ -101,7 +101,7 @@
 </script>
 
 <svelte:head>
-	<title>Enter Your Stats – PredictAdmit</title>
+	<title>Enter Your Stats · PredictAdmit</title>
 </svelte:head>
 
 <main class="min-h-screen bg-slate-50 text-slate-900 font-sans flex flex-col">
@@ -290,7 +290,7 @@
 										id="s-acts"
 										rows="5"
 										bind:value={stats.activities}
-										placeholder="List clubs, jobs, projects — role, organization, and impact for each. Leadership and state/national scope help most."
+										placeholder="List clubs, jobs, projects. Include role, organization, and impact for each. Leadership and state/national scope help most."
 										class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0052CC]/30 focus:border-[#0052CC]"
 									></textarea>
 								</div>
@@ -302,7 +302,7 @@
 										id="s-awards"
 										rows="3"
 										bind:value={stats.awards}
-										placeholder="Competitions, scholarships, distinctions — with the level (school / state / national)."
+										placeholder="Competitions, scholarships, distinctions, with the level for each (school / state / national)."
 										class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0052CC]/30 focus:border-[#0052CC]"
 									></textarea>
 								</div>

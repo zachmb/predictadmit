@@ -196,7 +196,7 @@
 					</div>
 					<h2 class="text-3xl font-black text-slate-900 tracking-tight mb-3">Read like an admissions officer would</h2>
 					<p class="text-slate-500 font-medium leading-relaxed max-w-sm mx-auto mb-6">
-						Line-by-line notes on every supplement — the honest read a reader gives, with the weak lines marked and why. You write every word; it just makes them land.
+						Line-by-line notes on every supplement: the honest read a reader gives, with the weak lines marked and why. You write every word; it just makes them land.
 					</p>
 					<ul class="mx-auto mb-8 max-w-xs space-y-2 text-left">
 						{#each ['10 inline annotations per draft', 'Blunt, specific AO-style critique', 'Targeted to each school you apply to'] as f}
@@ -210,7 +210,7 @@
 						onclick={() => goto('/pro')}
 						class="group relative flex items-center justify-center gap-3 w-full max-w-xs mx-auto py-4 px-6 bg-[#0052CC] text-white rounded-2xl font-bold hover:bg-[#0047b3] transition-all shadow-xl shadow-blue-600/25"
 					>
-						Unlock essay editing — $25 once
+						Unlock essay editing · $25 once
 					</button>
 					<p class="mt-3 text-xs text-slate-400">Your first prediction is free · then $25 once or $9.99/mo</p>
 				</div>

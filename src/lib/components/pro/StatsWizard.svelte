@@ -53,10 +53,10 @@
 
 	const steps = [
 		{ title: 'Your GPA', blurb: 'The single biggest input to every prediction.' },
-		{ title: 'Test scores', blurb: 'SAT or ACT — add whichever you have (or skip).' },
+		{ title: 'Test scores', blurb: 'SAT or ACT. Add whichever you have (or skip).' },
 		{ title: 'Course rigor', blurb: 'How demanding is your schedule vs. what your school offers?' },
-		{ title: 'Activities', blurb: 'One per line — clubs, sports, jobs, projects.' },
-		{ title: 'Awards & honors', blurb: 'One per line — school, regional, or national.' }
+		{ title: 'Activities', blurb: 'One per line: clubs, sports, jobs, projects.' },
+		{ title: 'Awards & honors', blurb: 'One per line: school, regional, or national.' }
 	] as const;
 
 	let step = $state(0);
@@ -199,7 +199,7 @@
 				<textarea
 					bind:value={activities}
 					rows="6"
-					placeholder="Debate Club — Captain&#10;Varsity Soccer — Starter&#10;Part-time job at local cafe"
+					placeholder="Debate Club, Captain&#10;Varsity Soccer, Starter&#10;Part-time job at local cafe"
 					class="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:border-[#0052CC] focus:ring-2 focus:ring-blue-500/20"
 				></textarea>
 			{:else}

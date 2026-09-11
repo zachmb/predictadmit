@@ -35,7 +35,7 @@
 			kind: 'benefit',
 			eyebrow: 'PredictAdmit Pro',
 			title: 'See your decisions before they land',
-			body: "The AI reads your real application and calls your verdict — accept, deny, or waitlist — at all 39 top schools, then shows you exactly why.",
+			body: "The AI reads your real application and calls your verdict (accept, deny, or waitlist) at all 39 top schools, then shows you exactly why.",
 			icon: 'bolt',
 			shot: '/onboarding/dashboard.png'
 		},
@@ -43,7 +43,7 @@
 			kind: 'benefit',
 			eyebrow: 'Unlimited',
 			title: 'Run it as many times as you want',
-			body: 'Change an essay, a score, an activity — re-run across all 39 schools and watch your odds move in real time.',
+			body: 'Change an essay, a score, an activity. Re-run across all 39 schools and watch your odds move in real time.',
 			icon: 'search',
 			shot: '/onboarding/schools.png'
 		},
@@ -51,7 +51,7 @@
 			kind: 'benefit',
 			eyebrow: 'The workshop',
 			title: 'Pro essay editing',
-			body: "Line-by-line AI feedback on every supplement — the honest read an admissions officer would give. You write every word; it just makes them land.",
+			body: "Line-by-line AI feedback on every supplement: the honest read an admissions officer would give. You write every word; it just makes them land.",
 			icon: 'pencil',
 			mock: 'essay'
 		},
@@ -73,7 +73,7 @@
 			role: 'Class of 2025'
 		},
 		{
-			quote: 'The essay grader flagged the cliché opening I was about to submit — and the breakdown pointed straight at my weakest spot.',
+			quote: 'The essay grader flagged the cliché opening I was about to submit, and the breakdown pointed straight at my weakest spot.',
 			name: 'Marcus',
 			role: 'First-gen applicant'
 		},
@@ -195,7 +195,7 @@
 											<svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
 										</div>
 										<p class="text-[12px] leading-snug text-slate-700">
-											Cliché opener. Start on the <span class="font-semibold">specific moment</span> — the reader has seen “passionate about helping” a thousand times.
+											Cliché opener. Start on the <span class="font-semibold">specific moment</span>. The reader has seen “passionate about helping” a thousand times.
 										</p>
 									</div>
 								</div>
@@ -208,7 +208,7 @@
 									<div class="flex items-end gap-2">
 										<div class="grid h-7 w-7 flex-none place-items-center rounded-full bg-[#0052CC] text-[11px] font-bold text-white">PA</div>
 										<div class="max-w-[80%] rounded-2xl rounded-bl-md bg-[#0052CC] px-4 py-2.5 text-[13px] leading-snug text-white">
-											Yes — add 3–4 targets where your profile is above their median. Want me to name them?
+											Yes. Add 3–4 targets where your profile is above their median. Want me to name them?
 										</div>
 									</div>
 								</div>
@@ -260,7 +260,7 @@
 								<div class="flex items-center justify-between gap-3">
 									<div>
 										<div class="text-base font-black text-slate-900">Lifetime</div>
-										<div class="mt-0.5 text-xs text-slate-500">All 39 schools, unlimited, forever — no subscription</div>
+										<div class="mt-0.5 text-xs text-slate-500">All 39 schools, unlimited, forever. No subscription</div>
 									</div>
 									<div class="text-right">
 										<div class="text-xl font-black text-slate-900">$25</div>
@@ -296,7 +296,7 @@
 						</ul>
 
 						<p class="mx-auto mt-5 max-w-xs text-center text-xs text-slate-400">
-							$25 is <span class="font-semibold text-slate-600">10% of a single $100 application fee</span> — a fraction of one school.
+							$25 is <span class="font-semibold text-slate-600">10% of a single $100 application fee</span>, a fraction of one school.
 						</p>
 					</div>
 				{/if}
@@ -313,8 +313,8 @@
 						{loading
 							? 'Opening secure checkout…'
 							: selectedPlan === 'monthly'
-								? 'Continue — $9.99/mo'
-								: 'Continue — $25 once'}
+								? 'Continue · $9.99/mo'
+								: 'Continue · $25 once'}
 					{:else}
 						Continue
 					{/if}

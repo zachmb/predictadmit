@@ -101,7 +101,7 @@
 			await navigator.clipboard.writeText(url);
 			showToast('Link copied to clipboard');
 		} catch {
-			showToast('Couldn’t copy — please copy the URL manually');
+			showToast('Couldn’t copy. Please copy the URL manually');
 		}
 	}
 
@@ -116,7 +116,7 @@
 		'Please log in to your applicant portal to view the latest update.',
 		'There has been a change to the status of your application.',
 		'Your admission decision is now available. Sign in to view it.',
-		"We've posted an update to your application — log in to see it.",
+		"We've posted an update to your application. Log in to see it.",
 		'A new notification is waiting for you in your applicant status page.',
 		'Important: action may be required on your application. Please sign in.'
 	];
@@ -446,7 +446,7 @@
 										</div>
 										<div class="text-sm text-slate-600 truncate">
 											<span class="font-medium text-slate-800">{message.subject}</span>
-											<span class="text-slate-400 mx-1">–</span>
+											<span class="text-slate-400 mx-1">·</span>
 											<span class="text-slate-500">{message.preview}</span>
 										</div>
 									</div>

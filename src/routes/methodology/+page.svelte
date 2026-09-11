@@ -43,7 +43,7 @@
 </script>
 
 <svelte:head>
-	<title>Methodology — Where PredictAdmit's predictions come from</title>
+	<title>Methodology: Where PredictAdmit's predictions come from</title>
 	<meta
 		name="description"
 		content="PredictAdmit's factor weights come from NACAC's Factors in the Admission Decision survey, then calibrated against HYPSM and Top-20 admitted-student profiles from the 2026 cycle and our own team's results."
@@ -66,7 +66,7 @@
 				We don't guess how much each part of your application counts. The factor weights come from
 				NACAC's national survey of what colleges themselves say drives their decisions. We then
 				calibrate those weights against admitted-student profiles from HYPSM and Top-20 universities
-				in the 2026 cycle — and against our own founding team's results.
+				in the 2026 cycle, and against our own founding team's results.
 			</p>
 		</div>
 	</section>
@@ -79,7 +79,7 @@
 		<p class="text-slate-600 leading-relaxed mb-4">
 			The <strong>National Association for College Admission Counseling (NACAC)</strong>, founded in
 			1937, is a nonprofit association of more than 28,000 admission officers, school counselors,
-			and enrollment professionals worldwide — the professional body for the people who actually
+			and enrollment professionals worldwide. It is the professional body for the people who actually
 			read applications and make admission decisions.
 		</p>
 		<p class="text-slate-600 leading-relaxed mb-4">
@@ -91,7 +91,7 @@
 		</p>
 		<p class="text-slate-600 leading-relaxed">
 			The headline finding barely changes year to year: <strong>grades in college-prep courses and
-			the strength of your curriculum outweigh everything else</strong> — test scores, essays,
+			the strength of your curriculum outweigh everything else</strong>: test scores, essays,
 			recommendations, extracurriculars, all of it.
 		</p>
 	</section>
@@ -104,7 +104,7 @@
 			</h2>
 			<p class="text-sm text-slate-500 mb-8">
 				Percentage of NACAC member four-year colleges attributing each level of importance to
-				factors in admission decisions — first-time freshmen, {NACAC_SOURCE.cycle}.
+				factors in admission decisions. First-time freshmen, {NACAC_SOURCE.cycle}.
 			</p>
 
 			<div class="overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm">
@@ -155,7 +155,7 @@
 		<div class="space-y-6 text-slate-600 leading-relaxed">
 			<p>
 				<strong class="text-slate-900">Academic index.</strong> Your academic index (0–100) blends
-				weighted GPA and SAT/ACT. We didn't pick the split by feel — it drops straight out of the
+				weighted GPA and SAT/ACT. We didn't pick the split by feel. It drops straight out of the
 				table. Grades and curriculum strength against admission tests lands at roughly
 				<strong>{Math.round(GPA_WEIGHT * 100)}% grades &amp; rigor / {Math.round(TEST_WEIGHT * 100)}%
 				test scores</strong>.
@@ -203,8 +203,8 @@
 					and Top-20 universities in the 2026 cycle</strong>, plus our own founding team's results.
 				</p>
 				<p>
-					That's why our school baselines — average SAT/ACT and weighted GPA of admits, acceptance
-					rates — track the current cycle. It's also why academics act as a gate at the top: at
+					That's why our school baselines (average SAT/ACT and weighted GPA of admits, acceptance
+					rates) track the current cycle. It's also why academics act as a gate at the top: at
 					those schools near-perfect grades and rigor are just the price of entry, and it's
 					character, essays, and a real extracurricular spike that separate the applicants who
 					already cleared the bar.
@@ -219,8 +219,8 @@
 		<ul class="space-y-3 text-slate-600 leading-relaxed list-disc pl-5">
 			<li>
 				Predictions are <strong>estimates, not promises</strong>. No model can guarantee an
-				admission outcome, and a real committee weighs context — a compelling backstory, a program's
-				needs that year — that a simulator never sees.
+				admission outcome, and a real committee weighs context (a compelling backstory, a program's
+				needs that year) that a simulator never sees.
 			</li>
 			<li>
 				NACAC is an independent professional association. It is
