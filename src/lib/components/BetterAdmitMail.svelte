@@ -553,30 +553,30 @@
 										{#if deepDiveItems && deepDiveItems.some((d) => d.slug === selectedPortal.slug)}
 											<button
 												type="button"
-												class="inline-flex items-center gap-2 rounded-xl border border-violet-200 bg-violet-50 px-4 py-3 text-sm font-medium text-violet-700 cursor-default"
+												class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-medium text-slate-600 cursor-default"
 											>
-												<span class="h-1.5 w-1.5 rounded-full bg-violet-500"></span>
-												Deep dive saved
+												<svg class="h-4 w-4 text-[#1A4CFF]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+												Deep dive ready
 											</button>
 										{:else if deepDiveLoadingSlug === selectedPortal.slug}
 											<button
 												type="button"
-												class="inline-flex items-center gap-2 rounded-xl border border-violet-200 bg-violet-50 px-4 py-3 text-sm font-medium text-violet-700 cursor-wait"
+												class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-medium text-slate-600 cursor-wait"
 												disabled
 											>
 												<span
-													class="h-3 w-3 animate-spin rounded-full border border-violet-300 border-t-transparent"
+													class="h-3 w-3 animate-spin rounded-full border-2 border-slate-300 border-t-slate-600"
 												></span>
-												Generating...
+												Reading your file...
 											</button>
 										{:else}
 											<button
 												type="button"
-												class="inline-flex items-center gap-2 rounded-xl border border-violet-200 bg-white px-4 py-3 text-sm font-medium text-violet-700 hover:bg-violet-50 transition-colors"
+												class="inline-flex items-center gap-2 rounded-xl bg-[#1A4CFF] px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#1540E0] active:scale-[0.99]"
 												on:click={() => requestDeepDiveForSlug(selectedPortal.slug)}
 											>
-												<span class="h-1.5 w-1.5 rounded-full bg-violet-500"></span>
-												Flag for Deep Dive
+												<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+												See the full deep dive
 											</button>
 										{/if}
 									</div>

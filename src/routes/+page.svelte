@@ -266,10 +266,9 @@
 
 	// --- Handlers ---
 	const handleStartSimulationClick = () => {
-		// Scroll to account form or open modal
-		const el = document.getElementById('simulation-start');
-		el?.scrollIntoView({ behavior: 'smooth' });
-		showAccountForm = true;
+		// The old in-page "run the whole season" form was removed; send people to
+		// the real AI simulation instead.
+		goto('/ai');
 	};
 
 	// ... [Keeping existing helper functions: startCalendar, startRdEmailTimeline, formatTime, etc.] ...
@@ -701,14 +700,6 @@
 							Have the AI predict my actual decisions
 							<span aria-hidden="true">&rarr;</span>
 						</a>
-						<button
-							on:click={handleStartSimulationClick}
-							class="inline-flex items-center gap-2 text-sm font-semibold text-slate-400 hover:text-slate-700 transition-colors group"
-						>
-							Or run a whole application season start to finish <span
-								class="group-hover:translate-x-1 transition-transform">&rarr;</span
-							>
-						</button>
 					</div>
 				</div>
 			{:else}
@@ -1115,115 +1106,6 @@
 		</div>
 	</section>
 
-	<!-- START SIMULATION (APP ENTRY) -->
-	<section id="simulation-start" class="py-24 bg-white border-t border-slate-100">
-		<div class="max-w-[800px] mx-auto px-6 text-center space-y-8">
-			<div class="space-y-4">
-				<h2 class="font-serif text-3xl md:text-4xl font-medium tracking-tight text-slate-900">Run the whole season</h2>
-				<p class="text-slate-500">
-					Make a throwaway profile and watch decisions land in an inbox, one school at a time, ED then RD. No real email needed. The rehearsal is free.
-				</p>
-			</div>
-
-			<div
-				class="bg-white p-10 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-slate-200/80 text-left max-w-md mx-auto"
-			>
-				{#if showAccountForm}
-					<form on:submit={handleSubmit} class="space-y-6">
-						<div class="space-y-5">
-							<div>
-								<label
-									for="name"
-									class="block text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2"
-									>Applicant Name</label
-								>
-								<div class="flex gap-2 relative">
-									<input
-										id="name"
-										type="text"
-										bind:value={name}
-										placeholder="e.g. Jordan Lee"
-										class="w-full bg-slate-50/50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-slate-300 focus:border-slate-400 transition-all font-medium placeholder:text-slate-400"
-									/>
-									<button
-										type="button"
-										on:click={generateFakeCredentials}
-										class="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-bold uppercase tracking-wider text-slate-400 hover:text-slate-900 bg-white border border-slate-200 px-2 py-1 rounded-md shadow-sm transition-colors"
-										>Auto-fill</button
-									>
-								</div>
-							</div>
-							<div>
-								<label
-									for="email"
-									class="block text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2"
-									>Practice Email</label
-								>
-								<input
-									id="email"
-									type="email"
-									bind:value={email}
-									placeholder="jordan.lee@example.com"
-									class="w-full bg-slate-50/50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-slate-300 focus:border-slate-400 transition-all font-medium placeholder:text-slate-400"
-								/>
-							</div>
-							<div class="relative">
-								<label
-									for="password"
-									class="block text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2"
-									>Practice Password</label
-								>
-								<input
-									id="password"
-									type={showPassword ? 'text' : 'password'}
-									bind:value={password}
-									placeholder="••••••••"
-									class="w-full bg-slate-50/50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-slate-300 focus:border-slate-400 transition-all font-medium placeholder:text-slate-400"
-								/>
-							</div>
-						</div>
-
-						<div class="pt-4">
-							<button
-								type="submit"
-								on:click={handleApply}
-								class="w-full py-3.5 bg-slate-900 text-white text-sm font-bold uppercase tracking-wide rounded-full hover:bg-black transition-all shadow-sm active:scale-95"
-							>
-								Send the applications
-							</button>
-							<p class="text-[10px] text-center text-slate-400 mt-3">
-								By clicking Start, you agree to our terms. This is a simulation.
-							</p>
-						</div>
-					</form>
-				{:else}
-					<div class="text-center py-6 space-y-6">
-						<div
-							class="w-16 h-16 bg-slate-50 border border-slate-200 rounded-full flex items-center justify-center mx-auto text-slate-600 shadow-sm"
-						>
-							<svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-								><path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									stroke-width="2"
-									d="M12 4v16m8-8H4"
-								/></svg
-							>
-						</div>
-						<p class="text-sm text-slate-500 font-medium">
-							The rehearsal is free, and stays free. Pro subscriptions pay for it.
-						</p>
-						<button
-							on:click={() => (showAccountForm = true)}
-							class="w-full py-3.5 bg-slate-900 text-white text-sm font-bold uppercase tracking-wide rounded-full hover:bg-black transition-all shadow-sm active:scale-95"
-						>
-							Start Free Rehearsal
-						</button>
-					</div>
-				{/if}
-			</div>
-		</div>
-	</section>
 
 	<!-- TESTIMONIAL (NAVY) -->
 	<section class="py-24 bg-[#001F3F] text-white">
@@ -1239,7 +1121,7 @@
 					{/each}
 				</div>
 				<blockquote class="text-2xl md:text-4xl font-serif leading-relaxed opacity-90">
-					"ts was lowkey genuinely accurate"
+					"ts was lowkenuinely accurate"
 				</blockquote>
 				<div class="pt-4">
 					<div class="font-bold">Miao S.</div>

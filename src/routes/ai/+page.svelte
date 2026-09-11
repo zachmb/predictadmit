@@ -101,6 +101,10 @@
 	// simulations + the workshop). The old 1-vs-2 A/B test is retired; this is always 1.
 	let abFreeDecisions = $state(1);
 	let freeOpenedSlugs = $state<string[]>([]);
+	// Value-first: a non-Pro user also gets ONE free deep-dive (the full "why")
+	// before the wall, on top of one free decision open. Persisted per browser.
+	let freeDeepDiveSlugs = $state<string[]>([]);
+	const FREE_DEEP_DIVES = 1;
 	let promoCodeInput = $state('');
 	let showPaywallModal = $state(false);
 	let paywallMode = $state<'simulation' | 'ocr' | 'deepDive' | 'decision' | null>(null);
@@ -521,6 +525,11 @@
 			freeOpenedSlugs = [];
 		}
 		if (legacyOne && !freeOpenedSlugs.includes(legacyOne)) freeOpenedSlugs = [...freeOpenedSlugs, legacyOne];
+		try {
+			freeDeepDiveSlugs = JSON.parse(localStorage.getItem('predictadmit_freeDeepDiveSlugs') || '[]');
+		} catch {
+			freeDeepDiveSlugs = [];
+		}
 
 		// Restore AI inbox state (visiblePortals, read flags, selected email, etc.)
 
@@ -857,10 +866,29 @@
 		return $userProfile.isPro || ($userProfile.proSchools ?? []).includes(slug);
 	}
 
+	// A non-Pro user gets ONE free deep-dive (the full "why") before the wall, on
+	// top of their one free decision open. Pro/single-unlock users are unlimited.
+	function canDeepDive(slug: string): boolean {
+		if (hasSchoolAccess(slug)) return true;
+		if (freeDeepDiveSlugs.includes(slug)) return true;
+		return freeDeepDiveSlugs.length < FREE_DEEP_DIVES;
+	}
+
 	async function requestDeepDive(decision: AiDecision) {
-		if (!hasSchoolAccess(decision.slug)) {
+		if (!canDeepDive(decision.slug)) {
 			openPaywall('deepDive', decision);
 			return;
+		}
+
+		// Claim the free deep-dive allowance for a non-Pro user on first use.
+		if (
+			!hasSchoolAccess(decision.slug) &&
+			!freeDeepDiveSlugs.includes(decision.slug)
+		) {
+			freeDeepDiveSlugs = [...freeDeepDiveSlugs, decision.slug];
+			if (typeof localStorage !== 'undefined')
+				localStorage.setItem('predictadmit_freeDeepDiveSlugs', JSON.stringify(freeDeepDiveSlugs));
+			track('free_deep_dive_used', { school: decision.slug });
 		}
 
 		if (!applicantSummary) {
