@@ -931,181 +931,95 @@
 		</div>
 	</section>
 
-	<!-- SECTION 2: PRO WORKSHOP -->
+
+
+	<!-- SECTION 2: EVERYTHING IN PRO (feature showcase) -->
 	<section class="py-32 bg-white border-t border-slate-100">
 		<div class="max-w-[1200px] mx-auto px-6">
-			<div class="grid lg:grid-cols-2 gap-20 items-center">
-				<!-- Text Content -->
-				<div class="space-y-8 max-w-xl">
-					<span
-						class="inline-block px-3 py-1 bg-slate-50 border border-slate-200 text-slate-600 text-[10px] font-bold uppercase tracking-widest rounded-full"
-						>PredictAdmit Pro</span
-					>
-					<h2 class="text-4xl md:text-5xl font-serif font-medium tracking-tight text-slate-900 leading-[1.05]">
-						The essay workshop, <br /> one school at a time.
-					</h2>
-					<p class="text-lg text-slate-500 leading-relaxed font-medium tracking-tight">
-						It reads your whole application, then works school by school, because what Harvard
-						wants and what MIT wants are not the same thing. You get feedback on your actual essays,
-						not a generic checklist.
-					</p>
+			<div class="max-w-2xl mx-auto text-center space-y-4 mb-16">
+				<span class="inline-block px-3 py-1 bg-slate-50 border border-slate-200 text-slate-600 text-[10px] font-bold uppercase tracking-widest rounded-full">PredictAdmit Pro</span>
+				<h2 class="font-serif text-4xl md:text-5xl font-medium tracking-tight text-slate-900 leading-[1.05]">
+					Everything a counselor does. <span class="text-[#1A4CFF]">In one app.</span>
+				</h2>
+				<p class="text-lg text-slate-500 leading-relaxed">
+					The prediction is the hook. Pro is the whole workshop: a committee reads your file, an editor sharpens your essays, and a counselor tells you where to spend your time.
+				</p>
+			</div>
 
-					<ul class="space-y-5 pt-4">
-						{#each ['What each school actually weights', 'Line-by-line notes on your essays', 'Where to spend your remaining time'] as feature}
-							<li class="flex items-center gap-3 text-slate-700 font-medium tracking-tight">
-								<div
-									class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-900 border border-slate-200/60"
-								>
-									<svg
-										class="w-3.5 h-3.5"
-										fill="none"
-										viewBox="0 0 24 24"
-										stroke="currentColor"
-										stroke-width="3"
-										><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg
-									>
+			<div class="grid gap-6 md:grid-cols-2">
+				<!-- Committee-style deep-dive -->
+				<div class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+					<div class="rounded-2xl border border-slate-200 bg-slate-50/60 p-5">
+						<div class="flex items-center justify-between">
+							<p class="text-xs font-bold uppercase tracking-wide text-slate-500">Committee read · Stanford</p>
+							<span class="rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-bold text-emerald-700 ring-1 ring-inset ring-emerald-200">Admit-leaning</span>
+						</div>
+						<div class="mt-4 space-y-2.5">
+							{#each [{ l: 'Academic reader', s: 9 }, { l: 'Essays reader', s: 8 }, { l: 'Fit reader', s: 7 }, { l: 'Impact reader', s: 8 }, { l: 'Character reader', s: 7 }] as r}
+								<div>
+									<div class="flex items-center justify-between text-[11px] font-medium text-slate-500"><span>{r.l}</span><span>{r.s}/10</span></div>
+									<div class="mt-1 h-1.5 rounded-full bg-slate-200"><div class="h-1.5 rounded-full bg-[#1A4CFF]" style="width: {r.s * 10}%"></div></div>
 								</div>
-								{feature}
-							</li>
+							{/each}
+						</div>
+					</div>
+					<h3 class="mt-6 text-xl font-bold tracking-tight text-slate-900">A committee, not a single guess</h3>
+					<p class="mt-2 text-slate-500 leading-relaxed">Five readers score your file across the dimensions real committees weigh, then reach a verdict. You see exactly which reader is dragging you down.</p>
+				</div>
+
+				<!-- Essay editor with AI feedback -->
+				<div class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+					<div class="rounded-2xl border border-slate-200 bg-slate-50/60 p-5">
+						<p class="text-xs font-bold uppercase tracking-wide text-slate-500">Personal statement</p>
+						<div class="mt-3 space-y-1.5 text-[13px] leading-relaxed text-slate-600">
+							<p class="rounded bg-[#1A4CFF]/10 px-1.5 py-0.5 text-slate-900 ring-1 ring-[#1A4CFF]/20">Ever since I was young, I have loved science.</p>
+							<p class="text-slate-400">The lab was quiet except for the hum of the</p>
+							<p class="text-slate-400">centrifuge, and I realized I had lost track of time.</p>
+						</div>
+						<div class="mt-3 flex items-start gap-2 rounded-xl bg-white border border-slate-200 p-3 shadow-sm">
+							<span class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#1A4CFF] text-white text-[10px] font-black">AI</span>
+							<p class="text-xs leading-relaxed text-slate-600">This opening is a cliché a reader has seen a thousand times. Start on the moment in the lab. Your words, just sharper.</p>
+						</div>
+					</div>
+					<h3 class="mt-6 text-xl font-bold tracking-tight text-slate-900">Essay feedback, line by line</h3>
+					<p class="mt-2 text-slate-500 leading-relaxed">Draft every supplement in one place, then get the notes an admissions reader would write. It marks what is weak. You write every word.</p>
+				</div>
+
+				<!-- Per-school strategy -->
+				<div class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+					<div class="rounded-2xl border border-slate-200 bg-slate-50/60 p-5 space-y-2.5">
+						{#each [{ s: 'Stanford', w: 'Intellectual vitality, essays' }, { s: 'MIT', w: 'STEM depth, maker spirit' }, { s: 'Yale', w: 'Community impact, voice' }] as row}
+							<div class="flex items-center justify-between rounded-xl bg-white border border-slate-200 px-3.5 py-2.5">
+								<span class="text-sm font-bold text-slate-900">{row.s}</span>
+								<span class="text-[11px] text-slate-500">Weighs: {row.w}</span>
+							</div>
 						{/each}
-					</ul>
-
-					<div class="pt-8">
-						<a
-							href="/pro"
-							class="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-[#1A4CFF] hover:text-blue-700 hover:gap-3 transition-all"
-						>
-							Enter Workshop <span class="text-xl">&rarr;</span>
-						</a>
 					</div>
+					<h3 class="mt-6 text-xl font-bold tracking-tight text-slate-900">Per-school strategy for 50+ schools</h3>
+					<p class="mt-2 text-slate-500 leading-relaxed">What each school actually weighs, and how to angle your application for that reader, instead of one generic app for all of them.</p>
 				</div>
 
-				<!-- Visual: Pro Dashboard Mockup -->
-				<div class="relative group perspective-1000 min-w-0 w-full">
-					<!-- Glow effect on hover -->
-					<div
-						class="absolute -inset-1 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-[2rem] blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"
-					></div>
-					<div
-						class="relative bg-white rounded-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] border border-slate-200/60 overflow-hidden transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:-translate-y-2 group-hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.15)]"
-					>
-						<!-- Top Bar -->
-						<div
-							class="bg-white border-b border-slate-100 flex items-center px-4 py-3 justify-between"
-						>
-							<div class="flex items-center gap-2">
-								<div class="w-2.5 h-2.5 rounded-full bg-slate-200"></div>
-								<span class="text-xs font-bold text-slate-900 tracking-tight"
-									>Predict Admit Pro</span
-								>
-							</div>
-							<div class="flex items-center gap-2">
-								<div
-									class="px-2 py-1 rounded bg-slate-50 border border-slate-200 text-[10px] font-bold text-slate-500"
-								>
-									Edit Profile
-								</div>
-								<div class="w-6 h-6 rounded-full bg-slate-100"></div>
-							</div>
-						</div>
-
-						<!-- Dashboard Layout -->
-						<div class="flex h-[320px] bg-slate-50">
-							<!-- Main Content -->
-							<div class="flex-1 p-4 flex flex-col gap-4 overflow-hidden relative">
-								<!-- Get Started Row -->
-								<div>
-									<div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">
-										Get Started
-									</div>
-									<div class="flex gap-2">
-										<div
-											class="flex-1 bg-white border border-slate-200 rounded-lg p-3 h-20 relative overflow-hidden"
-										>
-											<div class="text-[11px] font-bold text-slate-800">Complete Profile</div>
-											<div class="text-[9px] text-slate-400 mb-2">Enter GPA & test scores</div>
-											<div class="flex gap-1 absolute bottom-3 w-full pr-6 opacity-40">
-												<div class="h-2 w-1/3 bg-slate-200 rounded"></div>
-												<div class="h-2 w-1/2 bg-slate-200 rounded"></div>
-											</div>
-										</div>
-										<div
-											class="flex-1 bg-white border border-slate-200 rounded-lg p-3 h-20 relative overflow-hidden"
-										>
-											<div class="text-[11px] font-bold text-slate-800">Import Activities</div>
-											<div class="text-[9px] text-slate-400 mb-2">Add your extracurriculars</div>
-											<div
-												class="absolute bottom-3 left-3 right-3 h-4 border border-dashed border-slate-300 rounded flex items-center justify-center bg-slate-50 opacity-60"
-											>
-												<div class="h-1 w-8 bg-slate-300 rounded"></div>
-											</div>
-										</div>
-									</div>
-								</div>
-
-								<!-- Explore Row -->
-								<div>
-									<div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">
-										Explore Features
-									</div>
-									<div class="flex gap-2">
-										<div class="flex-1 bg-slate-100 border border-slate-200 rounded-lg p-3 h-20">
-											<div class="text-[11px] font-bold text-blue-900 mt-2">Outcome Predictor</div>
-											<div class="text-[9px] text-blue-700/60 mt-0.5">See your chances</div>
-										</div>
-										<div
-											class="flex-1 bg-purple-50/50 border border-purple-100 rounded-lg p-3 h-20"
-										>
-											<div class="text-[11px] font-bold text-purple-900 mt-2">Mind Map</div>
-											<div class="text-[9px] text-purple-700/60 mt-0.5">Brainstorm topics</div>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<!-- Right Sidebar -->
-							<div class="w-32 bg-slate-50 border-l border-slate-200 p-4 flex flex-col gap-4">
-								<div class="bg-white border border-slate-200 rounded-md p-3 shadow-sm">
-									<div
-										class="text-[8px] font-bold uppercase tracking-widest text-slate-400 mb-1 border-b border-slate-100 pb-1"
-									>
-										Acad. Index
-									</div>
-									<div class="text-xl font-black text-[#1A4CFF] leading-none mt-2">214</div>
-									<div class="w-full bg-slate-100 h-1 rounded-full mt-2 overflow-hidden">
-										<div class="bg-[#1A4CFF] h-full" style="width: 89%"></div>
-									</div>
-								</div>
-
-								<div class="bg-white border border-slate-200 rounded-md p-3 shadow-sm">
-									<div
-										class="text-[8px] font-bold uppercase tracking-widest text-slate-400 mb-2 border-b border-slate-100 pb-1"
-									>
-										Holistic
-									</div>
-									<div class="space-y-1.5 mt-2">
-										<div class="flex items-center gap-1">
-											<div class="w-3 text-[8px] text-slate-400">A</div>
-											<div class="flex-1 h-1 bg-blue-500 rounded-full"></div>
-										</div>
-										<div class="flex items-center gap-1">
-											<div class="w-3 text-[8px] text-slate-400">E</div>
-											<div class="flex-1 h-1 bg-purple-500 rounded-full w-3/4"></div>
-										</div>
-										<div class="flex items-center gap-1">
-											<div class="w-3 text-[8px] text-slate-400">P</div>
-											<div class="flex-1 h-1 bg-amber-400 rounded-full w-1/2"></div>
-										</div>
-									</div>
-								</div>
-							</div>
+				<!-- AI counselor -->
+				<div class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+					<div class="rounded-2xl border border-slate-200 bg-slate-50/60 p-5 space-y-3">
+						<div class="ml-auto max-w-[80%] rounded-2xl rounded-br-md bg-slate-900 px-3.5 py-2 text-[13px] text-white">Is my school list too top-heavy?</div>
+						<div class="flex items-start gap-2 max-w-[85%]">
+							<span class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#1A4CFF] text-white text-[10px] font-black">PA</span>
+							<div class="rounded-2xl rounded-bl-md bg-white border border-slate-200 px-3.5 py-2 text-[13px] leading-relaxed text-slate-700">A little. Add two matches where your profile is above their median. Want me to name them?</div>
 						</div>
 					</div>
+					<h3 class="mt-6 text-xl font-bold tracking-tight text-slate-900">An AI counselor, any hour</h3>
+					<p class="mt-2 text-slate-500 leading-relaxed">Ask the questions you would pay a consultant for. Where to apply, how to frame a gap, what a school wants. Answered in plain language, whenever.</p>
 				</div>
+			</div>
+
+			<div class="mt-12 text-center">
+				<a href="/pro" class="inline-flex items-center justify-center rounded-full bg-slate-900 px-8 py-4 text-base font-semibold text-white transition hover:bg-slate-800 active:scale-[0.99]">
+					See everything in Pro
+				</a>
 			</div>
 		</div>
 	</section>
-
 
 	<!-- TESTIMONIAL (NAVY) -->
 	<section class="py-24 bg-[#001F3F] text-white">
