@@ -153,6 +153,7 @@
 		if (checkingOut) return;
 		checkingOut = true;
 		track('quick_verdict_upsell_click', { where: 'unlock_all', school: schoolSlug });
+		track('checkout_step_1', { plan: 'monthly', where: 'verdict' });
 		try {
 			const res = await fetch('/api/checkout', {
 				method: 'POST',

@@ -730,6 +730,7 @@
 		// used to fire it in startUpgrade, but the paywall now goes straight to Stripe,
 		// so fire it here — otherwise add_to_cart under-counts vs begin_checkout.)
 		trackAddToCart(plan, _amt / 100);
+		track('checkout_step_1', { plan, where: 'ai' });
 		trackBeginCheckout(plan, _amt / 100);
 		try {
 			const res = await fetch('/api/checkout', {

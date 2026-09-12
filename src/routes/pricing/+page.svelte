@@ -4,14 +4,17 @@
 	import { page } from '$app/stores';
 	import { portals } from '$lib/config/admitMail';
 	import { onMount } from 'svelte';
-	import { trackViewItem, trackAddToCart, trackBeginCheckout } from '$lib/analytics';
+	import { track, trackViewItem, trackAddToCart, trackBeginCheckout } from '$lib/analytics';
 	import { STRIPE_PRODUCTS } from '$lib/config/stripe-products';
 
 	let isProcessing = $state(false);
 	let passSchoolSlug = $state(portals[0]?.slug ?? '');
 
 	// GA4 funnel Step 2 "View product" — the pricing page is a product view.
-	onMount(() => trackViewItem('lifetime', STRIPE_PRODUCTS.lifetime.amountCents / 100));
+	onMount(() => {
+		track('pricing_page_view', { where: 'pricing' });
+		trackViewItem('lifetime', STRIPE_PRODUCTS.lifetime.amountCents / 100);
+	});
 
 	const planCents = (plan: 'single' | 'monthly' | 'lifetime') =>
 		plan === 'single'
@@ -29,6 +32,7 @@
 		isProcessing = true;
 		// GA4 funnel Steps 3 + 4 — plan picked, then Stripe checkout opening.
 		trackAddToCart(plan, planCents(plan) / 100);
+		track('checkout_step_1', { plan, where: 'pricing' });
 		trackBeginCheckout(plan, planCents(plan) / 100);
 		try {
 			const school = portals.find((p) => p.slug === passSchoolSlug);
@@ -118,8 +122,9 @@
 						</a>
 					</div>
 
-					<!-- Monthly: recommended, tinted -->
-					<div class="relative flex flex-col bg-slate-50 p-8">
+					<!-- Monthly: recommended, tinted. On mobile it jumps to the top
+					     (order-first) so the primary plan + Buy button lead the stack. -->
+					<div class="relative order-first flex flex-col bg-slate-50 p-8 md:order-none">
 						<span class="absolute right-6 top-8 rounded-full bg-slate-900 px-3 py-1 text-[10px] font-semibold uppercase tracking-wide text-white">Recommended</span>
 						<h2 class="font-serif text-2xl text-slate-900">Monthly</h2>
 						<div class="mt-3 flex items-baseline gap-1.5">

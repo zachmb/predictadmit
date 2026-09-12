@@ -20,7 +20,7 @@
 	import SettingsView from '$lib/components/pro/SettingsView.svelte';
 	import ExtracurricularHelper from '$lib/components/pro/ExtracurricularHelper.svelte';
 	import UpgradeCarousel from '$lib/components/UpgradeCarousel.svelte';
-	import { trackViewItem, trackAddToCart, trackBeginCheckout } from '$lib/analytics';
+	import { track, trackViewItem, trackAddToCart, trackBeginCheckout } from '$lib/analytics';
 	import { STRIPE_PRODUCTS } from '$lib/config/stripe-products';
 
 	// --- RUNES STATE ---
@@ -68,7 +68,10 @@
 	let googleSignedIn = $derived(!!session?.user);
 
 	// GA4 funnel Step 2 "View product" — the /pro upgrade page is a product view.
-	onMount(() => trackViewItem('lifetime', STRIPE_PRODUCTS.lifetime.amountCents / 100));
+	onMount(() => {
+		track('pricing_page_view', { where: 'pro' });
+		trackViewItem('lifetime', STRIPE_PRODUCTS.lifetime.amountCents / 100);
+	});
 	let isPro = $derived($userProfile.isPro);
 
 	// Mobile navigation: the workspace sidebar collapses into an off-canvas drawer
@@ -659,6 +662,7 @@
 		// GA4 funnel Step 4 "Begin checkout" — Stripe checkout opening.
 		{
 			const cents = plan === 'monthly' ? STRIPE_PRODUCTS.monthly.amountCents : STRIPE_PRODUCTS.lifetime.amountCents;
+			track('checkout_step_1', { plan, where: 'pro' });
 			trackBeginCheckout(plan, cents / 100);
 		}
 		try {
@@ -2407,8 +2411,9 @@
 							</a>
 						</div>
 
-						<!-- Monthly: recommended, lifted in white -->
-						<div class="relative flex flex-col bg-white p-8">
+						<!-- Monthly: recommended, lifted in white. On mobile it jumps to the
+						     top (order-first) so the primary plan + Buy button lead the stack. -->
+						<div class="relative order-first flex flex-col bg-white p-8 md:order-none">
 							<span class="absolute right-6 top-8 rounded-full bg-slate-900 px-3 py-1 text-[10px] font-semibold uppercase tracking-wide text-white">Recommended</span>
 							<h3 class="font-serif text-2xl text-slate-900">Monthly</h3>
 							<div class="mt-3 flex items-baseline gap-1.5">
