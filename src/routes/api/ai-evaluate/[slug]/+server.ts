@@ -160,7 +160,11 @@ specific and detailed.
 
 Take into account the competitiveness of the applicant's selected major at ${schoolName}, and what types of people are usually admitted to this major at the school.
 
-Be brutally honest and realistic. If you admit someone you should have rejected or rejected someone you should have admitted, your job is on the line. 
+Be brutally honest and realistic. If you admit someone you should have rejected or rejected someone you should have admitted, your job is on the line.
+
+ROUND MATTERS — the applicant metadata tells you whether ${schoolName} is this applicant's ED/REA (early-round) choice:
+- If it IS their ED/REA choice, they applied in the early round. A non-admit is EITHER "defer" (their strong-but-not-clear file is pushed to the regular round for another look — the most common early non-admit) OR a hard "deny". NEVER use "waitlist" for an early-round applicant; the waitlist does not exist in the early round.
+- If it is NOT their ED/REA choice, they applied Regular Decision. A near-miss is "waitlist". NEVER use "defer" for a Regular Decision applicant; deferral only happens in the early round.
 
 RESPONSE FORMAT: Valid JSON only.
 Structure:

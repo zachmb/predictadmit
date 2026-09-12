@@ -61,10 +61,7 @@
 		if (who) redeemReferralIfJoined(who);
 	});
 
-	// Signed-in users: adopt the Google account name/email as the display
-	// identity. Do NOT grant Pro here — Pro is unlocked ONLY by a completed
-	// one-time Stripe purchase (Full Season / Season+Essay), verified on return
-	// in /ai's onMount. Signing in with Google is the free tier (one free run).
+	// Signed-in users: adopt the Google account name/email as the display identity.
 	$effect(() => {
 		const session = $page.data.session;
 		if (!session?.user) return;
@@ -78,6 +75,41 @@
 				email: email || u.email
 			};
 		});
+	});
+
+	// Hydrate Pro entitlement from the server — Stripe is the source of truth.
+	// The checkout-return flow in /ai sets isPro, but that flag lives only in the
+	// browser that completed checkout. A paying customer signing in on a new device
+	// (or after a cleared cache) would keep hitting the paywall even though their
+	// account page correctly reads "Pro" from Stripe. Reconcile against
+	// /api/billing/status on load: grant Pro for a full plan (monthly/lifetime), and
+	// clear a stale local flag when Stripe definitively reports no paid plan.
+	// Per-school passes (proSchools) are owned by the /ai checkout flow, untouched here.
+	let entitlementSynced = false;
+	$effect(() => {
+		const email = $page.data.session?.user?.email;
+		if (!email || entitlementSynced) return;
+		// The fresh ?upgrade=success return is owned by /ai's verified grant; let it
+		// run first so we never revoke a just-completed purchase in a race.
+		if (
+			typeof window !== 'undefined' &&
+			new URLSearchParams(window.location.search).get('upgrade') === 'success'
+		)
+			return;
+		entitlementSynced = true;
+		fetch('/api/billing/status')
+			.then((r) => (r.ok ? r.json() : null))
+			.then((d) => {
+				if (!d?.signedIn) return;
+				const fullPlan = d.plan === 'monthly' || d.plan === 'lifetime';
+				if (fullPlan) {
+					userProfile.update((u) => (u.isPro ? u : { ...u, isPro: true }));
+				} else if (d.billingConfigured && d.plan === 'none') {
+					// Stripe reachable and no paid plan under this account → drop any stale flag.
+					userProfile.update((u) => (u.isPro ? { ...u, isPro: false } : u));
+				}
+			})
+			.catch(() => {});
 	});
 
 	// Lifecycle capture: once per signed-in browser, register the user in our Resend

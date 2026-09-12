@@ -296,9 +296,12 @@
 		} as PortalEmail;
 	}
 
-	// Received label for AI decisions – simple placeholder timestamp
+	// Received label for AI decisions. The applicant's ED/REA pick applied in the
+	// early round, so its decision lands in mid-December; everything else is Regular
+	// Decision and lands in late March. This makes the inbox reflect the real
+	// admissions timeline instead of stamping every school with the same RD date.
 	function getReceivedLabelForAI(portal: PortalEmail): string {
-		return 'March 20, 5:00 PM';
+		return portal.slug === edSlug ? 'Dec 15, 2025, 4:05 PM' : 'Mar 20, 2026, 5:00 PM';
 	}
 
 	// === Persistence helpers for AI inbox ===

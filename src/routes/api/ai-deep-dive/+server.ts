@@ -34,13 +34,16 @@ export const POST: RequestHandler = async (event) => {
 		return json({ error: 'Invalid JSON body.' }, { status: 400 });
 	}
 
-	const { school, slug, outcome, short_reason, applicantSummary } = (body ?? {}) as {
+	const { school, slug, outcome, short_reason, applicantSummary, edSlug } = (body ?? {}) as {
 		school?: string;
 		slug?: string;
 		outcome?: DecisionOutcome;
 		short_reason?: string;
 		applicantSummary?: string;
+		edSlug?: string;
 	};
+
+	const isEarlyRound = !!edSlug && edSlug === slug;
 
 	if (!school || !slug || !outcome || !applicantSummary) {
 		return json(
@@ -60,6 +63,8 @@ ACADEMIC-INTEGRITY HARD RULE: advice describes WHAT to improve and WHY — never
 Return ONLY valid JSON (no markdown, no code fences).`;
 
 	const userPrompt = `The committee at ${school} has decided to ${outcome.toUpperCase()} this applicant.
+
+Round: ${isEarlyRound ? 'Early (ED/REA) — this is the applicant\'s early-round school, decided in mid-December. A non-admit here is a defer or a deny, never a waitlist.' : 'Regular Decision — decided in late March. A near-miss here is a waitlist, never a defer.'}
 
 Rationale from the prediction engine: ${short_reason ?? '(none provided)'}
 
