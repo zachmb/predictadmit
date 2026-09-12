@@ -962,10 +962,10 @@
 			<div class="max-w-2xl mx-auto text-center space-y-4 mb-16">
 				<span class="inline-block px-3 py-1 bg-slate-50 border border-slate-200 text-slate-600 text-[10px] font-bold uppercase tracking-widest rounded-full">PredictAdmit Pro</span>
 				<h2 class="font-serif text-4xl md:text-5xl font-medium tracking-tight text-slate-900 leading-[1.05]">
-					Everything a <span class="text-[#1A4CFF]">$5,000 counselor</span> does.
+					Everything you need to <span class="text-[#1A4CFF]">improve your application</span>. In one place.
 				</h2>
 				<p class="text-lg text-slate-500 leading-relaxed">
-					The prediction gets you in the door. Pro does the rest: it reads your file like a committee, marks up your essays line by line, and tells you what to fix first.
+					The free prediction shows where you stand. Pro is how you close the gap: a full committee reads your file, your essays get marked line by line, and every school tells you what it actually weighs. A private counselor's whole toolkit, at a student's price.
 				</p>
 			</div>
 
