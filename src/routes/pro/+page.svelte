@@ -2371,66 +2371,103 @@
 				{/each}
 			</div>
 
-			<!-- Pricing: three plans, Lifetime elevated. Buttons go straight to Stripe. -->
+			<!-- Pricing: editorial three-tier (Free / Monthly / Lifetime). Buttons go
+			     straight to Stripe. Monthly is the recommended, lifted plan. -->
 			<div>
-				<p class="text-center font-serif text-2xl md:text-3xl text-slate-900">
-					A private counselor runs $5,000+ a season. Pick your plan.
-				</p>
-				<div class="mt-10 grid gap-4 md:grid-cols-3 md:items-stretch">
-					<!-- Monthly: the default converter -->
-					<div class="relative flex flex-col rounded-2xl border border-slate-900 bg-white p-6">
-						<span class="absolute -top-2.5 left-6 rounded-full bg-[#1A4CFF] px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white">Start here</span>
-						<p class="text-xs font-semibold uppercase tracking-wide text-slate-400">Monthly</p>
-						<p class="mt-2 flex items-baseline gap-1">
-							<span class="text-4xl font-bold text-slate-900">$9.99</span>
-							<span class="text-sm text-slate-400">per month</span>
-						</p>
-						<p class="mt-2 text-sm leading-relaxed text-slate-500">Full access while you're applying. Cancel anytime.</p>
-						<button
-							onclick={() => handleCheckout('monthly')}
-							disabled={isProcessing}
-							class="mt-5 w-full rounded-full bg-slate-900 px-5 py-3.5 text-base font-semibold text-white transition hover:bg-slate-800 active:scale-[0.99] disabled:opacity-50"
-						>
-							{isProcessing ? 'Taking you to checkout…' : 'Start for $9.99/mo'}
-						</button>
-					</div>
+				<div class="max-w-2xl">
+					<h2 class="font-serif text-4xl md:text-5xl font-medium leading-[1.1] tracking-tight text-slate-900">
+						Your first prediction is free. Upgrade when you want your verdict at every school.
+					</h2>
+					<p class="mt-5 text-lg leading-relaxed text-slate-500">
+						See where you stand for free, no card. Then go month to month while you're applying, or pay once for the whole season.
+					</p>
+				</div>
 
-					<!-- Lifetime: the pay-once alternative -->
-					<div class="flex flex-col rounded-2xl border border-slate-200 bg-white p-6">
-						<p class="text-xs font-semibold uppercase tracking-wide text-slate-400">Lifetime</p>
-						<p class="mt-2 flex items-baseline gap-1">
-							<span class="text-4xl font-bold text-slate-900">$25</span>
-							<span class="text-sm text-slate-400">once</span>
-						</p>
-						<p class="mt-2 text-sm leading-relaxed text-slate-500">Pay once, no subscription. About two and a half months of Monthly costs the same.</p>
-						<button
-							onclick={() => handleCheckout('lifetime')}
-							disabled={isProcessing}
-							class="mt-auto w-full rounded-full border border-slate-300 px-5 py-3.5 text-base font-semibold text-slate-900 transition hover:bg-slate-50 disabled:opacity-50"
-						>
-							Get Lifetime
-						</button>
-					</div>
+				<div class="mt-12 overflow-hidden rounded-[2rem] border border-slate-200 bg-slate-50">
+					<div class="grid divide-y divide-slate-200 md:grid-cols-3 md:divide-x md:divide-y-0">
+						<!-- Free -->
+						<div class="flex flex-col p-8">
+							<h3 class="font-serif text-2xl text-slate-900">Free</h3>
+							<div class="mt-3 flex items-baseline gap-1.5">
+								<span class="font-serif text-4xl font-medium text-slate-900">$0</span>
+							</div>
+							<p class="mt-4 text-sm leading-relaxed text-slate-500">
+								Run one full AI prediction and open one school's decision. See where you stand before you spend a cent.
+							</p>
+							<ul class="mt-6 mb-8 space-y-2.5">
+								{#each ['One full AI prediction', "Open one school's decision", 'No credit card to start'] as f}
+									<li class="flex items-start gap-2.5 text-sm text-slate-600">
+										<svg class="mt-0.5 h-4 w-4 flex-none text-slate-900" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+										{f}
+									</li>
+								{/each}
+							</ul>
+							<a href="/verdict" class="mt-auto block w-full rounded-full border border-slate-300 bg-white px-5 py-3.5 text-center text-sm font-semibold text-slate-900 transition hover:bg-slate-100">
+								Start free →
+							</a>
+						</div>
 
-					<!-- Single school: needs a chosen school, so it starts free in /ai then unlocks one for $4.99. -->
-					<div class="flex flex-col rounded-2xl border border-slate-200 bg-white p-6">
-						<p class="text-xs font-semibold uppercase tracking-wide text-slate-400">Just one school</p>
-						<p class="mt-2 flex items-baseline gap-1">
-							<span class="text-4xl font-bold text-slate-900">$4.99</span>
-						</p>
-						<p class="mt-2 text-sm leading-relaxed text-slate-500">Run your free prediction first, then unlock the full deep-dive for any single school.</p>
-						<a
-							href="/ai"
-							class="mt-auto w-full rounded-full border border-slate-300 px-5 py-3.5 text-center text-base font-semibold text-slate-900 transition hover:bg-slate-50"
-						>
-							Start free, then unlock one
-						</a>
+						<!-- Monthly: recommended, lifted in white -->
+						<div class="relative flex flex-col bg-white p-8">
+							<span class="absolute right-6 top-8 rounded-full bg-slate-900 px-3 py-1 text-[10px] font-semibold uppercase tracking-wide text-white">Recommended</span>
+							<h3 class="font-serif text-2xl text-slate-900">Monthly</h3>
+							<div class="mt-3 flex items-baseline gap-1.5">
+								<span class="font-serif text-4xl font-medium text-slate-900">$9.99</span>
+								<span class="text-sm text-slate-400">/mo</span>
+							</div>
+							<p class="mt-1 text-xs text-slate-400">Billed monthly. Cancel anytime.</p>
+							<p class="mt-3 text-sm leading-relaxed text-slate-500">
+								Everything, while you're applying. Your verdict at all 39 schools and the full workshop to fix what's weak.
+							</p>
+							<ul class="mt-6 mb-8 space-y-2.5">
+								{#each ['Your verdict at all 39 top schools', 'The five-reader committee on every one', 'AI essay editor + per-school strategy', 'AI counselor + unlimited re-runs'] as f}
+									<li class="flex items-start gap-2.5 text-sm text-slate-700">
+										<svg class="mt-0.5 h-4 w-4 flex-none text-[#1A4CFF]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+										{f}
+									</li>
+								{/each}
+							</ul>
+							<button
+								onclick={() => handleCheckout('monthly')}
+								disabled={isProcessing}
+								class="mt-auto w-full rounded-full bg-slate-900 px-5 py-3.5 text-sm font-semibold text-white transition hover:bg-slate-800 active:scale-[0.99] disabled:opacity-50"
+							>
+								{isProcessing ? 'Taking you to checkout…' : 'Start for $9.99/mo'}
+							</button>
+						</div>
+
+						<!-- Lifetime: pay once -->
+						<div class="flex flex-col p-8">
+							<h3 class="font-serif text-2xl text-slate-900">Lifetime</h3>
+							<div class="mt-3 flex items-baseline gap-1.5">
+								<span class="font-serif text-4xl font-medium text-slate-900">$25</span>
+								<span class="text-sm text-slate-400">once</span>
+							</div>
+							<p class="mt-1 text-xs text-slate-400">One payment. No subscription.</p>
+							<p class="mt-3 text-sm leading-relaxed text-slate-500">
+								The same full access, paid once. About two and a half months of Monthly costs the same.
+							</p>
+							<ul class="mt-6 mb-8 space-y-2.5">
+								{#each ['Everything in Monthly, forever', 'Nothing to renew or cancel', 'One payment for the whole season'] as f}
+									<li class="flex items-start gap-2.5 text-sm text-slate-600">
+										<svg class="mt-0.5 h-4 w-4 flex-none text-slate-900" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+										{f}
+									</li>
+								{/each}
+							</ul>
+							<button
+								onclick={() => handleCheckout('lifetime')}
+								disabled={isProcessing}
+								class="mt-auto w-full rounded-full border border-slate-300 bg-white px-5 py-3.5 text-sm font-semibold text-slate-900 transition hover:bg-slate-50 disabled:opacity-50"
+							>
+								Get Lifetime
+							</button>
+						</div>
 					</div>
 				</div>
+
 				<p class="mt-5 text-center text-xs text-slate-400">
-					{googleSignedIn
-						? 'One-time payment · instant access · secure checkout by Stripe'
-						: 'Sign in with Google at checkout, then it is yours.'}
+					Just one school? Run your free prediction, then unlock a single deep-dive for $4.99. Secure checkout by Stripe.
 				</p>
 			</div>
 
@@ -2438,7 +2475,7 @@
 			<div class="space-y-10">
 				<div class="text-center max-w-2xl mx-auto">
 					<h2 class="font-serif text-4xl font-medium tracking-tight text-slate-900">Everything Pro gives you</h2>
-					<p class="mt-3 text-slate-500">Two jobs, done properly. See exactly where you stand today, then fix what's holding you back. Both come with Lifetime.</p>
+					<p class="mt-3 text-slate-500">Two jobs, done properly. See exactly where you stand today, then fix what's holding you back. Both come with Pro.</p>
 				</div>
 
 				<!-- Group 1: see where you stand -->
