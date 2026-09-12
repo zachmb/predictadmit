@@ -64,13 +64,6 @@
 		'Every future school and tool we add, included'
 	];
 
-	const schoolFeatures = [
-		'Full deep-dive analysis for your school: 5 scored dimensions + improvement plan',
-		'Unblurred decision breakdown on the results page',
-		'Unlimited essay grading targeted at your school',
-		'Yours forever. One payment, no subscription'
-	];
-
 	const freeFeatures = [
 		'Run the AI across all 39 schools, free',
 		'Open your first predicted decision free',
@@ -99,100 +92,114 @@
 			</p>
 		</header>
 
-		<section class="grid gap-6 md:grid-cols-3 items-stretch">
-			<!-- Free tier -->
-			<div class="rounded-[1.5rem] bg-white p-8 border border-slate-200 flex flex-col">
-				<h2 class="text-sm font-bold text-slate-500 tracking-[0.25em] uppercase">Free</h2>
-				<div class="mt-4 flex items-end gap-1">
-					<span class="text-5xl font-bold tracking-tighter">$0</span>
-					<span class="text-sm text-slate-400 font-medium mb-1.5">to start</span>
+		<section>
+			<div class="overflow-hidden rounded-[2rem] border border-slate-200 bg-white">
+				<div class="grid divide-y divide-slate-200 md:grid-cols-3 md:divide-x md:divide-y-0">
+					<!-- Free -->
+					<div class="flex flex-col p-8">
+						<h2 class="font-serif text-2xl text-slate-900">Free</h2>
+						<div class="mt-3 flex items-baseline gap-1.5">
+							<span class="font-serif text-4xl font-medium text-slate-900">$0</span>
+							<span class="text-sm text-slate-400">to start</span>
+						</div>
+						<p class="mt-4 text-sm leading-relaxed text-slate-500">
+							Run the AI across all 39 schools and open your first decision. See where you stand, no card.
+						</p>
+						<ul class="mt-6 mb-8 space-y-2.5">
+							{#each freeFeatures as f}
+								<li class="flex items-start gap-2.5 text-sm text-slate-600">
+									<svg class="mt-0.5 h-4 w-4 flex-none text-slate-900" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+									{f}
+								</li>
+							{/each}
+						</ul>
+						<a href="/verdict" class="mt-auto block w-full rounded-full border border-slate-300 bg-slate-50 px-5 py-3.5 text-center text-sm font-semibold text-slate-900 transition hover:bg-slate-100">
+							Run your free rehearsal →
+						</a>
+					</div>
+
+					<!-- Monthly: recommended, tinted -->
+					<div class="relative flex flex-col bg-slate-50 p-8">
+						<span class="absolute right-6 top-8 rounded-full bg-slate-900 px-3 py-1 text-[10px] font-semibold uppercase tracking-wide text-white">Recommended</span>
+						<h2 class="font-serif text-2xl text-slate-900">Monthly</h2>
+						<div class="mt-3 flex items-baseline gap-1.5">
+							<span class="font-serif text-4xl font-medium text-slate-900">$9.99</span>
+							<span class="text-sm text-slate-400">/mo</span>
+						</div>
+						<p class="mt-1 text-xs text-slate-400">Billed monthly. Cancel anytime.</p>
+						<p class="mt-3 text-sm leading-relaxed text-slate-500">
+							Full access while you're applying: your verdict at every school and the workshop to fix what's weak.
+						</p>
+						<ul class="mt-6 mb-8 space-y-2.5">
+							{#each fullFeatures as f}
+								<li class="flex items-start gap-2.5 text-sm text-slate-700">
+									<svg class="mt-0.5 h-4 w-4 flex-none text-[#1A4CFF]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+									{f}
+								</li>
+							{/each}
+						</ul>
+						<button
+							onclick={() => startCheckout('monthly')}
+							disabled={isProcessing}
+							class="mt-auto w-full rounded-full bg-slate-900 px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-slate-800 active:scale-[0.99] disabled:opacity-50"
+						>
+							{isProcessing ? 'Starting checkout…' : 'Start for $9.99/mo →'}
+						</button>
+					</div>
+
+					<!-- Lifetime: pay once -->
+					<div class="flex flex-col p-8">
+						<h2 class="font-serif text-2xl text-slate-900">Lifetime</h2>
+						<div class="mt-3 flex items-baseline gap-1.5">
+							<span class="font-serif text-4xl font-medium text-slate-900">$25</span>
+							<span class="text-sm text-slate-400">once</span>
+						</div>
+						<p class="mt-1 text-xs text-slate-400">One payment. No subscription.</p>
+						<p class="mt-3 text-sm leading-relaxed text-slate-500">
+							The same full access, paid once. About two and a half months of Monthly costs the same.
+						</p>
+						<ul class="mt-6 mb-8 space-y-2.5">
+							{#each ['Everything in Monthly, forever', 'Nothing to renew or cancel', 'Every future school and tool, included'] as f}
+								<li class="flex items-start gap-2.5 text-sm text-slate-600">
+									<svg class="mt-0.5 h-4 w-4 flex-none text-slate-900" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+									{f}
+								</li>
+							{/each}
+						</ul>
+						<button
+							onclick={() => startCheckout('lifetime')}
+							disabled={isProcessing}
+							class="mt-auto w-full rounded-full border border-slate-300 bg-white px-6 py-3.5 text-sm font-semibold text-slate-900 transition hover:bg-slate-50 disabled:opacity-50"
+						>
+							Get Lifetime for $25
+						</button>
+					</div>
 				</div>
-				<ul class="mt-6 space-y-3 text-sm text-slate-600 flex-1">
-					{#each freeFeatures as f}
-						<li class="flex items-start gap-2">
-							<svg class="mt-0.5 h-4 w-4 flex-none text-slate-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.7-9.3a1 1 0 00-1.4-1.4L9 10.6 7.7 9.3a1 1 0 00-1.4 1.4l2 2a1 1 0 001.4 0l4-4z" clip-rule="evenodd"/></svg>
-							{f}
-						</li>
-					{/each}
-				</ul>
-				<a
-					href="/ai"
-					class="mt-8 w-full rounded-2xl border border-slate-200 px-6 py-3.5 text-center text-sm font-bold text-slate-700 hover:bg-slate-50 transition-colors"
-				>
-					Run your free rehearsal
-				</a>
 			</div>
 
-			<!-- School Pass -->
-			<div class="rounded-[1.5rem] bg-white p-8 border border-slate-200 flex flex-col">
-				<h2 class="text-sm font-bold text-slate-500 tracking-[0.25em] uppercase">Single School</h2>
-				<div class="mt-4 flex items-end gap-1">
-					<span class="text-5xl font-bold tracking-tighter">$4.99</span>
-					<span class="text-sm text-slate-400 font-medium mb-1.5">once, per school</span>
+			<!-- Single-school downsell — keeps the school picker, visually secondary. -->
+			<div class="mt-4 flex flex-col items-center gap-3 rounded-2xl border border-slate-200 bg-white p-5 text-center sm:flex-row sm:justify-between sm:text-left">
+				<div>
+					<p class="text-sm font-bold text-slate-900">Just one dream school? $4.99</p>
+					<p class="mt-0.5 text-xs text-slate-500">Its full deep-dive and unblurred decision, yours forever. Run your free rehearsal first.</p>
 				</div>
-				<p class="mt-2 text-xs text-slate-500">
-					Everything Pro knows about one school: the one you actually care about.
-				</p>
-				<ul class="mt-5 space-y-3 text-sm text-slate-600 flex-1">
-					{#each schoolFeatures as f}
-						<li class="flex items-start gap-2">
-							<svg class="mt-0.5 h-4 w-4 flex-none text-slate-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.7-9.3a1 1 0 00-1.4-1.4L9 10.6 7.7 9.3a1 1 0 00-1.4 1.4l2 2a1 1 0 001.4 0l4-4z" clip-rule="evenodd"/></svg>
-							{f}
-						</li>
-					{/each}
-				</ul>
-				<select
-					bind:value={passSchoolSlug}
-					class="mt-6 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-900 focus:border-slate-400 focus:outline-none"
-				>
-					{#each portals as p}
-						<option value={p.slug}>{p.name}</option>
-					{/each}
-				</select>
-				<button
-					onclick={() => startCheckout('single')}
-					disabled={isProcessing}
-					class="mt-3 w-full rounded-2xl border border-slate-200 px-6 py-3.5 text-sm font-bold text-slate-700 hover:bg-slate-50 transition-colors disabled:opacity-50"
-				>
-					Unlock this school for $4.99
-				</button>
-			</div>
-
-			<!-- Full Season (featured) — lifted above the other cards for clear hierarchy -->
-			<div class="relative rounded-[1.5rem] bg-white p-8 border-2 border-slate-900 shadow-sm flex flex-col md:scale-[1.04] md:z-10">
-				<span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#1A4CFF] text-white text-[10px] uppercase font-bold tracking-[0.2em] px-4 py-1.5 rounded-full">
-					Start here
-				</span>
-				<h2 class="text-sm font-bold text-slate-900 tracking-[0.25em] uppercase">Monthly</h2>
-				<div class="mt-4 flex items-end gap-1">
-					<span class="text-5xl font-bold tracking-tighter">$9.99</span>
-					<span class="text-sm text-slate-400 font-medium mb-1.5">/mo</span>
+				<div class="flex w-full shrink-0 items-center gap-2 sm:w-auto">
+					<select
+						bind:value={passSchoolSlug}
+						class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-900 focus:border-slate-400 focus:outline-none sm:w-44"
+					>
+						{#each portals as p}
+							<option value={p.slug}>{p.name}</option>
+						{/each}
+					</select>
+					<button
+						onclick={() => startCheckout('single')}
+						disabled={isProcessing}
+						class="shrink-0 rounded-full border border-slate-300 px-5 py-2.5 text-sm font-semibold text-slate-900 transition hover:bg-slate-50 disabled:opacity-50"
+					>
+						Unlock · $4.99
+					</button>
 				</div>
-				<p class="mt-2 text-xs text-slate-500">
-					Full access while you're applying. Cancel anytime. Or pay once below.
-				</p>
-				<ul class="mt-5 space-y-3 text-sm text-slate-600 flex-1">
-					{#each fullFeatures as f}
-						<li class="flex items-start gap-2">
-							<svg class="mt-0.5 h-4 w-4 flex-none text-slate-900" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.7-9.3a1 1 0 00-1.4-1.4L9 10.6 7.7 9.3a1 1 0 00-1.4 1.4l2 2a1 1 0 001.4 0l4-4z" clip-rule="evenodd"/></svg>
-							{f}
-						</li>
-					{/each}
-				</ul>
-				<button
-					onclick={() => startCheckout('monthly')}
-					disabled={isProcessing}
-					class="mt-8 w-full rounded-full bg-slate-900 px-6 py-3.5 text-sm font-semibold text-white shadow-sm hover:bg-slate-800 transition-all disabled:opacity-50"
-				>
-					{isProcessing ? 'Starting checkout…' : 'Start for $9.99/mo →'}
-				</button>
-				<button
-					onclick={() => startCheckout('lifetime')}
-					disabled={isProcessing}
-					class="mt-2 w-full rounded-2xl border border-slate-200 px-6 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors disabled:opacity-50"
-				>
-					Or pay once: Lifetime $25
-				</button>
 			</div>
 		</section>
 
@@ -219,7 +226,7 @@
 					<h3 class="text-2xl font-bold text-slate-900">Why this pricing?</h3>
 					<p class="text-lg text-slate-600 font-medium leading-relaxed">
 						The feedback loop consultants sell by the hour (a blunt read of your application,
-						school by school, with a concrete plan to fix it) is what Lifetime gives you
+						school by school, with a concrete plan to fix it) is what Pro gives you
 						unlimited, for less than one-tenth of a single consultant hour. Only care about one dream school?
 						A single-school unlock gets you its full analysis for $4.99.
 					</p>
