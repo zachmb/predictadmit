@@ -147,7 +147,9 @@
 	// Paywall uses the proven select-then-continue pattern (Quizlet/Calm/TIDE):
 	// the user picks a plan tile, then one persistent CTA advances. Lifetime is
 	// pre-selected as the best-value default.
-	let selectedPlan = $state<'lifetime' | 'monthly' | 'single'>('lifetime');
+	// Monthly ($9.99) is the default — it's the lowest-commitment yes and the plan
+	// that actually converts (Zach, 2026-09-12). Lifetime sits below as pay-once.
+	let selectedPlan = $state<'lifetime' | 'monthly' | 'single'>('monthly');
 	function continuePlan() {
 		if (selectedPlan === 'single' && paywallContextDecision) {
 			startCheckout('single', paywallContextDecision);
@@ -2281,8 +2283,8 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 					</div>
 					<svg class="h-4 w-4 shrink-0 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
 					<div class="leading-tight">
-						<p class="text-[11px] font-bold uppercase tracking-wide text-[#1A4CFF]">Lifetime access</p>
-						<p class="text-lg font-black text-slate-900">$25, once</p>
+						<p class="text-[11px] font-bold uppercase tracking-wide text-[#1A4CFF]">PredictAdmit Pro</p>
+						<p class="text-lg font-black text-slate-900">$9.99/mo</p>
 					</div>
 				</div>
 
@@ -2300,48 +2302,49 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 				</ul>
 
 				<!-- Selectable plan tiles + one persistent CTA (Quizlet/Calm/TIDE
-				     pattern). Lifetime is pre-selected as best value. -->
+				     pattern). Monthly is pre-selected — the $9.99 low-commitment start is
+				     what converts; Lifetime sits below as the pay-once alternative. -->
 				<div class="mt-5 space-y-2.5">
-					<!-- Lifetime: the target -->
-					<button
-						type="button"
-						onclick={() => (selectedPlan = 'lifetime')}
-						aria-pressed={selectedPlan === 'lifetime'}
-						class="relative flex w-full items-center gap-3 rounded-2xl px-4 py-3.5 text-left transition {selectedPlan === 'lifetime' ? 'border-2 border-slate-900 bg-slate-50 shadow-sm' : 'border border-slate-200 hover:border-slate-300'}"
-					>
-						<span class="grid h-5 w-5 shrink-0 place-items-center rounded-full border-2 {selectedPlan === 'lifetime' ? 'border-slate-900 bg-slate-900' : 'border-slate-300'}">
-							{#if selectedPlan === 'lifetime'}<span class="h-2 w-2 rounded-full bg-white"></span>{/if}
-						</span>
-						<span class="min-w-0 flex-1">
-							<span class="flex items-center gap-2">
-								<span class="text-sm font-bold text-slate-900">Lifetime</span>
-								<span class="rounded-full bg-slate-900 px-2 py-0.5 text-[9px] font-black uppercase tracking-wide text-white">Best value</span>
-							</span>
-							<span class="mt-0.5 block text-xs leading-relaxed text-slate-500">Everything above, forever. No subscription.</span>
-						</span>
-						<span class="shrink-0 text-right leading-tight">
-							<span class="block text-base font-black text-slate-900">$25</span>
-							<span class="block text-[10px] font-semibold uppercase tracking-wide text-slate-500">once</span>
-						</span>
-					</button>
-
-					<!-- Monthly -->
+					<!-- Monthly: the default, lowest-commitment yes -->
 					<button
 						type="button"
 						onclick={() => (selectedPlan = 'monthly')}
 						aria-pressed={selectedPlan === 'monthly'}
-						class="flex w-full items-center gap-3 rounded-2xl px-4 py-3.5 text-left transition {selectedPlan === 'monthly' ? 'border-2 border-slate-900 bg-slate-50 shadow-sm' : 'border border-slate-200 hover:border-slate-300'}"
+						class="relative flex w-full items-center gap-3 rounded-2xl px-4 py-3.5 text-left transition {selectedPlan === 'monthly' ? 'border-2 border-slate-900 bg-slate-50 shadow-sm' : 'border border-slate-200 hover:border-slate-300'}"
 					>
 						<span class="grid h-5 w-5 shrink-0 place-items-center rounded-full border-2 {selectedPlan === 'monthly' ? 'border-slate-900 bg-slate-900' : 'border-slate-300'}">
 							{#if selectedPlan === 'monthly'}<span class="h-2 w-2 rounded-full bg-white"></span>{/if}
 						</span>
 						<span class="min-w-0 flex-1">
-							<span class="text-sm font-bold text-slate-900">Monthly</span>
+							<span class="flex items-center gap-2">
+								<span class="text-sm font-bold text-slate-900">Monthly</span>
+								<span class="rounded-full bg-[#1A4CFF] px-2 py-0.5 text-[9px] font-black uppercase tracking-wide text-white">Start here</span>
+							</span>
 							<span class="mt-0.5 block text-xs leading-relaxed text-slate-500">Full access while you're applying. Cancel anytime.</span>
 						</span>
 						<span class="shrink-0 text-right leading-tight">
 							<span class="block text-base font-black text-slate-900">$9.99</span>
 							<span class="block text-[10px] font-semibold uppercase tracking-wide text-slate-500">per month</span>
+						</span>
+					</button>
+
+					<!-- Lifetime: the pay-once alternative -->
+					<button
+						type="button"
+						onclick={() => (selectedPlan = 'lifetime')}
+						aria-pressed={selectedPlan === 'lifetime'}
+						class="flex w-full items-center gap-3 rounded-2xl px-4 py-3.5 text-left transition {selectedPlan === 'lifetime' ? 'border-2 border-slate-900 bg-slate-50 shadow-sm' : 'border border-slate-200 hover:border-slate-300'}"
+					>
+						<span class="grid h-5 w-5 shrink-0 place-items-center rounded-full border-2 {selectedPlan === 'lifetime' ? 'border-slate-900 bg-slate-900' : 'border-slate-300'}">
+							{#if selectedPlan === 'lifetime'}<span class="h-2 w-2 rounded-full bg-white"></span>{/if}
+						</span>
+						<span class="min-w-0 flex-1">
+							<span class="text-sm font-bold text-slate-900">Lifetime</span>
+							<span class="mt-0.5 block text-xs leading-relaxed text-slate-500">Pay once, no subscription. Best deal if you're sure.</span>
+						</span>
+						<span class="shrink-0 text-right leading-tight">
+							<span class="block text-base font-black text-slate-900">$25</span>
+							<span class="block text-[10px] font-semibold uppercase tracking-wide text-slate-500">once</span>
 						</span>
 					</button>
 
@@ -2380,7 +2383,7 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 						: selectedPlan === 'lifetime'
 							? 'Get Lifetime · $25 once'
 							: selectedPlan === 'monthly'
-								? 'Continue · $9.99/mo'
+								? 'Start for $9.99/mo'
 								: 'Continue · $4.99'}
 				</button>
 

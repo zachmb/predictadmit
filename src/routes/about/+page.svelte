@@ -205,7 +205,7 @@
 				href="/pricing"
 				class="inline-flex items-center justify-center font-semibold text-sm bg-slate-900 text-white px-8 py-3.5 rounded-full hover:bg-slate-800 transition-colors shadow-sm"
 			>
-				Get Lifetime for $25 once →
+				Get PredictAdmit for $9.99/mo →
 			</a>
 			<span class="text-sm text-slate-400">Free simulation included. No credit card to start.</span>
 		</div>

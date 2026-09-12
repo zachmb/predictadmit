@@ -83,7 +83,7 @@
 	<title>PredictAdmit: Pricing</title>
 	<meta
 		name="description"
-		content="Your first AI admissions rehearsal is free. Unlock one school for $4.99, or get Lifetime access (every school, every tool, forever) for $25 once (or $9.99/mo)."
+		content="Your first AI admissions rehearsal is free. Unlock one school for $4.99, or get full access to every school and tool for $9.99/mo (or $25 once)."
 	/>
 </svelte:head>
 
@@ -95,7 +95,7 @@
 			</h1>
 			<p class="text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
 				Private admissions consultants run $200–500 an hour and $5,000+ per application season.
-				Lifetime access is $25, once (or $9.99/mo). Start free and see where you stand first.
+				PredictAdmit is $9.99/mo while you're applying, or $25 once. Start free and see where you stand first.
 			</p>
 		</header>
 
@@ -160,16 +160,16 @@
 
 			<!-- Full Season (featured) — lifted above the other cards for clear hierarchy -->
 			<div class="relative rounded-[1.5rem] bg-white p-8 border-2 border-slate-900 shadow-sm flex flex-col md:scale-[1.04] md:z-10">
-				<span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-[10px] uppercase font-bold tracking-[0.2em] px-4 py-1.5 rounded-full">
-					Best value
+				<span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#1A4CFF] text-white text-[10px] uppercase font-bold tracking-[0.2em] px-4 py-1.5 rounded-full">
+					Start here
 				</span>
-				<h2 class="text-sm font-bold text-slate-900 tracking-[0.25em] uppercase">Lifetime</h2>
+				<h2 class="text-sm font-bold text-slate-900 tracking-[0.25em] uppercase">Monthly</h2>
 				<div class="mt-4 flex items-end gap-1">
-					<span class="text-5xl font-bold tracking-tighter">$25</span>
-					<span class="text-sm text-slate-400 font-medium mb-1.5">once, forever</span>
+					<span class="text-5xl font-bold tracking-tighter">$9.99</span>
+					<span class="text-sm text-slate-400 font-medium mb-1.5">/mo</span>
 				</div>
 				<p class="mt-2 text-xs text-slate-500">
-					One payment, nothing to cancel. Or go monthly at $9.99/mo below.
+					Full access while you're applying. Cancel anytime. Or pay once below.
 				</p>
 				<ul class="mt-5 space-y-3 text-sm text-slate-600 flex-1">
 					{#each fullFeatures as f}
@@ -180,18 +180,18 @@
 					{/each}
 				</ul>
 				<button
-					onclick={() => startCheckout('lifetime')}
+					onclick={() => startCheckout('monthly')}
 					disabled={isProcessing}
 					class="mt-8 w-full rounded-full bg-slate-900 px-6 py-3.5 text-sm font-semibold text-white shadow-sm hover:bg-slate-800 transition-all disabled:opacity-50"
 				>
-					{isProcessing ? 'Starting checkout…' : 'Get Lifetime for $25 once →'}
+					{isProcessing ? 'Starting checkout…' : 'Start for $9.99/mo →'}
 				</button>
 				<button
-					onclick={() => startCheckout('monthly')}
+					onclick={() => startCheckout('lifetime')}
 					disabled={isProcessing}
 					class="mt-2 w-full rounded-2xl border border-slate-200 px-6 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors disabled:opacity-50"
 				>
-					Or go Monthly at $9.99/mo
+					Or pay once: Lifetime $25
 				</button>
 			</div>
 		</section>

@@ -91,7 +91,7 @@
 	const onSocial = $derived(step === nBenefits);
 	const onPlans = $derived(step > nBenefits);
 
-	let selectedPlan = $state<'monthly' | 'lifetime'>('lifetime');
+	let selectedPlan = $state<'monthly' | 'lifetime'>('monthly');
 
 	function next() {
 		if (step < lastStep) step += 1;
@@ -253,34 +253,34 @@
 
 						<div class="mt-6 space-y-3">
 							<button
-								onclick={() => (selectedPlan = 'lifetime')}
-								class="relative w-full rounded-2xl border-2 px-5 py-4 text-left transition {selectedPlan === 'lifetime' ? 'border-slate-900 bg-slate-50' : 'border-slate-200 hover:border-slate-300'}"
+								onclick={() => (selectedPlan = 'monthly')}
+								class="relative w-full rounded-2xl border-2 px-5 py-4 text-left transition {selectedPlan === 'monthly' ? 'border-slate-900 bg-slate-50' : 'border-slate-200 hover:border-slate-300'}"
 							>
-								<span class="absolute -top-2.5 left-5 rounded-full bg-slate-900 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">Best value</span>
+								<span class="absolute -top-2.5 left-5 rounded-full bg-[#1A4CFF] px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">Start here</span>
 								<div class="flex items-center justify-between gap-3">
 									<div>
-										<div class="text-base font-black text-slate-900">Lifetime</div>
-										<div class="mt-0.5 text-xs text-slate-500">All 39 schools, unlimited, forever. No subscription</div>
+										<div class="text-base font-black text-slate-900">Monthly</div>
+										<div class="mt-0.5 text-xs text-slate-500">Full access while you're applying. Cancel anytime.</div>
 									</div>
 									<div class="text-right">
-										<div class="text-xl font-black text-slate-900">$25</div>
-										<div class="text-[10px] font-medium text-slate-400">once</div>
+										<div class="text-xl font-black text-slate-900">$9.99</div>
+										<div class="text-[10px] font-medium text-slate-400">/mo</div>
 									</div>
 								</div>
 							</button>
 
 							<button
-								onclick={() => (selectedPlan = 'monthly')}
-								class="w-full rounded-2xl border-2 px-5 py-4 text-left transition {selectedPlan === 'monthly' ? 'border-slate-900 bg-slate-50' : 'border-slate-200 hover:border-slate-300'}"
+								onclick={() => (selectedPlan = 'lifetime')}
+								class="w-full rounded-2xl border-2 px-5 py-4 text-left transition {selectedPlan === 'lifetime' ? 'border-slate-900 bg-slate-50' : 'border-slate-200 hover:border-slate-300'}"
 							>
 								<div class="flex items-center justify-between gap-3">
 									<div>
-										<div class="text-base font-black text-slate-900">Monthly</div>
-										<div class="mt-0.5 text-xs text-slate-500">Full access while you're applying. Just 2½ months = Lifetime.</div>
+										<div class="text-base font-black text-slate-900">Lifetime</div>
+										<div class="mt-0.5 text-xs text-slate-500">Pay once, no subscription. 2½ months of Monthly = Lifetime.</div>
 									</div>
 									<div class="text-right">
-										<div class="text-xl font-black text-slate-900">$9.99</div>
-										<div class="text-[10px] font-medium text-slate-400">/mo</div>
+										<div class="text-xl font-black text-slate-900">$25</div>
+										<div class="text-[10px] font-medium text-slate-400">once</div>
 									</div>
 								</div>
 							</button>
@@ -296,7 +296,7 @@
 						</ul>
 
 						<p class="mx-auto mt-5 max-w-xs text-center text-xs text-slate-400">
-							$25 is <span class="font-semibold text-slate-600">less than a single college application fee</span>, and it covers all 39.
+							<span class="font-semibold text-slate-600">Less than a single college application fee</span>, and it covers all 39.
 						</p>
 					</div>
 				{/if}

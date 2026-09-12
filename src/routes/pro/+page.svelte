@@ -875,7 +875,7 @@
 		},
 		{
 			q: 'Is this a subscription?',
-			a: "You have two options. Lifetime is a single $25 payment. No recurring charge, nothing to cancel, yours forever. Or Monthly at $9.99 a month while you're applying. About two and a half months of Monthly costs the same as Lifetime, so most people just get Lifetime. Both cover all 39 schools, unlimited re-runs, and the essay workshop. Your first prediction is free, so you see the value before you pay."
+			a: "You have two options. Monthly is $9.99 a month while you're applying. Cancel anytime, and it's the easiest way to start. Or Lifetime, a single $25 payment with no subscription and nothing to cancel; about two and a half months of Monthly costs the same. Both cover all 39 schools, unlimited re-runs, and the essay workshop. Your first prediction is free, so you see the value before you pay."
 		},
 		{
 			q: 'What if I only care about one school?',
@@ -896,7 +896,7 @@
 	<title>PredictAdmit Pro: your real admission decision, months early</title>
 	<meta
 		name="description"
-		content="PredictAdmit Pro is a full application workshop, not just a predictor: predicted decisions across 39 schools with deep-dive analysis, an AI essay editor that reads like an admissions officer, per-school strategy, a narrative mind map, and an AI counselor. First prediction free, then $25 once (or $9.99/mo)."
+		content="PredictAdmit Pro is a full application workshop, not just a predictor: predicted decisions across 39 schools with deep-dive analysis, an AI essay editor that reads like an admissions officer, per-school strategy, a narrative mind map, and an AI counselor. First prediction free, then $9.99/mo (or $25 once)."
 	/>
 </svelte:head>
 
@@ -2291,19 +2291,19 @@
 					</p>
 
 					<div class="mt-7 flex items-baseline justify-center lg:justify-start gap-2.5">
-						<span class="text-4xl font-bold text-slate-900">$25</span>
-						<span class="text-sm font-medium text-slate-400">once</span>
+						<span class="text-4xl font-bold text-slate-900">$9.99</span>
+						<span class="text-sm font-medium text-slate-400">/mo</span>
 						<span class="text-slate-300">·</span>
-						<span class="text-sm text-slate-500">or $9.99/mo</span>
+						<span class="text-sm text-slate-500">or $25 once</span>
 					</div>
 
 					<div class="mt-7 flex flex-col sm:flex-row items-center lg:justify-start justify-center gap-4">
 						<button
-							onclick={() => handleCheckout('lifetime')}
+							onclick={() => handleCheckout('monthly')}
 							disabled={isProcessing}
 							class="w-full sm:w-auto rounded-full bg-slate-900 px-8 py-4 text-base font-semibold text-white transition hover:bg-slate-800 active:scale-[0.99] disabled:opacity-50"
 						>
-							{isProcessing ? 'Taking you to checkout…' : 'Get Lifetime for $25'}
+							{isProcessing ? 'Taking you to checkout…' : 'Start for $9.99/mo'}
 						</button>
 						<a href="/verdict" class="group inline-flex items-center gap-1.5 text-base font-semibold text-slate-900 hover:text-slate-500">
 							Try your first verdict free
@@ -2377,38 +2377,38 @@
 					A private counselor runs $5,000+ a season. Pick your plan.
 				</p>
 				<div class="mt-10 grid gap-4 md:grid-cols-3 md:items-stretch">
-					<!-- Lifetime: the target -->
+					<!-- Monthly: the default converter -->
 					<div class="relative flex flex-col rounded-2xl border border-slate-900 bg-white p-6">
-						<span class="absolute -top-2.5 left-6 rounded-full bg-slate-900 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white">Best value</span>
-						<p class="text-xs font-semibold uppercase tracking-wide text-slate-400">Lifetime</p>
-						<p class="mt-2 flex items-baseline gap-1">
-							<span class="text-4xl font-bold text-slate-900">$25</span>
-							<span class="text-sm text-slate-400">once</span>
-						</p>
-						<p class="mt-2 text-sm leading-relaxed text-slate-500">Everything below, forever. No subscription and nothing to renew.</p>
-						<button
-							onclick={() => handleCheckout('lifetime')}
-							disabled={isProcessing}
-							class="mt-5 w-full rounded-full bg-slate-900 px-5 py-3.5 text-base font-semibold text-white transition hover:bg-slate-800 active:scale-[0.99] disabled:opacity-50"
-						>
-							{isProcessing ? 'Taking you to checkout…' : 'Get Lifetime'}
-						</button>
-					</div>
-
-					<!-- Monthly -->
-					<div class="flex flex-col rounded-2xl border border-slate-200 bg-white p-6">
+						<span class="absolute -top-2.5 left-6 rounded-full bg-[#1A4CFF] px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white">Start here</span>
 						<p class="text-xs font-semibold uppercase tracking-wide text-slate-400">Monthly</p>
 						<p class="mt-2 flex items-baseline gap-1">
 							<span class="text-4xl font-bold text-slate-900">$9.99</span>
 							<span class="text-sm text-slate-400">per month</span>
 						</p>
-						<p class="mt-2 text-sm leading-relaxed text-slate-500">Full access while you're applying. Cancel anytime. About two and a half months costs the same as Lifetime.</p>
+						<p class="mt-2 text-sm leading-relaxed text-slate-500">Full access while you're applying. Cancel anytime.</p>
 						<button
 							onclick={() => handleCheckout('monthly')}
 							disabled={isProcessing}
+							class="mt-5 w-full rounded-full bg-slate-900 px-5 py-3.5 text-base font-semibold text-white transition hover:bg-slate-800 active:scale-[0.99] disabled:opacity-50"
+						>
+							{isProcessing ? 'Taking you to checkout…' : 'Start for $9.99/mo'}
+						</button>
+					</div>
+
+					<!-- Lifetime: the pay-once alternative -->
+					<div class="flex flex-col rounded-2xl border border-slate-200 bg-white p-6">
+						<p class="text-xs font-semibold uppercase tracking-wide text-slate-400">Lifetime</p>
+						<p class="mt-2 flex items-baseline gap-1">
+							<span class="text-4xl font-bold text-slate-900">$25</span>
+							<span class="text-sm text-slate-400">once</span>
+						</p>
+						<p class="mt-2 text-sm leading-relaxed text-slate-500">Pay once, no subscription. About two and a half months of Monthly costs the same.</p>
+						<button
+							onclick={() => handleCheckout('lifetime')}
+							disabled={isProcessing}
 							class="mt-auto w-full rounded-full border border-slate-300 px-5 py-3.5 text-base font-semibold text-slate-900 transition hover:bg-slate-50 disabled:opacity-50"
 						>
-							Start Monthly
+							Get Lifetime
 						</button>
 					</div>
 
@@ -2490,15 +2490,15 @@
 				<!-- Everything, no limits, banner. -->
 				<div class="flex flex-col items-center gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-6 text-center sm:flex-row sm:justify-between sm:text-left">
 					<div>
-						<p class="font-bold text-slate-900">All of it, no limits, with Lifetime</p>
-						<p class="mt-0.5 text-sm text-slate-600">Run the simulation as often as you like, read every deep-dive, and grade essays until they're right. Your first prediction is free. $25 once unlocks the rest.</p>
+						<p class="font-bold text-slate-900">All of it, no limits</p>
+						<p class="mt-0.5 text-sm text-slate-600">Run the simulation as often as you like, read every deep-dive, and grade essays until they're right. Your first prediction is free. $9.99/mo unlocks the rest, or $25 once.</p>
 					</div>
 					<button
-						onclick={() => handleCheckout('lifetime')}
+						onclick={() => handleCheckout('monthly')}
 						disabled={isProcessing}
 						class="w-full shrink-0 rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 active:scale-[0.99] disabled:opacity-50 sm:w-auto"
 					>
-						Get Lifetime · $25
+						Start for $9.99/mo
 					</button>
 				</div>
 			</div>
@@ -2531,14 +2531,14 @@
 				<div class="bg-slate-900 rounded-[2rem] p-12 text-center text-white space-y-6">
 					<h3 class="font-serif text-3xl md:text-4xl font-medium text-white">The consultant's read, without the consultant's bill.</h3>
 					<p class="text-slate-300 text-lg max-w-2xl mx-auto leading-relaxed">
-						Private counselors charge thousands a season for one judgment call: is this student getting in, and what should they fix. Lifetime access is $25, once. Every simulation, every deep-dive, every essay pass, forever. Your first prediction is free, so you only pay once it has already told you something you didn't know.
+						Private counselors charge thousands a season for one judgment call: is this student getting in, and what should they fix. PredictAdmit is $9.99 a month while you're applying, or $25 once. Every simulation, every deep-dive, every essay pass. Your first prediction is free, so you only pay once it has already told you something you didn't know.
 					</p>
 					<button
-						onclick={() => handleCheckout('lifetime')}
+						onclick={() => handleCheckout('monthly')}
 						disabled={isProcessing}
 						class="rounded-full bg-white px-8 py-4 text-base font-semibold text-slate-900 transition hover:bg-slate-100 active:scale-[0.99] disabled:opacity-50"
 					>
-						{isProcessing ? 'Taking you to checkout…' : 'Get Lifetime for $25'}
+						{isProcessing ? 'Taking you to checkout…' : 'Start for $9.99/mo'}
 					</button>
 				</div>
 			</div>

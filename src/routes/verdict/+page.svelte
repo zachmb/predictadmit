@@ -312,9 +312,9 @@
 							each, and your essays graded before you submit.
 						</p>
 						<button onclick={() => toPro('all_schools')} class="mt-6 w-full rounded-full bg-white px-6 py-4 text-base font-semibold text-slate-900 transition hover:bg-slate-100 active:scale-[0.99]">
-							See all 39 verdicts + why → $25 once
+							See all 39 verdicts + why → $9.99/mo
 						</button>
-						<p class="mt-3 text-xs text-slate-400">or $9.99/mo · nothing to install</p>
+						<p class="mt-3 text-xs text-slate-400">cancel anytime · or $25 once</p>
 					</div>
 
 					<button onclick={() => { phase = 'input'; verdict = null; }} class="w-full py-2 text-sm font-semibold text-slate-500 hover:text-slate-900">
