@@ -1019,6 +1019,60 @@
 		</div>
 	</section>
 
+	<!-- SECTION 2.5: DATA CREDIBILITY (Common Data Set / NACAC) -->
+	<section class="py-32 bg-white border-t border-slate-100">
+		<div class="max-w-[1100px] mx-auto px-6">
+			<div class="grid gap-14 lg:grid-cols-2 lg:items-center">
+				<!-- Copy -->
+				<div>
+					<span class="inline-block px-3 py-1 bg-slate-50 border border-slate-200 text-slate-600 text-[10px] font-bold uppercase tracking-widest rounded-full">The numbers behind it</span>
+					<h2 class="mt-5 font-serif text-4xl md:text-5xl font-medium tracking-tight text-slate-900 leading-[1.05]">
+						Anchored to the data <span class="text-[#1A4CFF]">schools publish.</span>
+					</h2>
+					<p class="mt-5 text-lg text-slate-500 leading-relaxed">
+						This is not a magic 8-ball. Every read starts from the same public numbers colleges report in their Common Data Sets, weighted by what admissions officers themselves say matters most in the NACAC Factors in the Admission Decision survey.
+					</p>
+					<ul class="mt-6 space-y-3">
+						{#each ['Each school’s published acceptance rate and middle-50% test range', 'The factors committees rate "very important," weighted per NACAC', 'Calibrated against HYPSM and Top-20 admitted-student profiles'] as point}
+							<li class="flex items-start gap-3 text-slate-700">
+								<span class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#1A4CFF]/10 text-[#1A4CFF]">
+									<svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+								</span>
+								<span class="leading-relaxed">{point}</span>
+							</li>
+						{/each}
+					</ul>
+					<a href="/methodology" class="mt-7 inline-flex items-center gap-1.5 text-sm font-semibold text-slate-900 hover:text-slate-500">
+						Read the full methodology
+						<span>&rarr;</span>
+					</a>
+				</div>
+
+				<!-- Factor-weighting data card (the NACAC factors the model reads) -->
+				<div class="rounded-3xl border border-slate-200 bg-slate-50/60 p-6 sm:p-8">
+					<p class="text-xs font-bold uppercase tracking-wide text-slate-500">How much each factor counts</p>
+					<p class="mt-1 text-[11px] text-slate-400">Source: NACAC Factors in the Admission Decision</p>
+					<div class="mt-5 space-y-3">
+						{#each [{ f: 'Rigor of curriculum', w: 92 }, { f: 'Grades in college-prep courses', w: 90 }, { f: 'Application essays', w: 62 }, { f: 'Test scores', w: 58 }, { f: 'Extracurricular impact', w: 49 }, { f: 'Recommendations', w: 46 }, { f: 'Demonstrated character', w: 44 }] as row}
+							<div>
+								<div class="flex items-center justify-between text-xs font-medium text-slate-600">
+									<span>{row.f}</span>
+									<span class="text-slate-400">{row.w >= 80 ? 'Very important' : row.w >= 55 ? 'Important' : 'Considered'}</span>
+								</div>
+								<div class="mt-1.5 h-2 rounded-full bg-slate-200">
+									<div class="h-2 rounded-full bg-[#1A4CFF]" style="width: {row.w}%"></div>
+								</div>
+							</div>
+						{/each}
+					</div>
+					<p class="mt-5 text-[11px] leading-relaxed text-slate-400">
+						Illustrative weighting from the national survey. The AI adjusts these per school using its published data.
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
 	<!-- SECTION 3: COMPARISON TABLE -->
 	<section class="py-32 bg-slate-50 border-t border-slate-100">
 		<div class="max-w-[1000px] mx-auto px-6">
