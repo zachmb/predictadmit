@@ -2483,49 +2483,91 @@
 					<p class="mt-4 text-lg leading-relaxed text-slate-500">Two jobs, done properly. See exactly where you stand today, then fix what's holding you back.</p>
 				</div>
 
-				<!-- Group 1: see where you stand -->
-				<div>
-					<p class="text-xs font-bold uppercase tracking-wider text-slate-900">See exactly where you stand</p>
-					<div class="mt-4 grid gap-4 sm:grid-cols-2">
-						{#each [
-							{ t: 'Unlimited decision simulations', d: 'Run your real application through the AI and get a predicted accept, waitlist, or deny at all 39 top schools. Change an essay, an activity, or a score and re-run it as many times as you want. No cap.', d1: 'M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15' },
-							{ t: 'Real portal simulator', d: 'Open a realistic acceptance or rejection portal for any school and feel the moment before it is real. It is the rehearsal that makes people actually fix their application.', d1: 'M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z' },
-							{ t: 'Deep-dive on every decision', d: 'A five-part breakdown of each verdict: academics, activities, fit, intellect, and character. It names what is dragging you down and the one change that would move it.', d1: 'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z' },
-							{ t: 'Chance Me profile and stats', d: 'Save your profile once and see your realistic odds at any school, with a clear read on where you are strong and where you are thin.', d1: 'M16 8v8m-4-5v5M8 14v2m-2 5h12a2 2 0 002-2V5a2 2 0 00-2-2H6a2 2 0 00-2 2v14a2 2 0 002 2z' }
-						] as f}
-							<div class="flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-5">
-								<div class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-[#1A4CFF]/10">
-									<svg class="h-5 w-5 text-[#1A4CFF]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d={f.d1} /></svg>
+				<!-- Alternating feature rows: a bold headline + one line beside a real
+				     product mock (Trajecta-style editorial layout). -->
+				<div class="space-y-16 md:space-y-24">
+					<!-- Row 1: verdict across all 39 -->
+					<div class="grid items-center gap-8 md:grid-cols-2 md:gap-14">
+						<div>
+							<p class="text-xs font-bold uppercase tracking-widest text-[#1A4CFF]">See where you stand</p>
+							<h3 class="mt-3 font-serif text-3xl font-medium tracking-tight text-slate-900">Your verdict at all 39 top schools</h3>
+							<p class="mt-3 text-[15px] leading-relaxed text-slate-500">Run your real application through the AI once and watch accept, waitlist, and deny land across every top school. Change an essay or a score and re-run it, no cap.</p>
+						</div>
+						<div class="rounded-3xl border border-slate-200 bg-slate-50 p-5 sm:p-6">
+							<div class="space-y-2.5">
+								{#each [{ s: 'Stanford University', o: 'Admit', cls: 'bg-emerald-50 text-emerald-700 ring-emerald-200' }, { s: 'Cornell University', o: 'Waitlist', cls: 'bg-amber-50 text-amber-700 ring-amber-200' }, { s: 'MIT', o: 'Deny', cls: 'bg-rose-50 text-rose-700 ring-rose-200' }] as r}
+									<div class="flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm">
+										<span class="text-sm font-bold text-slate-900">{r.s}</span>
+										<span class="rounded-full px-2.5 py-1 text-[11px] font-semibold ring-1 ring-inset {r.cls}">{r.o}</span>
+									</div>
+								{/each}
+							</div>
+						</div>
+					</div>
+
+					<!-- Row 2: committee reasoning (mock left) -->
+					<div class="grid items-center gap-8 md:grid-cols-2 md:gap-14">
+						<div class="md:order-2">
+							<p class="text-xs font-bold uppercase tracking-widest text-[#1A4CFF]">The full "why"</p>
+							<h3 class="mt-3 font-serif text-3xl font-medium tracking-tight text-slate-900">A five-reader committee on every decision</h3>
+							<p class="mt-3 text-[15px] leading-relaxed text-slate-500">Academics, activities, fit, intellect, and character, each scored and explained. It names the one reader holding you back and the single change that would move the verdict.</p>
+						</div>
+						<div class="rounded-3xl border border-slate-200 bg-slate-50 p-5 sm:p-6 md:order-1">
+							<div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+								<div class="flex items-center justify-between">
+									<p class="text-xs font-bold uppercase tracking-wide text-slate-500">Committee read · Stanford</p>
+									<span class="rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-bold text-emerald-700 ring-1 ring-inset ring-emerald-200">Admit-leaning</span>
 								</div>
-								<div>
-									<p class="font-bold text-slate-900">{f.t}</p>
-									<p class="mt-1 text-sm leading-relaxed text-slate-500">{f.d}</p>
+								<div class="mt-4 space-y-2.5">
+									{#each [{ l: 'Academics', s: 9 }, { l: 'Activities', s: 8 }, { l: 'Fit', s: 7 }, { l: 'Intellect', s: 8 }, { l: 'Character', s: 7 }] as row}
+										<div>
+											<div class="flex items-center justify-between text-[11px] font-medium text-slate-500"><span>{row.l}</span><span>{row.s}/10</span></div>
+											<div class="mt-1 h-1.5 rounded-full bg-slate-100"><div class="h-1.5 rounded-full bg-[#1A4CFF]" style="width: {row.s * 10}%"></div></div>
+										</div>
+									{/each}
 								</div>
 							</div>
-						{/each}
+						</div>
 					</div>
 				</div>
 
-				<!-- Group 2: the workshop -->
-				<div>
-					<p class="text-xs font-bold uppercase tracking-wider text-slate-900">The workshop, where you fix it</p>
-					<div class="mt-4 grid gap-4 sm:grid-cols-2">
-						{#each [
-							{ t: 'Essay editor with AI feedback', d: 'Draft every supplement in one place, then hand it to the AI for the notes an admissions reader would give. It marks up weak lines and tells you why. You write every word. It never writes for you.', d1: 'M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z' },
-							{ t: 'Narrative Mind Map', d: 'Dump the experiences, jobs, and obsessions that make you you onto a board, and the AI finds the thread that ties them into one clear application story.', d1: 'M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z' },
-							{ t: 'AI counselor, any hour', d: 'Ask the questions you would pay a consultant for. Where to apply, how to frame a gap, what a school wants. It answers in plain language, whenever you need it.', d1: 'M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 3v-3z' },
-							{ t: 'Per-school strategy notes', d: 'What each of the top 50+ schools actually weighs, and how to angle your application for that specific reader instead of writing one generic app for all of them.', d1: 'M12 14l9-5-9-5-9 5 9 5z M12 14l6.16-3.42a12 12 0 01.84 4.42 12 12 0 01-14 0 12 12 0 01.84-4.42L12 14z' }
-						] as f}
-							<div class="flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-5">
-								<div class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-[#1A4CFF]/10">
-									<svg class="h-5 w-5 text-[#1A4CFF]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d={f.d1} /></svg>
-								</div>
-								<div>
-									<p class="font-bold text-slate-900">{f.t}</p>
-									<p class="mt-1 text-sm leading-relaxed text-slate-500">{f.d}</p>
-								</div>
+				<!-- Row 3: essay markup -->
+				<div class="grid items-center gap-8 md:grid-cols-2 md:gap-14">
+					<div>
+						<p class="text-xs font-bold uppercase tracking-widest text-[#1A4CFF]">Fix what's weak</p>
+						<h3 class="mt-3 font-serif text-3xl font-medium tracking-tight text-slate-900">Essays marked up like an admissions reader</h3>
+						<p class="mt-3 text-[15px] leading-relaxed text-slate-500">Hand over any supplement and the AI flags the weak lines and tells you why, the way a reader would. You write every word. It never writes one for you.</p>
+					</div>
+					<div class="rounded-3xl border border-slate-200 bg-slate-50 p-5 sm:p-6">
+						<div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+							<p class="text-xs font-bold uppercase tracking-wide text-slate-500">Personal statement</p>
+							<div class="mt-3 space-y-1.5 text-[13px] leading-relaxed text-slate-600">
+								<p class="rounded bg-[#1A4CFF]/10 px-1.5 py-0.5 text-slate-900 ring-1 ring-[#1A4CFF]/20">Ever since I was young, I have loved science.</p>
+								<p class="text-slate-400">The lab was quiet except for the hum of the centrifuge.</p>
 							</div>
-						{/each}
+							<div class="mt-3 flex items-start gap-2 rounded-xl border border-slate-200 bg-white p-3 shadow-sm">
+								<span class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#1A4CFF] text-[10px] font-black text-white">AI</span>
+								<p class="text-xs leading-relaxed text-slate-600">A reader has seen this opener a thousand times. Start on the moment in the lab.</p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Row 4: AI counselor (mock left) -->
+				<div class="grid items-center gap-8 md:grid-cols-2 md:gap-14">
+					<div class="md:order-2">
+						<p class="text-xs font-bold uppercase tracking-widest text-[#1A4CFF]">Any hour</p>
+						<h3 class="mt-3 font-serif text-3xl font-medium tracking-tight text-slate-900">A counselor in your pocket</h3>
+						<p class="mt-3 text-[15px] leading-relaxed text-slate-500">Ask the things you'd pay a consultant $300 an hour for. Where to apply, how to explain a rough semester, what a school actually wants. In plain language, any time.</p>
+					</div>
+					<div class="rounded-3xl border border-slate-200 bg-slate-50 p-5 sm:p-6 md:order-1">
+						<div class="space-y-3 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+							<div class="ml-auto max-w-[80%] rounded-2xl rounded-br-md bg-slate-900 px-3.5 py-2 text-[13px] text-white">Is my school list too top-heavy?</div>
+							<div class="flex items-start gap-2">
+								<span class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#1A4CFF] text-[10px] font-black text-white">PA</span>
+								<div class="max-w-[85%] rounded-2xl rounded-bl-md border border-slate-200 bg-white px-3.5 py-2 text-[13px] leading-relaxed text-slate-700">A little. Add two matches where you're above their median. Want me to name them?</div>
+							</div>
+						</div>
 					</div>
 				</div>
 
