@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { browser } from '$app/environment';
-	import { portalDecisionViewed } from '$lib/stores/ui';
+	import { portalDecisionViewed, portalDecisionHeaderVisible } from '$lib/stores/ui';
 	import { schoolConfigs } from '$lib/config/schools';
 	import { decisionsBySlug } from '$lib/stores/results';
 	import { userProfile } from '$lib/stores/user';
@@ -16,9 +16,11 @@
 	const school = $derived(slug ? schoolConfigs[slug] : undefined);
 
 	// Only surface the launcher for AI-simulation decisions (usingAI), not the
-	// manual portal sim, after the decision is viewed on a valid portal page.
+	// manual portal sim. Gate on portalDecisionHeaderVisible (not just Viewed) so it
+	// fades in on the SAME 4s delay as the header + SimulationBadge, instead of
+	// popping in immediately while everything else is still hidden.
 	const active = $derived(
-		!!slug && !!school && $portalDecisionViewed && $userProfile.usingAI
+		!!slug && !!school && $portalDecisionViewed && $portalDecisionHeaderVisible && $userProfile.usingAI
 	);
 
 	const outcome = $derived.by(() => {
@@ -244,8 +246,8 @@
 	<!-- Floating launcher -->
 	<button
 		type="button"
-		class="share-launcher fixed right-4 z-50 flex items-center gap-2 rounded-full px-4 py-3 font-[Inter,system-ui,sans-serif] text-sm font-semibold text-white shadow-lg transition-transform hover:scale-105 focus:ring-4 focus:ring-black/10 focus:outline-none sm:right-5 sm:px-5"
-		style="background-color: {color}; bottom: calc(1.25rem + env(safe-area-inset-bottom));"
+		class="share-launcher fixed right-4 z-50 flex items-center gap-2 rounded-full bg-slate-900 px-4 py-3 font-sans text-sm font-semibold text-white shadow-lg transition-all hover:bg-slate-800 hover:scale-105 focus:ring-4 focus:ring-black/10 focus:outline-none sm:right-5 sm:px-5"
+		style="bottom: calc(1.25rem + env(safe-area-inset-bottom));"
 		onclick={openModal}
 	>
 		<Share2 size={18} strokeWidth={2.4} />

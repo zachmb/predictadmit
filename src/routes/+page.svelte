@@ -819,22 +819,20 @@
 	</section>
 
 	<!-- SECTION 1: FREE SIMULATOR -->
-	<section class="py-32 bg-white relative overflow-hidden">
+	<section class="py-20 bg-white relative overflow-hidden">
 		<div class="max-w-[1200px] mx-auto px-6 relative z-10">
 			<!-- Headline -->
-			<div class="text-center max-w-2xl mx-auto mb-20 space-y-6">
-				<h2 class="text-5xl md:text-6xl font-serif font-medium tracking-tight text-slate-900 leading-[1.05]">
-					Rehearse decision day. <br /> Then fix your odds.
+			<div class="text-center max-w-2xl mx-auto mb-12 space-y-4">
+				<h2 class="text-4xl md:text-5xl font-serif font-medium tracking-tight text-slate-900 leading-[1.05]">
+					Rehearse decision day. Then fix your odds.
 				</h2>
-				<p class="text-lg text-slate-500">
-					Open any of the 39 portals and read your letter before it is written. <span
-						class="text-slate-900 font-bold">Every portal simulation is free. The AI that predicts your real decisions is Pro.</span
-					>
+				<p class="text-base text-slate-500 leading-relaxed">
+					Open any of the 39 portals and read your letter before it is written. Every simulation is free. The AI that predicts your real decisions is Pro.
 				</p>
 			</div>
 
 			<!-- Window-in-Window UI -->
-			<div class="relative max-w-5xl mx-auto group perspective-1000">
+			<div class="relative max-w-3xl mx-auto group perspective-1000">
 				<!-- Base Window: Browser -->
 				<div
 					class="bg-white rounded-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] border border-slate-200/60 overflow-hidden relative z-10 select-none animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-150 fill-mode-both transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] hover:-translate-y-2 hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.15)]"
@@ -857,7 +855,7 @@
 						</div>
 					</div>
 					<!-- Content: Portal -->
-					<div class="bg-white p-8 md:p-12 min-h-[450px] relative">
+					<div class="bg-white p-6 md:p-8 min-h-[320px] relative">
 						<!-- Header -->
 						<div class="flex items-center justify-between border-b border-slate-100 pb-6 mb-8">
 							<div class="flex items-center gap-4">
