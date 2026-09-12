@@ -1176,10 +1176,10 @@
 		<div class="max-w-[1000px] mx-auto px-6">
 			<div class="max-w-2xl mx-auto text-center space-y-4 mb-14">
 				<h2 class="font-serif text-4xl md:text-5xl font-medium tracking-tight text-slate-900 leading-[1.05]">
-					Counselors charge thousands. <span class="text-[#1A4CFF]">This is $25.</span>
+					Counselors charge thousands. <span class="text-[#1A4CFF]">This is $9.99/mo.</span>
 				</h2>
 				<p class="text-lg text-slate-500 leading-relaxed">
-					Start free and see your first read. When you upgrade, it is $25 once and it stays yours.
+					Start free and see your first read. When you upgrade, it is $9.99 a month while you're applying, or $25 once.
 				</p>
 			</div>
 
@@ -1194,7 +1194,7 @@
 							</th>
 							<th class="p-5 text-center bg-[#1A4CFF]/[0.04]">
 								<div class="text-sm font-bold text-[#1A4CFF]">PredictAdmit Pro</div>
-								<div class="text-xs text-slate-500">$25 once</div>
+								<div class="text-xs text-slate-500">$9.99/mo</div>
 							</th>
 							<th class="p-5 text-center">
 								<div class="text-sm font-bold text-slate-900">Private counselor</div>
@@ -1233,7 +1233,7 @@
 
 			<div class="mt-10 text-center">
 				<a href="/pro" class="inline-flex items-center justify-center rounded-full bg-slate-900 px-8 py-4 text-base font-semibold text-white transition hover:bg-slate-800 active:scale-[0.99]">
-					Start free, upgrade for $25
+					Start free, then $9.99/mo
 				</a>
 			</div>
 		</div>
