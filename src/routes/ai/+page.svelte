@@ -69,6 +69,25 @@
 		chair?: string;
 		advice?: string[];
 	};
+
+	// The most selective schools (Ivy League + Stanford & MIT) are Pro-only: the
+	// one free decision can't be spent here. A free user's simulation still COMPUTES
+	// their verdict at these schools — they just see it blurred behind the wall, so
+	// the pull is their actual dream-school decision waiting to be revealed. This is
+	// the deliberate conversion lever, not a limitation to apologize for.
+	const ELITE_SLUGS = new Set([
+		'harvard',
+		'yale',
+		'princeton',
+		'columbia',
+		'upenn',
+		'brown',
+		'cornell',
+		'dartmouth',
+		'stanford',
+		'mit'
+	]);
+
 	// Application inputs (can be typed or filled via OCR)
 	let essay = $state('');
 	let activities = $state('');
@@ -117,6 +136,14 @@
 	let showPaywallModal = $state(false);
 	let paywallMode = $state<'simulation' | 'ocr' | 'deepDive' | 'decision' | null>(null);
 	let paywallContextDecision = $state<AiDecision | null>(null);
+	// True when the paywall was triggered by an elite (Ivy/HYPSM) decision the user
+	// never had a free shot at — changes the pitch from "you've used your free one"
+	// to "this school is Pro-only," and turns on the blurred decision preview.
+	let isElitePaywall = $derived(
+		paywallMode === 'decision' &&
+			!!paywallContextDecision &&
+			ELITE_SLUGS.has(paywallContextDecision.slug)
+	);
 	// Paywall uses the proven select-then-continue pattern (Quizlet/Calm/TIDE):
 	// the user picks a plan tile, then one persistent CTA advances. Lifetime is
 	// pre-selected as the best-value default.
@@ -329,11 +356,13 @@
 	// Callbacks that AdmitMail expects
 
 	// Can this decision be OPENED? Pro/lifetime/monthly → all of them. A $4.99 single
-	// unlock (proSchools) → that one. Otherwise you get abFreeDecisions free opens
-	// (the A/B variant); the ones you've already opened stay open.
+	// unlock (proSchools) → that one. Elite schools (Ivy + Stanford/MIT) are never
+	// free — they always route to the blurred paywall. Otherwise you get
+	// abFreeDecisions free opens on a non-elite school; ones you've opened stay open.
 	function canOpenDecision(slug: string): boolean {
 		if ($userProfile.isPro) return true;
 		if (($userProfile.proSchools ?? []).includes(slug)) return true;
+		if (ELITE_SLUGS.has(slug)) return false; // Ivy/HYPSM: strict paywall
 		if (freeOpenedSlugs.includes(slug)) return true;
 		return freeOpenedSlugs.length < abFreeDecisions; // free opens remaining
 	}
@@ -2193,7 +2222,9 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 					</h3>
 					<p class="mx-auto mt-2 max-w-[19rem] text-sm leading-relaxed text-slate-300">
 						{paywallMode === 'decision'
-							? 'You’ve used your one free decision. Open this one for $4.99 (deep-dive included), or unlock all 39.'
+							? isElitePaywall
+								? `${paywallContextDecision?.school ?? 'This school'} is one of the most selective in the country, so its decision is Pro-only. Reveal it for $4.99 (deep-dive included), or unlock all 39.`
+								: 'You’ve used your one free decision. Open this one for $4.99 (deep-dive included), or unlock all 39.'
 							: paywallMode === 'deepDive'
 								? 'Open the full breakdown of this decision. What drove it, and what would move it.'
 								: 'Point the AI at your real application: predicted decisions at every school, a committee-style deep-dive on each, and an essay editor to fix what is weak.'}
@@ -2205,16 +2236,42 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 			     Scrolls independently so the hero stays pinned and the CTA is always
 			     reachable on short laptops / mobile. -->
 			<div class="flex-1 overflow-y-auto px-7 pt-6 pb-6">
-				<!-- Snapshot of the Pro app so the buyer sees exactly what they unlock. -->
-				<figure class="mb-6 overflow-hidden rounded-2xl border border-slate-200 shadow-sm">
-					<div class="flex items-center gap-1 bg-slate-50 px-3 py-1.5">
-						<span class="h-1.5 w-1.5 rounded-full bg-slate-300"></span>
-						<span class="h-1.5 w-1.5 rounded-full bg-slate-300"></span>
-						<span class="h-1.5 w-1.5 rounded-full bg-slate-300"></span>
-						<span class="ml-2 text-[9px] font-medium text-slate-400">app.predictadmit.com/pro</span>
-					</div>
-					<img src="/screenshots/pro-hub.png" alt="Inside PredictAdmit Pro: your application command center" loading="lazy" class="block w-full" />
-				</figure>
+				{#if paywallMode === 'decision' && paywallContextDecision}
+					<!-- The real verdict is already computed — show it BLURRED so the applicant
+					     feels their actual decision waiting, not a generic teaser. Outcome word
+					     and reasoning are their true results, just unreadable until they unlock. -->
+					<figure class="relative mb-6 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+						<div class="border-b border-slate-100 px-5 py-3">
+							<p class="text-[11px] font-bold uppercase tracking-wide text-slate-500">{paywallContextDecision.school}</p>
+							<p class="text-sm font-bold text-slate-900">Your admission decision</p>
+						</div>
+						<div class="space-y-3 px-5 pb-9 pt-4">
+							<div class="flex justify-center">
+								<span class="select-none rounded-full border-2 border-slate-300 px-7 py-1.5 text-lg font-black uppercase tracking-wider text-slate-900 blur-[7px]">{paywallContextDecision.outcome}</span>
+							</div>
+							<p class="select-none text-[13px] leading-relaxed text-slate-600 blur-[4px]">
+								{(paywallContextDecision.academic_explanation || 'The committee read your file in full and reached a decision. Every reader weighed your academics, essays, activities, and fit before the chair made the final call.').slice(0, 240)}
+							</p>
+						</div>
+						<div class="pointer-events-none absolute inset-x-0 bottom-0 flex flex-col items-center bg-gradient-to-t from-white via-white/85 to-transparent pb-3 pt-8">
+							<span class="grid h-9 w-9 place-items-center rounded-full bg-slate-900 text-white shadow-lg">
+								<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+							</span>
+							<span class="mt-1.5 text-xs font-bold text-slate-900">Unlock to reveal your decision</span>
+						</div>
+					</figure>
+				{:else}
+					<!-- Snapshot of the Pro app so the buyer sees exactly what they unlock. -->
+					<figure class="mb-6 overflow-hidden rounded-2xl border border-slate-200 shadow-sm">
+						<div class="flex items-center gap-1 bg-slate-50 px-3 py-1.5">
+							<span class="h-1.5 w-1.5 rounded-full bg-slate-300"></span>
+							<span class="h-1.5 w-1.5 rounded-full bg-slate-300"></span>
+							<span class="h-1.5 w-1.5 rounded-full bg-slate-300"></span>
+							<span class="ml-2 text-[9px] font-medium text-slate-400">app.predictadmit.com/pro</span>
+						</div>
+						<img src="/screenshots/pro-hub.png" alt="Inside PredictAdmit Pro: your application command center" loading="lazy" class="block w-full" />
+					</figure>
+				{/if}
 
 				<!-- Value anchor: what it's worth vs what it costs. -->
 				<div class="flex items-center justify-center gap-3 text-center">
