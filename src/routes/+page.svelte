@@ -264,6 +264,34 @@
 		}
 	});
 
+	// Scroll-reveal: fades + rises an element into view once, respecting
+	// reduced-motion. Used to give the landing a light "scroll story" cadence
+	// without any heavy animation library.
+	function reveal(node: HTMLElement, delay = 0) {
+		if (
+			typeof window === 'undefined' ||
+			window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+			typeof IntersectionObserver === 'undefined'
+		) {
+			node.dataset.revealed = 'true';
+			return;
+		}
+		node.style.transitionDelay = `${delay}ms`;
+		const io = new IntersectionObserver(
+			(entries) => {
+				for (const e of entries) {
+					if (e.isIntersecting) {
+						node.dataset.revealed = 'true';
+						io.disconnect();
+					}
+				}
+			},
+			{ threshold: 0.15, rootMargin: '0px 0px -8% 0px' }
+		);
+		io.observe(node);
+		return { destroy: () => io.disconnect() };
+	}
+
 	// --- Handlers ---
 	const handleStartSimulationClick = () => {
 		// The old in-page "run the whole season" form was removed; send people to
@@ -581,20 +609,22 @@
 <!-- MARKETING LANDING PAGE -->
 <main class="font-sans text-slate-900 bg-white selection:bg-blue-100 selection:text-blue-900">
 	<!-- HERO SECTION -->
-	<section class="relative pt-32 pb-24 md:pt-48 md:pb-32 overflow-hidden bg-[#FAFAFA]">
+	<section class="relative pt-28 pb-20 md:pt-40 md:pb-28 overflow-hidden bg-[#FAFAFA]">
 		<div class="max-w-[1200px] mx-auto px-6 text-center relative z-10 flex flex-col items-center">
 			<!-- Headline -->
-			<div class="space-y-6 max-w-4xl mx-auto mb-10">
+			<div class="space-y-5 max-w-4xl mx-auto mb-9">
+				<p class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-400 animate-in fade-in duration-700 fill-mode-both">
+					AI college admissions
+				</p>
 				<h1
-					class="font-serif text-5xl sm:text-6xl md:text-[5.5rem] font-medium tracking-tight leading-[1.0] text-slate-900 animate-in fade-in slide-in-from-bottom-6 duration-1000 fill-mode-both"
+					class="font-serif text-5xl sm:text-6xl md:text-[5.25rem] font-medium tracking-tight leading-[1.0] text-slate-900 animate-in fade-in slide-in-from-bottom-6 duration-1000 fill-mode-both"
 				>
-					Simulate Any <br class="hidden md:block" /> University <span class="text-[#1A4CFF]">Portal</span>
+					Read your decision <br class="hidden md:block" /> <span class="text-[#1A4CFF]">before it's written.</span>
 				</h1>
 				<p
-					class="text-xl md:text-2xl text-slate-500 max-w-2xl mx-auto leading-snug tracking-tight font-medium mt-6 animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-[200ms] fill-mode-both"
+					class="text-lg md:text-xl text-slate-500 max-w-2xl mx-auto leading-relaxed tracking-tight font-medium mt-5 animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-[200ms] fill-mode-both"
 				>
-					Open any school's decision portal and read your letter months early, free. Then let the AI
-					run your real application past a full admissions committee, and fix what they flag before you submit.
+					Open any of 39 real decision portals and see accept or deny today, free. Then point the AI at your actual application: it predicts every school, sits a committee on your file, and shows you exactly what to fix.
 				</p>
 			</div>
 
@@ -930,7 +960,7 @@
 
 
 	<!-- SECTION 2: EVERYTHING IN PRO (feature showcase) -->
-	<section class="py-32 bg-white border-t border-slate-100">
+	<section class="py-24 bg-white border-t border-slate-100">
 		<div class="max-w-[1200px] mx-auto px-6">
 			<div class="max-w-2xl mx-auto text-center space-y-4 mb-16">
 				<span class="inline-block px-3 py-1 bg-slate-50 border border-slate-200 text-slate-600 text-[10px] font-bold uppercase tracking-widest rounded-full">PredictAdmit Pro</span>
@@ -944,7 +974,7 @@
 
 			<div class="grid gap-6 md:grid-cols-2">
 				<!-- Committee-style deep-dive -->
-				<div class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+				<div use:reveal class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
 					<div class="rounded-2xl border border-slate-200 bg-slate-50/60 p-5">
 						<div class="flex items-center justify-between">
 							<p class="text-xs font-bold uppercase tracking-wide text-slate-500">Committee read · Stanford</p>
@@ -964,7 +994,7 @@
 				</div>
 
 				<!-- Essay editor with AI feedback -->
-				<div class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+				<div use:reveal={100} class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
 					<div class="rounded-2xl border border-slate-200 bg-slate-50/60 p-5">
 						<p class="text-xs font-bold uppercase tracking-wide text-slate-500">Personal statement</p>
 						<div class="mt-3 space-y-1.5 text-[13px] leading-relaxed text-slate-600">
@@ -982,7 +1012,7 @@
 				</div>
 
 				<!-- Per-school strategy -->
-				<div class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+				<div use:reveal={200} class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
 					<div class="rounded-2xl border border-slate-200 bg-slate-50/60 p-5 space-y-2.5">
 						{#each [{ s: 'Stanford', w: 'Intellectual vitality, essays' }, { s: 'MIT', w: 'STEM depth, maker spirit' }, { s: 'Yale', w: 'Community impact, voice' }] as row}
 							<div class="flex items-center justify-between rounded-xl bg-white border border-slate-200 px-3.5 py-2.5">
@@ -996,7 +1026,7 @@
 				</div>
 
 				<!-- AI counselor -->
-				<div class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+				<div use:reveal={300} class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
 					<div class="rounded-2xl border border-slate-200 bg-slate-50/60 p-5 space-y-3">
 						<div class="ml-auto max-w-[80%] rounded-2xl rounded-br-md bg-slate-900 px-3.5 py-2 text-[13px] text-white">Is my school list too top-heavy?</div>
 						<div class="flex items-start gap-2 max-w-[85%]">
@@ -1018,7 +1048,7 @@
 	</section>
 
 	<!-- SECTION 2.4: SEE INSIDE PRO (dashboard snapshots) -->
-	<section class="py-32 bg-slate-50 border-t border-slate-100 overflow-hidden">
+	<section class="py-24 bg-slate-50 border-t border-slate-100 overflow-hidden">
 		<div class="max-w-[1100px] mx-auto px-6">
 			<div class="max-w-2xl mx-auto text-center space-y-4 mb-14">
 				<span class="inline-block px-3 py-1 bg-white border border-slate-200 text-slate-600 text-[10px] font-bold uppercase tracking-widest rounded-full">See inside Pro</span>
@@ -1031,7 +1061,7 @@
 			</div>
 
 			<!-- Featured snapshot -->
-			<figure class="rounded-2xl border border-slate-200 bg-white shadow-[0_30px_80px_-30px_rgba(15,23,42,0.25)] overflow-hidden">
+			<figure use:reveal class="rounded-2xl border border-slate-200 bg-white shadow-[0_30px_80px_-30px_rgba(15,23,42,0.25)] overflow-hidden">
 				<div class="flex items-center gap-1.5 border-b border-slate-100 bg-slate-50/70 px-4 py-2.5">
 					<span class="h-2.5 w-2.5 rounded-full bg-slate-200"></span>
 					<span class="h-2.5 w-2.5 rounded-full bg-slate-200"></span>
@@ -1044,19 +1074,19 @@
 
 			<!-- Supporting snapshots -->
 			<div class="mt-8 grid gap-6 md:grid-cols-2">
-				<figure class="rounded-2xl border border-slate-200 bg-white shadow-lg overflow-hidden">
+				<figure use:reveal={0} class="rounded-2xl border border-slate-200 bg-white shadow-lg overflow-hidden">
 					<img src="/screenshots/pro-universities.png" alt="PredictAdmit Pro: explore schools with real admissions data and your chances" loading="lazy" class="block w-full" />
 					<figcaption class="px-5 py-4 text-sm font-medium text-slate-600 border-t border-slate-100">Every school, with real data and your odds on each.</figcaption>
 				</figure>
-				<figure class="rounded-2xl border border-slate-200 bg-white shadow-lg overflow-hidden">
+				<figure use:reveal={80} class="rounded-2xl border border-slate-200 bg-white shadow-lg overflow-hidden">
 					<img src="/screenshots/pro-counselor.png" alt="PredictAdmit Pro: AI counselor chat" loading="lazy" class="block w-full" />
 					<figcaption class="px-5 py-4 text-sm font-medium text-slate-600 border-t border-slate-100">A counselor on call for the questions you'd pay hundreds to ask.</figcaption>
 				</figure>
-				<figure class="rounded-2xl border border-slate-200 bg-white shadow-lg overflow-hidden">
+				<figure use:reveal={160} class="rounded-2xl border border-slate-200 bg-white shadow-lg overflow-hidden">
 					<img src="/screenshots/pro-essay.png" alt="PredictAdmit Pro: essay editor with AI feedback" loading="lazy" class="block w-full" />
 					<figcaption class="px-5 py-4 text-sm font-medium text-slate-600 border-t border-slate-100">Draft every supplement in one place, feedback a click away.</figcaption>
 				</figure>
-				<figure class="rounded-2xl border border-slate-200 bg-white shadow-lg overflow-hidden">
+				<figure use:reveal={240} class="rounded-2xl border border-slate-200 bg-white shadow-lg overflow-hidden">
 					<img src="/screenshots/pro-chanceme.png" alt="PredictAdmit Pro: build your Chance Me profile for personalized odds" loading="lazy" class="block w-full" />
 					<figcaption class="px-5 py-4 text-sm font-medium text-slate-600 border-t border-slate-100">Build your profile once, sharpen every prediction.</figcaption>
 				</figure>
@@ -1071,7 +1101,7 @@
 	</section>
 
 	<!-- SECTION 2.5: DATA CREDIBILITY (Common Data Set / NACAC) -->
-	<section class="py-32 bg-white border-t border-slate-100">
+	<section class="py-24 bg-white border-t border-slate-100">
 		<div class="max-w-[1100px] mx-auto px-6">
 			<div class="grid gap-14 lg:grid-cols-2 lg:items-center">
 				<!-- Copy -->
@@ -1125,7 +1155,7 @@
 	</section>
 
 	<!-- SECTION 3: COMPARISON TABLE -->
-	<section class="py-32 bg-slate-50 border-t border-slate-100">
+	<section class="py-24 bg-slate-50 border-t border-slate-100">
 		<div class="max-w-[1000px] mx-auto px-6">
 			<div class="max-w-2xl mx-auto text-center space-y-4 mb-14">
 				<h2 class="font-serif text-4xl md:text-5xl font-medium tracking-tight text-slate-900 leading-[1.05]">
@@ -1193,7 +1223,7 @@
 	</section>
 
 	<!-- SECTION 4: FAQ -->
-	<section class="py-32 bg-white border-t border-slate-100">
+	<section class="py-24 bg-white border-t border-slate-100">
 		<div class="max-w-[760px] mx-auto px-6">
 			<h2 class="font-serif text-4xl md:text-5xl font-medium tracking-tight text-slate-900 text-center mb-14">
 				Questions, answered
@@ -1295,3 +1325,25 @@
 		</div>
 	</div>
 {/if}
+
+<style>
+	:global([data-revealed]) {
+		opacity: 0;
+		transform: translateY(24px);
+		transition:
+			opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+			transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+		will-change: opacity, transform;
+	}
+	:global([data-revealed='true']) {
+		opacity: 1;
+		transform: none;
+	}
+	@media (prefers-reduced-motion: reduce) {
+		:global([data-revealed]) {
+			opacity: 1;
+			transform: none;
+			transition: none;
+		}
+	}
+</style>
