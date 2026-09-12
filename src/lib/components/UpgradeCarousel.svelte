@@ -65,22 +65,12 @@
 		}
 	];
 
-	// Real testimonials (also shown on /about) — social proof was GPT-vision's #1 ask.
+	// Real testimonial (also shown on the landing + /pro).
 	const testimonials = [
 		{
-			quote: 'Opening the fake Stanford portal genuinely scared me. Then I went back and rewrote two essays I thought were fine. Worth it.',
-			name: 'Priya',
-			role: 'Class of 2025'
-		},
-		{
-			quote: 'The essay grader flagged the cliché opening I was about to submit, and the breakdown pointed straight at my weakest spot.',
-			name: 'Marcus',
-			role: 'First-gen applicant'
-		},
-		{
-			quote: 'Easiest money I spent all season.',
-			name: 'Elena',
-			role: 'Class of 2026'
+			quote: 'ts was lowkenuinely accurate',
+			name: 'Miao S.',
+			role: "Accepted to Northwestern '30"
 		}
 	];
 

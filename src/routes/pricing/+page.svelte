@@ -6,8 +6,16 @@
 	import { onMount } from 'svelte';
 	import { track, trackViewItem, trackAddToCart, trackBeginCheckout } from '$lib/analytics';
 	import { STRIPE_PRODUCTS } from '$lib/config/stripe-products';
+	import UpgradeCarousel from '$lib/components/UpgradeCarousel.svelte';
 
 	let isProcessing = $state(false);
+	// Show the onboarding benefit carousel before Stripe on the full-access tiers
+	// (Zach, 2026-09-12): walk the value, then the carousel's last step checks out.
+	let showUpgradeCarousel = $state(false);
+	function openUpgrade(plan: 'monthly' | 'lifetime') {
+		track('upgrade_carousel_view', { plan, where: 'pricing' });
+		showUpgradeCarousel = true;
+	}
 	let passSchoolSlug = $state(portals[0]?.slug ?? '');
 
 	// GA4 funnel Step 2 "View product" — the pricing page is a product view.
@@ -144,7 +152,7 @@
 							{/each}
 						</ul>
 						<button
-							onclick={() => startCheckout('monthly')}
+							onclick={() => openUpgrade('monthly')}
 							disabled={isProcessing}
 							class="mt-auto w-full rounded-full bg-slate-900 px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-slate-800 active:scale-[0.99] disabled:opacity-50"
 						>
@@ -172,7 +180,7 @@
 							{/each}
 						</ul>
 						<button
-							onclick={() => startCheckout('lifetime')}
+							onclick={() => openUpgrade('lifetime')}
 							disabled={isProcessing}
 							class="mt-auto w-full rounded-full border border-slate-300 bg-white px-6 py-3.5 text-sm font-semibold text-slate-900 transition hover:bg-slate-50 disabled:opacity-50"
 						>
@@ -241,5 +249,8 @@
 		</section>
 	</div>
 </main>
+
+<!-- Pre-checkout benefit carousel (Monthly/Lifetime upgrade path) -->
+<UpgradeCarousel bind:open={showUpgradeCarousel} loading={isProcessing} oncontinue={(plan) => startCheckout(plan)} />
 
 <SiteFooter />

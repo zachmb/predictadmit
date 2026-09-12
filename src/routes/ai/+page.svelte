@@ -154,11 +154,10 @@
 		if (selectedPlan === 'single' && paywallContextDecision) {
 			startCheckout('single', paywallContextDecision);
 		} else if (selectedPlan === 'monthly' || selectedPlan === 'lifetime') {
-			// Straight to Stripe. The old path opened the UpgradeCarousel (a second
-			// full-screen modal) BETWEEN picking a plan and paying — an extra gate at
-			// the exact moment of intent, and a measurable drop. Once they've chosen a
-			// plan, get out of the way.
-			startCheckout(selectedPlan);
+			// Show the onboarding benefit carousel before Stripe (Zach, 2026-09-12):
+			// walk the value once, then the carousel's final step runs checkout. The
+			// $4.99 single-school micro-buy still goes straight through.
+			startUpgrade(selectedPlan);
 		}
 	}
 	// Retained for compatibility; the paywall now shows the one-time tiers directly

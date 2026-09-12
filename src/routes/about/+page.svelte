@@ -33,22 +33,9 @@
 
 	const testimonials = [
 		{
-			quote:
-				'Opening the fake Stanford portal genuinely scared me. Then I went back and rewrote two essays I had thought were fine. Worth it.',
-			name: 'Priya',
-			role: 'Class of 2025 applicant'
-		},
-		{
-			quote:
-				'The essay grader flagged the cliché opening I was about to submit. And the breakdown on my simulated rejection pointed straight at the weakest part of my application.',
-			name: 'Marcus',
-			role: 'First-gen applicant'
-		},
-		{
-			quote:
-				'I ran my list against every school until the ones that did not fit fell off on their own. Easiest money I spent all season.',
-			name: 'Elena',
-			role: 'Class of 2026 applicant'
+			quote: 'ts was lowkenuinely accurate',
+			name: 'Miao S.',
+			role: "Accepted to Northwestern '30"
 		}
 	];
 
@@ -218,12 +205,12 @@
 				<h2 class="font-serif text-3xl md:text-4xl font-medium tracking-tight text-slate-900 mb-4">
 					What students tell us
 				</h2>
-				<p class="text-sm text-slate-400">Illustrative quotes from students using PredictAdmit.</p>
+				<p class="text-sm text-slate-400">From students who used PredictAdmit before their real decisions.</p>
 			</div>
-			<div class="grid md:grid-cols-3 gap-5">
+			<div class="max-w-xl mx-auto">
 				{#each testimonials as t}
-					<figure class="flex flex-col rounded-2xl bg-white border border-slate-100 p-8">
-						<blockquote class="text-slate-700 leading-relaxed mb-6 grow">"{t.quote}"</blockquote>
+					<figure class="rounded-2xl bg-white border border-slate-100 p-8 text-center">
+						<blockquote class="font-serif text-xl leading-relaxed text-slate-800 mb-5">"{t.quote}"</blockquote>
 						<figcaption class="text-sm">
 							<span class="font-semibold text-slate-900">{t.name}</span>
 							<span class="text-slate-400"> · {t.role}</span>

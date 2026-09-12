@@ -2303,7 +2303,7 @@
 
 					<div class="mt-7 flex flex-col sm:flex-row items-center lg:justify-start justify-center gap-4">
 						<button
-							onclick={() => handleCheckout('monthly')}
+							onclick={() => startUpgrade('monthly')}
 							disabled={isProcessing}
 							class="w-full sm:w-auto rounded-full bg-slate-900 px-8 py-4 text-base font-semibold text-white transition hover:bg-slate-800 active:scale-[0.99] disabled:opacity-50"
 						>
@@ -2433,7 +2433,7 @@
 								{/each}
 							</ul>
 							<button
-								onclick={() => handleCheckout('monthly')}
+								onclick={() => startUpgrade('monthly')}
 								disabled={isProcessing}
 								class="mt-auto w-full rounded-full bg-slate-900 px-5 py-3.5 text-sm font-semibold text-white transition hover:bg-slate-800 active:scale-[0.99] disabled:opacity-50"
 							>
@@ -2461,7 +2461,7 @@
 								{/each}
 							</ul>
 							<button
-								onclick={() => handleCheckout('lifetime')}
+								onclick={() => startUpgrade('lifetime')}
 								disabled={isProcessing}
 								class="mt-auto w-full rounded-full border border-slate-300 bg-white px-5 py-3.5 text-sm font-semibold text-slate-900 transition hover:bg-slate-50 disabled:opacity-50"
 							>
@@ -2536,7 +2536,7 @@
 						<p class="mt-0.5 text-sm text-slate-600">Run the simulation as often as you like, read every deep-dive, and grade essays until they're right. Your first prediction is free. $9.99/mo unlocks the rest, or $25 once.</p>
 					</div>
 					<button
-						onclick={() => handleCheckout('monthly')}
+						onclick={() => startUpgrade('monthly')}
 						disabled={isProcessing}
 						class="w-full shrink-0 rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 active:scale-[0.99] disabled:opacity-50 sm:w-auto"
 					>
@@ -2555,17 +2555,13 @@
 					</div>
 					<p class="mt-2 text-sm font-semibold text-slate-500">Loved by 5,000+ applicants</p>
 				</div>
-				<div class="grid gap-4 sm:grid-cols-3 max-w-5xl mx-auto">
-					{#each [{ q: 'Opening the fake Stanford portal genuinely scared me. Then I rewrote two essays I thought were fine. Worth it.', n: 'Priya', r: 'Class of 2025' }, { q: 'The essay grader caught the cliché opening I was about to submit, then pointed straight at my weakest spot.', n: 'Marcus', r: 'First-gen applicant' }, { q: 'I ran my list against every school until the ones that did not fit fell off on their own. Easiest money I spent all season.', n: 'Elena', r: 'Class of 2026' }] as t}
-						<div class="rounded-2xl border border-slate-200 bg-white p-6 text-left">
-							<p class="text-sm leading-relaxed text-slate-700">“{t.q}”</p>
-							<div class="mt-4 flex items-center gap-2.5">
-								<div class="grid h-8 w-8 place-items-center rounded-full bg-slate-900 text-xs font-bold text-white">{t.n[0]}</div>
-								<p class="text-xs font-semibold text-slate-600">{t.n} <span class="font-normal text-slate-400">· {t.r}</span></p>
-							</div>
-						</div>
-					{/each}
-				</div>
+				<figure class="mx-auto max-w-xl rounded-2xl border border-slate-200 bg-white p-8 text-center">
+					<blockquote class="font-serif text-xl leading-relaxed text-slate-800">"ts was lowkenuinely accurate"</blockquote>
+					<figcaption class="mt-4 text-sm">
+						<span class="font-semibold text-slate-900">Miao S.</span>
+						<span class="text-slate-400"> · Accepted to Northwestern '30</span>
+					</figcaption>
+				</figure>
 			</div>
 
 			<!-- Closing CTA -->
@@ -2576,7 +2572,7 @@
 						Private counselors charge thousands a season for one judgment call: is this student getting in, and what should they fix. PredictAdmit is $9.99 a month while you're applying, or $25 once. Every simulation, every deep-dive, every essay pass. Your first prediction is free, so you only pay once it has already told you something you didn't know.
 					</p>
 					<button
-						onclick={() => handleCheckout('monthly')}
+						onclick={() => startUpgrade('monthly')}
 						disabled={isProcessing}
 						class="rounded-full bg-white px-8 py-4 text-base font-semibold text-slate-900 transition hover:bg-slate-100 active:scale-[0.99] disabled:opacity-50"
 					>
