@@ -79,11 +79,11 @@
 
 			<div class="relative z-10 max-w-md">
 				<h2 class="text-white text-3xl lg:text-[38px] font-serif font-medium leading-[1.1] tracking-tight">
-					See your real decisions before they land.
+					Find out now. Not in March.
 				</h2>
 				<p class="mt-3 text-blue-100 text-base leading-relaxed">
-					Your predicted verdicts, school by school, in one inbox. The rehearsal that tells you what
-					to fix while there's still time.
+					Your real decision at every top school, in one inbox: accept, deny, or waitlist. Then the
+					one thing to fix, while you still have months to fix it.
 				</p>
 
 				<div class="mt-8 space-y-3">

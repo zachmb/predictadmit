@@ -34,8 +34,8 @@
 		{
 			kind: 'benefit',
 			eyebrow: 'PredictAdmit Pro',
-			title: 'See your decisions before they land',
-			body: "The AI reads your real application and calls your verdict at all 39 top schools, then sits a five-reader committee on your file to show you exactly why.",
+			title: 'Find out now. Not in March.',
+			body: 'The AI reads your real application and calls your decision at all 39 top schools: accept, deny, or waitlist. Then a five-reader committee shows you exactly what drove it.',
 			icon: 'bolt',
 			shot: '/onboarding/dashboard.png'
 		},

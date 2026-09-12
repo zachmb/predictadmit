@@ -893,7 +893,7 @@
 </script>
 
 <svelte:head>
-	<title>PredictAdmit Pro: see your real decisions before they land</title>
+	<title>PredictAdmit Pro: your real admission decision, months early</title>
 	<meta
 		name="description"
 		content="PredictAdmit Pro is a full application workshop, not just a predictor: predicted decisions across 39 schools with deep-dive analysis, an AI essay editor that reads like an admissions officer, per-school strategy, a narrative mind map, and an AI counselor. First prediction free, then $25 once (or $9.99/mo)."
@@ -2284,10 +2284,10 @@
 				<div class="text-center lg:text-left">
 					<p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">PredictAdmit Pro</p>
 					<h1 class="mt-5 font-serif text-5xl md:text-6xl font-medium tracking-tight text-slate-900 leading-[1.05]">
-						See your <span class="text-[#1A4CFF]">decisions</span> before they land.
+						Find out now. <span class="text-[#1A4CFF]">Not in March.</span>
 					</h1>
 					<p class="mt-5 mx-auto lg:mx-0 max-w-xl text-lg text-slate-500 leading-relaxed">
-						PredictAdmit reads your real application, predicts your verdict at every top school, tells you exactly what's driving it, and grades your essays while there's still time to fix them. Your first prediction is free.
+						PredictAdmit runs your real application through every top school and shows you the decision waiting there: accept, deny, or waitlist. Then it names the one thing holding you back, while you still have months to fix it. Your first prediction is free.
 					</p>
 
 					<div class="mt-7 flex items-baseline justify-center lg:justify-start gap-2.5">
