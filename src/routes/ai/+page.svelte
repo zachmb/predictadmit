@@ -2202,6 +2202,17 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 			     Scrolls independently so the hero stays pinned and the CTA is always
 			     reachable on short laptops / mobile. -->
 			<div class="flex-1 overflow-y-auto px-7 pt-6 pb-6">
+				<!-- Snapshot of the Pro app so the buyer sees exactly what they unlock. -->
+				<figure class="mb-6 overflow-hidden rounded-2xl border border-slate-200 shadow-sm">
+					<div class="flex items-center gap-1 bg-slate-50 px-3 py-1.5">
+						<span class="h-1.5 w-1.5 rounded-full bg-slate-300"></span>
+						<span class="h-1.5 w-1.5 rounded-full bg-slate-300"></span>
+						<span class="h-1.5 w-1.5 rounded-full bg-slate-300"></span>
+						<span class="ml-2 text-[9px] font-medium text-slate-400">app.predictadmit.com/pro</span>
+					</div>
+					<img src="/screenshots/pro-hub.png" alt="Inside PredictAdmit Pro: your application command center" loading="lazy" class="block w-full" />
+				</figure>
+
 				<!-- Value anchor: what it's worth vs what it costs. -->
 				<div class="flex items-center justify-center gap-3 text-center">
 					<div class="leading-tight">

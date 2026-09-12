@@ -35,7 +35,7 @@
 			kind: 'benefit',
 			eyebrow: 'PredictAdmit Pro',
 			title: 'See your decisions before they land',
-			body: "The AI reads your real application and calls your verdict (accept, deny, or waitlist) at all 39 top schools, then shows you exactly why.",
+			body: "The AI reads your real application and calls your verdict at all 39 top schools, then sits a five-reader committee on your file to show you exactly why.",
 			icon: 'bolt',
 			shot: '/onboarding/dashboard.png'
 		},
@@ -170,7 +170,7 @@
 									{/if}
 								</div>
 								<p class="mt-4 text-[11px] font-bold uppercase tracking-[0.18em] text-[#1A4CFF]">{s.eyebrow}</p>
-								<h2 class="mt-1.5 text-[26px] font-black leading-[1.1] tracking-tight text-slate-900">{s.title}</h2>
+								<h2 class="mt-1.5 font-serif text-[28px] font-medium leading-[1.1] tracking-tight text-slate-900">{s.title}</h2>
 								<p class="mx-auto mt-3 max-w-xs text-[15px] leading-relaxed text-slate-500">{s.body}</p>
 							</div>
 
@@ -224,7 +224,7 @@
 									<svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.07 3.3a1 1 0 00.95.68h3.46c.97 0 1.37 1.24.59 1.81l-2.8 2.03a1 1 0 00-.36 1.12l1.07 3.29c.3.92-.76 1.69-1.54 1.12l-2.8-2.03a1 1 0 00-1.18 0l-2.8 2.03c-.78.57-1.83-.2-1.54-1.12l1.07-3.29a1 1 0 00-.36-1.12L2.4 8.72c-.78-.57-.38-1.81.59-1.81h3.46a1 1 0 00.95-.68l1.07-3.3z" /></svg>
 								{/each}
 							</div>
-							<h2 class="mt-4 text-[26px] font-black leading-[1.1] tracking-tight text-slate-900">Applicants like you</h2>
+							<h2 class="mt-4 font-serif text-[28px] font-medium leading-[1.1] tracking-tight text-slate-900">Applicants like you</h2>
 							<p class="mx-auto mt-2 max-w-xs text-[15px] leading-relaxed text-slate-500">
 								Join <span class="font-semibold text-slate-700">5,000+ students</span> who pressure-tested their application here first.
 							</p>
@@ -245,7 +245,7 @@
 					<!-- Plan picker (final step) — mymind pattern: tap a card, then continue -->
 					<div in:fly={{ x: 18, duration: 240 }}>
 						<div class="text-center">
-							<h2 class="text-[26px] font-black leading-[1.1] tracking-tight text-slate-900">Pick your plan</h2>
+							<h2 class="font-serif text-[28px] font-medium leading-[1.1] tracking-tight text-slate-900">Pick your plan</h2>
 							<p class="mx-auto mt-2 max-w-xs text-[15px] leading-relaxed text-slate-500">
 								Your first prediction is free. This unlocks all 39, forever.
 							</p>
@@ -254,9 +254,9 @@
 						<div class="mt-6 space-y-3">
 							<button
 								onclick={() => (selectedPlan = 'lifetime')}
-								class="relative w-full rounded-2xl border-2 px-5 py-4 text-left transition {selectedPlan === 'lifetime' ? 'border-[#1A4CFF] bg-[#1A4CFF]/[0.04]' : 'border-slate-200 hover:border-slate-300'}"
+								class="relative w-full rounded-2xl border-2 px-5 py-4 text-left transition {selectedPlan === 'lifetime' ? 'border-slate-900 bg-slate-50' : 'border-slate-200 hover:border-slate-300'}"
 							>
-								<span class="absolute -top-2.5 left-5 rounded-full bg-[#1A4CFF] px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">Best value</span>
+								<span class="absolute -top-2.5 left-5 rounded-full bg-slate-900 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">Best value</span>
 								<div class="flex items-center justify-between gap-3">
 									<div>
 										<div class="text-base font-black text-slate-900">Lifetime</div>
@@ -271,7 +271,7 @@
 
 							<button
 								onclick={() => (selectedPlan = 'monthly')}
-								class="w-full rounded-2xl border-2 px-5 py-4 text-left transition {selectedPlan === 'monthly' ? 'border-[#1A4CFF] bg-[#1A4CFF]/[0.04]' : 'border-slate-200 hover:border-slate-300'}"
+								class="w-full rounded-2xl border-2 px-5 py-4 text-left transition {selectedPlan === 'monthly' ? 'border-slate-900 bg-slate-50' : 'border-slate-200 hover:border-slate-300'}"
 							>
 								<div class="flex items-center justify-between gap-3">
 									<div>
@@ -296,7 +296,7 @@
 						</ul>
 
 						<p class="mx-auto mt-5 max-w-xs text-center text-xs text-slate-400">
-							$25 is <span class="font-semibold text-slate-600">10% of a single $100 application fee</span>, a fraction of one school.
+							$25 is <span class="font-semibold text-slate-600">less than a single college application fee</span>, and it covers all 39.
 						</p>
 					</div>
 				{/if}
@@ -307,7 +307,7 @@
 				<button
 					onclick={next}
 					disabled={loading}
-					class="w-full rounded-2xl bg-[#1A4CFF] px-6 py-4 text-base font-bold text-white shadow-lg shadow-blue-600/25 transition hover:bg-[#1540E0] active:scale-[0.99] disabled:opacity-50"
+					class="w-full rounded-full bg-slate-900 px-6 py-4 text-base font-semibold text-white shadow-sm transition hover:bg-slate-800 active:scale-[0.99] disabled:opacity-50"
 				>
 					{#if onPlans}
 						{loading
@@ -322,7 +322,7 @@
 				{#if onPlans}
 					<p class="mt-2 text-center text-[11px] text-slate-400">Secure checkout by Stripe · cancel anytime</p>
 				{:else}
-					<button onclick={() => (step = total)} class="mt-3 w-full text-center text-xs font-semibold text-slate-400 transition hover:text-slate-600">Skip to plans</button>
+					<button onclick={() => (step = lastStep)} class="mt-3 w-full text-center text-xs font-semibold text-slate-400 transition hover:text-slate-600">Skip to plans</button>
 				{/if}
 			</div>
 		</div>
