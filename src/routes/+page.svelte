@@ -1111,7 +1111,7 @@
 
 			<div class="mt-12 text-center">
 				<a href="/pro" class="inline-flex items-center justify-center rounded-full bg-slate-900 px-8 py-4 text-base font-semibold text-white transition hover:bg-slate-800 active:scale-[0.99]">
-					Unlock all of Pro for $25
+					Unlock all of Pro for $9.99/mo
 				</a>
 			</div>
 		</div>
