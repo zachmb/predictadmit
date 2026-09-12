@@ -1253,7 +1253,7 @@
 			<section class="max-w-2xl mx-auto">
 				<!-- Application card -->
 				<Card
-					class="bg-white/80 backdrop-blur-xl border border-slate-200/60 shadow-2xl text-slate-900 rounded-3xl overflow-hidden"
+					class="bg-white border border-slate-200 shadow-[0_30px_80px_-30px_rgba(15,23,42,0.18)] text-slate-900 rounded-3xl overflow-hidden"
 				>
 					<div class="p-8 md:p-10">
 						<!-- Google sign-in bar -->
@@ -1261,7 +1261,7 @@
 							class="mb-10 flex flex-col items-center justify-between gap-4 border-b border-slate-200 pb-8 md:flex-row"
 						>
 							<div class="space-y-1.5">
-								<h2 class="font-bold text-xl text-slate-900 tracking-tight">Your application</h2>
+								<h2 class="font-serif text-2xl font-medium text-slate-900 tracking-tight">Your application</h2>
 								<p class="text-xs text-slate-500">Stays on your side. We don't keep it</p>
 							</div>
 
@@ -1883,7 +1883,7 @@ See what we read from your file
 			<!-- AIMail Inbox -->
 			{#if hasUsedFreeSimulation || $userProfile.isSubmittingAI}
 				<section
-					class="rounded-3xl border-2 border-slate-200 bg-white/80 backdrop-blur-xl shadow-2xl overflow-hidden mt-12"
+					class="rounded-3xl border border-slate-200 bg-white shadow-[0_30px_80px_-30px_rgba(15,23,42,0.18)] overflow-hidden mt-12"
 				>
 					<!-- Honesty caveat: these are AI-simulated letters, never real decisions.
 					     A student must not mistake the inbox metaphor for an actual result. -->
