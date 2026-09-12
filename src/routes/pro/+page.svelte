@@ -2305,8 +2305,8 @@
 						>
 							{isProcessing ? 'Taking you to checkout…' : 'Get Lifetime for $25'}
 						</button>
-						<a href="/ai" class="group inline-flex items-center gap-1.5 text-base font-semibold text-slate-900 hover:text-slate-500">
-							Try your first prediction free
+						<a href="/verdict" class="group inline-flex items-center gap-1.5 text-base font-semibold text-slate-900 hover:text-slate-500">
+							Try your first verdict free
 							<span class="transition group-hover:translate-x-0.5">→</span>
 						</a>
 					</div>

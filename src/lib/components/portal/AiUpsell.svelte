@@ -37,7 +37,10 @@
 
 	function go() {
 		track('upsell_click', { placement: 'portal_decision' });
-		goto('/ai');
+		// Route the free portal-sim player into the fast REAL-verdict aha (one dream
+		// school, ~20s) rather than the heavy full builder — the lower-friction path
+		// to the paid moment.
+		goto('/verdict');
 	}
 </script>
 
