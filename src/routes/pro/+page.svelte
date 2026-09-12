@@ -2473,9 +2473,9 @@
 
 			<!-- Everything you get: the full feature set, in two honest groups. -->
 			<div class="space-y-10">
-				<div class="text-center max-w-2xl mx-auto">
-					<h2 class="font-serif text-4xl font-medium tracking-tight text-slate-900">Everything Pro gives you</h2>
-					<p class="mt-3 text-slate-500">Two jobs, done properly. See exactly where you stand today, then fix what's holding you back. Both come with Pro.</p>
+				<div class="max-w-2xl">
+					<h2 class="font-serif text-4xl md:text-5xl font-medium leading-[1.1] tracking-tight text-slate-900">Everything Pro gives you</h2>
+					<p class="mt-4 text-lg leading-relaxed text-slate-500">Two jobs, done properly. See exactly where you stand today, then fix what's holding you back.</p>
 				</div>
 
 				<!-- Group 1: see where you stand -->
