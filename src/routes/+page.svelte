@@ -1019,6 +1019,51 @@
 		</div>
 	</section>
 
+	<!-- SECTION 2.4: SEE INSIDE PRO (dashboard snapshots) -->
+	<section class="py-32 bg-slate-50 border-t border-slate-100 overflow-hidden">
+		<div class="max-w-[1100px] mx-auto px-6">
+			<div class="max-w-2xl mx-auto text-center space-y-4 mb-14">
+				<span class="inline-block px-3 py-1 bg-white border border-slate-200 text-slate-600 text-[10px] font-bold uppercase tracking-widest rounded-full">See inside Pro</span>
+				<h2 class="font-serif text-4xl md:text-5xl font-medium tracking-tight text-slate-900 leading-[1.05]">
+					A whole application desk, <span class="text-[#1A4CFF]">not a paywall.</span>
+				</h2>
+				<p class="text-lg text-slate-500 leading-relaxed">
+					Here is exactly what you unlock. No mystery, no demo call.
+				</p>
+			</div>
+
+			<!-- Featured snapshot -->
+			<figure class="rounded-2xl border border-slate-200 bg-white shadow-[0_30px_80px_-30px_rgba(15,23,42,0.25)] overflow-hidden">
+				<div class="flex items-center gap-1.5 border-b border-slate-100 bg-slate-50/70 px-4 py-2.5">
+					<span class="h-2.5 w-2.5 rounded-full bg-slate-200"></span>
+					<span class="h-2.5 w-2.5 rounded-full bg-slate-200"></span>
+					<span class="h-2.5 w-2.5 rounded-full bg-slate-200"></span>
+					<span class="ml-3 rounded-md bg-white border border-slate-200 px-3 py-1 text-[11px] font-medium text-slate-400">app.predictadmit.com/pro</span>
+				</div>
+				<img src="/screenshots/pro-hub.png" alt="PredictAdmit Pro dashboard: your application command center" loading="lazy" class="block w-full" />
+			</figure>
+			<p class="mt-3 text-center text-sm font-medium text-slate-500">Your command center: stats, streak, and next best moves in one place.</p>
+
+			<!-- Two supporting snapshots -->
+			<div class="mt-8 grid gap-6 md:grid-cols-2">
+				<figure class="rounded-2xl border border-slate-200 bg-white shadow-lg overflow-hidden">
+					<img src="/screenshots/pro-universities.png" alt="PredictAdmit Pro: explore 78 schools with real admissions data and your chances" loading="lazy" class="block w-full" />
+					<figcaption class="px-5 py-4 text-sm font-medium text-slate-600 border-t border-slate-100">Every school, with real data and your odds on each.</figcaption>
+				</figure>
+				<figure class="rounded-2xl border border-slate-200 bg-white shadow-lg overflow-hidden">
+					<img src="/screenshots/pro-chanceme.png" alt="PredictAdmit Pro: build your Chance Me profile for personalized odds" loading="lazy" class="block w-full" />
+					<figcaption class="px-5 py-4 text-sm font-medium text-slate-600 border-t border-slate-100">Build your profile once, sharpen every prediction.</figcaption>
+				</figure>
+			</div>
+
+			<div class="mt-12 text-center">
+				<a href="/pro" class="inline-flex items-center justify-center rounded-full bg-slate-900 px-8 py-4 text-base font-semibold text-white transition hover:bg-slate-800 active:scale-[0.99]">
+					Get the full desk for $25
+				</a>
+			</div>
+		</div>
+	</section>
+
 	<!-- SECTION 2.5: DATA CREDIBILITY (Common Data Set / NACAC) -->
 	<section class="py-32 bg-white border-t border-slate-100">
 		<div class="max-w-[1100px] mx-auto px-6">
