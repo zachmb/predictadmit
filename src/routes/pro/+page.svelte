@@ -2288,7 +2288,7 @@
 				<div class="text-center lg:text-left">
 					<p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">PredictAdmit Pro</p>
 					<h1 class="mt-5 font-serif text-5xl md:text-6xl font-medium tracking-tight text-slate-900 leading-[1.05]">
-						Find out now. <span class="text-[#1A4CFF]">Not in March.</span>
+						Perfect your applications <span class="text-[#1A4CFF]">before it's too late.</span>
 					</h1>
 					<p class="mt-5 mx-auto lg:mx-0 max-w-xl text-lg text-slate-500 leading-relaxed">
 						PredictAdmit runs your real application through every top school and shows you the decision waiting there: accept, deny, or waitlist. Then it names the one thing holding you back, while you still have months to fix it. Your first prediction is free.

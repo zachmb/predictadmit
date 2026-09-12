@@ -79,7 +79,7 @@
 
 			<div class="relative z-10 max-w-md">
 				<h2 class="text-white text-3xl lg:text-[38px] font-serif font-medium leading-[1.1] tracking-tight">
-					Find out now. Not in March.
+					Perfect your applications before it's too late.
 				</h2>
 				<p class="mt-3 text-blue-100 text-base leading-relaxed">
 					Your real decision at every top school, in one inbox: accept, deny, or waitlist. Then the

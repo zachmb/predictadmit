@@ -34,7 +34,7 @@
 		{
 			kind: 'benefit',
 			eyebrow: 'PredictAdmit Pro',
-			title: 'Find out now. Not in March.',
+			title: "Perfect your applications before it's too late.",
 			body: 'The AI reads your real application and calls your decision at all 39 top schools: accept, deny, or waitlist. Then a five-reader committee shows you exactly what drove it.',
 			icon: 'bolt',
 			shot: '/onboarding/dashboard.png'

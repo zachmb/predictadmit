@@ -188,7 +188,7 @@
 		<div class="text-center">
 			<p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">PredictAdmit</p>
 			<h1 class="mt-4 font-serif text-4xl font-medium leading-[1.05] tracking-tight text-slate-900 sm:text-5xl">
-				Find out now. <span class="text-[#1A4CFF]">Not in March.</span>
+				Perfect your applications <span class="text-[#1A4CFF]">before it's too late.</span>
 			</h1>
 			<p class="mx-auto mt-4 max-w-md text-lg leading-relaxed text-slate-500">
 				Your real AI verdict at one dream school, in about 20 seconds. Free.

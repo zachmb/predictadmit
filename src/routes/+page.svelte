@@ -12,6 +12,7 @@
 		hasEnoughToScore
 	} from '$lib/scoring/model';
 	import SiteFooter from '$lib/components/layout/SiteFooter.svelte';
+	import ScrollZoomStory from '$lib/components/home/ScrollZoomStory.svelte';
 	import AdmitMail from '$lib/components/AdmitMail.svelte';
 	import Card from '$lib/components/common/Card.svelte';
 
@@ -290,6 +291,42 @@
 		);
 		io.observe(node);
 		return { destroy: () => io.disconnect() };
+	}
+
+	// Scroll-scrubbed scale: the node grows as it travels up the viewport (from `from`
+	// to `to`). Used on the "See inside Pro" heading so it swells as you scroll into
+	// it. rAF-throttled; a no-op under prefers-reduced-motion.
+	function growOnScroll(node: HTMLElement, opts: { from?: number; to?: number } = {}) {
+		if (
+			typeof window === 'undefined' ||
+			window.matchMedia('(prefers-reduced-motion: reduce)').matches
+		)
+			return;
+		const from = opts.from ?? 0.72;
+		const to = opts.to ?? 1.18;
+		node.style.transformOrigin = 'center center';
+		node.style.willChange = 'transform';
+		let raf = 0;
+		const update = () => {
+			raf = 0;
+			const rect = node.getBoundingClientRect();
+			const vh = window.innerHeight;
+			// 0 as it enters from the bottom, 1 once it has risen to ~1/4 up the screen.
+			const prog = Math.min(Math.max((vh - rect.top) / (vh * 0.85), 0), 1);
+			node.style.transform = `scale(${(from + (to - from) * prog).toFixed(4)})`;
+		};
+		const onScroll = () => {
+			if (!raf) raf = requestAnimationFrame(update);
+		};
+		window.addEventListener('scroll', onScroll, { passive: true });
+		window.addEventListener('resize', onScroll, { passive: true });
+		update();
+		return {
+			destroy: () => {
+				window.removeEventListener('scroll', onScroll);
+				window.removeEventListener('resize', onScroll);
+			}
+		};
 	}
 
 	// --- Handlers ---
@@ -848,19 +885,12 @@
 
 
 
+	<!-- SECTION 2A: PRO SCROLL-ZOOM STORY (replaces the static section header) -->
+	<ScrollZoomStory />
+
 	<!-- SECTION 2: EVERYTHING IN PRO (feature showcase) -->
 	<section class="py-24 bg-white border-t border-slate-100">
 		<div class="max-w-[1200px] mx-auto px-6">
-			<div class="max-w-2xl mx-auto text-center space-y-4 mb-16">
-				<span class="inline-block px-3 py-1 bg-slate-50 border border-slate-200 text-slate-600 text-[10px] font-bold uppercase tracking-widest rounded-full">PredictAdmit Pro</span>
-				<h2 class="font-serif text-4xl md:text-5xl font-medium tracking-tight text-slate-900 leading-[1.05]">
-					Everything you need to <span class="text-[#1A4CFF]">improve your application</span>. In one place.
-				</h2>
-				<p class="text-lg text-slate-500 leading-relaxed">
-					The free prediction shows where you stand. Pro is how you close the gap: a full committee reads your file, your essays get marked line by line, and every school tells you what it actually weighs. A private counselor's whole toolkit, at a student's price.
-				</p>
-			</div>
-
 			<div class="space-y-16 md:space-y-24">
 				<!-- Row 1: committee (text left) -->
 				<div use:reveal class="grid items-center gap-8 md:grid-cols-2 md:gap-14">
@@ -961,7 +991,7 @@
 		<div class="max-w-[1100px] mx-auto px-6">
 			<div class="max-w-2xl mx-auto text-center space-y-4 mb-14">
 				<span class="inline-block px-3 py-1 bg-white border border-slate-200 text-slate-600 text-[10px] font-bold uppercase tracking-widest rounded-full">See inside Pro</span>
-				<h2 class="font-serif text-4xl md:text-5xl font-medium tracking-tight text-slate-900 leading-[1.05]">
+				<h2 use:growOnScroll={{ from: 0.72, to: 1.15 }} class="font-serif text-4xl md:text-5xl font-medium tracking-tight text-slate-900 leading-[1.05]">
 					See the actual app <span class="text-[#1A4CFF]">before you pay.</span>
 				</h2>
 				<p class="text-lg text-slate-500 leading-relaxed">
