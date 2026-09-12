@@ -969,70 +969,90 @@
 				</p>
 			</div>
 
-			<div class="grid gap-6 md:grid-cols-2">
-				<!-- Committee-style deep-dive -->
-				<div use:reveal class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
-					<div class="rounded-2xl border border-slate-200 bg-slate-50/60 p-5">
-						<div class="flex items-center justify-between">
-							<p class="text-xs font-bold uppercase tracking-wide text-slate-500">Committee read · Stanford</p>
-							<span class="rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-bold text-emerald-700 ring-1 ring-inset ring-emerald-200">Admit-leaning</span>
+			<div class="space-y-16 md:space-y-24">
+				<!-- Row 1: committee (text left) -->
+				<div use:reveal class="grid items-center gap-8 md:grid-cols-2 md:gap-14">
+					<div>
+						<p class="text-xs font-bold uppercase tracking-widest text-[#1A4CFF]">The full "why"</p>
+						<h3 class="mt-3 font-serif text-3xl font-medium tracking-tight text-slate-900">A full committee reads your file</h3>
+						<p class="mt-3 text-[15px] leading-relaxed text-slate-500">Five readers argue over your file the way a real committee does, then land a verdict. You find out which one is holding you back, and exactly why.</p>
+					</div>
+					<div class="rounded-3xl border border-slate-200 bg-white p-5 sm:p-6">
+						<div class="rounded-2xl border border-slate-200 bg-slate-50/60 p-5">
+							<div class="flex items-center justify-between">
+								<p class="text-xs font-bold uppercase tracking-wide text-slate-500">Committee read · Stanford</p>
+								<span class="rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-bold text-emerald-700 ring-1 ring-inset ring-emerald-200">Admit-leaning</span>
+							</div>
+							<div class="mt-4 space-y-2.5">
+								{#each [{ l: 'Academic reader', s: 9 }, { l: 'Essays reader', s: 8 }, { l: 'Fit reader', s: 7 }, { l: 'Impact reader', s: 8 }, { l: 'Character reader', s: 7 }] as r}
+									<div>
+										<div class="flex items-center justify-between text-[11px] font-medium text-slate-500"><span>{r.l}</span><span>{r.s}/10</span></div>
+										<div class="mt-1 h-1.5 rounded-full bg-slate-200"><div class="h-1.5 rounded-full bg-[#1A4CFF]" style="width: {r.s * 10}%"></div></div>
+									</div>
+								{/each}
+							</div>
 						</div>
-						<div class="mt-4 space-y-2.5">
-							{#each [{ l: 'Academic reader', s: 9 }, { l: 'Essays reader', s: 8 }, { l: 'Fit reader', s: 7 }, { l: 'Impact reader', s: 8 }, { l: 'Character reader', s: 7 }] as r}
-								<div>
-									<div class="flex items-center justify-between text-[11px] font-medium text-slate-500"><span>{r.l}</span><span>{r.s}/10</span></div>
-									<div class="mt-1 h-1.5 rounded-full bg-slate-200"><div class="h-1.5 rounded-full bg-[#1A4CFF]" style="width: {r.s * 10}%"></div></div>
+					</div>
+				</div>
+
+				<!-- Row 2: essay (text right) -->
+				<div use:reveal={100} class="grid items-center gap-8 md:grid-cols-2 md:gap-14">
+					<div class="md:order-2">
+						<p class="text-xs font-bold uppercase tracking-widest text-[#1A4CFF]">Fix what's weak</p>
+						<h3 class="mt-3 font-serif text-3xl font-medium tracking-tight text-slate-900">Essay feedback, line by line</h3>
+						<p class="mt-3 text-[15px] leading-relaxed text-slate-500">Every supplement in one place. Hand it over and it marks the weak lines like an admissions reader would, and tells you why. It never writes a word for you.</p>
+					</div>
+					<div class="rounded-3xl border border-slate-200 bg-white p-5 sm:p-6 md:order-1">
+						<div class="rounded-2xl border border-slate-200 bg-slate-50/60 p-5">
+							<p class="text-xs font-bold uppercase tracking-wide text-slate-500">Personal statement</p>
+							<div class="mt-3 space-y-1.5 text-[13px] leading-relaxed text-slate-600">
+								<p class="rounded bg-[#1A4CFF]/10 px-1.5 py-0.5 text-slate-900 ring-1 ring-[#1A4CFF]/20">Ever since I was young, I have loved science.</p>
+								<p class="text-slate-400">The lab was quiet except for the hum of the</p>
+								<p class="text-slate-400">centrifuge, and I realized I had lost track of time.</p>
+							</div>
+							<div class="mt-3 flex items-start gap-2 rounded-xl bg-white border border-slate-200 p-3 shadow-sm">
+								<span class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#1A4CFF] text-white text-[10px] font-black">AI</span>
+								<p class="text-xs leading-relaxed text-slate-600">This opening is a cliché a reader has seen a thousand times. Start on the moment in the lab. Your words, just sharper.</p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Row 3: per-school (text left) -->
+				<div use:reveal={200} class="grid items-center gap-8 md:grid-cols-2 md:gap-14">
+					<div>
+						<p class="text-xs font-bold uppercase tracking-widest text-[#1A4CFF]">Aim it right</p>
+						<h3 class="mt-3 font-serif text-3xl font-medium tracking-tight text-slate-900">Per-school strategy for 50+ schools</h3>
+						<p class="mt-3 text-[15px] leading-relaxed text-slate-500">Stanford and MIT do not want the same thing. See what each one actually weighs, then aim your application at that reader instead of sending one generic app everywhere.</p>
+					</div>
+					<div class="rounded-3xl border border-slate-200 bg-white p-5 sm:p-6">
+						<div class="rounded-2xl border border-slate-200 bg-slate-50/60 p-5 space-y-2.5">
+							{#each [{ s: 'Stanford', w: 'Intellectual vitality, essays' }, { s: 'MIT', w: 'STEM depth, maker spirit' }, { s: 'Yale', w: 'Community impact, voice' }] as row}
+								<div class="flex items-center justify-between gap-3 rounded-xl bg-white border border-slate-200 px-3.5 py-2.5">
+									<span class="text-sm font-bold text-slate-900 shrink-0">{row.s}</span>
+									<span class="text-[11px] text-slate-500 text-right">Weighs: {row.w}</span>
 								</div>
 							{/each}
 						</div>
 					</div>
-					<h3 class="mt-6 text-xl font-bold tracking-tight text-slate-900">A full committee reads your file</h3>
-					<p class="mt-2 text-slate-500 leading-relaxed">Five readers argue over your file the way a real committee does, then land a verdict. You find out which one is holding you back, and exactly why.</p>
 				</div>
 
-				<!-- Essay editor with AI feedback -->
-				<div use:reveal={100} class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
-					<div class="rounded-2xl border border-slate-200 bg-slate-50/60 p-5">
-						<p class="text-xs font-bold uppercase tracking-wide text-slate-500">Personal statement</p>
-						<div class="mt-3 space-y-1.5 text-[13px] leading-relaxed text-slate-600">
-							<p class="rounded bg-[#1A4CFF]/10 px-1.5 py-0.5 text-slate-900 ring-1 ring-[#1A4CFF]/20">Ever since I was young, I have loved science.</p>
-							<p class="text-slate-400">The lab was quiet except for the hum of the</p>
-							<p class="text-slate-400">centrifuge, and I realized I had lost track of time.</p>
-						</div>
-						<div class="mt-3 flex items-start gap-2 rounded-xl bg-white border border-slate-200 p-3 shadow-sm">
-							<span class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#1A4CFF] text-white text-[10px] font-black">AI</span>
-							<p class="text-xs leading-relaxed text-slate-600">This opening is a cliché a reader has seen a thousand times. Start on the moment in the lab. Your words, just sharper.</p>
-						</div>
+				<!-- Row 4: counselor (text right) -->
+				<div use:reveal={300} class="grid items-center gap-8 md:grid-cols-2 md:gap-14">
+					<div class="md:order-2">
+						<p class="text-xs font-bold uppercase tracking-widest text-[#1A4CFF]">Any hour</p>
+						<h3 class="mt-3 font-serif text-3xl font-medium tracking-tight text-slate-900">A counselor in your pocket</h3>
+						<p class="mt-3 text-[15px] leading-relaxed text-slate-500">Ask the stuff you would pay a consultant $300 an hour for. Where to apply, how to explain a rough semester, what a school is really looking for. Any time, no appointment.</p>
 					</div>
-					<h3 class="mt-6 text-xl font-bold tracking-tight text-slate-900">Essay feedback, line by line</h3>
-					<p class="mt-2 text-slate-500 leading-relaxed">Every supplement in one place. Hand it over and it marks the weak lines like an admissions reader would, and tells you why. It never writes a word for you.</p>
-				</div>
-
-				<!-- Per-school strategy -->
-				<div use:reveal={200} class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
-					<div class="rounded-2xl border border-slate-200 bg-slate-50/60 p-5 space-y-2.5">
-						{#each [{ s: 'Stanford', w: 'Intellectual vitality, essays' }, { s: 'MIT', w: 'STEM depth, maker spirit' }, { s: 'Yale', w: 'Community impact, voice' }] as row}
-							<div class="flex items-center justify-between gap-3 rounded-xl bg-white border border-slate-200 px-3.5 py-2.5">
-								<span class="text-sm font-bold text-slate-900 shrink-0">{row.s}</span>
-								<span class="text-[11px] text-slate-500 text-right">Weighs: {row.w}</span>
+					<div class="rounded-3xl border border-slate-200 bg-white p-5 sm:p-6 md:order-1">
+						<div class="rounded-2xl border border-slate-200 bg-slate-50/60 p-5 space-y-3">
+							<div class="ml-auto max-w-[80%] rounded-2xl rounded-br-md bg-slate-900 px-3.5 py-2 text-[13px] text-white">Is my school list too top-heavy?</div>
+							<div class="flex items-start gap-2 max-w-[85%]">
+								<span class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#1A4CFF] text-white text-[10px] font-black">PA</span>
+								<div class="rounded-2xl rounded-bl-md bg-white border border-slate-200 px-3.5 py-2 text-[13px] leading-relaxed text-slate-700">A little. Add two matches where your profile is above their median. Want me to name them?</div>
 							</div>
-						{/each}
-					</div>
-					<h3 class="mt-6 text-xl font-bold tracking-tight text-slate-900">Per-school strategy for 50+ schools</h3>
-					<p class="mt-2 text-slate-500 leading-relaxed">Stanford and MIT do not want the same thing. See what each one actually weighs, then aim your application at that reader instead of sending one generic app everywhere.</p>
-				</div>
-
-				<!-- AI counselor -->
-				<div use:reveal={300} class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
-					<div class="rounded-2xl border border-slate-200 bg-slate-50/60 p-5 space-y-3">
-						<div class="ml-auto max-w-[80%] rounded-2xl rounded-br-md bg-slate-900 px-3.5 py-2 text-[13px] text-white">Is my school list too top-heavy?</div>
-						<div class="flex items-start gap-2 max-w-[85%]">
-							<span class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#1A4CFF] text-white text-[10px] font-black">PA</span>
-							<div class="rounded-2xl rounded-bl-md bg-white border border-slate-200 px-3.5 py-2 text-[13px] leading-relaxed text-slate-700">A little. Add two matches where your profile is above their median. Want me to name them?</div>
 						</div>
 					</div>
-					<h3 class="mt-6 text-xl font-bold tracking-tight text-slate-900">A counselor in your pocket</h3>
-					<p class="mt-2 text-slate-500 leading-relaxed">Ask the stuff you would pay a consultant $300 an hour for. Where to apply, how to explain a rough semester, what a school is really looking for. Any time, no appointment.</p>
 				</div>
 			</div>
 
