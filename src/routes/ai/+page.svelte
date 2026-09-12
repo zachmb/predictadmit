@@ -586,6 +586,30 @@
 			if (!honors && savedProfile.awards) honors = savedProfile.awards;
 			if (!transcript && savedProfile.rigor) transcript = savedProfile.rigor;
 		}
+
+		// Hand-off from /verdict: it collects a quick profile then sends the applicant
+		// here to run the FULL 39-school simulation (not one school). If the prefill
+		// payload + autorun flag are present, populate the builder and run immediately.
+		try {
+			if (sessionStorage.getItem('pa_autorun_sim') === '1') {
+				sessionStorage.removeItem('pa_autorun_sim');
+				const raw = sessionStorage.getItem('pa_sim_prefill');
+				if (raw) {
+					sessionStorage.removeItem('pa_sim_prefill');
+					const pf = JSON.parse(raw);
+					if (pf.transcript) transcript = pf.transcript;
+					if (pf.activities) activities = pf.activities;
+					if (pf.major) major = pf.major;
+					if (pf.essay) essay = pf.essay;
+					if (pf.honors) honors = pf.honors;
+				}
+				// Run the full simulation after fields settle. runEvaluation is
+				// server-metered (one free full run) and handles the sign-in/paywall gates.
+				if (googleSignedIn) setTimeout(() => runEvaluation(), 60);
+			}
+		} catch {
+			/* sessionStorage/JSON issues are non-fatal — just skip the autorun */
+		}
 	});
 
 	// Gray out the nav whenever the paywall modal is open.
