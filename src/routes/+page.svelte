@@ -1044,11 +1044,19 @@
 			</figure>
 			<p class="mt-3 text-center text-sm font-medium text-slate-500">Your command center: stats, streak, and next best moves in one place.</p>
 
-			<!-- Two supporting snapshots -->
+			<!-- Supporting snapshots -->
 			<div class="mt-8 grid gap-6 md:grid-cols-2">
 				<figure class="rounded-2xl border border-slate-200 bg-white shadow-lg overflow-hidden">
-					<img src="/screenshots/pro-universities.png" alt="PredictAdmit Pro: explore 78 schools with real admissions data and your chances" loading="lazy" class="block w-full" />
+					<img src="/screenshots/pro-universities.png" alt="PredictAdmit Pro: explore schools with real admissions data and your chances" loading="lazy" class="block w-full" />
 					<figcaption class="px-5 py-4 text-sm font-medium text-slate-600 border-t border-slate-100">Every school, with real data and your odds on each.</figcaption>
+				</figure>
+				<figure class="rounded-2xl border border-slate-200 bg-white shadow-lg overflow-hidden">
+					<img src="/screenshots/pro-counselor.png" alt="PredictAdmit Pro: AI counselor chat" loading="lazy" class="block w-full" />
+					<figcaption class="px-5 py-4 text-sm font-medium text-slate-600 border-t border-slate-100">A counselor on call for the questions you'd pay hundreds to ask.</figcaption>
+				</figure>
+				<figure class="rounded-2xl border border-slate-200 bg-white shadow-lg overflow-hidden">
+					<img src="/screenshots/pro-essay.png" alt="PredictAdmit Pro: essay editor with AI feedback" loading="lazy" class="block w-full" />
+					<figcaption class="px-5 py-4 text-sm font-medium text-slate-600 border-t border-slate-100">Draft every supplement in one place, feedback a click away.</figcaption>
 				</figure>
 				<figure class="rounded-2xl border border-slate-200 bg-white shadow-lg overflow-hidden">
 					<img src="/screenshots/pro-chanceme.png" alt="PredictAdmit Pro: build your Chance Me profile for personalized odds" loading="lazy" class="block w-full" />
