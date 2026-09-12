@@ -1015,9 +1015,9 @@
 				<div use:reveal={200} class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
 					<div class="rounded-2xl border border-slate-200 bg-slate-50/60 p-5 space-y-2.5">
 						{#each [{ s: 'Stanford', w: 'Intellectual vitality, essays' }, { s: 'MIT', w: 'STEM depth, maker spirit' }, { s: 'Yale', w: 'Community impact, voice' }] as row}
-							<div class="flex items-center justify-between rounded-xl bg-white border border-slate-200 px-3.5 py-2.5">
-								<span class="text-sm font-bold text-slate-900">{row.s}</span>
-								<span class="text-[11px] text-slate-500">Weighs: {row.w}</span>
+							<div class="flex items-center justify-between gap-3 rounded-xl bg-white border border-slate-200 px-3.5 py-2.5">
+								<span class="text-sm font-bold text-slate-900 shrink-0">{row.s}</span>
+								<span class="text-[11px] text-slate-500 text-right">Weighs: {row.w}</span>
 							</div>
 						{/each}
 					</div>
