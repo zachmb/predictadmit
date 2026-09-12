@@ -144,9 +144,32 @@
 		}
 	}
 
-	function toPro(where: 'all_schools' | 'full_why') {
-		track('quick_verdict_upsell_click', { where, school: schoolSlug });
-		goto('/pro');
+	// One-click checkout straight to Stripe — no detour through /pro. The user is
+	// already signed in (they signed in for the verdict) and at the emotional peak,
+	// so take the yes here. Defaults to $9.99/mo (the plan that converts). Falls back
+	// to /pro only if the checkout session can't be created.
+	let checkingOut = $state(false);
+	async function unlockAll() {
+		if (checkingOut) return;
+		checkingOut = true;
+		track('quick_verdict_upsell_click', { where: 'unlock_all', school: schoolSlug });
+		try {
+			const res = await fetch('/api/checkout', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ pricingMode: 'monthly' })
+			});
+			const data = await res.json().catch(() => null);
+			if (data?.url) {
+				window.location.href = data.url;
+				return;
+			}
+			goto('/pro');
+		} catch {
+			goto('/pro');
+		} finally {
+			checkingOut = false;
+		}
 	}
 </script>
 
@@ -280,9 +303,10 @@
 						Unlock your verdict at all 39 top schools, the committee's full breakdown of each, and
 						essay grading before you submit.
 					</p>
-					<button onclick={() => toPro('all_schools')} class="mt-6 w-full rounded-full bg-slate-900 px-6 py-4 text-base font-semibold text-white transition hover:bg-slate-800 active:scale-[0.99]">
-						See all 39 verdicts →
+					<button onclick={unlockAll} disabled={checkingOut} class="mt-6 w-full rounded-full bg-slate-900 px-6 py-4 text-base font-semibold text-white transition hover:bg-slate-800 active:scale-[0.99] disabled:opacity-60">
+						{checkingOut ? 'Opening checkout…' : 'Unlock all 39 verdicts · $9.99/mo →'}
 					</button>
+					<a href="/pro" class="mt-3 inline-block text-xs font-semibold text-slate-400 hover:text-slate-600">See everything in Pro first →</a>
 				</div>
 			{:else if verdict}
 				<div class="mt-10 space-y-5">
@@ -311,10 +335,13 @@
 							See your verdict at every top school, the five-reader committee's full reasoning on
 							each, and your essays graded before you submit.
 						</p>
-						<button onclick={() => toPro('all_schools')} class="mt-6 w-full rounded-full bg-white px-6 py-4 text-base font-semibold text-slate-900 transition hover:bg-slate-100 active:scale-[0.99]">
-							See all 39 verdicts + why → $9.99/mo
+						<button onclick={unlockAll} disabled={checkingOut} class="mt-6 w-full rounded-full bg-white px-6 py-4 text-base font-semibold text-slate-900 transition hover:bg-slate-100 active:scale-[0.99] disabled:opacity-60">
+							{checkingOut ? 'Opening checkout…' : 'Unlock all 39 verdicts + why · $9.99/mo →'}
 						</button>
-						<p class="mt-3 text-xs text-slate-400">cancel anytime · or $25 once</p>
+						<p class="mt-3 text-xs text-slate-400">
+							cancel anytime · or $25 once ·
+							<a href="/pro" class="underline hover:text-slate-200">see details</a>
+						</p>
 					</div>
 
 					<button onclick={() => { phase = 'input'; verdict = null; }} class="w-full py-2 text-sm font-semibold text-slate-500 hover:text-slate-900">

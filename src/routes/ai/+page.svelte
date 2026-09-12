@@ -154,7 +154,11 @@
 		if (selectedPlan === 'single' && paywallContextDecision) {
 			startCheckout('single', paywallContextDecision);
 		} else if (selectedPlan === 'monthly' || selectedPlan === 'lifetime') {
-			startUpgrade(selectedPlan);
+			// Straight to Stripe. The old path opened the UpgradeCarousel (a second
+			// full-screen modal) BETWEEN picking a plan and paying — an extra gate at
+			// the exact moment of intent, and a measurable drop. Once they've chosen a
+			// plan, get out of the way.
+			startCheckout(selectedPlan);
 		}
 	}
 	// Retained for compatibility; the paywall now shows the one-time tiers directly
@@ -722,9 +726,10 @@
 				: plan === 'monthly'
 					? STRIPE_PRODUCTS.monthly.amountCents
 					: STRIPE_PRODUCTS.single.amountCents;
-		// The single ($4.99) micro-buy skips the carousel/startUpgrade, so fire its
-		// "add to cart" here; monthly/lifetime already fired it in startUpgrade().
-		if (plan === 'single') trackAddToCart('single', _amt / 100);
+		// Fire "add to cart" for every plan right before checkout. (Monthly/lifetime
+		// used to fire it in startUpgrade, but the paywall now goes straight to Stripe,
+		// so fire it here — otherwise add_to_cart under-counts vs begin_checkout.)
+		trackAddToCart(plan, _amt / 100);
 		trackBeginCheckout(plan, _amt / 100);
 		try {
 			const res = await fetch('/api/checkout', {
