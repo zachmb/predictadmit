@@ -55,7 +55,7 @@
 		<!-- Body -->
 		<div class="space-y-10 text-[17px] leading-8 text-slate-700">
 			<section>
-				<h2 class="text-2xl font-bold tracking-tight text-slate-900">
+				<h2 class="font-serif text-2xl font-medium tracking-tight text-slate-900">
 					Why junior year is where you have leverage
 				</h2>
 				<p class="mt-4">
@@ -76,7 +76,7 @@
 			</section>
 
 			<section>
-				<h2 class="text-2xl font-bold tracking-tight text-slate-900">
+				<h2 class="font-serif text-2xl font-medium tracking-tight text-slate-900">
 					The 5 pillars admissions officers actually weigh
 				</h2>
 				<p class="mt-4">
@@ -128,7 +128,7 @@
 			</section>
 
 			<section>
-				<h2 class="text-2xl font-bold tracking-tight text-slate-900">
+				<h2 class="font-serif text-2xl font-medium tracking-tight text-slate-900">
 					How to run your own gap analysis
 				</h2>
 				<p class="mt-4">
@@ -177,7 +177,7 @@
 			</section>
 
 			<section>
-				<h2 class="text-2xl font-bold tracking-tight text-slate-900">
+				<h2 class="font-serif text-2xl font-medium tracking-tight text-slate-900">
 					Projecting your test scores realistically
 				</h2>
 				<p class="mt-4">
@@ -213,7 +213,7 @@
 			</section>
 
 			<section>
-				<h2 class="text-2xl font-bold tracking-tight text-slate-900">
+				<h2 class="font-serif text-2xl font-medium tracking-tight text-slate-900">
 					Building a reach / target / safety list
 				</h2>
 				<p class="mt-4">
@@ -261,7 +261,7 @@
 			</section>
 
 			<section>
-				<h2 class="text-2xl font-bold tracking-tight text-slate-900">
+				<h2 class="font-serif text-2xl font-medium tracking-tight text-slate-900">
 					The mistakes that quietly sink junior-year applicants
 				</h2>
 				<p class="mt-4">
@@ -371,7 +371,7 @@
 
 			<!-- FAQ -->
 			<section>
-				<h2 class="text-2xl font-bold tracking-tight text-slate-900">
+				<h2 class="font-serif text-2xl font-medium tracking-tight text-slate-900">
 					Frequently asked questions
 				</h2>
 				<div class="mt-6 space-y-6">

@@ -51,7 +51,7 @@
 		</p>
 
 		<!-- Section: Why research -->
-		<h2 class="text-3xl font-bold tracking-tight text-slate-900 mt-16 mb-5">
+		<h2 class="font-serif text-3xl font-medium tracking-tight text-slate-900 mt-16 mb-5">
 			Why research carries so much weight
 		</h2>
 		<p class="text-lg text-slate-600 leading-relaxed mb-5">
@@ -84,7 +84,7 @@
 		</p>
 
 		<!-- Section: 5 types -->
-		<h2 class="text-3xl font-bold tracking-tight text-slate-900 mt-16 mb-5">
+		<h2 class="font-serif text-3xl font-medium tracking-tight text-slate-900 mt-16 mb-5">
 			The 5 types of high school research (ranked by impact)
 		</h2>
 		<p class="text-lg text-slate-600 leading-relaxed mb-6">
@@ -175,7 +175,7 @@
 		</p>
 
 		<!-- Section: cold email -->
-		<h2 class="text-3xl font-bold tracking-tight text-slate-900 mt-16 mb-5">
+		<h2 class="font-serif text-3xl font-medium tracking-tight text-slate-900 mt-16 mb-5">
 			How to cold-email a professor (with a template)
 		</h2>
 		<p class="text-lg text-slate-600 leading-relaxed mb-5">
@@ -241,7 +241,7 @@
 		</p>
 
 		<!-- Section: independent -->
-		<h2 class="text-3xl font-bold tracking-tight text-slate-900 mt-16 mb-5">
+		<h2 class="font-serif text-3xl font-medium tracking-tight text-slate-900 mt-16 mb-5">
 			Independent research when no lab will take you
 		</h2>
 		<p class="text-lg text-slate-600 leading-relaxed mb-5">
@@ -273,7 +273,7 @@
 		</p>
 
 		<!-- Section: competitions and summer programs -->
-		<h2 class="text-3xl font-bold tracking-tight text-slate-900 mt-16 mb-5">
+		<h2 class="font-serif text-3xl font-medium tracking-tight text-slate-900 mt-16 mb-5">
 			Competitions and summer programs worth your time
 		</h2>
 		<p class="text-lg text-slate-600 leading-relaxed mb-5">
@@ -306,7 +306,7 @@
 		</p>
 
 		<!-- Section: how to write about it -->
-		<h2 class="text-3xl font-bold tracking-tight text-slate-900 mt-16 mb-5">
+		<h2 class="font-serif text-3xl font-medium tracking-tight text-slate-900 mt-16 mb-5">
 			How to write about research on your application
 		</h2>
 		<p class="text-lg text-slate-600 leading-relaxed mb-5">
@@ -370,7 +370,7 @@
 		</section>
 
 		<!-- FAQ -->
-		<h2 class="text-3xl font-bold tracking-tight text-slate-900 mt-16 mb-8">
+		<h2 class="font-serif text-3xl font-medium tracking-tight text-slate-900 mt-16 mb-8">
 			Frequently asked questions
 		</h2>
 
