@@ -612,14 +612,11 @@
 	<section class="relative pt-28 pb-20 md:pt-40 md:pb-28 overflow-hidden bg-[#FAFAFA]">
 		<div class="max-w-[1200px] mx-auto px-6 text-center relative z-10 flex flex-col items-center">
 			<!-- Headline -->
-			<div class="space-y-5 max-w-4xl mx-auto mb-9">
-				<p class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-400 animate-in fade-in duration-700 fill-mode-both">
-					AI college admissions
-				</p>
+			<div class="space-y-6 max-w-4xl mx-auto mb-10">
 				<h1
-					class="font-serif text-5xl sm:text-6xl md:text-[5.25rem] font-medium tracking-tight leading-[1.0] text-slate-900 animate-in fade-in slide-in-from-bottom-6 duration-1000 fill-mode-both"
+					class="font-serif text-5xl sm:text-6xl md:text-[5.5rem] font-medium tracking-tight leading-[1.0] text-slate-900 animate-in fade-in slide-in-from-bottom-6 duration-1000 fill-mode-both"
 				>
-					Read your decision <br class="hidden md:block" /> <span class="text-[#1A4CFF]">before it's written.</span>
+					Simulate Any <br class="hidden md:block" /> University <span class="text-[#1A4CFF]">Portal</span>
 				</h1>
 				<p
 					class="text-lg md:text-xl text-slate-500 max-w-2xl mx-auto leading-relaxed tracking-tight font-medium mt-5 animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-[200ms] fill-mode-both"
@@ -965,10 +962,10 @@
 			<div class="max-w-2xl mx-auto text-center space-y-4 mb-16">
 				<span class="inline-block px-3 py-1 bg-slate-50 border border-slate-200 text-slate-600 text-[10px] font-bold uppercase tracking-widest rounded-full">PredictAdmit Pro</span>
 				<h2 class="font-serif text-4xl md:text-5xl font-medium tracking-tight text-slate-900 leading-[1.05]">
-					Everything a counselor does. <span class="text-[#1A4CFF]">In one app.</span>
+					Everything a <span class="text-[#1A4CFF]">$5,000 counselor</span> does.
 				</h2>
 				<p class="text-lg text-slate-500 leading-relaxed">
-					The prediction gets you in the door. Then Pro does the work a $5,000 counselor does: reads your file like a committee, tears into your essays, and tells you what to fix first.
+					The prediction gets you in the door. Pro does the rest: it reads your file like a committee, marks up your essays line by line, and tells you what to fix first.
 				</p>
 			</div>
 
@@ -989,7 +986,7 @@
 							{/each}
 						</div>
 					</div>
-					<h3 class="mt-6 text-xl font-bold tracking-tight text-slate-900">A committee, not a single guess</h3>
+					<h3 class="mt-6 text-xl font-bold tracking-tight text-slate-900">A full committee reads your file</h3>
 					<p class="mt-2 text-slate-500 leading-relaxed">Five readers argue over your file the way a real committee does, then land a verdict. You find out which one is holding you back, and exactly why.</p>
 				</div>
 
@@ -1053,10 +1050,10 @@
 			<div class="max-w-2xl mx-auto text-center space-y-4 mb-14">
 				<span class="inline-block px-3 py-1 bg-white border border-slate-200 text-slate-600 text-[10px] font-bold uppercase tracking-widest rounded-full">See inside Pro</span>
 				<h2 class="font-serif text-4xl md:text-5xl font-medium tracking-tight text-slate-900 leading-[1.05]">
-					A whole application desk, <span class="text-[#1A4CFF]">not a paywall.</span>
+					See the actual app <span class="text-[#1A4CFF]">before you pay.</span>
 				</h2>
 				<p class="text-lg text-slate-500 leading-relaxed">
-					Here is exactly what you unlock. No mystery, no demo call.
+					Real screenshots from inside Pro. Everything you see below works today.
 				</p>
 			</div>
 
@@ -1094,7 +1091,7 @@
 
 			<div class="mt-12 text-center">
 				<a href="/pro" class="inline-flex items-center justify-center rounded-full bg-slate-900 px-8 py-4 text-base font-semibold text-white transition hover:bg-slate-800 active:scale-[0.99]">
-					Get the full desk for $25
+					Unlock all of Pro for $25
 				</a>
 			</div>
 		</div>
@@ -1159,10 +1156,10 @@
 		<div class="max-w-[1000px] mx-auto px-6">
 			<div class="max-w-2xl mx-auto text-center space-y-4 mb-14">
 				<h2 class="font-serif text-4xl md:text-5xl font-medium tracking-tight text-slate-900 leading-[1.05]">
-					A counselor's coverage, <span class="text-[#1A4CFF]">at a student's price.</span>
+					Counselors charge thousands. <span class="text-[#1A4CFF]">This is $25.</span>
 				</h2>
 				<p class="text-lg text-slate-500 leading-relaxed">
-					The same read a private counselor sells for thousands. One payment, or free to start.
+					Start free and see your first read. When you upgrade, it is $25 once and it stays yours.
 				</p>
 			</div>
 
