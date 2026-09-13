@@ -74,9 +74,10 @@
 			<!-- Black wash that fills as line 1 swallows the screen -->
 			<div class="pointer-events-none absolute inset-0 bg-slate-950" style="opacity:{bg}"></div>
 
-			<!-- Line 1 (font-size zoom = crisp) -->
+			<!-- Line 1 (font-size zoom = crisp). nowrap so its layout never reflows as it
+			     grows — it just overflows off-screen (a letter fills the view). -->
 			<h2
-				class="absolute px-6 text-center font-serif font-medium tracking-tight text-slate-900"
+				class="absolute px-6 text-center font-serif font-medium tracking-tight text-slate-900 whitespace-nowrap"
 				style="--s:{s1}; font-size: calc(clamp(2.4rem, 8.5vw, 6.25rem) * var(--s)); line-height: 1; transform: rotate({r1}deg); opacity:{o1};"
 			>
 				Pro can do <span class="text-[#1A4CFF]">waaaaay more</span>

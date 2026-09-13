@@ -68,9 +68,10 @@
 				>{eyebrow}</span>
 			{/if}
 
-			<!-- Headline (font-size zoom = crisp) -->
+			<!-- Headline (font-size zoom = crisp). nowrap so its layout never reflows as
+			     it grows — it just overflows off-screen. -->
 			<h2
-				class="font-serif font-medium tracking-tight text-slate-900"
+				class="font-serif font-medium tracking-tight text-slate-900 whitespace-nowrap"
 				style="--s:{s}; font-size: calc(clamp(2.4rem, 8vw, 6rem) * var(--s)); line-height: 1.02; opacity:{headOpacity};"
 			>
 				{pre} <span class="text-[#1A4CFF]">{accent}</span>
