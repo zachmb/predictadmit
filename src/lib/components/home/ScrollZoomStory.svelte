@@ -71,7 +71,7 @@
 		</p>
 	</div>
 {:else}
-	<section bind:this={section} class="relative h-[320vh] bg-white">
+	<section bind:this={section} class="relative h-[540vh] bg-white">
 		<div class="sticky top-0 flex h-[100svh] items-center justify-center overflow-hidden">
 			<!-- Black wash that fills as line 1 swallows the screen -->
 			<div class="pointer-events-none absolute inset-0 bg-slate-950" style="opacity:{bg}"></div>

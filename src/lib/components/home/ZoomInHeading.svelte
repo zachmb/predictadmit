@@ -59,7 +59,7 @@
 		{#if sub}<p class="text-lg text-slate-500 leading-relaxed">{sub}</p>{/if}
 	</div>
 {:else}
-	<section bind:this={section} class="relative h-[240vh] bg-slate-50">
+	<section bind:this={section} class="relative h-[380vh] bg-slate-50">
 		<div class="sticky top-0 flex h-[100svh] flex-col items-center justify-center overflow-hidden px-6 text-center">
 			{#if eyebrow}
 				<span
