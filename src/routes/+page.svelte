@@ -958,13 +958,10 @@
 		pre="See the actual app"
 		accent="before you pay."
 		sub="Real screenshots from inside Pro. Everything you see below works today."
-	/>
-
-	<!-- SECTION 2.4: SEE INSIDE PRO (dashboard snapshots) -->
-	<section class="py-24 bg-slate-50 border-t border-slate-100 overflow-hidden">
-		<div class="max-w-[1100px] mx-auto px-6">
-			<!-- Featured snapshot -->
-			<figure use:reveal class="rounded-2xl border border-slate-200 bg-white shadow-[0_30px_80px_-30px_rgba(15,23,42,0.25)] overflow-hidden">
+	>
+		{#snippet reveal()}
+			<!-- Featured snapshot — revealed BEHIND the zoom text as it clears. -->
+			<figure class="rounded-2xl border border-slate-200 bg-white shadow-[0_30px_80px_-30px_rgba(15,23,42,0.25)] overflow-hidden">
 				<div class="flex items-center gap-1.5 border-b border-slate-100 bg-slate-50/70 px-4 py-2.5">
 					<span class="h-2.5 w-2.5 rounded-full bg-slate-200"></span>
 					<span class="h-2.5 w-2.5 rounded-full bg-slate-200"></span>
@@ -973,7 +970,13 @@
 				</div>
 				<img src="/screenshots/pro-hub.png" alt="PredictAdmit Pro dashboard: your application command center" loading="lazy" class="block w-full" />
 			</figure>
-			<p class="mt-3 text-center text-sm font-medium text-slate-500">Your command center: stats, streak, and next best moves in one place.</p>
+		{/snippet}
+	</ZoomInHeading>
+
+	<!-- SECTION 2.4: SEE INSIDE PRO (dashboard snapshots) -->
+	<section class="py-24 bg-slate-50 border-t border-slate-100 overflow-hidden">
+		<div class="max-w-[1100px] mx-auto px-6">
+			<p class="mb-10 text-center text-sm font-medium text-slate-500">Your command center: stats, streak, and next best moves in one place. And the rest of Pro:</p>
 
 			<!-- Supporting snapshots -->
 			<div class="mt-8 grid gap-6 md:grid-cols-2">

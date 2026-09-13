@@ -3,14 +3,23 @@
 	// The eyebrow + subcopy show first, then the headline zooms from small to huge
 	// as you scroll through the pinned stage, then fades to reveal what follows.
 	// Used to introduce the "See inside Pro" screenshots. Reduced-motion → static.
-	import { onMount } from 'svelte';
+	import { onMount, type Snippet } from 'svelte';
 
 	let {
 		eyebrow = '',
 		pre = '',
 		accent = '',
-		sub = ''
-	}: { eyebrow?: string; pre?: string; accent?: string; sub?: string } = $props();
+		sub = '',
+		reveal
+	}: {
+		eyebrow?: string;
+		pre?: string;
+		accent?: string;
+		sub?: string;
+		// Rendered BEHIND the heading inside the pinned stage; fades/scales in as the
+		// heading zooms away, so it's already there — no scroll needed to reach it.
+		reveal?: Snippet;
+	} = $props();
 
 	let section = $state<HTMLElement | null>(null);
 	let p = $state(0);
@@ -48,6 +57,10 @@
 	let headOpacity = $derived(1 - seg(p, 0.68, 0.86));
 	// Eyebrow + sub are visible up front, then clear as the zoom takes over.
 	let auxOpacity = $derived((1 - seg(p, 0.14, 0.34)) * seg(p, 0, 0.05));
+	// Reveal card behind the heading: fades + scales up as the heading zooms away,
+	// so it's already sitting there when the text clears (no extra scroll to reach it).
+	let revealOpacity = $derived(seg(p, 0.6, 0.9));
+	let revealScale = $derived(0.92 + seg(p, 0.6, 0.98) * 0.08);
 </script>
 
 {#if reduced}
@@ -57,13 +70,25 @@
 			{pre} <span class="text-[#1A4CFF]">{accent}</span>
 		</h2>
 		{#if sub}<p class="text-lg text-slate-500 leading-relaxed">{sub}</p>{/if}
+		{#if reveal}<div class="mt-10">{@render reveal()}</div>{/if}
 	</div>
 {:else}
 	<section bind:this={section} class="relative h-[380vh] bg-slate-50">
 		<div class="sticky top-0 flex h-[100svh] flex-col items-center justify-center overflow-hidden px-6 text-center">
+			<!-- Reveal card, sitting BEHIND the heading; fades + scales in as the zoom
+			     text clears, so it's already in view without scrolling to it. -->
+			{#if reveal}
+				<div
+					class="pointer-events-none absolute inset-0 z-0 flex items-center justify-center px-6"
+					style="opacity:{revealOpacity}; transform: scale({revealScale});"
+				>
+					<div class="w-full max-w-[900px]">{@render reveal()}</div>
+				</div>
+			{/if}
+
 			{#if eyebrow}
 				<span
-					class="mb-6 inline-block rounded-full border border-slate-200 bg-white px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-slate-600"
+					class="relative z-10 mb-6 inline-block rounded-full border border-slate-200 bg-white px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-slate-600"
 					style="opacity:{auxOpacity}"
 				>{eyebrow}</span>
 			{/if}
@@ -71,14 +96,14 @@
 			<!-- Headline (font-size zoom = crisp). nowrap so its layout never reflows as
 			     it grows — it just overflows off-screen. -->
 			<h2
-				class="font-serif font-medium tracking-tight text-slate-900 whitespace-nowrap"
+				class="relative z-10 font-serif font-medium tracking-tight text-slate-900 whitespace-nowrap"
 				style="--s:{s}; font-size: calc(clamp(1.5rem, 7vw, 6rem) * var(--s)); line-height: 1.02; opacity:{headOpacity};"
 			>
 				{pre} <span class="text-[#1A4CFF]">{accent}</span>
 			</h2>
 
 			{#if sub}
-				<p class="mt-6 max-w-lg text-lg leading-relaxed text-slate-500" style="opacity:{auxOpacity}">{sub}</p>
+				<p class="relative z-10 mt-6 max-w-lg text-lg leading-relaxed text-slate-500" style="opacity:{auxOpacity}">{sub}</p>
 			{/if}
 		</div>
 	</section>
