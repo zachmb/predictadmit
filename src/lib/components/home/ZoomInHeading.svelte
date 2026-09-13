@@ -60,7 +60,7 @@
 	</div>
 {:else}
 	<section bind:this={section} class="relative h-[240vh] bg-slate-50">
-		<div class="sticky top-0 flex h-screen flex-col items-center justify-center overflow-hidden px-6 text-center">
+		<div class="sticky top-0 flex h-[100svh] flex-col items-center justify-center overflow-hidden px-6 text-center">
 			{#if eyebrow}
 				<span
 					class="mb-6 inline-block rounded-full border border-slate-200 bg-white px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-slate-600"
@@ -72,7 +72,7 @@
 			     it grows — it just overflows off-screen. -->
 			<h2
 				class="font-serif font-medium tracking-tight text-slate-900 whitespace-nowrap"
-				style="--s:{s}; font-size: calc(clamp(2.4rem, 8vw, 6rem) * var(--s)); line-height: 1.02; opacity:{headOpacity};"
+				style="--s:{s}; font-size: calc(clamp(1.5rem, 7vw, 6rem) * var(--s)); line-height: 1.02; opacity:{headOpacity};"
 			>
 				{pre} <span class="text-[#1A4CFF]">{accent}</span>
 			</h2>

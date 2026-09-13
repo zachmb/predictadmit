@@ -48,13 +48,15 @@
 	let o1 = $derived(1 - seg(p, 0.29, 0.35));
 	let bg = $derived(seg(p, 0.22, 0.34));
 
-	// Line 2 — zooms out of the black to readable, crossfades into line 3.
-	let s2 = $derived(2.4 - seg(p, 0.3, 0.52) * 1.4);
+	// Lines 2 & 3 do NOT resize — they rise + fade in at a CONSTANT font size so
+	// their wrapping (line count, words per line) is identical every frame. Only the
+	// single-line headlines do the dramatic zoom. y2/y3 are a small translate for the
+	// "rise out of the black" feel; opacity handles the reveal/crossfade.
 	let o2 = $derived(clamp(seg(p, 0.33, 0.42) - seg(p, 0.6, 0.68)));
+	let y2 = $derived((1 - seg(p, 0.33, 0.46)) * 24);
 
-	// Line 3 (+ "and more") — settles and holds to the end.
-	let s3 = $derived(2.4 - seg(p, 0.62, 0.84) * 1.4);
-	let o3 = $derived(seg(p, 0.62, 0.7));
+	let o3 = $derived(seg(p, 0.62, 0.72));
+	let y3 = $derived((1 - seg(p, 0.62, 0.75)) * 24);
 	let o4 = $derived(seg(p, 0.82, 0.92));
 </script>
 
@@ -70,7 +72,7 @@
 	</div>
 {:else}
 	<section bind:this={section} class="relative h-[320vh] bg-white">
-		<div class="sticky top-0 flex h-screen items-center justify-center overflow-hidden">
+		<div class="sticky top-0 flex h-[100svh] items-center justify-center overflow-hidden">
 			<!-- Black wash that fills as line 1 swallows the screen -->
 			<div class="pointer-events-none absolute inset-0 bg-slate-950" style="opacity:{bg}"></div>
 
@@ -78,25 +80,22 @@
 			     grows — it just overflows off-screen (a letter fills the view). -->
 			<h2
 				class="absolute px-6 text-center font-serif font-medium tracking-tight text-slate-900 whitespace-nowrap"
-				style="--s:{s1}; font-size: calc(clamp(2.4rem, 8.5vw, 6.25rem) * var(--s)); line-height: 1; transform: rotate({r1}deg); opacity:{o1};"
+				style="--s:{s1}; font-size: calc(clamp(1.6rem, 8vw, 6.25rem) * var(--s)); line-height: 1; transform: rotate({r1}deg); opacity:{o1};"
 			>
 				Pro can do <span class="text-[#1A4CFF]">waaaaay more</span>
 			</h2>
 
-			<!-- Line 2 -->
+			<!-- Line 2 — constant size, rises + fades in (no resize = no reflow) -->
 			<h2
-				class="absolute max-w-4xl px-6 text-center font-serif font-medium tracking-tight text-white"
-				style="--s:{s2}; font-size: calc(clamp(2rem, 6.5vw, 4.75rem) * var(--s)); line-height: 1.05; opacity:{o2};"
+				class="absolute max-w-[22ch] px-6 text-center font-serif text-3xl font-medium leading-tight tracking-tight text-white sm:max-w-2xl sm:text-5xl"
+				style="opacity:{o2}; transform: translateY({y2}px);"
 			>
 				Re-run infinite predictions. <span class="text-[#6f9bff]">See what'll happen.</span>
 			</h2>
 
-			<!-- Line 3 + "and more" -->
-			<div class="absolute max-w-3xl px-6 text-center text-white" style="opacity:{o3}">
-				<p
-					class="font-serif font-medium tracking-tight"
-					style="--s:{s3}; font-size: calc(clamp(1.55rem, 4.8vw, 3.15rem) * var(--s)); line-height: 1.15;"
-				>
+			<!-- Line 3 + "and more" — constant size, rises + fades in -->
+			<div class="absolute max-w-[24ch] px-6 text-center text-white sm:max-w-2xl" style="opacity:{o3}; transform: translateY({y3}px);">
+				<p class="font-serif text-2xl font-medium leading-snug tracking-tight sm:text-4xl">
 					Improve your essays with line-by-line feedback, trained on successful applications.
 				</p>
 				<div
