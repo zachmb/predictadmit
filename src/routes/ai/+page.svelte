@@ -2330,95 +2330,30 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 					{/each}
 				</ul>
 
-				<!-- Selectable plan tiles + one persistent CTA (Quizlet/Calm/TIDE
-				     pattern). Monthly is pre-selected — the $9.99 low-commitment start is
-				     what converts; Lifetime sits below as the pay-once alternative. -->
-				<div class="mt-5 space-y-2.5">
-					<!-- Monthly: the default, lowest-commitment yes -->
-					<button
-						type="button"
-						onclick={() => (selectedPlan = 'monthly')}
-						aria-pressed={selectedPlan === 'monthly'}
-						class="relative flex w-full items-center gap-3 rounded-2xl px-4 py-3.5 text-left transition {selectedPlan === 'monthly' ? 'border-2 border-slate-900 bg-slate-50 shadow-sm' : 'border border-slate-200 hover:border-slate-300'}"
-					>
-						<span class="grid h-5 w-5 shrink-0 place-items-center rounded-full border-2 {selectedPlan === 'monthly' ? 'border-slate-900 bg-slate-900' : 'border-slate-300'}">
-							{#if selectedPlan === 'monthly'}<span class="h-2 w-2 rounded-full bg-white"></span>{/if}
-						</span>
-						<span class="min-w-0 flex-1">
-							<span class="flex items-center gap-2">
-								<span class="text-sm font-bold text-slate-900">Monthly</span>
-								<span class="rounded-full bg-[#1A4CFF] px-2 py-0.5 text-[9px] font-black uppercase tracking-wide text-white">Start here</span>
-							</span>
-							<span class="mt-0.5 block text-xs leading-relaxed text-slate-500">Full access while you're applying. Cancel anytime.</span>
-						</span>
-						<span class="shrink-0 text-right leading-tight">
-							<span class="block text-base font-black text-slate-900">$9.99</span>
-							<span class="block text-[10px] font-semibold uppercase tracking-wide text-slate-500">per month</span>
-						</span>
-					</button>
-
-					<!-- Lifetime: the pay-once alternative -->
-					<button
-						type="button"
-						onclick={() => (selectedPlan = 'lifetime')}
-						aria-pressed={selectedPlan === 'lifetime'}
-						class="flex w-full items-center gap-3 rounded-2xl px-4 py-3.5 text-left transition {selectedPlan === 'lifetime' ? 'border-2 border-slate-900 bg-slate-50 shadow-sm' : 'border border-slate-200 hover:border-slate-300'}"
-					>
-						<span class="grid h-5 w-5 shrink-0 place-items-center rounded-full border-2 {selectedPlan === 'lifetime' ? 'border-slate-900 bg-slate-900' : 'border-slate-300'}">
-							{#if selectedPlan === 'lifetime'}<span class="h-2 w-2 rounded-full bg-white"></span>{/if}
-						</span>
-						<span class="min-w-0 flex-1">
-							<span class="text-sm font-bold text-slate-900">Lifetime</span>
-							<span class="mt-0.5 block text-xs leading-relaxed text-slate-500">Pay once, no subscription. Best deal if you're sure.</span>
-						</span>
-						<span class="shrink-0 text-right leading-tight">
-							<span class="block text-base font-black text-slate-900">$25</span>
-							<span class="block text-[10px] font-semibold uppercase tracking-wide text-slate-500">once</span>
-						</span>
-					</button>
-
-					<!-- Single school: the floor / downsell (only from a specific school). -->
-					{#if paywallContextDecision}
-						<button
-							type="button"
-							onclick={() => (selectedPlan = 'single')}
-							aria-pressed={selectedPlan === 'single'}
-							class="flex w-full items-center gap-3 rounded-2xl px-4 py-3.5 text-left transition {selectedPlan === 'single' ? 'border-2 border-slate-900 bg-slate-50 shadow-sm' : 'border border-slate-200 hover:border-slate-300'}"
-						>
-							<span class="grid h-5 w-5 shrink-0 place-items-center rounded-full border-2 {selectedPlan === 'single' ? 'border-slate-900 bg-slate-900' : 'border-slate-300'}">
-								{#if selectedPlan === 'single'}<span class="h-2 w-2 rounded-full bg-white"></span>{/if}
-							</span>
-							<span class="min-w-0 flex-1">
-								<span class="text-sm font-bold text-slate-900">
-									{paywallMode === 'decision' ? `Just ${paywallContextDecision.school}` : `Only ${paywallContextDecision.school}`}
-								</span>
-								<span class="mt-0.5 block text-xs leading-relaxed text-slate-500">This decision and its full deep-dive. Yours to keep.</span>
-							</span>
-							<span class="shrink-0 text-right leading-tight">
-								<span class="block text-base font-black text-slate-900">$4.99</span>
-							</span>
-						</button>
-					{/if}
-				</div>
-
-				<!-- One persistent CTA. Its label reflects the chosen plan. -->
+				<!-- One "Continue" button that opens the onboarding flow (a quick benefit
+				     walk), which ends in the plan picker + checkout. We do NOT show plans
+				     here — the walkthrough comes first. -->
 				<button
-					onclick={continuePlan}
-					disabled={checkoutLoading}
-					class="mt-4 w-full rounded-full bg-slate-900 px-5 py-4 text-base font-semibold text-white transition hover:bg-slate-800 active:scale-[0.99] disabled:opacity-50"
+					onclick={() => startUpgrade('monthly')}
+					class="mt-5 w-full rounded-full bg-slate-900 px-5 py-4 text-base font-semibold text-white transition hover:bg-slate-800 active:scale-[0.99]"
 				>
-					{checkoutLoading
-						? 'Opening checkout…'
-						: selectedPlan === 'lifetime'
-							? 'Get Lifetime · $25 once'
-							: selectedPlan === 'monthly'
-								? 'Start for $9.99/mo'
-								: 'Continue · $4.99'}
+					Continue →
 				</button>
+
+				{#if paywallContextDecision}
+					<!-- Micro-buy downsell: just this one school, straight to checkout. -->
+					<button
+						onclick={() => startCheckout('single', paywallContextDecision ?? undefined)}
+						disabled={checkoutLoading}
+						class="mt-2.5 w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-50 disabled:opacity-50"
+					>
+						{checkoutLoading ? 'Opening checkout…' : `Or unlock just ${paywallContextDecision.school} · $4.99`}
+					</button>
+				{/if}
 
 				<p class="mt-3 flex items-center justify-center gap-1.5 text-[11px] font-medium text-slate-500">
 					<svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
-					Instant access · secure checkout by Stripe
+					See everything you get, then pick a plan
 				</p>
 
 				<button
