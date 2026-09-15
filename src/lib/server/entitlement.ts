@@ -30,6 +30,17 @@ const GRANDFATHERED = new Set(
 		.filter(Boolean)
 );
 
+/**
+ * True if this email is on the manual comp/grandfather allowlist
+ * (`PRO_GRANDFATHER_EMAILS`). Exported so the read-only billing-status endpoint
+ * can report these accounts as a FULL (lifetime) plan too — otherwise the server
+ * grants access while the client UI still shows "upgrade" (it derives `isPro`
+ * from /api/billing/status). One list, honored everywhere.
+ */
+export function isGrandfathered(email: string | null | undefined): boolean {
+	return !!email && GRANDFATHERED.has(email.trim().toLowerCase());
+}
+
 // A subscription in any of these states means full access (trial or paid
 // monthly) is currently usable.
 const ACTIVE_SUB = new Set(['trialing', 'active', 'past_due']);

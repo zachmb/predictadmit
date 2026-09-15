@@ -8,6 +8,7 @@ import type { RequestHandler } from '@sveltejs/kit';
 import { json } from '@sveltejs/kit';
 import Stripe from 'stripe';
 import { env } from '$env/dynamic/private';
+import { isGrandfathered } from '$lib/server/entitlement';
 
 const STRIPE_SECRET_KEY = env.STRIPE_SECRET_KEY;
 
@@ -18,6 +19,14 @@ export const GET: RequestHandler = async ({ locals }) => {
 	const email = (await locals.auth?.())?.user?.email?.toLowerCase();
 	if (!email) {
 		return json({ signedIn: false, plan: 'none', hasBilling: false, billingConfigured: true });
+	}
+
+	// Manual comp/grandfather allowlist wins before Stripe: report a FULL lifetime
+	// plan so the client flips isPro=true, matching the server entitlement gate.
+	// (Same list `hasActivePlan` uses — this keeps client + server consistent so a
+	// comped account never sees an "upgrade" prompt while its AI routes work.)
+	if (isGrandfathered(email)) {
+		return json({ signedIn: true, plan: 'lifetime', hasBilling: false, billingConfigured: true });
 	}
 
 	// Billing not wired up: entitlement fails open, so the user has access but
