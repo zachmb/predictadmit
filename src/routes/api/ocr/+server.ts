@@ -26,7 +26,7 @@ export const config = { maxDuration: 60 };
 const MAX_BYTES = 4 * 1024 * 1024;
 
 export const POST: RequestHandler = async (event) => {
-	const g = await guardAi(event);
+	const g = await guardAi(event, { bucket: 'ocr' });
 	if (!g.ok) return g.response;
 	const { request } = event;
 	let file: FormDataEntryValue | null;

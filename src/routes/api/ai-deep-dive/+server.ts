@@ -10,7 +10,10 @@ type DecisionOutcome = 'admit' | 'deny' | 'waitlist' | 'defer';
 export const config = { maxDuration: 60 };
 
 export const POST: RequestHandler = async (event) => {
-	const g = await guardAi(event);
+	// Own rate-limit bucket with headroom for a Pro user opening a deep dive on
+	// each of the 39 schools in one sitting (the default max:20 shared bucket
+	// used to 429 after a full simulation).
+	const g = await guardAi(event, { max: 50, bucket: 'deepdive' });
 	if (!g.ok) return g.response;
 	const { request } = event;
 	// 🔑 Read env at request time so it's never stale

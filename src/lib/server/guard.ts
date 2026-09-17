@@ -40,7 +40,7 @@ export type GuardFail = { ok: false; response: Response };
  */
 export async function guardAi(
 	event: RequestEvent,
-	opts?: { max?: number; windowMs?: number; requirePlan?: boolean }
+	opts?: { max?: number; windowMs?: number; requirePlan?: boolean; bucket?: string }
 ): Promise<GuardOk | GuardFail> {
 	const session = await event.locals.auth?.();
 	const email = session?.user?.email;
@@ -53,9 +53,20 @@ export async function guardAi(
 	const ip = event.getClientAddress?.() ?? 'unknown';
 	const max = opts?.max ?? 20; // per user per window
 	const windowMs = opts?.windowMs ?? 60_000; // 1 minute
+	// PER-OPERATION bucket. Each route gets its own window so a burst on one
+	// endpoint can't lock out another: a single simulation fans out to ~39
+	// `ai-evaluate` calls, and if every route shared one `ai:${email}` bucket
+	// that burst would push the count past a lower-`max` route's cap (e.g. the
+	// deep dive) and 429 it for the rest of the minute — right when the user
+	// clicks Deep Dive after seeing results. Namespacing the bucket by operation
+	// keeps each cap independent.
+	const scope = opts?.bucket ?? 'default';
 	// Per-user cap is the primary gate; a looser per-IP cap catches one account
 	// scripting many parallel calls without punishing shared-NAT classmates.
-	if (!rateLimit(`ai:${email}`, max, windowMs) || !rateLimit(`ip:${ip}`, max * 4, windowMs)) {
+	if (
+		!rateLimit(`ai:${scope}:${email}`, max, windowMs) ||
+		!rateLimit(`ip:${scope}:${ip}`, max * 4, windowMs)
+	) {
 		return {
 			ok: false,
 			response: json(
@@ -94,7 +105,8 @@ const FREE_COOKIE = 'pa_free_used';
 
 export async function guardEvaluation(event: RequestEvent): Promise<GuardOk | GuardFail> {
 	// Auth + per-user/IP rate limit — but NOT requirePlan, so the free run passes.
-	const g = await guardAi(event, { max: 60, windowMs: 60_000 });
+	// Own bucket ('eval') so the ~39-call sim burst doesn't poison other routes.
+	const g = await guardAi(event, { max: 60, windowMs: 60_000, bucket: 'eval' });
 	if (!g.ok) return g;
 
 	// Pro / trial customers are unlimited.

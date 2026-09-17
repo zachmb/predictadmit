@@ -28,7 +28,7 @@ function estimateChance(acceptanceRate: number, academicIndex: number): number {
 export const config = { maxDuration: 60 };
 
 export const POST: RequestHandler = async (event) => {
-	const g = await guardAi(event);
+	const g = await guardAi(event, { bucket: 'counselor', max: 40 });
 	if (!g.ok) return g.response;
 	const { request } = event;
 	let body;

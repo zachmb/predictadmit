@@ -35,7 +35,7 @@ Rules:
 export const config = { maxDuration: 60 };
 
 export const POST: RequestHandler = async (event) => {
-	const g = await guardAi(event);
+	const g = await guardAi(event, { bucket: 'parse' });
 	if (!g.ok) return g.response;
 	const { request } = event;
 	const DEEPSEEK_API_KEY = env.DEEPSEEK_API_KEY;

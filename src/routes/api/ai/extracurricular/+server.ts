@@ -10,7 +10,7 @@ import { guardAi } from '$lib/server/guard';
 export const config = { maxDuration: 60 };
 
 export const POST: RequestHandler = async (event) => {
-	const g = await guardAi(event);
+	const g = await guardAi(event, { bucket: 'extracurricular' });
 	if (!g.ok) return g.response;
 
 	const DEEPSEEK_API_KEY = env.DEEPSEEK_API_KEY;
