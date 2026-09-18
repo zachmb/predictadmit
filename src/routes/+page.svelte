@@ -302,6 +302,24 @@
 		goto('/ai');
 	};
 
+	// Hero stats entry: the visitor starts typing their stats right on the landing,
+	// then we hand off to /ai with an autorun prefill so the full 39-school
+	// prediction runs the moment they arrive (Zach, 2026-09-17). The portal
+	// simulator lives on /portals now, not the landing.
+	let heroStats = '';
+	function startPrediction() {
+		const stats = heroStats.trim();
+		try {
+			if (stats) {
+				sessionStorage.setItem('pa_sim_prefill', JSON.stringify({ transcript: stats }));
+				sessionStorage.setItem('pa_autorun_sim', '1');
+			}
+		} catch {
+			/* sessionStorage unavailable — /ai still opens on the stats form */
+		}
+		goto('/ai');
+	}
+
 	// ... [Keeping existing helper functions: startCalendar, startRdEmailTimeline, formatTime, etc.] ...
 	const startCalendar = () => {
 		if (calendarIntervalId !== null) clearInterval(calendarIntervalId);
@@ -455,10 +473,6 @@
 		sortedVisiblePortals = [...visiblePortals].sort(
 			(a, b) => new Date(b.received).getTime() - new Date(a.received).getTime()
 		);
-		if (inboxSection && !hasAutoScrolledToInbox) {
-			inboxSection.scrollIntoView({ behavior: 'smooth' });
-			hasAutoScrolledToInbox = true;
-		}
 	} else {
 		sortedVisiblePortals = [...visiblePortals];
 	}
@@ -619,177 +633,45 @@
 				<h1
 					class="font-serif text-5xl sm:text-6xl md:text-[5.5rem] font-medium tracking-tight leading-[1.0] text-slate-900 animate-in fade-in slide-in-from-bottom-6 duration-1000 fill-mode-both"
 				>
-					Simulate Any <br class="hidden md:block" /> University <span class="text-[#1A4CFF]">Portal</span>
+					Predict Your Real <br class="hidden md:block" /> College <span class="text-[#1A4CFF]">Decisions</span>
 				</h1>
 				<p
 					class="text-lg md:text-xl text-slate-500 max-w-2xl mx-auto leading-relaxed tracking-tight font-medium mt-5 animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-[200ms] fill-mode-both"
 				>
-					Enter your stats and the AI predicts your real decision at all 39 top schools, free. It sits a full admissions committee on your file and shows you exactly what to fix. Or open any school's real decision portal and see accept or deny today.
+					Enter your stats and the AI predicts your real decision at all 39 top schools, free. It sits a full admissions committee on your file and shows you exactly what to fix.
 				</p>
 			</div>
 
-			<!-- PRIMARY action: open a real school's decision portal. This tangible,
-			     school-specific hook is what makes PredictAdmit distinctive (vs. a
-			     generic "grade my application" AI box); the AI grader is the strong
-			     secondary path just below. -->
-			{#if !hasApplied}
+			<!-- PRIMARY action: start entering your stats right here. The portal
+			     simulator lives on /portals now, not the landing. -->
+			<div
+				class="w-full max-w-xl mx-auto relative z-20 animate-in fade-in slide-in-from-bottom-5 duration-700 delay-150 fill-mode-both"
+			>
 				<div
-					class="mb-4 text-sm font-semibold text-slate-500 animate-in fade-in duration-700 delay-200 fill-mode-both"
+					class="rounded-2xl border border-slate-200 bg-white p-2 shadow-sm transition-all focus-within:border-slate-300 focus-within:ring-4 focus-within:ring-slate-100"
 				>
-					Pick a school, hit search, and open its portal →
-				</div>
-				<div
-					class="w-full max-w-xl mx-auto relative z-20 animate-in fade-in slide-in-from-bottom-5 duration-700 delay-150 fill-mode-both"
-				>
-					<div
-						class="flex items-center gap-2 p-1.5 bg-white rounded-full border border-slate-200 shadow-sm relative transition-all focus-within:ring-4 focus-within:ring-slate-100 focus-within:border-slate-300"
+					<textarea
+						bind:value={heroStats}
+						rows="3"
+						placeholder="Enter your stats — GPA, SAT/ACT, activities, awards, intended major. Dump it all; the AI sorts it out."
+						class="w-full resize-none rounded-xl bg-transparent px-4 py-3 font-medium text-slate-900 outline-none placeholder:text-slate-400"
+					></textarea>
+					<button
+						on:click={startPrediction}
+						class="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#1A4CFF] px-6 py-3.5 text-base font-semibold text-white shadow-sm transition-all hover:bg-[#1540d6] active:scale-95"
 					>
-						<!-- Mode Selector (Accept/Deny) -->
-						<div class="relative flex-shrink-0 h-12">
-							<select
-								bind:value={$manualOverrideMode}
-								class="appearance-none h-full pl-5 pr-9 bg-slate-50 font-bold text-sm text-slate-900 rounded-full border border-slate-100 hover:border-slate-200 transition-colors focus:outline-none cursor-pointer"
-							>
-								<option value="" disabled selected class="text-slate-500">Decision</option>
-								<option value="accepted">Accept</option>
-								<option value="denied">Reject</option>
-							</select>
-							<div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
-								<svg
-									class="w-3 h-3 text-slate-500"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke="currentColor"
-									><path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										stroke-width="2"
-										d="M19 9l-7 7-7-7"
-									/></svg
-								>
-							</div>
-						</div>
-
-						<!-- Search Input -->
-						<div class="flex-1 relative">
-							<input
-								type="text"
-								bind:value={searchQuery}
-								on:keydown={handleKeydown}
-								placeholder="Search university..."
-								class="w-full h-12 px-4 text-slate-900 placeholder:text-slate-400 font-medium outline-none bg-transparent"
-							/>
-							{#if searchQuery && showSearchResults}
-								<ul
-									class="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-xl border border-slate-100 overflow-hidden text-left z-50 animate-in fade-in slide-in-from-top-2 duration-200"
-								>
-									{#each filteredUniversities as university, i}
-										<li>
-											<button
-												class="w-full px-4 py-3 flex items-center justify-between hover:bg-slate-100 transition-colors {i ===
-												selectedIndex
-													? 'bg-slate-100'
-													: ''}"
-												on:click={() => handleUniversitySelect(university.slug)}
-											>
-												<span class="font-bold text-slate-900">{university.name}</span>
-												<span class="text-xs font-medium text-slate-400">View Portal &rarr;</span>
-											</button>
-										</li>
-									{/each}
-								</ul>
-							{/if}
-						</div>
-
-						<!-- Search Button Icon -->
-						<button
-							aria-label="Search"
-							class="w-12 h-12 flex-shrink-0 flex items-center justify-center bg-slate-900 text-white rounded-full hover:bg-black transition-all shadow-sm transform active:scale-95"
-						>
-							<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-								><path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									stroke-width="2.5"
-									d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-								/></svg
-							>
-						</button>
-					</div>
-
-					<!-- Secondary paths: grade the real application with AI (the funnel to
-					     the paid product), and run a full mock cycle. -->
-					<div class="mt-8 flex flex-col items-center gap-4">
-						<a
-							href="/ai"
-							class="inline-flex items-center gap-2 rounded-full border border-[#1A4CFF] bg-[#1A4CFF] px-7 py-3.5 text-base font-semibold text-white shadow-sm transition-all hover:bg-[#1540d6] hover:border-[#1540d6] active:scale-95"
-						>
-							<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v2m0 14v2M3 12h2m14 0h2m-3.5-6.5-1.4 1.4M6.9 17.1l-1.4 1.4m0-13 1.4 1.4m11.6 11.6-1.4-1.4"/><circle cx="12" cy="12" r="4"/></svg>
-							Enter your stats — predict all 39 decisions, free
-							<span aria-hidden="true">&rarr;</span>
-						</a>
-						<p class="text-xs font-medium text-slate-400">Free. Sign in with Google to see all your real decisions.</p>
-					</div>
+						Predict all 39 decisions, free
+						<span aria-hidden="true">&rarr;</span>
+					</button>
 				</div>
-			{:else}
-				<!-- ACTIVE SIMULATION UI -->
-				<div
-					class="max-w-4xl mx-auto relative z-20 mt-8 text-left animate-in fade-in slide-in-from-bottom-4 duration-500"
-				>
-					<div class="flex items-center justify-between gap-4 mb-8 md:mb-12 px-2">
-						<h2 class="text-xl font-bold text-slate-900">Admissions Inbox</h2>
-						<button
-							on:click={resetSimulation}
-							class="text-sm text-red-600 hover:text-red-700 font-semibold bg-red-50 px-3 py-1 rounded-full"
-							>End Simulation</button
-						>
-					</div>
-
-					<div class="bg-white rounded-xl shadow-lg overflow-hidden border border-slate-200/80">
-						{#if visiblePortals.length === 0 && $userProfile.isSubmitting}
-							<div class="p-8 flex flex-col items-center justify-center gap-4">
-								<svg
-									class="w-12 h-12 text-blue-500 animate-spin"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke="currentColor"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										stroke-width="2"
-										d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-									/>
-								</svg>
-								<p class="text-slate-600 font-medium">Submitting your application...</p>
-							</div>
-						{:else}
-							<AdmitMail
-								bind:inboxSection
-								{viewMode}
-								{activeFolder}
-								searchQuery={inboxSearchQuery}
-								{filteredPortals}
-								{visiblePortals}
-								{currentEdPortal}
-								{edEmailMustBeViewed}
-								{hasViewedEdEmail}
-								{readPortalSlugs}
-								{selectedPortal}
-								{selectedSent}
-								{sentEmails}
-								displayName={displayNameStr}
-								displayEmail={displayEmailStr}
-								{getReceivedLabel}
-								{resetSimulation}
-								selectPortal={handleSelectPortal}
-								selectSent={handleSelectSent}
-								{switchFolder}
-								{openInboxList}
-							/>{/if}
-					</div>
-				</div>
-			{/if}
+				<p class="mt-3 text-xs font-medium text-slate-400">
+					Free. Sign in with Google to see all your real decisions.
+				</p>
+				<p class="mt-2 text-xs font-medium text-slate-400">
+					Just want to rehearse a decision portal?
+					<a href="/portals" class="text-slate-600 underline underline-offset-2 hover:text-slate-900">Open one on the portals page →</a>
+				</p>
+			</div>
 
 			<!-- Social Proof Ribbon -->
 			<div
