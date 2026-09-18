@@ -3,6 +3,7 @@ import Google from '@auth/core/providers/google';
 import { sequence } from '@sveltejs/kit/hooks';
 import type { Handle } from '@sveltejs/kit';
 import { env } from '$env/dynamic/private';
+import { captureSignInEmail } from '$lib/server/leadCapture';
 
 // Accept either naming convention for the Google credentials so a rename in the
 // env file can't silently break sign-in.
@@ -41,7 +42,14 @@ const { handle: authHandle } = SvelteKitAuth({
 	// same client works on localhost, preview deploys, and prod without a
 	// hardcoded URL. (No AUTH_URL needed.)
 	trustHost: true,
-	secret: AUTH_SECRET
+	secret: AUTH_SECRET,
+	events: {
+		// Capture every Google sign-in email into one exportable list (Stripe
+		// Customers). Best-effort + fail-closed: an error here never blocks login.
+		async signIn({ user }) {
+			await captureSignInEmail(user?.email, user?.name);
+		}
+	}
 });
 
 // Canonical host: force apex predictadmit.com. Because trustHost derives the

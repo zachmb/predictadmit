@@ -311,8 +311,11 @@
 		const stats = heroStats.trim();
 		try {
 			if (stats) {
-				sessionStorage.setItem('pa_sim_prefill', JSON.stringify({ transcript: stats }));
+				// Carry the raw blob as `paste` so /ai runs it through the autofill
+				// parser (splits it into every box), not just the transcript field.
+				sessionStorage.setItem('pa_sim_prefill', JSON.stringify({ paste: stats }));
 				sessionStorage.setItem('pa_autorun_sim', '1');
+				sessionStorage.removeItem('pa_sim_signin_tried');
 			}
 		} catch {
 			/* sessionStorage unavailable — /ai still opens on the stats form */
@@ -630,8 +633,9 @@
 		<div class="max-w-[1200px] mx-auto px-6 text-center relative z-10 flex flex-col items-center">
 			<!-- Headline -->
 			<div class="space-y-6 max-w-4xl mx-auto mb-10">
+				<p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 animate-in fade-in slide-in-from-bottom-6 duration-1000 fill-mode-both">AI Admissions Simulator</p>
 				<h1
-					class="font-serif text-5xl sm:text-6xl md:text-[5.5rem] font-medium tracking-tight leading-[1.0] text-slate-900 animate-in fade-in slide-in-from-bottom-6 duration-1000 fill-mode-both"
+					class="font-serif text-5xl sm:text-6xl md:text-[5.5rem] font-medium tracking-tight leading-[1.0] text-slate-900 animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-[100ms] fill-mode-both"
 				>
 					Predict Your Real <br class="hidden md:block" /> College <span class="text-[#1A4CFF]">Decisions</span>
 				</h1>
@@ -642,23 +646,37 @@
 				</p>
 			</div>
 
-			<!-- PRIMARY action: start entering your stats right here. The portal
-			     simulator lives on /portals now, not the landing. -->
+			<!-- PRIMARY action: a simplified version of the /ai "Autofill the boxes"
+			     card. The full field-by-field builder + OCR pipeline lives on /ai;
+			     here we capture the paste and hand off (startPrediction stashes it
+			     as pa_sim_prefill + autoruns on /ai). -->
 			<div
 				class="w-full max-w-xl mx-auto relative z-20 animate-in fade-in slide-in-from-bottom-5 duration-700 delay-150 fill-mode-both"
 			>
-				<div
-					class="rounded-2xl border border-slate-200 bg-white p-2 shadow-sm transition-all focus-within:border-slate-300 focus-within:ring-4 focus-within:ring-slate-100"
-				>
+				<div class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-7 text-left shadow-[0_30px_80px_-30px_rgba(15,23,42,0.18)]">
+					<!-- Autofill header — matches /ai -->
+					<div class="flex items-center justify-between gap-3 mb-4">
+						<div class="flex items-center gap-3">
+							<div class="w-10 h-10 rounded-xl bg-slate-900 flex items-center justify-center shrink-0">
+								<svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" /></svg>
+							</div>
+							<div>
+								<h3 class="text-sm font-bold text-slate-900">Autofill the boxes</h3>
+								<p class="text-xs text-slate-500 mt-0.5">Drop in a PDF or a wall of text. The AI splits it into every field.</p>
+							</div>
+						</div>
+						<span class="hidden sm:inline-flex items-center gap-1.5 text-[10px] uppercase font-bold tracking-wider text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-full border border-emerald-200/60 shadow-sm">OCR Beta</span>
+					</div>
+
 					<textarea
 						bind:value={heroStats}
-						rows="3"
-						placeholder="Enter your stats — GPA, SAT/ACT, activities, awards, intended major. Dump it all; the AI sorts it out."
-						class="w-full resize-none rounded-xl bg-transparent px-4 py-3 font-medium text-slate-900 outline-none placeholder:text-slate-400"
+						rows="4"
+						placeholder="Dump it all here: GPA, SAT/ACT, activities, awards, intended major, essay. The AI sorts it into the right boxes."
+						class="w-full resize-y rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-900 outline-none placeholder:text-slate-400 shadow-sm transition-all hover:border-slate-300 focus:border-blue-600 focus:ring-4 focus:ring-blue-600/10"
 					></textarea>
 					<button
 						on:click={startPrediction}
-						class="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#1A4CFF] px-6 py-3.5 text-base font-semibold text-white shadow-sm transition-all hover:bg-[#1540d6] active:scale-95"
+						class="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#1A4CFF] px-6 py-3.5 text-base font-semibold text-white shadow-sm transition-all hover:bg-[#1540d6] active:scale-95"
 					>
 						Predict all 39 decisions, free
 						<span aria-hidden="true">&rarr;</span>
@@ -673,61 +691,29 @@
 				</p>
 			</div>
 
-			<!-- Social Proof Ribbon -->
-			<div
-				class="pt-12 flex flex-col md:flex-row items-center justify-center gap-4 md:gap-5 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300 fill-mode-both"
-			>
-				<div class="flex -space-x-2">
-					<div
-						class="w-8 h-8 rounded-full border-2 border-white bg-[#B2D8C9] relative overflow-hidden shadow-sm transition-transform hover:-translate-y-1 hover:z-10"
-					>
-						<img
-							src="/apple_memoji_1.png"
-							alt="Student 1"
-							class="w-full h-full object-cover scale-[1.35] mt-0.5"
-						/>
-					</div>
-					<div
-						class="w-8 h-8 rounded-full border-2 border-white bg-[#E3A5A5] relative overflow-hidden shadow-sm transition-transform hover:-translate-y-1 hover:z-10"
-					>
-						<img
-							src="/apple_memoji_2.png"
-							alt="Student 2"
-							class="w-full h-full object-cover scale-[1.35] mt-0.5"
-						/>
-					</div>
-					<div
-						class="w-8 h-8 rounded-full border-2 border-white bg-[#E9B681] relative overflow-hidden shadow-sm transition-transform hover:-translate-y-1 hover:z-10"
-					>
-						<img
-							src="/apple_memoji_3.png"
-							alt="Student 3"
-							class="w-full h-full object-cover scale-[1.35] mt-0.5"
-						/>
-					</div>
-					<div
-						class="w-8 h-8 rounded-full border-2 border-white bg-[#A7BCE6] relative overflow-hidden shadow-sm transition-transform hover:-translate-y-1 hover:z-10"
-					>
-						<img
-							src="/apple_memoji_4.png"
-							alt="Student 4"
-							class="w-full h-full object-cover scale-[1.35] mt-0.5"
-						/>
-					</div>
-				</div>
-				<div class="flex flex-col items-center md:items-start justify-center gap-0.5 mt-2 md:mt-0">
-					<div class="flex gap-1 text-slate-900">
-						{#each Array(5) as _}
-							<svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-								<path
-									d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-								/>
-							</svg>
-						{/each}
-					</div>
-					<span class="text-xs font-semibold text-slate-500">Trusted by 5,000+</span>
-				</div>
+			<!-- Trust band — calibration, scale, privacy (matches /ai) -->
+			<div class="pt-12 flex flex-wrap items-center justify-center gap-x-3.5 gap-y-2 text-xs font-medium text-slate-500 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300 fill-mode-both">
+				<span class="inline-flex items-center gap-1.5">
+					<svg class="h-3.5 w-3.5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+					Calibrated on real admissions results
+				</span>
+				<span class="hidden sm:block h-3 w-px bg-slate-200"></span>
+				<span class="inline-flex items-center gap-1.5">
+					<svg class="h-3.5 w-3.5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 10-4 0m8 0a4 4 0 10-3-7" /></svg>
+					5,000+ applicants
+				</span>
+				<span class="hidden sm:block h-3 w-px bg-slate-200"></span>
+				<span class="inline-flex items-center gap-1.5">
+					<svg class="h-3.5 w-3.5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+					Your data never leaves your browser
+				</span>
 			</div>
+
+			<!-- Fine print + methodology (matches /ai) -->
+			<p class="mx-auto max-w-md pt-5 text-xs leading-relaxed text-slate-400 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300 fill-mode-both">
+				An estimate from NACAC factor weights. Not an official decision, and never affiliated with any school.
+				<a href="/methodology" class="font-medium text-slate-600 underline underline-offset-2 hover:text-slate-900">Methodology →</a>
+			</p>
 		</div>
 	</section>
 

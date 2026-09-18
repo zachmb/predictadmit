@@ -585,25 +585,63 @@
 			if (!transcript && savedProfile.rigor) transcript = savedProfile.rigor;
 		}
 
-		// Hand-off from /verdict: it collects a quick profile then sends the applicant
-		// here to run the FULL 39-school simulation (not one school). If the prefill
-		// payload + autorun flag are present, populate the builder and run immediately.
+		// Hand-off from /verdict (structured fields) and from the landing hero (a raw
+		// `paste` blob). If the prefill payload + autorun flag are present, populate the
+		// builder, split the blob into the right boxes, and run the FULL 39-school sim.
 		try {
 			if (sessionStorage.getItem('pa_autorun_sim') === '1') {
-				sessionStorage.removeItem('pa_autorun_sim');
 				const raw = sessionStorage.getItem('pa_sim_prefill');
+				let pf: Record<string, string> | null = null;
 				if (raw) {
-					sessionStorage.removeItem('pa_sim_prefill');
-					const pf = JSON.parse(raw);
+					try {
+						pf = JSON.parse(raw);
+					} catch {
+						pf = null;
+					}
+				}
+
+				if (pf) {
+					// Structured fields from /verdict.
 					if (pf.transcript) transcript = pf.transcript;
 					if (pf.activities) activities = pf.activities;
 					if (pf.major) major = pf.major;
 					if (pf.essay) essay = pf.essay;
 					if (pf.honors) honors = pf.honors;
+					// Raw blob from the landing hero — keep it visible so their input is
+					// never lost, even if they bounce off sign-in.
+					if (pf.paste) pasteBlob = pf.paste;
 				}
-				// Run the full simulation after fields settle. runEvaluation is
-				// server-metered (one free full run) and handles the sign-in/paywall gates.
-				if (googleSignedIn) setTimeout(() => runEvaluation(), 60);
+
+				if (!googleSignedIn) {
+					// Autofill + the metered run both need a session. sessionStorage
+					// survives the Google round-trip, so leave the flags in place and
+					// resume on return. Guard against a cancel-loop: only auto-launch
+					// sign-in once; after that their text sits in the paste box with the
+					// Autofill button as the manual path.
+					if (sessionStorage.getItem('pa_sim_signin_tried') !== '1') {
+						sessionStorage.setItem('pa_sim_signin_tried', '1');
+						signIn('google', { callbackUrl: '/ai' });
+					}
+					return;
+				}
+
+				// Signed in — consume the flags so we don't re-fire, then split the
+				// blob into every box and run.
+				sessionStorage.removeItem('pa_autorun_sim');
+				sessionStorage.removeItem('pa_sim_prefill');
+				sessionStorage.removeItem('pa_sim_signin_tried');
+
+				(async () => {
+					try {
+						if (pf?.paste && pf.paste.trim().length >= 20) {
+							await parseAndFill(pf.paste);
+						}
+					} finally {
+						// runEvaluation is server-metered (one free full run) and handles
+						// the sign-in/paywall gates itself.
+						setTimeout(() => runEvaluation(), 60);
+					}
+				})();
 			}
 		} catch {
 			/* sessionStorage/JSON issues are non-fatal — just skip the autorun */
