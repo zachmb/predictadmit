@@ -99,13 +99,15 @@
 		portalDecisionViewed.set(true);
 	};
 
+	// Show the real major the applicant applied with (falls back to a placeholder).
+	const appliedMajor = $userProfile.stats?.major?.trim() || 'Business Administration';
 	// --- Applicant Information (portal capture) ---
 	const applicantInfo = [
 		{ label: 'Level', value: 'First Year' },
 		{ label: 'Term', value: 'Fall 2026' },
 		{ label: 'App ID', value: '5273046' },
 		{ label: 'UCI ID', value: '41932760' },
-		{ label: 'Major', value: 'Business Administration' },
+		{ label: 'Major', value: appliedMajor },
 		{ label: 'Alt Major', value: 'Information and Computer Sciences/Undeclared' }
 	];
 </script>

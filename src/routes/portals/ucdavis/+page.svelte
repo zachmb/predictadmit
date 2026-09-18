@@ -102,10 +102,12 @@
 	};
 
 	// --- Applicant Profile / Checklist Data ---
+	// Show the real major the applicant applied with (falls back to a placeholder).
+	const appliedMajor = $userProfile.stats?.major?.trim() || 'Economics';
 	const profileRows = [
 		{ label: 'SID', value: school.referenceNumber },
 		{ label: 'Term', value: 'Fall Quarter 2026' },
-		{ label: 'Major', value: 'Economics' }
+		{ label: 'Major', value: appliedMajor }
 	];
 
 	const checklist = [

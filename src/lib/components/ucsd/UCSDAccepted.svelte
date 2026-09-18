@@ -1,6 +1,9 @@
 <script lang="ts">
 	import DeepDiveButton from '$lib/components/common/DeepDiveButton.svelte';
 	import Confetti from '$lib/components/common/Confetti.svelte';
+	import { userProfile } from '$lib/stores/user';
+	// Real major the applicant applied with (falls back to the placeholder phrasing).
+	$: appliedMajor = $userProfile.stats?.major?.trim();
 	// The parent component passes these props
 	export let applicantName: string;
 	export let schoolName: string = 'University of California, San Diego';
@@ -50,7 +53,7 @@
 		<div class="space-y-5 text-[15px] leading-relaxed">
 			<p class="font-semibold text-slate-800">
 				Congratulations! We are pleased to offer you admission for Fall 2027 to the University of
-				California San Diego as an Undeclared major in Warren College.
+				California San Diego as {appliedMajor ? `a ${appliedMajor}` : 'an Undeclared'} major in Warren College.
 			</p>
 
 			<p>

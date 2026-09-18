@@ -832,6 +832,11 @@
 
 	async function runEvaluation() {
 		saveToStore(); // Save before running
+		// Persist the applied major so the portal pages + decision letters can show
+		// the real major the applicant used (they read $userProfile.stats.major).
+		if (major.trim()) {
+			userProfile.update((u) => ({ ...u, stats: { ...u.stats, major: major.trim() } }));
+		}
 		const myId = currentStoreVersion + 1;
 
 		if (!googleSignedIn) {

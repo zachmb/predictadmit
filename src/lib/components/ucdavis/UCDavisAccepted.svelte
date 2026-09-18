@@ -1,6 +1,9 @@
 <script lang="ts">
 	import DeepDiveButton from '$lib/components/common/DeepDiveButton.svelte';
 	import Confetti from '$lib/components/common/Confetti.svelte';
+	import { userProfile } from '$lib/stores/user';
+	// Real major the applicant applied with (falls back to the placeholder).
+	$: appliedMajor = $userProfile.stats?.major?.trim() || 'Economics';
 	// The parent component passes these props
 	export let applicantName: string;
 	export let schoolName: string = 'University of California, Davis';
@@ -64,7 +67,7 @@
 		<div class="space-y-4 mb-8">
 			<p>
 				<strong>Congratulations!</strong> We are pleased to let you know that you have been admitted to
-				the University of California, Davis, for fall quarter 2027 in the Economics major. The hard work
+				the University of California, Davis, for fall quarter 2027 in the {appliedMajor} major. The hard work
 				that brought you to this important milestone deserves applause, and we would be honored to count
 				you as a member of our UC Davis community.
 			</p>

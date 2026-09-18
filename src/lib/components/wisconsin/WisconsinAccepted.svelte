@@ -1,6 +1,9 @@
 <script lang="ts">
 	import DeepDiveButton from '$lib/components/common/DeepDiveButton.svelte';
 	import Confetti from '$lib/components/common/Confetti.svelte';
+	import { userProfile } from '$lib/stores/user';
+	// Real major the applicant applied with (falls back to the placeholder).
+	$: appliedMajor = $userProfile.stats?.major?.trim() || 'Mechanical Engineering';
 	// The parent component passes these props
 	export let applicantName: string;
 	export let schoolName: string = 'University of Wisconsin-Madison';
@@ -73,8 +76,8 @@
 			</p>
 
 			<p>
-				You have been admitted to the College of Engineering with an intended major in Mechanical
-				Engineering. At UW-Madison, you will join a community long committed to searching for truth,
+				You have been admitted with an intended major in {appliedMajor}. At UW-Madison, you will
+				join a community long committed to searching for truth,
 				with world-class faculty, hands-on research, and the Wisconsin Idea, the belief that the
 				university's reach extends across the state and beyond.
 			</p>

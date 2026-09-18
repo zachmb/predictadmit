@@ -1,28 +1,45 @@
 <script lang="ts">
 	// Portal login screens are a SIMULATION — the email/password fields are
-	// decorative and you just click "Login" to continue. Applicants kept trying to
-	// type real credentials and stalling. This layout wraps EVERY portal page and,
-	// for any email/password input rendered underneath it, (1) blocks typing and
-	// (2) nudges the user to just click Login — on an interaction attempt, or after
-	// a few idle seconds on a login screen. Done once here (not per-portal) so it
-	// covers all 40+ portals and any added later. A MutationObserver re-applies it
-	// after client-side navigation between portals.
+	// decorative and you just click "Login" to continue. This layout wraps every
+	// portal page and, for any email/password input, blocks typing (they're not
+	// needed). If the applicant CLEARLY gets stuck — sits on the login screen for a
+	// while, or actually tries to type credentials — we show ONE gentle reminder to
+	// click Login. It never fires on a quick Login click, on focus, or more than
+	// once per session.
 	import { onMount } from 'svelte';
+
+	const SHOWN_KEY = 'pa_portal_nudge_shown';
+	const STUCK_MS = 8000; // "clearly stuck" = this long on a login screen with no progress
 
 	let showNudge = false;
 	let hideTimer: ReturnType<typeof setTimeout> | null = null;
 	let idleTimer: ReturnType<typeof setTimeout> | null = null;
 
-	function flashNudge() {
-		showNudge = true;
-		if (hideTimer) clearTimeout(hideTimer);
-		hideTimer = setTimeout(() => (showNudge = false), 6000);
+	function alreadyShown() {
+		try {
+			return sessionStorage.getItem(SHOWN_KEY) === '1';
+		} catch {
+			return false;
+		}
 	}
 
-	// Wait a few idle seconds on a login screen, then remind them.
-	function armIdleNudge() {
+	// Show the reminder at most once per session.
+	function nudgeOnce() {
+		if (showNudge || alreadyShown()) return;
+		try {
+			sessionStorage.setItem(SHOWN_KEY, '1');
+		} catch {
+			/* ignore */
+		}
+		showNudge = true;
+		if (hideTimer) clearTimeout(hideTimer);
+		hideTimer = setTimeout(() => (showNudge = false), 7000);
+	}
+
+	function armStuckTimer() {
+		if (alreadyShown()) return;
 		if (idleTimer) clearTimeout(idleTimer);
-		idleTimer = setTimeout(() => flashNudge(), 4500);
+		idleTimer = setTimeout(nudgeOnce, STUCK_MS);
 	}
 
 	function lockField(el: HTMLInputElement) {
@@ -30,24 +47,20 @@
 		el.dataset.simLocked = '1';
 		el.readOnly = true;
 		el.style.cursor = 'not-allowed';
-		const nudgeAndBounce = () => {
-			flashNudge();
-			el.blur();
-		};
-		el.addEventListener('focus', nudgeAndBounce);
-		el.addEventListener('mousedown', (e) => {
-			e.preventDefault();
-			flashNudge();
-		});
+		// An ACTUAL typing attempt (a character / backspace / enter) is a clear sign
+		// they think they must fill this in — block it and nudge once. Focus, clicks,
+		// and tabbing through do NOT nudge, so a quick Login click never triggers it.
 		el.addEventListener('keydown', (e) => {
-			e.preventDefault();
-			flashNudge();
+			if (e.key.length === 1 || e.key === 'Backspace' || e.key === 'Enter') {
+				e.preventDefault();
+				nudgeOnce();
+			}
 		});
 		el.addEventListener('paste', (e) => {
 			e.preventDefault();
-			flashNudge();
+			nudgeOnce();
 		});
-		if (el.type === 'password') armIdleNudge();
+		if (el.type === 'password') armStuckTimer();
 	}
 
 	function scan(root: ParentNode) {
