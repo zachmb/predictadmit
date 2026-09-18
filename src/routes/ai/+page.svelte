@@ -423,12 +423,15 @@
 	function openInboxList() {
 		mailViewMode = 'inbox';
 		saveAiInboxState();
-		// Auto-scroll back down to the AImail section so the user doesn't have to
-		// scroll the long /ai page every time they tab out of a decision. Wait for
-		// the inbox view to render, then scroll (id fallback in case the bound ref
-		// hasn't attached yet).
+		// Auto-scroll back to the TOP of the AImail block (the disclaimer), so the
+		// user lands on the inbox without hand-scrolling the long /ai page every time
+		// they tab out of a decision. Fall back to the inbox card if the anchor isn't
+		// present yet.
 		setTimeout(() => {
-			const el = inboxSection ?? document.getElementById('inboxSection');
+			const el =
+				document.getElementById('aimailTop') ??
+				inboxSection ??
+				document.getElementById('inboxSection');
 			el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 		}, 60);
 	}
@@ -2082,16 +2085,21 @@ See what we read from your file
 			<!-- AIMail Inbox -->
 			{#if hasUsedFreeSimulation || $userProfile.isSubmittingAI}
 				<section
-					class="rounded-3xl border border-slate-200 bg-white shadow-[0_30px_80px_-30px_rgba(15,23,42,0.18)] overflow-hidden mt-12"
+					id="aimailTop"
+					class="scroll-mt-24 rounded-3xl border border-slate-200 bg-white shadow-[0_30px_80px_-30px_rgba(15,23,42,0.18)] overflow-hidden mt-12"
 				>
 					<!-- Honesty caveat: these are AI-simulated letters, never real decisions.
 					     A student must not mistake the inbox metaphor for an actual result. -->
-					<p
-						class="px-6 py-2 text-[11px] leading-snug text-slate-500 bg-slate-50 border-b border-slate-100"
-					>
-						These are the AI's best guess from what you gave it. Estimates, not real or official
-						decisions. PredictAdmit isn't affiliated with any school.
-					</p>
+					<div class="px-6 py-2.5 bg-slate-50 border-b border-slate-100">
+						<p class="text-[11px] leading-snug text-slate-500">
+							These are the AI's best guess from what you gave it. Estimates, not real or official
+							decisions. PredictAdmit isn't affiliated with any school.
+						</p>
+						<p class="mt-1 text-[11px] leading-snug font-medium text-slate-600">
+							We're sorry if this feels brutal or disappointing. We calibrated the AI to our actual
+							admissions results, so it runs a lot harsher than a generic AI would.
+						</p>
+					</div>
 					<!-- Conversion moment: the free prediction has landed. A non-Pro user who has
 					     used their one free run gets a warm, specific upsell (not a cold wall) to
 					     start the trial for unlimited re-runs + deep dives. Pro users never see it. -->
