@@ -329,7 +329,7 @@
 							</div>
 							<button
 								on:click={() => selectPortal(currentEdPortal)}
-								class="text-xs font-bold text-white bg-rose-600 hover:bg-rose-700 px-3 py-1.5 rounded-lg transition-colors cursor-pointer"
+								class="inline-flex items-center gap-1.5 rounded-xl bg-rose-600 px-4 py-2 text-xs font-semibold text-white shadow-sm transition-all hover:bg-rose-700 active:scale-[0.99] cursor-pointer"
 							>
 								View Simulated Decision
 							</button>
@@ -529,7 +529,7 @@
 									<div class="my-8 flex flex-wrap items-center gap-3">
 										<a
 											href={`/portals/${selectedPortal.slug}`}
-											class="inline-flex items-center justify-center px-6 py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition-all shadow-lg shadow-blue-200 no-underline"
+											class="inline-flex items-center justify-center gap-2 rounded-xl bg-[#1A4CFF] px-6 py-3 text-sm font-semibold text-white shadow-sm transition-all hover:bg-[#1540E0] active:scale-[0.99] no-underline"
 										>
 											View Simulated Decision
 										</a>
@@ -537,7 +537,7 @@
 										<button
 											type="button"
 											on:click={() => shareDecision(selectedPortal)}
-											class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors"
+											class="inline-flex items-center gap-2 rounded-xl border-2 border-slate-300 bg-white px-4 py-3 text-sm font-semibold text-slate-700 shadow-sm transition-all hover:border-blue-400 hover:text-blue-700 hover:bg-slate-50"
 										>
 											<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 												<path

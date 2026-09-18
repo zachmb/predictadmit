@@ -554,6 +554,21 @@
 			})();
 		}
 
+		// Restore which inbox emails have already been read, so the blue unread dots
+		// stay cleared across reloads. saveAiInboxState() persists this on every open;
+		// without this restore, every decision showed unread again after a refresh.
+		try {
+			const rawInbox = localStorage.getItem(AI_PERSIST_KEY);
+			if (rawInbox) {
+				const savedInbox = JSON.parse(rawInbox);
+				if (Array.isArray(savedInbox?.readPortalSlugs)) {
+					readPortalSlugs = new Set(savedInbox.readPortalSlugs);
+				}
+			}
+		} catch {
+			/* corrupt/absent inbox state — fall back to all-unread, non-fatal */
+		}
+
 		// Restore free-tier usage flags (still used for non-Pro users)
 		hasUsedFreeSimulation = localStorage.getItem('predictadmit_hasUsedFreeSimulation') === 'true';
 		hasUsedFreePdfOcr = localStorage.getItem('predictadmit_hasUsedFreePdfOcr') === 'true';
@@ -1341,9 +1356,9 @@
 				</h1>
 
 				<p class="mx-auto max-w-xl text-base sm:text-lg leading-relaxed text-slate-600">
-					PredictAdmit's AI reads your real application and calls your decision (accept, deny, or
-					waitlist) at all 39 top schools.
-					<span class="font-semibold text-slate-900">Your first simulation is free, and you can unlock one school's results.</span>
+					PredictAdmit's AI reads your real application and calls your decision (admit, deny,
+					waitlist, or defer) at all 39 top schools, then a five-reader committee shows you what drove it.
+					<span class="font-semibold text-slate-900">Your first simulation is free, and you can unlock one school's full results.</span>
 				</p>
 
 				<!-- Trust band — calibration, scale, privacy (the signals a nervous applicant needs). -->

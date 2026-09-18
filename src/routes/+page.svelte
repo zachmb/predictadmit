@@ -807,39 +807,37 @@
 				</div>
 			</div>
 
-			<!-- Under-hero: reassurance, trust signals, fine print -->
-			<div class="mt-7 w-full max-w-2xl mx-auto flex flex-col items-center gap-4 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300 fill-mode-both">
-				<p class="text-sm font-medium text-slate-500">
-					Free. <span class="font-semibold text-slate-700">Sign in with Google</span> to see all your real decisions.
+			<!-- Under-hero: one cohesive trust strip (lead line · unified signal bar · one fine-print line) -->
+			<div class="mt-8 w-full max-w-xl mx-auto flex flex-col items-center gap-3 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300 fill-mode-both">
+				<p class="text-sm text-slate-500">
+					<span class="font-semibold text-slate-900">Free.</span> Sign in with Google to see all your real decisions.
 				</p>
 
-				<div class="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs font-medium text-slate-500">
+				<!-- Trust signals unified into a single pill so they read as one element -->
+				<div class="inline-flex flex-wrap items-center justify-center gap-x-3.5 gap-y-1 rounded-full border border-slate-200 bg-white px-5 py-2 text-xs font-medium text-slate-600 shadow-sm">
 					<span class="inline-flex items-center gap-1.5">
-						<svg class="h-3.5 w-3.5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-						Calibrated on real admissions results
+						<svg class="h-3.5 w-3.5 text-[#1A4CFF]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+						Calibrated on real results
 					</span>
-					<span class="hidden sm:block h-3 w-px bg-slate-200"></span>
+					<span class="h-3 w-px bg-slate-200"></span>
 					<span class="inline-flex items-center gap-1.5">
-						<svg class="h-3.5 w-3.5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 10-4 0m8 0a4 4 0 10-3-7" /></svg>
+						<svg class="h-3.5 w-3.5 text-[#1A4CFF]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 10-4 0m8 0a4 4 0 10-3-7" /></svg>
 						5,000+ applicants
 					</span>
-					<span class="hidden sm:block h-3 w-px bg-slate-200"></span>
+					<span class="h-3 w-px bg-slate-200"></span>
 					<span class="inline-flex items-center gap-1.5">
-						<svg class="h-3.5 w-3.5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
-						Your data never leaves your browser
+						<svg class="h-3.5 w-3.5 text-[#1A4CFF]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+						Private to your browser
 					</span>
 				</div>
 
-				<div class="flex flex-col items-center gap-1 text-center text-[11px] leading-relaxed text-slate-400">
-					<p class="max-w-md">
-						An estimate from NACAC factor weights. Not an official decision, and never affiliated with any school.
-						<a href="/methodology" class="font-medium text-slate-600 underline underline-offset-2 hover:text-slate-900">Methodology →</a>
-					</p>
-					<p>
-						Just want to rehearse a decision portal?
-						<a href="/portals" class="font-medium text-slate-600 underline underline-offset-2 hover:text-slate-900">Open one on the portals page →</a>
-					</p>
-				</div>
+				<!-- One merged fine-print line -->
+				<p class="max-w-xl text-center text-[11px] leading-relaxed text-slate-400">
+					An estimate from NACAC factor weights, not an official decision and never affiliated with any school.
+					<a href="/methodology" class="font-medium text-slate-500 underline underline-offset-2 hover:text-slate-900">Methodology →</a>
+					<span class="mx-1.5 text-slate-300">·</span>
+					<a href="/portals" class="font-medium text-slate-500 underline underline-offset-2 hover:text-slate-900">Rehearse a portal →</a>
+				</p>
 			</div>
 	</section>
 
