@@ -43,10 +43,45 @@ export async function captureSignInEmail(
 				name: name ?? undefined,
 				metadata: { source: 'google_signin', product: 'predictadmit' }
 			});
+			console.log('[leadCapture] recorded new sign-in email:', clean);
+		} else {
+			console.log('[leadCapture] sign-in email already on file:', clean);
 		}
 		seen.add(clean);
 	} catch (err) {
 		// Never let a capture failure surface to the sign-in flow.
-		console.error('[leadCapture] could not record sign-in email:', err);
+		console.error('[leadCapture] could not record sign-in email:', clean, err);
 	}
+}
+
+export type SignInLead = { email: string; name: string | null; source: string; created: number };
+
+/**
+ * List every captured lead (all Stripe customers, which includes every signed-in
+ * email plus any payer). Paginated up to `max`. Used by the admin endpoint so the
+ * full list is viewable/exportable without opening the Stripe dashboard.
+ */
+export async function listSignInLeads(max = 2000): Promise<SignInLead[]> {
+	if (!stripe) return [];
+	const out: SignInLead[] = [];
+	let startingAfter: string | undefined;
+	while (out.length < max) {
+		const page = await stripe.customers.list({
+			limit: 100,
+			...(startingAfter ? { starting_after: startingAfter } : {})
+		});
+		for (const c of page.data) {
+			if (c.email) {
+				out.push({
+					email: c.email,
+					name: c.name ?? null,
+					source: (c.metadata?.source as string) ?? 'stripe',
+					created: c.created
+				});
+			}
+		}
+		if (!page.has_more || page.data.length === 0) break;
+		startingAfter = page.data[page.data.length - 1].id;
+	}
+	return out;
 }

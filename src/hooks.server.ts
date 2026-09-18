@@ -43,9 +43,25 @@ const { handle: authHandle } = SvelteKitAuth({
 	// hardcoded URL. (No AUTH_URL needed.)
 	trustHost: true,
 	secret: AUTH_SECRET,
+	callbacks: {
+		// PRIMARY capture point. The jwt callback is always awaited before the
+		// session is issued, and `account` is only present on a fresh sign-in — so
+		// this reliably logs EVERY new sign-in (Pro or not) on serverless, where a
+		// fire-and-forget event could be cut off. Returns the token unchanged, so
+		// the default session shape is preserved.
+		async jwt({ token, account, user, profile }) {
+			if (account) {
+				const email =
+					user?.email ?? (token.email as string | undefined) ?? (profile as any)?.email;
+				const name = user?.name ?? (token.name as string | undefined) ?? (profile as any)?.name;
+				await captureSignInEmail(email, name);
+			}
+			return token;
+		}
+	},
 	events: {
-		// Capture every Google sign-in email into one exportable list (Stripe
-		// Customers). Best-effort + fail-closed: an error here never blocks login.
+		// Belt-and-suspenders: also capture from the signIn event. Deduped by the
+		// list-before-create + warm-instance cache, so no duplicate customers.
 		async signIn({ user }) {
 			await captureSignInEmail(user?.email, user?.name);
 		}
