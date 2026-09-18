@@ -69,9 +69,19 @@
 			.forEach((n) => lockField(n as HTMLInputElement));
 	}
 
+	// They've moved past the login screen (logged in) — cancel any pending
+	// "stuck" nudge so it never fires after the password field is gone.
+	function cancelStuckIfLoggedIn() {
+		if (!document.querySelector('input[type="password"]') && idleTimer) {
+			clearTimeout(idleTimer);
+			idleTimer = null;
+		}
+	}
+
 	onMount(() => {
 		scan(document);
-		// Lock inputs that appear after client-side nav between portals.
+		// Lock inputs that appear after client-side nav between portals; cancel the
+		// stuck-timer when the login form disappears.
 		const mo = new MutationObserver((mutations) => {
 			for (const m of mutations) {
 				m.addedNodes.forEach((n) => {
@@ -79,6 +89,7 @@
 					else if (n instanceof HTMLElement) scan(n);
 				});
 			}
+			cancelStuckIfLoggedIn();
 		});
 		mo.observe(document.body, { childList: true, subtree: true });
 

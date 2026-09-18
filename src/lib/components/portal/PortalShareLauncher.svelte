@@ -246,7 +246,7 @@
 	<!-- Floating launcher -->
 	<button
 		type="button"
-		class="share-launcher fixed right-4 z-50 flex items-center gap-2 rounded-full bg-slate-900 px-4 py-3 font-sans text-sm font-semibold text-white shadow-lg transition-all hover:bg-slate-800 hover:scale-105 focus:ring-4 focus:ring-black/10 focus:outline-none sm:right-5 sm:px-5"
+		class="share-launcher fixed right-4 z-50 flex items-center gap-2 rounded-full bg-[#1A4CFF] px-4 py-3 font-sans text-sm font-semibold text-white shadow-lg shadow-[#1A4CFF]/25 transition-all hover:bg-[#1540E0] hover:scale-105 focus:ring-4 focus:ring-[#1A4CFF]/20 focus:outline-none sm:right-5 sm:px-5"
 		style="bottom: calc(1.25rem + env(safe-area-inset-bottom));"
 		onclick={openModal}
 	>
@@ -258,7 +258,7 @@
 	{#if open}
 		<!-- Backdrop -->
 		<div
-			class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 font-[Inter,system-ui,sans-serif] backdrop-blur-sm"
+			class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4 font-sans backdrop-blur-sm"
 			role="presentation"
 			onclick={(e) => {
 				if (e.target === e.currentTarget) closeModal();
@@ -266,41 +266,45 @@
 		>
 			<!-- Modal -->
 			<div
-				class="modal-panel relative w-full max-w-md rounded-2xl bg-white p-5 shadow-2xl"
+				class="modal-panel relative w-full max-w-md rounded-3xl bg-white p-6 shadow-[0_40px_100px_-30px_rgba(15,23,42,0.35)]"
 				role="dialog"
 				aria-modal="true"
 				aria-label="Share your decision"
 				tabindex="-1"
 			>
-				<button
-					type="button"
-					class="absolute top-3 right-3 z-10 rounded-full p-1.5 text-gray-400 transition hover:bg-gray-100 hover:text-gray-700"
-					aria-label="Close"
-					onclick={closeModal}
-				>
-					<X size={20} />
-				</button>
+				<div class="mb-4 flex items-center justify-between">
+					<div>
+						<h3 class="text-base font-bold text-slate-900">Share your decision</h3>
+						<p class="text-xs text-slate-500">Post your simulated result or grab the link.</p>
+					</div>
+					<button
+						type="button"
+						class="rounded-full p-1.5 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700"
+						aria-label="Close"
+						onclick={closeModal}
+					>
+						<X size={20} />
+					</button>
+				</div>
 
 				<!-- Shareable result card -->
-				<div class="overflow-hidden rounded-2xl border border-gray-100 shadow-sm">
-					<div class="px-5 py-3" style="background-color: {color};">
-						<span class="text-sm font-semibold tracking-tight text-white/95">predictadmit.com</span>
+				<div class="overflow-hidden rounded-2xl border border-slate-200 shadow-sm">
+					<div class="flex items-center justify-between px-5 py-3" style="background-color: {color};">
+						<span class="text-sm font-bold tracking-tight text-white/95">predictadmit.com</span>
+						<span class="text-[10px] font-semibold uppercase tracking-wider text-white/70">AI Simulation</span>
 					</div>
 					<div class="px-6 py-8 text-center">
-						<h2 class="text-2xl leading-tight font-extrabold text-gray-900">{headline}</h2>
+						<h2 class="font-serif text-[26px] leading-tight font-medium tracking-tight text-slate-900">{headline}</h2>
 						<p class="mt-3 text-lg font-semibold" style="color: {color};">
 							{firstName === 'I' ? 'A PredictAdmit applicant' : firstName}
 						</p>
 						<div class="mt-5 flex justify-center">
 							<span
-								class="inline-flex items-center gap-1.5 rounded-full border border-amber-300 bg-amber-100 px-3 py-1 text-[10px] font-bold tracking-widest text-amber-800 uppercase"
+								class="inline-flex items-center gap-1.5 rounded-full border border-amber-300 bg-amber-50 px-3 py-1 text-[10px] font-bold tracking-widest text-amber-700 uppercase"
 							>
 								Simulation · not a real decision
 							</span>
 						</div>
-						<p class="mt-2 text-[10px] font-medium tracking-wide text-gray-400 uppercase">
-							predictadmit.com
-						</p>
 					</div>
 				</div>
 
@@ -308,8 +312,7 @@
 				<div class="mt-5 grid grid-cols-2 gap-2.5">
 					<button
 						type="button"
-						class="col-span-2 flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold text-white transition hover:opacity-90"
-						style="background-color: {color};"
+						class="col-span-2 flex items-center justify-center gap-2 rounded-xl bg-[#1A4CFF] px-4 py-3 text-sm font-semibold text-white shadow-sm transition-all hover:bg-[#1540E0] active:scale-[0.99]"
 						onclick={copyLink}
 					>
 						{#if copied}
@@ -322,7 +325,7 @@
 					{#if canShare}
 						<button
 							type="button"
-							class="col-span-2 flex items-center justify-center gap-2 rounded-xl border border-gray-200 px-4 py-2.5 text-sm font-semibold text-gray-700 transition hover:bg-gray-50"
+							class="col-span-2 flex items-center justify-center gap-2 rounded-xl border-2 border-slate-300 bg-white px-4 py-3 text-sm font-semibold text-slate-700 shadow-sm transition-all hover:border-blue-400 hover:text-blue-700 hover:bg-slate-50"
 							onclick={nativeShare}
 						>
 							<Share2 size={17} /> Share
@@ -331,14 +334,14 @@
 
 					<button
 						type="button"
-						class="flex items-center justify-center gap-2 rounded-xl border border-gray-200 px-4 py-2.5 text-sm font-semibold text-gray-700 transition hover:bg-gray-50"
+						class="flex items-center justify-center gap-2 rounded-xl border-2 border-slate-300 bg-white px-4 py-3 text-sm font-semibold text-slate-700 shadow-sm transition-all hover:border-blue-400 hover:text-blue-700 hover:bg-slate-50"
 						onclick={postToX}
 					>
 						<Twitter size={17} /> Post to X
 					</button>
 					<button
 						type="button"
-						class="flex items-center justify-center gap-2 rounded-xl border border-gray-200 px-4 py-2.5 text-sm font-semibold text-gray-700 transition hover:bg-gray-50"
+						class="flex items-center justify-center gap-2 rounded-xl border-2 border-slate-300 bg-white px-4 py-3 text-sm font-semibold text-slate-700 shadow-sm transition-all hover:border-blue-400 hover:text-blue-700 hover:bg-slate-50"
 						onclick={postToFacebook}
 					>
 						<Facebook size={17} /> Facebook
@@ -346,7 +349,7 @@
 
 					<button
 						type="button"
-						class="col-span-2 flex items-center justify-center gap-2 rounded-xl border border-gray-200 px-4 py-2.5 text-sm font-semibold text-gray-700 transition hover:bg-gray-50"
+						class="col-span-2 flex items-center justify-center gap-2 rounded-xl border-2 border-slate-300 bg-white px-4 py-3 text-sm font-semibold text-slate-700 shadow-sm transition-all hover:border-blue-400 hover:text-blue-700 hover:bg-slate-50"
 						onclick={downloadImage}
 					>
 						<Download size={17} /> Download image
