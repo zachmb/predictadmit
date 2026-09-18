@@ -624,7 +624,7 @@
 				<p
 					class="text-lg md:text-xl text-slate-500 max-w-2xl mx-auto leading-relaxed tracking-tight font-medium mt-5 animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-[200ms] fill-mode-both"
 				>
-					Open any of 39 real decision portals and see accept or deny today, free. Then point the AI at your actual application: it predicts every school, sits a committee on your file, and shows you exactly what to fix.
+					Enter your stats and the AI predicts your real decision at all 39 top schools, free. It sits a full admissions committee on your file and shows you exactly what to fix. Or open any school's real decision portal and see accept or deny today.
 				</p>
 			</div>
 
@@ -722,12 +722,13 @@
 					<div class="mt-8 flex flex-col items-center gap-4">
 						<a
 							href="/ai"
-							class="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white px-6 py-3 text-base font-semibold text-slate-900 transition-all hover:border-slate-400 hover:bg-slate-50 active:scale-95"
+							class="inline-flex items-center gap-2 rounded-full border border-[#1A4CFF] bg-[#1A4CFF] px-7 py-3.5 text-base font-semibold text-white shadow-sm transition-all hover:bg-[#1540d6] hover:border-[#1540d6] active:scale-95"
 						>
 							<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v2m0 14v2M3 12h2m14 0h2m-3.5-6.5-1.4 1.4M6.9 17.1l-1.4 1.4m0-13 1.4 1.4m11.6 11.6-1.4-1.4"/><circle cx="12" cy="12" r="4"/></svg>
-							Have the AI predict my actual decisions
+							Enter your stats — predict all 39 decisions, free
 							<span aria-hidden="true">&rarr;</span>
 						</a>
+						<p class="text-xs font-medium text-slate-400">Free. Sign in with Google to see all your real decisions.</p>
 					</div>
 				</div>
 			{:else}

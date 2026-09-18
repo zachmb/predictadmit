@@ -361,16 +361,13 @@
 
 	// Callbacks that AdmitMail expects
 
-	// Can this decision be OPENED? Pro/lifetime/monthly → all of them. A $4.99 single
-	// unlock (proSchools) → that one. Elite schools (Ivy + Stanford/MIT) are never
-	// free — they always route to the blurred paywall. Otherwise you get
-	// abFreeDecisions free opens on a non-elite school; ones you've opened stay open.
-	function canOpenDecision(slug: string): boolean {
-		if ($userProfile.isPro) return true;
-		if (($userProfile.proSchools ?? []).includes(slug)) return true;
-		if (ELITE_SLUGS.has(slug)) return false; // Ivy/HYPSM: strict paywall
-		if (freeOpenedSlugs.includes(slug)) return true;
-		return freeOpenedSlugs.length < abFreeDecisions; // free opens remaining
+	// Every predicted decision is FREE for everyone (Zach, 2026-09-17): the whole
+	// aha is open — enter your stats, sign in with Google, and see ALL 39 real
+	// decisions, elite schools included. The old "one free decision, elites walled"
+	// model is retired; the wall now lives deeper (Pro: essay editor, unlimited
+	// re-runs, per-school strategy, AI counselor).
+	function canOpenDecision(_slug: string): boolean {
+		return true;
 	}
 
 	function selectPortal(portal: PortalEmail) {
@@ -940,10 +937,10 @@
 
 	// A non-Pro user gets ONE free deep-dive (the full "why") before the wall, on
 	// top of their one free decision open. Pro/single-unlock users are unlimited.
-	function canDeepDive(slug: string): boolean {
-		if (hasSchoolAccess(slug)) return true;
-		if (freeDeepDiveSlugs.includes(slug)) return true;
-		return freeDeepDiveSlugs.length < FREE_DEEP_DIVES;
+	// Deep dive is FREE for everyone too (Zach, 2026-09-17): the committee-style
+	// "why" on every verdict is part of the open aha, not a walled extra.
+	function canDeepDive(_slug: string): boolean {
+		return true;
 	}
 
 	async function requestDeepDive(decision: AiDecision) {
@@ -976,6 +973,24 @@
 				.join('\n\n');
 		}
 
+		// The deep-dive API 400s on an empty summary. If the user ran a quick
+		// stats-only prediction (no essay/activities typed), fall back to the
+		// prediction's own read of the file so the committee still has substance.
+		if (!applicantSummary.trim()) {
+			applicantSummary = [
+				`Predicted outcome at ${decision.school}: ${decision.outcome}.`,
+				decision.academic_explanation && `Academics: ${decision.academic_explanation}`,
+				decision.extracurricular_explanation &&
+					`Activities: ${decision.extracurricular_explanation}`,
+				decision.fit_explanation && `Fit: ${decision.fit_explanation}`,
+				decision.intellectual_explanation &&
+					`Intellectual vitality: ${decision.intellectual_explanation}`,
+				decision.character_explanation && `Character: ${decision.character_explanation}`
+			]
+				.filter(Boolean)
+				.join('\n');
+		}
+
 		aiError = '';
 		deepDiveLoadingSlug = decision.slug;
 
@@ -988,6 +1003,11 @@
 					school: decision.school,
 					slug: decision.slug,
 					outcome: decision.outcome,
+					// Grounds the committee prompt (server reads short_reason).
+					short_reason:
+						decision.improvement_tips ||
+						decision.academic_explanation ||
+						`Predicted ${decision.outcome} at ${decision.school}.`,
 
 					// Granular Scores
 					academic_score: decision.academic_score,
