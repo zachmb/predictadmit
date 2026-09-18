@@ -448,43 +448,49 @@
 					<div class="flex-1 overflow-y-auto p-8 bg-white">
 						{#if activeFolder === 'inbox' && selectedPortal}
 							<div class="max-w-2xl mx-auto">
-								<h1 class="text-2xl font-bold text-slate-900 mb-6">{selectedPortal.subject}</h1>
+								<span class="inline-flex items-center gap-1.5 rounded-full border border-amber-200 bg-amber-50 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-amber-700">
+									<svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+									Simulated notification
+								</span>
 
-								<div class="flex items-center gap-4 mb-8 pb-8 border-b border-slate-100">
+								<h1 class="mt-3 font-serif text-2xl sm:text-3xl font-medium tracking-tight leading-tight text-slate-900">{selectedPortal.subject}</h1>
+
+								<!-- Sender card -->
+								<div class="mt-5 flex items-center gap-3.5 rounded-2xl border border-slate-200 bg-slate-50/70 p-4">
 									<div
-										class={`w-12 h-12 rounded-full flex items-center justify-center text-lg font-bold ${tintFor(selectedPortal)}`}
+										class={`h-11 w-11 shrink-0 rounded-full flex items-center justify-center text-base font-bold ${tintFor(selectedPortal)}`}
 									>
 										{selectedPortal.name[0]}
 									</div>
-									<div class="flex-1">
-										<div class="flex justify-between items-baseline">
-											<span class="font-bold text-slate-900">{selectedPortal.from}</span>
-											<span
-												class="text-xs text-slate-500 bg-slate-50 px-2 py-1 rounded-full border border-slate-100"
-												>{getReceivedLabel(selectedPortal)}</span
-											>
+									<div class="min-w-0 flex-1">
+										<div class="flex items-center justify-between gap-2">
+											<p class="truncate text-sm font-bold text-slate-900">{selectedPortal.name} Admissions</p>
+											<span class="shrink-0 text-[11px] font-medium text-slate-500">{getReceivedLabel(selectedPortal)}</span>
 										</div>
-										<div class="text-xs text-slate-500">to me</div>
+										<p class="truncate text-xs text-slate-500">{selectedPortal.from} · to you</p>
 									</div>
 								</div>
 
-								<div class="prose prose-sm prose-slate max-w-none">
+								<!-- Body -->
+								<div class="mt-6 space-y-4 text-[15px] leading-relaxed text-slate-600">
 									<p>Dear {displayName},</p>
 									<p>
-										Your application status for <strong>{selectedPortal.name}</strong> has
+										Your application status for <strong class="font-semibold text-slate-900">{selectedPortal.name}</strong> has
 										changed. We don't send the decision itself over email, so you'll need to
 										sign in to your portal to see it.
 									</p>
-									<p>
-										Log in with the credentials you set up when you applied.
-									</p>
-									<p class="not-prose rounded-lg border border-blue-100 bg-blue-50 px-4 py-2.5 text-sm text-slate-600">
-										<span class="font-semibold text-[#1A4CFF]">First time?</span> This is a
-										simulation, so just tap <span class="font-semibold">Login</span> to reveal your
-										decision. Your details are pre-filled and no real credentials are needed.
-									</p>
+									<p>Log in with the credentials you set up when you applied.</p>
 
-									<div class="my-8 flex flex-wrap items-center gap-3">
+									<div class="flex items-start gap-2.5 rounded-xl border border-[#1A4CFF]/15 bg-[#1A4CFF]/5 px-4 py-3">
+										<svg class="mt-0.5 h-4 w-4 shrink-0 text-[#1A4CFF]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" /></svg>
+										<p class="text-sm leading-relaxed text-slate-600">
+											<span class="font-semibold text-[#1A4CFF]">First time?</span> This is a
+											simulation, so just tap <span class="font-semibold text-slate-900">Login</span> to reveal your
+											decision. Your details are pre-filled and no real credentials are needed.
+										</p>
+									</div>
+
+									<div class="mt-7 flex flex-wrap items-center gap-3">
 										<a
 											href={`/portals/${selectedPortal.slug}`}
 											class="inline-flex items-center justify-center gap-2 rounded-xl bg-[#1A4CFF] px-6 py-3 text-sm font-semibold text-white shadow-sm transition-all hover:bg-[#1540E0] active:scale-[0.99] no-underline"
