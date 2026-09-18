@@ -323,6 +323,78 @@
 		goto('/ai');
 	}
 
+	// ---- Landing PDF upload -------------------------------------------------
+	// Extract the PDF's text layer CLIENT-SIDE with unpdf (a serverless/browser-safe
+	// pdf.js build) so a signed-out visitor can upload a resume and feel the value
+	// BEFORE any sign-in. The extracted text drops into the box below; the normal
+	// handoff to /ai then splits it across every field. (The authed /api/ocr route
+	// on /ai stays as the full path.) unpdf is lazy-imported so it never weighs down
+	// the initial landing load.
+	let pdfReading = false;
+	let pdfError = '';
+	let pdfDone = false;
+	async function handleHeroPdf(e: Event) {
+		const input = e.currentTarget as HTMLInputElement;
+		const file = input.files?.[0];
+		input.value = ''; // let the same file re-fire onchange after a failed try
+		pdfError = '';
+		pdfDone = false;
+		if (!file) return;
+
+		const looksPdf =
+			file.type === 'application/pdf' ||
+			(file.type === '' && file.name.toLowerCase().endsWith('.pdf'));
+		if (!looksPdf) {
+			pdfError = 'That’s not a PDF. Export your resume as a PDF, or paste the text below.';
+			return;
+		}
+		if (file.size > 4 * 1024 * 1024) {
+			pdfError = 'That PDF is over 4 MB. Export a smaller copy, or paste the text below.';
+			return;
+		}
+
+		pdfReading = true;
+		try {
+			const { extractText, getDocumentProxy } = await import('unpdf');
+			const bytes = new Uint8Array(await file.arrayBuffer());
+			const pdf = await getDocumentProxy(bytes);
+			const { text } = await extractText(pdf, { mergePages: true });
+			const clean = (Array.isArray(text) ? text.join('\n') : text ?? '').trim();
+			if (!clean) {
+				pdfError = 'Read the file but found no text — it’s likely a scan. Paste the text below instead.';
+				return;
+			}
+			heroStats = clean;
+			pdfDone = true;
+		} catch (err) {
+			console.error('hero PDF read failed:', err);
+			pdfError = 'Couldn’t read that PDF. Try another, or paste the text below.';
+		} finally {
+			pdfReading = false;
+		}
+	}
+
+	// ---- Early-deadline countdown (mirrors the Pro dashboard) ---------------
+	const deadlineTarget = new Date('2026-11-01T00:00:00-06:00');
+	let nowTs = Date.now();
+	let countdownTimer: ReturnType<typeof setInterval> | null = null;
+	onMount(() => {
+		countdownTimer = setInterval(() => (nowTs = Date.now()), 1000);
+	});
+	onDestroy(() => {
+		if (countdownTimer) clearInterval(countdownTimer);
+	});
+	const pad2 = (n: number) => String(n).padStart(2, '0');
+	$: heroCountdown = (() => {
+		let diff = Math.max(0, deadlineTarget.getTime() - nowTs);
+		const days = Math.floor(diff / 86_400_000);
+		diff -= days * 86_400_000;
+		const hours = Math.floor(diff / 3_600_000);
+		diff -= hours * 3_600_000;
+		const minutes = Math.floor(diff / 60_000);
+		return { days, hours, minutes };
+	})();
+
 	// ... [Keeping existing helper functions: startCalendar, startRdEmailTimeline, formatTime, etc.] ...
 	const startCalendar = () => {
 		if (calendarIntervalId !== null) clearInterval(calendarIntervalId);
@@ -633,9 +705,8 @@
 		<div class="max-w-[1200px] mx-auto px-6 text-center relative z-10 flex flex-col items-center">
 			<!-- Headline -->
 			<div class="space-y-6 max-w-4xl mx-auto mb-10">
-				<p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 animate-in fade-in slide-in-from-bottom-6 duration-1000 fill-mode-both">AI Admissions Simulator</p>
 				<h1
-					class="font-serif text-5xl sm:text-6xl md:text-[5.5rem] font-medium tracking-tight leading-[1.0] text-slate-900 animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-[100ms] fill-mode-both"
+					class="font-serif text-5xl sm:text-6xl md:text-[5.5rem] font-medium tracking-tight leading-[1.0] text-slate-900 animate-in fade-in slide-in-from-bottom-6 duration-1000 fill-mode-both"
 				>
 					Predict Your Real <br class="hidden md:block" /> College <span class="text-[#1A4CFF]">Decisions</span>
 				</h1>
@@ -646,10 +717,36 @@
 				</p>
 			</div>
 
+			<!-- Early-deadline countdown (mirrors the Pro dashboard) -->
+			<div
+				class="mb-8 w-full max-w-md mx-auto rounded-2xl border border-slate-200 bg-white p-4 shadow-sm animate-in fade-in slide-in-from-bottom-5 duration-700 delay-100 fill-mode-both"
+			>
+				<div class="flex items-center justify-between">
+					<p class="text-sm font-bold text-slate-900">Early Deadlines · Nov 1, 2026</p>
+					<span class="flex items-center gap-1.5 text-xs font-semibold text-[#1A4CFF]">
+						<span class="relative flex h-2 w-2">
+							<span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#1A4CFF] opacity-75"></span>
+							<span class="relative inline-flex h-2 w-2 rounded-full bg-[#1A4CFF]"></span>
+						</span>
+						LIVE
+					</span>
+				</div>
+				<div class="mt-3 grid grid-cols-3 gap-2">
+					{#each [{ label: 'Days', value: heroCountdown.days }, { label: 'Hours', value: heroCountdown.hours }, { label: 'Min', value: heroCountdown.minutes }] as box}
+						<div class="rounded-xl bg-slate-50 border border-slate-100 py-2.5 text-center">
+							<div class="text-xl font-bold tabular-nums text-slate-900">
+								{box.label === 'Days' ? box.value : pad2(box.value)}
+							</div>
+							<div class="mt-0.5 text-[10px] font-medium uppercase tracking-wide text-slate-400">{box.label}</div>
+						</div>
+					{/each}
+				</div>
+			</div>
+
 			<!-- PRIMARY action: a simplified version of the /ai "Autofill the boxes"
-			     card. The full field-by-field builder + OCR pipeline lives on /ai;
-			     here we capture the paste and hand off (startPrediction stashes it
-			     as pa_sim_prefill + autoruns on /ai). -->
+			     card. Upload a PDF (read client-side with unpdf) or paste text; the
+			     handoff to /ai then splits it across every field (startPrediction
+			     stashes it as pa_sim_prefill + autoruns on /ai). -->
 			<div
 				class="w-full max-w-xl mx-auto relative z-20 animate-in fade-in slide-in-from-bottom-5 duration-700 delay-150 fill-mode-both"
 			>
@@ -662,11 +759,33 @@
 							</div>
 							<div>
 								<h3 class="text-sm font-bold text-slate-900">Autofill the boxes</h3>
-								<p class="text-xs text-slate-500 mt-0.5">Drop in a PDF or a wall of text. The AI splits it into every field.</p>
+								<p class="text-xs text-slate-500 mt-0.5">Upload a PDF or paste a wall of text. The AI splits it into every field.</p>
 							</div>
 						</div>
-						<span class="hidden sm:inline-flex items-center gap-1.5 text-[10px] uppercase font-bold tracking-wider text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-full border border-emerald-200/60 shadow-sm">OCR Beta</span>
+						<label class="shrink-0 cursor-pointer inline-flex items-center gap-2 rounded-xl border-2 border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition-all hover:border-blue-400 hover:text-blue-700 hover:bg-slate-50">
+							{#if pdfReading}
+								<span class="h-3.5 w-3.5 animate-spin rounded-full border-2 border-slate-300 border-t-blue-600"></span>
+								Reading…
+							{:else}
+								<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" /></svg>
+								Choose PDF
+							{/if}
+							<input type="file" accept="application/pdf" class="hidden" on:change={handleHeroPdf} />
+						</label>
 					</div>
+
+					{#if pdfDone}
+						<p class="mb-3 flex items-center gap-1.5 text-xs font-semibold text-emerald-600">
+							<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
+							Got your PDF — review the text below, then predict.
+						</p>
+					{/if}
+					{#if pdfError}
+						<p class="mb-3 flex items-start gap-1.5 text-xs font-medium text-rose-600">
+							<svg class="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" /></svg>
+							{pdfError}
+						</p>
+					{/if}
 
 					<textarea
 						bind:value={heroStats}
@@ -730,7 +849,6 @@
 				<!-- Row 1: committee (text left) -->
 				<div use:reveal class="grid items-center gap-8 md:grid-cols-2 md:gap-14">
 					<div>
-						<p class="text-xs font-bold uppercase tracking-widest text-[#1A4CFF]">The full "why"</p>
 						<h3 class="mt-3 font-serif text-3xl font-medium tracking-tight text-slate-900">A full committee reads your file</h3>
 						<p class="mt-3 text-[15px] leading-relaxed text-slate-500">Five readers argue over your file the way a real committee does, then land a verdict. You find out which one is holding you back, and exactly why.</p>
 					</div>
@@ -755,7 +873,6 @@
 				<!-- Row 2: essay (text right) -->
 				<div use:reveal={100} class="grid items-center gap-8 md:grid-cols-2 md:gap-14">
 					<div class="md:order-2">
-						<p class="text-xs font-bold uppercase tracking-widest text-[#1A4CFF]">Fix what's weak</p>
 						<h3 class="mt-3 font-serif text-3xl font-medium tracking-tight text-slate-900">Essay feedback, line by line</h3>
 						<p class="mt-3 text-[15px] leading-relaxed text-slate-500">Every supplement in one place. Hand it over and it marks the weak lines like an admissions reader would, and tells you why. It never writes a word for you.</p>
 					</div>
@@ -778,7 +895,6 @@
 				<!-- Row 3: per-school (text left) -->
 				<div use:reveal={200} class="grid items-center gap-8 md:grid-cols-2 md:gap-14">
 					<div>
-						<p class="text-xs font-bold uppercase tracking-widest text-[#1A4CFF]">Aim it right</p>
 						<h3 class="mt-3 font-serif text-3xl font-medium tracking-tight text-slate-900">Per-school strategy for 50+ schools</h3>
 						<p class="mt-3 text-[15px] leading-relaxed text-slate-500">Stanford and MIT do not want the same thing. See what each one actually weighs, then aim your application at that reader instead of sending one generic app everywhere.</p>
 					</div>
@@ -797,7 +913,6 @@
 				<!-- Row 4: counselor (text right) -->
 				<div use:reveal={300} class="grid items-center gap-8 md:grid-cols-2 md:gap-14">
 					<div class="md:order-2">
-						<p class="text-xs font-bold uppercase tracking-widest text-[#1A4CFF]">Any hour</p>
 						<h3 class="mt-3 font-serif text-3xl font-medium tracking-tight text-slate-900">A counselor in your pocket</h3>
 						<p class="mt-3 text-[15px] leading-relaxed text-slate-500">Ask the stuff you would pay a consultant $300 an hour for. Where to apply, how to explain a rough semester, what a school is really looking for. Any time, no appointment.</p>
 					</div>

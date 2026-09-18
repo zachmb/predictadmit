@@ -2489,7 +2489,6 @@
 					<!-- Row 1: verdict across all 39 -->
 					<div class="grid items-center gap-8 md:grid-cols-2 md:gap-14">
 						<div>
-							<p class="text-xs font-bold uppercase tracking-widest text-[#1A4CFF]">See where you stand</p>
 							<h3 class="mt-3 font-serif text-3xl font-medium tracking-tight text-slate-900">Your verdict at all 39 top schools</h3>
 							<p class="mt-3 text-[15px] leading-relaxed text-slate-500">Run your real application through the AI once and watch accept, waitlist, and deny land across every top school. Change an essay or a score and re-run it, no cap.</p>
 						</div>
@@ -2508,7 +2507,6 @@
 					<!-- Row 2: committee reasoning (mock left) -->
 					<div class="grid items-center gap-8 md:grid-cols-2 md:gap-14">
 						<div class="md:order-2">
-							<p class="text-xs font-bold uppercase tracking-widest text-[#1A4CFF]">The full "why"</p>
 							<h3 class="mt-3 font-serif text-3xl font-medium tracking-tight text-slate-900">A five-reader committee on every decision</h3>
 							<p class="mt-3 text-[15px] leading-relaxed text-slate-500">Academics, activities, fit, intellect, and character, each scored and explained. It names the one reader holding you back and the single change that would move the verdict.</p>
 						</div>
@@ -2534,7 +2532,6 @@
 				<!-- Row 3: essay markup -->
 				<div class="grid items-center gap-8 md:grid-cols-2 md:gap-14">
 					<div>
-						<p class="text-xs font-bold uppercase tracking-widest text-[#1A4CFF]">Fix what's weak</p>
 						<h3 class="mt-3 font-serif text-3xl font-medium tracking-tight text-slate-900">Essays marked up like an admissions reader</h3>
 						<p class="mt-3 text-[15px] leading-relaxed text-slate-500">Hand over any supplement and the AI flags the weak lines and tells you why, the way a reader would. You write every word. It never writes one for you.</p>
 					</div>
@@ -2556,7 +2553,6 @@
 				<!-- Row 4: AI counselor (mock left) -->
 				<div class="grid items-center gap-8 md:grid-cols-2 md:gap-14">
 					<div class="md:order-2">
-						<p class="text-xs font-bold uppercase tracking-widest text-[#1A4CFF]">Any hour</p>
 						<h3 class="mt-3 font-serif text-3xl font-medium tracking-tight text-slate-900">A counselor in your pocket</h3>
 						<p class="mt-3 text-[15px] leading-relaxed text-slate-500">Ask the things you'd pay a consultant $300 an hour for. Where to apply, how to explain a rough semester, what a school actually wants. In plain language, any time.</p>
 					</div>

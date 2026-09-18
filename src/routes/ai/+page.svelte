@@ -1336,8 +1336,6 @@
 		<div class="max-w-[1000px] mx-auto px-6 py-24 space-y-16">
 			<!-- Hero -->
 			<header class="text-center space-y-5 max-w-2xl mx-auto">
-				<p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">AI Admissions Simulator</p>
-
 				<h1 class="font-serif text-4xl sm:text-5xl md:text-6xl font-medium tracking-tight text-slate-900 leading-[1.05]">
 					Predict your college <span class="text-[#1A4CFF]">decisions</span>
 				</h1>
