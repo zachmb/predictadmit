@@ -30,7 +30,6 @@
 	// search + lists
 	export let searchQuery: string;
 	export let filteredPortals: PortalEmail[];
-	export let sortedVisiblePortals: PortalEmail[];
 	export let visiblePortals: PortalEmail[];
 
 	// ED / RD state
@@ -125,27 +124,16 @@
 		for (let i = 0; i < portal.slug.length; i++) h = (h * 31 + portal.slug.charCodeAt(i)) >>> 0;
 		return PREVIEWS[h % PREVIEWS.length];
 	}
-	// Short brand-ish accent per school for the avatar, so the list has color
-	// variety like a real inbox (falls back to blue).
-	const AVATAR_TINTS = [
-		'bg-rose-100 text-rose-700',
-		'bg-blue-100 text-blue-700',
-		'bg-emerald-100 text-emerald-700',
-		'bg-amber-100 text-amber-700',
-		'bg-violet-100 text-violet-700',
-		'bg-sky-100 text-sky-700',
-		'bg-indigo-100 text-indigo-700'
-	];
-	function tintFor(portal: PortalEmail): string {
-		let h = 0;
-		for (let i = 0; i < portal.slug.length; i++) h = (h * 33 + portal.slug.charCodeAt(i)) >>> 0;
-		return AVATAR_TINTS[h % AVATAR_TINTS.length];
+	// Single brand-blue avatar tint — one accent, consistent with the rest of the
+	// app (was a 7-color pastel rainbow, which read as AI-generated).
+	function tintFor(_portal: PortalEmail): string {
+		return 'bg-[#1A4CFF]/10 text-[#1A4CFF]';
 	}
 </script>
 
 <section id="inboxSection" bind:this={inboxSection} class="scroll-mt-24 font-sans">
 	<div
-		class="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden flex flex-col md:h-[700px] h-[600px]"
+		class="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden flex flex-col h-[min(600px,82svh)] md:h-[min(700px,86svh)]"
 	>
 		<!-- Header -->
 		<header
@@ -298,7 +286,8 @@
 					<!-- ED Alert -->
 					{#if currentEdPortal && edEmailMustBeViewed && !hasViewedEdEmail}
 						<div
-							class="bg-rose-50 border-b border-rose-100 px-6 py-3 flex items-center justify-between animate-in slide-in-from-top-2"
+							class="bg-rose-50 border-b border-rose-100 px-6 py-3 flex items-center justify-between"
+							transition:fly={{ y: -8, duration: 200 }}
 						>
 							<div class="flex items-center gap-3">
 								<div class="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></div>
@@ -590,7 +579,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="prose prose-sm prose-slate max-w-none whitespace-pre-wrap">
+								<div class="whitespace-pre-wrap text-[15px] leading-relaxed text-slate-600">
 									{selectedSent.body}
 								</div>
 							</div>

@@ -289,7 +289,6 @@
 	// search + lists
 	let searchQuery = $state('');
 	let visiblePortals = $derived($aiResults?.decisions?.map(decisionToPortalEmail) ?? []);
-	let sortedVisiblePortals = $derived([...visiblePortals]);
 
 	// For complex logic like your search filter:
 	let filteredPortals = $derived.by(() => {
@@ -2141,7 +2140,6 @@ See what we read from your file
 								activeFolder={mailActiveFolder}
 								bind:searchQuery
 								{filteredPortals}
-								{sortedVisiblePortals}
 								{visiblePortals}
 								{currentEdPortal}
 								{edEmailMustBeViewed}
