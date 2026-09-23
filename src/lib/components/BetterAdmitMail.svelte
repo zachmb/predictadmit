@@ -247,6 +247,27 @@
 				{#if viewMode === 'inbox'}
 					<!-- INBOX VIEW -->
 
+					<!-- Mobile folder switcher: the sidebar folders are desktop-only
+					     (hidden md:flex), so without this phones can't reach Sent or
+					     see the unread count. -->
+					<div class="md:hidden flex items-center gap-2 border-b border-slate-100 px-4 py-2.5 bg-white">
+						<button
+							on:click={() => switchFolder('inbox')}
+							class={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition-colors ${activeFolder === 'inbox' ? 'bg-[#1A4CFF] text-white' : 'bg-slate-100 text-slate-600'}`}
+						>
+							Inbox
+							{#if unreadCount > 0}
+								<span class={`rounded-full px-1.5 text-[10px] font-bold ${activeFolder === 'inbox' ? 'bg-white/25 text-white' : 'bg-[#1A4CFF] text-white'}`}>{unreadCount}</span>
+							{/if}
+						</button>
+						<button
+							on:click={() => switchFolder('sent')}
+							class={`rounded-full px-3 py-1.5 text-xs font-semibold transition-colors ${activeFolder === 'sent' ? 'bg-[#1A4CFF] text-white' : 'bg-slate-100 text-slate-600'}`}
+						>
+							Sent
+						</button>
+					</div>
+
 					<!-- Toolbar -->
 					<div
 						class="h-16 border-b border-slate-100 flex items-center justify-between px-6 bg-white z-10"
@@ -286,7 +307,7 @@
 								>
 							</div>
 							<button
-								on:click={() => selectPortal(currentEdPortal)}
+								on:click={() => currentEdPortal && selectPortal(currentEdPortal)}
 								class="inline-flex items-center gap-1.5 rounded-xl bg-rose-600 px-4 py-2 text-xs font-semibold text-white shadow-sm transition-all hover:bg-rose-700 active:scale-[0.99] cursor-pointer"
 							>
 								View Simulated Decision
@@ -319,6 +340,19 @@
 									<h3 class="text-slate-900 font-bold mb-1">Inbox Empty</h3>
 									<p class="text-slate-500 text-sm max-w-xs">
 										Decisions land here as the simulation plays out. Sit tight.
+									</p>
+								</div>
+							{:else if filteredPortals.length === 0}
+								<!-- Search matched nothing — don't leave a blank list. -->
+								<div class="flex flex-col items-center justify-center h-full text-center p-8">
+									<div class="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mb-4">
+										<svg class="w-8 h-8 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+										</svg>
+									</div>
+									<h3 class="text-slate-900 font-bold mb-1">No matches</h3>
+									<p class="text-slate-500 text-sm max-w-xs">
+										No decisions match “{searchQuery.trim()}”. Try a different school name.
 									</p>
 								</div>
 							{:else}
@@ -431,18 +465,6 @@
 							</svg>
 							Back
 						</button>
-						<div class="flex items-center gap-2">
-							<button class="p-2 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-100">
-								<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										stroke-width="2"
-										d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-									/>
-								</svg>
-							</button>
-						</div>
 					</div>
 
 					<div class="flex-1 overflow-y-auto p-8 bg-white">

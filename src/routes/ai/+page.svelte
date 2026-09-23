@@ -423,15 +423,14 @@
 	function openInboxList() {
 		mailViewMode = 'inbox';
 		saveAiInboxState();
-		// Auto-scroll back to the TOP of the AImail block (the disclaimer), so the
-		// user lands on the inbox without hand-scrolling the long /ai page every time
-		// they tab out of a decision. Fall back to the inbox card if the anchor isn't
-		// present yet.
+		// Scroll DOWN to the inbox CARD itself (not '#aimailTop', which is the
+		// disclaimer banner above it — landing there left the inbox below the fold and
+		// forced a hand-scroll). The card has scroll-mt-24 so it sits just under the nav.
 		setTimeout(() => {
 			const el =
-				document.getElementById('aimailTop') ??
 				inboxSection ??
-				document.getElementById('inboxSection');
+				document.getElementById('inboxSection') ??
+				document.getElementById('aimailTop');
 			el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 		}, 60);
 	}
