@@ -157,7 +157,7 @@
 						Sign in to grade your essay
 					</h2>
 					<p class="text-muted leading-relaxed max-w-sm mx-auto mb-10">
-						The grader reads your draft and tells you what an admissions officer would think. It never writes the essay for you.
+						The grader reads your draft and tells you what an admissions officer would think, then marks exactly what to fix.
 					</p>
 					<button
 						onclick={() => signIn('google', { callbackUrl: '/ai' })}
@@ -354,7 +354,7 @@
 			<header>
 				<h1 class="text-4xl font-display text-navy tracking-tight mb-2">Essay Grader</h1>
 				<p class="text-muted italic">
-					"Paste a draft. Get the notes an admissions officer would scribble in the margin. It won't rewrite it for you."
+					"Paste a draft. Get the notes an admissions officer would scribble in the margin, with the weak lines marked and why."
 				</p>
 			</header>
 

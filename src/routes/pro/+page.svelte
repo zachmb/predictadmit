@@ -722,6 +722,54 @@
 		currentView = 'editor';
 	}
 
+	// Rewrite-in-your-voice: sends the current draft to /api/ai/rewrite and shows an
+	// improved version the student can accept into the editor. Edits their words in
+	// their voice (never fabricates) — the "improve your application" half of Pro.
+	let isRewriting = $state(false);
+	let rewriteResult = $state<{ rewrite: string; changes: string[] } | null>(null);
+	let rewriteError = $state('');
+
+	async function runRewrite() {
+		if (isRewriting) return;
+		const content = (activeFile?.content || '').trim();
+		if (content.length < 40) {
+			rewriteError = 'Write a paragraph or more first, then rewrite it.';
+			rewriteResult = null;
+			return;
+		}
+		isRewriting = true;
+		rewriteError = '';
+		rewriteResult = null;
+		try {
+			const res = await fetch('/api/ai/rewrite', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({
+					content,
+					essayType: activeFile.name?.includes('Common') ? 'personal' : 'supplemental',
+					selectedSchool: activeFile.school || ''
+				})
+			});
+			const data = await res.json();
+			if (!res.ok) throw new Error(data.error || 'Rewrite failed');
+			rewriteResult = { rewrite: data.rewrite, changes: Array.isArray(data.changes) ? data.changes : [] };
+		} catch (e: any) {
+			rewriteError = e.message || 'Something went wrong. Please try again.';
+		} finally {
+			isRewriting = false;
+		}
+	}
+
+	// Accepting replaces the draft with the rewrite (they always keep the analysis /
+	// undo via the editor). We never auto-apply — the student chooses.
+	function acceptRewrite() {
+		if (!rewriteResult) return;
+		const newFiles = [...files];
+		newFiles[activeFileIndex] = { ...activeFile, content: rewriteResult.rewrite };
+		files = newFiles;
+		rewriteResult = null;
+	}
+
 	async function runBuild() {
 		if (isBuilding) return;
 		isBuilding = true;
@@ -887,7 +935,7 @@
 		},
 		{
 			q: 'How good is the essay grader, really?',
-			a: "It was built on thousands of essays that actually got people into Top 20 schools. It reads for structure, voice, and whether the essay fits the specific school you are targeting, then tells you where it is weak. It grades and gives notes. It never writes a line for you."
+			a: "It was built on thousands of essays that actually got people into Top 20 schools. It reads for structure, voice, and whether the essay fits the specific school you are targeting, then tells you where it is weak. It grades and gives notes, and when you ask, it rewrites a passage in your own voice: an edit of your words, never a new essay invented for you. Read every line and keep it true to you before you submit."
 		}
 	];
 
@@ -1985,11 +2033,25 @@
 								</div>
 							</div>
 
-							<div class="flex items-center gap-4 flex-1 md:flex-none justify-end">
+							<div class="flex items-center gap-3 flex-1 md:flex-none justify-end">
+								<button
+									onclick={runRewrite}
+									disabled={isRewriting || isBuilding}
+									title="Rewrite your draft in your own voice"
+									class="flex items-center justify-center gap-2 px-4 md:px-5 py-3.5 md:py-4 bg-white text-slate-700 border-2 border-slate-300 rounded-xl font-bold hover:border-[#1A4CFF] hover:text-[#1A4CFF] transition-all disabled:opacity-50 active:scale-95 duration-200 text-sm md:text-base"
+								>
+									{#if isRewriting}
+										<svg class="animate-spin h-4 w-4" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>
+										<span class="hidden sm:inline">Rewriting…</span>
+									{:else}
+										<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
+										<span class="hidden sm:inline">Rewrite in my voice</span><span class="sm:hidden">Rewrite</span>
+									{/if}
+								</button>
 								<button
 									onclick={runBuild}
-									disabled={isBuilding}
-									class="flex items-center justify-center gap-3 w-full md:w-auto px-5 md:px-8 py-3.5 md:py-4 bg-[#1A4CFF] text-white rounded-xl font-bold hover:bg-blue-700 transition-all shadow-xl shadow-blue-200 disabled:opacity-50 disabled:shadow-none transform active:scale-95 duration-200 text-base md:text-lg"
+									disabled={isBuilding || isRewriting}
+									class="flex items-center justify-center gap-3 px-5 md:px-8 py-3.5 md:py-4 bg-[#1A4CFF] text-white rounded-xl font-bold hover:bg-blue-700 transition-all shadow-xl shadow-blue-200 disabled:opacity-50 disabled:shadow-none transform active:scale-95 duration-200 text-base md:text-lg"
 								>
 									{#if isBuilding}
 										<svg class="animate-spin h-4 w-4" viewBox="0 0 24 24"
@@ -2022,6 +2084,45 @@
 							</div>
 						</div>
 					</div>
+
+					<!-- Rewrite-in-your-voice result modal -->
+					{#if rewriteResult || rewriteError}
+						<div class="fixed inset-0 z-[9999] flex items-end justify-center bg-slate-900/50 p-0 sm:items-center sm:p-6" role="dialog" aria-modal="true">
+							<div class="flex max-h-[88vh] w-full flex-col overflow-hidden rounded-t-2xl bg-white shadow-2xl sm:max-w-2xl sm:rounded-2xl">
+								<div class="flex items-center justify-between border-b border-slate-100 px-6 py-4">
+									<h3 class="font-serif text-xl text-slate-900">Rewrite in your voice</h3>
+									<button onclick={() => { rewriteResult = null; rewriteError = ''; }} class="text-slate-400 hover:text-slate-600" aria-label="Close">
+										<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+									</button>
+								</div>
+								{#if rewriteError}
+									<div class="p-6 text-sm leading-relaxed text-slate-600">{rewriteError}</div>
+									<div class="flex justify-end border-t border-slate-100 px-6 py-4">
+										<button onclick={() => { rewriteError = ''; }} class="rounded-xl bg-slate-900 px-5 py-2.5 text-sm font-bold text-white hover:bg-slate-800">Close</button>
+									</div>
+								{:else if rewriteResult}
+									<div class="space-y-5 overflow-y-auto p-6">
+										<div class="whitespace-pre-wrap rounded-xl border border-slate-200 bg-slate-50 p-4 font-serif text-[15px] leading-relaxed text-slate-800">{rewriteResult.rewrite}</div>
+										{#if rewriteResult.changes.length}
+											<div>
+												<p class="mb-2 text-[11px] font-bold uppercase tracking-wider text-slate-400">What changed</p>
+												<ul class="space-y-1.5">
+													{#each rewriteResult.changes as c}
+														<li class="flex gap-2 text-sm leading-relaxed text-slate-600"><span class="text-[#1A4CFF]">•</span>{c}</li>
+													{/each}
+												</ul>
+											</div>
+										{/if}
+										<p class="text-xs leading-relaxed text-slate-400">You wrote it. This is an edit in your own voice, not a new essay. Read every line and make it yours before you use it.</p>
+									</div>
+									<div class="flex items-center justify-end gap-3 border-t border-slate-100 px-6 py-4">
+										<button onclick={() => rewriteResult && navigator.clipboard?.writeText(rewriteResult.rewrite)} class="px-4 py-2.5 text-sm font-semibold text-slate-600 hover:text-slate-900">Copy</button>
+										<button onclick={acceptRewrite} class="rounded-xl bg-[#1A4CFF] px-5 py-2.5 text-sm font-bold text-white hover:bg-blue-700">Replace my draft</button>
+									</div>
+								{/if}
+							</div>
+						</div>
+					{/if}
 
 					<!-- Analysis Sidebar -->
 					{#if showTerminal}
@@ -2533,7 +2634,7 @@
 				<div class="grid items-center gap-8 md:grid-cols-2 md:gap-14">
 					<div>
 						<h3 class="mt-3 font-display text-navy text-3xl">Essays marked up like an admissions reader</h3>
-						<p class="mt-3 text-[15px] leading-relaxed text-muted">Hand over any supplement and the AI flags the weak lines and tells you why, the way a reader would. You write every word. It never writes one for you.</p>
+						<p class="mt-3 text-[15px] leading-relaxed text-muted">Hand over any supplement and the AI flags the weak lines and tells you why, the way a reader would. When you want it, it rewrites a passage in your own voice, an edit of your words, never a new essay for you.</p>
 					</div>
 					<div class="pa-card p-5 sm:p-6">
 						<div class="pa-inset p-5">

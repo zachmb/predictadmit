@@ -879,7 +879,7 @@
 				<div use:reveal={100} class="grid items-center gap-8 md:grid-cols-2 md:gap-14">
 					<div class="md:order-2">
 						<h3 class="mt-3 font-display text-3xl text-navy">Essay feedback, line by line</h3>
-						<p class="mt-3 text-[15px] leading-relaxed text-slate-500">Every supplement in one place. Hand it over and it marks the weak lines like an admissions reader would, and tells you why. It never writes a word for you.</p>
+						<p class="mt-3 text-[15px] leading-relaxed text-slate-500">Every supplement in one place. Hand it over and it marks the weak lines like an admissions reader would, tells you why, and can rewrite a passage in your own voice when you ask.</p>
 					</div>
 					<div class="pa-card p-5 sm:p-6 md:order-1">
 						<div class="pa-inset p-5">
@@ -1128,7 +1128,7 @@
 					{ q: 'Can an AI really predict my admissions decision?', a: 'It predicts, it does not promise. The read is trained on real admitted-student profiles and the factors committees actually weigh, then it scores your file the way five readers would. Treat it as a sharp dry run, not a verdict to lose sleep over.' },
 					{ q: 'What do I get for free?', a: 'Run one full simulation across all 39 schools, unlock one school’s results, and open one full committee deep-dive. No card, no account beyond a Google sign-in. You only pay once it has already shown you something you did not know.' },
 					{ q: 'Does it just predict, or does it help me improve?', a: 'Both, and the improving is the point. Pro reads your essays line by line, tells you what each school weighs, and answers your questions like a counselor. The prediction shows where you stand; the workshop is how you move.' },
-					{ q: 'Will it write my essays for me?', a: 'No, on purpose. It marks what is weak and asks the questions a reader would, but it never writes or rewrites a sentence you could paste in. Colleges can revoke an offer over AI-written text, and the work has to sound like you.' },
+					{ q: 'Will it write my essays for me?', a: 'It starts from your words. The workshop marks what is weak and asks the questions a reader would, and when you ask, it rewrites a passage in your own voice: an edit of what you already wrote, never a new essay or an achievement invented for you. Read every line, keep it true to you, and make sure it still sounds like you before you submit.' },
 					{ q: 'Is this affiliated with the universities?', a: 'No. The decision portals are clearly labeled simulations, and PredictAdmit is not affiliated with, endorsed by, or connected to any school.' },
 					{ q: 'How much does it cost?', a: 'Your first prediction is free. Full access is $25 once for lifetime, or $9.99 a month. A private counselor runs thousands.' }
 				] as item}
