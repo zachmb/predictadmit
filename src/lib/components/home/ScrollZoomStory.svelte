@@ -60,18 +60,25 @@
 	let o4 = $derived(seg(p, 0.82, 0.92));
 </script>
 
-{#if reduced}
-	<div class="mx-auto max-w-3xl px-6 py-24 text-center space-y-6">
+{#snippet compact()}
+	<div class="mx-auto max-w-2xl px-6 py-20 text-center space-y-5">
 		<h2 class="font-serif text-4xl md:text-5xl font-medium tracking-tight text-slate-900 leading-[1.05]">
 			Pro can do <span class="text-[#1A4CFF]">waaaaay more</span>
 		</h2>
 		<p class="text-lg leading-relaxed text-slate-500">
-			Re-run infinite predictions and see what'll happen. Our tools improve your essays with
-			line-by-line feedback, trained on successful applications. And more.
+			Re-run your prediction as you improve and watch it move. The workshop sharpens your
+			essays with line-by-line feedback, trained on essays that got in. And more.
 		</p>
 	</div>
+{/snippet}
+
+{#if reduced}
+	{@render compact()}
 {:else}
-	<section bind:this={section} class="relative h-[540vh] bg-white">
+	<!-- Mobile: the scroll-scrubbed zoom is a desktop delight; on a phone it's 540vh
+	     of janky, near-empty scroll, so show the message compactly instead. -->
+	<div class="md:hidden">{@render compact()}</div>
+	<section bind:this={section} class="relative hidden h-[540vh] bg-white md:block">
 		<div class="sticky top-0 flex h-[100svh] items-center justify-center overflow-hidden">
 			<!-- Black wash that fills as line 1 swallows the screen -->
 			<div class="pointer-events-none absolute inset-0 bg-slate-950" style="opacity:{bg}"></div>
@@ -90,7 +97,7 @@
 				class="absolute max-w-[22ch] px-6 text-center font-serif text-3xl font-medium leading-tight tracking-tight text-white sm:max-w-2xl sm:text-5xl"
 				style="opacity:{o2}; transform: translateY({y2}px);"
 			>
-				Re-run infinite predictions. <span class="text-[#6f9bff]">See what'll happen.</span>
+				Re-run your prediction. <span class="text-[#6f9bff]">Watch your odds move.</span>
 			</h2>
 
 			<!-- Line 3 + "and more" — constant size, rises + fades in -->

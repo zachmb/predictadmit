@@ -63,8 +63,8 @@
 	let revealScale = $derived(0.92 + seg(p, 0.6, 0.98) * 0.08);
 </script>
 
-{#if reduced}
-	<div class="mx-auto max-w-2xl px-6 pt-24 pb-10 text-center space-y-4">
+{#snippet compact()}
+	<div class="mx-auto max-w-2xl px-6 pt-20 pb-10 text-center space-y-4">
 		{#if eyebrow}<span class="inline-block px-3 py-1 bg-white border border-slate-200 text-slate-600 text-[10px] font-bold uppercase tracking-widest rounded-full">{eyebrow}</span>{/if}
 		<h2 class="font-serif text-4xl md:text-5xl font-medium tracking-tight text-slate-900 leading-[1.05]">
 			{pre} <span class="text-[#1A4CFF]">{accent}</span>
@@ -72,8 +72,15 @@
 		{#if sub}<p class="text-lg text-slate-500 leading-relaxed">{sub}</p>{/if}
 		{#if reveal}<div class="mt-10">{@render reveal()}</div>{/if}
 	</div>
+{/snippet}
+
+{#if reduced}
+	{@render compact()}
 {:else}
-	<section bind:this={section} class="relative h-[380vh] bg-slate-50">
+	<!-- Mobile: skip the 380vh pinned zoom (janky, endless scroll on a phone) and
+	     show the heading + reveal content compactly. -->
+	<div class="md:hidden">{@render compact()}</div>
+	<section bind:this={section} class="relative hidden h-[380vh] bg-slate-50 md:block">
 		<div class="sticky top-0 flex h-[100svh] flex-col items-center justify-center overflow-hidden px-6 text-center">
 			<!-- Reveal card, sitting BEHIND the heading; fades + scales in as the zoom
 			     text clears, so it's already in view without scrolling to it. -->
