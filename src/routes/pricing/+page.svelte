@@ -132,18 +132,18 @@
 						</a>
 					</div>
 
-					<!-- Monthly: recommended, tinted. On mobile it jumps to the top
-					     (order-first) so the primary plan + Buy button lead the stack. -->
+					<!-- Season Pass: the primary plan (pay once for the whole season).
+					     Tinted + recommended; on mobile it jumps to the top (order-first). -->
 					<div class="pa-card-cyan relative order-first flex flex-col p-8 md:order-none">
 						<span class="absolute right-6 top-8 rounded-full bg-blue px-3 py-1 text-[10px] font-semibold uppercase tracking-wide text-white">Recommended</span>
-						<h2 class="font-display text-navy text-2xl">Monthly</h2>
+						<h2 class="font-display text-navy text-2xl">Season Pass</h2>
 						<div class="mt-3 flex items-baseline gap-1.5">
-							<span class="font-display text-navy text-4xl">$9.99</span>
-							<span class="text-sm text-muted">/mo</span>
+							<span class="font-display text-navy text-4xl">$25</span>
+							<span class="text-sm text-muted">once</span>
 						</div>
-						<p class="mt-1 text-xs text-muted">Billed monthly. Cancel anytime.</p>
+						<p class="mt-1 text-xs text-muted">One payment. No subscription.</p>
 						<p class="mt-3 text-sm leading-relaxed text-muted">
-							Everything you need to fix your application while you're applying: the essay workshop, a plan for every school, and your counselor.
+							The whole application season, yours to keep. Everything that makes your application stronger, from now until you hit submit.
 						</p>
 						<ul class="mt-6 mb-8 space-y-2.5">
 							{#each fullFeatures as f}
@@ -154,27 +154,27 @@
 							{/each}
 						</ul>
 						<button
-							onclick={() => openUpgrade('monthly')}
+							onclick={() => openUpgrade('lifetime')}
 							disabled={isProcessing}
 							class="btn btn-primary btn-block mt-auto"
 						>
-							{isProcessing ? 'Starting checkout…' : 'Start for $9.99/mo →'}
+							{isProcessing ? 'Starting checkout…' : 'Get the Season Pass · $25'}
 						</button>
 					</div>
 
-					<!-- Lifetime: pay once -->
+					<!-- Monthly: the flexible, cancel-anytime version of the Season Pass. -->
 					<div class="flex flex-col p-8">
-						<h2 class="font-display text-navy text-2xl">Lifetime</h2>
+						<h2 class="font-display text-navy text-2xl">Monthly</h2>
 						<div class="mt-3 flex items-baseline gap-1.5">
-							<span class="font-display text-navy text-4xl">$25</span>
-							<span class="text-sm text-muted">once</span>
+							<span class="font-display text-navy text-4xl">$9.99</span>
+							<span class="text-sm text-muted">/mo</span>
 						</div>
-						<p class="mt-1 text-xs text-muted">One payment. No subscription.</p>
+						<p class="mt-1 text-xs text-muted">Renews monthly. Cancel anytime.</p>
 						<p class="mt-3 text-sm leading-relaxed text-muted">
-							The same full access, paid once. About two and a half months of Monthly costs the same.
+							Same features as the Season Pass, billed monthly. For students who only need PredictAdmit for a deadline or two.
 						</p>
 						<ul class="mt-6 mb-8 space-y-2.5">
-							{#each ['Everything in Monthly, forever', 'Nothing to renew or cancel', 'Every future school and tool, included'] as f}
+							{#each ['Everything in the Season Pass, month to month', 'Cancel the moment you hit submit', 'About 2½ months equals the Season Pass'] as f}
 								<li class="flex items-start gap-2.5 text-sm text-muted">
 									<svg class="mt-0.5 h-4 w-4 flex-none text-navy" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
 									{f}
@@ -182,11 +182,11 @@
 							{/each}
 						</ul>
 						<button
-							onclick={() => openUpgrade('lifetime')}
+							onclick={() => openUpgrade('monthly')}
 							disabled={isProcessing}
 							class="btn btn-secondary btn-block mt-auto"
 						>
-							Get Lifetime for $25
+							{isProcessing ? 'Starting checkout…' : 'Start monthly · $9.99/mo'}
 						</button>
 					</div>
 				</div>
@@ -230,7 +230,7 @@
 			</div>
 			<div class="pa-card-yellow p-5">
 				<div class="font-display text-navy text-2xl">$25</div>
-				<div class="mt-1 text-xs text-muted">Lifetime: every school, every tool, forever</div>
+				<div class="mt-1 text-xs text-muted">Season Pass: every school, every tool, all season</div>
 			</div>
 		</section>
 

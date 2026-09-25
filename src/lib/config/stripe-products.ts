@@ -29,11 +29,12 @@ export const STRIPE_PRODUCTS = {
 		amountCents: 999,
 		recurring: true
 	},
-	// $25 one-time — THE TARGET. Full access forever: all 39 schools, unlimited
-	// re-runs, every deep-dive, the essay workshop + AI counselor. Sets isPro.
+	// $25 one-time — THE TARGET ("Season Pass"). Full access for the whole
+	// application season: all 39 schools, every deep-dive, the essay workshop + AI
+	// counselor. Code key stays `lifetime` (maps to checkout); label is user-facing.
 	lifetime: {
 		productId: '', // none in live — checkout uses product_data.name below
-		name: 'PredictAdmit Pro — Lifetime',
+		name: 'PredictAdmit Pro — Season Pass',
 		amountCents: 2500,
 		recurring: false
 	},

@@ -879,7 +879,7 @@
 		},
 		{
 			q: 'Is this a subscription?',
-			a: "You have two options. Monthly is $9.99 a month while you're applying. Cancel anytime, and it's the easiest way to start. Or Lifetime, a single $25 payment with no subscription and nothing to cancel; about two and a half months of Monthly costs the same. Both cover all 39 schools, unlimited re-runs, and the essay workshop. Your first prediction is free, so you see the value before you pay."
+			a: "You have two options. The Season Pass is a single $25 payment that covers the whole application season, no subscription and nothing to cancel. Or go Monthly at $9.99 while you're applying and cancel anytime; about two and a half months of Monthly equals the Season Pass. Both unlock all 39 schools, the essay workshop, and your AI counselor. Your first prediction is free, so you see the value before you pay."
 		},
 		{
 			q: 'What if I only care about one school?',
@@ -2411,18 +2411,18 @@
 							</a>
 						</div>
 
-						<!-- Monthly: recommended, lifted in white. On mobile it jumps to the
-						     top (order-first) so the primary plan + Buy button lead the stack. -->
+						<!-- Season Pass: the primary plan (pay once for the whole season).
+						     Tinted + recommended; on mobile it jumps to the top (order-first). -->
 						<div class="pa-card-cyan relative order-first flex flex-col p-8 md:order-none">
 							<span class="absolute right-6 top-8 rounded-full bg-blue px-3 py-1 text-[10px] font-semibold uppercase tracking-wide text-white">Recommended</span>
-							<h3 class="font-display text-navy text-2xl">Monthly</h3>
+							<h3 class="font-display text-navy text-2xl">Season Pass</h3>
 							<div class="mt-3 flex items-baseline gap-1.5">
-								<span class="font-display text-navy text-4xl">$9.99</span>
-								<span class="text-sm text-muted">/mo</span>
+								<span class="font-display text-navy text-4xl">$25</span>
+								<span class="text-sm text-muted">once</span>
 							</div>
-							<p class="mt-1 text-xs text-muted">Billed monthly. Cancel anytime.</p>
+							<p class="mt-1 text-xs text-muted">One payment. No subscription.</p>
 							<p class="mt-3 text-sm leading-relaxed text-muted">
-								Everything you need to fix your application while you're applying: the essay workshop, a plan for every school, and your counselor.
+								The whole application season, yours to keep. Everything that makes your application stronger, from now until you hit submit.
 							</p>
 							<ul class="mt-6 mb-8 space-y-2.5">
 								{#each ['The essay workshop: honest, line-by-line edits on every draft', "A per-school deep-dive: what's holding you back and how to fix it", 'An AI counselor that knows your whole application', 'Re-run your prediction any time and watch your odds move'] as f}
@@ -2433,27 +2433,27 @@
 								{/each}
 							</ul>
 							<button
-								onclick={() => startUpgrade('monthly')}
+								onclick={() => startUpgrade('lifetime')}
 								disabled={isProcessing}
 								class="btn btn-primary btn-block mt-auto"
 							>
-								{isProcessing ? 'Taking you to checkout…' : 'Start for $9.99/mo'}
+								{isProcessing ? 'Taking you to checkout…' : 'Get the Season Pass · $25'}
 							</button>
 						</div>
 
-						<!-- Lifetime: pay once -->
+						<!-- Monthly: the flexible, cancel-anytime version of the Season Pass. -->
 						<div class="flex flex-col p-8">
-							<h3 class="font-display text-navy text-2xl">Lifetime</h3>
+							<h3 class="font-display text-navy text-2xl">Monthly</h3>
 							<div class="mt-3 flex items-baseline gap-1.5">
-								<span class="font-display text-navy text-4xl">$25</span>
-								<span class="text-sm text-muted">once</span>
+								<span class="font-display text-navy text-4xl">$9.99</span>
+								<span class="text-sm text-muted">/mo</span>
 							</div>
-							<p class="mt-1 text-xs text-muted">One payment. No subscription.</p>
+							<p class="mt-1 text-xs text-muted">Renews monthly. Cancel anytime.</p>
 							<p class="mt-3 text-sm leading-relaxed text-muted">
-								The same full access, paid once. About two and a half months of Monthly costs the same.
+								Same features as the Season Pass, billed monthly. For students who only need PredictAdmit for a deadline or two.
 							</p>
 							<ul class="mt-6 mb-8 space-y-2.5">
-								{#each ['Everything in Monthly, forever', 'Nothing to renew or cancel', 'One payment for the whole season'] as f}
+								{#each ['Everything in the Season Pass, month to month', 'Cancel the moment you hit submit', 'About 2½ months equals the Season Pass'] as f}
 									<li class="flex items-start gap-2.5 text-sm text-muted">
 										<svg class="mt-0.5 h-4 w-4 flex-none text-navy" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
 										{f}
@@ -2461,11 +2461,11 @@
 								{/each}
 							</ul>
 							<button
-								onclick={() => startUpgrade('lifetime')}
+								onclick={() => startUpgrade('monthly')}
 								disabled={isProcessing}
 								class="btn btn-secondary btn-block mt-auto"
 							>
-								Get Lifetime
+								{isProcessing ? 'Taking you to checkout…' : 'Start monthly · $9.99/mo'}
 							</button>
 						</div>
 					</div>

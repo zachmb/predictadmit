@@ -267,8 +267,8 @@
 							>
 								<div class="flex items-center justify-between gap-3">
 									<div>
-										<div class="text-base font-black text-slate-900">Lifetime</div>
-										<div class="mt-0.5 text-xs text-slate-500">Pay once, no subscription. 2½ months of Monthly = Lifetime.</div>
+										<div class="text-base font-black text-slate-900">Season Pass</div>
+										<div class="mt-0.5 text-xs text-slate-500">Pay once, no subscription. Covers the whole application season.</div>
 									</div>
 									<div class="text-right">
 										<div class="text-xl font-black text-slate-900">$25</div>
