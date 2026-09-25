@@ -30,10 +30,10 @@
 	});
 	// Updated outcome colors for higher contrast on light backgrounds
 	const outcomeColors = {
-		admit: 'text-emerald-600 border-emerald-600',
-		deny: 'text-rose-600 border-rose-600',
-		waitlist: 'text-amber-600 border-amber-600',
-		defer: 'text-blue-600 border-blue-600'
+		admit: 'text-blue border-blue',
+		deny: 'text-stamp-red border-stamp-red',
+		waitlist: 'text-navy border-yellow',
+		defer: 'text-blue border-blue'
 	};
 	const getPeekText = (text: string) => {
 		if (!text) return '';
@@ -67,56 +67,56 @@
 </script>
 
 {#if schoolData && schoolData.academic_explanation !== 'N/A: random sim'}
-	<div class="min-h-screen bg-slate-50 text-slate-700 p-4 md:p-8 font-sans">
+	<div class="min-h-screen pa-grid text-navy p-4 md:p-8 font-sans">
 		<header class="mb-8">
-			<h1 class="text-3xl font-bold text-slate-900 mb-2">Where you stand with this school</h1>
-			<p class="text-slate-500 text-sm italic">
+			<h1 class="text-3xl font-display text-navy mb-2">Where you stand with this school</h1>
+			<p class="text-muted text-sm italic">
 				A blunt read of your saved profile and essays. It's an estimate, not a real decision.
 			</p>
 		</header>
 
 		{#if !schoolData}
-			<div class="text-center py-20 border border-dashed border-slate-300 rounded-xl">
+			<div class="text-center py-20 pa-card">
 				<p>Nothing here yet for this school. Run a simulation first.</p>
 			</div>
 		{:else}
 			<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 max-w-7xl mx-auto">
 				<div class="lg:col-span-4 space-y-6">
-					<div class="bg-white p-6 rounded-xl border border-slate-200 shadow-xl">
+					<div class="pa-card p-6">
 						<div class="mb-6">
 							<label
-								class="block text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2"
+								class="block text-[10px] font-bold uppercase tracking-widest text-muted mb-2"
 								>Target University</label
 							>
-							<div class="text-xl font-bold text-slate-900 border-b border-slate-100 pb-2">
+							<div class="text-xl font-display text-navy border-b-2 border-navy pb-2">
 								{schoolData.school}
 							</div>
 						</div>
 
 						<div class="mb-6">
 							<div class="flex justify-between items-end mb-2">
-								<label class="text-[10px] font-bold uppercase tracking-widest text-slate-400"
+								<label class="text-[10px] font-bold uppercase tracking-widest text-muted"
 									>Profile Data</label
 								>
-								<button class="text-[10px] text-cyan-600 font-bold hover:underline">Manage</button>
+								<button class="text-[10px] text-blue font-bold hover:underline">Manage</button>
 							</div>
 							<div class="space-y-1">
 								<div class="flex justify-between text-xs">
 									<span>Common App</span>
-									<span class="text-emerald-600 font-mono font-bold">Loaded</span>
+									<span class="text-blue font-mono font-bold">Loaded</span>
 								</div>
 								<div class="flex justify-between text-xs">
 									<span>Transcript</span>
-									<span class="text-emerald-600 font-mono font-bold">Loaded</span>
+									<span class="text-blue font-mono font-bold">Loaded</span>
 								</div>
 							</div>
 						</div>
 
 						<div class="space-y-4">
-							<label class="block text-[10px] font-bold uppercase tracking-widest text-slate-400"
+							<label class="block text-[10px] font-bold uppercase tracking-widest text-muted"
 								>Intended Major</label
 							>
-							<p class="text-sm text-slate-800 bg-slate-50 p-3 rounded border border-slate-200">
+							<p class="text-sm text-navy pa-inset p-3">
 								{$aiResults.raw?.major || 'Undecided'}
 							</p>
 						</div>
@@ -124,21 +124,21 @@
 				</div>
 
 				<div
-					class="lg:col-span-8 bg-white rounded-xl border border-slate-200 shadow-xl overflow-hidden"
+					class="lg:col-span-8 pa-card overflow-hidden"
 				>
-					<div class="p-8 border-b border-slate-100 flex justify-between items-center">
+					<div class="p-8 border-b-2 border-navy flex justify-between items-center">
 						<div class="space-y-2">
-							<h2 class="text-[11px] font-black uppercase tracking-[0.3em] text-slate-400">
+							<h2 class="text-[11px] font-display uppercase tracking-[0.3em] text-muted">
 								Decision Outcome
 							</h2>
-							<p class="max-w-xl text-xs leading-relaxed text-slate-500">
+							<p class="max-w-xl text-xs leading-relaxed text-muted">
 								Remember: this is just an AI prediction. It could be completely wrong, so
 								don't think about it too deeply or treat it like a real admissions decision.
 							</p>
 						</div>
 						<div class="flex items-center gap-4">
 							<div
-								class="text-4xl font-black uppercase italic tracking-tighter {outcomeColors[
+								class="text-4xl font-display uppercase italic tracking-tighter {outcomeColors[
 									schoolData.outcome
 								]}"
 							>
@@ -194,8 +194,8 @@
 
 								<polygon
 									points={getRadarPoints()}
-									fill="rgba(37, 99, 235, 0.15)"
-									stroke="#2563eb"
+									fill="rgba(18, 102, 227, 0.15)"
+									stroke="#1266e3"
 									stroke-width="2"
 								/>
 							</svg>
@@ -203,15 +203,15 @@
 
 						<div class="space-y-6">
 							<h3
-								class="text-rose-600 text-xs font-black uppercase tracking-widest border-l-2 border-rose-600 pl-3"
+								class="text-stamp-red text-xs font-display uppercase tracking-widest border-l-2 border-stamp-red pl-3"
 							>
 								Harsh Critique
 							</h3>
 
-							<div class="space-y-4 text-[13px] leading-relaxed italic text-slate-600">
+							<div class="space-y-4 text-[13px] leading-relaxed italic text-muted">
 								{#each [{ label: 'Academic', val: $academicExplanationsBySlug[slug] }, { label: 'Extracurricular', val: $extracurricularExplanationsBySlug[slug] }, { label: 'Intellectual', val: $intellectualExplanationsBySlug[slug] }, { label: 'Character', val: $characterExplanationsBySlug[slug] }, { label: 'Fit', val: $fitExplanationsBySlug[slug] }] as item}
 									<p>
-										<strong class="text-slate-900 not-italic">{item.label}:</strong>
+										<strong class="text-navy not-italic">{item.label}:</strong>
 										<span>{getPeekText(item.val)}</span>
 										<span class:blur-sm={!unlocked} class:select-none={!unlocked}>
 											{getRemainingText(item.val)}
@@ -220,12 +220,12 @@
 								{/each}
 							</div>
 
-							<div class="pt-6 border-t border-slate-100">
-								<h3 class="text-emerald-600 text-xs font-black uppercase tracking-widest mb-4">
+							<div class="pt-6 pa-rule-top">
+								<h3 class="text-blue text-xs font-display uppercase tracking-widest mb-4">
 									Key Improvements
 								</h3>
 								<div
-									class="text-xs text-slate-700 space-y-2 whitespace-pre-line"
+									class="text-xs text-navy space-y-2 whitespace-pre-line"
 									class:blur-sm={!unlocked}
 									class:select-none={!unlocked}
 								>

@@ -66,7 +66,7 @@
 			<span
 				class="inline-flex items-center gap-1 rounded-full border border-slate-600 bg-slate-900/40 px-2.5 py-1"
 			>
-				<span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
+				<span class="h-1.5 w-1.5 rounded-full bg-cyan"></span>
 				Narrative alignment
 			</span>
 			<span

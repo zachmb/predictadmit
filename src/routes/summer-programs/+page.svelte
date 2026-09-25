@@ -82,10 +82,10 @@
 
 	// ---- Presentation helpers -----------------------------------------------------
 	const signalChip: Record<AdmissionsSignal, string> = {
-		Elite: 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200',
-		Strong: 'bg-slate-100 text-slate-700 ring-1 ring-slate-200',
-		Moderate: 'bg-amber-50 text-amber-700 ring-1 ring-amber-200',
-		Enrichment: 'bg-slate-100 text-slate-600 ring-1 ring-slate-200'
+		Elite: 'bg-blue text-white',
+		Strong: 'bg-cyan text-navy',
+		Moderate: 'bg-yellow text-navy',
+		Enrichment: 'bg-paper-deep text-muted ring-2 ring-navy/15'
 	};
 
 	const signalLegend: { key: AdmissionsSignal; text: string }[] = [
@@ -111,27 +111,27 @@
 	/>
 </svelte:head>
 
-<main class="min-h-screen bg-white font-sans text-slate-900">
+<main class="min-h-screen bg-paper font-sans text-ink">
 	<!-- Hero -->
-	<section class="border-b border-slate-100 bg-slate-50">
+	<section class="pa-hero-bg pa-rule-top border-b-0">
 		<div class="max-w-5xl mx-auto px-6 py-16 md:py-20">
 			<p
-				class="inline-block mb-5 text-xs font-semibold tracking-widest uppercase text-slate-500 bg-slate-100 px-3 py-1 rounded-full"
+				class="inline-block mb-5 text-xs font-semibold tracking-widest uppercase text-white bg-blue px-3 py-1 rounded-full"
 			>
 				Summer Programs
 			</p>
-			<h1 class="text-4xl md:text-5xl font-serif font-medium tracking-tight text-slate-900 mb-4 text-balance">
+			<h1 class="text-4xl md:text-5xl font-display tracking-tight text-navy mb-4 text-balance">
 				Spend your summer on something that counts.
 			</h1>
-			<p class="text-lg text-slate-500 leading-relaxed max-w-2xl">
+			<p class="text-lg text-muted leading-relaxed max-w-2xl">
 				{summerPrograms.length} programs, checked by hand. {freeCount} of them are free or come with a
 				stipend. Each one has a straight read on what it actually signals to selective colleges. No
 				duplicate listings, no made-up prices, no fake deadlines.
 			</p>
-			<p class="mt-4 max-w-2xl text-xs leading-relaxed text-slate-400">
+			<p class="mt-4 max-w-2xl text-xs leading-relaxed text-muted">
 				How the list works: every program appears once, under the organization that actually runs it.
 				Costs are grouped into tiers, and deadlines are the typical windows from recent years.
-				<span class="font-semibold text-slate-500">Check the current deadline on the program's own
+				<span class="font-semibold text-navy">Check the current deadline on the program's own
 				site</span> before you plan around it.
 			</p>
 		</div>
@@ -141,12 +141,12 @@
 	<section class="max-w-5xl mx-auto px-6 pt-10">
 		<div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
 			{#each signalLegend as s}
-				<div class="rounded-xl border border-slate-100 bg-white p-4">
+				<div class="pa-card p-4">
 					<span
 						class="inline-block rounded-full px-2.5 py-0.5 text-[11px] font-bold {signalChip[s.key]}"
 						>{s.key}</span
 					>
-					<p class="mt-2 text-xs leading-relaxed text-slate-500">{s.text}</p>
+					<p class="mt-2 text-xs leading-relaxed text-muted">{s.text}</p>
 				</div>
 			{/each}
 		</div>
@@ -155,18 +155,18 @@
 	<!-- Toolbar -->
 	<section class="max-w-5xl mx-auto px-6 pt-8">
 		<div
-			class="flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm md:flex-row md:items-center"
+			class="flex flex-col gap-3 pa-card p-4 md:flex-row md:items-center"
 		>
 			<input
 				type="text"
 				bind:value={search}
 				placeholder="Search by program, host, or keyword…"
-				class="flex-1 rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-300"
+				class="flex-1 rounded-lg border-2 border-navy bg-card px-3 py-2 text-sm outline-none focus:border-blue"
 			/>
 			<div class="flex flex-wrap items-center gap-2">
 				<select
 					bind:value={subjectFilter}
-					class="rounded-lg border border-slate-200 bg-white px-2.5 py-2 text-sm text-slate-700"
+					class="rounded-lg border-2 border-navy bg-card px-2.5 py-2 text-sm text-navy"
 				>
 					<option value="All">All subjects</option>
 					{#each subjects as s}
@@ -175,7 +175,7 @@
 				</select>
 				<select
 					bind:value={costFilter}
-					class="rounded-lg border border-slate-200 bg-white px-2.5 py-2 text-sm text-slate-700"
+					class="rounded-lg border-2 border-navy bg-card px-2.5 py-2 text-sm text-navy"
 				>
 					<option value="All">Any cost</option>
 					<option value="Free or funded">Free or funded</option>
@@ -183,7 +183,7 @@
 				</select>
 				<select
 					bind:value={formatFilter}
-					class="rounded-lg border border-slate-200 bg-white px-2.5 py-2 text-sm text-slate-700"
+					class="rounded-lg border-2 border-navy bg-card px-2.5 py-2 text-sm text-navy"
 				>
 					<option value="All">Any format</option>
 					{#each formats as f}
@@ -193,15 +193,15 @@
 				<button
 					type="button"
 					onclick={() => (savedOnly = !savedOnly)}
-					class="rounded-lg border px-3 py-2 text-sm font-semibold transition-colors {savedOnly
-						? 'border-slate-900 bg-slate-900 text-white'
-						: 'border-slate-200 bg-white text-slate-600 hover:bg-slate-50'}"
+					class="rounded-lg border-2 px-3 py-2 text-sm font-semibold transition-colors {savedOnly
+						? 'border-navy bg-navy text-white'
+						: 'border-navy bg-card text-navy hover:bg-paper-deep'}"
 				>
 					★ Saved ({saved.size})
 				</button>
 			</div>
 		</div>
-		<p class="mt-3 text-xs text-slate-400">
+		<p class="mt-3 text-xs text-muted">
 			{rows.length} of {summerPrograms.length} programs · sorted by typical deadline · anything you
 			save stays in this browser only
 		</p>
@@ -210,19 +210,19 @@
 	<!-- Program cards -->
 	<section class="max-w-5xl mx-auto px-6 py-8">
 		{#if rows.length === 0}
-			<div class="rounded-2xl border border-dashed border-slate-200 p-12 text-center text-slate-400">
+			<div class="rounded-[10px] border-2 border-dashed border-navy/30 p-12 text-center text-muted">
 				No programs match those filters.
 			</div>
 		{:else}
 			<div class="grid gap-4 md:grid-cols-2">
 				{#each rows as p (p.id)}
 					<article
-						class="flex flex-col rounded-2xl border border-slate-100 bg-white p-5 shadow-sm transition-shadow hover:shadow-md"
+						class="flex flex-col pa-card p-5"
 					>
 						<div class="mb-2 flex items-start justify-between gap-3">
 							<div>
-								<h2 class="font-bold leading-snug text-slate-900">{p.name}</h2>
-								<p class="text-xs font-medium text-slate-500">{p.host}</p>
+								<h2 class="font-display leading-snug text-navy">{p.name}</h2>
+								<p class="text-xs font-medium text-muted">{p.host}</p>
 							</div>
 							<div class="flex shrink-0 items-center gap-2">
 								<span class="rounded-full px-2.5 py-0.5 text-[11px] font-bold {signalChip[p.signal]}"
@@ -233,43 +233,43 @@
 									aria-label={saved.has(p.id) ? 'Remove from saved' : 'Save program'}
 									onclick={() => toggleSaved(p.id)}
 									class="text-lg leading-none transition-colors {saved.has(p.id)
-										? 'text-amber-400'
-										: 'text-slate-300 hover:text-amber-400'}"
+										? 'text-yellow'
+										: 'text-navy/30 hover:text-yellow'}"
 								>
 									★
 								</button>
 							</div>
 						</div>
 
-						<p class="mb-3 text-sm leading-relaxed text-slate-600">{p.blurb}</p>
+						<p class="mb-3 text-sm leading-relaxed text-muted">{p.blurb}</p>
 
 						<div class="mb-3 flex flex-wrap gap-1.5">
 							{#each p.subjects as s}
-								<span class="rounded-full bg-slate-100 px-2.5 py-0.5 text-[11px] font-medium text-slate-600"
+								<span class="rounded-full bg-paper-deep px-2.5 py-0.5 text-[11px] font-medium text-navy"
 									>{s}</span
 								>
 							{/each}
 						</div>
 
-						<dl class="mt-auto grid grid-cols-2 gap-x-4 gap-y-1.5 border-t border-slate-100 pt-3 text-xs">
+						<dl class="mt-auto grid grid-cols-2 gap-x-4 gap-y-1.5 pa-rule-top pt-3 text-xs">
 							<div>
-								<dt class="font-semibold uppercase tracking-wide text-slate-400">Cost</dt>
-								<dd class="text-slate-700">
-									{p.cost}{#if p.costNote}<span class="text-slate-400"> · {p.costNote}</span>{/if}
+								<dt class="font-semibold uppercase tracking-wide text-muted">Cost</dt>
+								<dd class="text-navy">
+									{p.cost}{#if p.costNote}<span class="text-muted"> · {p.costNote}</span>{/if}
 								</dd>
 							</div>
 							<div>
-								<dt class="font-semibold uppercase tracking-wide text-slate-400">Typical deadline</dt>
-								<dd class="text-slate-700">{p.typicalDeadline}</dd>
+								<dt class="font-semibold uppercase tracking-wide text-muted">Typical deadline</dt>
+								<dd class="text-navy">{p.typicalDeadline}</dd>
 							</div>
 							<div>
-								<dt class="font-semibold uppercase tracking-wide text-slate-400">Format</dt>
-								<dd class="text-slate-700">{p.format} · {p.duration}</dd>
+								<dt class="font-semibold uppercase tracking-wide text-muted">Format</dt>
+								<dd class="text-navy">{p.format} · {p.duration}</dd>
 							</div>
 							{#if p.eligibility}
 								<div>
-									<dt class="font-semibold uppercase tracking-wide text-slate-400">Eligibility</dt>
-									<dd class="text-slate-700">{p.eligibility}</dd>
+									<dt class="font-semibold uppercase tracking-wide text-muted">Eligibility</dt>
+									<dd class="text-navy">{p.eligibility}</dd>
 								</div>
 							{/if}
 						</dl>
@@ -279,7 +279,7 @@
 								href="https://{p.website}"
 								target="_blank"
 								rel="noopener noreferrer"
-								class="mt-3 inline-block text-xs font-semibold text-[#1A4CFF] hover:underline"
+								class="mt-3 inline-block text-xs font-semibold text-blue hover:underline"
 							>
 								Official site: {p.website} ↗
 							</a>
@@ -292,17 +292,17 @@
 
 	<!-- Invite-only pipelines -->
 	<section class="max-w-5xl mx-auto px-6 pb-8">
-		<div class="rounded-2xl border border-amber-200 bg-amber-50 p-6">
-			<h2 class="mb-2 font-bold text-amber-900">Programs you can't just apply to</h2>
-			<p class="mb-4 text-sm leading-relaxed text-amber-800">
+		<div class="pa-card-yellow p-6">
+			<h2 class="mb-2 font-display text-navy">Programs you can't just apply to</h2>
+			<p class="mb-4 text-sm leading-relaxed text-ink">
 				Some famous programs have no application form at all. You win your way up a
 				competition pipeline. Any catalog that shows these with an "application deadline" has it wrong.
 			</p>
-			<ul class="space-y-2 text-sm text-amber-900">
+			<ul class="space-y-2 text-sm text-navy">
 				{#each inviteOnlyPipelines as p}
 					<li>
 						<span class="font-semibold">{p.name}:</span>
-						<span class="text-amber-800"> {p.how}</span>
+						<span class="text-ink"> {p.how}</span>
 					</li>
 				{/each}
 			</ul>
@@ -311,8 +311,8 @@
 
 	<!-- CTA -->
 	<section class="max-w-5xl mx-auto px-6 pb-16">
-		<div class="rounded-[2rem] bg-slate-900 p-10 text-center">
-			<h2 class="mb-3 text-2xl md:text-3xl font-serif font-medium tracking-tight text-white">
+		<div class="cta-band rounded-[10px] p-10 text-center">
+			<h2 class="mb-3 text-2xl md:text-3xl font-display tracking-tight text-white">
 				Landed a great summer? Now make it count on the application.
 			</h2>
 			<p class="mx-auto mb-8 max-w-xl leading-relaxed text-white/80">
@@ -321,7 +321,7 @@
 			</p>
 			<a
 				href="/pro"
-				class="inline-flex items-center justify-center rounded-full bg-white px-8 py-3.5 text-sm font-semibold text-slate-900 shadow-lg transition-colors hover:bg-slate-100"
+				class="btn btn-light"
 			>
 				Open PredictAdmit Pro →
 			</a>

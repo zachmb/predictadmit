@@ -7,24 +7,16 @@
 		overlayActive
 	} from '$lib/stores/ui';
 	import { page } from '$app/stores';
-	import { onDestroy } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 
 	$: isPortal = $page.url.pathname.startsWith('/portals/');
 	// During an AI simulation, viewing a school's decision page, the nav morphs
 	// into a "mail" nav so the user can jump straight back to their inbox and open
 	// another decision instead of hunting for the browser back button.
 	$: mailMode = isPortal && $userProfile.usingAI;
-	// Active-route highlight for the primary nav (exact match or a sub-path).
 	$: path = $page.url.pathname;
-	// The "Portal Simulator" chip lights only on the simulator index — NOT on an
-	// individual school's portal/decision page (/portals/stanford), where a filled
-	// nav chip reads as a stuck highlight after you've "tried one portal".
-	$: isPortalsIndex = path === '/portals';
 
-	// Reactive nav model. IMPORTANT: reference `path` directly here so Svelte tracks
-	// it. Calling isActive('/pro') inside the template only tracks the isActive const
-	// (which never changes), so the active highlight went stale after client-side
-	// navigation — that was the "glitched highlight". Deriving off `path` fixes it.
+	// Reactive nav model. Reference `path` directly so Svelte tracks it.
 	$: navLinks = [
 		{ href: '/ai', label: 'Predict My Decisions', active: path === '/ai' || path.startsWith('/ai/') },
 		{ href: '/portals', label: 'Portal Simulator', active: path === '/portals' },
@@ -33,16 +25,21 @@
 	];
 
 	let showHeader = true;
+	let menuOpen = false;
 	let timer: ReturnType<typeof setTimeout> | undefined;
 
+	// Match the Mr. Sinn nav: JS present → mobile nav collapses behind the toggle.
+	// Without JS the links stay visible, so a stale bundle never hides the nav.
+	onMount(() => {
+		document.documentElement.classList.add('js');
+	});
+
 	$: session = $page.data.session;
-	// When any overlay/toast is up, the nav grays out + goes non-interactive so it
-	// never competes with the overlay. Driven by the global overlayActive counter.
+	// When any overlay/toast is up, the nav grays out + goes non-interactive.
 	$: dimmed = $overlayActive > 0;
-	$: isLandingPage = $page.url.pathname === '/';
-	// Portal decision pages get the floating "dynamic island" pill (the header
-	// only ever shows there after a decision is viewed), matching the home page.
-	$: floatingIsland = isLandingPage || isPortal;
+
+	// Collapse the mobile menu on navigation.
+	$: if (path) menuOpen = false;
 
 	$: {
 		if (isPortal) {
@@ -74,111 +71,84 @@
 </script>
 
 {#if showHeader}
-	{#if !isLandingPage && !isPortal}
-		<!-- Placeholder to prevent content overlap on inner pages without animating height -->
-		<div class="w-full h-[76px] transition-none"></div>
-	{/if}
-
 	<header
-		class:opacity-30={dimmed}
-		class:pointer-events-none={dimmed}
-		class:grayscale={dimmed}
-		class="fixed left-1/2 -translate-x-1/2 z-[9999] bg-white/80 backdrop-blur-xl transition-[width,max-width,height,top,border-radius,padding,box-shadow] duration-300 ease-out shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden
-		{floatingIsland
-			? 'top-6 h-[68px] border border-slate-200/80 rounded-full px-2'
-			: 'top-0 h-[76px] border-b border-transparent lg:border-slate-200/80 rounded-none px-4'}"
-		style="width: {floatingIsland ? 'calc(100% - 32px)' : '100%'}; max-width: {floatingIsland
-			? '1060px'
-			: '100%'};"
+		class="site-header"
+		class:is-dimmed={dimmed}
 	>
-		<div
-			class="w-full h-full flex items-center justify-between mx-auto transition-[width,max-width,height,top,border-radius,padding,box-shadow] duration-300 ease-out"
-			style="max-width: {floatingIsland ? '100%' : '1200px'};"
-		>
-			<div class="pl-4">
-				{#if mailMode}
-					<!-- Mail-nav mode: one tap back to the decision inbox. -->
-					<a
-						href="/ai"
-						class="inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white no-underline transition-colors hover:bg-slate-800"
-					>
-						<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m0 0 7 7m-7-7 7-7"/></svg>
-						Back to inbox
-					</a>
-				{:else}
-					<a href="/" class="text-xl font-[700] tracking-tight text-slate-900 transition-colors">
-						predictadmit<span class="text-[#1A4CFF]">.com</span>
-					</a>
-				{/if}
-			</div>
-
-			<!-- CENTERED NAVIGATION — the three things a visitor comes to do, spelled
-			     out plainly (was terse "Portals / Predict / Pro"): predict their own
-			     odds, run every school's real portal, and upgrade. Bigger + clearer;
-			     each carries a small glyph, and "Go Pro" is an accent pill so the
-			     paid action reads instantly. Active route gets a filled chip. -->
-			<!-- Consistent nav: all four links share one size/weight/padding, the same
-			     light-grey hover chip, and the same filled black active chip. -->
-			<nav class="hidden lg:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
-				{#each navLinks as link}
-					<a
-						href={link.href}
-						aria-current={link.active ? 'page' : undefined}
-						on:click={(e) => e.currentTarget.blur()}
-						class="whitespace-nowrap shrink-0 text-[15px] font-medium px-4 py-2 rounded-full transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-300 {link.active
-							? 'bg-slate-900 text-white'
-							: 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'}"
-					>
-						{link.label}
-					</a>
-				{/each}
-			</nav>
-
-			<div class="flex items-center pr-1">
-				<a
-					href="/account"
-					class="inline-flex items-center gap-2 bg-slate-900 text-white px-4 py-2 rounded-full hover:bg-black transition-colors font-semibold text-sm shadow-sm"
-				>
-					{#if session}
-						{#if session.user?.image}
-							<img
-								src={session.user.image}
-								alt={session.user.name}
-								class="w-5 h-5 rounded-full border border-slate-700"
-							/>
-						{:else}
-							<div
-								class="w-5 h-5 bg-slate-800 rounded-full flex items-center justify-center text-[10px] text-white"
-							>
-								{session.user?.name?.charAt(0) || 'U'}
-							</div>
-						{/if}
-						<span class="max-w-[80px] overflow-hidden text-ellipsis whitespace-nowrap text-xs">
-							{session.user?.name || 'Account'}
-						</span>
-					{:else}
-						<svg class="w-3.5 h-3.5" viewBox="0 0 24 24">
-							<path
-								fill="#4285F4"
-								d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-							/>
-							<path
-								fill="#34A853"
-								d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-							/>
-							<path
-								fill="#FBBC05"
-								d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
-							/>
-							<path
-								fill="#EA4335"
-								d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
-							/>
-						</svg>
-						<span class="text-xs">Sign in</span>
-					{/if}
+		<div class="container header-inner">
+			{#if mailMode}
+				<!-- Mail-nav mode: one tap back to the decision inbox. -->
+				<a href="/ai" class="btn btn-secondary logo-link">← Back to inbox</a>
+			{:else}
+				<a href="/" class="logo-link">
+					<span class="brand-word">predictadmit<span class="brand-dot">.com</span></span>
 				</a>
-			</div>
+			{/if}
+
+			{#if !mailMode}
+				<button
+					class="nav-toggle"
+					type="button"
+					aria-expanded={menuOpen}
+					aria-label="Menu"
+					on:click={() => (menuOpen = !menuOpen)}
+				>
+					<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
+				</button>
+
+				<nav class="site-nav" class:is-open={menuOpen} aria-label="Primary">
+					<ul>
+						{#each navLinks as link}
+							<li>
+								<a href={link.href} aria-current={link.active ? 'page' : undefined}>{link.label}</a>
+							</li>
+						{/each}
+						<li>
+							<a href="/account" class="btn btn-primary nav-account">
+								{#if session}
+									{session.user?.name || 'Account'}
+								{:else}
+									Sign in
+								{/if}
+							</a>
+						</li>
+					</ul>
+				</nav>
+			{/if}
 		</div>
 	</header>
 {/if}
+
+<style>
+	.brand-word {
+		font-family: var(--font-display);
+		font-size: 1.35rem;
+		color: var(--navy);
+		letter-spacing: 0;
+	}
+	.brand-dot {
+		color: var(--blue);
+	}
+	.logo-link:hover .brand-dot {
+		color: var(--blue-dark);
+	}
+	.nav-account {
+		padding: 0.5rem 1.1rem;
+		font-size: 0.85rem;
+	}
+	/* Mail-mode back button reuses .btn but shouldn't stretch */
+	.logo-link.btn {
+		font-size: 0.85rem;
+		padding: 0.5rem 1.1rem;
+	}
+	.site-header.is-dimmed {
+		opacity: 0.3;
+		pointer-events: none;
+		filter: grayscale(1);
+	}
+	@media (min-width: 768px) {
+		.site-nav :global(ul) {
+			gap: 0.15rem 0.35rem;
+		}
+	}
+</style>

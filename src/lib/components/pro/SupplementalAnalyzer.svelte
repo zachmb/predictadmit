@@ -154,7 +154,7 @@
 								on:input={(e) => updateDraft(school.slug, i, e.currentTarget.value)}
 								rows="6"
 								placeholder="Start writing your draft..."
-								class="w-full rounded-lg border border-slate-200 bg-slate-50 p-4 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 resize-y"
+								class="w-full rounded-lg border border-slate-200 bg-slate-50 p-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue resize-y"
 							></textarea>
 
 							<div class="flex items-center justify-between">
@@ -164,7 +164,7 @@
 								<Button
 									disabled={isAnalyzing || !supp.draft}
 									on:click={() => analyzeDraft(i)}
-									class="bg-emerald-600 text-white px-4 py-2 text-xs font-bold rounded-lg hover:bg-emerald-700"
+									class="bg-blue text-white px-4 py-2 text-xs font-bold rounded-lg hover:bg-blue-dark"
 								>
 									{isAnalyzing ? 'Analyzing...' : 'AI Feedback'}
 								</Button>
@@ -172,12 +172,12 @@
 
 							{#if supp.aiFeedback}
 								<div
-									class="bg-emerald-50 border border-emerald-100 rounded-lg p-4 text-sm text-emerald-800 animate-in fade-in slide-in-from-top-2"
+									class="bg-blue/10 border border-blue/30 rounded-lg p-4 text-sm text-blue animate-in fade-in slide-in-from-top-2"
 								>
 									<h4
 										class="font-bold text-xs uppercase tracking-wide mb-1 flex items-center gap-2"
 									>
-										<span class="text-emerald-500">✨</span> AI Feedback
+										<span class="text-blue">✨</span> AI Feedback
 									</h4>
 									{supp.aiFeedback}
 								</div>

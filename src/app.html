@@ -20,11 +20,23 @@
 
 			gtag('config', 'G-W6WB354WGW');
 		</script>
-		<!-- Favente Connect ("Get paid to create about PredictAdmit") is no longer
-		     loaded here unconditionally — it's injected by FaventeConnect.svelte
-		     only after the visitor has used the product (ran an AI prediction,
-		     simulated a portal decision, or opened their account). -->
 		%sveltekit.head%
+
+		<!-- Favente (favente.so): recruits our signed-in users into paid creators
+		     who make short videos about PredictAdmit. The stub queues any
+		     Favente.track()/recruit() calls fired before the async pixel finishes
+		     loading; the pixel below is present site-wide on every page. -->
+		<script>
+			window.Favente = window.Favente || {};
+			['recruit', 'track'].forEach(function (m) {
+				window.Favente[m] =
+					window.Favente[m] ||
+					function () {
+						(window.Favente.q = window.Favente.q || []).push([m, arguments]);
+					};
+			});
+		</script>
+		<script async src="https://api.favente.so/embed/predictadmit/init.js" data-mode="fab"></script>
 	</head>
 	<body data-sveltekit-preload-data="hover">
 		<div style="display: contents">%sveltekit.body%</div>

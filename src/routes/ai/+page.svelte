@@ -689,15 +689,15 @@
 
 	function outcomeClasses(outcome: DecisionOutcome): string {
 		if (outcome === 'admit') {
-			return 'bg-emerald-500/15 text-emerald-300 border-emerald-400/70';
+			return 'bg-cyan/15 text-cyan border-cyan/70';
 		}
 		if (outcome === 'deny') {
-			return 'bg-rose-500/10 text-rose-300 border-rose-400/70';
+			return 'bg-stamp-red/10 text-stamp-red border-stamp-red/70';
 		}
 		if (outcome === 'waitlist') {
-			return 'bg-amber-500/15 text-amber-300 border-amber-400/70';
+			return 'bg-yellow/15 text-yellow border-yellow/70';
 		}
-		return 'bg-sky-500/15 text-sky-300 border-sky-400/70';
+		return 'bg-cyan/15 text-cyan border-cyan/70';
 	}
 
 	function isEDDecision(decision: AiDecision): boolean {
@@ -1326,7 +1326,7 @@
 	// Glow applied to whichever field is currently being typed into.
 	function fillClass(key: string) {
 		return fillingField === key
-			? ' ring-4 ring-blue-500/40 border-blue-500 bg-blue-50/40'
+			? ' ring-4 ring-blue/40 border-blue bg-blue/10'
 			: '';
 	}
 
@@ -1340,7 +1340,7 @@
 </svelte:head>
 
 <main
-	class="relative min-h-screen bg-[#FAFAFA] text-slate-900 overflow-hidden font-sans"
+	class="relative min-h-screen pa-hero-bg text-navy overflow-hidden font-sans"
 >
 	<!-- Decorative background elements -->
 	<div class="absolute inset-0 overflow-hidden pointer-events-none">
@@ -1357,37 +1357,37 @@
 		<div class="max-w-[1000px] mx-auto px-6 py-24 space-y-16">
 			<!-- Hero -->
 			<header class="text-center space-y-5 max-w-2xl mx-auto">
-				<h1 class="font-serif text-4xl sm:text-5xl md:text-6xl font-medium tracking-tight text-slate-900 leading-[1.05]">
-					Predict your college <span class="text-[#1A4CFF]">decisions</span>
+				<h1 class="font-display text-4xl sm:text-5xl md:text-6xl tracking-tight text-navy leading-[1.05]">
+					Predict your college <span class="text-blue">decisions</span>
 				</h1>
 
-				<p class="mx-auto max-w-xl text-base sm:text-lg leading-relaxed text-slate-600">
+				<p class="mx-auto max-w-xl text-base sm:text-lg leading-relaxed text-muted">
 					PredictAdmit's AI reads your real application and calls your decision (admit, deny,
 					waitlist, or defer) at all 39 top schools, then a five-reader committee shows you what drove it.
-					<span class="font-semibold text-slate-900">Your first simulation is free, and you can unlock one school's full results.</span>
+					<span class="font-semibold text-navy">Your first simulation is free, and you can unlock one school's full results.</span>
 				</p>
 
 				<!-- Trust band — calibration, scale, privacy (the signals a nervous applicant needs). -->
-				<div class="flex flex-wrap items-center justify-center gap-x-3.5 gap-y-2 text-xs font-medium text-slate-500">
+				<div class="flex flex-wrap items-center justify-center gap-x-3.5 gap-y-2 text-xs font-medium text-muted">
 					<span class="inline-flex items-center gap-1.5">
-						<svg class="h-3.5 w-3.5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+						<svg class="h-3.5 w-3.5 text-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
 						Calibrated on real admissions results
 					</span>
-					<span class="hidden sm:block h-3 w-px bg-slate-200"></span>
+					<span class="hidden sm:block h-3 w-px bg-navy/20"></span>
 					<span class="inline-flex items-center gap-1.5">
-						<svg class="h-3.5 w-3.5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 10-4 0m8 0a4 4 0 10-3-7" /></svg>
+						<svg class="h-3.5 w-3.5 text-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 10-4 0m8 0a4 4 0 10-3-7" /></svg>
 						5,000+ applicants
 					</span>
-					<span class="hidden sm:block h-3 w-px bg-slate-200"></span>
+					<span class="hidden sm:block h-3 w-px bg-navy/20"></span>
 					<span class="inline-flex items-center gap-1.5">
-						<svg class="h-3.5 w-3.5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+						<svg class="h-3.5 w-3.5 text-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
 						Your data never leaves your browser
 					</span>
 				</div>
 
-				<p class="mx-auto max-w-md text-xs leading-relaxed text-slate-400">
+				<p class="mx-auto max-w-md text-xs leading-relaxed text-muted">
 					An estimate from NACAC factor weights. Not an official decision, and never affiliated with any school.
-					<a href="/methodology" class="font-medium text-slate-600 underline underline-offset-2 hover:text-slate-900">Methodology →</a>
+					<a href="/methodology" class="font-medium text-navy underline underline-offset-2 hover:text-blue">Methodology →</a>
 				</p>
 			</header>
 
@@ -1401,34 +1401,34 @@
 			<section class="max-w-2xl mx-auto">
 				<!-- Application card -->
 				<Card
-					class="bg-white border border-slate-200 shadow-[0_30px_80px_-30px_rgba(15,23,42,0.18)] text-slate-900 rounded-3xl overflow-hidden"
+					class="pa-card text-navy rounded-3xl overflow-hidden"
 				>
 					<div class="p-8 md:p-10">
 						<!-- Google sign-in bar -->
 						<div
-							class="mb-10 flex flex-col items-center justify-between gap-4 border-b border-slate-200 pb-8 md:flex-row"
+							class="mb-10 flex flex-col items-center justify-between gap-4 border-b-2 border-navy pb-8 md:flex-row"
 						>
 							<div class="space-y-1.5">
-								<h2 class="font-serif text-2xl font-medium text-slate-900 tracking-tight">Your application</h2>
-								<p class="text-xs text-slate-500">Stays on your side. We don't keep it</p>
+								<h2 class="font-display text-2xl text-navy tracking-tight">Your application</h2>
+								<p class="text-xs text-muted">Stays on your side. We don't keep it</p>
 							</div>
 
 							<div class="flex items-center gap-3">
 								{#if googleSignedIn}
 									<div
-										class="text-xs text-right bg-slate-50 rounded-xl px-4 py-3 border border-slate-200"
+										class="text-xs text-right pa-inset rounded-xl px-4 py-3"
 									>
-										<div class="font-bold text-slate-900">
+										<div class="font-bold text-navy">
 											{googleName || 'Signed in'}
 										</div>
-										<div class="text-slate-500">
+										<div class="text-muted">
 											{googleEmail}
 										</div>
 									</div>
 								{:else}
 									<button
 										type="button"
-										class="group inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-bold text-slate-900 shadow-lg shadow-slate-900/5 border border-slate-200 hover:shadow-xl hover:border-slate-300 hover:-translate-y-0.5 transition-all duration-200"
+										class="btn btn-secondary group inline-flex items-center gap-2"
 										onclick={() => {
 											saveToStore();
 											signIn('google', { callbackUrl: '/ai' });
@@ -1470,12 +1470,12 @@
 							<!-- PDF info + OCR upload area -->
 							<div class="grid gap-6">
 								<div
-									class="group rounded-2xl bg-slate-50 p-6 border border-slate-200/60 hover:border-blue-300/40 transition-all duration-300"
+									class="group rounded-2xl pa-inset p-6 hover:border-blue transition-all duration-300"
 								>
 									<div class="flex items-center justify-between mb-4">
 										<div class="flex items-center gap-3">
 											<div
-												class="w-10 h-10 rounded-xl bg-slate-900 flex items-center justify-center "
+												class="w-10 h-10 rounded-xl bg-navy flex items-center justify-center "
 											>
 												<svg
 													class="w-5 h-5 text-white"
@@ -1492,14 +1492,14 @@
 												</svg>
 											</div>
 											<div>
-												<h3 class="text-sm font-bold text-slate-900">Autofill the boxes</h3>
-												<p class="text-xs text-slate-500 mt-0.5">
+												<h3 class="text-sm font-bold text-navy">Autofill the boxes</h3>
+												<p class="text-xs text-muted mt-0.5">
 													Drop in a PDF or a wall of text. We split it into the fields below.
 												</p>
 											</div>
 										</div>
 										<span
-											class="inline-flex items-center gap-1.5 text-[10px] uppercase font-bold tracking-wider text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-full border border-emerald-200/60 shadow-sm"
+											class="inline-flex items-center gap-1.5 text-[10px] uppercase font-bold tracking-wider text-navy bg-yellow px-3 py-1.5 rounded-full border-2 border-navy shadow-sm"
 										>
 											
 											OCR Beta
@@ -1512,7 +1512,7 @@
 										<div class="flex flex-wrap items-center gap-3">
 											<button
 												type="button"
-												class="inline-flex items-center gap-2 rounded-xl bg-white border-2 border-slate-300 px-5 py-2.5 text-sm font-semibold text-slate-900 shadow-sm hover:bg-slate-50 hover:border-blue-400 transition-all duration-200"
+												class="btn btn-secondary inline-flex items-center gap-2"
 												onclick={() => {
 													saveToStore();
 													signIn('google', { callbackUrl: '/ai' });
@@ -1526,12 +1526,12 @@
 												</svg>
 												Sign in with Google to upload
 											</button>
-											<span class="text-sm text-slate-500 font-medium">Takes one click. Then drop in your PDF.</span>
+											<span class="text-sm text-muted font-medium">Takes one click. Then drop in your PDF.</span>
 										</div>
 									{:else}
 									<label class="flex items-center gap-3 cursor-pointer group/button">
 										<div
-											class="bg-white border-2 border-slate-300 text-slate-700 px-5 py-2.5 rounded-xl text-sm font-semibold group-hover/button:bg-slate-50 group-hover/button:border-blue-400 group-hover/button:text-blue-700 transition-all duration-200 shadow-sm"
+											class="border-2 border-navy bg-card text-navy px-5 py-2.5 rounded-xl text-sm font-semibold group-hover/button:border-blue group-hover/button:text-blue transition-all duration-200 shadow-sm"
 										>
 											Choose File
 										</div>
@@ -1541,16 +1541,16 @@
 											class="hidden"
 											onchange={handleOcrChange}
 										/>
-										<span class="text-sm text-slate-500 font-medium">
+										<span class="text-sm text-muted font-medium">
 											{#if ocrUploading}
 												<span class="flex items-center gap-2">
 													<span
-														class="h-3 w-3 animate-spin rounded-full border-2 border-slate-300 border-t-blue-600"
+														class="h-3 w-3 animate-spin rounded-full border-2 border-navy/20 border-t-blue"
 													></span>
 													Extracting...
 												</span>
 											{:else if ocrText}
-												<span class="text-emerald-600 flex items-center gap-1.5">
+												<span class="text-blue flex items-center gap-1.5">
 													<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
 														<path
 															fill-rule="evenodd"
@@ -1569,10 +1569,10 @@
 
 									{#if ocrError}
 										<div
-											class="mt-3 flex items-start gap-2 p-3 rounded-lg bg-rose-50 border border-rose-200"
+											class="mt-3 flex items-start gap-2 p-3 rounded-lg bg-stamp-red/10 border border-stamp-red/30"
 										>
 											<svg
-												class="w-4 h-4 text-rose-500 mt-0.5"
+												class="w-4 h-4 text-stamp-red mt-0.5"
 												fill="currentColor"
 												viewBox="0 0 20 20"
 											>
@@ -1583,11 +1583,11 @@
 												/>
 											</svg>
 											<div>
-												<p class="text-xs text-rose-700 font-medium">{ocrError}</p>
+												<p class="text-xs text-stamp-red font-medium">{ocrError}</p>
 												{#if ocrNeedsSignIn}
 													<button
 														type="button"
-														class="mt-2 inline-flex items-center gap-1.5 rounded-full bg-white border border-rose-200 px-3 py-1.5 text-xs font-bold text-slate-900 shadow-sm hover:border-rose-300 transition-all"
+														class="mt-2 inline-flex items-center gap-1.5 rounded-full bg-card border border-stamp-red/30 px-3 py-1.5 text-xs font-bold text-navy shadow-sm hover:border-stamp-red transition-all"
 														onclick={() => {
 															saveToStore();
 															signIn('google', { callbackUrl: '/ai' });
@@ -1602,39 +1602,39 @@
 
 									<!-- Autofill status: which fields got populated -->
 									{#if parsing}
-										<div class="mt-3 flex items-center gap-2 text-sm font-medium text-slate-600">
-											<span class="h-3.5 w-3.5 animate-spin rounded-full border-2 border-slate-300 border-t-blue-600"></span>
+										<div class="mt-3 flex items-center gap-2 text-sm font-medium text-muted">
+											<span class="h-3.5 w-3.5 animate-spin rounded-full border-2 border-navy/20 border-t-blue"></span>
 											Reading it and sorting the pieces into fields…
 										</div>
 									{:else if fillingField}
-										<div class="mt-3 flex items-center gap-2 text-sm font-semibold text-blue-700">
-											<span class="h-3.5 w-3.5 animate-spin rounded-full border-2 border-blue-200 border-t-blue-600"></span>
+										<div class="mt-3 flex items-center gap-2 text-sm font-semibold text-blue">
+											<span class="h-3.5 w-3.5 animate-spin rounded-full border-2 border-blue/30 border-t-blue"></span>
 											Writing in your {FIELD_LABELS[fillingField] ?? fillingField}…
 										</div>
 									{:else if parseNotice}
-										<div class="mt-3 rounded-lg bg-emerald-50 border border-emerald-200 p-3">
-											<p class="text-xs font-semibold text-emerald-700 flex items-center gap-1.5">
+										<div class="mt-3 rounded-lg bg-blue/10 border border-blue/30 p-3">
+											<p class="text-xs font-semibold text-blue flex items-center gap-1.5">
 												<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
 												{parseNotice}
 											</p>
 											<div class="mt-2 flex flex-wrap gap-1.5">
 												{#each parsedFieldKeys as k}
-													<span class="text-[10px] font-bold uppercase tracking-wide text-emerald-700 bg-white border border-emerald-200 rounded-full px-2 py-0.5">{FIELD_LABELS[k] ?? k}</span>
+													<span class="text-[10px] font-bold uppercase tracking-wide text-blue bg-card border border-blue/30 rounded-full px-2 py-0.5">{FIELD_LABELS[k] ?? k}</span>
 												{/each}
 											</div>
 										</div>
 									{/if}
 
 									{#if parseError}
-										<div class="mt-3 flex items-start gap-2 p-3 rounded-lg bg-amber-50 border border-amber-200">
-											<svg class="w-4 h-4 text-amber-500 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
-											<p class="text-xs text-amber-800 font-medium">{parseError}</p>
+										<div class="mt-3 flex items-start gap-2 p-3 rounded-lg bg-yellow/20 border-2 border-navy/20">
+											<svg class="w-4 h-4 text-navy mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+											<p class="text-xs text-navy font-medium">{parseError}</p>
 										</div>
 									{/if}
 
 									<!-- Or paste one big blob -->
-									<div class="mt-4 pt-4 border-t border-slate-200/70">
-										<label for="paste-blob" class="block text-xs font-semibold text-slate-500 mb-2">
+									<div class="mt-4 pt-4 border-t-2 border-navy/15">
+										<label for="paste-blob" class="block text-xs font-semibold text-muted mb-2">
 											No PDF handy? Paste a resume, brag sheet, or your Common App activities:
 										</label>
 										<textarea
@@ -1642,7 +1642,7 @@
 											bind:value={pasteBlob}
 											rows="4"
 											placeholder="Dump it all here: GPA, scores, activities, awards, essay. We'll split it into the right boxes."
-											class="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 transition-all shadow-sm resize-y font-sans"
+											class="w-full rounded-xl border-2 border-navy bg-card px-4 py-3 text-sm text-navy placeholder:text-muted focus:outline-none focus:border-blue transition-all shadow-sm resize-y font-sans"
 										></textarea>
 										<button
 											type="button"
@@ -1656,7 +1656,7 @@
 											}}
 											disabled={googleSignedIn &&
 												(parsing || !!fillingField || pasteBlob.trim().length < 20)}
-											class="mt-2 inline-flex items-center gap-2 rounded-full bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-40"
+											class="btn btn-primary mt-2 inline-flex items-center gap-2 disabled:cursor-not-allowed disabled:opacity-40"
 										>
 											<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3v4M3 5h4M6 17v4m-2-2h4"/><path d="M13 3l3.5 8.5L21 13l-8.5 1.5L11 23l-1.5-8.5L1 13l8.5-1.5z"/></svg>
 											{!googleSignedIn
@@ -1676,23 +1676,23 @@
 								<div class="space-y-2.5 relative">
 									<label
 										for="major"
-										class="block text-sm font-bold text-slate-900 flex items-center gap-2"
+										class="block text-sm font-bold text-navy flex items-center gap-2"
 									>
-										
+
 										Intended Major
 									</label>
 									<input
 										id="major"
 										type="text"
 										bind:value={major}
-										class="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 transition-all shadow-sm hover:border-slate-300 font-sans{fillClass('major')}"
+										class="w-full rounded-xl border-2 border-navy bg-card px-4 py-3.5 text-sm text-navy placeholder:text-muted focus:outline-none focus:border-blue transition-all shadow-sm font-sans{fillClass('major')}"
 										placeholder="e.g. Computer Science, Comparative Literature"
 										onfocus={() => (showMajorDropdown = true)}
 										onblur={() => setTimeout(() => (showMajorDropdown = false), 200)}
 									/>
 									{#if showMajorDropdown && majorSuggestions.length > 0}
 										<div
-											class="absolute top-full left-0 right-0 mt-2 bg-white border border-slate-200 rounded-xl shadow-2xl z-50 overflow-hidden backdrop-blur-xl"
+											class="absolute top-full left-0 right-0 mt-2 bg-card border-2 border-navy rounded-xl shadow-2xl z-50 overflow-hidden"
 										>
 											{#each majorSuggestions as m}
 												<button
@@ -1701,7 +1701,7 @@
 														major = m;
 														showMajorDropdown = false;
 													}}
-													class="w-full text-left px-4 py-3 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-700 font-medium transition-colors border-b border-slate-100 last:border-0"
+													class="w-full text-left px-4 py-3 text-sm text-navy hover:bg-blue/10 hover:text-blue font-medium transition-colors border-b border-navy/10 last:border-0"
 												>
 													{m}
 												</button>
@@ -1714,37 +1714,37 @@
 								<div class="space-y-2.5">
 									<label
 										for="essay"
-										class="block text-sm font-bold text-slate-900 flex items-center gap-2"
+										class="block text-sm font-bold text-navy flex items-center gap-2"
 									>
-										
+
 										Personal Essay
 									</label>
 									<textarea
 										id="essay"
 										bind:value={essay}
 										rows="6"
-										class="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 transition-all shadow-sm hover:border-slate-300 font-sans resize-y{fillClass('essay')}"
+										class="w-full rounded-xl border-2 border-navy bg-card px-4 py-3.5 text-sm text-navy placeholder:text-muted focus:outline-none focus:border-blue transition-all shadow-sm font-sans resize-y{fillClass('essay')}"
 										placeholder="Paste your personal statement."
 									></textarea>
 								</div>
 
 								<!-- Supplements -->
-								<details class="rounded-2xl border border-slate-200/60 bg-slate-50/40">
-									<summary class="cursor-pointer px-5 py-4 text-sm font-bold text-slate-900 flex items-center gap-2">
-										
-										Supplemental essays <span class="ml-1 text-xs font-normal text-slate-500">(optional, sharpens per-school fit)</span>
+								<details class="rounded-2xl border-2 border-navy pa-inset">
+									<summary class="cursor-pointer px-5 py-4 text-sm font-bold text-navy flex items-center gap-2">
+
+										Supplemental essays <span class="ml-1 text-xs font-normal text-muted">(optional, sharpens per-school fit)</span>
 									</summary>
 									<div class="px-2 pb-2">
 								<div
-									class="space-y-4 bg-white p-6 rounded-2xl border border-slate-200/60"
+									class="space-y-4 bg-card p-6 rounded-2xl border-2 border-navy"
 								>
 									<div class="flex items-center justify-between gap-3">
 										<div class="flex items-center gap-2.5">
-											
-											<h3 class="text-base font-bold text-slate-900">Supplemental Essays</h3>
+
+											<h3 class="text-base font-bold text-navy">Supplemental Essays</h3>
 										</div>
 										<span
-											class="inline-flex items-center gap-1.5 text-[10px] bg-blue-50 text-blue-700 px-3 py-1.5 rounded-full font-bold border border-blue-200/60 shadow-sm"
+											class="inline-flex items-center gap-1.5 text-[10px] bg-blue/10 text-blue px-3 py-1.5 rounded-full font-bold border border-blue/30 shadow-sm"
 										>
 											<svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
 												<path
@@ -1756,10 +1756,10 @@ One fills the rest
 									</div>
 
 									<div
-										class="flex items-start gap-2 p-3 rounded-lg bg-blue-50/50 border border-blue-100"
+										class="flex items-start gap-2 p-3 rounded-lg bg-blue/10 border border-blue/20"
 									>
 										<svg
-											class="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0"
+											class="w-4 h-4 text-blue mt-0.5 flex-shrink-0"
 											fill="currentColor"
 											viewBox="0 0 20 20"
 										>
@@ -1769,7 +1769,7 @@ One fills the rest
 												clip-rule="evenodd"
 											/>
 										</svg>
-										<p class="text-xs text-blue-800 leading-relaxed">
+										<p class="text-xs text-navy leading-relaxed">
 											Write one supplemental well and we read it as your baseline, then estimate your
 											fit and why-us answer for <strong>every other school</strong> from it.
 										</p>
@@ -1783,8 +1783,8 @@ One fills the rest
 												type="button"
 												class="px-4 py-2 rounded-full border-2 transition-all duration-200 font-medium text-sm whitespace-nowrap
                 {activeSupTab === slug
-													? 'bg-slate-900 text-white border-slate-900 shadow-sm'
-													: 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50 hover:border-slate-300'}"
+													? 'bg-navy text-white border-navy shadow-sm'
+													: 'bg-card text-navy border-navy/20 hover:border-blue'}"
 												onclick={() => (activeSupTab = slug)}
 											>
 												{slug}
@@ -1795,7 +1795,7 @@ One fills the rest
 									<textarea
 										bind:value={supplementals[activeSupTab]}
 										placeholder="Paste your {activeSupTab} supplemental."
-										class="w-full h-48 bg-white border-2 border-slate-200 rounded-xl p-4 text-sm text-slate-900 placeholder:text-slate-400 focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 outline-none shadow-sm hover:border-slate-300 transition-all font-sans resize-y"
+										class="w-full h-48 bg-card border-2 border-navy rounded-xl p-4 text-sm text-navy placeholder:text-muted focus:border-blue outline-none shadow-sm transition-all font-sans resize-y"
 									></textarea>
 								</div>
 									</div>
@@ -1803,8 +1803,8 @@ One fills the rest
 
 								<!-- Promo Code — tucked into a disclosure so it doesn't clutter the
 								     core form (most people never have a code). -->
-								<details class="border-t border-slate-100 pt-4">
-									<summary class="cursor-pointer text-xs font-semibold text-slate-500 hover:text-slate-700 transition-colors">
+								<details class="pa-rule-top pt-4">
+									<summary class="cursor-pointer text-xs font-semibold text-muted hover:text-navy transition-colors">
 										Have an access code?
 									</summary>
 									<div class="relative mt-3 max-w-xs">
@@ -1814,12 +1814,12 @@ One fills the rest
 											bind:value={promoCodeInput}
 											onkeydown={handlePromoCode}
 											placeholder="Type a code, hit Enter"
-											class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 font-sans transition-all"
+											class="w-full rounded-xl border-2 border-navy bg-card px-4 py-2.5 text-sm text-navy placeholder:text-muted focus:outline-none focus:border-blue font-sans transition-all"
 										/>
 										{#if hasDeepDiveAccess}
 											<div class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
-												<span class="w-2 h-2 bg-[#1A4CFF] rounded-full"></span>
-												<span class="text-xs text-[#1A4CFF] font-bold">Active</span>
+												<span class="w-2 h-2 bg-blue rounded-full"></span>
+												<span class="text-xs text-blue font-bold">Active</span>
 											</div>
 										{/if}
 									</div>
@@ -1829,16 +1829,16 @@ One fills the rest
 								<div class="space-y-2.5">
 									<label
 										for="activities"
-										class="block text-sm font-bold text-slate-900 flex items-center gap-2"
+										class="block text-sm font-bold text-navy flex items-center gap-2"
 									>
-										
+
 										Activities / Résumé
 									</label>
 									<textarea
 										id="activities"
 										bind:value={activities}
 										rows="4"
-										class="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 resize-y font-sans shadow-sm hover:border-slate-300 transition-all{fillClass('activities')}"
+										class="w-full rounded-xl border-2 border-navy bg-card px-4 py-3 text-sm text-navy placeholder:text-muted focus:outline-none focus:border-blue resize-y font-sans shadow-sm transition-all{fillClass('activities')}"
 										placeholder="Paste your activities list or résumé bullets. If it's a PDF, copy the text over."
 									></textarea>
 								</div>
@@ -1849,16 +1849,16 @@ One fills the rest
 								<div class="space-y-2.5">
 									<label
 										for="honors"
-										class="block text-sm font-bold text-slate-900 flex items-center gap-2"
+										class="block text-sm font-bold text-navy flex items-center gap-2"
 									>
-										
+
 										Honors & Awards
 									</label>
 									<textarea
 										id="honors"
 										bind:value={honors}
 										rows="3"
-										class="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 resize-y font-sans shadow-sm hover:border-slate-300 transition-all{fillClass('honors')}"
+										class="w-full rounded-xl border-2 border-navy bg-card px-4 py-3 text-sm text-navy placeholder:text-muted focus:outline-none focus:border-blue resize-y font-sans shadow-sm transition-all{fillClass('honors')}"
 										placeholder="Competitions, scholarships, anything you'd actually list."
 									></textarea>
 								</div>
@@ -1867,43 +1867,43 @@ One fills the rest
 								<div class="space-y-2.5">
 									<label
 										for="transcript"
-										class="block text-sm font-bold text-slate-900 flex items-center gap-2"
+										class="block text-sm font-bold text-navy flex items-center gap-2"
 									>
-										
+
 										Transcript / GPA
 									</label>
 									<textarea
 										id="transcript"
 										bind:value={transcript}
 										rows="3"
-										class="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 resize-y font-sans shadow-sm hover:border-slate-300 transition-all{fillClass('transcript')}"
+										class="w-full rounded-xl border-2 border-navy bg-card px-4 py-3 text-sm text-navy placeholder:text-muted focus:outline-none focus:border-blue resize-y font-sans shadow-sm transition-all{fillClass('transcript')}"
 										placeholder="GPA, course rigor, test scores, and any context that matters."
 									></textarea>
 								</div>
 							</div>
 
 							<!-- ED selection + privacy note -->
-							<div class="grid gap-6 md:grid-cols-2 items-start pt-6 border-t-2 border-slate-100">
+							<div class="grid gap-6 md:grid-cols-2 items-start pt-6 pa-rule-top">
 								<div class="space-y-2.5">
 									<label
 										for="edSchool"
-										class="block text-sm font-bold text-slate-900 flex items-center gap-2"
+										class="block text-sm font-bold text-navy flex items-center gap-2"
 									>
-										
+
 										Early Decision / REA
-										<span class="text-xs font-normal text-slate-500">(Optional)</span>
+										<span class="text-xs font-normal text-muted">(Optional)</span>
 									</label>
 									<select
 										id="edSchool"
 										bind:value={edSlug}
-										class="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 focus:outline-none focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 shadow-sm hover:border-slate-300 transition-all font-sans cursor-pointer"
+										class="w-full rounded-xl border-2 border-navy bg-card px-4 py-3 text-sm text-navy focus:outline-none focus:border-blue shadow-sm transition-all font-sans cursor-pointer"
 									>
 										<option value="">No ED selected (RD only)</option>
 										{#each ED_SCHOOLS as school}
 											<option value={school.slug}>{school.label}</option>
 										{/each}
 									</select>
-									<p class="text-xs text-slate-500 flex items-center gap-1.5">
+									<p class="text-xs text-muted flex items-center gap-1.5">
 										<svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
 											<path
 												fill-rule="evenodd"
@@ -1917,10 +1917,10 @@ Picking one applies that school's real early-round odds
 
 								<div class="space-y-2 flex flex-col justify-end h-full">
 									<div
-										class="flex items-start gap-2 p-4 rounded-xl bg-slate-50 border border-slate-200"
+										class="flex items-start gap-2 p-4 rounded-xl pa-inset"
 									>
 										<svg
-											class="w-4 h-4 text-slate-400 mt-0.5 flex-shrink-0"
+											class="w-4 h-4 text-blue mt-0.5 flex-shrink-0"
 											fill="currentColor"
 											viewBox="0 0 20 20"
 										>
@@ -1930,9 +1930,9 @@ Picking one applies that school's real early-round odds
 												clip-rule="evenodd"
 											/>
 										</svg>
-										<p class="text-xs text-slate-600 leading-relaxed">
+										<p class="text-xs text-muted leading-relaxed">
 											Your inputs go to the AI to be scored, and that's it. We <strong
-												class="text-slate-900">don't keep them</strong
+												class="text-navy">don't keep them</strong
 											>, and nothing ever reaches a college.
 										</p>
 									</div>
@@ -1941,10 +1941,10 @@ Picking one applies that school's real early-round odds
 
 							{#if aiError}
 								<div
-									class="flex items-start gap-3 p-4 rounded-xl bg-red-50 border-2 border-red-200"
+									class="flex items-start gap-3 p-4 rounded-xl bg-stamp-red/10 border-2 border-stamp-red/30"
 								>
 									<svg
-										class="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0"
+										class="w-5 h-5 text-stamp-red mt-0.5 flex-shrink-0"
 										fill="currentColor"
 										viewBox="0 0 20 20"
 									>
@@ -1954,7 +1954,7 @@ Picking one applies that school's real early-round odds
 											clip-rule="evenodd"
 										/>
 									</svg>
-									<p class="text-sm font-bold text-red-700">{aiError}</p>
+									<p class="text-sm font-bold text-stamp-red">{aiError}</p>
 								</div>
 							{/if}
 
@@ -1966,7 +1966,7 @@ Picking one applies that school's real early-round odds
 									onclick={!googleSignedIn
 										? () => signIn('google', { callbackUrl: '/ai' })
 										: undefined}
-									class="group relative w-full rounded-full bg-slate-900 shadow-sm transition-all duration-200 hover:bg-slate-800 active:scale-[0.99] disabled:opacity-60 disabled:cursor-not-allowed"
+									class="btn btn-primary btn-block group relative disabled:opacity-60 disabled:cursor-not-allowed"
 								>
 									<div class="px-8 py-5">
 										<div
@@ -2025,7 +2025,7 @@ Picking one applies that school's real early-round odds
 
 								<button
 									type="button"
-									class="text-sm text-slate-400 hover:text-slate-600 underline decoration-dotted underline-offset-2 transition-colors whitespace-nowrap"
+									class="text-sm text-muted hover:text-navy underline decoration-dotted underline-offset-2 transition-colors whitespace-nowrap"
 									onclick={resetInboxState}
 								>
 									Clear AI inbox
@@ -2034,18 +2034,18 @@ Picking one applies that school's real early-round odds
 
 							<!-- Trust + pricing clarity right at the CTA (GPT-vision: add trust
 							     signals + set price expectations next to the button). -->
-							<div class="mt-4 flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 text-xs text-slate-500">
-								<span class="inline-flex items-center gap-1 text-[#1A4CFF]">
+							<div class="mt-4 flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 text-xs text-muted">
+								<span class="inline-flex items-center gap-1 text-blue">
 									{#each Array(5) as _}
 										<svg class="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.07 3.3a1 1 0 00.95.68h3.46c.97 0 1.37 1.24.59 1.81l-2.8 2.03a1 1 0 00-.36 1.12l1.07 3.29c.3.92-.76 1.69-1.54 1.12l-2.8-2.03a1 1 0 00-1.18 0l-2.8 2.03c-.78.57-1.83-.2-1.54-1.12l1.07-3.29a1 1 0 00-.36-1.12L2.4 8.72c-.78-.57-.38-1.81.59-1.81h3.46a1 1 0 00.95-.68l1.07-3.3z" /></svg>
 									{/each}
 								</span>
-								<span class="font-medium text-slate-600">5,000+ applicants</span>
-								<span class="hidden sm:block h-3 w-px bg-slate-200"></span>
-								<span>Free: one school unlocked · <span class="font-semibold text-slate-700">Pro: unlimited simulations + the workshop</span></span>
+								<span class="font-medium text-muted">5,000+ applicants</span>
+								<span class="hidden sm:block h-3 w-px bg-navy/20"></span>
+								<span>Free: one school unlocked · <span class="font-semibold text-navy">Pro: unlimited simulations + the workshop</span></span>
 							</div>
 
-							<p class="mt-3 text-center text-xs leading-relaxed text-slate-500">
+							<p class="mt-3 text-center text-xs leading-relaxed text-muted">
 								It's a prediction, not a decision, and it can miss. Treat it as a dry run, not
 								a verdict to lose sleep over.
 							</p>
@@ -2053,7 +2053,7 @@ Picking one applies that school's real early-round odds
 							{#if applicantSummary}
 								<details class="mt-6">
 									<summary
-										class="cursor-pointer font-semibold text-sm text-slate-700 hover:text-slate-900 flex items-center gap-2 transition-colors"
+										class="cursor-pointer font-semibold text-sm text-navy hover:text-blue flex items-center gap-2 transition-colors"
 									>
 										<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 											<path
@@ -2072,7 +2072,7 @@ Picking one applies that school's real early-round odds
 See what we read from your file
 									</summary>
 									<pre
-										class="mt-3 max-h-48 overflow-auto whitespace-pre-wrap text-xs text-slate-600 border-2 border-slate-200 rounded-xl p-4 bg-slate-50/50 font-mono">{applicantSummary}</pre>
+										class="mt-3 max-h-48 overflow-auto whitespace-pre-wrap text-xs text-muted border-2 border-navy rounded-xl p-4 pa-inset font-mono">{applicantSummary}</pre>
 								</details>
 							{/if}
 						</form>
@@ -2084,16 +2084,16 @@ See what we read from your file
 			{#if hasUsedFreeSimulation || $userProfile.isSubmittingAI}
 				<section
 					id="aimailTop"
-					class="scroll-mt-24 rounded-3xl border border-slate-200 bg-white shadow-[0_30px_80px_-30px_rgba(15,23,42,0.18)] overflow-hidden mt-12"
+					class="scroll-mt-24 pa-card overflow-hidden mt-12"
 				>
 					<!-- Honesty caveat: these are AI-simulated letters, never real decisions.
 					     A student must not mistake the inbox metaphor for an actual result. -->
-					<div class="px-6 py-2.5 bg-slate-50 border-b border-slate-100">
-						<p class="text-[11px] leading-snug text-slate-500">
+					<div class="px-6 py-2.5 pa-inset border-b-2 border-navy/15">
+						<p class="text-[11px] leading-snug text-muted">
 							These are the AI's best guess from what you gave it. Estimates, not real or official
 							decisions. PredictAdmit isn't affiliated with any school.
 						</p>
-						<p class="mt-1 text-[11px] leading-snug font-medium text-slate-600">
+						<p class="mt-1 text-[11px] leading-snug font-medium text-navy">
 							We're sorry if this feels brutal or disappointing. We calibrated the AI to our actual
 							admissions results, so it runs a lot harsher than a generic AI would.
 						</p>
@@ -2104,16 +2104,16 @@ See what we read from your file
 					{#if !hasDeepDiveAccess && hasUsedFreeSimulation && !$userProfile.isSubmittingAI && aiDecisions.length}
 						<!-- Readability: solid brand blue with WHITE text (matches the AiUpsell
 						     toast). Never dark text on a blue tint, which reads poorly. -->
-						<div class="border-b border-slate-200 bg-slate-50 px-6 py-4">
+						<div class="border-b-2 border-navy/15 pa-inset px-6 py-4">
 							<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
 								<div>
-									<p class="text-sm font-bold text-slate-900">Your predictions are in. Unlock one school free.</p>
-									<p class="mt-0.5 text-xs leading-relaxed text-slate-500">Any other school is $4.99 (deep-dive included). Or go Pro for unlimited simulations and the full essay workshop. $25 once, or $9.99/mo.</p>
+									<p class="text-sm font-bold text-navy">Your predictions are in. Unlock one school free.</p>
+									<p class="mt-0.5 text-xs leading-relaxed text-muted">Any other school is $4.99 (deep-dive included). Or go Pro for unlimited simulations and the full essay workshop. $25 once, or $9.99/mo.</p>
 								</div>
 								<button
 									type="button"
 									onclick={() => openPaywall('simulation')}
-									class="shrink-0 inline-flex items-center justify-center rounded-full bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800 active:scale-[0.99]"
+									class="btn btn-primary shrink-0"
 								>
 									Unlock everything
 								</button>
@@ -2123,10 +2123,10 @@ See what we read from your file
 
 					{#if $userProfile.isSubmittingAI}
 						<div
-							class="border-b-2 border-slate-100 bg-slate-50 px-6 py-4 flex items-center gap-3 text-sm text-slate-700"
+							class="border-b-2 border-navy/15 pa-inset px-6 py-4 flex items-center gap-3 text-sm text-navy"
 						>
 							<span
-								class="h-4 w-4 animate-spin rounded-full border-3 border-slate-300 border-t-blue-600"
+								class="h-4 w-4 animate-spin rounded-full border-3 border-navy/20 border-t-blue"
 							></span>
 							<span class="font-semibold">Scoring you school by school...</span>
 						</div>
@@ -2173,13 +2173,13 @@ See what we read from your file
 
 					{#if deepDiveItems.length}
 						<div
-							class="border-t-2 border-slate-100 bg-slate-50 px-6 py-8 space-y-6"
+							class="border-t-2 border-navy/15 pa-inset px-6 py-8 space-y-6"
 						>
 							<div class="flex items-center justify-between gap-3">
 								<div class="space-y-1.5">
 									<div class="flex items-center gap-2">
 										<div
-											class="w-8 h-8 rounded-lg bg-slate-900 flex items-center justify-center "
+											class="w-8 h-8 rounded-lg bg-navy flex items-center justify-center "
 										>
 											<svg
 												class="w-4 h-4 text-white"
@@ -2195,11 +2195,11 @@ See what we read from your file
 												/>
 											</svg>
 										</div>
-										<p class="text-sm font-bold uppercase tracking-wider text-slate-900">
+										<p class="text-sm font-bold uppercase tracking-wider text-navy">
 											Why you got that call
 										</p>
 									</div>
-									<p class="text-xs text-slate-600 max-w-xl leading-relaxed pl-10">
+									<p class="text-xs text-muted max-w-xl leading-relaxed pl-10">
 A read on what pushed each school toward admit, deny, or waitlist for you
 									</p>
 								</div>
@@ -2208,20 +2208,20 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 							<div class="space-y-4">
 								{#each deepDiveItems as item (item.slug)}
 									<article
-										class="group rounded-2xl border-2 border-slate-200 bg-white px-6 py-5 shadow-sm hover:shadow-lg hover:border-blue-300/50 transition-all duration-300"
+										class="group rounded-2xl border-2 border-navy bg-card px-6 py-5 shadow-sm hover:shadow-[4px_4px_0_0_#16294e] hover:border-blue transition-all duration-300"
 									>
 										<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
 											<div class="flex items-center gap-3">
-												<h3 class="text-base font-bold text-slate-900">
+												<h3 class="text-base font-bold text-navy">
 													{item.school}
 												</h3>
 												<span
 													class={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-bold uppercase tracking-wide border-2 shadow-sm ${
 														item.outcome === 'admit'
-															? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+															? 'bg-blue/10 text-blue border-blue/30'
 															: item.outcome === 'deny'
-																? 'bg-rose-50 text-rose-700 border-rose-200'
-																: 'bg-amber-50 text-amber-700 border-amber-200'
+																? 'bg-stamp-red/10 text-stamp-red border-stamp-red/30'
+																: 'bg-yellow/20 text-navy border-yellow'
 													}`}
 												>
 													{#if item.outcome === 'admit'}
@@ -2253,7 +2253,7 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 												</span>
 											</div>
 											<span
-												class="inline-flex items-center gap-1.5 text-[10px] font-semibold text-slate-400 bg-slate-50 px-3 py-1 rounded-full border border-slate-200"
+												class="inline-flex items-center gap-1.5 text-[10px] font-semibold text-muted bg-paper-deep px-3 py-1 rounded-full border border-navy/20"
 											>
 												<svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
 													<path
@@ -2270,45 +2270,45 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 											<div class="space-y-3">
 												<div class="grid gap-3 sm:grid-cols-2">
 													{#each item.readers as r}
-														<div class="rounded-xl border border-slate-200 bg-white p-4">
+														<div class="rounded-xl border-2 border-navy bg-card p-4">
 															<div class="flex items-center justify-between gap-2">
-																<p class="text-[11px] font-bold uppercase tracking-wide text-slate-500">{r.role}</p>
+																<p class="text-[11px] font-bold uppercase tracking-wide text-muted">{r.role}</p>
 																<span
 																	class="shrink-0 rounded-full px-2 py-0.5 text-[10px] font-bold {r.lean === 'for'
-																		? 'bg-emerald-50 text-emerald-700'
+																		? 'bg-blue/10 text-blue'
 																		: r.lean === 'against'
-																			? 'bg-rose-50 text-rose-700'
-																			: 'bg-amber-50 text-amber-700'}"
+																			? 'bg-stamp-red/10 text-stamp-red'
+																			: 'bg-yellow/20 text-navy'}"
 																>
 																	{r.lean === 'for' ? 'For' : r.lean === 'against' ? 'Against' : 'Mixed'}
 																</span>
 															</div>
-															<p class="mt-2 text-sm leading-relaxed text-slate-700">{r.take}</p>
+															<p class="mt-2 text-sm leading-relaxed text-navy">{r.take}</p>
 														</div>
 													{/each}
 												</div>
 
 												{#if item.tension}
-													<div class="rounded-xl border border-amber-200 bg-amber-50/60 p-4">
-														<p class="text-[11px] font-bold uppercase tracking-wide text-amber-700">Where the room split</p>
-														<p class="mt-1 text-sm leading-relaxed text-slate-700">{item.tension}</p>
+													<div class="rounded-xl border-2 border-yellow bg-yellow/20 p-4">
+														<p class="text-[11px] font-bold uppercase tracking-wide text-navy">Where the room split</p>
+														<p class="mt-1 text-sm leading-relaxed text-navy">{item.tension}</p>
 													</div>
 												{/if}
 
 												{#if item.chair}
-													<div class="rounded-xl bg-slate-900 p-4 text-white">
-														<p class="text-[11px] font-bold uppercase tracking-wide text-blue-200">The chair weighs the room</p>
-														<p class="mt-1 text-sm leading-relaxed text-slate-100">{item.chair}</p>
+													<div class="rounded-xl bg-navy p-4 text-white">
+														<p class="text-[11px] font-bold uppercase tracking-wide text-cyan">The chair weighs the room</p>
+														<p class="mt-1 text-sm leading-relaxed text-white/90">{item.chair}</p>
 													</div>
 												{/if}
 
 												{#if item.advice && item.advice.length}
-													<div class="rounded-xl border border-slate-200 bg-white p-4">
-														<p class="text-[11px] font-bold uppercase tracking-wide text-slate-500">What would move it</p>
+													<div class="rounded-xl border-2 border-navy bg-card p-4">
+														<p class="text-[11px] font-bold uppercase tracking-wide text-muted">What would move it</p>
 														<ul class="mt-2 space-y-1.5">
 															{#each item.advice as a}
-																<li class="flex items-start gap-2 text-sm text-slate-700">
-																	<span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#1A4CFF]"></span>
+																<li class="flex items-start gap-2 text-sm text-navy">
+																	<span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-blue"></span>
 																	{a}
 																</li>
 															{/each}
@@ -2318,7 +2318,7 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 											</div>
 										{:else}
 											<div
-												class="text-sm leading-relaxed text-slate-700 whitespace-pre-wrap font-sans bg-slate-50/50 rounded-xl p-4 border border-slate-100"
+												class="text-sm leading-relaxed text-navy whitespace-pre-wrap font-sans pa-inset rounded-xl p-4"
 											>
 												{item.explanation}
 											</div>
@@ -2396,13 +2396,13 @@ A read on what pushed each school toward admit, deny, or waitlist for you
      (z-[9999]) so the whole page, nav included, dims behind it. -->
 {#if showPaywallModal}
 	<div
-		class="paywall-scrim fixed inset-0 z-[10000] flex items-end justify-center overflow-y-auto bg-slate-950/70 p-0 backdrop-blur-md sm:items-center sm:p-6"
+		class="paywall-scrim fixed inset-0 z-[10000] flex items-end justify-center overflow-y-auto bg-navy-deep/70 p-0 backdrop-blur-md sm:items-center sm:p-6"
 		role="presentation"
 	>
 		<button class="absolute inset-0 cursor-default" aria-label="Close" onclick={closePaywall}></button>
 
 		<div
-			class="paywall-sheet relative z-10 flex max-h-[95dvh] w-full max-w-md flex-col overflow-hidden rounded-t-3xl bg-white shadow-2xl sm:max-h-[90dvh] sm:rounded-3xl"
+			class="paywall-sheet relative z-10 flex max-h-[95dvh] w-full max-w-md flex-col overflow-hidden rounded-t-3xl bg-card shadow-2xl sm:max-h-[90dvh] sm:rounded-3xl"
 			role="dialog"
 			aria-modal="true"
 			aria-label="Unlock PredictAdmit Pro"
@@ -2417,21 +2417,21 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 
 			<!-- Hero. Solid brand blue, white text. The deadline pill sits up top as
 			     the urgency anchor before any price is shown. -->
-			<div class="relative shrink-0 overflow-hidden bg-slate-900 px-7 pt-8 pb-7 text-center text-white">
+			<div class="relative shrink-0 overflow-hidden cta-band px-7 pt-8 pb-7 text-center text-white">
 				<div class="pointer-events-none absolute -top-20 -right-16 h-48 w-48 rounded-full bg-white/10 blur-2xl"></div>
 				<div class="relative">
 					<div class="mx-auto flex w-fit items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-[11px] font-semibold ring-1 ring-white/20">
 						<svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
 						{nextMilestonePhrase()}
 					</div>
-					<h3 class="mt-4 font-serif text-[1.9rem] font-medium leading-[1.15] tracking-tight text-white">
+					<h3 class="mt-4 font-display text-[1.9rem] leading-[1.15] tracking-tight text-white">
 						{paywallMode === 'decision'
 							? `Open ${paywallContextDecision?.school ?? 'this'} decision`
 							: paywallMode === 'deepDive'
 								? 'See exactly why'
 								: 'Find out where you actually stand'}
 					</h3>
-					<p class="mx-auto mt-2 max-w-[19rem] text-sm leading-relaxed text-slate-300">
+					<p class="mx-auto mt-2 max-w-[19rem] text-sm leading-relaxed text-white/80">
 						{paywallMode === 'decision'
 							? isElitePaywall
 								? `${paywallContextDecision?.school ?? 'This school'} is one of the most selective in the country, so its decision is Pro-only. Reveal it for $4.99 (deep-dive included), or unlock all 39.`
@@ -2451,34 +2451,34 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 					<!-- The real verdict is already computed — show it BLURRED so the applicant
 					     feels their actual decision waiting, not a generic teaser. Outcome word
 					     and reasoning are their true results, just unreadable until they unlock. -->
-					<figure class="relative mb-6 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-						<div class="border-b border-slate-100 px-5 py-3">
-							<p class="text-[11px] font-bold uppercase tracking-wide text-slate-500">{paywallContextDecision.school}</p>
-							<p class="text-sm font-bold text-slate-900">Your admission decision</p>
+					<figure class="relative mb-6 overflow-hidden rounded-2xl border-2 border-navy bg-card shadow-sm">
+						<div class="border-b-2 border-navy/15 px-5 py-3">
+							<p class="text-[11px] font-bold uppercase tracking-wide text-muted">{paywallContextDecision.school}</p>
+							<p class="text-sm font-bold text-navy">Your admission decision</p>
 						</div>
 						<div class="space-y-3 px-5 pb-9 pt-4">
 							<div class="flex justify-center">
-								<span class="select-none rounded-full border-2 border-slate-300 px-7 py-1.5 text-lg font-black uppercase tracking-wider text-slate-900 blur-[7px]">{paywallContextDecision.outcome}</span>
+								<span class="select-none rounded-full border-2 border-navy px-7 py-1.5 text-lg font-display uppercase tracking-wider text-navy blur-[7px]">{paywallContextDecision.outcome}</span>
 							</div>
-							<p class="select-none text-[13px] leading-relaxed text-slate-600 blur-[4px]">
+							<p class="select-none text-[13px] leading-relaxed text-muted blur-[4px]">
 								{(paywallContextDecision.academic_explanation || 'The committee read your file in full and reached a decision. Every reader weighed your academics, essays, activities, and fit before the chair made the final call.').slice(0, 240)}
 							</p>
 						</div>
-						<div class="pointer-events-none absolute inset-x-0 bottom-0 flex flex-col items-center bg-gradient-to-t from-white via-white/85 to-transparent pb-3 pt-8">
-							<span class="grid h-9 w-9 place-items-center rounded-full bg-slate-900 text-white shadow-lg">
+						<div class="pointer-events-none absolute inset-x-0 bottom-0 flex flex-col items-center bg-gradient-to-t from-card via-card/85 to-transparent pb-3 pt-8">
+							<span class="grid h-9 w-9 place-items-center rounded-full bg-navy text-white shadow-lg">
 								<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
 							</span>
-							<span class="mt-1.5 text-xs font-bold text-slate-900">Unlock to reveal your decision</span>
+							<span class="mt-1.5 text-xs font-bold text-navy">Unlock to reveal your decision</span>
 						</div>
 					</figure>
 				{:else}
 					<!-- Snapshot of the Pro app so the buyer sees exactly what they unlock. -->
-					<figure class="mb-6 overflow-hidden rounded-2xl border border-slate-200 shadow-sm">
-						<div class="flex items-center gap-1 bg-slate-50 px-3 py-1.5">
-							<span class="h-1.5 w-1.5 rounded-full bg-slate-300"></span>
-							<span class="h-1.5 w-1.5 rounded-full bg-slate-300"></span>
-							<span class="h-1.5 w-1.5 rounded-full bg-slate-300"></span>
-							<span class="ml-2 text-[9px] font-medium text-slate-400">app.predictadmit.com/pro</span>
+					<figure class="mb-6 overflow-hidden rounded-2xl border-2 border-navy shadow-sm">
+						<div class="flex items-center gap-1 bg-paper-deep px-3 py-1.5">
+							<span class="h-1.5 w-1.5 rounded-full bg-navy/30"></span>
+							<span class="h-1.5 w-1.5 rounded-full bg-navy/30"></span>
+							<span class="h-1.5 w-1.5 rounded-full bg-navy/30"></span>
+							<span class="ml-2 text-[9px] font-medium text-muted">app.predictadmit.com/pro</span>
 						</div>
 						<img src="/screenshots/pro-hub.png" alt="Inside PredictAdmit Pro: your application command center" loading="lazy" class="block w-full" />
 					</figure>
@@ -2487,13 +2487,13 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 				<!-- Value anchor: what it's worth vs what it costs. -->
 				<div class="flex items-center justify-center gap-3 text-center">
 					<div class="leading-tight">
-						<p class="text-[11px] font-semibold uppercase tracking-wide text-slate-500">Private counselor</p>
-						<p class="text-sm font-bold text-slate-500 line-through decoration-slate-400">$5,000+</p>
+						<p class="text-[11px] font-semibold uppercase tracking-wide text-muted">Private counselor</p>
+						<p class="text-sm font-bold text-muted line-through decoration-muted">$5,000+</p>
 					</div>
-					<svg class="h-4 w-4 shrink-0 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+					<svg class="h-4 w-4 shrink-0 text-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
 					<div class="leading-tight">
-						<p class="text-[11px] font-bold uppercase tracking-wide text-[#1A4CFF]">PredictAdmit Pro</p>
-						<p class="text-lg font-black text-slate-900">$9.99/mo</p>
+						<p class="text-[11px] font-bold uppercase tracking-wide text-blue">PredictAdmit Pro</p>
+						<p class="text-lg font-display text-navy">$9.99/mo</p>
 					</div>
 				</div>
 
@@ -2501,8 +2501,8 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 				     scannable at a glance (proven paywall pattern). -->
 				<ul class="mt-4 grid grid-cols-1 gap-x-3 gap-y-2 sm:grid-cols-2">
 					{#each ['Decisions across all 39 top schools', 'Committee-style deep-dive on every verdict', 'AI essay editor with reader feedback', 'Per-school strategy for 50+ schools', 'AI counselor, available any time', 'Unlimited re-runs as you edit'] as benefit}
-						<li class="flex items-center gap-2 text-[13px] text-slate-700">
-							<span class="grid h-4 w-4 shrink-0 place-items-center rounded-full bg-[#1A4CFF]/10 text-[#1A4CFF]">
+						<li class="flex items-center gap-2 text-[13px] text-navy">
+							<span class="grid h-4 w-4 shrink-0 place-items-center rounded-full bg-blue/10 text-blue">
 								<svg class="h-2.5 w-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
 							</span>
 							{benefit}
@@ -2515,7 +2515,7 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 				     here — the walkthrough comes first. -->
 				<button
 					onclick={() => startUpgrade('monthly')}
-					class="mt-5 w-full rounded-full bg-slate-900 px-5 py-4 text-base font-semibold text-white transition hover:bg-slate-800 active:scale-[0.99]"
+					class="btn btn-primary btn-block mt-5"
 				>
 					Continue →
 				</button>
@@ -2525,24 +2525,24 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 					<button
 						onclick={() => startCheckout('single', paywallContextDecision ?? undefined)}
 						disabled={checkoutLoading}
-						class="mt-2.5 w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-50 disabled:opacity-50"
+						class="btn btn-secondary btn-block mt-2.5 disabled:opacity-50"
 					>
 						{checkoutLoading ? 'Opening checkout…' : `Or unlock just ${paywallContextDecision.school} · $4.99`}
 					</button>
 				{/if}
 
-				<p class="mt-3 flex items-center justify-center gap-1.5 text-[11px] font-medium text-slate-500">
+				<p class="mt-3 flex items-center justify-center gap-1.5 text-[11px] font-medium text-muted">
 					<svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
 					See everything you get, then pick a plan
 				</p>
 
 				<button
 					onclick={sendToParent}
-					class="mt-4 w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-50"
+					class="btn btn-secondary btn-block mt-4"
 				>
 					Not your card? Send this to a parent →
 				</button>
-				<button onclick={closePaywall} class="mt-3 w-full text-center text-xs font-medium text-slate-500 transition hover:text-slate-700">
+				<button onclick={closePaywall} class="mt-3 w-full text-center text-xs font-medium text-muted transition hover:text-navy">
 					Maybe later
 				</button>
 			</div>
@@ -2562,13 +2562,13 @@ A read on what pushed each school toward admit, deny, or waitlist for you
      behind overlays (z-40 < the paywall/carousel scrims). -->
 {#if !$userProfile.usingAI && !showPaywallModal && !showUpgradeCarousel}
 	<div
-		class="fixed inset-x-0 bottom-0 z-40 border-t border-slate-200 bg-white/95 px-4 py-3 backdrop-blur sm:hidden"
+		class="fixed inset-x-0 bottom-0 z-40 border-t-2 border-navy bg-card/95 px-4 py-3 backdrop-blur sm:hidden"
 		style="padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));"
 	>
 		<button
 			onclick={googleSignedIn ? runEvaluation : () => signIn('google', { callbackUrl: '/ai' })}
 			disabled={$userProfile.isSubmittingAI}
-			class="flex w-full items-center justify-center gap-2 rounded-full bg-slate-900 py-3.5 text-base font-semibold text-white shadow-sm transition active:scale-[0.99] disabled:opacity-60"
+			class="btn btn-primary btn-block flex items-center justify-center gap-2 disabled:opacity-60"
 		>
 			{#if $userProfile.isSubmittingAI}
 				<span class="h-5 w-5 animate-spin rounded-full border-2 border-white/30 border-t-white"></span>

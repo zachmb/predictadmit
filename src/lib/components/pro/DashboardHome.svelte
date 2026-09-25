@@ -256,7 +256,7 @@
 								</div>
 								{#if rec.done}
 									<span
-										class="rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-600"
+										class="rounded-full bg-blue/10 px-2.5 py-1 text-xs font-semibold text-blue"
 										>Done ✓</span
 									>
 								{/if}
@@ -283,7 +283,7 @@
 								</div>
 								{#if rec.done}
 									<span
-										class="rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-600"
+										class="rounded-full bg-blue/10 px-2.5 py-1 text-xs font-semibold text-blue"
 										>Done ✓</span
 									>
 								{/if}

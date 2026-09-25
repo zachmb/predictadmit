@@ -6,13 +6,13 @@
 	<title>Privacy Policy | PredictAdmit</title>
 </svelte:head>
 
-<main class="min-h-screen bg-slate-50 font-sans text-slate-900 flex flex-col">
+<main class="min-h-screen pa-grid font-sans text-navy flex flex-col">
 	<div class="flex-1 max-w-3xl mx-auto px-6 py-24 w-full">
-		<h1 class="text-4xl font-bold mb-8 text-slate-900">Privacy Policy</h1>
+		<h1 class="text-4xl font-display mb-8 text-navy">Privacy Policy</h1>
 		<div
-			class="prose prose-slate max-w-none prose-headings:font-bold prose-headings:text-slate-900 prose-a:text-blue-600"
+			class="prose prose-slate max-w-none prose-headings:font-display prose-headings:text-navy prose-a:text-blue"
 		>
-			<p class="text-sm text-slate-500 mb-8">Last updated: January 1, 2026</p>
+			<p class="text-sm text-muted mb-8">Last updated: January 1, 2026</p>
 
 			<p>
 				At PredictAdmit, accessible from predictadmit.com, one of our main priorities is the privacy

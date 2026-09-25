@@ -50,19 +50,19 @@
 	/>
 </svelte:head>
 
-<main class="min-h-screen bg-white font-sans text-slate-900">
+<main class="min-h-screen font-sans text-ink">
 	<!-- Hero -->
-	<section class="border-b border-slate-100">
+	<section class="pa-hero-bg pa-rule-top">
 		<div class="max-w-3xl mx-auto px-6 py-20 md:py-28">
 			<p
-				class="inline-block mb-6 text-xs font-semibold tracking-widest uppercase text-slate-500 bg-slate-100 px-3 py-1 rounded-full"
+				class="inline-block mb-6 text-xs font-semibold tracking-widest uppercase bg-yellow text-navy px-3 py-1"
 			>
 				Methodology
 			</p>
-			<h1 class="font-serif text-4xl md:text-5xl font-medium tracking-tight text-slate-900 mb-6 text-balance">
+			<h1 class="font-display text-navy text-4xl md:text-5xl mb-6 text-balance">
 				Where our predictions come from
 			</h1>
-			<p class="text-lg text-slate-500 leading-relaxed">
+			<p class="text-lg text-muted leading-relaxed">
 				We don't guess how much each part of your application counts. The factor weights come from
 				NACAC's national survey of what colleges themselves say drives their decisions. We then
 				calibrate those weights against admitted-student profiles from HYPSM and Top-20 universities
@@ -73,23 +73,23 @@
 
 	<!-- What is NACAC -->
 	<section class="max-w-3xl mx-auto px-6 py-16">
-		<h2 class="font-serif text-2xl md:text-3xl font-medium tracking-tight text-slate-900 mb-4">
+		<h2 class="font-display text-navy text-2xl md:text-3xl mb-4">
 			Our primary source: NACAC
 		</h2>
-		<p class="text-slate-600 leading-relaxed mb-4">
+		<p class="text-muted leading-relaxed mb-4">
 			The <strong>National Association for College Admission Counseling (NACAC)</strong>, founded in
 			1937, is a nonprofit association of more than 28,000 admission officers, school counselors,
 			and enrollment professionals worldwide. It is the professional body for the people who actually
 			read applications and make admission decisions.
 		</p>
-		<p class="text-slate-600 leading-relaxed mb-4">
+		<p class="text-muted leading-relaxed mb-4">
 			As part of its <em>State of College Admission Report</em>, NACAC asks its member four-year
 			colleges how much weight they put on each factor in the admission decision. The most recent
 			factor survey ({NACAC_SOURCE.cycle}, {NACAC_SOURCE.sampleSize} colleges) is what our weighting
 			is built on. It is about as close as you can get to admission officers, in aggregate, telling
 			you what actually moves a decision.
 		</p>
-		<p class="text-slate-600 leading-relaxed">
+		<p class="text-muted leading-relaxed">
 			The headline finding barely changes year to year: <strong>grades in college-prep courses and
 			the strength of your curriculum outweigh everything else</strong>: test scores, essays,
 			recommendations, extracurriculars, all of it.
@@ -97,20 +97,20 @@
 	</section>
 
 	<!-- Factor table -->
-	<section class="bg-slate-50 border-y border-slate-100 py-16">
+	<section class="pa-grid pa-rule-top py-16">
 		<div class="max-w-4xl mx-auto px-6">
-			<h2 class="font-serif text-2xl md:text-3xl font-medium tracking-tight text-slate-900 mb-2">
+			<h2 class="font-display text-navy text-2xl md:text-3xl mb-2">
 				What colleges say matters
 			</h2>
-			<p class="text-sm text-slate-500 mb-8">
+			<p class="text-sm text-muted mb-8">
 				Percentage of NACAC member four-year colleges attributing each level of importance to
 				factors in admission decisions. First-time freshmen, {NACAC_SOURCE.cycle}.
 			</p>
 
-			<div class="overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm">
+			<div class="overflow-x-auto pa-card">
 				<table class="w-full text-sm">
 					<thead>
-						<tr class="border-b border-slate-200 text-left text-xs font-semibold uppercase tracking-wide text-slate-400">
+						<tr class="border-b border-navy/20 text-left text-xs font-semibold uppercase tracking-wide text-muted">
 							<th class="px-4 py-3">Factor</th>
 							<th class="px-4 py-3 text-right">Considerable</th>
 							<th class="px-4 py-3 text-right hidden sm:table-cell">Moderate</th>
@@ -119,18 +119,18 @@
 							<th class="px-4 py-3 w-32 hidden sm:table-cell">Weight signal</th>
 						</tr>
 					</thead>
-					<tbody class="divide-y divide-slate-100">
+					<tbody class="divide-y divide-navy/10">
 						{#each sortedFactors as f}
 							<tr>
-								<td class="px-4 py-3 font-medium text-slate-900">{f.label}</td>
-								<td class="px-4 py-3 text-right font-semibold text-[#1A4CFF]">{pct(f.considerable)}</td>
-								<td class="px-4 py-3 text-right text-slate-600 hidden sm:table-cell">{pct(f.moderate)}</td>
-								<td class="px-4 py-3 text-right text-slate-600 hidden md:table-cell">{pct(f.limited)}</td>
-								<td class="px-4 py-3 text-right text-slate-600 hidden md:table-cell">{pct(f.none)}</td>
+								<td class="px-4 py-3 font-medium text-navy">{f.label}</td>
+								<td class="px-4 py-3 text-right font-semibold text-blue">{pct(f.considerable)}</td>
+								<td class="px-4 py-3 text-right text-muted hidden sm:table-cell">{pct(f.moderate)}</td>
+								<td class="px-4 py-3 text-right text-muted hidden md:table-cell">{pct(f.limited)}</td>
+								<td class="px-4 py-3 text-right text-muted hidden md:table-cell">{pct(f.none)}</td>
 								<td class="px-4 py-3 hidden sm:table-cell">
-									<div class="h-2 rounded-full bg-slate-100">
+									<div class="h-2 rounded-full bg-paper-deep">
 										<div
-											class="h-2 rounded-full bg-[#1A4CFF]"
+											class="h-2 rounded-full bg-blue"
 											style="width: {(factorScore(f) / maxScore) * 100}%"
 										></div>
 									</div>
@@ -140,7 +140,7 @@
 					</tbody>
 				</table>
 			</div>
-			<p class="mt-4 text-xs text-slate-400">
+			<p class="mt-4 text-xs text-muted">
 				Source: {NACAC_SOURCE.org}, "{NACAC_SOURCE.report}." The weight signal collapses the four
 				columns into one score (considerable counted fully, moderate half, limited a quarter).
 			</p>
@@ -149,38 +149,38 @@
 
 	<!-- How we use it -->
 	<section class="max-w-3xl mx-auto px-6 py-16">
-		<h2 class="font-serif text-2xl md:text-3xl font-medium tracking-tight text-slate-900 mb-4">
+		<h2 class="font-display text-navy text-2xl md:text-3xl mb-4">
 			How the table becomes our formulas
 		</h2>
-		<div class="space-y-6 text-slate-600 leading-relaxed">
+		<div class="space-y-6 text-muted leading-relaxed">
 			<p>
-				<strong class="text-slate-900">Academic index.</strong> Your academic index (0–100) blends
+				<strong class="text-navy">Academic index.</strong> Your academic index (0–100) blends
 				weighted GPA and SAT/ACT. We didn't pick the split by feel. It drops straight out of the
 				table. Grades and curriculum strength against admission tests lands at roughly
 				<strong>{Math.round(GPA_WEIGHT * 100)}% grades &amp; rigor / {Math.round(TEST_WEIGHT * 100)}%
 				test scores</strong>.
 			</p>
 			<p>
-				<strong class="text-slate-900">Holistic read.</strong> The AI read scores five dimensions.
+				<strong class="text-navy">Holistic read.</strong> The AI read scores five dimensions.
 				Each one pools the NACAC factors it covers, and how much it counts toward your overall read
 				is that pool's share of the table:
 			</p>
 			<div class="space-y-3">
 				{#each dims as d}
-					<div class="rounded-xl border border-slate-100 bg-slate-50 p-4">
+					<div class="pa-inset p-4">
 						<div class="flex items-center justify-between mb-1">
-							<span class="font-semibold text-slate-900">{d.label}</span>
-							<span class="font-bold text-[#1A4CFF]">~{d.weight}%</span>
+							<span class="font-semibold text-navy">{d.label}</span>
+							<span class="font-bold text-blue">~{d.weight}%</span>
 						</div>
-						<div class="mb-2 h-2 rounded-full bg-slate-200">
-							<div class="h-2 rounded-full bg-[#1A4CFF]" style="width: {d.weight}%"></div>
+						<div class="mb-2 h-2 rounded-full bg-paper-deep">
+							<div class="h-2 rounded-full bg-blue" style="width: {d.weight}%"></div>
 						</div>
-						<p class="text-xs text-slate-500">{d.covers}</p>
+						<p class="text-xs text-muted">{d.covers}</p>
 					</div>
 				{/each}
 			</div>
 			<p>
-				<strong class="text-slate-900">Chance estimates &amp; reach/target/safety.</strong> We hold
+				<strong class="text-navy">Chance estimates &amp; reach/target/safety.</strong> We hold
 				your academic index up against each school's selectivity to get a chance estimate and a
 				reach/target/safety label. Same NACAC weighting behind it, whether you're looking at the
 				chances predictor or the counselor's advice.
@@ -189,12 +189,12 @@
 	</section>
 
 	<!-- Calibration -->
-	<section class="bg-slate-50 border-y border-slate-100 py-16">
+	<section class="pa-grid pa-rule-top py-16">
 		<div class="max-w-3xl mx-auto px-6">
-			<h2 class="font-serif text-2xl md:text-3xl font-medium tracking-tight text-slate-900 mb-4">
+			<h2 class="font-display text-navy text-2xl md:text-3xl mb-4">
 				Calibrated on HYPSM &amp; Top-20 admits, 2026 cycle
 			</h2>
-			<div class="space-y-4 text-slate-600 leading-relaxed">
+			<div class="space-y-4 text-muted leading-relaxed">
 				<p>
 					NACAC's survey spans four-year colleges at every selectivity level, and NACAC itself says
 					factor importance shifts by institution type. We care about highly selective admissions,
@@ -215,8 +215,8 @@
 
 	<!-- Honest limits -->
 	<section class="max-w-3xl mx-auto px-6 py-16">
-		<h2 class="font-serif text-2xl md:text-3xl font-medium tracking-tight text-slate-900 mb-4">Honest limits</h2>
-		<ul class="space-y-3 text-slate-600 leading-relaxed list-disc pl-5">
+		<h2 class="font-display text-navy text-2xl md:text-3xl mb-4">Honest limits</h2>
+		<ul class="space-y-3 text-muted leading-relaxed list-disc pl-5">
 			<li>
 				Predictions are <strong>estimates, not promises</strong>. No model can guarantee an
 				admission outcome, and a real committee weighs context (a compelling backstory, a program's
@@ -235,13 +235,13 @@
 		<div class="mt-10 flex flex-col sm:flex-row gap-3">
 			<a
 				href="/pro"
-				class="inline-flex items-center justify-center font-semibold text-sm bg-slate-900 text-white px-8 py-3.5 rounded-full hover:bg-slate-800 transition-colors shadow-sm"
+				class="btn btn-primary"
 			>
 				See your chances →
 			</a>
 			<a
 				href="/about"
-				class="inline-flex items-center justify-center font-semibold text-sm bg-white text-slate-900 px-8 py-3.5 rounded-full border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-colors"
+				class="btn btn-secondary"
 			>
 				About PredictAdmit
 			</a>

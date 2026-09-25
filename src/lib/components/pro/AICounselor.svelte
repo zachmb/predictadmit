@@ -241,7 +241,7 @@
 					<div class="leading-tight">
 						<h2 class="text-base font-semibold text-slate-900">AI Counselor</h2>
 						<p class="flex items-center gap-1.5 text-xs text-slate-500">
-							<span class="inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+							<span class="inline-block h-1.5 w-1.5 rounded-full bg-blue"></span>
 							PredictAI · online
 						</p>
 					</div>

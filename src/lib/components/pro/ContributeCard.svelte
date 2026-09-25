@@ -339,9 +339,8 @@
 							<li class="flex items-center justify-between rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-sm">
 								<span class="truncate text-slate-800">{r.school}</span>
 								<span
-									class="ml-3 shrink-0 rounded-full px-2 py-0.5 text-xs font-semibold"
-									class:bg-emerald-50={r.outcome === 'admit'}
-									class:text-emerald-700={r.outcome === 'admit'}
+									class="ml-3 shrink-0 rounded-full px-2 py-0.5 text-xs font-semibold {r.outcome === 'admit' ? 'bg-blue/10' : ''}"
+									class:text-blue={r.outcome === 'admit'}
 									class:bg-rose-50={r.outcome === 'deny'}
 									class:text-rose-700={r.outcome === 'deny'}
 									class:bg-amber-50={r.outcome === 'waitlist' || r.outcome === 'defer'}

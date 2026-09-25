@@ -102,26 +102,26 @@
 	/>
 </svelte:head>
 
-<main class="min-h-screen bg-[#FAFAFA] font-sans text-slate-900">
+<main class="min-h-screen pa-grid font-sans text-navy">
 	<div class="mx-auto flex min-h-screen max-w-xl flex-col justify-center px-6 py-16">
 		<!-- Header copy stays constant across phases so it reads as one moment. -->
 		<div class="text-center">
-			<p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">PredictAdmit</p>
-			<h1 class="mt-4 font-serif text-4xl font-medium leading-[1.05] tracking-tight text-slate-900 sm:text-5xl">
-				Perfect your applications <span class="text-[#1A4CFF]">before it's too late.</span>
+			<p class="text-xs font-semibold uppercase tracking-[0.2em] text-muted">PredictAdmit</p>
+			<h1 class="mt-4 font-display text-4xl leading-[1.05] text-navy sm:text-5xl">
+				Perfect your applications <span class="text-blue">before it's too late.</span>
 			</h1>
-			<p class="mx-auto mt-4 max-w-md text-lg leading-relaxed text-slate-500">
+			<p class="mx-auto mt-4 max-w-md text-lg leading-relaxed text-muted">
 				Your real AI verdict at every top school, in about 20 seconds. Free.
 			</p>
 		</div>
 
-		<div class="mt-10 space-y-5 rounded-3xl border border-slate-200 bg-white p-7 shadow-sm">
+		<div class="mt-10 space-y-5 pa-card p-7">
 			<div>
-				<label for="school" class="block text-sm font-semibold text-slate-900">Your dream school <span class="font-normal text-slate-400">· optional</span></label>
+				<label for="school" class="block text-sm font-semibold text-navy">Your dream school <span class="font-normal text-muted">· optional</span></label>
 				<select
 					id="school"
 					bind:value={schoolSlug}
-					class="mt-2 w-full cursor-pointer rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 transition hover:border-slate-300 focus:border-[#1A4CFF] focus:outline-none focus:ring-4 focus:ring-[#1A4CFF]/10"
+					class="mt-2 w-full cursor-pointer rounded-xl border-2 border-navy bg-card px-4 py-3 text-sm text-navy transition focus:border-blue focus:outline-none"
 				>
 					<option value="">All 39 schools</option>
 					{#each schoolOptions as s}
@@ -132,28 +132,28 @@
 
 			<div class="grid grid-cols-2 gap-4">
 				<div>
-					<label for="gpa" class="block text-sm font-semibold text-slate-900">Unweighted GPA</label>
+					<label for="gpa" class="block text-sm font-semibold text-navy">Unweighted GPA</label>
 					<input
 						id="gpa"
 						bind:value={gpa}
 						inputmode="decimal"
 						placeholder="3.9"
-						class="mt-2 w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 transition hover:border-slate-300 focus:border-[#1A4CFF] focus:outline-none focus:ring-4 focus:ring-[#1A4CFF]/10"
+						class="mt-2 w-full rounded-xl border-2 border-navy bg-card px-4 py-3 text-sm text-navy transition focus:border-blue focus:outline-none"
 					/>
 				</div>
 				<div>
-					<label for="test" class="block text-sm font-semibold text-slate-900">SAT / ACT <span class="font-normal text-slate-400">· optional</span></label>
+					<label for="test" class="block text-sm font-semibold text-navy">SAT / ACT <span class="font-normal text-muted">· optional</span></label>
 					<input
 						id="test"
 						bind:value={testScore}
 						placeholder="1520"
-						class="mt-2 w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 transition hover:border-slate-300 focus:border-[#1A4CFF] focus:outline-none focus:ring-4 focus:ring-[#1A4CFF]/10"
+						class="mt-2 w-full rounded-xl border-2 border-navy bg-card px-4 py-3 text-sm text-navy transition focus:border-blue focus:outline-none"
 					/>
 				</div>
 			</div>
 
 			<div class="relative">
-				<label for="major" class="block text-sm font-semibold text-slate-900">Intended major <span class="font-normal text-slate-400">· optional</span></label>
+				<label for="major" class="block text-sm font-semibold text-navy">Intended major <span class="font-normal text-muted">· optional</span></label>
 				<input
 					id="major"
 					bind:value={major}
@@ -161,10 +161,10 @@
 					placeholder="Computer Science"
 					onfocus={() => (showMajorDropdown = true)}
 					onblur={() => setTimeout(() => (showMajorDropdown = false), 200)}
-					class="mt-2 w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 transition hover:border-slate-300 focus:border-[#1A4CFF] focus:outline-none focus:ring-4 focus:ring-[#1A4CFF]/10"
+					class="mt-2 w-full rounded-xl border-2 border-navy bg-card px-4 py-3 text-sm text-navy transition focus:border-blue focus:outline-none"
 				/>
 				{#if showMajorDropdown && majorSuggestions.length > 0}
-					<div class="absolute left-0 right-0 top-full z-50 mt-2 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-2xl">
+					<div class="absolute left-0 right-0 top-full z-50 mt-2 overflow-hidden rounded-xl border-2 border-navy bg-card shadow-2xl">
 						{#each majorSuggestions as m}
 							<button
 								type="button"
@@ -172,7 +172,7 @@
 									major = m;
 									showMajorDropdown = false;
 								}}
-								class="w-full border-b border-slate-100 px-4 py-3 text-left text-sm font-medium text-slate-700 transition-colors last:border-0 hover:bg-blue-50 hover:text-blue-700"
+								class="w-full border-b border-paper-deep px-4 py-3 text-left text-sm font-medium text-navy transition-colors last:border-0 hover:bg-cyan hover:text-navy"
 							>
 								{m}
 							</button>
@@ -182,30 +182,30 @@
 			</div>
 
 			<div>
-				<label for="extras" class="block text-sm font-semibold text-slate-900">
-					Anything that makes you you <span class="font-normal text-slate-400">· optional</span>
+				<label for="extras" class="block text-sm font-semibold text-navy">
+					Anything that makes you you <span class="font-normal text-muted">· optional</span>
 				</label>
 				<textarea
 					id="extras"
 					bind:value={extras}
 					rows="3"
 					placeholder="Activities, awards, a line about your essay. The more you add, the sharper the read."
-					class="mt-2 w-full resize-none rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 transition hover:border-slate-300 focus:border-[#1A4CFF] focus:outline-none focus:ring-4 focus:ring-[#1A4CFF]/10"
+					class="mt-2 w-full resize-none rounded-xl border-2 border-navy bg-card px-4 py-3 text-sm text-navy transition focus:border-blue focus:outline-none"
 				></textarea>
 			</div>
 
 			{#if error}
-				<p class="text-sm font-medium text-rose-600">{error}</p>
+				<p class="text-sm font-medium text-stamp-red">{error}</p>
 			{/if}
 
 			<button
 				onclick={launchFullSim}
 				disabled={launching}
-				class="w-full rounded-full bg-slate-900 px-6 py-4 text-base font-semibold text-white transition hover:bg-slate-800 active:scale-[0.99] disabled:opacity-60"
+				class="btn btn-primary btn-block disabled:opacity-60"
 			>
 				{launching ? 'Starting your simulation…' : 'Run my full simulation →'}
 			</button>
-			<p class="text-center text-xs text-slate-400">
+			<p class="text-center text-xs text-muted">
 				A real AI read of your file across all 39 schools. Not a real or official decision; not affiliated with any school.
 			</p>
 		</div>

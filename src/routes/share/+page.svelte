@@ -83,15 +83,15 @@
 </svelte:head>
 
 <div
-	class="flex min-h-screen flex-col bg-slate-50 font-sans text-slate-900 antialiased"
+	class="flex min-h-screen flex-col pa-grid font-sans text-navy antialiased"
 	style="--accent: {accent};"
 >
 	<!-- Top bar -->
-	<header class="w-full border-b border-slate-200/70 bg-white/80 backdrop-blur">
+	<header class="w-full border-b-2 border-navy bg-card backdrop-blur">
 		<div class="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-			<a href="/" class="text-lg font-bold tracking-tight text-slate-900">
+			<a href="/" class="text-lg font-display text-navy">
 				predict<span style="color: var(--accent);">admit</span
-				><span class="text-slate-400">.com</span>
+				><span class="text-muted">.com</span>
 			</a>
 			<a
 				href="/portals"
@@ -107,7 +107,7 @@
 	<main class="flex flex-1 items-center justify-center px-5 py-12">
 		<div class="w-full max-w-lg">
 			<div
-				class="relative overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-xl shadow-slate-900/5"
+				class="relative overflow-hidden pa-card"
 			>
 				<!-- Accent top bar -->
 				<div class="h-2 w-full" style="background-color: var(--accent);"></div>
@@ -121,12 +121,12 @@
 					</span>
 
 					<h1
-						class="mt-6 text-3xl font-extrabold leading-tight tracking-tight text-slate-900 sm:text-4xl"
+						class="mt-6 text-3xl font-display leading-tight text-navy sm:text-4xl"
 					>
 						{headline}
 					</h1>
 
-					<p class="mx-auto mt-4 max-w-md text-base leading-relaxed text-slate-500">
+					<p class="mx-auto mt-4 max-w-md text-base leading-relaxed text-muted">
 						{#if isAdmit}
 							Simulated on PredictAdmit. This is an estimate of the odds, not a real
 							admissions decision. Plug in your own stats and see where you land.
@@ -147,21 +147,21 @@
 						</a>
 						<a
 							href="/ai"
-							class="inline-flex w-full items-center justify-center rounded-xl border border-slate-200 bg-white px-6 py-3.5 text-base font-semibold text-slate-700 transition-colors hover:bg-slate-50"
+							class="btn btn-secondary btn-block"
 						>
 							Run the free predictor
 						</a>
 					</div>
 
-					<p class="mt-6 text-sm text-slate-400">
-						<a href="/about" class="font-medium text-slate-500 underline-offset-2 hover:underline">
+					<p class="mt-6 text-sm text-muted">
+						<a href="/about" class="font-medium text-blue underline-offset-2 hover:underline">
 							How real is this?
 						</a>
 					</p>
 				</div>
 			</div>
 
-			<p class="mt-6 text-center text-xs text-slate-400">
+			<p class="mt-6 text-center text-xs text-muted">
 				Simulated result. Not affiliated with or endorsed by any university.
 			</p>
 		</div>

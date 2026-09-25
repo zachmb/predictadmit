@@ -618,13 +618,13 @@
 	function getOddsColor(odds: number) {
 		if (odds < 15) return 'text-rose-600 bg-rose-50'; // Reach
 		if (odds < 40) return 'text-amber-600 bg-amber-50'; // Target
-		return 'text-emerald-600 bg-emerald-50'; // Likely
+		return 'text-blue bg-blue/10'; // Likely
 	}
 
 	function getBarColor(odds: number) {
 		if (odds < 15) return 'bg-rose-500';
 		if (odds < 40) return 'bg-amber-500';
-		return 'bg-emerald-500';
+		return 'bg-blue';
 	}
 
 	// --- ACTIONS ---
@@ -1846,7 +1846,7 @@
 
 						<span
 							class="text-xs font-medium hidden md:inline {profile.gpa_uw
-								? 'text-emerald-500'
+								? 'text-blue'
 								: 'text-amber-500'}"
 						>
 							{profile.gpa_uw ? 'Profile Linked' : 'No Profile Linked'}
@@ -2087,7 +2087,7 @@
 										</div>
 
 										<div
-											class="space-y-1 pl-4 border-l-2 border-[#1A4CFF]/30 opacity-80 bg-slate-900 rounded-r-lg p-2 font-mono text-[10px] text-green-400 shadow-inner"
+											class="space-y-1 pl-4 border-l-2 border-blue/30 opacity-80 bg-navy rounded-r-lg p-2 font-mono text-[10px] text-cyan shadow-inner"
 										>
 											{#each buildOutput.slice(-4) as line}
 												<div class="truncate">
@@ -2280,82 +2280,82 @@
 	</div>
 {:else}
 	<!-- SIGN IN PROMPT -->
-	<main class="min-h-screen bg-white font-sans text-slate-900 flex flex-col items-center pt-20 pb-28 px-6 relative overflow-hidden">
+	<main class="min-h-screen pa-hero-bg font-sans text-ink flex flex-col items-center pt-20 pb-28 px-6 relative overflow-hidden">
 		<div class="max-w-5xl w-full mx-auto space-y-28 relative z-10">
 			<!-- Hero -->
 			<div class="grid items-center gap-10 lg:grid-cols-2">
 				<!-- Left: copy, price, CTAs -->
 				<div class="text-center lg:text-left">
-					<p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">PredictAdmit Pro</p>
-					<h1 class="mt-5 font-serif text-5xl md:text-6xl font-medium tracking-tight text-slate-900 leading-[1.05]">
-						Perfect your applications <span class="text-[#1A4CFF]">before it's too late.</span>
+					<p class="font-hand text-lg text-blue">PredictAdmit Pro</p>
+					<h1 class="mt-5 font-display text-navy text-5xl md:text-6xl leading-[1.05]">
+						Perfect your applications <span class="text-blue">before it's too late.</span>
 					</h1>
-					<p class="mt-5 mx-auto lg:mx-0 max-w-xl text-lg text-slate-500 leading-relaxed">
+					<p class="mt-5 mx-auto lg:mx-0 max-w-xl text-lg text-muted leading-relaxed">
 						PredictAdmit runs your real application through every top school and shows you the decision waiting there: accept, deny, or waitlist. Then it names the one thing holding you back, while you still have months to fix it. Your first prediction is free.
 					</p>
 
 					<div class="mt-7 flex items-baseline justify-center lg:justify-start gap-2.5">
-						<span class="text-4xl font-bold text-slate-900">$9.99</span>
-						<span class="text-sm font-medium text-slate-400">/mo</span>
-						<span class="text-slate-300">·</span>
-						<span class="text-sm text-slate-500">or $25 once</span>
+						<span class="font-display text-navy text-4xl">$9.99</span>
+						<span class="text-sm font-medium text-muted">/mo</span>
+						<span class="text-muted">·</span>
+						<span class="text-sm text-muted">or $25 once</span>
 					</div>
 
 					<div class="mt-7 flex flex-col sm:flex-row items-center lg:justify-start justify-center gap-4">
 						<button
 							onclick={() => startUpgrade('monthly')}
 							disabled={isProcessing}
-							class="w-full sm:w-auto rounded-full bg-slate-900 px-8 py-4 text-base font-semibold text-white transition hover:bg-slate-800 active:scale-[0.99] disabled:opacity-50"
+							class="btn btn-primary w-full sm:w-auto"
 						>
 							{isProcessing ? 'Taking you to checkout…' : 'Start for $9.99/mo'}
 						</button>
-						<a href="/verdict" class="group inline-flex items-center gap-1.5 text-base font-semibold text-slate-900 hover:text-slate-500">
+						<a href="/verdict" class="group inline-flex items-center gap-1.5 text-base font-semibold text-navy hover:text-blue">
 							Try your first verdict free
 							<span class="transition group-hover:translate-x-0.5">→</span>
 						</a>
 					</div>
 
-					<p class="mt-6 flex flex-wrap items-center justify-center lg:justify-start gap-x-2 gap-y-1 text-xs text-slate-400">
+					<p class="mt-6 flex flex-wrap items-center justify-center lg:justify-start gap-x-2 gap-y-1 text-xs text-muted">
 						<span>First prediction free</span>
-						<span class="text-slate-300">·</span>
+						<span class="text-muted">·</span>
 						<span>Nothing to install</span>
-						<span class="text-slate-300">·</span>
+						<span class="text-muted">·</span>
 						<span>Secure checkout by Stripe</span>
 					</p>
 				</div>
 
 				<!-- Right: product preview on a clean neutral card (no loud color block). -->
-				<div class="rounded-3xl border border-slate-200 bg-slate-50 p-6 sm:p-8">
-					<div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+				<div class="pa-card p-6 sm:p-8">
+					<div class="pa-inset p-5">
 						<div class="flex items-center justify-between gap-3">
 							<div class="flex items-center gap-2.5">
-								<div class="grid h-9 w-9 place-items-center rounded-lg bg-slate-100 text-xs font-bold text-slate-700">S</div>
+								<div class="grid h-9 w-9 place-items-center rounded-lg bg-navy text-xs font-bold text-white">S</div>
 								<div>
-									<p class="text-sm font-bold text-slate-900">Stanford University</p>
-									<p class="text-[11px] text-slate-400">Your predicted decision</p>
+									<p class="text-sm font-bold text-navy">Stanford University</p>
+									<p class="text-[11px] text-muted">Your predicted decision</p>
 								</div>
 							</div>
-							<span class="shrink-0 rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-semibold text-emerald-700">Admitted</span>
+							<span class="shrink-0 rounded-full bg-blue px-2.5 py-1 text-[11px] font-semibold text-white">Admitted</span>
 						</div>
 						<div class="mt-4 space-y-2.5">
 							{#each [{ l: 'Academics', s: 9 }, { l: 'Essays', s: 8 }, { l: 'Fit', s: 7 }] as row}
 								<div>
-									<div class="flex items-center justify-between text-[11px] font-medium text-slate-500">
+									<div class="flex items-center justify-between text-[11px] font-medium text-muted">
 										<span>{row.l}</span><span>{row.s}/10</span>
 									</div>
-									<div class="mt-1 h-1.5 rounded-full bg-slate-100">
-										<div class="h-1.5 rounded-full bg-[#1A4CFF]" style="width: {row.s * 10}%"></div>
+									<div class="mt-1 h-1.5 rounded-full bg-paper-deep">
+										<div class="h-1.5 rounded-full bg-blue" style="width: {row.s * 10}%"></div>
 									</div>
 								</div>
 							{/each}
 						</div>
 					</div>
-					<div class="mt-3 ml-6 flex items-center justify-between gap-3 rounded-2xl border border-slate-200 bg-white p-3.5 shadow-sm">
+					<div class="pa-inset mt-3 ml-6 flex items-center justify-between gap-3 p-3.5">
 						<div class="flex items-center gap-2.5">
-							<div class="grid h-8 w-8 place-items-center rounded-lg bg-slate-100 text-xs font-bold text-slate-700">M</div>
-							<p class="text-sm font-bold text-slate-900">MIT</p>
+							<div class="grid h-8 w-8 place-items-center rounded-lg bg-navy text-xs font-bold text-white">M</div>
+							<p class="text-sm font-bold text-navy">MIT</p>
 						</div>
-						<span class="shrink-0 rounded-full bg-amber-50 px-2.5 py-1 text-[11px] font-semibold text-amber-700">Waitlist</span>
+						<span class="shrink-0 rounded-full bg-yellow px-2.5 py-1 text-[11px] font-semibold text-navy">Waitlist</span>
 					</div>
 				</div>
 			</div>
@@ -2368,9 +2368,9 @@
 					{ n: '3', t: 'Fix what is weak, re-run', d: 'Use the workshop to tighten essays and framing, then run it again and watch your odds move.' }
 				] as step}
 					<div>
-						<span class="font-serif text-4xl text-slate-300">{step.n}</span>
-						<p class="mt-3 font-bold text-slate-900">{step.t}</p>
-						<p class="mt-1 text-sm leading-relaxed text-slate-500">{step.d}</p>
+						<span class="font-display text-4xl text-cyan">{step.n}</span>
+						<p class="mt-3 font-bold text-navy">{step.t}</p>
+						<p class="mt-1 text-sm leading-relaxed text-muted">{step.d}</p>
 					</div>
 				{/each}
 			</div>
@@ -2379,55 +2379,55 @@
 			     straight to Stripe. Monthly is the recommended, lifted plan. -->
 			<div>
 				<div class="max-w-2xl">
-					<h2 class="font-serif text-4xl md:text-5xl font-medium leading-[1.1] tracking-tight text-slate-900">
+					<h2 class="font-display text-navy text-4xl md:text-5xl leading-[1.1]">
 						Your first prediction is free. Upgrade when you want your verdict at every school.
 					</h2>
-					<p class="mt-5 text-lg leading-relaxed text-slate-500">
+					<p class="mt-5 text-lg leading-relaxed text-muted">
 						See where you stand for free, no card. Then go month to month while you're applying, or pay once for the whole season.
 					</p>
 				</div>
 
-				<div class="mt-12 overflow-hidden rounded-[2rem] border border-slate-200 bg-slate-50">
-					<div class="grid divide-y divide-slate-200 md:grid-cols-3 md:divide-x md:divide-y-0">
+				<div class="pa-card mt-12 overflow-hidden">
+					<div class="grid divide-y divide-navy/15 md:grid-cols-3 md:divide-x md:divide-y-0">
 						<!-- Free -->
 						<div class="flex flex-col p-8">
-							<h3 class="font-serif text-2xl text-slate-900">Free</h3>
+							<h3 class="font-display text-navy text-2xl">Free</h3>
 							<div class="mt-3 flex items-baseline gap-1.5">
-								<span class="font-serif text-4xl font-medium text-slate-900">$0</span>
+								<span class="font-display text-navy text-4xl">$0</span>
 							</div>
-							<p class="mt-4 text-sm leading-relaxed text-slate-500">
+							<p class="mt-4 text-sm leading-relaxed text-muted">
 								Run one full AI prediction and open one school's decision. See where you stand before you spend a cent.
 							</p>
 							<ul class="mt-6 mb-8 space-y-2.5">
 								{#each ['One full AI prediction', "Open one school's decision", 'No credit card to start'] as f}
-									<li class="flex items-start gap-2.5 text-sm text-slate-600">
-										<svg class="mt-0.5 h-4 w-4 flex-none text-slate-900" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+									<li class="flex items-start gap-2.5 text-sm text-muted">
+										<svg class="mt-0.5 h-4 w-4 flex-none text-navy" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
 										{f}
 									</li>
 								{/each}
 							</ul>
-							<a href="/verdict" class="mt-auto block w-full rounded-full border border-slate-300 bg-white px-5 py-3.5 text-center text-sm font-semibold text-slate-900 transition hover:bg-slate-100">
+							<a href="/verdict" class="btn btn-secondary btn-block mt-auto text-center">
 								Start free →
 							</a>
 						</div>
 
 						<!-- Monthly: recommended, lifted in white. On mobile it jumps to the
 						     top (order-first) so the primary plan + Buy button lead the stack. -->
-						<div class="relative order-first flex flex-col bg-white p-8 md:order-none">
-							<span class="absolute right-6 top-8 rounded-full bg-slate-900 px-3 py-1 text-[10px] font-semibold uppercase tracking-wide text-white">Recommended</span>
-							<h3 class="font-serif text-2xl text-slate-900">Monthly</h3>
+						<div class="pa-card-cyan relative order-first flex flex-col p-8 md:order-none">
+							<span class="absolute right-6 top-8 rounded-full bg-blue px-3 py-1 text-[10px] font-semibold uppercase tracking-wide text-white">Recommended</span>
+							<h3 class="font-display text-navy text-2xl">Monthly</h3>
 							<div class="mt-3 flex items-baseline gap-1.5">
-								<span class="font-serif text-4xl font-medium text-slate-900">$9.99</span>
-								<span class="text-sm text-slate-400">/mo</span>
+								<span class="font-display text-navy text-4xl">$9.99</span>
+								<span class="text-sm text-muted">/mo</span>
 							</div>
-							<p class="mt-1 text-xs text-slate-400">Billed monthly. Cancel anytime.</p>
-							<p class="mt-3 text-sm leading-relaxed text-slate-500">
+							<p class="mt-1 text-xs text-muted">Billed monthly. Cancel anytime.</p>
+							<p class="mt-3 text-sm leading-relaxed text-muted">
 								Everything, while you're applying. Your verdict at all 39 schools and the full workshop to fix what's weak.
 							</p>
 							<ul class="mt-6 mb-8 space-y-2.5">
 								{#each ['Your verdict at all 39 top schools', 'The five-reader committee on every one', 'AI essay editor + per-school strategy', 'AI counselor + unlimited re-runs'] as f}
-									<li class="flex items-start gap-2.5 text-sm text-slate-700">
-										<svg class="mt-0.5 h-4 w-4 flex-none text-[#1A4CFF]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+									<li class="flex items-start gap-2.5 text-sm text-ink">
+										<svg class="mt-0.5 h-4 w-4 flex-none text-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
 										{f}
 									</li>
 								{/each}
@@ -2435,7 +2435,7 @@
 							<button
 								onclick={() => startUpgrade('monthly')}
 								disabled={isProcessing}
-								class="mt-auto w-full rounded-full bg-slate-900 px-5 py-3.5 text-sm font-semibold text-white transition hover:bg-slate-800 active:scale-[0.99] disabled:opacity-50"
+								class="btn btn-primary btn-block mt-auto"
 							>
 								{isProcessing ? 'Taking you to checkout…' : 'Start for $9.99/mo'}
 							</button>
@@ -2443,19 +2443,19 @@
 
 						<!-- Lifetime: pay once -->
 						<div class="flex flex-col p-8">
-							<h3 class="font-serif text-2xl text-slate-900">Lifetime</h3>
+							<h3 class="font-display text-navy text-2xl">Lifetime</h3>
 							<div class="mt-3 flex items-baseline gap-1.5">
-								<span class="font-serif text-4xl font-medium text-slate-900">$25</span>
-								<span class="text-sm text-slate-400">once</span>
+								<span class="font-display text-navy text-4xl">$25</span>
+								<span class="text-sm text-muted">once</span>
 							</div>
-							<p class="mt-1 text-xs text-slate-400">One payment. No subscription.</p>
-							<p class="mt-3 text-sm leading-relaxed text-slate-500">
+							<p class="mt-1 text-xs text-muted">One payment. No subscription.</p>
+							<p class="mt-3 text-sm leading-relaxed text-muted">
 								The same full access, paid once. About two and a half months of Monthly costs the same.
 							</p>
 							<ul class="mt-6 mb-8 space-y-2.5">
 								{#each ['Everything in Monthly, forever', 'Nothing to renew or cancel', 'One payment for the whole season'] as f}
-									<li class="flex items-start gap-2.5 text-sm text-slate-600">
-										<svg class="mt-0.5 h-4 w-4 flex-none text-slate-900" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+									<li class="flex items-start gap-2.5 text-sm text-muted">
+										<svg class="mt-0.5 h-4 w-4 flex-none text-navy" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
 										{f}
 									</li>
 								{/each}
@@ -2463,7 +2463,7 @@
 							<button
 								onclick={() => startUpgrade('lifetime')}
 								disabled={isProcessing}
-								class="mt-auto w-full rounded-full border border-slate-300 bg-white px-5 py-3.5 text-sm font-semibold text-slate-900 transition hover:bg-slate-50 disabled:opacity-50"
+								class="btn btn-secondary btn-block mt-auto"
 							>
 								Get Lifetime
 							</button>
@@ -2471,7 +2471,7 @@
 					</div>
 				</div>
 
-				<p class="mt-5 text-center text-xs text-slate-400">
+				<p class="mt-5 text-center text-xs text-muted">
 					Just one school? Run your free prediction, then unlock a single deep-dive for $4.99. Secure checkout by Stripe.
 				</p>
 			</div>
@@ -2479,8 +2479,8 @@
 			<!-- Everything you get: the full feature set, in two honest groups. -->
 			<div class="space-y-10">
 				<div class="max-w-2xl">
-					<h2 class="font-serif text-4xl md:text-5xl font-medium leading-[1.1] tracking-tight text-slate-900">Everything Pro gives you</h2>
-					<p class="mt-4 text-lg leading-relaxed text-slate-500">Two jobs, done properly. See exactly where you stand today, then fix what's holding you back.</p>
+					<h2 class="font-display text-navy text-4xl md:text-5xl leading-[1.1]">Everything Pro gives you</h2>
+					<p class="mt-4 text-lg leading-relaxed text-muted">Two jobs, done properly. See exactly where you stand today, then fix what's holding you back.</p>
 				</div>
 
 				<!-- Alternating feature rows: a bold headline + one line beside a real
@@ -2489,14 +2489,14 @@
 					<!-- Row 1: verdict across all 39 -->
 					<div class="grid items-center gap-8 md:grid-cols-2 md:gap-14">
 						<div>
-							<h3 class="mt-3 font-serif text-3xl font-medium tracking-tight text-slate-900">Your verdict at all 39 top schools</h3>
-							<p class="mt-3 text-[15px] leading-relaxed text-slate-500">Run your real application through the AI once and watch accept, waitlist, and deny land across every top school. Change an essay or a score and re-run it, no cap.</p>
+							<h3 class="mt-3 font-display text-navy text-3xl">Your verdict at all 39 top schools</h3>
+							<p class="mt-3 text-[15px] leading-relaxed text-muted">Run your real application through the AI once and watch accept, waitlist, and deny land across every top school. Change an essay or a score and re-run it, no cap.</p>
 						</div>
-						<div class="rounded-3xl border border-slate-200 bg-slate-50 p-5 sm:p-6">
+						<div class="pa-card p-5 sm:p-6">
 							<div class="space-y-2.5">
-								{#each [{ s: 'Stanford University', o: 'Admit', cls: 'bg-emerald-50 text-emerald-700 ring-emerald-200' }, { s: 'Cornell University', o: 'Waitlist', cls: 'bg-amber-50 text-amber-700 ring-amber-200' }, { s: 'MIT', o: 'Deny', cls: 'bg-rose-50 text-rose-700 ring-rose-200' }] as r}
-									<div class="flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm">
-										<span class="text-sm font-bold text-slate-900">{r.s}</span>
+								{#each [{ s: 'Stanford University', o: 'Admit', cls: 'bg-blue text-white ring-navy' }, { s: 'Cornell University', o: 'Waitlist', cls: 'bg-yellow text-navy ring-navy' }, { s: 'MIT', o: 'Deny', cls: 'bg-stamp-red text-white ring-navy' }] as r}
+									<div class="pa-inset flex items-center justify-between px-4 py-3">
+										<span class="text-sm font-bold text-navy">{r.s}</span>
 										<span class="rounded-full px-2.5 py-1 text-[11px] font-semibold ring-1 ring-inset {r.cls}">{r.o}</span>
 									</div>
 								{/each}
@@ -2507,20 +2507,20 @@
 					<!-- Row 2: committee reasoning (mock left) -->
 					<div class="grid items-center gap-8 md:grid-cols-2 md:gap-14">
 						<div class="md:order-2">
-							<h3 class="mt-3 font-serif text-3xl font-medium tracking-tight text-slate-900">A five-reader committee on every decision</h3>
-							<p class="mt-3 text-[15px] leading-relaxed text-slate-500">Academics, activities, fit, intellect, and character, each scored and explained. It names the one reader holding you back and the single change that would move the verdict.</p>
+							<h3 class="mt-3 font-display text-navy text-3xl">A five-reader committee on every decision</h3>
+							<p class="mt-3 text-[15px] leading-relaxed text-muted">Academics, activities, fit, intellect, and character, each scored and explained. It names the one reader holding you back and the single change that would move the verdict.</p>
 						</div>
-						<div class="rounded-3xl border border-slate-200 bg-slate-50 p-5 sm:p-6 md:order-1">
-							<div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+						<div class="pa-card p-5 sm:p-6 md:order-1">
+							<div class="pa-inset p-5">
 								<div class="flex items-center justify-between">
-									<p class="text-xs font-bold uppercase tracking-wide text-slate-500">Committee read · Stanford</p>
-									<span class="rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-bold text-emerald-700 ring-1 ring-inset ring-emerald-200">Admit-leaning</span>
+									<p class="text-xs font-bold uppercase tracking-wide text-muted">Committee read · Stanford</p>
+									<span class="rounded-full bg-blue px-2 py-0.5 text-[10px] font-bold text-white ring-1 ring-inset ring-navy">Admit-leaning</span>
 								</div>
 								<div class="mt-4 space-y-2.5">
 									{#each [{ l: 'Academics', s: 9 }, { l: 'Activities', s: 8 }, { l: 'Fit', s: 7 }, { l: 'Intellect', s: 8 }, { l: 'Character', s: 7 }] as row}
 										<div>
-											<div class="flex items-center justify-between text-[11px] font-medium text-slate-500"><span>{row.l}</span><span>{row.s}/10</span></div>
-											<div class="mt-1 h-1.5 rounded-full bg-slate-100"><div class="h-1.5 rounded-full bg-[#1A4CFF]" style="width: {row.s * 10}%"></div></div>
+											<div class="flex items-center justify-between text-[11px] font-medium text-muted"><span>{row.l}</span><span>{row.s}/10</span></div>
+											<div class="mt-1 h-1.5 rounded-full bg-paper-deep"><div class="h-1.5 rounded-full bg-blue" style="width: {row.s * 10}%"></div></div>
 										</div>
 									{/each}
 								</div>
@@ -2532,19 +2532,19 @@
 				<!-- Row 3: essay markup -->
 				<div class="grid items-center gap-8 md:grid-cols-2 md:gap-14">
 					<div>
-						<h3 class="mt-3 font-serif text-3xl font-medium tracking-tight text-slate-900">Essays marked up like an admissions reader</h3>
-						<p class="mt-3 text-[15px] leading-relaxed text-slate-500">Hand over any supplement and the AI flags the weak lines and tells you why, the way a reader would. You write every word. It never writes one for you.</p>
+						<h3 class="mt-3 font-display text-navy text-3xl">Essays marked up like an admissions reader</h3>
+						<p class="mt-3 text-[15px] leading-relaxed text-muted">Hand over any supplement and the AI flags the weak lines and tells you why, the way a reader would. You write every word. It never writes one for you.</p>
 					</div>
-					<div class="rounded-3xl border border-slate-200 bg-slate-50 p-5 sm:p-6">
-						<div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-							<p class="text-xs font-bold uppercase tracking-wide text-slate-500">Personal statement</p>
-							<div class="mt-3 space-y-1.5 text-[13px] leading-relaxed text-slate-600">
-								<p class="rounded bg-[#1A4CFF]/10 px-1.5 py-0.5 text-slate-900 ring-1 ring-[#1A4CFF]/20">Ever since I was young, I have loved science.</p>
-								<p class="text-slate-400">The lab was quiet except for the hum of the centrifuge.</p>
+					<div class="pa-card p-5 sm:p-6">
+						<div class="pa-inset p-5">
+							<p class="text-xs font-bold uppercase tracking-wide text-muted">Personal statement</p>
+							<div class="mt-3 space-y-1.5 text-[13px] leading-relaxed text-ink">
+								<p class="rounded bg-yellow px-1.5 py-0.5 text-navy ring-1 ring-navy/20">Ever since I was young, I have loved science.</p>
+								<p class="text-muted">The lab was quiet except for the hum of the centrifuge.</p>
 							</div>
-							<div class="mt-3 flex items-start gap-2 rounded-xl border border-slate-200 bg-white p-3 shadow-sm">
-								<span class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#1A4CFF] text-[10px] font-black text-white">AI</span>
-								<p class="text-xs leading-relaxed text-slate-600">A reader has seen this opener a thousand times. Start on the moment in the lab.</p>
+							<div class="pa-card mt-3 flex items-start gap-2 p-3">
+								<span class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-blue text-[10px] font-black text-white">AI</span>
+								<p class="text-xs leading-relaxed text-ink">A reader has seen this opener a thousand times. Start on the moment in the lab.</p>
 							</div>
 						</div>
 					</div>
@@ -2553,30 +2553,30 @@
 				<!-- Row 4: AI counselor (mock left) -->
 				<div class="grid items-center gap-8 md:grid-cols-2 md:gap-14">
 					<div class="md:order-2">
-						<h3 class="mt-3 font-serif text-3xl font-medium tracking-tight text-slate-900">A counselor in your pocket</h3>
-						<p class="mt-3 text-[15px] leading-relaxed text-slate-500">Ask the things you'd pay a consultant $300 an hour for. Where to apply, how to explain a rough semester, what a school actually wants. In plain language, any time.</p>
+						<h3 class="mt-3 font-display text-navy text-3xl">A counselor in your pocket</h3>
+						<p class="mt-3 text-[15px] leading-relaxed text-muted">Ask the things you'd pay a consultant $300 an hour for. Where to apply, how to explain a rough semester, what a school actually wants. In plain language, any time.</p>
 					</div>
-					<div class="rounded-3xl border border-slate-200 bg-slate-50 p-5 sm:p-6 md:order-1">
-						<div class="space-y-3 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-							<div class="ml-auto max-w-[80%] rounded-2xl rounded-br-md bg-slate-900 px-3.5 py-2 text-[13px] text-white">Is my school list too top-heavy?</div>
+					<div class="pa-card p-5 sm:p-6 md:order-1">
+						<div class="pa-inset space-y-3 p-5">
+							<div class="ml-auto max-w-[80%] rounded-2xl rounded-br-md bg-navy px-3.5 py-2 text-[13px] text-white">Is my school list too top-heavy?</div>
 							<div class="flex items-start gap-2">
-								<span class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#1A4CFF] text-[10px] font-black text-white">PA</span>
-								<div class="max-w-[85%] rounded-2xl rounded-bl-md border border-slate-200 bg-white px-3.5 py-2 text-[13px] leading-relaxed text-slate-700">A little. Add two matches where you're above their median. Want me to name them?</div>
+								<span class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-blue text-[10px] font-black text-white">PA</span>
+								<div class="max-w-[85%] rounded-2xl rounded-bl-md border-2 border-navy bg-card px-3.5 py-2 text-[13px] leading-relaxed text-ink">A little. Add two matches where you're above their median. Want me to name them?</div>
 							</div>
 						</div>
 					</div>
 				</div>
 
 				<!-- Everything, no limits, banner. -->
-				<div class="flex flex-col items-center gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-6 text-center sm:flex-row sm:justify-between sm:text-left">
+				<div class="pa-card flex flex-col items-center gap-4 p-6 text-center sm:flex-row sm:justify-between sm:text-left">
 					<div>
-						<p class="font-bold text-slate-900">All of it, no limits</p>
-						<p class="mt-0.5 text-sm text-slate-600">Run the simulation as often as you like, read every deep-dive, and grade essays until they're right. Your first prediction is free. $9.99/mo unlocks the rest, or $25 once.</p>
+						<p class="font-bold text-navy">All of it, no limits</p>
+						<p class="mt-0.5 text-sm text-muted">Run the simulation as often as you like, read every deep-dive, and grade essays until they're right. Your first prediction is free. $9.99/mo unlocks the rest, or $25 once.</p>
 					</div>
 					<button
 						onclick={() => startUpgrade('monthly')}
 						disabled={isProcessing}
-						class="w-full shrink-0 rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 active:scale-[0.99] disabled:opacity-50 sm:w-auto"
+						class="btn btn-primary w-full shrink-0 sm:w-auto"
 					>
 						Start for $9.99/mo
 					</button>
@@ -2586,33 +2586,33 @@
 			<!-- Social proof -->
 			<div class="pt-4">
 				<div class="text-center mb-8">
-					<div class="inline-flex items-center gap-1 text-slate-900">
+					<div class="inline-flex items-center gap-1 text-yellow">
 						{#each Array(5) as _}
 							<svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.07 3.3a1 1 0 00.95.68h3.46c.97 0 1.37 1.24.59 1.81l-2.8 2.03a1 1 0 00-.36 1.12l1.07 3.29c.3.92-.76 1.69-1.54 1.12l-2.8-2.03a1 1 0 00-1.18 0l-2.8 2.03c-.78.57-1.83-.2-1.54-1.12l1.07-3.29a1 1 0 00-.36-1.12L2.4 8.72c-.78-.57-.38-1.81.59-1.81h3.46a1 1 0 00.95-.68l1.07-3.3z" /></svg>
 						{/each}
 					</div>
-					<p class="mt-2 text-sm font-semibold text-slate-500">Loved by 5,000+ applicants</p>
+					<p class="mt-2 text-sm font-semibold text-muted">Loved by 5,000+ applicants</p>
 				</div>
-				<figure class="mx-auto max-w-xl rounded-2xl border border-slate-200 bg-white p-8 text-center">
-					<blockquote class="font-serif text-xl leading-relaxed text-slate-800">"ts was lowkenuinely accurate"</blockquote>
+				<figure class="pa-card mx-auto max-w-xl p-8 text-center">
+					<blockquote class="font-display text-navy text-xl leading-relaxed">"ts was lowkenuinely accurate"</blockquote>
 					<figcaption class="mt-4 text-sm">
-						<span class="font-semibold text-slate-900">Miao S.</span>
-						<span class="text-slate-400"> · Accepted to Northwestern '30</span>
+						<span class="font-semibold text-navy">Miao S.</span>
+						<span class="text-muted"> · Accepted to Northwestern '30</span>
 					</figcaption>
 				</figure>
 			</div>
 
 			<!-- Closing CTA -->
 			<div>
-				<div class="bg-slate-900 rounded-[2rem] p-12 text-center text-white space-y-6">
-					<h3 class="font-serif text-3xl md:text-4xl font-medium text-white">The consultant's read, without the consultant's bill.</h3>
-					<p class="text-slate-300 text-lg max-w-2xl mx-auto leading-relaxed">
+				<div class="cta-band rounded-[2rem] p-12 text-center text-white space-y-6">
+					<h3 class="font-display text-3xl md:text-4xl text-white">The consultant's read, without the consultant's bill.</h3>
+					<p class="text-white/80 text-lg max-w-2xl mx-auto leading-relaxed">
 						Private counselors charge thousands a season for one judgment call: is this student getting in, and what should they fix. PredictAdmit is $9.99 a month while you're applying, or $25 once. Every simulation, every deep-dive, every essay pass. Your first prediction is free, so you only pay once it has already told you something you didn't know.
 					</p>
 					<button
 						onclick={() => startUpgrade('monthly')}
 						disabled={isProcessing}
-						class="rounded-full bg-white px-8 py-4 text-base font-semibold text-slate-900 transition hover:bg-slate-100 active:scale-[0.99] disabled:opacity-50"
+						class="btn btn-light"
 					>
 						{isProcessing ? 'Taking you to checkout…' : 'Start for $9.99/mo'}
 					</button>

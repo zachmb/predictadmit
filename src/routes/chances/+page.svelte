@@ -25,16 +25,16 @@
 		{ key: 'Hard reach', min: 0, tone: 'rose', label: 'Hard reach (<12%)' }
 	];
 	const toneBar: Record<string, string> = {
-		emerald: 'bg-emerald-500',
-		blue: 'bg-[#1A4CFF]',
-		amber: 'bg-amber-500',
-		rose: 'bg-rose-500'
+		emerald: 'bg-cyan',
+		blue: 'bg-blue',
+		amber: 'bg-yellow',
+		rose: 'bg-stamp-red'
 	};
 	const toneChip: Record<string, string> = {
-		emerald: 'text-emerald-700',
-		blue: 'text-[#1A4CFF]',
-		amber: 'text-amber-700',
-		rose: 'text-rose-700'
+		emerald: 'text-navy',
+		blue: 'text-blue',
+		amber: 'text-navy',
+		rose: 'text-stamp-red'
 	};
 
 	function bucketFor(odds: number) {
@@ -97,62 +97,62 @@
 	</script>
 </svelte:head>
 
-<main class="min-h-screen bg-slate-50 text-slate-900">
+<main class="min-h-screen pa-grid text-ink">
 	<div class="mx-auto max-w-2xl px-5 py-14 sm:py-20">
 		<header class="text-center">
-			<div class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-100 px-3.5 py-1.5">
-				<span class="h-1.5 w-1.5 rounded-full bg-[#1A4CFF]"></span>
-				<span class="text-[11px] font-bold uppercase tracking-[0.14em] text-slate-600">Free · No sign-up</span>
+			<div class="inline-flex items-center gap-2 rounded-full bg-blue px-3.5 py-1.5">
+				<span class="h-1.5 w-1.5 rounded-full bg-white"></span>
+				<span class="text-[11px] font-bold uppercase tracking-[0.14em] text-white">Free · No sign-up</span>
 			</div>
-			<h1 class="mt-5 font-serif text-4xl font-medium tracking-tight text-slate-900 sm:text-5xl">
+			<h1 class="mt-5 font-display text-4xl tracking-tight text-navy sm:text-5xl">
 				College Chances Calculator
 			</h1>
-			<p class="mx-auto mt-4 max-w-lg text-base leading-relaxed text-slate-500 sm:text-lg">
-				See your admission odds at <span class="font-semibold text-slate-700">39 top schools</span> in
+			<p class="mx-auto mt-4 max-w-lg text-base leading-relaxed text-muted sm:text-lg">
+				See your admission odds at <span class="font-semibold text-navy">39 top schools</span> in
 				about 10 seconds. No account, no credit card, just the math.
 			</p>
 		</header>
 
 		<!-- Form -->
-		<div class="mt-8 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+		<div class="mt-8 pa-card p-6 sm:p-8">
 			<div class="grid gap-5 sm:grid-cols-2">
 				<div>
-					<label for="c-gpa" class="block text-xs font-bold uppercase tracking-wide text-slate-500">Unweighted GPA</label>
-					<input id="c-gpa" bind:value={gpa} inputmode="decimal" placeholder="3.9" class="mt-1.5 w-full rounded-xl border border-slate-200 px-3.5 py-2.5 text-sm outline-none focus:border-slate-400 focus:ring-4 focus:ring-slate-300/40" />
+					<label for="c-gpa" class="block text-xs font-bold uppercase tracking-wide text-muted">Unweighted GPA</label>
+					<input id="c-gpa" bind:value={gpa} inputmode="decimal" placeholder="3.9" class="mt-1.5 w-full rounded-lg border-2 border-navy bg-card px-3.5 py-2.5 text-sm outline-none focus:border-blue" />
 				</div>
 				<div>
-					<span class="block text-xs font-bold uppercase tracking-wide text-slate-500">Test score</span>
+					<span class="block text-xs font-bold uppercase tracking-wide text-muted">Test score</span>
 					<div class="mt-1.5 flex gap-2">
-						<div class="flex rounded-xl border border-slate-200 p-0.5">
+						<div class="flex rounded-lg border-2 border-navy p-0.5">
 							{#each ['SAT', 'ACT'] as t}
-								<button type="button" onclick={() => (testType = t as 'SAT' | 'ACT')} class="rounded-lg px-3 py-2 text-xs font-bold transition {testType === t ? 'bg-slate-900 text-white' : 'text-slate-500'}">{t}</button>
+								<button type="button" onclick={() => (testType = t as 'SAT' | 'ACT')} class="rounded-md px-3 py-2 text-xs font-bold transition {testType === t ? 'bg-navy text-white' : 'text-muted'}">{t}</button>
 							{/each}
 						</div>
-						<input bind:value={testScore} inputmode="numeric" placeholder={testType === 'SAT' ? '1500' : '34'} class="w-full rounded-xl border border-slate-200 px-3.5 py-2.5 text-sm outline-none focus:border-slate-400 focus:ring-4 focus:ring-slate-300/40" />
+						<input bind:value={testScore} inputmode="numeric" placeholder={testType === 'SAT' ? '1500' : '34'} class="w-full rounded-lg border-2 border-navy bg-card px-3.5 py-2.5 text-sm outline-none focus:border-blue" />
 					</div>
 				</div>
 				<div>
-					<label for="c-rigor" class="block text-xs font-bold uppercase tracking-wide text-slate-500">Course rigor</label>
-					<select id="c-rigor" bind:value={rigor} class="mt-1.5 w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm outline-none focus:border-slate-400 focus:ring-4 focus:ring-slate-300/40">
+					<label for="c-rigor" class="block text-xs font-bold uppercase tracking-wide text-muted">Course rigor</label>
+					<select id="c-rigor" bind:value={rigor} class="mt-1.5 w-full rounded-lg border-2 border-navy bg-card px-3.5 py-2.5 text-sm outline-none focus:border-blue">
 						<option value="AP/IB">Most rigorous (many APs/IB)</option>
 						<option value="Honors">Honors-heavy</option>
 						<option value="Regular">Mostly regular</option>
 					</select>
 				</div>
 				<div>
-					<label for="c-major" class="block text-xs font-bold uppercase tracking-wide text-slate-500">Intended major</label>
-					<input id="c-major" bind:value={major} placeholder="Computer Science" class="mt-1.5 w-full rounded-xl border border-slate-200 px-3.5 py-2.5 text-sm outline-none focus:border-slate-400 focus:ring-4 focus:ring-slate-300/40" />
+					<label for="c-major" class="block text-xs font-bold uppercase tracking-wide text-muted">Intended major</label>
+					<input id="c-major" bind:value={major} placeholder="Computer Science" class="mt-1.5 w-full rounded-lg border-2 border-navy bg-card px-3.5 py-2.5 text-sm outline-none focus:border-blue" />
 				</div>
 			</div>
 			<div class="mt-5">
-				<label for="c-acts" class="block text-xs font-bold uppercase tracking-wide text-slate-500">Top activities & awards <span class="font-normal normal-case text-slate-400">(optional, boosts accuracy)</span></label>
-				<textarea id="c-acts" bind:value={activities} placeholder="e.g. Robotics captain, state finals · Research intern · Varsity soccer" class="mt-1.5 h-20 w-full resize-y rounded-xl border border-slate-200 p-3 text-sm outline-none focus:border-slate-400 focus:ring-4 focus:ring-slate-300/40"></textarea>
+				<label for="c-acts" class="block text-xs font-bold uppercase tracking-wide text-muted">Top activities & awards <span class="font-normal normal-case text-muted">(optional, boosts accuracy)</span></label>
+				<textarea id="c-acts" bind:value={activities} placeholder="e.g. Robotics captain, state finals · Research intern · Varsity soccer" class="mt-1.5 h-20 w-full resize-y rounded-lg border-2 border-navy bg-card p-3 text-sm outline-none focus:border-blue"></textarea>
 			</div>
-			<button onclick={calculate} class="mt-5 w-full rounded-full bg-slate-900 px-6 py-4 text-base font-semibold text-white transition hover:bg-slate-800 active:scale-[0.99]">
+			<button onclick={calculate} class="btn btn-primary btn-block mt-5">
 				Calculate my chances →
 			</button>
-			{#if error}<p class="mt-3 text-center text-sm font-semibold text-rose-600">{error}</p>{/if}
-			<p class="mt-3 text-center text-[11px] text-slate-400">A statistical estimate from NACAC factor weights. Not an official decision.</p>
+			{#if error}<p class="mt-3 text-center text-sm font-semibold text-stamp-red">{error}</p>{/if}
+			<p class="mt-3 text-center text-[11px] text-muted">A statistical estimate from NACAC factor weights. Not an official decision.</p>
 		</div>
 
 		{#if results}
@@ -161,14 +161,14 @@
 					{#if g.rows.length}
 						<div>
 							<h2 class="mb-2 text-sm font-bold uppercase tracking-wide {toneChip[g.tone]}">{g.label} · {g.rows.length}</h2>
-							<div class="overflow-hidden rounded-2xl border border-slate-200 bg-white">
+							<div class="overflow-hidden pa-card">
 								{#each g.rows as r}
-									<div class="border-b border-slate-100 px-4 py-3 last:border-b-0">
+									<div class="border-b-2 border-navy/10 px-4 py-3 last:border-b-0">
 										<div class="flex items-baseline justify-between gap-3">
-											<span class="min-w-0 truncate text-sm font-semibold text-slate-800">{r.school}</span>
+											<span class="min-w-0 truncate text-sm font-semibold text-navy">{r.school}</span>
 											<span class="shrink-0 text-sm font-black tabular-nums {toneChip[g.tone]}">{r.odds}%</span>
 										</div>
-										<div class="mt-2 h-2.5 overflow-hidden rounded-full bg-slate-100">
+										<div class="mt-2 h-2.5 overflow-hidden rounded-full bg-paper-deep">
 											<div class="h-full rounded-full {toneBar[g.tone]} transition-all duration-500" style="width: {Math.max(3, r.odds)}%"></div>
 										</div>
 									</div>
@@ -179,12 +179,12 @@
 				{/each}
 
 				<!-- Conversion to the real (AI) product -->
-				<div class="rounded-3xl bg-slate-900 p-6 text-center text-white sm:p-8">
-					<h3 class="font-serif text-xl font-medium sm:text-2xl">That's the fast math. Want the real read?</h3>
-					<p class="mx-auto mt-2 max-w-md text-sm leading-relaxed text-slate-300">
+				<div class="cta-band rounded-[10px] p-6 text-center text-white sm:p-8">
+					<h3 class="font-display text-xl sm:text-2xl">That's the fast math. Want the real read?</h3>
+					<p class="mx-auto mt-2 max-w-md text-sm leading-relaxed text-white/80">
 						This calculator uses your stats alone. PredictAdmit's AI reads your <span class="font-semibold text-white">actual essays and activities</span> and calls your decision (accept, deny, or waitlist) school by school. Your first prediction is free.
 					</p>
-					<a href="/ai" onclick={() => track('chances_to_ai_click')} class="mt-5 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3.5 text-base font-semibold text-slate-900 transition hover:bg-slate-100 active:scale-[0.99]">
+					<a href="/ai" onclick={() => track('chances_to_ai_click')} class="btn btn-light mt-5">
 						Run my real prediction, free →
 					</a>
 				</div>

@@ -67,7 +67,7 @@
 		researching: 'bg-slate-100 text-slate-600',
 		writing: 'bg-blue-100 text-blue-700',
 		submitted: 'bg-blue-100 text-[#003d99]',
-		accepted: 'bg-emerald-100 text-emerald-700',
+		accepted: 'bg-blue/10 text-blue',
 		denied: 'bg-rose-100 text-rose-700',
 		waitlisted: 'bg-amber-100 text-amber-700'
 	};

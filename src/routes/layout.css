@@ -1,40 +1,62 @@
 @import 'tailwindcss';
 
+/* PredictAdmit adopts the "study guide + field notes" design system:
+   paper canvas, navy / bright-blue / cyan palette, highlighter yellow accent,
+   Archivo Black display + Caveat handwritten, flat bordered buttons with solid
+   offset shadows. Full component system lives in sinn-system.css (imported from
+   +layout.svelte). These @theme tokens wire the palette + fonts into Tailwind so
+   utility classes (bg-navy, text-cyan, font-display, …) speak the same language. */
+
 @theme {
-	/* Default (Light Mode) Palette */
-	--color-brand-bg: #f8fafc; /* slate-50 */
-	--color-brand-text: #0f172a; /* slate-900 */
+	/* ---- Canvas ---- */
+	--color-brand-bg: #faf6eb; /* paper */
+	--color-brand-text: #26303c; /* ink */
 
-	/* Vigilante/Authority Accents (Universal) */
-	--color-brand-crimson: #a51c30; /* Harvard/Stress */
-	--color-brand-navy: #00356b; /* Yale/Authority */
-	--color-brand-gold: #cfb87c; /* Prestige */
+	/* ---- Brand palette (from the logo: navy / bright blue / cyan + yellow) ---- */
+	--color-navy: #16294e;
+	--color-navy-deep: #0f1d3a;
+	--color-blue: #1266e3;
+	--color-blue-dark: #0e51b8;
+	--color-cyan: #35cdee;
+	--color-yellow: #ffd93b;
+	--color-sticky: #f6e9b2;
+	--color-stamp-red: #c92a2a;
+	--color-ink: #26303c;
+	--color-muted: #52606f;
+	--color-paper: #faf6eb;
+	--color-paper-deep: #f3ecd9;
+	--color-card: #fffdf7;
 
-	/* Typography (Kolly-matched, 2026-09-11): Kolly's marketing site uses Söhne
-	   (a paid Klim font) for sans + Newsreader for serif. We can't ship Söhne's
-	   licensed files, so the sans stack leads with 'Söhne' (auto-applies if a
-	   licensed copy is ever self-hosted) then falls back to Hanken Grotesk, the
-	   closest free neo-grotesque. Serif = Newsreader, matching Kolly. */
-	--font-sans: 'Söhne', 'Hanken Grotesk', 'Inter', ui-sans-serif, system-ui, sans-serif;
+	/* Legacy brand aliases kept so un-migrated pages don't break — remapped to
+	   the new register (crimson → clay/stamp red, navy → brand navy, gold → yellow). */
+	--color-brand-crimson: #c92a2a;
+	--color-brand-navy: #16294e;
+	--color-brand-gold: #ffd93b;
+
+	/* ---- Typography ---- */
+	--font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+	--font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+	--font-display: 'Archivo Black', 'Arial Black', -apple-system, 'Segoe UI', sans-serif;
+	--font-hand: 'Caveat', 'Segoe Script', 'Comic Sans MS', cursive;
 	--font-serif: 'Newsreader', ui-serif, Georgia, 'Times New Roman', serif;
-	--font-inter: 'Söhne', 'Hanken Grotesk', 'Inter', ui-sans-serif, system-ui, sans-serif;
+	--font-inter: var(--font-body);
 
-	/* Shadows */
-	--shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-	--shadow-glow: 0 0 20px -5px rgba(34, 211, 238, 0.15);
+	/* ---- Shadows / radii (flat, solid offset — no blur) ---- */
+	--shadow-soft: 4px 4px 0 rgba(22, 41, 78, 0.13);
+	--shadow-offset: 7px 7px 0 rgba(22, 41, 78, 0.13);
+	--shadow-glow: 7px 7px 0 #35cdee;
 
-	--radius-card: 16px;
-	--radius-btn: 8px; /* Restored to 8px for friendly UI */
+	--radius-card: 10px;
+	--radius-btn: 9px;
 }
 
-/* Shared Brand Colors */
---color-brand-primary: #0f172a; /* Slate 900 - Main Text/Header */
+/* Shared brand color (legacy variable used inline in a few places) */
+--color-brand-primary: #16294e;
 
 :root {
-	font-family: var(--font-sans);
+	font-family: var(--font-body);
 	background-color: var(--color-brand-bg);
 	color: var(--color-brand-text);
-	/* color-scheme: light; -- Defaulting to light */
 }
 
 body {
@@ -44,9 +66,8 @@ body {
 	background-color: var(--color-brand-bg);
 }
 
-/* Tailwind v4 emits utilities inside @layer; unlayered rules would always beat
-   them (e.g. text-white headings rendering slate-900). Keep these element
-   defaults in the base layer so utility classes can override them. */
+/* Tailwind v4 emits utilities inside @layer; keep element defaults in the base
+   layer so utility classes can override them. Headings adopt Archivo Black. */
 @layer base {
 	h1,
 	h2,
@@ -54,9 +75,11 @@ body {
 	h4,
 	h5,
 	h6 {
-		font-weight: 700;
-		letter-spacing: -0.02em;
-		color: var(--color-brand-text);
+		font-family: var(--font-display);
+		font-weight: 400; /* Archivo Black is a single heavy weight; avoid faux-bold */
+		letter-spacing: 0;
+		line-height: 1.18;
+		color: var(--color-navy);
 	}
 
 	p,

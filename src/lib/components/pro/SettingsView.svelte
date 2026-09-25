@@ -182,7 +182,7 @@
 						<div class="flex items-center gap-2">
 							<h1 class="truncate text-xl font-bold tracking-tight text-slate-900">{displayName}</h1>
 							<span
-								class="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-0.5 text-xs font-medium text-emerald-700 ring-1 ring-inset ring-emerald-200"
+								class="inline-flex items-center gap-1 rounded-full bg-blue/10 px-2 py-0.5 text-xs font-medium text-blue ring-1 ring-inset ring-blue/30"
 							>
 								<svg viewBox="0 0 20 20" fill="currentColor" class="h-3.5 w-3.5" aria-hidden="true">
 									<path
@@ -217,7 +217,7 @@
 					</div>
 					<div class="flex items-center justify-between py-3">
 						<dt class="text-sm text-slate-500">Status</dt>
-						<dd class="text-sm font-medium text-emerald-700">Verified</dd>
+						<dd class="text-sm font-medium text-blue">Verified</dd>
 					</div>
 					<div class="flex items-center justify-between py-3">
 						<dt class="text-sm text-slate-500">Joined</dt>
@@ -272,8 +272,8 @@
 											Cancels soon
 										</span>
 									{:else if plan !== 'none'}
-										<span class="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-semibold text-emerald-700 ring-1 ring-inset ring-emerald-200">
-											<span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+										<span class="inline-flex items-center gap-1.5 rounded-full bg-blue/10 px-2.5 py-0.5 text-xs font-semibold text-blue ring-1 ring-inset ring-blue/30">
+											<span class="h-1.5 w-1.5 rounded-full bg-blue"></span>
 											Active
 										</span>
 									{/if}

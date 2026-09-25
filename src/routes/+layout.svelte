@@ -1,5 +1,6 @@
 <script lang="ts">
 	import './layout.css';
+	import './sinn-system.css';
 	import favicon from '$lib/assets/favicon.ico';
 	import SiteHeader from '$lib/components/layout/SiteHeader.svelte';
 	import PortalShareLauncher from '$lib/components/portal/PortalShareLauncher.svelte';
@@ -13,8 +14,30 @@
 	import { decisionsBySlug } from '$lib/stores/results';
 	import { schoolConfigs } from '$lib/config/schools';
 	import { computeDecisionForSchool, hasEnoughToScore } from '$lib/scoring/model';
+	import { browser } from '$app/environment';
 
 	let { children } = $props();
+
+	// Report engaged users to Favente (favente.so) so it can rank our best
+	// creator prospects from our own user base. Only signed-in users (we have
+	// their email) are reported; each event fires at most once per email per
+	// browser. Fire-and-forget — the stub in app.html queues the call if the
+	// async pixel hasn't loaded yet, so we never need to wait for it.
+	function faventeTrack(event: string, email: string | undefined | null) {
+		if (!browser || !email) return;
+		const key = `predictadmit_favente_${event}`;
+		try {
+			if (localStorage.getItem(key) === email) return;
+			localStorage.setItem(key, email);
+		} catch {
+			/* ignore storage errors */
+		}
+		try {
+			window.Favente?.track?.({ email, event });
+		} catch {
+			/* ignore — pixel is best-effort */
+		}
+	}
 
 	// Reset portal view state when navigating between schools or back home
 	$effect(() => {
@@ -121,6 +144,26 @@
 		if (localStorage.getItem('predictadmit_lifecycle_captured') === email) return;
 		localStorage.setItem('predictadmit_lifecycle_captured', email);
 		fetch('/api/lifecycle', { method: 'POST' }).catch(() => {});
+	});
+
+	// Favente signals. A signed-in identity (Google session or a saved account
+	// email) = an account exists. Pro entitlement = a purchase. Viewing a portal
+	// decision = they used the core product (rehearsed a decision). Each is a
+	// meaningful signal that this user could become a strong creator for us.
+	$effect(() => {
+		faventeTrack('signed_up', $page.data.session?.user?.email || $userProfile.email);
+	});
+
+	$effect(() => {
+		if ($userProfile.isPro) {
+			faventeTrack('purchased', $page.data.session?.user?.email || $userProfile.email);
+		}
+	});
+
+	$effect(() => {
+		if ($portalDecisionViewed) {
+			faventeTrack('simulated_decision', $page.data.session?.user?.email || $userProfile.email);
+		}
 	});
 </script>
 

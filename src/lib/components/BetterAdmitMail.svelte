@@ -161,8 +161,8 @@
 			<div class="flex items-center gap-2.5">
 				<div class="hidden md:flex items-center gap-1.5 rounded-full bg-slate-50 border border-slate-200 px-3 py-1.5">
 					<span class="relative flex h-1.5 w-1.5">
-						<span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
-						<span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+						<span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue opacity-75"></span>
+						<span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-blue"></span>
 					</span>
 					<span class="text-[11px] font-semibold text-slate-600">{displayEmail}</span>
 				</div>
@@ -598,7 +598,7 @@
 		aria-live="polite"
 		transition:fly={{ y: 24, duration: 220 }}
 	>
-		<svg class="h-4 w-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+		<svg class="h-4 w-4 text-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 			<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
 		</svg>
 		{toastMsg}

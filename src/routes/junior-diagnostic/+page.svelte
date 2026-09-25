@@ -21,41 +21,41 @@
 	<meta property="og:type" content="article" />
 </svelte:head>
 
-<main class="min-h-screen bg-white font-sans text-slate-800 antialiased">
+<main class="min-h-screen bg-paper font-sans text-ink antialiased">
 	<article class="mx-auto max-w-3xl px-6 py-16 md:py-24">
 		<!-- Header -->
 		<header class="mb-12">
 			<div
-				class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-100 px-3 py-1 text-xs font-bold uppercase tracking-wide text-slate-500"
+				class="inline-flex items-center gap-2 rounded-full bg-blue px-3 py-1 text-xs font-bold uppercase tracking-wide text-white"
 			>
-				<span class="h-1.5 w-1.5 rounded-full bg-[#1A4CFF]"></span>
+				<span class="h-1.5 w-1.5 rounded-full bg-white"></span>
 				College Admissions Guide
 			</div>
 
 			<h1
-				class="mt-6 text-4xl font-serif font-medium leading-[1.1] tracking-tight text-slate-900 md:text-5xl"
+				class="mt-6 text-4xl font-display leading-[1.1] tracking-tight text-navy md:text-5xl"
 			>
 				The Junior Year College Admissions Diagnostic
 			</h1>
 
-			<p class="mt-6 text-lg leading-relaxed text-slate-500 md:text-xl">
+			<p class="mt-6 text-lg leading-relaxed text-muted md:text-xl">
 				Junior year is the last full year admissions officers see before you apply. This guide
 				walks you through running an honest diagnostic on your own application &mdash; find the gaps,
 				project your scores, build a balanced list, and fix what's weak while there's still
 				time to fix it.
 			</p>
 
-			<div class="mt-8 flex items-center gap-3 border-t border-slate-100 pt-6 text-sm text-slate-400">
-				<span class="font-semibold text-slate-600">PredictAdmit Research Team</span>
+			<div class="mt-8 flex items-center gap-3 pa-rule-top pt-6 text-sm text-muted">
+				<span class="font-semibold text-navy">PredictAdmit Research Team</span>
 				<span>&middot;</span>
 				<span>14 min read</span>
 			</div>
 		</header>
 
 		<!-- Body -->
-		<div class="space-y-10 text-[17px] leading-8 text-slate-700">
+		<div class="space-y-10 text-[17px] leading-8 text-ink">
 			<section>
-				<h2 class="font-serif text-2xl font-medium tracking-tight text-slate-900">
+				<h2 class="font-display text-2xl tracking-tight text-navy">
 					Why junior year is where you have leverage
 				</h2>
 				<p class="mt-4">
@@ -76,7 +76,7 @@
 			</section>
 
 			<section>
-				<h2 class="font-serif text-2xl font-medium tracking-tight text-slate-900">
+				<h2 class="font-display text-2xl tracking-tight text-navy">
 					The 5 pillars admissions officers actually weigh
 				</h2>
 				<p class="mt-4">
@@ -86,40 +86,40 @@
 				</p>
 				<ul class="mt-4 space-y-3">
 					<li class="flex gap-3">
-						<span class="mt-1 font-bold text-slate-900">1.</span>
+						<span class="mt-1 font-bold text-navy">1.</span>
 						<span
-							><strong class="text-slate-900">Academic rigor &amp; GPA.</strong> Not just your unweighted
+							><strong class="text-navy">Academic rigor &amp; GPA.</strong> Not just your unweighted
 							average, but how demanding your schedule is relative to what your school offers. Taking
 							4 of a possible 12 APs reads very differently than 10 of 12.</span
 						>
 					</li>
 					<li class="flex gap-3">
-						<span class="mt-1 font-bold text-slate-900">2.</span>
+						<span class="mt-1 font-bold text-navy">2.</span>
 						<span
-							><strong class="text-slate-900">Standardized testing.</strong> Where your SAT/ACT
+							><strong class="text-navy">Standardized testing.</strong> Where your SAT/ACT
 							sits relative to a school's middle-50% range. Increasingly optional, but a strong score
 							still moves the needle at most reaches.</span
 						>
 					</li>
 					<li class="flex gap-3">
-						<span class="mt-1 font-bold text-slate-900">3.</span>
+						<span class="mt-1 font-bold text-navy">3.</span>
 						<span
-							><strong class="text-slate-900">Extracurricular depth.</strong> Depth and impact beat
+							><strong class="text-navy">Extracurricular depth.</strong> Depth and impact beat
 							a long list. One activity where you built, led, or achieved something real outweighs
 							ten club memberships.</span
 						>
 					</li>
 					<li class="flex gap-3">
-						<span class="mt-1 font-bold text-slate-900">4.</span>
+						<span class="mt-1 font-bold text-navy">4.</span>
 						<span
-							><strong class="text-slate-900">Narrative &amp; essays.</strong> A coherent story
+							><strong class="text-navy">Narrative &amp; essays.</strong> A coherent story
 							that ties your interests together. Officers remember a through-line, not a résumé.</span
 						>
 					</li>
 					<li class="flex gap-3">
-						<span class="mt-1 font-bold text-slate-900">5.</span>
+						<span class="mt-1 font-bold text-navy">5.</span>
 						<span
-							><strong class="text-slate-900">Context &amp; fit.</strong> How you compare within your
+							><strong class="text-navy">Context &amp; fit.</strong> How you compare within your
 							own high school, region, and applicant pool &mdash; and whether the school reads you as
 							genuinely interested.</span
 						>
@@ -128,7 +128,7 @@
 			</section>
 
 			<section>
-				<h2 class="font-serif text-2xl font-medium tracking-tight text-slate-900">
+				<h2 class="font-display text-2xl tracking-tight text-navy">
 					How to run your own gap analysis
 				</h2>
 				<p class="mt-4">
@@ -137,29 +137,29 @@
 					doing it honestly. Work through this checklist:
 				</p>
 
-				<div class="mt-6 rounded-2xl border border-slate-200 bg-slate-50 p-6">
-					<h3 class="text-sm font-bold uppercase tracking-wide text-slate-500">
+				<div class="mt-6 pa-inset p-6">
+					<h3 class="text-sm font-bold uppercase tracking-wide text-muted">
 						Junior-year gap-analysis checklist
 					</h3>
-					<ul class="mt-4 space-y-3 text-slate-700">
+					<ul class="mt-4 space-y-3 text-ink">
 						<li class="flex gap-3">
-							<span class="text-slate-900">&#10003;</span> Pull your school's course catalog and count
+							<span class="text-navy">&#10003;</span> Pull your school's course catalog and count
 							how many of the most rigorous classes you've actually taken.
 						</li>
 						<li class="flex gap-3">
-							<span class="text-slate-900">&#10003;</span> Look up the middle-50% test range for each
+							<span class="text-navy">&#10003;</span> Look up the middle-50% test range for each
 							target school and mark where your current score falls.
 						</li>
 						<li class="flex gap-3">
-							<span class="text-slate-900">&#10003;</span> Rank your activities by real impact, not by
+							<span class="text-navy">&#10003;</span> Rank your activities by real impact, not by
 							title. Circle the one you'd talk about in an interview.
 						</li>
 						<li class="flex gap-3">
-							<span class="text-slate-900">&#10003;</span> Write one sentence describing your "hook"
+							<span class="text-navy">&#10003;</span> Write one sentence describing your "hook"
 							or narrative. If you can't, that's a gap.
 						</li>
 						<li class="flex gap-3">
-							<span class="text-slate-900">&#10003;</span> For each target school, note whether you're
+							<span class="text-navy">&#10003;</span> For each target school, note whether you're
 							above, at, or below its admitted-student profile.
 						</li>
 					</ul>
@@ -170,14 +170,14 @@
 					<em>applicant</em> instead of the average <em>admit</em>. The admit bar is meaningfully
 					higher, and it's the only bar that matters. If doing this by hand feels imprecise, this is
 					exactly the comparison
-					<a href="/pro" class="font-semibold text-[#1A4CFF] underline decoration-blue-200 underline-offset-2 hover:decoration-blue-500">PredictAdmit Pro</a>
+					<a href="/pro" class="font-semibold text-blue underline decoration-cyan underline-offset-2 hover:decoration-blue">PredictAdmit Pro</a>
 					automates &mdash; it plots your profile against real admit distributions instead of leaving
 					you to eyeball it.
 				</p>
 			</section>
 
 			<section>
-				<h2 class="font-serif text-2xl font-medium tracking-tight text-slate-900">
+				<h2 class="font-display text-2xl tracking-tight text-navy">
 					Projecting your test scores realistically
 				</h2>
 				<p class="mt-4">
@@ -187,25 +187,25 @@
 				</p>
 				<ul class="mt-4 space-y-2">
 					<li class="flex gap-3">
-						<span class="text-slate-900">&bull;</span> Take a full-length, timed diagnostic under real
+						<span class="text-navy">&bull;</span> Take a full-length, timed diagnostic under real
 						conditions to get a true baseline.
 					</li>
 					<li class="flex gap-3">
-						<span class="text-slate-900">&bull;</span> Assume realistic gains: 50&ndash;100 points on the
+						<span class="text-navy">&bull;</span> Assume realistic gains: 50&ndash;100 points on the
 						SAT from disciplined prep is typical; 200+ is rare and shouldn't anchor your plan.
 					</li>
 					<li class="flex gap-3">
-						<span class="text-slate-900">&bull;</span> Plan your test dates <em>backward</em> from application
+						<span class="text-navy">&bull;</span> Plan your test dates <em>backward</em> from application
 						deadlines so your last attempt lands before you apply.
 					</li>
 					<li class="flex gap-3">
-						<span class="text-slate-900">&bull;</span> Decide test-optional strategy per school: if your
+						<span class="text-navy">&bull;</span> Decide test-optional strategy per school: if your
 						projected score won't clear the 25th percentile, that school may read better without it.
 					</li>
 				</ul>
 				<p class="mt-4">
 					Combine your projected test score with your projected junior/senior GPA into a single
-					<strong class="text-slate-900">academic index</strong> &mdash; a rough composite that many
+					<strong class="text-navy">academic index</strong> &mdash; a rough composite that many
 					selective schools compute internally. That one number tells you, fast, which schools are
 					academic reaches versus schools where academics are already handled and the rest of your
 					application decides.
@@ -213,7 +213,7 @@
 			</section>
 
 			<section>
-				<h2 class="font-serif text-2xl font-medium tracking-tight text-slate-900">
+				<h2 class="font-display text-2xl tracking-tight text-navy">
 					Building a reach / target / safety list
 				</h2>
 				<p class="mt-4">
@@ -222,28 +222,28 @@
 					probability. Here's the framework:
 				</p>
 
-				<div class="mt-6 overflow-hidden rounded-2xl border border-slate-200">
+				<div class="mt-6 overflow-hidden pa-card">
 					<table class="w-full text-left text-sm">
-						<thead class="bg-slate-900 text-white">
+						<thead class="bg-navy text-white">
 							<tr>
 								<th class="px-4 py-3 font-semibold">Category</th>
 								<th class="px-4 py-3 font-semibold">Your profile vs. admits</th>
 								<th class="px-4 py-3 font-semibold">Suggested count</th>
 							</tr>
 						</thead>
-						<tbody class="divide-y divide-slate-100 text-slate-700">
+						<tbody class="divide-y-2 divide-navy/10 text-ink">
 							<tr>
-								<td class="px-4 py-3 font-bold text-red-600">Reach</td>
+								<td class="px-4 py-3 font-bold text-stamp-red">Reach</td>
 								<td class="px-4 py-3">At or below the admitted middle-50%; sub-15% admit rate</td>
 								<td class="px-4 py-3">4&ndash;6</td>
 							</tr>
-							<tr class="bg-slate-50">
-								<td class="px-4 py-3 font-bold text-amber-600">Target</td>
+							<tr class="bg-paper-deep">
+								<td class="px-4 py-3 font-bold text-navy">Target</td>
 								<td class="px-4 py-3">Squarely inside the admitted middle-50% on every pillar</td>
 								<td class="px-4 py-3">3&ndash;5</td>
 							</tr>
 							<tr>
-								<td class="px-4 py-3 font-bold text-emerald-600">Safety</td>
+								<td class="px-4 py-3 font-bold text-blue">Safety</td>
 								<td class="px-4 py-3">Above the middle-50%; likely admit and affordable</td>
 								<td class="px-4 py-3">2&ndash;3</td>
 							</tr>
@@ -253,7 +253,7 @@
 
 				<p class="mt-6">
 					Two rules keep this list honest. First, a school is only a
-					<strong class="text-slate-900">safety</strong> if it's a safety on <em>both</em> admission and cost
+					<strong class="text-navy">safety</strong> if it's a safety on <em>both</em> admission and cost
 					&mdash; an unaffordable admit isn't a safety. Second, every school on the list should be
 					one you'd genuinely attend. A balanced list of 10&ndash;14 schools built this way protects you
 					from the two worst outcomes: no acceptances, and acceptances you can't use.
@@ -261,7 +261,7 @@
 			</section>
 
 			<section>
-				<h2 class="font-serif text-2xl font-medium tracking-tight text-slate-900">
+				<h2 class="font-display text-2xl tracking-tight text-navy">
 					The mistakes that quietly sink junior-year applicants
 				</h2>
 				<p class="mt-4">
@@ -270,38 +270,38 @@
 				</p>
 				<ul class="mt-4 space-y-3">
 					<li class="flex gap-3">
-						<span class="text-slate-900">&bull;</span>
+						<span class="text-navy">&bull;</span>
 						<span
-							><strong class="text-slate-900">Coasting in junior spring.</strong> This semester's grades
+							><strong class="text-navy">Coasting in junior spring.</strong> This semester's grades
 							are the freshest data on your transcript. A dip here is expensive.</span
 						>
 					</li>
 					<li class="flex gap-3">
-						<span class="text-slate-900">&bull;</span>
+						<span class="text-navy">&bull;</span>
 						<span
-							><strong class="text-slate-900">Collecting titles instead of impact.</strong> "President"
+							><strong class="text-navy">Collecting titles instead of impact.</strong> "President"
 							of a club that meets twice a year reads as filler. Depth wins.</span
 						>
 					</li>
 					<li class="flex gap-3">
-						<span class="text-slate-900">&bull;</span>
+						<span class="text-navy">&bull;</span>
 						<span
-							><strong class="text-slate-900">A top-heavy list.</strong> Eight reaches and one safety
+							><strong class="text-navy">A top-heavy list.</strong> Eight reaches and one safety
 							isn't ambition &mdash; it's a coin flip you're likely to lose.</span
 						>
 					</li>
 					<li class="flex gap-3">
-						<span class="text-slate-900">&bull;</span>
+						<span class="text-navy">&bull;</span>
 						<span
-							><strong class="text-slate-900">Ignoring the narrative until essay season.</strong> The
+							><strong class="text-navy">Ignoring the narrative until essay season.</strong> The
 							story your activities tell should be intentional by the end of junior year, not
 							reverse-engineered in November.</span
 						>
 					</li>
 					<li class="flex gap-3">
-						<span class="text-slate-900">&bull;</span>
+						<span class="text-navy">&bull;</span>
 						<span
-							><strong class="text-slate-900">Guessing at your odds.</strong> Vibes are not a strategy.
+							><strong class="text-navy">Guessing at your odds.</strong> Vibes are not a strategy.
 							Every fixable gap you don't measure is one you won't fix in time.</span
 						>
 					</li>
@@ -310,47 +310,47 @@
 
 			<!-- Pro callout -->
 			<section
-				class="rounded-3xl bg-slate-900 p-8 text-white md:p-10"
+				class="cta-band rounded-[10px] p-8 text-left text-white md:p-10"
 			>
 				<div
 					class="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-bold uppercase tracking-wide text-white"
 				>
 					Built into PredictAdmit Pro
 				</div>
-				<h2 class="mt-5 text-2xl font-serif font-medium tracking-tight text-white md:text-3xl">
+				<h2 class="mt-5 text-2xl font-display tracking-tight text-white md:text-3xl">
 					Run this entire diagnostic automatically
 				</h2>
-				<p class="mt-4 text-slate-300">
+				<p class="mt-4 text-white/80">
 					Everything in this guide &mdash; the gap analysis, the score projection, the balanced list
 					&mdash; runs on its own inside PredictAdmit Pro. You stop eyeballing percentiles and let it
 					do the math:
 				</p>
 				<ul class="mt-5 grid gap-3 sm:grid-cols-2">
-					<li class="flex gap-3 rounded-xl border border-slate-100 bg-white p-4 text-sm">
-						<span class="text-slate-900">&#10003;</span>
+					<li class="flex gap-3 rounded-lg border-2 border-navy bg-card p-4 text-sm text-ink">
+						<span class="text-blue">&#10003;</span>
 						<span
-							>Computes your <strong class="text-slate-900">academic index</strong> and projects it forward
+							>Computes your <strong class="text-navy">academic index</strong> and projects it forward
 							from your current trajectory.</span
 						>
 					</li>
-					<li class="flex gap-3 rounded-xl border border-slate-100 bg-white p-4 text-sm">
-						<span class="text-slate-900">&#10003;</span>
+					<li class="flex gap-3 rounded-lg border-2 border-navy bg-card p-4 text-sm text-ink">
+						<span class="text-blue">&#10003;</span>
 						<span
-							>Plots you against real <strong class="text-slate-900">admit distributions</strong> for every
+							>Plots you against real <strong class="text-navy">admit distributions</strong> for every
 							school on your list.</span
 						>
 					</li>
-					<li class="flex gap-3 rounded-xl border border-slate-100 bg-white p-4 text-sm">
-						<span class="text-slate-900">&#10003;</span>
+					<li class="flex gap-3 rounded-lg border-2 border-navy bg-card p-4 text-sm text-ink">
+						<span class="text-blue">&#10003;</span>
 						<span
-							>Generates <strong class="text-slate-900">personalized chances</strong> and flags your biggest
+							>Generates <strong class="text-navy">personalized chances</strong> and flags your biggest
 							fixable gaps.</span
 						>
 					</li>
-					<li class="flex gap-3 rounded-xl border border-slate-100 bg-white p-4 text-sm">
-						<span class="text-slate-900">&#10003;</span>
+					<li class="flex gap-3 rounded-lg border-2 border-navy bg-card p-4 text-sm text-ink">
+						<span class="text-blue">&#10003;</span>
 						<span
-							>Pairs it with an <strong class="text-slate-900">AI counselor</strong> that turns each gap
+							>Pairs it with an <strong class="text-navy">AI counselor</strong> that turns each gap
 							into a concrete next step.</span
 						>
 					</li>
@@ -358,11 +358,11 @@
 				<div class="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
 					<a
 						href="/pro"
-						class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3.5 text-base font-semibold text-slate-900 transition-all hover:-translate-y-0.5 hover:bg-slate-100"
+						class="btn btn-light"
 					>
 						Run your diagnostic in PredictAdmit Pro &rarr;
 					</a>
-					<div class="flex items-center gap-5 text-sm font-semibold text-slate-300">
+					<div class="flex items-center gap-5 text-sm font-semibold text-white/80">
 						<a href="/portals" class="hover:text-white">Explore all portals</a>
 						<a href="/ai" class="hover:text-white">Meet the AI counselor</a>
 					</div>
@@ -371,25 +371,25 @@
 
 			<!-- FAQ -->
 			<section>
-				<h2 class="font-serif text-2xl font-medium tracking-tight text-slate-900">
+				<h2 class="font-display text-2xl tracking-tight text-navy">
 					Frequently asked questions
 				</h2>
 				<div class="mt-6 space-y-6">
 					<div>
-						<h3 class="text-lg font-bold text-slate-900">
+						<h3 class="text-lg font-bold text-navy">
 							When exactly should a junior run this diagnostic?
 						</h3>
-						<p class="mt-2 text-slate-600">
+						<p class="mt-2 text-muted">
 							The fall of junior year is ideal &mdash; early enough to adjust your course load,
 							testing plan, and activities before they're locked. Running it again in spring lets you
 							update projections with fresh grades and scores.
 						</p>
 					</div>
 					<div>
-						<h3 class="text-lg font-bold text-slate-900">
+						<h3 class="text-lg font-bold text-navy">
 							Do test-optional policies mean I can skip the SAT/ACT?
 						</h3>
-						<p class="mt-2 text-slate-600">
+						<p class="mt-2 text-muted">
 							Not necessarily. Test-optional means a strong score can only help you. If your projected
 							score clears a school's 25th percentile, submitting usually strengthens your file. If it
 							won't, that school may read better without it &mdash; a per-school decision Pro makes for
@@ -397,18 +397,18 @@
 						</p>
 					</div>
 					<div>
-						<h3 class="text-lg font-bold text-slate-900">How many schools should be on my list?</h3>
-						<p class="mt-2 text-slate-600">
+						<h3 class="text-lg font-bold text-navy">How many schools should be on my list?</h3>
+						<p class="mt-2 text-muted">
 							Ten to fourteen is a healthy range: roughly 4&ndash;6 reaches, 3&ndash;5 targets, and
 							2&ndash;3 true safeties. The exact split depends on how far your profile sits from your
 							dream schools.
 						</p>
 					</div>
 					<div>
-						<h3 class="text-lg font-bold text-slate-900">
+						<h3 class="text-lg font-bold text-navy">
 							Is a chance estimate actually reliable?
 						</h3>
-						<p class="mt-2 text-slate-600">
+						<p class="mt-2 text-muted">
 							No single number is destiny &mdash; holistic admissions is genuinely uncertain. But a
 							data-backed estimate built from real admit distributions is far more useful than a gut
 							feeling, especially for spotting which reaches are realistic and which gaps are worth
@@ -416,11 +416,11 @@
 						</p>
 					</div>
 					<div>
-						<h3 class="text-lg font-bold text-slate-900">Can't my school counselor do this?</h3>
-						<p class="mt-2 text-slate-600">
+						<h3 class="text-lg font-bold text-navy">Can't my school counselor do this?</h3>
+						<p class="mt-2 text-muted">
 							A great counselor is invaluable, but most manage hundreds of students and can't run a
 							data-driven, per-school projection for each one. That's the specific job
-							<a href="/pro" class="font-semibold text-[#1A4CFF] underline decoration-blue-200 underline-offset-2 hover:decoration-blue-500">PredictAdmit Pro</a>
+							<a href="/pro" class="font-semibold text-blue underline decoration-cyan underline-offset-2 hover:decoration-blue">PredictAdmit Pro</a>
 							is built to handle &mdash; the number-crunching, so your counselor can focus on the
 							human guidance.
 						</p>
@@ -429,12 +429,12 @@
 			</section>
 
 			<!-- Closing -->
-			<section class="border-t border-slate-100 pt-8">
-				<p class="text-slate-600">
+			<section class="pa-rule-top pt-8">
+				<p class="text-muted">
 					Junior year is the one window where seeing your gaps still lets you close them. Run the
 					diagnostic, fix what's fixable, and walk into senior fall knowing exactly where you stand.
 					When you're ready to skip the manual math,
-					<a href="/pro" class="font-semibold text-[#1A4CFF] underline decoration-blue-200 underline-offset-2 hover:decoration-blue-500">PredictAdmit Pro</a>
+					<a href="/pro" class="font-semibold text-blue underline decoration-cyan underline-offset-2 hover:decoration-blue">PredictAdmit Pro</a>
 					does all of it in minutes.
 				</p>
 			</section>

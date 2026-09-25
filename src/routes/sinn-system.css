@@ -1,0 +1,3165 @@
+/* mrsinnchannel.com — single shared stylesheet
+   Direction: "study guide + field notes" — paper, marker annotations, sticky notes,
+   dashed map-route lines. Brand palette from the logo (navy / bright blue / cyan)
+   plus a highlighter-yellow accent. No blur shadows, no gradients on buttons. */
+
+/* ---------- Self-hosted fonts (fonts/ — no external requests) ---------- */
+
+@font-face {
+  font-family: "Archivo Black";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/archivo-black-v23-latin-regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Caveat";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("/fonts/caveat-v23-latin-700.woff2") format("woff2");
+}
+
+/* ---------- Tokens ---------- */
+
+:root {
+  --navy: #16294e;
+  --navy-deep: #0f1d3a;
+  --blue: #1266e3;
+  --blue-dark: #0e51b8;
+  --cyan: #35cdee;
+  --yellow: #ffd93b;
+  /* Softer post-it shade for sticky notes only; buttons/badges keep --yellow */
+  --sticky-yellow: #f6e9b2;
+  --stamp-red: #c92a2a;
+  --ink: #26303c;
+  --muted: #52606f;
+  --paper: #faf6eb;
+  --paper-deep: #f3ecd9;
+  --card: #fffdf7;
+  --grid-line: rgba(18, 102, 227, 0.07);
+  --rule-line: rgba(18, 102, 227, 0.13);
+  --offset-shadow: 7px 7px 0 rgba(22, 41, 78, 0.13);
+  --radius: 10px;
+  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-display: "Archivo Black", "Arial Black", -apple-system, "Segoe UI", sans-serif;
+  --font-hand: "Caveat", "Segoe Script", "Comic Sans MS", cursive;
+  /* Marker swipes + contour art as inline SVG data URIs — zero image files */
+  --swipe-cyan: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 130 12' preserveAspectRatio='none'%3E%3Cpath d='M3 8.5C28 4.5 62 3.5 127 6.5' fill='none' stroke='%2335cdee' stroke-width='5' stroke-linecap='round'/%3E%3Cpath d='M8 10.5C38 8 66 7 112 8.5' fill='none' stroke='%2335cdee' stroke-width='3' stroke-linecap='round' opacity='.5'/%3E%3C/svg%3E");
+  --swipe-yellow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 130 12' preserveAspectRatio='none'%3E%3Cpath d='M3 8.5C28 4.5 62 3.5 127 6.5' fill='none' stroke='%23ffd93b' stroke-width='6' stroke-linecap='round'/%3E%3Cpath d='M8 10.5C38 8 66 7 112 8.5' fill='none' stroke='%23ffd93b' stroke-width='3' stroke-linecap='round' opacity='.6'/%3E%3C/svg%3E");
+  --contour: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 600'%3E%3Cg fill='none' stroke='%2335cdee' stroke-width='1.5' opacity='.38'%3E%3Cpath d='M100 520c-60-60-70-160-20-220s150-70 210-20 70 160 20 220-150 70-210 20z'/%3E%3Cpath d='M120 490c-45-45-55-125-15-170s115-55 160-15 55 125 15 170-115 55-160 15z'/%3E%3Cpath d='M140 460c-30-30-40-90-10-120s80-40 110-10 40 90 10 120-80 40-110 10z'/%3E%3Cpath d='M160 430c-18-18-25-55-5-75s50-25 68-5 25 55 5 75-50 25-68 5z'/%3E%3Cpath d='M430 180c-40-45-35-115 10-150s120-30 155 15 30 115-15 150-110 30-150-15z'/%3E%3Cpath d='M450 155c-28-32-25-80 7-105s85-21 110 11 21 80-11 105-78 21-106-11z'/%3E%3Cpath d='M470 130c-16-19-15-48 4-63s51-13 66 6 13 48-6 63-48 13-64-6z'/%3E%3C/g%3E%3Cpath d='M40 90C160 40 320 150 560 70' fill='none' stroke='%2335cdee' stroke-width='2.5' stroke-dasharray='8 10' opacity='.45'/%3E%3C/svg%3E");
+}
+
+/* ---------- Reset / base ---------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  /* Rotated/offset decorations (stamps, tape) may poke past the edge — never scroll for them */
+  overflow-x: clip;
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: var(--ink);
+  background: var(--paper);
+  /* Sticky footer: main stretches so the footer never floats above the viewport bottom */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 400; /* Archivo Black is a single heavy weight; avoid faux-bold */
+  line-height: 1.18;
+  color: var(--navy);
+  margin: 0 0 0.6em;
+}
+
+h1 {
+  font-size: clamp(1.9rem, 4.5vw, 2.9rem);
+}
+
+h2 {
+  font-size: clamp(1.4rem, 3.2vw, 1.9rem);
+}
+
+h3 {
+  font-size: 1.2rem;
+}
+
+p {
+  margin: 0 0 1em;
+}
+
+a {
+  color: var(--blue);
+}
+
+a:hover {
+  color: var(--blue-dark);
+}
+
+/* Blue focus ring on light paper backgrounds (cyan fails 3:1 there);
+   dark surfaces override to cyan below. */
+:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 2px;
+}
+
+.site-footer :focus-visible {
+  outline-color: var(--cyan);
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--navy);
+  color: #fff;
+  padding: 0.6rem 1rem;
+  z-index: 100;
+}
+
+.skip-link:focus {
+  left: 0;
+  color: #fff;
+}
+
+/* ---------- Annotation utilities ---------- */
+
+/* Highlighter swipe behind text */
+.hl {
+  background: var(--yellow);
+  color: var(--navy);
+  padding: 0.02em 0.18em;
+  border-radius: 0.25em 0.6em 0.3em 0.5em / 0.5em 0.3em 0.55em 0.3em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/* Hand-drawn marker underline below a heading */
+.swipe::after {
+  content: "";
+  display: block;
+  width: min(170px, 65%);
+  height: 11px;
+  margin-top: 0.25em;
+  background: var(--swipe-cyan) no-repeat center / 100% 100%;
+}
+
+.swipe-y::after {
+  background-image: var(--swipe-yellow);
+}
+
+.swipe-center::after {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Handwritten accent text (labels, captions — never body copy) */
+.hand {
+  font-family: var(--font-hand);
+  font-weight: 700;
+  color: var(--navy);
+}
+
+/* ---------- Buttons — flat, bordered, solid offset shadow ---------- */
+
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border: 2.5px solid var(--navy);
+  border-radius: 9px;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 4px 4px 0 var(--navy);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+
+.btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--navy);
+}
+
+.btn:active {
+  transform: translate(1px, 1px);
+  box-shadow: 2px 2px 0 var(--navy);
+}
+
+.btn-primary {
+  background: var(--blue);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: var(--blue-dark);
+  color: #fff;
+}
+
+.btn-secondary {
+  background: var(--card);
+  color: var(--navy);
+}
+
+.btn-secondary:hover {
+  background: var(--yellow);
+  color: var(--navy);
+}
+
+/* On yellow sticky notes */
+.btn-light {
+  background: var(--navy);
+  color: #fff;
+}
+
+.btn-light:hover {
+  background: var(--navy-deep);
+  color: #fff;
+}
+
+/* ---------- Header / nav ---------- */
+
+.site-header {
+  background: var(--paper);
+  border-bottom: 3px dashed var(--cyan);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.header-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
+}
+
+.logo-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none;
+}
+
+.logo-link img {
+  height: 48px;
+  width: auto;
+}
+
+.nav-toggle {
+  border: 2.5px solid var(--navy);
+  background: var(--card);
+  color: var(--navy);
+  border-radius: 8px;
+  padding: 0.45rem 0.7rem;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 3px 3px 0 var(--navy);
+}
+
+.nav-toggle svg {
+  display: block;
+}
+
+.nav-toggle[hidden] {
+  display: none;
+}
+
+.site-nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  width: 100%;
+}
+
+.site-nav a {
+  display: block;
+  padding: 0.5rem 0.8rem;
+  text-decoration: none;
+  color: var(--navy);
+  font-weight: 700;
+  border-radius: 8px;
+}
+
+.site-nav a:hover {
+  background: var(--yellow);
+  color: var(--navy);
+}
+
+/* Current page: highlighter streak under the label */
+.site-nav a[aria-current="page"] {
+  color: var(--navy);
+  text-decoration: underline;
+  text-decoration-color: var(--yellow);
+  text-decoration-thickness: 0.38em;
+  text-underline-offset: 0.12em;
+  text-decoration-skip-ink: none;
+}
+
+/* Mobile collapse only when JS is available; without JS the links stay visible. */
+.js .site-nav {
+  display: none;
+  width: 100%;
+}
+
+.js .site-nav.is-open {
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .js .site-nav,
+  .site-nav {
+    display: block;
+    width: auto;
+  }
+
+  .nav-toggle {
+    display: none !important;
+  }
+
+  .site-nav ul {
+    flex-direction: row;
+    align-items: center;
+    width: auto;
+  }
+
+  .site-nav a {
+    white-space: nowrap;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 959px) {
+  .site-nav a {
+    padding: 0.45rem 0.5rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* ---------- Hero (home) — paper, contour lines, taped-in photo ---------- */
+
+.hero {
+  background-color: var(--paper-deep);
+  background-image:
+    var(--contour),
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 640px 640px, 26px 26px, 26px 26px;
+  background-position: right -120px bottom -180px, 0 0, 0 0;
+  background-repeat: no-repeat, repeat, repeat;
+  padding: 4rem 0 4.5rem;
+}
+
+.hero-inner {
+  display: grid;
+  gap: 2.75rem;
+  align-items: center;
+}
+
+.hero h1 {
+  font-size: clamp(2.1rem, 5vw, 3.3rem);
+  margin-bottom: 0.7em;
+}
+
+.hero-photo {
+  position: relative;
+  max-width: 620px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+@media (min-width: 900px) {
+  .hero-inner {
+    /* photo column now leads — it carries the bigger art */
+    grid-template-columns: 0.92fr 1.08fr;
+    gap: 3.5rem;
+  }
+
+  .hero {
+    padding: 5.5rem 0 6rem;
+  }
+}
+
+/* ---------- Page header band (interior pages) ---------- */
+
+.page-header {
+  background-color: var(--paper-deep);
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 26px 26px;
+  border-bottom: 3px dashed var(--cyan);
+  text-align: center;
+  padding: 2.9rem 0 2.6rem;
+}
+
+.page-header h1 {
+  margin-bottom: 0.25em;
+}
+
+.page-header p {
+  font-family: var(--font-hand);
+  font-weight: 700;
+  font-size: 1.55rem;
+  line-height: 1.3;
+  margin: 0;
+  color: var(--navy);
+}
+
+/* In-page jump nav (Student Resources) — plain anchor links, no JS needed */
+.jump-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem 0.9rem;
+  margin-top: 1.35rem;
+}
+
+.jump-nav a {
+  font-family: var(--font-hand);
+  font-weight: 700;
+  font-size: 1.3rem;
+  line-height: 1.2;
+  text-decoration: none;
+  color: var(--navy);
+  background: var(--card);
+  border: 2px solid var(--navy);
+  border-radius: 999px;
+  padding: 0.12rem 0.95rem;
+  box-shadow: 2px 2px 0 var(--navy);
+}
+
+.jump-nav a:hover {
+  background: var(--yellow);
+  color: var(--navy);
+}
+
+/* Anchored sections land below the sticky header */
+main [id] {
+  scroll-margin-top: 5.5rem;
+}
+
+/* ---------- Section bar ----------
+   Sticky on desktop only. On phones a second pinned bar would eat too much of
+   a short viewport, so there it just scrolls away with the page header.
+   768px is the same breakpoint where the header swaps its hamburger for the
+   full nav, so both bars change behaviour together. */
+
+.jump-nav-bar {
+  z-index: 40;
+  background-color: var(--paper-deep);
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 26px 26px;
+  border-bottom: 3px dashed var(--cyan);
+  padding: 0.7rem 0;
+}
+
+/* the bar carries the rule now, so the header above it doesn't need one */
+.page-header.has-subnav {
+  border-bottom: 0;
+  padding-bottom: 2rem;
+}
+
+.jump-nav-bar .jump-nav {
+  margin-top: 0;
+}
+
+@media (min-width: 768px) {
+  .jump-nav-bar {
+    position: sticky;
+    top: var(--header-h, 74px);
+  }
+
+  /* with the bar pinned, anchors have to clear the header AND the bar */
+  .jump-nav-bar ~ [id] {
+    scroll-margin-top: calc(var(--header-h, 74px) + 4.2rem);
+  }
+}
+
+/* On small screens the bar isn't sticky, so let the links wrap onto multiple
+   rows rather than forcing a horizontal scroll. */
+@media (max-width: 767px) {
+  .jump-nav-bar .jump-nav {
+    gap: 0.5rem 0.6rem;
+  }
+}
+
+/* ---------- Sections & route lines ---------- */
+
+.section {
+  padding: 3.5rem 0;
+}
+
+.section-soft {
+  background-color: var(--paper-deep);
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 26px 26px;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* Handwritten intro line under a section title */
+.section-intro {
+  font-family: var(--font-hand);
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 1.3;
+  color: var(--navy);
+  text-align: center;
+  max-width: 40rem;
+  margin: -1.25rem auto 2.25rem;
+}
+
+/* Dashed route hop connecting sections, with a waypoint dot */
+.route-hop {
+  width: 0;
+  height: 74px;
+  margin: -1.4rem auto;
+  border-left: 3px dashed var(--cyan);
+  position: relative;
+  z-index: 1;
+}
+
+.route-hop::after {
+  content: "";
+  position: absolute;
+  bottom: -7px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--blue);
+  border: 3px solid var(--paper);
+}
+
+/* Two-column media + text */
+
+.split {
+  display: grid;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.intro-text {
+  max-width: 46rem;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .split {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .split.split-flip > .split-media {
+    order: 2;
+  }
+
+  /* Media placed after the text in the DOM (so it stacks below on mobile)
+     but shown as the left column on wide screens */
+  .split.split-lead-media > .split-media {
+    order: -1;
+  }
+}
+
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.1rem;
+  margin-top: 0.5rem;
+}
+
+/* Center a text block and any button row inside it */
+.text-center {
+  text-align: center;
+}
+
+.text-center .btn-row {
+  justify-content: center;
+}
+
+/* Small print sitting under a button row (e.g. the Discord card) */
+.fine-print {
+  margin-top: 0.9rem;
+}
+
+/* ---------- Taped-in photos ---------- */
+
+.tape-photo {
+  position: relative;
+  display: block;
+  background: #fff;
+  padding: 11px 11px 15px;
+  box-shadow: var(--offset-shadow);
+  transform: rotate(1.6deg);
+  margin: 0;
+}
+
+.tape-photo.rotate-l {
+  transform: rotate(-1.6deg);
+}
+
+.tape-photo::before {
+  content: "";
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  width: 108px;
+  height: 30px;
+  transform: translateX(-50%) rotate(-3deg);
+  background: rgba(255, 224, 130, 0.55);
+  z-index: 2;
+}
+
+.tape-photo img {
+  width: 100%;
+  object-fit: cover;
+}
+
+.hand-caption {
+  display: block;
+  font-family: var(--font-hand);
+  font-weight: 700;
+  font-size: 1.45rem;
+  line-height: 1.2;
+  color: var(--navy);
+  text-align: center;
+  padding-top: 0.55rem;
+}
+
+/* Ultra-wide banner image, taped at both ends */
+.tape-wide {
+  position: relative;
+  background: #fff;
+  padding: 10px;
+  box-shadow: var(--offset-shadow);
+  transform: rotate(-0.5deg);
+  margin-bottom: 2.75rem;
+}
+
+.tape-wide::before,
+.tape-wide::after {
+  content: "";
+  position: absolute;
+  top: -13px;
+  width: 96px;
+  height: 27px;
+  background: rgba(255, 224, 130, 0.55);
+  z-index: 2;
+}
+
+.tape-wide::before {
+  left: 6%;
+  transform: rotate(-5deg);
+}
+
+.tape-wide::after {
+  right: 6%;
+  transform: rotate(4deg);
+}
+
+.banner {
+  width: 100%;
+}
+
+/* ---------- Sticker cards ---------- */
+
+.card-grid {
+  display: grid;
+  gap: 2.25rem;
+}
+
+@media (min-width: 640px) {
+  .card-grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 900px) {
+  .card-grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* A grid holding a single card: give it the whole row and centre it, instead of
+   stranding a narrow card in the left column. Comes after the -2/-3 rules so it
+   wins. Drop this class once the row has more than one card in it. */
+.card-grid-solo {
+  grid-template-columns: 1fr;
+  max-width: 34rem;
+  margin-inline: auto;
+}
+
+.card {
+  background: var(--card);
+  border: 3px solid var(--navy);
+  border-radius: var(--radius);
+  box-shadow: 7px 7px 0 var(--cyan);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.card:hover {
+  transform: rotate(-0.8deg) translate(-2px, -2px);
+  box-shadow: 10px 10px 0 var(--cyan);
+}
+
+.card img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border-bottom: 3px solid var(--navy);
+}
+
+/* Product art is 16:9 — match it so the banner text isn't cropped off */
+.card-art-16x9 img {
+  aspect-ratio: 16 / 9;
+}
+
+.card-body {
+  padding: 1.4rem 1.4rem 1.6rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.card-body h2,
+.card-body h3 {
+  font-size: 1.22rem;
+}
+
+.card-body p {
+  flex: 1;
+}
+
+.card-body .btn {
+  align-self: flex-start;
+}
+
+/* Small inline SVG doodles (map pin, lightbulb, …) in card corners */
+.doodle {
+  width: 30px;
+  height: 30px;
+  color: var(--blue);
+  margin-bottom: 0.55rem;
+  transform: rotate(-6deg);
+}
+
+/* ---------- Video cards (Student Resources §videos) ---------- */
+
+/* Video thumbnail tile. The self-hosted <img> covers the tile; the navy tile
+   with its play badge sits behind it as the fallback (shown if the image is
+   missing). Plain link by default; js/main.js upgrades it to a click-to-load
+   youtube-nocookie embed when data-video-id holds a real ID. */
+.video-thumb {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  aspect-ratio: 16 / 9;
+  background-color: var(--navy);
+  background-image: var(--contour);
+  background-size: 430px 430px;
+  background-position: right -150px bottom -180px;
+  background-repeat: no-repeat;
+  border-bottom: 3px solid var(--navy);
+  text-decoration: none;
+}
+
+.video-thumb img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.play-badge {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--yellow);
+  border: 3px solid var(--navy);
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.35);
+  display: grid;
+  place-items: center;
+  z-index: 1;
+}
+
+.play-badge::before {
+  content: "";
+  width: 0;
+  height: 0;
+  margin-left: 4px;
+  border-style: solid;
+  border-width: 10px 0 10px 18px;
+  border-color: transparent transparent transparent var(--navy);
+}
+
+.video-thumb:hover .play-badge {
+  background: var(--cyan);
+}
+
+.video-thumb-label {
+  font-family: var(--font-hand);
+  font-weight: 700;
+  font-size: 1.3rem;
+  line-height: 1.2;
+  color: #fff;
+  z-index: 1;
+}
+
+/* Swapped in by js/main.js on click */
+.video-frame {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+  border-bottom: 3px solid var(--navy);
+}
+
+/* ---------- Feature list ---------- */
+
+.feature-list {
+  list-style: none;
+  margin: 0 0 1.25rem;
+  padding: 0;
+}
+
+.feature-list li {
+  padding-left: 1.8rem;
+  position: relative;
+  margin-bottom: 0.5rem;
+}
+
+.feature-list li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: -0.35rem;
+  color: var(--blue);
+  font-family: var(--font-hand);
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+/* ---------- Index card (teacher lessons block) ---------- */
+
+.index-card {
+  position: relative;
+  background-color: #fff;
+  background-image: repeating-linear-gradient(
+    transparent,
+    transparent 34px,
+    var(--rule-line) 34px,
+    var(--rule-line) 36px
+  );
+  border: 2.5px solid var(--navy);
+  border-radius: var(--radius);
+  box-shadow: 7px 7px 0 var(--cyan);
+  padding: 2.2rem 2.2rem 2rem;
+  transform: rotate(-0.5deg);
+}
+
+.index-card::before {
+  content: "";
+  position: absolute;
+  top: 1.1rem;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: rgba(224, 82, 82, 0.5);
+}
+
+/* ---------- Newsletter — one big sticky note ---------- */
+
+.newsletter {
+  /* Soft paper + grid: it follows the plain FAQ section, and every section on
+     the page alternates plain / soft down the page. */
+  background-color: var(--paper-deep);
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 26px 26px;
+  padding: 3.75rem 0 4.25rem;
+}
+
+.sticky-note {
+  position: relative;
+  max-width: 44rem;
+  margin: 0 auto;
+  background: var(--sticky-yellow);
+  border-radius: 3px;
+  box-shadow: 10px 10px 0 rgba(22, 41, 78, 0.14);
+  padding: 2.75rem 2rem 2.25rem;
+  text-align: center;
+  transform: rotate(-1deg);
+}
+
+.sticky-note::before {
+  content: "";
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  width: 120px;
+  height: 32px;
+  transform: translateX(-50%) rotate(-2deg);
+  background: rgba(255, 253, 247, 0.55);
+}
+
+.newsletter h2 {
+  color: var(--navy);
+}
+
+.newsletter p {
+  color: var(--navy);
+  max-width: 34rem;
+  margin: 0 auto 1.4em;
+}
+
+/* Section-header pattern used above the sticky note keeps its own spacing */
+.newsletter .section-intro {
+  max-width: 40rem;
+  margin: -1.25rem auto 2.25rem;
+}
+
+.newsletter-form {
+  display: grid;
+  gap: 0.9rem;
+  max-width: 34rem;
+  margin: 0 auto;
+  text-align: left;
+}
+
+@media (min-width: 600px) {
+  .newsletter-form {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .newsletter-form .nl-field-full,
+  .newsletter-form button,
+  .newsletter-form .form-status {
+    grid-column: 1 / -1;
+  }
+}
+
+.nl-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-width: 0;
+}
+
+.nl-field label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--navy);
+}
+
+.nl-optional {
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--muted);
+}
+
+.newsletter-form input[type="email"],
+.newsletter-form select,
+.newsletter-form textarea {
+  width: 100%;
+  padding: 0.72rem 1rem;
+  border-radius: 9px;
+  border: 2.5px solid var(--navy);
+  background: #fff;
+  color: var(--ink);
+  font: inherit;
+}
+
+.newsletter-form textarea {
+  resize: vertical;
+  min-height: 5.5rem;
+}
+
+/* native arrow sits too close to the border on some browsers */
+.newsletter-form select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%2316294e' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.9rem center;
+  background-size: 12px 8px;
+  padding-right: 2.4rem;
+}
+
+.newsletter-form button {
+  justify-self: center;
+  margin-top: 0.3rem;
+}
+
+.newsletter .fine-print {
+  font-family: var(--font-hand);
+  font-weight: 700;
+  font-size: 1.3rem;
+  line-height: 1.25;
+  margin: 1rem auto 0;
+  color: #3c4a68;
+}
+
+/* ---------- Contact form — notebook page ---------- */
+
+.notebook {
+  position: relative;
+  max-width: 40rem;
+  background-color: #fff;
+  background-image: repeating-linear-gradient(
+    transparent,
+    transparent 34px,
+    var(--rule-line) 34px,
+    var(--rule-line) 36px
+  );
+  border: 2.5px solid var(--navy);
+  border-radius: var(--radius);
+  box-shadow: 7px 7px 0 var(--yellow);
+  padding: 2rem 2rem 2.25rem 3.4rem;
+  margin: 0 auto;
+}
+
+.notebook::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 2.4rem;
+  width: 2px;
+  background: rgba(224, 82, 82, 0.45);
+}
+
+.contact-form {
+  max-width: 34rem;
+}
+
+.form-field {
+  margin-bottom: 1.15rem;
+}
+
+/* two selects side by side on wider screens, stacked on phones */
+.form-field-pair {
+  display: grid;
+  gap: 1.15rem;
+}
+
+@media (min-width: 520px) {
+  .form-field-pair {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.contact-form select {
+  width: 100%;
+  padding: 0.7rem 2.4rem 0.7rem 0.9rem;
+  border-radius: 9px;
+  border: 2px solid var(--navy);
+  background-color: #fff;
+  color: var(--ink);
+  font: inherit;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%2316294e' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.9rem center;
+  background-size: 12px 8px;
+}
+
+.form-field label {
+  display: block;
+  font-family: var(--font-hand);
+  font-weight: 700;
+  font-size: 1.4rem;
+  line-height: 1.2;
+  color: var(--navy);
+  margin-bottom: 0.25rem;
+}
+
+.form-field input,
+.form-field textarea {
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  border: 2px solid var(--navy);
+  border-radius: 8px;
+  font: inherit;
+  color: var(--ink);
+  background: #fff;
+}
+
+.form-field input:focus-visible,
+.form-field textarea:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 1px;
+}
+
+/* Honeypot — hide from humans, keep in the form for bots */
+.hp-field {
+  position: absolute !important;
+  left: -9999px !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* Form status messages (JS-injected) */
+.form-status {
+  margin-top: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+}
+
+.form-status.is-success {
+  color: #0c6b3d;
+  background: #e2f6ea;
+  border: 2px solid #0c6b3d;
+  padding: 0.7rem 1rem;
+}
+
+.form-status.is-error {
+  color: #a12020;
+  background: #fdeaea;
+  border: 2px solid #a12020;
+  padding: 0.7rem 1rem;
+}
+
+/* ---------- Social row ---------- */
+
+.social-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+}
+
+.social-row a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.social-row svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* ---------- Footer — navy with faint contours, dashed route on top ---------- */
+
+.site-footer {
+  background-color: var(--navy-deep);
+  background-image: var(--contour);
+  background-size: 620px 620px;
+  background-position: right -180px bottom -260px;
+  background-repeat: no-repeat;
+  border-top: 3px dashed var(--cyan);
+  color: #cfe0f5;
+  padding: 2.5rem 0;
+}
+
+.footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.site-footer a {
+  color: #fff;
+}
+
+.site-footer a:hover {
+  color: var(--cyan);
+}
+
+.site-footer .social-row a {
+  color: #fff;
+}
+
+.site-footer .social-row a:hover {
+  color: var(--cyan);
+}
+
+.footer-note {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+/* ---------- 404 ---------- */
+
+.error-page {
+  text-align: center;
+  padding: 5rem 0;
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 26px 26px;
+}
+
+.error-page .error-code {
+  display: inline-grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-size: 4.25rem;
+  line-height: 1;
+  color: var(--stamp-red);
+  border: 5px solid var(--stamp-red);
+  border-radius: 47% 53% 45% 55% / 56% 44% 58% 42%;
+  padding: 1.1rem 1.5rem;
+  transform: rotate(-7deg);
+  margin-bottom: 1.2rem;
+}
+
+.error-page .btn-row {
+  justify-content: center;
+}
+
+/* ---------- Proof sections: sticky quotes, results ---------- */
+
+/* Testimonials — a spread of smaller sticky notes */
+.quote-grid {
+  display: grid;
+  gap: 2.2rem;
+}
+
+@media (min-width: 900px) {
+  .quote-grid {
+    grid-template-columns: repeat(3, 1fr);
+    align-items: start;
+  }
+
+  /* Two-up variant for sections with only a couple of quotes */
+  .quote-grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 48rem;
+    margin-inline: auto;
+  }
+}
+
+.sticky-quote {
+  position: relative;
+  margin: 0;
+  background: var(--sticky-yellow);
+  border-radius: 3px;
+  box-shadow: 7px 7px 0 rgba(22, 41, 78, 0.14);
+  padding: 2rem 1.5rem 1.5rem;
+  transform: rotate(-1.4deg);
+}
+
+.sticky-quote:nth-child(2n) {
+  transform: rotate(1.2deg);
+}
+
+.sticky-quote::before {
+  content: "";
+  position: absolute;
+  top: -13px;
+  left: 50%;
+  width: 96px;
+  height: 27px;
+  transform: translateX(-50%) rotate(-2deg);
+  background: rgba(255, 253, 247, 0.55);
+}
+
+.sticky-quote blockquote {
+  margin: 0 0 0.9rem;
+  color: var(--navy);
+}
+
+.sticky-quote figcaption {
+  font-family: var(--font-hand);
+  font-weight: 700;
+  font-size: 1.35rem;
+  line-height: 1.2;
+  color: #3c4a68;
+}
+
+/* Course + score line under a testimonial name */
+.quote-tag {
+  display: block;
+  margin-top: 0.35rem;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--blue-dark);
+}
+
+/* ---------- Survey results: KPI tiles + score distribution chart ---------- */
+
+/* Sequential ramp for AP score 5 -> 1. Monotonic in lightness; every step
+   clears 3:1 against --paper so no bar is invisible. */
+:root {
+  --score-5: #102f66;
+  --score-4: #123f8c;
+  --score-3: #1257c0;
+  --score-2: #1266e3;
+  --score-1: #3d86dd;
+}
+
+.kpi-row {
+  list-style: none;
+  margin: 0 0 3rem;
+  padding: 0;
+  display: grid;
+  gap: 1.4rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 620px) {
+  .kpi-row { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 960px) {
+  .kpi-row { grid-template-columns: 1.4fr 1fr 1fr 1fr; align-items: stretch; }
+}
+
+.kpi {
+  position: relative;
+  background: var(--card);
+  border: 2px solid var(--navy);
+  border-radius: var(--radius);
+  box-shadow: var(--offset-shadow);
+  padding: 1.5rem 1.25rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+.kpi-value {
+  font-family: var(--font-display);
+  font-size: 2.6rem;
+  line-height: 0.95;
+  color: var(--blue-dark);
+}
+
+/* The one number the section leads with */
+.kpi-hero .kpi-value {
+  font-size: 4rem;
+  color: var(--navy);
+}
+
+.kpi-label {
+  font-family: var(--font-hand);
+  font-weight: 700;
+  font-size: 1.3rem;
+  line-height: 1.15;
+  color: var(--ink);
+}
+
+.kpi-sub {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+/* Horizontal bar chart — pure CSS, no JS, values direct-labelled */
+.chart-figure {
+  margin: 0;
+  background: var(--card);
+  border: 2px solid var(--navy);
+  border-radius: var(--radius);
+  box-shadow: var(--offset-shadow);
+  padding: 1.75rem 1.5rem 1.5rem;
+}
+
+.chart-title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--navy);
+  margin: 0 0 0.3rem;
+}
+
+.chart-sub {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin: 0 0 1.4rem;
+}
+
+.bar-chart {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.bar-row {
+  display: grid;
+  grid-template-columns: 4.6rem 1fr 3.6rem;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.bar-key {
+  font-family: var(--font-hand);
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--ink);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.bar-track {
+  background: rgba(18, 102, 227, 0.08);
+  border-radius: 0 4px 4px 0;
+  height: 22px;
+}
+
+.bar-fill {
+  display: block;
+  height: 100%;
+  /* square at the baseline, 4px rounded at the data end */
+  border-radius: 0 4px 4px 0;
+  background: var(--score-3);
+  min-width: 3px;
+}
+
+.bar-row[data-score="5"] .bar-fill { background: var(--score-5); }
+.bar-row[data-score="4"] .bar-fill { background: var(--score-4); }
+.bar-row[data-score="3"] .bar-fill { background: var(--score-3); }
+.bar-row[data-score="2"] .bar-fill { background: var(--score-2); }
+.bar-row[data-score="1"] .bar-fill { background: var(--score-1); }
+
+.bar-value {
+  font-weight: 700;
+  font-size: 0.9rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+
+.chart-note {
+  margin: 1.4rem 0 0;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.chart-note-center {
+  text-align: center;
+  max-width: 44rem;
+  margin: 2rem auto 0;
+}
+
+/* ---------- Richer review cards (student resources) ---------- */
+
+.review-head {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: 0.9rem;
+}
+
+/* Head sits above the quote, so the quote no longer needs trailing space */
+.review-head + blockquote {
+  margin-bottom: 0;
+}
+
+.review-avatar {
+  flex: 0 0 auto;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--blue);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sticky-quote:nth-child(3n+2) .review-avatar { background: var(--navy); }
+.sticky-quote:nth-child(3n) .review-avatar { background: var(--blue-dark); }
+
+.review-id { min-width: 0; flex: 1 1 auto; }
+
+.review-name {
+  display: block;
+  font-family: var(--font-hand);
+  font-weight: 700;
+  font-size: 1.3rem;
+  line-height: 1.1;
+  color: var(--navy);
+}
+
+.review-id .quote-tag { margin-top: 0.15rem; }
+
+/* Passport-stamp style score badge */
+.score-badge {
+  flex: 0 0 auto;
+  position: relative;
+  width: 52px;
+  height: 52px;
+  border: 2.5px solid var(--stamp-red);
+  border-radius: 50%;
+  color: var(--stamp-red);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transform: rotate(-8deg);
+}
+
+.score-badge::before {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border: 1.5px dashed currentColor;
+  border-radius: 50%;
+  opacity: 0.55;
+}
+
+.score-badge-num {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+}
+
+.score-badge-word {
+  font-size: 0.44rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Compact results strip above the student reviews */
+.mini-stats {
+  list-style: none;
+  margin: 0 0 2.6rem;
+  padding: 1.2rem 1rem;
+  background: var(--card);
+  border: 2px solid var(--navy);
+  border-radius: var(--radius);
+  box-shadow: var(--offset-shadow);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem 2.4rem;
+}
+
+/* When the strip or a chart sits below the quotes rather than above them */
+.quote-grid + .mini-stats,
+.quote-grid + .chart-figure,
+.mini-stats + .chart-figure,
+.mini-stats + .chart-pair {
+  margin-top: 2.6rem;
+}
+
+.quote-grid + .mini-stats {
+  margin-bottom: 0;
+}
+
+.mini-stats li {
+  text-align: center;
+  min-width: 7.5rem;
+}
+
+.mini-stat-value {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  line-height: 1;
+  color: var(--blue-dark);
+}
+
+.mini-stat-label {
+  display: block;
+  margin-top: 0.3rem;
+  font-family: var(--font-hand);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--ink);
+}
+
+/* ---------- Merged hero copy ---------- */
+
+.hero-lede {
+  max-width: 34rem;
+  margin: 0 auto 1.6rem;
+}
+
+/* Mouse-follow parallax. js/main.js sets --tx/--ty; without JS these stay 0,
+   so the layout is identical. */
+[data-tilt] {
+  --tx: 0;
+  --ty: 0;
+  transform: translate3d(calc(var(--tx) * 1px), calc(var(--ty) * 1px), 0);
+  transition: transform 0.25s ease-out;
+  will-change: transform;
+}
+
+/* ---------- Chart interactivity ---------- */
+
+.kpi {
+  transition: transform 0.18s ease-out, box-shadow 0.18s ease-out;
+}
+
+.kpi:hover,
+.kpi:focus-within {
+  transform: translate(-3px, -3px);
+  box-shadow: 11px 11px 0 rgba(22, 41, 78, 0.16);
+}
+
+/* Rows dim their neighbours on hover so the hovered bar reads as the subject */
+.bar-chart:hover .bar-row {
+  opacity: 0.45;
+}
+
+.bar-chart .bar-row {
+  transition: opacity 0.18s ease-out, transform 0.18s ease-out;
+}
+
+.bar-chart:hover .bar-row:hover {
+  opacity: 1;
+  transform: translateX(4px);
+}
+
+.bar-fill {
+  transition: filter 0.18s ease-out;
+}
+
+.bar-row:hover .bar-fill {
+  filter: saturate(1.25) brightness(1.08);
+}
+
+.bar-row:hover .bar-value {
+  color: var(--blue-dark);
+}
+
+/* Stacked charts within one section (not the side-by-side pair, which is a grid) */
+.chart-figure + .chart-figure {
+  margin-top: 1.6rem;
+}
+
+.chart-pair .chart-figure + .chart-figure {
+  margin-top: 0;
+}
+
+/* Two charts side by side */
+.chart-pair {
+  display: grid;
+  gap: 1.6rem;
+}
+
+@media (min-width: 900px) {
+  .chart-pair {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+    /* wider gutter so the "vs" badge below has room to sit between the cards */
+    gap: 2.6rem;
+    position: relative;
+  }
+
+  /* "vs" badge in the gutter, so the two charts read as one comparison rather
+     than two unrelated charts. Decorative, so it stays out of the a11y tree. */
+  .chart-pair::after {
+    content: "vs";
+    position: absolute;
+    top: 3.4rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.3rem;
+    height: 2.3rem;
+    border: 2px solid var(--navy);
+    border-radius: 50%;
+    background: var(--paper);
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    color: var(--navy);
+  }
+}
+
+/* National comparison — de-emphasis grays so the URP chart stays the subject */
+.chart-figure-muted {
+  border-color: #b8bfc9;
+}
+
+.bar-chart-national .bar-row[data-score="5"] .bar-fill { background: #414b58; }
+.bar-chart-national .bar-row[data-score="4"] .bar-fill { background: #525d6b; }
+.bar-chart-national .bar-row[data-score="3"] .bar-fill { background: #64707e; }
+.bar-chart-national .bar-row[data-score="2"] .bar-fill { background: #77828f; }
+.bar-chart-national .bar-row[data-score="1"] .bar-fill { background: #8a94a1; }
+
+/* ---------- Likert stacked bar ---------- */
+
+.likert {
+  max-width: 46rem;
+  margin: 0 auto;
+}
+
+.likert-bar {
+  display: flex;
+  height: 34px;
+  border-radius: 4px;
+  overflow: hidden;
+  /* the 2px surface gaps between segments come from the segment borders */
+  background: var(--card);
+}
+
+.likert-seg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2px;
+  box-shadow: 0 0 0 1px var(--card);
+  transition: filter 0.18s ease-out;
+}
+
+.likert-seg:hover {
+  filter: saturate(1.25) brightness(1.08);
+}
+
+.likert-seg[data-seg="sa"] { background: #102f66; }
+.likert-seg[data-seg="a"]  { background: #1266e3; }
+.likert-seg[data-seg="d"]  { background: #e8a33d; }
+.likert-seg[data-seg="sd"] { background: var(--stamp-red); }
+
+.likert-pct {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.likert-legend {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 1.4rem;
+  font-size: 0.82rem;
+  color: var(--ink);
+}
+
+.likert-legend li {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.likert-key {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  flex: 0 0 auto;
+}
+
+.likert-key[data-seg="sa"] { background: #102f66; }
+.likert-key[data-seg="a"]  { background: #1266e3; }
+.likert-key[data-seg="d"]  { background: #e8a33d; }
+.likert-key[data-seg="sd"] { background: var(--stamp-red); }
+
+/* Wider label column for the word-label charts */
+.bar-chart-wide .bar-row {
+  grid-template-columns: 12.5rem 1fr 3.6rem;
+}
+
+.bar-chart-wide .bar-key {
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 600;
+  white-space: normal;
+  line-height: 1.25;
+}
+
+@media (max-width: 560px) {
+  .bar-chart-wide .bar-row {
+    grid-template-columns: 1fr;
+    gap: 0.2rem;
+  }
+
+  .bar-chart-wide .bar-key {
+    text-align: left;
+  }
+
+  .bar-chart-wide .bar-value {
+    text-align: right;
+  }
+}
+
+/* Single-hue ramp for the "what students noticed" chart */
+.bar-chart-accent .bar-fill { background: var(--blue); }
+.bar-chart-accent .bar-row:nth-child(1) .bar-fill { background: #102f66; }
+.bar-chart-accent .bar-row:nth-child(2) .bar-fill { background: #123f8c; }
+.bar-chart-accent .bar-row:nth-child(3) .bar-fill { background: #1257c0; }
+.bar-chart-accent .bar-row:nth-child(4) .bar-fill { background: #1266e3; }
+.bar-chart-accent .bar-row:nth-child(5) .bar-fill { background: #2f7ee6; }
+.bar-chart-accent .bar-row:nth-child(6) .bar-fill { background: #4e93ea; }
+.bar-chart-accent .bar-row:nth-child(7) .bar-fill { background: #6ba5ee; }
+
+/* ---------- Free preview CTAs (home results section) ---------- */
+
+.preview-cta {
+  margin-top: 2.2rem;
+  text-align: center;
+}
+
+.preview-cta-lead {
+  margin: 0 0 1.2rem;
+  font-family: var(--font-hand);
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--navy);
+}
+
+.preview-group + .preview-group {
+  margin-top: 1.4rem;
+}
+
+.preview-course {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.76rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--blue-dark);
+}
+
+.preview-group .btn-row {
+  margin-top: 0;
+}
+
+/* ---------- Course toggle ---------- */
+
+.seg-toggle {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.4rem;
+  margin: 0 auto 2.2rem;
+  padding: 0.35rem;
+  background: var(--card);
+  border: 2px solid var(--navy);
+  border-radius: 999px;
+  box-shadow: var(--offset-shadow);
+  width: fit-content;
+  max-width: 100%;
+}
+
+/* Teacher Resources: the toggle sits right under the header tagline */
+.page-header .seg-toggle {
+  margin-top: 1.1rem;
+}
+
+.seg-btn {
+  font: inherit;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--navy);
+  background: transparent;
+  border: 0;
+  border-radius: 999px;
+  padding: 0.6rem 1.15rem;
+  cursor: pointer;
+  transition: background-color 0.15s ease-out, color 0.15s ease-out;
+}
+
+.seg-btn:hover {
+  background: rgba(18, 102, 227, 0.1);
+}
+
+.seg-btn.is-active {
+  background: var(--blue);
+  color: #fff;
+}
+
+.seg-btn:focus-visible {
+  outline: 3px solid var(--cyan);
+  outline-offset: 2px;
+}
+
+/* Values swap instantly; a short fade keeps it from feeling like a glitch */
+[data-stat],
+.bar-fill,
+.bar-value {
+  transition: opacity 0.15s ease-out, width 0.35s ease-out, filter 0.18s ease-out;
+}
+
+/* ---------- Recommend waffle ---------- */
+
+.recommend-block {
+  display: grid;
+  gap: 2rem;
+  align-items: center;
+  justify-items: center;
+}
+
+@media (min-width: 800px) {
+  .recommend-block {
+    grid-template-columns: 1fr auto;
+    gap: 3rem;
+  }
+
+  .recommend-figure {
+    text-align: left;
+  }
+}
+
+.recommend-figure {
+  text-align: center;
+  max-width: 26rem;
+}
+
+.recommend-value {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 11vw, 6.5rem);
+  line-height: 0.9;
+  color: var(--navy);
+}
+
+.recommend-label {
+  margin: 0.7rem 0 0;
+  font-family: var(--font-hand);
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 1.25;
+  color: var(--ink);
+}
+
+.recommend-sub {
+  margin: 0.6rem 0 0;
+  font-size: 0.92rem;
+  color: var(--muted);
+}
+
+.waffle-wrap {
+  text-align: center;
+}
+
+.waffle {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 3px;
+  width: min(280px, 78vw);
+}
+
+.waffle-cell {
+  aspect-ratio: 1;
+  border-radius: 2px;
+  background: var(--score-2);
+  transition: opacity 0.15s ease-out, transform 0.15s ease-out;
+}
+
+/* Hovering a square (or its legend entry) lifts that whole group */
+.waffle[data-active] .waffle-cell {
+  opacity: 0.22;
+}
+
+.waffle[data-active="sa"] .waffle-cell[data-seg="sa"],
+.waffle[data-active="a"] .waffle-cell[data-seg="a"],
+.waffle[data-active="d"] .waffle-cell[data-seg="d"],
+.waffle[data-active="sd"] .waffle-cell[data-seg="sd"] {
+  opacity: 1;
+  transform: scale(1.14);
+}
+
+.likert-legend li {
+  transition: opacity 0.15s ease-out;
+  cursor: default;
+}
+
+.likert-legend li.is-dim {
+  opacity: 0.35;
+}
+
+.waffle[data-active] ~ .waffle-caption {
+  color: var(--navy);
+  font-weight: 700;
+}
+
+.waffle-cell[data-seg="sa"] { background: #102f66; }
+.waffle-cell[data-seg="a"]  { background: #1266e3; }
+.waffle-cell[data-seg="d"]  { background: #e8a33d; }
+.waffle-cell[data-seg="sd"] { background: var(--stamp-red); }
+
+.waffle-caption {
+  margin: 0.8rem 0 0;
+  font-size: 0.78rem;
+  color: var(--muted);
+  min-height: 1.2em;
+  transition: color 0.15s ease-out;
+}
+
+.recommend-block + .likert-legend {
+  margin-top: 2rem;
+}
+
+/* ---------- Blog previews on the home page ---------- */
+
+.post-preview .card-body h3 {
+  margin: 0.35rem 0 0.6rem;
+  font-size: 1.12rem;
+  line-height: 1.3;
+}
+
+.post-preview h3 a {
+  color: var(--navy);
+  text-decoration: none;
+}
+
+.post-preview h3 a:hover {
+  text-decoration: underline;
+}
+
+.post-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.post-tag {
+  background: rgba(18, 102, 227, 0.12);
+  color: var(--blue-dark);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  font-size: 0.68rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+}
+
+.btn-row-center {
+  justify-content: center;
+  margin-top: 2.2rem;
+}
+
+/* ---------- Closing call to action ---------- */
+
+.cta-band {
+  background: var(--navy);
+  background-image: var(--contour);
+  background-size: 620px 620px;
+  background-position: right -140px top -160px;
+  background-repeat: no-repeat;
+  padding: 3.75rem 0 4rem;
+  text-align: center;
+  color: #fff;
+}
+
+.cta-band h2 {
+  color: #fff;
+  font-size: clamp(1.9rem, 4.4vw, 2.7rem);
+  margin: 0 0 0.5rem;
+}
+
+.cta-band p {
+  color: rgba(255, 255, 255, 0.86);
+  max-width: 34rem;
+  margin: 0 auto;
+}
+
+.cta-band .btn-row {
+  margin-top: 1.6rem;
+}
+
+/* .btn-light is navy-on-light for the yellow sticky note; on the navy band it
+   would be navy-on-navy, so the primary CTA switches to the brand yellow. */
+.cta-band .btn-light {
+  background: var(--yellow);
+  color: var(--navy);
+  border-color: var(--yellow);
+}
+
+.cta-band .btn-light:hover {
+  background: #ffe272;
+  color: var(--navy);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.7);
+}
+
+.btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: #fff;
+}
+
+/* ---------- Teacher page extras ---------- */
+
+/* The problem the product solves, in the teacher's own words */
+.pain-point {
+  margin: 0 0 1.8rem;
+  text-align: center;
+  font-family: var(--font-hand);
+  font-weight: 700;
+  font-size: clamp(1.35rem, 3vw, 1.75rem);
+  line-height: 1.25;
+  color: var(--navy);
+}
+
+.bulk-note {
+  margin-top: 2.2rem;
+  text-align: center;
+}
+
+.bulk-note h3 {
+  margin-bottom: 0.5rem;
+}
+
+.bulk-note p {
+  max-width: 44rem;
+  margin: 0 auto 1.2rem;
+}
+
+/* ---------- "Talk to my school" block ----------
+   Sits under the bulk offer for the teacher who wants it but needs someone
+   else to approve the spend. */
+
+.school-help {
+  margin-top: 1.6rem;
+  background: var(--card);
+  border: 2px dashed var(--navy);
+  border-radius: var(--radius);
+  padding: 1.6rem 1.3rem 1.4rem;
+  text-align: center;
+}
+
+.school-help h3 {
+  margin-bottom: 0.4rem;
+  font-size: 1.15rem;
+}
+
+.school-help p {
+  max-width: 40rem;
+  margin: 0 auto;
+  font-size: 0.95rem;
+}
+
+.school-help .btn-row {
+  margin-top: 1.2rem;
+}
+
+/* Two classes so this outranks `.school-help p`, which sets margin: 0 auto and
+   was zeroing the top margin out. Clears the buttons' 4px offset shadow too. */
+.school-help .school-help-note {
+  margin: 1.9rem auto 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+/* ---------- Product blocks on the teacher page ----------
+   Two products in one section were running together, so each gets breathing
+   room and a dashed rule marks where one ends and the next begins. */
+
+.product-block + .product-block {
+  margin-top: 3.5rem;
+  padding-top: 3.5rem;
+  border-top: 2px dashed var(--cyan);
+}
+
+.product-block + .bulk-offer,
+.product-block + .bulk-offer.bulk-offer {
+  margin-top: 3.5rem;
+}
+
+@media (max-width: 767px) {
+  .product-block + .product-block {
+    margin-top: 2.6rem;
+    padding-top: 2.6rem;
+  }
+}
+
+/* ---------- Worksheet preview (two overlapping pages) ---------- */
+
+.worksheet-preview {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  padding: 0.5rem 0 1.5rem;
+}
+
+.worksheet-shot {
+  margin: 0;
+  width: 62%;
+  background: #fff;
+  border: 2px solid var(--navy);
+  border-radius: 4px;
+  box-shadow: 6px 6px 0 rgba(22, 41, 78, 0.16);
+  overflow: hidden;
+  transform: rotate(-2.5deg);
+}
+
+/* the key tucks behind and to the right, so both are readable as a pair */
+.worksheet-shot-key {
+  position: absolute;
+  right: 0;
+  top: 1.6rem;
+  z-index: -1;
+  transform: rotate(3deg);
+  box-shadow: 6px 6px 0 rgba(22, 41, 78, 0.12);
+}
+
+.worksheet-shot img {
+  width: 100%;
+  display: block;
+}
+
+.worksheet-shot figcaption {
+  background: var(--navy);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 0.4rem 0.3rem;
+}
+
+.worksheet-shot-key figcaption {
+  background: var(--stamp-red);
+}
+
+@media (max-width: 620px) {
+  .worksheet-preview { display: block; }
+  .worksheet-shot { width: 78%; margin: 0 auto; }
+  .worksheet-shot-key {
+    position: static;
+    margin: -2rem 0 0 auto;
+    z-index: 0;
+  }
+}
+
+/* ---------- Bulk order offer ---------- */
+
+.bulk-offer {
+  margin-top: 2.4rem;
+  background: var(--navy);
+  color: #fff;
+  border-radius: var(--radius);
+  box-shadow: 8px 8px 0 var(--yellow);
+  padding: 2.2rem 1.6rem 1.8rem;
+  text-align: center;
+}
+
+.bulk-kicker {
+  margin: 0;
+  font-family: var(--font-hand);
+  font-weight: 700;
+  font-size: 1.35rem;
+  color: var(--cyan);
+}
+
+.bulk-offer h3 {
+  color: #fff;
+  font-size: clamp(1.15rem, 2.6vw, 1.55rem);
+  max-width: 34rem;
+  margin: 0.2rem auto 0.6rem;
+}
+
+.bulk-lede {
+  color: rgba(255, 255, 255, 0.88);
+  max-width: 36rem;
+  margin: 0 auto 1.8rem;
+}
+
+.bulk-tiers {
+  list-style: none;
+  margin: 0 0 1.6rem;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 780px) {
+  .bulk-tiers { grid-template-columns: repeat(3, 1fr); }
+  .bulk-tiers-2 { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* The free worksheets sit on top of either tier, so they get a full-width
+   banner in the brand yellow rather than a third column that reads as a
+   competing choice. */
+.bulk-bonus {
+  position: relative;
+  margin: 0 0 1.6rem;
+  background: var(--yellow);
+  color: var(--navy);
+  border-radius: 9px;
+  padding: 1.5rem 1.2rem 1.2rem;
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.22);
+}
+
+.bulk-bonus::before {
+  content: "+";
+  position: absolute;
+  top: -1.15rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2.3rem;
+  height: 2.3rem;
+  border-radius: 50%;
+  background: var(--navy);
+  color: var(--yellow);
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  display: grid;
+  place-items: center;
+}
+
+.bulk-bonus-tag {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  background: var(--navy);
+  color: var(--yellow);
+  font-family: var(--font-display);
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.7rem;
+  border-radius: 4px;
+}
+
+.bulk-bonus-text {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.45;
+  color: var(--navy);
+  max-width: 40rem;
+  margin-inline: auto;
+}
+
+.bulk-bonus-value {
+  margin: 0.45rem 0 0;
+  font-size: 0.82rem;
+  color: rgba(22, 41, 78, 0.75);
+}
+
+.bulk-tier {
+  position: relative;
+  background: rgba(255, 255, 255, 0.07);
+  border: 2px solid rgba(255, 255, 255, 0.28);
+  border-radius: 9px;
+  padding: 1.3rem 1rem 1.1rem;
+}
+
+.bulk-tier-featured {
+  border-color: var(--yellow);
+  background: rgba(255, 217, 59, 0.12);
+}
+
+.bulk-tier-free {
+  border-color: var(--cyan);
+  background: rgba(53, 205, 238, 0.12);
+}
+
+.bulk-badge {
+  position: absolute;
+  top: -0.72rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--yellow);
+  color: var(--navy);
+  font-family: var(--font-display);
+  font-size: 0.62rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.bulk-price {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  line-height: 1;
+  color: #fff;
+}
+
+.bulk-per {
+  display: block;
+  margin-top: 0.3rem;
+  font-size: 0.76rem;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.bulk-what {
+  display: block;
+  margin-top: 0.6rem;
+  font-family: var(--font-hand);
+  font-weight: 700;
+  font-size: 1.15rem;
+  line-height: 1.2;
+  color: var(--cyan);
+}
+
+.bulk-tier-featured .bulk-what { color: var(--yellow); }
+
+.bulk-terms {
+  max-width: 40rem;
+  margin: 0 auto;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.bulk-offer :focus-visible { outline-color: var(--cyan); }
+
+/* ---------- FAQ (native details, works without JS) ---------- */
+
+.faq-list {
+  max-width: 46rem;
+  margin: 0 auto;
+  display: grid;
+  gap: 0.8rem;
+}
+
+.faq-item {
+  background: var(--card);
+  border: 2px solid var(--navy);
+  border-radius: var(--radius);
+  box-shadow: 4px 4px 0 rgba(22, 41, 78, 0.13);
+  padding: 0 1.2rem;
+}
+
+.faq-item summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 1rem 1.8rem 1rem 0;
+  position: relative;
+  font-family: var(--font-display);
+  font-size: 0.98rem;
+  line-height: 1.35;
+  color: var(--navy);
+}
+
+.faq-item summary::-webkit-details-marker { display: none; }
+
+.faq-item summary::after {
+  content: "+";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.4rem;
+  color: var(--blue);
+}
+
+.faq-item[open] summary::after { content: "\2013"; }
+
+.faq-item[open] summary { color: var(--blue-dark); }
+
+.faq-item p {
+  margin: 0 0 1.1rem;
+  padding-top: 0.2rem;
+  border-top: 2px dashed var(--rule-line);
+  padding-top: 0.9rem;
+}
+
+/* ---------- Course panels ----------
+   Filtering is gated on [data-course-filtered], which js/main.js sets ONLY
+   after the toggle is wired up and a course is selected. Deliberately not
+   gated on the .js class: that is set inline in <head> and would still be
+   present if main.js were stale, missing or throwing, which would hide every
+   panel and leave the page empty. This way a failure shows both courses
+   instead of none. */
+
+[data-course-filtered] [data-course-panel] {
+  display: none;
+}
+
+[data-course-filtered] [data-course-panel].is-active {
+  display: block;
+}
+
+#packets .seg-toggle {
+  margin-bottom: 0;
+}
+
+/* Here the intro line follows the course toggle, not a section title, so drop
+   the negative pull-up that normally snugs it under a heading. */
+#packets .section-intro {
+  margin-top: 0.85rem;
+}
+
+/* ---------- Product finder ---------- */
+
+.finder {
+  max-width: 46rem;
+  margin: 0 auto;
+}
+
+.finder-qs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1.4rem;
+}
+
+.finder-q {
+  background: var(--card);
+  border: 2px solid var(--navy);
+  border-radius: var(--radius);
+  box-shadow: var(--offset-shadow);
+  padding: 1.2rem 1.3rem;
+  transition: border-color 0.18s ease-out;
+}
+
+.finder-q.is-answered {
+  border-color: var(--blue);
+}
+
+.finder-label {
+  margin: 0 0 0.8rem;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: var(--navy);
+}
+
+.finder-opts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.finder-opt {
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--navy);
+  background: var(--paper);
+  border: 2px solid var(--navy);
+  border-radius: 999px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.15s ease-out, color 0.15s ease-out;
+}
+
+.finder-opt:hover {
+  background: var(--yellow);
+}
+
+.finder-opt.is-chosen {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: #fff;
+}
+
+.finder-result {
+  margin-top: 1.8rem;
+  background: var(--navy);
+  color: #fff;
+  border-radius: var(--radius);
+  padding: 2rem 1.6rem 1.6rem;
+  text-align: center;
+  box-shadow: 7px 7px 0 var(--yellow);
+}
+
+.finder-result-kicker {
+  margin: 0;
+  font-family: var(--font-hand);
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--cyan);
+}
+
+.finder-result-title {
+  color: #fff;
+  margin: 0.2rem 0 0.7rem;
+  font-size: 1.5rem;
+}
+
+.finder-result-body {
+  color: rgba(255, 255, 255, 0.88);
+  max-width: 34rem;
+  margin: 0 auto;
+}
+
+.finder-result-extra:empty {
+  display: none;
+}
+
+.finder-result-extra {
+  margin: 1rem 0 0;
+  font-size: 0.88rem;
+  color: var(--cyan);
+}
+
+.finder-result .btn-row {
+  margin-top: 1.3rem;
+}
+
+.finder-reset {
+  margin-top: 1.2rem;
+  font: inherit;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.75);
+  background: none;
+  border: 0;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.finder-reset:hover {
+  color: #fff;
+}
+
+.finder-result :focus-visible {
+  outline-color: var(--cyan);
+}
+
+/* ---------- URP vs Exam Slayer ---------- */
+
+.compare-grid {
+  display: grid;
+  gap: 1.4rem;
+  align-items: stretch;
+}
+
+@media (min-width: 860px) {
+  .compare-grid {
+    grid-template-columns: 1fr auto 1fr;
+    /* equal-height columns — the two lists differ in length */
+    align-items: stretch;
+  }
+
+  .compare-vs {
+    align-self: center;
+  }
+}
+
+.compare-col {
+  background: var(--card);
+  border: 2px solid var(--navy);
+  border-radius: var(--radius);
+  box-shadow: var(--offset-shadow);
+  padding: 1.5rem 1.4rem;
+}
+
+.compare-kicker {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--navy);
+}
+
+.compare-job {
+  margin: 0.2rem 0 1rem;
+  font-family: var(--font-hand);
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--blue-dark);
+}
+
+.compare-for {
+  margin: 1rem 0 0;
+  padding-top: 0.9rem;
+  border-top: 2px dashed var(--rule-line);
+  font-size: 0.92rem;
+}
+
+.compare-vs {
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  color: var(--muted);
+}
+
+.compare-note {
+  margin: 1.6rem 0 0;
+  text-align: center;
+  font-family: var(--font-hand);
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--navy);
+}
+
+/* Packet cards sit under a course sub-head */
+#packets .sub-head {
+  margin-top: 2.6rem;
+}
+
+#packets .card-body h4 {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  color: var(--navy);
+  margin: 0 0 0.4rem;
+}
+
+
+/* ---------- Bundle cards ---------- */
+
+.bundle-card {
+  position: relative;
+  border-color: var(--blue-dark);
+  box-shadow: 7px 7px 0 var(--yellow);
+}
+
+.bundle-card:hover {
+  box-shadow: 10px 10px 0 var(--yellow);
+}
+
+.bundle-badge {
+  position: absolute;
+  top: 0.9rem;
+  right: -0.4rem;
+  z-index: 2;
+  background: var(--yellow);
+  color: var(--navy);
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.4rem 0.9rem;
+  border: 2px solid var(--navy);
+  border-radius: 5px;
+  transform: rotate(3deg);
+  box-shadow: 3px 3px 0 rgba(22, 41, 78, 0.25);
+}
+
+/* ---------- Review section: turnarounds, objections, ticker ---------- */
+
+.sub-head {
+  font-size: 1.35rem;
+  text-align: center;
+  margin: 3rem 0 1.6rem;
+}
+
+.turnaround-grid,
+.objection-grid {
+  display: grid;
+  gap: 1.6rem;
+}
+
+@media (min-width: 820px) {
+  .turnaround-grid { grid-template-columns: repeat(3, 1fr); }
+  .objection-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+.turnaround,
+.objection {
+  background: var(--card);
+  border: 2px solid var(--navy);
+  border-radius: var(--radius);
+  box-shadow: var(--offset-shadow);
+  padding: 1.5rem 1.4rem;
+  transition: transform 0.18s ease-out, box-shadow 0.18s ease-out;
+}
+
+.turnaround:hover,
+.objection:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 11px 11px 0 rgba(22, 41, 78, 0.16);
+}
+
+/* Before -> after, labelled so the jump reads at a glance */
+.score-jump {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 0.75rem;
+  margin: 0 0 1.1rem;
+  padding-bottom: 1.1rem;
+  border-bottom: 2px dashed var(--rule-line);
+}
+
+.score-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.score-step-label {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.score-chip {
+  font-family: var(--font-display);
+  line-height: 1;
+  border-radius: 8px;
+  border: 2px solid currentColor;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* the "before" stays deliberately quiet — the payoff is the after */
+.score-before {
+  color: var(--muted);
+  background: rgba(82, 96, 111, 0.08);
+  font-size: 1.15rem;
+  min-height: 46px;
+  padding: 0 0.75rem;
+}
+
+/* the "after" is the point of the card, so it dominates */
+.score-after {
+  color: #fff;
+  background: var(--blue-dark);
+  border-color: var(--blue-dark);
+  font-size: 2rem;
+  min-height: 60px;
+  min-width: 60px;
+  padding: 0 0.8rem;
+  box-shadow: 3px 3px 0 rgba(22, 41, 78, 0.22);
+}
+
+.score-arrow {
+  font-size: 1.7rem;
+  line-height: 1;
+  color: var(--blue);
+  font-weight: 700;
+  padding-bottom: 0.7rem;
+}
+
+/* ---------- Headline agreement stats ----------
+   These all sit between 87% and 92%, so bars would read as identical.
+   Four stat tiles carry the story better than a seven-bar chart. */
+
+.agree-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1.2rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 620px) {
+  .agree-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 960px) {
+  .agree-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+.agree-tile {
+  background: var(--card);
+  border: 2px solid var(--navy);
+  border-radius: var(--radius);
+  box-shadow: var(--offset-shadow);
+  padding: 1.4rem 1.2rem 1.2rem;
+  text-align: center;
+  transition: transform 0.18s ease-out, box-shadow 0.18s ease-out;
+}
+
+.agree-tile:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 11px 11px 0 rgba(22, 41, 78, 0.16);
+}
+
+.agree-value {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  line-height: 1;
+  color: var(--blue-dark);
+}
+
+.agree-label {
+  display: block;
+  margin-top: 0.5rem;
+  font-family: var(--font-hand);
+  font-weight: 700;
+  font-size: 1.2rem;
+  line-height: 1.2;
+  color: var(--ink);
+}
+
+/* Meter track is a lighter step of the fill's own hue */
+.agree-meter {
+  display: block;
+  margin-top: 0.9rem;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(18, 102, 227, 0.14);
+  overflow: hidden;
+}
+
+.agree-meter-fill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--blue);
+}
+
+.turnaround blockquote,
+.objection blockquote {
+  margin: 0 0 0.9rem;
+  color: var(--ink);
+}
+
+.turnaround-by {
+  margin: 0;
+  font-family: var(--font-hand);
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--navy);
+}
+
+.turnaround-by .quote-tag {
+  display: inline-block;
+  margin-top: 0.2rem;
+}
+
+.objection-q {
+  margin: 0 0 0.7rem;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  line-height: 1.35;
+  color: var(--blue-dark);
+}
+
+.objection-stat {
+  display: block;
+  margin-top: 0.45rem;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.78rem;
+  color: var(--stamp-red);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.marquee {
+  margin-top: 2.6rem;
+  display: flex;
+  gap: 1rem;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+
+.marquee-track {
+  list-style: none;
+  margin: 0;
+  padding: 0.4rem 0;
+  display: flex;
+  gap: 1rem;
+  flex: 0 0 auto;
+  animation: marquee-scroll 70s linear infinite;
+}
+
+.marquee:hover .marquee-track,
+.marquee:focus-within .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(-100% - 1rem)); }
+}
+
+.marquee-item {
+  flex: 0 0 auto;
+  width: 17rem;
+  background: var(--sticky-yellow);
+  border-radius: 4px;
+  box-shadow: 5px 5px 0 rgba(22, 41, 78, 0.13);
+  padding: 1rem 1.1rem;
+}
+
+.marquee-item p {
+  margin: 0 0 0.5rem;
+  font-size: 0.92rem;
+  line-height: 1.45;
+  color: var(--navy);
+}
+
+.marquee-by {
+  font-family: var(--font-hand);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #3c4a68;
+}
+
+.marquee-score {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--blue-dark);
+}
+
+.review-cta {
+  margin-top: 2.8rem;
+  text-align: center;
+}
+
+.review-cta-text {
+  font-family: var(--font-hand);
+  font-weight: 700;
+  font-size: 1.6rem;
+  color: var(--navy);
+  margin: 0;
+}
+
+.review-cta .btn-row {
+  margin-top: 0.8rem;
+}
+
+
+/* ---------- Reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+
+  /* Parallax is motion by definition — switch it off entirely */
+  [data-tilt] {
+    transform: none !important;
+  }
+
+  /* Stop the ticker; let it be scrolled by hand instead */
+  .marquee {
+    overflow-x: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .marquee-track {
+    animation: none !important;
+  }
+
+  /* The duplicate set exists only to make the loop seamless */
+  .marquee-track[aria-hidden="true"] {
+    display: none;
+  }
+}
+
+/* ---------- PredictAdmit bridging utilities ----------
+   Plain classes (pa- prefix, never Tailwind color names) used to migrate the
+   existing Tailwind pages onto the flat "study-guide" look without a full
+   rewrite: paper cards with a 2–3px navy border + solid offset shadow, and the
+   grid-paper / hero backgrounds. */
+
+.pa-card {
+  background: var(--card);
+  border: 2px solid var(--navy);
+  border-radius: var(--radius);
+  box-shadow: var(--offset-shadow);
+}
+
+.pa-card-cyan {
+  background: var(--card);
+  border: 3px solid var(--navy);
+  border-radius: var(--radius);
+  box-shadow: 7px 7px 0 var(--cyan);
+}
+
+.pa-card-yellow {
+  background: var(--card);
+  border: 3px solid var(--navy);
+  border-radius: var(--radius);
+  box-shadow: 7px 7px 0 var(--yellow);
+}
+
+/* Inset panel (was bg-slate-50 sub-cards) */
+.pa-inset {
+  background: rgba(18, 102, 227, 0.05);
+  border: 2px solid rgba(18, 102, 227, 0.12);
+  border-radius: 8px;
+}
+
+/* Grid-paper background (no forced padding, unlike .section-soft) */
+.pa-grid {
+  background-color: var(--paper-deep);
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 26px 26px;
+}
+
+/* Hero: grid paper + contour art in the corner */
+.pa-hero-bg {
+  background-color: var(--paper-deep);
+  background-image:
+    var(--contour),
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 640px 640px, 26px 26px, 26px 26px;
+  background-position: right -120px bottom -180px, 0 0, 0 0;
+  background-repeat: no-repeat, repeat, repeat;
+}
+
+/* Dashed cyan section rule */
+.pa-rule-top { border-top: 3px dashed var(--cyan); }
+
+/* Full-width block button variant of .btn (hero CTA spans the card) */
+.btn.btn-block {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}

@@ -701,16 +701,16 @@
 </svelte:head>
 
 <!-- MARKETING LANDING PAGE -->
-<main class="font-sans text-slate-900 bg-white selection:bg-blue-100 selection:text-blue-900">
+<main class="font-sans text-slate-900 selection:bg-yellow selection:text-navy">
 	<!-- HERO SECTION -->
-	<section class="relative pt-28 pb-20 md:pt-40 md:pb-28 overflow-hidden bg-[#FAFAFA]">
+	<section class="pa-hero-bg pa-rule-top relative pt-28 pb-20 md:pt-40 md:pb-28 overflow-hidden">
 		<div class="max-w-[1200px] mx-auto px-6 text-center relative z-10 flex flex-col items-center">
 			<!-- Headline -->
 			<div class="space-y-6 max-w-4xl mx-auto mb-10">
 				<h1
-					class="font-serif text-5xl sm:text-6xl md:text-[5.5rem] font-medium tracking-tight leading-[1.0] text-slate-900 animate-in fade-in slide-in-from-bottom-6 duration-1000 fill-mode-both"
+					class="font-display text-5xl sm:text-6xl md:text-[5rem] leading-[1.05] text-navy animate-in fade-in slide-in-from-bottom-6 duration-1000 fill-mode-both"
 				>
-					Predict Your Real <br class="hidden md:block" /> College <span class="text-[#1A4CFF]">Decisions</span>
+					Predict Your Real <br class="hidden md:block" /> College <span class="text-blue">Decisions</span>
 				</h1>
 				<p
 					class="text-lg md:text-xl text-slate-500 max-w-2xl mx-auto leading-relaxed tracking-tight font-medium mt-5 animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-[200ms] fill-mode-both"
@@ -727,11 +727,11 @@
 				     card. Upload a PDF (read client-side with unpdf) or paste text; the
 				     handoff to /ai then splits it across every field (startPrediction
 				     stashes it as pa_sim_prefill + autoruns on /ai). -->
-				<div class="flex-1 w-full md:max-w-xl text-left rounded-3xl border border-slate-200 bg-white p-6 sm:p-7 shadow-[0_30px_80px_-30px_rgba(15,23,42,0.18)]">
+				<div class="pa-card-cyan flex-1 w-full md:max-w-xl text-left p-6 sm:p-7">
 					<!-- Autofill header — matches /ai -->
 					<div class="flex items-center justify-between gap-3 mb-4">
 						<div class="flex items-center gap-3">
-							<div class="w-10 h-10 rounded-xl bg-slate-900 flex items-center justify-center shrink-0">
+							<div class="w-10 h-10 rounded-xl bg-navy flex items-center justify-center shrink-0">
 								<svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" /></svg>
 							</div>
 							<div>
@@ -752,7 +752,7 @@
 					</div>
 
 					{#if pdfDone}
-						<p class="mb-3 flex items-center gap-1.5 text-xs font-semibold text-emerald-600">
+						<p class="mb-3 flex items-center gap-1.5 text-xs font-semibold text-blue">
 							<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
 							Got your PDF — review the text below, then predict.
 						</p>
@@ -772,7 +772,7 @@
 					></textarea>
 					<button
 						on:click={startPrediction}
-						class="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#1A4CFF] px-6 py-3.5 text-base font-semibold text-white shadow-sm transition-all hover:bg-[#1540d6] active:scale-95"
+						class="btn btn-primary btn-block mt-4"
 					>
 						Predict all 39 decisions, free
 						<span aria-hidden="true">&rarr;</span>
@@ -780,7 +780,7 @@
 				</div>
 
 				<!-- Live countdown (right of the card) -->
-				<div class="w-full md:w-64 shrink-0 text-left rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+				<div class="pa-card w-full md:w-64 shrink-0 text-left p-5">
 					<div class="flex items-start justify-between gap-2">
 						<div>
 							<p class="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Early Deadlines</p>
@@ -796,8 +796,8 @@
 					</div>
 					<div class="mt-4 grid grid-cols-2 gap-2">
 						{#each [{ label: 'Days', value: heroCountdown.days }, { label: 'Hours', value: heroCountdown.hours }, { label: 'Min', value: heroCountdown.minutes }, { label: 'Sec', value: heroCountdown.seconds }] as box}
-							<div class="rounded-xl bg-slate-50 border border-slate-100 py-2.5 text-center">
-								<div class="text-xl font-bold tabular-nums text-slate-900">
+							<div class="pa-inset py-2.5 text-center">
+								<div class="font-display text-xl tabular-nums text-navy">
 									{box.label === 'Days' ? box.value : pad2(box.value)}
 								</div>
 								<div class="mt-0.5 text-[10px] font-medium uppercase tracking-wide text-slate-400">{box.label}</div>
@@ -848,20 +848,20 @@
 	<ScrollZoomStory />
 
 	<!-- SECTION 2: EVERYTHING IN PRO (feature showcase) -->
-	<section class="py-24 bg-white border-t border-slate-100">
+	<section class="py-24 pa-rule-top">
 		<div class="max-w-[1200px] mx-auto px-6">
 			<div class="space-y-16 md:space-y-24">
 				<!-- Row 1: committee (text left) -->
 				<div use:reveal class="grid items-center gap-8 md:grid-cols-2 md:gap-14">
 					<div>
-						<h3 class="mt-3 font-serif text-3xl font-medium tracking-tight text-slate-900">A full committee reads your file</h3>
+						<h3 class="mt-3 font-display text-3xl text-navy">A full committee reads your file</h3>
 						<p class="mt-3 text-[15px] leading-relaxed text-slate-500">Five readers argue over your file the way a real committee does, then land a verdict. You find out which one is holding you back, and exactly why.</p>
 					</div>
-					<div class="rounded-3xl border border-slate-200 bg-white p-5 sm:p-6">
-						<div class="rounded-2xl border border-slate-200 bg-slate-50/60 p-5">
+					<div class="pa-card p-5 sm:p-6">
+						<div class="pa-inset p-5">
 							<div class="flex items-center justify-between">
 								<p class="text-xs font-bold uppercase tracking-wide text-slate-500">Committee read · Stanford</p>
-								<span class="rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-bold text-emerald-700 ring-1 ring-inset ring-emerald-200">Admit-leaning</span>
+								<span class="rounded-full bg-blue px-2.5 py-1 text-[11px] font-bold text-white ring-1 ring-inset ring-navy">Admit-leaning</span>
 							</div>
 							<div class="mt-4 space-y-2.5">
 								{#each [{ l: 'Academic reader', s: 9 }, { l: 'Essays reader', s: 8 }, { l: 'Fit reader', s: 7 }, { l: 'Impact reader', s: 8 }, { l: 'Character reader', s: 7 }] as r}
@@ -878,11 +878,11 @@
 				<!-- Row 2: essay (text right) -->
 				<div use:reveal={100} class="grid items-center gap-8 md:grid-cols-2 md:gap-14">
 					<div class="md:order-2">
-						<h3 class="mt-3 font-serif text-3xl font-medium tracking-tight text-slate-900">Essay feedback, line by line</h3>
+						<h3 class="mt-3 font-display text-3xl text-navy">Essay feedback, line by line</h3>
 						<p class="mt-3 text-[15px] leading-relaxed text-slate-500">Every supplement in one place. Hand it over and it marks the weak lines like an admissions reader would, and tells you why. It never writes a word for you.</p>
 					</div>
-					<div class="rounded-3xl border border-slate-200 bg-white p-5 sm:p-6 md:order-1">
-						<div class="rounded-2xl border border-slate-200 bg-slate-50/60 p-5">
+					<div class="pa-card p-5 sm:p-6 md:order-1">
+						<div class="pa-inset p-5">
 							<p class="text-xs font-bold uppercase tracking-wide text-slate-500">Personal statement</p>
 							<div class="mt-3 space-y-1.5 text-[13px] leading-relaxed text-slate-600">
 								<p class="rounded bg-[#1A4CFF]/10 px-1.5 py-0.5 text-slate-900 ring-1 ring-[#1A4CFF]/20">Ever since I was young, I have loved science.</p>
@@ -900,11 +900,11 @@
 				<!-- Row 3: per-school (text left) -->
 				<div use:reveal={200} class="grid items-center gap-8 md:grid-cols-2 md:gap-14">
 					<div>
-						<h3 class="mt-3 font-serif text-3xl font-medium tracking-tight text-slate-900">Per-school strategy for 50+ schools</h3>
+						<h3 class="mt-3 font-display text-3xl text-navy">Per-school strategy for 50+ schools</h3>
 						<p class="mt-3 text-[15px] leading-relaxed text-slate-500">Stanford and MIT do not want the same thing. See what each one actually weighs, then aim your application at that reader instead of sending one generic app everywhere.</p>
 					</div>
-					<div class="rounded-3xl border border-slate-200 bg-white p-5 sm:p-6">
-						<div class="rounded-2xl border border-slate-200 bg-slate-50/60 p-5 space-y-2.5">
+					<div class="pa-card p-5 sm:p-6">
+						<div class="pa-inset p-5 space-y-2.5">
 							{#each [{ s: 'Stanford', w: 'Intellectual vitality, essays' }, { s: 'MIT', w: 'STEM depth, maker spirit' }, { s: 'Yale', w: 'Community impact, voice' }] as row}
 								<div class="flex items-center justify-between gap-3 rounded-xl bg-white border border-slate-200 px-3.5 py-2.5">
 									<span class="text-sm font-bold text-slate-900 shrink-0">{row.s}</span>
@@ -918,11 +918,11 @@
 				<!-- Row 4: counselor (text right) -->
 				<div use:reveal={300} class="grid items-center gap-8 md:grid-cols-2 md:gap-14">
 					<div class="md:order-2">
-						<h3 class="mt-3 font-serif text-3xl font-medium tracking-tight text-slate-900">A counselor in your pocket</h3>
+						<h3 class="mt-3 font-display text-3xl text-navy">A counselor in your pocket</h3>
 						<p class="mt-3 text-[15px] leading-relaxed text-slate-500">Ask the stuff you would pay a consultant $300 an hour for. Where to apply, how to explain a rough semester, what a school is really looking for. Any time, no appointment.</p>
 					</div>
-					<div class="rounded-3xl border border-slate-200 bg-white p-5 sm:p-6 md:order-1">
-						<div class="rounded-2xl border border-slate-200 bg-slate-50/60 p-5 space-y-3">
+					<div class="pa-card p-5 sm:p-6 md:order-1">
+						<div class="pa-inset p-5 space-y-3">
 							<div class="ml-auto max-w-[80%] rounded-2xl rounded-br-md bg-slate-900 px-3.5 py-2 text-[13px] text-white">Is my school list too top-heavy?</div>
 							<div class="flex items-start gap-2 max-w-[85%]">
 								<span class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#1A4CFF] text-white text-[10px] font-black">PA</span>
@@ -963,25 +963,25 @@
 	</ZoomInHeading>
 
 	<!-- SECTION 2.4: SEE INSIDE PRO (dashboard snapshots) -->
-	<section class="py-24 bg-slate-50 border-t border-slate-100 overflow-hidden">
+	<section class="py-24 pa-grid pa-rule-top overflow-hidden">
 		<div class="max-w-[1100px] mx-auto px-6">
 			<p class="mb-10 text-center text-sm font-medium text-slate-500">Your command center: stats, streak, and next best moves in one place. And the rest of Pro:</p>
 
 			<!-- Supporting snapshots -->
 			<div class="mt-8 grid gap-6 md:grid-cols-2">
-				<figure use:reveal={0} class="rounded-2xl border border-slate-200 bg-white shadow-lg overflow-hidden">
+				<figure use:reveal={0} class="pa-card overflow-hidden">
 					<img src="/screenshots/pro-universities.png" alt="PredictAdmit Pro: explore schools with real admissions data and your chances" loading="lazy" class="block w-full" />
 					<figcaption class="px-5 py-4 text-sm font-medium text-slate-600 border-t border-slate-100">Every school, with real data and your odds on each.</figcaption>
 				</figure>
-				<figure use:reveal={80} class="rounded-2xl border border-slate-200 bg-white shadow-lg overflow-hidden">
+				<figure use:reveal={80} class="pa-card overflow-hidden">
 					<img src="/screenshots/pro-counselor.png" alt="PredictAdmit Pro: AI counselor chat" loading="lazy" class="block w-full" />
 					<figcaption class="px-5 py-4 text-sm font-medium text-slate-600 border-t border-slate-100">A counselor on call for the questions you'd pay hundreds to ask.</figcaption>
 				</figure>
-				<figure use:reveal={160} class="rounded-2xl border border-slate-200 bg-white shadow-lg overflow-hidden">
+				<figure use:reveal={160} class="pa-card overflow-hidden">
 					<img src="/screenshots/pro-essay.png" alt="PredictAdmit Pro: essay editor with AI feedback" loading="lazy" class="block w-full" />
 					<figcaption class="px-5 py-4 text-sm font-medium text-slate-600 border-t border-slate-100">Draft every supplement in one place, feedback a click away.</figcaption>
 				</figure>
-				<figure use:reveal={240} class="rounded-2xl border border-slate-200 bg-white shadow-lg overflow-hidden">
+				<figure use:reveal={240} class="pa-card overflow-hidden">
 					<img src="/screenshots/pro-chanceme.png" alt="PredictAdmit Pro: build your Chance Me profile for personalized odds" loading="lazy" class="block w-full" />
 					<figcaption class="px-5 py-4 text-sm font-medium text-slate-600 border-t border-slate-100">Build your profile once, sharpen every prediction.</figcaption>
 				</figure>
@@ -996,13 +996,13 @@
 	</section>
 
 	<!-- SECTION 2.5: DATA CREDIBILITY (Common Data Set / NACAC) -->
-	<section class="py-24 bg-white border-t border-slate-100">
+	<section class="py-24 pa-rule-top">
 		<div class="max-w-[1100px] mx-auto px-6">
 			<div class="grid gap-14 lg:grid-cols-2 lg:items-center">
 				<!-- Copy -->
 				<div>
 					<span class="inline-block px-3 py-1 bg-slate-50 border border-slate-200 text-slate-600 text-[10px] font-bold uppercase tracking-widest rounded-full">The numbers behind it</span>
-					<h2 class="mt-5 font-serif text-4xl md:text-5xl font-medium tracking-tight text-slate-900 leading-[1.05]">
+					<h2 class="mt-5 font-display text-4xl md:text-5xl text-navy leading-[1.05]">
 						Anchored to the data <span class="text-[#1A4CFF]">schools publish.</span>
 					</h2>
 					<p class="mt-5 text-lg text-slate-500 leading-relaxed">
@@ -1050,10 +1050,10 @@
 	</section>
 
 	<!-- SECTION 3: COMPARISON TABLE -->
-	<section class="py-24 bg-slate-50 border-t border-slate-100">
+	<section class="py-24 pa-grid pa-rule-top">
 		<div class="max-w-[1000px] mx-auto px-6">
 			<div class="max-w-2xl mx-auto text-center space-y-4 mb-14">
-				<h2 class="font-serif text-4xl md:text-5xl font-medium tracking-tight text-slate-900 leading-[1.05]">
+				<h2 class="font-display text-4xl md:text-5xl text-navy leading-[1.05]">
 					Counselors charge thousands. <span class="text-[#1A4CFF]">This is $9.99/mo.</span>
 				</h2>
 				<p class="text-lg text-slate-500 leading-relaxed">
@@ -1118,9 +1118,9 @@
 	</section>
 
 	<!-- SECTION 4: FAQ -->
-	<section class="py-24 bg-white border-t border-slate-100">
+	<section class="py-24 pa-rule-top">
 		<div class="max-w-[760px] mx-auto px-6">
-			<h2 class="font-serif text-4xl md:text-5xl font-medium tracking-tight text-slate-900 text-center mb-14">
+			<h2 class="font-display text-4xl md:text-5xl text-navy text-center mb-14">
 				Questions, answered
 			</h2>
 			<div class="divide-y divide-slate-200 border-t border-slate-200">
@@ -1145,10 +1145,10 @@
 	</section>
 
 	<!-- TESTIMONIAL (NAVY) -->
-	<section class="py-24 bg-[#001F3F] text-white">
+	<section class="cta-band py-24">
 		<div class="max-w-[1200px] mx-auto px-6 text-center">
 			<div class="max-w-3xl mx-auto space-y-8">
-				<div class="flex justify-center text-[#1A4CFF]">
+				<div class="flex justify-center text-cyan">
 					{#each Array(5) as _}
 						<svg class="w-6 h-6 fill-current" viewBox="0 0 20 20"
 							><path

@@ -163,11 +163,11 @@
 	const getDecisionColor = (decision: DecisionMode) => {
 		switch (decision) {
 			case 'accepted':
-				return 'text-green-600 bg-green-50 border-green-200';
+				return 'text-blue bg-blue/10 border-blue/30';
 			case 'denied':
-				return 'text-red-600 bg-red-50 border-red-200';
+				return 'text-stamp-red bg-stamp-red/10 border-stamp-red/30';
 			default:
-				return 'text-slate-600 bg-slate-50 border-slate-200';
+				return 'text-muted bg-paper-deep border-navy/20';
 		}
 	};
 </script>
@@ -176,22 +176,22 @@
 	<title>All College Portals - PredictAdmit</title>
 </svelte:head>
 
-<main class="min-h-screen bg-slate-50 text-slate-900 font-sans flex flex-col">
+<main class="min-h-screen pa-grid text-navy font-sans flex flex-col">
 	<div class="flex-1">
 		<div class="max-w-6xl mx-auto px-4 py-10">
-			<div class="bg-white border border-slate-400 shadow-md rounded-md overflow-hidden">
+			<div class="pa-card overflow-hidden">
 				<div
-					class="border-b border-slate-300 bg-gradient-to-r from-slate-100 via-slate-50 to-slate-100 px-5 py-4"
+					class="border-b-2 border-navy bg-paper-deep px-5 py-4"
 				>
-					<h1 class="text-3xl font-bold text-slate-900 mb-2">All College Portals</h1>
-					<p class="text-slate-700">
+					<h1 class="text-3xl font-display text-navy mb-2">All College Portals</h1>
+					<p class="text-muted">
 						Explore clearly labeled admissions outcome rehearsals. Choose a result for any school scenario, or use rehearsal mode to update every portal at once.
 					</p>
 
 					<div
-						class="mt-3 rounded-md border border-slate-300 bg-slate-50 px-4 py-3 text-[11px] leading-relaxed text-slate-600"
+						class="mt-3 pa-inset px-4 py-3 text-[11px] leading-relaxed text-muted"
 					>
-						<p class="font-bold uppercase tracking-wider text-slate-500 mb-1">
+						<p class="font-bold uppercase tracking-wider text-muted mb-1">
 							Important disclosure — simulation only
 						</p>
 						<p>
@@ -205,7 +205,7 @@
 							identify the institution being simulated. PredictAdmit does not access, connect to, or
 							interact with any university's actual application systems or applicant data. If you
 							represent an institution and have questions or concerns, please
-							<a href="/contact" class="font-semibold text-[#1A4CFF] underline hover:text-[#003d99]"
+							<a href="/contact" class="font-semibold text-blue underline hover:text-blue-dark"
 								>contact us</a
 							>.
 						</p>
@@ -214,7 +214,7 @@
 					<div class="mt-4 flex flex-wrap items-center gap-3">
 						<label
 							for="applicant-name"
-							class="text-xs font-bold text-slate-500 uppercase tracking-wider">Your name:</label
+							class="text-xs font-bold text-muted uppercase tracking-wider">Your name:</label
 						>
 						<input
 							id="applicant-name"
@@ -237,25 +237,25 @@
 									password: u.password || 'password123'
 								}));
 							}}
-							class="bg-white border border-slate-300 text-slate-800 text-xs font-semibold px-3 py-1.5 rounded-md outline-none w-56 focus:border-blue-400 focus:ring-1 focus:ring-blue-200 transition-colors"
+							class="border-2 border-navy bg-card text-navy text-xs font-semibold px-3 py-1.5 rounded-md outline-none w-56 focus:border-blue transition-colors"
 						/>
 						{#if $userProfile.email}
-							<span class="text-[11px] text-slate-500"
-								>Login email: <span class="font-semibold text-slate-700">{$userProfile.email}</span></span
+							<span class="text-[11px] text-muted"
+								>Login email: <span class="font-semibold text-navy">{$userProfile.email}</span></span
 							>
 						{:else}
-							<span class="text-[11px] text-slate-400">Personalizes every portal &amp; letter</span>
+							<span class="text-[11px] text-muted">Personalizes every portal &amp; letter</span>
 						{/if}
 					</div>
 
 					<div class="mt-3 flex items-center gap-3">
-						<span class="text-xs font-bold text-slate-500 uppercase tracking-wider"
+						<span class="text-xs font-bold text-muted uppercase tracking-wider"
 							>Simulate Mode:</span
 						>
 						<select
 							value={$manualOverrideMode}
 							onchange={handleModeChange}
-							class="bg-white border border-slate-300 text-slate-700 text-xs font-semibold px-3 py-1.5 rounded-md outline-none cursor-pointer hover:border-slate-400 transition-colors"
+							class="border-2 border-navy bg-card text-navy text-xs font-semibold px-3 py-1.5 rounded-md outline-none cursor-pointer focus:border-blue transition-colors"
 						>
 							<option value="random">Random / As Simulated</option>
 							<option value="accepted">Force Accepted</option>
@@ -269,12 +269,12 @@
 						{#each portals as portal}
 							<div
 								id={`portal-card-${portal.slug}`}
-								class={`border rounded-md transition-all duration-700 ${
+								class={`border-2 border-navy rounded-md bg-card transition-all duration-700 ${
 									flashSlug === portal.slug
 										? flashOutcome === 'admit'
 											? 'decision-flash decision-flash-admit'
 											: 'decision-flash decision-flash-deny'
-										: 'border-slate-300 hover:border-slate-400 hover:shadow-md bg-white'
+										: 'hover:shadow-[4px_4px_0_0_#16294e]'
 								}`}
 							>
 								<button
@@ -287,10 +287,10 @@
 											class="w-3 h-3 rounded-full"
 											style="background-color: {portal.color}"
 										></div>
-										<h3 class="font-semibold text-slate-900">{portal.name}</h3>
+										<h3 class="font-display text-navy">{portal.name}</h3>
 									</div>
 									<div class="flex items-center justify-between">
-										<div class="text-xs text-blue-600 font-medium">Visit Portal →</div>
+										<div class="text-xs text-blue font-medium">Visit Portal →</div>
 										<div
 											class={`px-2 py-1 text-xs font-medium rounded border ${getDecisionColor(portal.decision)}`}
 										>
@@ -299,9 +299,9 @@
 									</div>
 								</button>
 
-								<div class="px-4 pb-3 pt-0 border-t border-slate-100 bg-slate-50/50">
+								<div class="px-4 pb-3 pt-0 border-t-2 border-navy/15 bg-paper-deep/50">
 									<div class="flex items-center gap-1 mt-2">
-										<span class="text-[10px] uppercase tracking-wider text-slate-500 mr-2"
+										<span class="text-[10px] uppercase tracking-wider text-muted mr-2"
 											>Status:</span
 										>
 
@@ -311,8 +311,8 @@
 											onclick={() => handlePortalDecisionChange(portal.slug, 'accepted')}
 											class={`px-2 py-0.5 text-xs font-medium rounded border transition-colors ${
 												portal.decision === 'accepted'
-													? 'bg-green-600 text-white border-green-600'
-													: 'bg-white text-slate-600 border-slate-200 hover:border-green-300 hover:text-green-700'
+													? 'bg-blue text-white border-blue'
+													: 'bg-card text-muted border-navy/20 hover:border-blue/40 hover:text-blue'
 											}`}
 										>
 											Accepted
@@ -324,8 +324,8 @@
 											onclick={() => handlePortalDecisionChange(portal.slug, 'denied')}
 											class={`px-2 py-0.5 text-xs font-medium rounded border transition-colors ${
 												portal.decision === 'denied'
-													? 'bg-red-600 text-white border-red-600'
-													: 'bg-white text-slate-600 border-slate-200 hover:border-red-300 hover:text-red-700'
+													? 'bg-stamp-red text-white border-stamp-red'
+													: 'bg-card text-muted border-navy/20 hover:border-stamp-red/40 hover:text-stamp-red'
 											}`}
 										>
 											Denied
@@ -336,8 +336,8 @@
 						{/each}
 					</div>
 
-					<div class="mt-8 p-4 bg-blue-50 border border-blue-200 rounded-md">
-						<p class="text-sm text-blue-800">
+					<div class="mt-8 p-4 pa-card-cyan">
+						<p class="text-sm text-navy">
 							<strong>Rehearsal Controls:</strong> Individual buttons update that school's
 							portal and letter. The rehearsal mode above can still force every school at once.
 						</p>
@@ -356,18 +356,18 @@
 	}
 
 	.decision-flash-admit {
-		border-color: #16a34a;
-		background-color: #f0fdf4;
-		box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5);
+		border-color: #1266e3;
+		background-color: rgba(18, 102, 227, 0.08);
+		box-shadow: 0 0 0 0 rgba(18, 102, 227, 0.5);
 		animation:
 			decision-pop 0.5s cubic-bezier(0.16, 1, 0.3, 1),
 			decision-pulse-admit 1.4s ease-out 2;
 	}
 
 	.decision-flash-deny {
-		border-color: #dc2626;
-		background-color: #fef2f2;
-		box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.5);
+		border-color: #c8442e;
+		background-color: rgba(200, 68, 46, 0.08);
+		box-shadow: 0 0 0 0 rgba(200, 68, 46, 0.5);
 		animation:
 			decision-pop 0.5s cubic-bezier(0.16, 1, 0.3, 1),
 			decision-pulse-deny 1.4s ease-out 2;
@@ -387,19 +387,19 @@
 
 	@keyframes decision-pulse-admit {
 		0% {
-			box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5);
+			box-shadow: 0 0 0 0 rgba(18, 102, 227, 0.5);
 		}
 		100% {
-			box-shadow: 0 0 0 14px rgba(34, 197, 94, 0);
+			box-shadow: 0 0 0 14px rgba(18, 102, 227, 0);
 		}
 	}
 
 	@keyframes decision-pulse-deny {
 		0% {
-			box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.5);
+			box-shadow: 0 0 0 0 rgba(200, 68, 46, 0.5);
 		}
 		100% {
-			box-shadow: 0 0 0 14px rgba(239, 68, 68, 0);
+			box-shadow: 0 0 0 14px rgba(200, 68, 46, 0);
 		}
 	}
 </style>

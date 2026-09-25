@@ -15,7 +15,7 @@
 
 	const tierStyle: Record<string, string> = {
 		Standout: 'bg-[#1A4CFF] text-white',
-		Strong: 'bg-emerald-100 text-emerald-800',
+		Strong: 'bg-blue/10 text-blue',
 		Solid: 'bg-slate-100 text-slate-700',
 		Filler: 'bg-amber-100 text-amber-800'
 	};
@@ -110,7 +110,7 @@
 			<h2 class="text-xs font-bold uppercase tracking-wide text-slate-500">What you'll get</h2>
 			<p class="mt-1.5 text-sm text-slate-600">Every activity sorted into the four tiers admissions officers actually use:</p>
 			<div class="mt-3 grid gap-2 sm:grid-cols-2">
-				{#each [['Standout', 'National impact: the rare, résumé-defining kind', 'bg-[#1A4CFF] text-white'], ['Strong', 'State/regional leadership or real, sustained results', 'bg-emerald-100 text-emerald-800'], ['Solid', 'School-level involvement: good, but expected', 'bg-slate-200 text-slate-700'], ['Filler', 'Brief or passive: little real impact', 'bg-amber-100 text-amber-800']] as [tier, desc, cls]}
+				{#each [['Standout', 'National impact: the rare, résumé-defining kind', 'bg-[#1A4CFF] text-white'], ['Strong', 'State/regional leadership or real, sustained results', 'bg-blue/10 text-blue'], ['Solid', 'School-level involvement: good, but expected', 'bg-slate-200 text-slate-700'], ['Filler', 'Brief or passive: little real impact', 'bg-amber-100 text-amber-800']] as [tier, desc, cls]}
 					<div class="flex items-start gap-2.5 rounded-xl border border-slate-200 bg-white p-3">
 						<span class="shrink-0 rounded-full px-2.5 py-0.5 text-[11px] font-bold {cls}">{tier}</span>
 						<span class="text-xs leading-snug text-slate-600">{desc}</span>

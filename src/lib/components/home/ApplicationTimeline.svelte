@@ -34,7 +34,7 @@
 					<div class="flex items-center gap-1">
 						<span class="w-2 h-2 rounded-full bg-red-500 inline-block"></span>
 						<span class="w-2 h-2 rounded-full bg-yellow-400 inline-block"></span>
-						<span class="w-2 h-2 rounded-full bg-green-500 inline-block"></span>
+						<span class="w-2 h-2 rounded-full bg-blue inline-block"></span>
 					</div>
 					<div class="flex-1 mx-2">
 						<div class="border border-slate-400 bg-white px-2 py-1 text-[10px] truncate">
@@ -159,21 +159,21 @@
 						</div>
 					{:else if applicationPhase === 'fee'}
 						<!-- Payment/confirmation–style page -->
-						<div class="border border-emerald-200 rounded-sm bg-emerald-50 px-4 py-4 text-[11px]">
+						<div class="border border-blue/30 rounded-sm bg-blue/10 px-4 py-4 text-[11px]">
 							<div class="flex items-center gap-2 mb-2">
 								<div
-									class="w-6 h-6 rounded-full border border-emerald-500 flex items-center justify-center text-emerald-600 text-xs"
+									class="w-6 h-6 rounded-full border border-blue flex items-center justify-center text-blue text-xs"
 								>
 									✓
 								</div>
 								<div>
-									<div class="text-xs font-semibold text-emerald-800">Submission complete</div>
-									<div class="text-[10px] text-emerald-700">
+									<div class="text-xs font-semibold text-blue">Submission complete</div>
+									<div class="text-[10px] text-blue">
 										Your Common App submissions have been processed.
 									</div>
 								</div>
 							</div>
-							<div class="border border-emerald-200 bg-white rounded-sm px-3 py-3">
+							<div class="border border-blue/30 bg-white rounded-sm px-3 py-3">
 								<div class="text-[10px] font-semibold text-slate-800 mb-1">
 									Payment confirmation
 								</div>
@@ -266,7 +266,7 @@
 							<div class="grid grid-cols-2 gap-3">
 								<div class="border border-slate-200 rounded-sm bg-slate-50 px-3 py-3">
 									<div class="text-[10px] text-slate-600 mb-1">Composite Score</div>
-									<div class="text-2xl font-bold text-green-700 leading-none">35</div>
+									<div class="text-2xl font-bold text-blue leading-none">35</div>
 									<div class="text-[10px] text-slate-600 mt-1">
 										Test Date: <span class="font-semibold">April 2025</span>
 									</div>

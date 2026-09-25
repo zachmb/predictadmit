@@ -106,22 +106,22 @@
 
 <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
 	<div
-		class="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] bg-slate-500/5 rounded-full blur-[120px]"
+		class="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] bg-paper-deep rounded-full blur-[120px]"
 	></div>
 	<div
-		class="absolute top-[20%] -right-[5%] w-[30%] h-[30%] bg-slate-400/5 rounded-full blur-[120px]"
+		class="absolute top-[20%] -right-[5%] w-[30%] h-[30%] bg-paper-deep rounded-full blur-[120px]"
 	></div>
 </div>
 
 <div class="max-w-6xl mx-auto p-6 pt-12 min-h-screen pb-32">
 	<div class="flex items-center justify-center gap-2 mb-12">
-		<div class="bg-slate-100 p-1 rounded-2xl flex gap-1 border border-slate-200 shadow-sm">
-			<button class="px-6 py-2 rounded-xl text-sm font-bold bg-white text-slate-900 shadow-sm"
+		<div class="pa-inset p-1 flex gap-1">
+			<button class="px-6 py-2 rounded-xl text-sm font-bold bg-card text-navy shadow-sm"
 				>Essay Grader</button
 			>
 			<button
 				onclick={() => goto('/ai')}
-				class="px-6 py-2 rounded-xl text-sm font-bold text-slate-500 hover:text-slate-900 transition-colors italic"
+				class="px-6 py-2 rounded-xl text-sm font-bold text-muted hover:text-navy transition-colors italic"
 				>AI Simulator</button
 			>
 		</div>
@@ -130,13 +130,13 @@
 	{#if !googleSignedIn}
 		<div class="max-w-2xl mx-auto py-20 px-6">
 			<Card
-				class="relative overflow-hidden border-none shadow-2xl bg-white/80 backdrop-blur-xl p-1"
+				class="pa-card relative overflow-hidden p-1"
 			>
 				<div
-					class="relative z-10 text-center py-16 px-8 border border-slate-100 rounded-[1.5rem] bg-white"
+					class="relative z-10 text-center py-16 px-8 pa-inset"
 				>
 					<div
-						class="w-20 h-20 bg-slate-100 text-slate-700 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-inner border border-slate-200 transform -rotate-3 hover:rotate-0 transition-transform duration-500"
+						class="w-20 h-20 bg-blue text-white rounded-3xl flex items-center justify-center mx-auto mb-8 border-2 border-navy transform -rotate-3 hover:rotate-0 transition-transform duration-500"
 					>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -153,15 +153,15 @@
 							/></svg
 						>
 					</div>
-					<h2 class="text-3xl font-serif font-medium text-slate-900 tracking-tight mb-4">
+					<h2 class="text-3xl font-display text-navy tracking-tight mb-4">
 						Sign in to grade your essay
 					</h2>
-					<p class="text-slate-500 font-medium leading-relaxed max-w-sm mx-auto mb-10">
+					<p class="text-muted leading-relaxed max-w-sm mx-auto mb-10">
 						The grader reads your draft and tells you what an admissions officer would think. It never writes the essay for you.
 					</p>
 					<button
 						onclick={() => signIn('google', { callbackUrl: '/ai' })}
-						class="group relative flex items-center justify-center gap-3 w-full max-w-xs mx-auto py-4 px-6 bg-slate-900 text-white rounded-full font-semibold hover:bg-slate-800 transition-all shadow-xl shadow-slate-200"
+						class="btn btn-primary group w-full max-w-xs mx-auto"
 					>
 						Continue with Google
 					</button>
@@ -171,13 +171,13 @@
 	{:else if !graderUnlocked}
 		<div class="max-w-2xl mx-auto py-20 px-6">
 			<Card
-				class="relative overflow-hidden border-none shadow-2xl bg-white/80 backdrop-blur-xl p-1"
+				class="pa-card relative overflow-hidden p-1"
 			>
 				<div
-					class="relative z-10 text-center py-16 px-8 border border-slate-100 rounded-[1.5rem] bg-white"
+					class="relative z-10 text-center py-16 px-8 pa-inset"
 				>
 					<div
-						class="w-20 h-20 bg-slate-100 text-slate-700 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-inner border border-slate-200 transform rotate-3 hover:rotate-0 transition-transform duration-500"
+						class="w-20 h-20 bg-blue text-white rounded-3xl flex items-center justify-center mx-auto mb-8 border-2 border-navy transform rotate-3 hover:rotate-0 transition-transform duration-500"
 					>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -194,42 +194,42 @@
 							/></svg
 						>
 					</div>
-					<h2 class="text-3xl font-serif font-medium text-slate-900 tracking-tight mb-3">Read like an admissions officer would</h2>
-					<p class="text-slate-500 font-medium leading-relaxed max-w-sm mx-auto mb-6">
+					<h2 class="text-3xl font-display text-navy tracking-tight mb-3">Read like an admissions officer would</h2>
+					<p class="text-muted leading-relaxed max-w-sm mx-auto mb-6">
 						Line-by-line notes on every supplement: the honest read a reader gives, with the weak lines marked and why. You write every word; it just makes them land.
 					</p>
 					<ul class="mx-auto mb-8 max-w-xs space-y-2 text-left">
 						{#each ['10 inline annotations per draft', 'Blunt, specific AO-style critique', 'Targeted to each school you apply to'] as f}
-							<li class="flex items-center gap-2.5 text-sm text-slate-600">
-								<svg class="h-4 w-4 flex-none text-slate-900" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+							<li class="flex items-center gap-2.5 text-sm text-muted">
+								<svg class="h-4 w-4 flex-none text-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
 								{f}
 							</li>
 						{/each}
 					</ul>
 					<button
 						onclick={() => goto('/pro')}
-						class="group relative flex items-center justify-center gap-3 w-full max-w-xs mx-auto py-4 px-6 bg-slate-900 text-white rounded-full font-semibold hover:bg-slate-800 transition-all shadow-xl shadow-slate-200"
+						class="btn btn-primary group w-full max-w-xs mx-auto"
 					>
 						Unlock essay editing · $25 once
 					</button>
-					<p class="mt-3 text-xs text-slate-400">Your first prediction is free · then $25 once or $9.99/mo</p>
+					<p class="mt-3 text-xs text-muted">Your first prediction is free · then $25 once or $9.99/mo</p>
 				</div>
 			</Card>
 		</div>
 	{:else if results}
 		<div class="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
 			<div
-				class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 pb-6"
+				class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b-2 border-navy pb-6"
 			>
 				<div>
-					<h2 class="text-3xl font-serif font-medium text-slate-900 tracking-tight">Your read</h2>
-					<p class="text-slate-500 font-medium tracking-tight">
-						Graded against <span class="text-slate-900 font-semibold">{selectedSchool}</span> • {major}
+					<h2 class="text-3xl font-display text-navy tracking-tight">Your read</h2>
+					<p class="text-muted tracking-tight">
+						Graded against <span class="text-navy font-semibold">{selectedSchool}</span> • {major}
 					</p>
 				</div>
 				<button
 					onclick={restart}
-					class="px-5 py-2.5 text-sm font-bold text-slate-600 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-all shadow-sm"
+					class="btn btn-secondary text-sm"
 				>
 					New Analysis
 				</button>
@@ -239,20 +239,20 @@
 				{@const essay = results.essays[currentEssayIndex]}
 				{#key currentEssayIndex}
 					<div in:fade={{ duration: 200 }}>
-						<Card class="overflow-hidden border-slate-200 shadow-xl">
-							<div class="bg-slate-900 px-8 py-3 flex justify-between items-center">
+						<Card class="pa-card overflow-hidden p-0">
+							<div class="bg-navy px-8 py-3 flex justify-between items-center">
 								<div class="flex items-center gap-4">
-									<span class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">
+									<span class="text-[10px] font-black text-white/60 uppercase tracking-[0.2em]">
 										{essayType === 'supplemental'
 											? `Supplemental Essay #${currentEssayIndex + 1} of ${results.essays.length}`
 											: 'Personal Statement'}
 									</span>
 									{#if essayType === 'supplemental' && results.essays.length > 1}
-										<div class="flex items-center gap-2 border-l border-slate-700 ml-2 pl-4">
+										<div class="flex items-center gap-2 border-l border-white/20 ml-2 pl-4">
 											<button
 												disabled={currentEssayIndex === 0}
 												onclick={() => currentEssayIndex--}
-												class="text-white hover:text-blue-400 disabled:opacity-30 transition-colors"
+												class="text-white hover:text-cyan disabled:opacity-30 transition-colors"
 											>
 												<svg
 													xmlns="http://www.w3.org/2000/svg"
@@ -269,7 +269,7 @@
 											<button
 												disabled={currentEssayIndex === results.essays.length - 1}
 												onclick={() => currentEssayIndex++}
-												class="text-white hover:text-blue-400 disabled:opacity-30 transition-colors"
+												class="text-white hover:text-cyan disabled:opacity-30 transition-colors"
 											>
 												<svg
 													xmlns="http://www.w3.org/2000/svg"
@@ -290,12 +290,12 @@
 
 							<div class="p-8 space-y-10">
 								{#if essayType === 'supplemental' && essay.prompt}
-									<div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+									<div class="pa-inset p-4">
 										<label
-											class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1"
+											class="block text-[10px] font-black text-muted uppercase tracking-widest mb-1"
 											>Detected Prompt</label
 										>
-										<p class="text-sm text-slate-700 italic">"{essay.prompt}"</p>
+										<p class="text-sm text-navy italic">"{essay.prompt}"</p>
 									</div>
 								{/if}
 
@@ -303,24 +303,24 @@
 									{#each Object.entries(essay.scores) as [category, data]}
 										<div class="group">
 											<div class="flex justify-between items-end mb-3">
-												<h4 class="text-xs font-black text-slate-900 uppercase tracking-wider">
+												<h4 class="text-xs font-black text-navy uppercase tracking-wider">
 													{formatLabel(category)}
 												</h4>
 												<div class="flex items-baseline gap-1">
-													<span class="text-2xl font-black text-blue-600 tracking-tighter"
+													<span class="text-2xl font-display text-blue tracking-tighter"
 														>{data.score}</span
 													>
-													<span class="text-xs font-bold text-slate-300">/10</span>
+													<span class="text-xs font-bold text-muted">/10</span>
 												</div>
 											</div>
-											<div class="h-2 bg-slate-100 rounded-full overflow-hidden mb-4">
+											<div class="h-2 bg-paper-deep rounded-full overflow-hidden mb-4">
 												<div
-													class="h-full bg-blue-600 transition-all duration-1000 ease-out"
+													class="h-full bg-blue transition-all duration-1000 ease-out"
 													style="width: {data.score * 10}%"
 												></div>
 											</div>
-											<div class="relative bg-slate-50 border border-slate-200 p-4 rounded-xl">
-												<p class="text-[13px] text-slate-600 leading-relaxed italic">
+											<div class="pa-inset relative p-4">
+												<p class="text-[13px] text-muted leading-relaxed italic">
 													"{data.explanation}"
 												</p>
 											</div>
@@ -328,16 +328,16 @@
 									{/each}
 								</div>
 
-								<div class="mt-8 pt-8 border-t border-slate-100 flex items-center justify-between">
+								<div class="mt-8 pt-8 pa-rule-top flex items-center justify-between">
 									<div class="flex items-center gap-4">
 										<div
-											class="min-w-[5rem] h-auto p-6 w-14 h-14 bg-blue-600 rounded-2xl flex items-center justify-center text-white font-black text-2xl shadow-lg"
+											class="min-w-[5rem] h-auto p-6 w-14 h-14 bg-blue rounded-2xl flex items-center justify-center text-white font-display text-2xl shadow-lg"
 										>
 											{essay.average}
 										</div>
 										<div>
-											<p class="text-sm font-bold text-slate-900">Overall score</p>
-											<p class="text-xs text-slate-500">
+											<p class="text-sm font-bold text-navy">Overall score</p>
+											<p class="text-xs text-muted">
 												Scored against the kind of applicant {selectedSchool} tends to admit.
 											</p>
 										</div>
@@ -352,38 +352,38 @@
 	{:else}
 		<div class="max-w-3xl mx-auto space-y-8 animate-in fade-in duration-500">
 			<header>
-				<h1 class="text-4xl font-serif font-medium text-slate-900 tracking-tight mb-2">Essay Grader</h1>
-				<p class="text-slate-500 font-medium italic">
+				<h1 class="text-4xl font-display text-navy tracking-tight mb-2">Essay Grader</h1>
+				<p class="text-muted italic">
 					"Paste a draft. Get the notes an admissions officer would scribble in the margin. It won't rewrite it for you."
 				</p>
 			</header>
 
-			<Card class="p-8 space-y-8 shadow-2xl border-slate-200">
+			<Card class="pa-card p-8 space-y-8">
 				<div class="grid md:grid-cols-2 gap-6">
 					<div class="space-y-2">
-						<label class="text-xs font-black uppercase tracking-widest text-slate-400"
+						<label class="text-xs font-black uppercase tracking-widest text-muted"
 							>Intended Major</label
 						>
 						<input
 							bind:value={major}
 							placeholder="e.g. Finance, Biology"
-							class="w-full bg-slate-50 border border-slate-200 p-4 rounded-xl focus:ring-2 focus:ring-slate-300 outline-none transition-all"
+							class="w-full border-2 border-navy bg-card p-4 rounded-xl focus:border-blue outline-none transition-all"
 						/>
 					</div>
 					<div class="space-y-2">
-						<label class="text-xs font-black uppercase tracking-widest text-slate-400"
+						<label class="text-xs font-black uppercase tracking-widest text-muted"
 							>Target University</label
 						>
 						<select
 							bind:value={selectedSchool}
-							class="w-full bg-slate-50 border border-slate-200 p-4 rounded-xl focus:ring-2 focus:ring-slate-300 outline-none transition-all appearance-none"
+							class="w-full border-2 border-navy bg-card p-4 rounded-xl focus:border-blue outline-none transition-all appearance-none"
 						>
 							{#each selectableSchools as school}
 								<option value={school.name}>{school.name}</option>
 							{/each}
 						</select>
 						{#if !$userProfile.isPro && passSchools.length > 0}
-							<p class="text-[11px] text-slate-400">
+							<p class="text-[11px] text-muted">
 								Your School Pass covers {passSchools.map((p) => p.name).join(', ')}. Full Access
 								unlocks every school.
 							</p>
@@ -392,23 +392,23 @@
 				</div>
 
 				<div class="space-y-4">
-					<label class="text-xs font-black uppercase tracking-widest text-slate-400"
+					<label class="text-xs font-black uppercase tracking-widest text-muted"
 						>Submission Type</label
 					>
 					<div class="grid grid-cols-2 gap-4">
 						<button
 							onclick={() => (essayType = 'personal')}
 							class="py-4 border-2 rounded-xl font-bold transition-all {essayType === 'personal'
-								? 'border-slate-900 bg-slate-900 text-white'
-								: 'border-slate-100 text-slate-400 hover:border-slate-200'}"
+								? 'border-navy bg-navy text-white'
+								: 'border-navy/20 text-muted hover:border-navy'}"
 						>
 							Common App Personal
 						</button>
 						<button
 							onclick={() => (essayType = 'supplemental')}
 							class="py-4 border-2 rounded-xl font-bold transition-all {essayType === 'supplemental'
-								? 'border-slate-900 bg-slate-900 text-white'
-								: 'border-slate-100 text-slate-400 hover:border-slate-200'}"
+								? 'border-navy bg-navy text-white'
+								: 'border-navy/20 text-muted hover:border-navy'}"
 						>
 							School Supplements
 						</button>
@@ -416,7 +416,7 @@
 				</div>
 
 				<div class="space-y-2">
-					<label class="text-xs font-black uppercase tracking-widest text-slate-400">
+					<label class="text-xs font-black uppercase tracking-widest text-muted">
 						{essayType === 'personal' ? 'Your Essay' : 'Paste Prompts & Responses'}
 					</label>
 					<textarea
@@ -425,7 +425,7 @@
 						placeholder={essayType === 'personal'
 							? 'Paste your 650-word statement here...'
 							: 'Prompt 1: Why NYU?\nResponse: [Your text]\n\nPrompt 2: ...'}
-						class="w-full bg-slate-50 border border-slate-200 p-6 rounded-xl focus:ring-2 focus:ring-slate-300 outline-none transition-all font-serif text-lg leading-relaxed"
+						class="w-full border-2 border-navy bg-card p-6 rounded-xl focus:border-blue outline-none transition-all font-body text-lg leading-relaxed"
 					></textarea>
 				</div>
 
@@ -434,7 +434,7 @@
 						<div class="relative h-24 w-24 mx-auto">
 							<svg class="h-full w-full transform -rotate-90">
 								<circle
-									class="text-slate-100"
+									class="text-paper-deep"
 									stroke-width="8"
 									stroke="currentColor"
 									fill="transparent"
@@ -443,7 +443,7 @@
 									cy="48"
 								/>
 								<circle
-									class="text-blue-600 transition-all duration-300 ease-out"
+									class="text-blue transition-all duration-300 ease-out"
 									stroke-width="8"
 									stroke-dasharray={264}
 									stroke-dashoffset={264 - (264 * progressPercent) / 100}
@@ -456,16 +456,16 @@
 								/>
 							</svg>
 							<div class="absolute inset-0 flex items-center justify-center">
-								<span class="text-xl font-black text-slate-900">{progressPercent}%</span>
+								<span class="text-xl font-display text-navy">{progressPercent}%</span>
 							</div>
 						</div>
-						<p class="text-lg font-bold text-slate-900 animate-pulse">{analysisStep}</p>
+						<p class="text-lg font-bold text-navy animate-pulse">{analysisStep}</p>
 					</div>
 				{:else}
 					<button
 						disabled={!major || !content}
 						onclick={handleAnalyze}
-						class="w-full bg-slate-900 text-white py-8 rounded-full font-semibold text-xl hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-xl shadow-slate-200"
+						class="btn btn-primary btn-block text-xl disabled:opacity-50 disabled:cursor-not-allowed"
 					>
 						Analyze My Essays
 					</button>

@@ -104,44 +104,44 @@
 	<title>Enter Your Stats · PredictAdmit</title>
 </svelte:head>
 
-<main class="min-h-screen bg-slate-50 text-slate-900 font-sans flex flex-col">
+<main class="min-h-screen pa-grid text-ink font-sans flex flex-col">
 	<div class="flex-1">
 		<div class="max-w-3xl mx-auto px-4 py-12 md:py-16">
 			<!-- Header -->
 			<header class="text-center mb-8">
 				<span
-					class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-600 text-xs font-bold tracking-wide"
+					class="inline-flex items-center gap-2 px-3 py-1 bg-yellow text-navy text-xs font-bold tracking-wide"
 				>
-					<span class="w-1.5 h-1.5 rounded-full bg-[#1A4CFF]"></span>
+					<span class="w-1.5 h-1.5 rounded-full bg-blue"></span>
 					STEP {step} OF {totalSteps} · {stepTitles[step - 1].toUpperCase()}
 				</span>
-				<h1 class="mt-4 font-serif text-3xl md:text-4xl font-medium tracking-tight text-slate-900">
+				<h1 class="mt-4 font-display text-navy text-3xl md:text-4xl">
 					Tell us your academic profile
 				</h1>
-				<p class="mt-2 text-slate-600 max-w-xl mx-auto">
+				<p class="mt-2 text-muted max-w-xl mx-auto">
 					Predictions run off <strong>your</strong> actual numbers: GPA, tests, course rigor, activities. Nothing random. Enter it once and every school reuses it.
 				</p>
 			</header>
 
 			<!-- Progress bar -->
 			<div class="mb-8">
-				<div class="h-2 w-full rounded-full bg-slate-200 overflow-hidden">
+				<div class="h-2 w-full rounded-full bg-paper-deep overflow-hidden">
 					<div
-						class="h-full rounded-full transition-all duration-500"
-						style="width:{(step / totalSteps) * 100}%;background:#1A4CFF"
+						class="h-full rounded-full transition-all duration-500 bg-blue"
+						style="width:{(step / totalSteps) * 100}%"
 					></div>
 				</div>
 			</div>
 
 			<!-- Card -->
-			<div class="rounded-2xl border border-slate-200 bg-white shadow-sm p-6 md:p-8">
+			<div class="pa-card p-6 md:p-8">
 				{#key step}
 					<div in:fly={{ y: 12, duration: 250 }}>
 						{#if step === 1}
 							<!-- ACADEMICS -->
 							<div class="space-y-6">
 								<div>
-									<label for="s-name" class="block text-sm font-bold text-slate-900 mb-1.5"
+									<label for="s-name" class="block text-sm font-bold text-navy mb-1.5"
 										>Your name</label
 									>
 									<input
@@ -149,14 +149,14 @@
 										type="text"
 										bind:value={name}
 										placeholder="e.g. Jordan Lee"
-										class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-300/50 focus:border-slate-400"
+										class="w-full rounded-lg border-2 border-navy bg-card px-4 py-3 text-sm text-ink focus:outline-none focus:ring-2 focus:ring-blue/40 focus:border-blue"
 									/>
 								</div>
 
 								<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
 									<div>
-										<label for="s-ugpa" class="block text-sm font-bold text-slate-900 mb-1.5"
-											>Unweighted GPA <span class="text-slate-400 font-normal">(0–4.0)</span></label
+										<label for="s-ugpa" class="block text-sm font-bold text-navy mb-1.5"
+											>Unweighted GPA <span class="text-muted font-normal">(0–4.0)</span></label
 										>
 										<input
 											id="s-ugpa"
@@ -168,12 +168,12 @@
 											oninput={(e) =>
 												(stats.gpaUnweighted = clamp(e.currentTarget.value, 0, 4))}
 											placeholder="e.g. 3.9"
-											class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-slate-300/50 focus:border-slate-400"
+											class="w-full rounded-lg border-2 border-navy bg-card px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue/40 focus:border-blue"
 										/>
 									</div>
 									<div>
-										<label for="s-wgpa" class="block text-sm font-bold text-slate-900 mb-1.5"
-											>Weighted GPA <span class="text-slate-400 font-normal">(optional)</span></label
+										<label for="s-wgpa" class="block text-sm font-bold text-navy mb-1.5"
+											>Weighted GPA <span class="text-muted font-normal">(optional)</span></label
 										>
 										<input
 											id="s-wgpa"
@@ -184,15 +184,15 @@
 											bind:value={stats.gpaWeighted}
 											oninput={(e) => (stats.gpaWeighted = clamp(e.currentTarget.value, 0, 5))}
 											placeholder="e.g. 4.4"
-											class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-slate-300/50 focus:border-slate-400"
+											class="w-full rounded-lg border-2 border-navy bg-card px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue/40 focus:border-blue"
 										/>
 									</div>
 								</div>
 
 								<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
 									<div>
-										<label for="s-sat" class="block text-sm font-bold text-slate-900 mb-1.5"
-											>SAT <span class="text-slate-400 font-normal">(400–1600)</span></label
+										<label for="s-sat" class="block text-sm font-bold text-navy mb-1.5"
+											>SAT <span class="text-muted font-normal">(400–1600)</span></label
 										>
 										<input
 											id="s-sat"
@@ -202,12 +202,12 @@
 											bind:value={stats.sat}
 											oninput={(e) => (stats.sat = clamp(e.currentTarget.value, 400, 1600))}
 											placeholder="e.g. 1500"
-											class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-slate-300/50 focus:border-slate-400"
+											class="w-full rounded-lg border-2 border-navy bg-card px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue/40 focus:border-blue"
 										/>
 									</div>
 									<div>
-										<label for="s-act" class="block text-sm font-bold text-slate-900 mb-1.5"
-											>ACT <span class="text-slate-400 font-normal">(1–36, if no SAT)</span></label
+										<label for="s-act" class="block text-sm font-bold text-navy mb-1.5"
+											>ACT <span class="text-muted font-normal">(1–36, if no SAT)</span></label
 										>
 										<input
 											id="s-act"
@@ -217,12 +217,12 @@
 											bind:value={stats.act}
 											oninput={(e) => (stats.act = clamp(e.currentTarget.value, 1, 36))}
 											placeholder="e.g. 34"
-											class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-slate-300/50 focus:border-slate-400"
+											class="w-full rounded-lg border-2 border-navy bg-card px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue/40 focus:border-blue"
 										/>
 									</div>
 								</div>
 								{#if !step1Valid}
-									<p class="text-xs text-slate-500">
+									<p class="text-xs text-muted">
 										Enter at least a GPA and one test score to continue.
 									</p>
 								{/if}
@@ -231,16 +231,16 @@
 							<!-- RIGOR & TREND -->
 							<div class="space-y-6">
 								<div>
-									<span class="block text-sm font-bold text-slate-900 mb-2">Course rigor</span>
+									<span class="block text-sm font-bold text-navy mb-2">Course rigor</span>
 									<div class="flex flex-wrap gap-2">
 										{#each rigorOptions as opt}
 											<button
 												type="button"
 												onclick={() => (stats.rigor = opt)}
-												class="px-4 py-2 rounded-xl text-sm font-semibold border transition-colors {stats.rigor ===
+												class="px-4 py-2 rounded-lg text-sm font-semibold border-2 transition-colors {stats.rigor ===
 												opt
-													? 'bg-slate-900 text-white border-slate-900'
-													: 'bg-white text-slate-700 border-slate-200 hover:border-slate-300'}"
+													? 'bg-navy text-white border-navy'
+													: 'bg-card text-navy border-navy hover:bg-paper-deep'}"
 											>
 												{opt}
 											</button>
@@ -248,16 +248,16 @@
 									</div>
 								</div>
 								<div>
-									<span class="block text-sm font-bold text-slate-900 mb-2">Grade trend</span>
+									<span class="block text-sm font-bold text-navy mb-2">Grade trend</span>
 									<div class="flex flex-wrap gap-2">
 										{#each trendOptions as opt}
 											<button
 												type="button"
 												onclick={() => (stats.gradeTrend = opt)}
-												class="px-4 py-2 rounded-xl text-sm font-semibold border transition-colors {stats.gradeTrend ===
+												class="px-4 py-2 rounded-lg text-sm font-semibold border-2 transition-colors {stats.gradeTrend ===
 												opt
-													? 'bg-slate-900 text-white border-slate-900'
-													: 'bg-white text-slate-700 border-slate-200 hover:border-slate-300'}"
+													? 'bg-navy text-white border-navy'
+													: 'bg-card text-navy border-navy hover:bg-paper-deep'}"
 											>
 												{opt}
 											</button>
@@ -265,13 +265,13 @@
 									</div>
 								</div>
 								<div>
-									<label for="s-low" class="block text-sm font-bold text-slate-900 mb-2"
+									<label for="s-low" class="block text-sm font-bold text-navy mb-2"
 										>Lowest grade received</label
 									>
 									<select
 										id="s-low"
 										bind:value={stats.lowestGrade}
-										class="w-full sm:w-48 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-slate-300/50 focus:border-slate-400"
+										class="w-full sm:w-48 rounded-lg border-2 border-navy bg-card px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue/40 focus:border-blue"
 									>
 										{#each lowestOptions as g}
 											<option value={g}>{g}</option>
@@ -283,7 +283,7 @@
 							<!-- ACTIVITIES / AWARDS / ESSAY -->
 							<div class="space-y-6">
 								<div>
-									<label for="s-acts" class="block text-sm font-bold text-slate-900 mb-1.5"
+									<label for="s-acts" class="block text-sm font-bold text-navy mb-1.5"
 										>Activities / résumé</label
 									>
 									<textarea
@@ -291,11 +291,11 @@
 										rows="5"
 										bind:value={stats.activities}
 										placeholder="List clubs, jobs, projects. Include role, organization, and impact for each. Leadership and state/national scope help most."
-										class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-slate-300/50 focus:border-slate-400"
+										class="w-full rounded-lg border-2 border-navy bg-card px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue/40 focus:border-blue"
 									></textarea>
 								</div>
 								<div>
-									<label for="s-awards" class="block text-sm font-bold text-slate-900 mb-1.5"
+									<label for="s-awards" class="block text-sm font-bold text-navy mb-1.5"
 										>Honors & awards</label
 									>
 									<textarea
@@ -303,19 +303,19 @@
 										rows="3"
 										bind:value={stats.awards}
 										placeholder="Competitions, scholarships, distinctions, with the level for each (school / state / national)."
-										class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-slate-300/50 focus:border-slate-400"
+										class="w-full rounded-lg border-2 border-navy bg-card px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue/40 focus:border-blue"
 									></textarea>
 								</div>
 								<div>
-									<label for="s-essay" class="block text-sm font-bold text-slate-900 mb-1.5"
-										>Personal essay <span class="text-slate-400 font-normal">(optional)</span></label
+									<label for="s-essay" class="block text-sm font-bold text-navy mb-1.5"
+										>Personal essay <span class="text-muted font-normal">(optional)</span></label
 									>
 									<textarea
 										id="s-essay"
 										rows="4"
 										bind:value={stats.essay}
 										placeholder="Paste your personal statement draft here."
-										class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-slate-300/50 focus:border-slate-400"
+										class="w-full rounded-lg border-2 border-navy bg-card px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue/40 focus:border-blue"
 									></textarea>
 								</div>
 							</div>
@@ -323,7 +323,7 @@
 							<!-- MAJOR -->
 							<div class="space-y-6">
 								<div class="relative">
-									<label for="s-major" class="block text-sm font-bold text-slate-900 mb-1.5"
+									<label for="s-major" class="block text-sm font-bold text-navy mb-1.5"
 										>Intended major</label
 									>
 									<input
@@ -333,11 +333,11 @@
 										placeholder="e.g. Computer Science"
 										onfocus={() => (showMajorDropdown = true)}
 										onblur={() => setTimeout(() => (showMajorDropdown = false), 150)}
-										class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-slate-300/50 focus:border-slate-400"
+										class="w-full rounded-lg border-2 border-navy bg-card px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue/40 focus:border-blue"
 									/>
 									{#if showMajorDropdown && majorSuggestions.length > 0}
 										<div
-											class="absolute top-full left-0 right-0 mt-1 bg-white border border-slate-200 rounded-xl shadow-xl z-50 overflow-hidden"
+											class="absolute top-full left-0 right-0 mt-1 bg-card border-2 border-navy rounded-lg z-50 overflow-hidden"
 										>
 											{#each majorSuggestions as m}
 												<button
@@ -346,7 +346,7 @@
 														stats.major = m;
 														showMajorDropdown = false;
 													}}
-													class="w-full text-left px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900 border-b border-slate-100 last:border-0"
+													class="w-full text-left px-4 py-2.5 text-sm text-navy hover:bg-paper-deep border-b border-navy/10 last:border-0"
 												>
 													{m}
 												</button>
@@ -356,23 +356,23 @@
 								</div>
 
 								<!-- Live model read-out -->
-								<div class="rounded-xl border border-slate-200 bg-slate-50 p-5">
-									<h3 class="text-sm font-bold text-slate-900 mb-3">How the model reads you so far</h3>
+								<div class="pa-inset p-5">
+									<h3 class="text-sm font-bold text-navy mb-3">How the model reads you so far</h3>
 									<div class="grid grid-cols-2 gap-4">
 										<div>
-											<div class="text-xs text-slate-500 mb-1">Academic Index</div>
-											<div class="text-2xl font-bold text-slate-900">
-												{academicIndex}<span class="text-sm text-slate-400 font-semibold"> / 240</span>
+											<div class="text-xs text-muted mb-1">Academic Index</div>
+											<div class="font-display text-2xl text-navy">
+												{academicIndex}<span class="text-sm text-muted font-semibold"> / 240</span>
 											</div>
 										</div>
 										<div>
-											<div class="text-xs text-slate-500 mb-1">Activity strength</div>
-											<div class="text-2xl font-bold text-slate-900">
-												{ecScore}<span class="text-sm text-slate-400 font-semibold"> / 10</span>
+											<div class="text-xs text-muted mb-1">Activity strength</div>
+											<div class="font-display text-2xl text-navy">
+												{ecScore}<span class="text-sm text-muted font-semibold"> / 10</span>
 											</div>
 										</div>
 									</div>
-									<p class="mt-3 text-xs text-slate-500">
+									<p class="mt-3 text-xs text-muted">
 										These get compared against each school's selectivity to produce a
 										decision. It's an estimate, not a real outcome. Same stats in, same
 										result out.
@@ -389,7 +389,7 @@
 						type="button"
 						onclick={back}
 						disabled={step === 1}
-						class="px-5 py-2.5 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+						class="btn btn-secondary disabled:opacity-40 disabled:cursor-not-allowed"
 					>
 						Back
 					</button>
@@ -399,7 +399,7 @@
 							type="button"
 							onclick={next}
 							disabled={step === 1 && !step1Valid}
-							class="px-6 py-2.5 rounded-full text-sm font-semibold text-white bg-slate-900 hover:bg-slate-800 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+							class="btn btn-primary disabled:opacity-40 disabled:cursor-not-allowed"
 						>
 							Continue
 						</button>
@@ -408,7 +408,7 @@
 							type="button"
 							onclick={finish}
 							disabled={!canScore}
-							class="px-6 py-2.5 rounded-full text-sm font-semibold text-white bg-slate-900 hover:bg-slate-800 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+							class="btn btn-primary disabled:opacity-40 disabled:cursor-not-allowed"
 						>
 							See my decisions →
 						</button>
@@ -416,7 +416,7 @@
 				</div>
 			</div>
 
-			<p class="mt-6 text-center text-xs text-slate-400 max-w-lg mx-auto">
+			<p class="mt-6 text-center text-xs text-muted max-w-lg mx-auto">
 				Everything stays in your browser. This is an independent educational simulation and is not
 				affiliated with any college.
 			</p>

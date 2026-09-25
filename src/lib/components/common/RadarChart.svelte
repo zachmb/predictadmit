@@ -2,7 +2,7 @@
 	export let data: { label: string; value: number }[] = [];
 	export let max = 100;
 	export let size = 200;
-	export let color = 'text-emerald-500'; // Tailwind class for text color (used for fill/stroke logic if needed, or just CSS)
+	export let color = 'text-blue'; // Tailwind class for text color (used for fill/stroke logic if needed, or just CSS)
 
 	// Calculate points for the polygon
 	$: points = data

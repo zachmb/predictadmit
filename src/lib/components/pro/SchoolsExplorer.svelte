@@ -151,7 +151,7 @@
 
 	// ---- Styling helpers -------------------------------------------------------
 	const likelihoodChip: Record<Likelihood, string> = {
-		Safety: 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200',
+		Safety: 'bg-blue/10 text-blue ring-1 ring-blue/30',
 		Target: 'bg-blue-50 text-blue-700 ring-1 ring-blue-200',
 		Reach: 'bg-amber-50 text-amber-700 ring-1 ring-amber-200',
 		'Hard reach': 'bg-rose-50 text-rose-700 ring-1 ring-rose-200'
@@ -211,7 +211,7 @@
 			</div>
 			<div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
 				<div class="text-xs font-semibold uppercase tracking-wide text-slate-400">Safety</div>
-				<div class="mt-1 text-2xl font-bold text-emerald-600">{summary.Safety}</div>
+				<div class="mt-1 text-2xl font-bold text-blue">{summary.Safety}</div>
 			</div>
 			<div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
 				<div class="text-xs font-semibold uppercase tracking-wide text-slate-400">Target</div>
@@ -404,7 +404,7 @@
 								onclick={() => toggleList(row)}
 								class="inline-flex items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-semibold transition
 									{onList
-									? 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200 hover:bg-emerald-100'
+									? 'bg-blue/10 text-blue ring-1 ring-blue/30 hover:bg-blue/20'
 									: 'bg-[#1A4CFF] text-white hover:bg-[#1540E0]'}"
 							>
 								{#if onList}

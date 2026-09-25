@@ -92,61 +92,61 @@
 	/>
 </svelte:head>
 
-<main class="min-h-screen bg-slate-50 text-slate-900">
+<main class="min-h-screen pa-grid text-ink">
 	<div class="max-w-6xl mx-auto px-4 py-16 space-y-14">
 		<header class="text-center space-y-4">
-			<h1 class="font-serif text-5xl font-medium tracking-tight text-slate-900">
-				Your admissions strategist, <span class="text-[#1A4CFF]">not your consultant's invoice.</span>
+			<h1 class="font-display text-navy text-5xl">
+				Your admissions strategist, <span class="text-blue">not your consultant's invoice.</span>
 			</h1>
-			<p class="text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
+			<p class="text-xl text-muted max-w-2xl mx-auto leading-relaxed">
 				Private admissions consultants run $200–500 an hour and $5,000+ per application season.
 				PredictAdmit is $9.99/mo while you're applying, or $25 once. Start free and see where you stand first.
 			</p>
 		</header>
 
 		<section>
-			<div class="overflow-hidden rounded-[2rem] border border-slate-200 bg-white">
-				<div class="grid divide-y divide-slate-200 md:grid-cols-3 md:divide-x md:divide-y-0">
+			<div class="pa-card overflow-hidden">
+				<div class="grid divide-y divide-navy/15 md:grid-cols-3 md:divide-x md:divide-y-0">
 					<!-- Free -->
 					<div class="flex flex-col p-8">
-						<h2 class="font-serif text-2xl text-slate-900">Free</h2>
+						<h2 class="font-display text-navy text-2xl">Free</h2>
 						<div class="mt-3 flex items-baseline gap-1.5">
-							<span class="font-serif text-4xl font-medium text-slate-900">$0</span>
-							<span class="text-sm text-slate-400">to start</span>
+							<span class="font-display text-navy text-4xl">$0</span>
+							<span class="text-sm text-muted">to start</span>
 						</div>
-						<p class="mt-4 text-sm leading-relaxed text-slate-500">
+						<p class="mt-4 text-sm leading-relaxed text-muted">
 							Run the AI across all 39 schools and open your first decision. See where you stand, no card.
 						</p>
 						<ul class="mt-6 mb-8 space-y-2.5">
 							{#each freeFeatures as f}
-								<li class="flex items-start gap-2.5 text-sm text-slate-600">
-									<svg class="mt-0.5 h-4 w-4 flex-none text-slate-900" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+								<li class="flex items-start gap-2.5 text-sm text-muted">
+									<svg class="mt-0.5 h-4 w-4 flex-none text-navy" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
 									{f}
 								</li>
 							{/each}
 						</ul>
-						<a href="/verdict" class="mt-auto block w-full rounded-full border border-slate-300 bg-slate-50 px-5 py-3.5 text-center text-sm font-semibold text-slate-900 transition hover:bg-slate-100">
+						<a href="/verdict" class="btn btn-secondary btn-block mt-auto text-center">
 							Run your free rehearsal →
 						</a>
 					</div>
 
 					<!-- Monthly: recommended, tinted. On mobile it jumps to the top
 					     (order-first) so the primary plan + Buy button lead the stack. -->
-					<div class="relative order-first flex flex-col bg-slate-50 p-8 md:order-none">
-						<span class="absolute right-6 top-8 rounded-full bg-slate-900 px-3 py-1 text-[10px] font-semibold uppercase tracking-wide text-white">Recommended</span>
-						<h2 class="font-serif text-2xl text-slate-900">Monthly</h2>
+					<div class="pa-card-cyan relative order-first flex flex-col p-8 md:order-none">
+						<span class="absolute right-6 top-8 rounded-full bg-blue px-3 py-1 text-[10px] font-semibold uppercase tracking-wide text-white">Recommended</span>
+						<h2 class="font-display text-navy text-2xl">Monthly</h2>
 						<div class="mt-3 flex items-baseline gap-1.5">
-							<span class="font-serif text-4xl font-medium text-slate-900">$9.99</span>
-							<span class="text-sm text-slate-400">/mo</span>
+							<span class="font-display text-navy text-4xl">$9.99</span>
+							<span class="text-sm text-muted">/mo</span>
 						</div>
-						<p class="mt-1 text-xs text-slate-400">Billed monthly. Cancel anytime.</p>
-						<p class="mt-3 text-sm leading-relaxed text-slate-500">
+						<p class="mt-1 text-xs text-muted">Billed monthly. Cancel anytime.</p>
+						<p class="mt-3 text-sm leading-relaxed text-muted">
 							Full access while you're applying: your verdict at every school and the workshop to fix what's weak.
 						</p>
 						<ul class="mt-6 mb-8 space-y-2.5">
 							{#each fullFeatures as f}
-								<li class="flex items-start gap-2.5 text-sm text-slate-700">
-									<svg class="mt-0.5 h-4 w-4 flex-none text-[#1A4CFF]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+								<li class="flex items-start gap-2.5 text-sm text-ink">
+									<svg class="mt-0.5 h-4 w-4 flex-none text-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
 									{f}
 								</li>
 							{/each}
@@ -154,7 +154,7 @@
 						<button
 							onclick={() => openUpgrade('monthly')}
 							disabled={isProcessing}
-							class="mt-auto w-full rounded-full bg-slate-900 px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-slate-800 active:scale-[0.99] disabled:opacity-50"
+							class="btn btn-primary btn-block mt-auto"
 						>
 							{isProcessing ? 'Starting checkout…' : 'Start for $9.99/mo →'}
 						</button>
@@ -162,19 +162,19 @@
 
 					<!-- Lifetime: pay once -->
 					<div class="flex flex-col p-8">
-						<h2 class="font-serif text-2xl text-slate-900">Lifetime</h2>
+						<h2 class="font-display text-navy text-2xl">Lifetime</h2>
 						<div class="mt-3 flex items-baseline gap-1.5">
-							<span class="font-serif text-4xl font-medium text-slate-900">$25</span>
-							<span class="text-sm text-slate-400">once</span>
+							<span class="font-display text-navy text-4xl">$25</span>
+							<span class="text-sm text-muted">once</span>
 						</div>
-						<p class="mt-1 text-xs text-slate-400">One payment. No subscription.</p>
-						<p class="mt-3 text-sm leading-relaxed text-slate-500">
+						<p class="mt-1 text-xs text-muted">One payment. No subscription.</p>
+						<p class="mt-3 text-sm leading-relaxed text-muted">
 							The same full access, paid once. About two and a half months of Monthly costs the same.
 						</p>
 						<ul class="mt-6 mb-8 space-y-2.5">
 							{#each ['Everything in Monthly, forever', 'Nothing to renew or cancel', 'Every future school and tool, included'] as f}
-								<li class="flex items-start gap-2.5 text-sm text-slate-600">
-									<svg class="mt-0.5 h-4 w-4 flex-none text-slate-900" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+								<li class="flex items-start gap-2.5 text-sm text-muted">
+									<svg class="mt-0.5 h-4 w-4 flex-none text-navy" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
 									{f}
 								</li>
 							{/each}
@@ -182,7 +182,7 @@
 						<button
 							onclick={() => openUpgrade('lifetime')}
 							disabled={isProcessing}
-							class="mt-auto w-full rounded-full border border-slate-300 bg-white px-6 py-3.5 text-sm font-semibold text-slate-900 transition hover:bg-slate-50 disabled:opacity-50"
+							class="btn btn-secondary btn-block mt-auto"
 						>
 							Get Lifetime for $25
 						</button>
@@ -191,15 +191,15 @@
 			</div>
 
 			<!-- Single-school downsell — keeps the school picker, visually secondary. -->
-			<div class="mt-4 flex flex-col items-center gap-3 rounded-2xl border border-slate-200 bg-white p-5 text-center sm:flex-row sm:justify-between sm:text-left">
+			<div class="pa-card mt-4 flex flex-col items-center gap-3 p-5 text-center sm:flex-row sm:justify-between sm:text-left">
 				<div>
-					<p class="text-sm font-bold text-slate-900">Just one dream school? $4.99</p>
-					<p class="mt-0.5 text-xs text-slate-500">Its full deep-dive and unblurred decision, yours forever. Run your free rehearsal first.</p>
+					<p class="text-sm font-bold text-navy">Just one dream school? $4.99</p>
+					<p class="mt-0.5 text-xs text-muted">Its full deep-dive and unblurred decision, yours forever. Run your free rehearsal first.</p>
 				</div>
 				<div class="flex w-full shrink-0 items-center gap-2 sm:w-auto">
 					<select
 						bind:value={passSchoolSlug}
-						class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-900 focus:border-slate-400 focus:outline-none sm:w-44"
+						class="w-full rounded-lg border-2 border-navy bg-paper px-3 py-2.5 text-sm text-navy focus:outline-none sm:w-44"
 					>
 						{#each portals as p}
 							<option value={p.slug}>{p.name}</option>
@@ -208,7 +208,7 @@
 					<button
 						onclick={() => startCheckout('single')}
 						disabled={isProcessing}
-						class="shrink-0 rounded-full border border-slate-300 px-5 py-2.5 text-sm font-semibold text-slate-900 transition hover:bg-slate-50 disabled:opacity-50"
+						class="btn btn-secondary shrink-0"
 					>
 						Unlock · $4.99
 					</button>
@@ -218,32 +218,32 @@
 
 		<!-- Value math -->
 		<section class="max-w-3xl mx-auto grid gap-4 sm:grid-cols-3 text-center">
-			<div class="rounded-2xl border border-slate-200 bg-white p-5">
-				<div class="text-2xl font-bold text-slate-900">$5,000+</div>
-				<div class="mt-1 text-xs text-slate-500">Typical private consultant, one application season</div>
+			<div class="pa-card p-5">
+				<div class="font-display text-navy text-2xl">$5,000+</div>
+				<div class="mt-1 text-xs text-muted">Typical private consultant, one application season</div>
 			</div>
-			<div class="rounded-2xl border border-slate-200 bg-white p-5">
-				<div class="text-2xl font-bold text-slate-900">$200–500</div>
-				<div class="mt-1 text-xs text-slate-500">One hour of consultant essay review</div>
+			<div class="pa-card p-5">
+				<div class="font-display text-navy text-2xl">$200–500</div>
+				<div class="mt-1 text-xs text-muted">One hour of consultant essay review</div>
 			</div>
-			<div class="rounded-2xl border border-slate-200 bg-slate-100 p-5">
-				<div class="text-2xl font-bold text-slate-900">$25</div>
-				<div class="mt-1 text-xs text-slate-600">Lifetime: every school, every tool, forever</div>
+			<div class="pa-card-yellow p-5">
+				<div class="font-display text-navy text-2xl">$25</div>
+				<div class="mt-1 text-xs text-muted">Lifetime: every school, every tool, forever</div>
 			</div>
 		</section>
 
 		<!-- Message Section -->
 		<section class="max-w-xl mx-auto pt-4 pb-12 text-center">
-			<div class="relative p-8 bg-slate-50 rounded-3xl border border-slate-200">
+			<div class="pa-card relative p-8">
 				<div class="space-y-4">
-					<h3 class="text-2xl font-bold text-slate-900">Why this pricing?</h3>
-					<p class="text-lg text-slate-600 font-medium leading-relaxed">
+					<h3 class="font-display text-navy text-2xl">Why this pricing?</h3>
+					<p class="text-lg text-muted font-medium leading-relaxed">
 						The feedback loop consultants sell by the hour (a blunt read of your application,
 						school by school, with a concrete plan to fix it) is what Pro gives you
 						unlimited, for less than one-tenth of a single consultant hour. Only care about one dream school?
 						A single-school unlock gets you its full analysis for $4.99.
 					</p>
-					<p class="text-slate-500 italic">"The read is the same either way. We just don't bill you by the hour for it."</p>
+					<p class="text-muted italic">"The read is the same either way. We just don't bill you by the hour for it."</p>
 				</div>
 			</div>
 		</section>
