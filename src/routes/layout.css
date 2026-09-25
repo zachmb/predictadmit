@@ -2,7 +2,8 @@
 
 /* PredictAdmit adopts the "study guide + field notes" design system:
    paper canvas, navy / bright-blue / cyan palette, highlighter yellow accent,
-   Archivo Black display + Caveat handwritten, flat bordered buttons with solid
+   Kolly-inspired type (Söhne body + Newsreader editorial-serif headings) + Caveat
+   handwritten accents, flat bordered buttons with solid
    offset shadows. Full component system lives in sinn-system.css (imported from
    +layout.svelte). These @theme tokens wire the palette + fonts into Tailwind so
    utility classes (bg-navy, text-cyan, font-display, …) speak the same language. */
@@ -33,12 +34,16 @@
 	--color-brand-navy: #16294e;
 	--color-brand-gold: #ffd93b;
 
-	/* ---- Typography ---- */
-	--font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-	--font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-	--font-display: 'Archivo Black', 'Arial Black', -apple-system, 'Segoe UI', sans-serif;
+	/* ---- Typography (Kolly-inspired: Söhne body + editorial serif headings) ----
+	   Body/UI → Söhne (self-hosted from the licensed files, Inter fallback).
+	   Headings → Newsreader serif (Kolly's own font-serif → Iowan Old Style →
+	   Newsreader treatment: tight tracking, balanced wrapping). Caveat stays for
+	   the handwritten field-notes accents. */
+	--font-sans: 'Sohne', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+	--font-body: 'Sohne', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+	--font-display: 'Newsreader', 'Iowan Old Style', Georgia, ui-serif, 'Times New Roman', serif;
 	--font-hand: 'Caveat', 'Segoe Script', 'Comic Sans MS', cursive;
-	--font-serif: 'Newsreader', ui-serif, Georgia, 'Times New Roman', serif;
+	--font-serif: 'Newsreader', 'Iowan Old Style', ui-serif, Georgia, 'Times New Roman', serif;
 	--font-inter: var(--font-body);
 
 	/* ---- Shadows / radii (flat, solid offset — no blur) ---- */
@@ -48,6 +53,30 @@
 
 	--radius-card: 10px;
 	--radius-btn: 9px;
+}
+
+/* Söhne — self-hosted from the licensed Kolly files (subset OTFs; Inter/system
+   fallback in the stack covers any glyph the subset lacks). */
+@font-face {
+	font-family: 'Sohne';
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url('/fonts/sohne-400.otf') format('opentype');
+}
+@font-face {
+	font-family: 'Sohne';
+	font-style: normal;
+	font-weight: 500;
+	font-display: swap;
+	src: url('/fonts/sohne-500.otf') format('opentype');
+}
+@font-face {
+	font-family: 'Sohne';
+	font-style: normal;
+	font-weight: 600;
+	font-display: swap;
+	src: url('/fonts/sohne-600.otf') format('opentype');
 }
 
 /* Shared brand color (legacy variable used inline in a few places) */
@@ -75,10 +104,11 @@ body {
 	h4,
 	h5,
 	h6 {
-		font-family: var(--font-display);
-		font-weight: 400; /* Archivo Black is a single heavy weight; avoid faux-bold */
-		letter-spacing: 0;
-		line-height: 1.18;
+		font-family: var(--font-display); /* editorial serif (Newsreader), Kolly style */
+		font-weight: 500;
+		letter-spacing: -0.02em; /* tight tracking like Kolly's headings */
+		line-height: 1.12;
+		text-wrap: balance;
 		color: var(--color-navy);
 	}
 
