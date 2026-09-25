@@ -1,6 +1,10 @@
 <script lang="ts">
 	import './layout.css';
 	import './sinn-system.css';
+	// Loaded AFTER sinn-system.css on purpose: .pa-native re-establishes the native
+	// look for realistic simulation surfaces (portal pages + decision letters) by
+	// overriding sinn-system's global element rules via source order. See pa-native.css.
+	import './pa-native.css';
 	import favicon from '$lib/assets/favicon.ico';
 	import SiteHeader from '$lib/components/layout/SiteHeader.svelte';
 	import PortalShareLauncher from '$lib/components/portal/PortalShareLauncher.svelte';

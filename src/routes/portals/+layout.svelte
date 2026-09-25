@@ -7,6 +7,14 @@
 	// click Login. It never fires on a quick Login click, on focus, or more than
 	// once per session.
 	import { onMount } from 'svelte';
+	import { page } from '$app/stores';
+
+	// The individual portal pages (/portals/<school>) are realistic university
+	// applicant portals + decision letters — they must render native, NOT in the
+	// site-wide "field notes" design system. `.pa-native` (pa-native.css) undoes
+	// the global sinn-system element styling for this subtree. The /portals INDEX
+	// keeps the new design, so it is deliberately excluded.
+	$: isPortalScreen = $page.url.pathname.replace(/\/$/, '') !== '/portals';
 
 	const SHOWN_KEY = 'pa_portal_nudge_shown';
 	const STUCK_MS = 8000; // "clearly stuck" = this long on a login screen with no progress
@@ -101,7 +109,9 @@
 	});
 </script>
 
-<slot />
+<div class:pa-native={isPortalScreen} style="display: contents">
+	<slot />
+</div>
 
 {#if showNudge}
 	<div class="sim-nudge" role="status" aria-live="polite">

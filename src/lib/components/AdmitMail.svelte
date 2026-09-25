@@ -41,7 +41,7 @@
 	export let openInboxList: () => void;
 </script>
 
-<section id="inboxSection" bind:this={inboxSection} class="scroll-mt-24 font-sans">
+<section id="inboxSection" bind:this={inboxSection} class="pa-native scroll-mt-24 font-sans">
 	<div
 		class="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden flex flex-col md:h-[700px] h-[600px]"
 	>

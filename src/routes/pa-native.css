@@ -1,0 +1,68 @@
+/* ==========================================================================
+   .pa-native — native simulation surfaces (portal pages + decision letters)
+   --------------------------------------------------------------------------
+   These surfaces must look like REAL university applicant portals and real
+   admissions emails, NOT the site-wide "field notes" design system. Two
+   separate rule sets impose that design on bare elements, in DIFFERENT cascade
+   origins, and BOTH must be neutralized inside .pa-native while each page's own
+   Tailwind utilities (text-5xl, font-serif, text-[#...], font-bold, mb-*, ...)
+   keep working:
+
+     1. sinn-system.css styles h1-h3 / a / p while UNLAYERED (so it outranks
+        every Tailwind utility, which live in @layer utilities).
+     2. layout.css styles h1-h6 inside @layer base (Archivo Black + navy) as the
+        intended element default that utilities override.
+
+   Strategy (restores the exact pre-refresh native look = Tailwind Preflight +
+   each page's own utilities):
+
+     - An UNLAYERED rule with a real .pa-native class (specificity 0,0,1,1) beats
+       the unlayered sinn rules deterministically, and uses `revert-layer` so it
+       imposes nothing itself — it rolls each property down into the cascade
+       layers (utilities first, then base).
+     - A matching rule INSIDE @layer base (also 0,0,1,1) overrides layout.css's
+       base heading rule, so a bare/utility-less element lands on native
+       Preflight-like values (inherit + no margin) instead of Archivo Black/navy.
+       @layer utilities still sits above base, so a heading that DOES carry a
+       font/size/color utility keeps it.
+   ========================================================================== */
+
+.pa-native {
+	/* Base for anything unclassed: undo the body-inherited field-notes typography. */
+	font-family:
+		ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+	font-size: 16px;
+	line-height: 1.5;
+	color: #0f172a;
+}
+
+/* (1) Defeat the UNLAYERED sinn-system element rules; yield down to the layers. */
+.pa-native :is(h1, h2, h3, h4, h5, h6) {
+	font-family: revert-layer;
+	font-weight: revert-layer;
+	font-size: revert-layer;
+	line-height: revert-layer;
+	letter-spacing: revert-layer;
+	color: revert-layer;
+	margin: revert-layer;
+}
+
+.pa-native a {
+	color: revert-layer;
+}
+
+.pa-native p {
+	margin: revert-layer;
+}
+
+/* (2) Override layout.css's @layer base heading default so a utility-less element
+   falls back to native (inherit) values. @layer utilities still overrides this,
+   so headings that carry their own font/size/color utility are untouched. */
+@layer base {
+	.pa-native :is(h1, h2, h3, h4, h5, h6) {
+		font: inherit;
+		letter-spacing: normal;
+		color: inherit;
+		margin: 0;
+	}
+}
