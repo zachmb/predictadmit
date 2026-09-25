@@ -67,13 +67,14 @@
 		}
 	}
 
+	// Pro sells IMPROVEMENT, not more predictions. Lead with the workshop and the
+	// fix-it tools (what actually moves your odds); the prediction is the free,
+	// unbiased scoreboard those tools are graded against.
 	const fullFeatures = [
-		'Unlimited AI admissions rehearsals across all 39 schools',
-		'Every deep-dive decision analysis: 5 scored dimensions, AO-style critique, and an improvement plan per school',
-		'Unlimited essay grading: 10 inline annotations + harsh and honest AO reads on every draft',
-		'AI counselor with your full application in context',
-		'Narrative mind-map, schools explorer, and chance-me profile',
-		'Every future school and tool we add, included'
+		'The essay workshop: line-by-line notes and an honest admissions-officer read on every draft. You write it, we make it land.',
+		"A per-school deep-dive that names what's holding you back, then the plan to fix it.",
+		"An AI counselor that knows your whole application and has read thousands like it.",
+		"Re-run your prediction any time you change something, and watch your odds move."
 	];
 
 	const freeFeatures = [
@@ -99,8 +100,9 @@
 				Your admissions strategist, <span class="text-blue">not your consultant's invoice.</span>
 			</h1>
 			<p class="text-xl text-muted max-w-2xl mx-auto leading-relaxed">
-				Private admissions consultants run $200–500 an hour and $5,000+ per application season.
-				PredictAdmit is $9.99/mo while you're applying, or $25 once. Start free and see where you stand first.
+				Your prediction is free. What you pay for is fixing it: real essay edits,
+				a plan for every school, and a counselor who's read thousands of applications.
+				All of it for less than one hour with a $200-an-hour consultant.
 			</p>
 		</header>
 
@@ -141,7 +143,7 @@
 						</div>
 						<p class="mt-1 text-xs text-muted">Billed monthly. Cancel anytime.</p>
 						<p class="mt-3 text-sm leading-relaxed text-muted">
-							Full access while you're applying: your verdict at every school and the workshop to fix what's weak.
+							Everything you need to fix your application while you're applying: the essay workshop, a plan for every school, and your counselor.
 						</p>
 						<ul class="mt-6 mb-8 space-y-2.5">
 							{#each fullFeatures as f}

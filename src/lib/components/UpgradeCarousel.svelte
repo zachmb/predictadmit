@@ -29,31 +29,33 @@
 		mock?: 'essay' | 'chat'; // designed visual for the screens without a screenshot
 	};
 
-	// Essay editing is screen 3 on purpose — rising seniors pay for that specifically.
+	// Pro sells IMPROVEMENT, not more predictions. Lead with the workshop and the
+	// fix-it tools; the free prediction is the diagnosis, Pro is the treatment.
+	// (Rising seniors pay for the essay help specifically, so it comes early.)
 	const screens: Screen[] = [
 		{
 			kind: 'benefit',
 			eyebrow: 'PredictAdmit Pro',
-			title: "Perfect your applications before it's too late.",
-			body: 'The AI reads your real application and calls your decision at all 39 top schools: admit, deny, waitlist, or defer. Then a five-reader committee shows you exactly what drove it.',
+			title: "Fix your application before it's too late.",
+			body: "You've seen your honest odds. Pro is everything that moves them: real edits on your essays, a plan for every school, and a counselor who knows your whole file.",
 			icon: 'bolt',
 			shot: '/onboarding/dashboard.png'
 		},
 		{
 			kind: 'benefit',
-			eyebrow: 'Unlimited',
-			title: 'Run it as many times as you want',
-			body: 'Change an essay, a score, an activity. Re-run across all 39 schools and watch your odds move in real time.',
-			icon: 'search',
-			shot: '/onboarding/schools.png'
+			eyebrow: 'The workshop',
+			title: 'Essay edits that read like an admissions officer',
+			body: "Line-by-line notes on every supplement: what's working, what's weak, and how to make it land. You write every word; it just makes them count.",
+			icon: 'pencil',
+			mock: 'essay'
 		},
 		{
 			kind: 'benefit',
-			eyebrow: 'The workshop',
-			title: 'Pro essay editing',
-			body: "Line-by-line AI feedback on every supplement: the honest read an admissions officer would give. You write every word; it just makes them land.",
-			icon: 'pencil',
-			mock: 'essay'
+			eyebrow: 'Your odds, moving',
+			title: 'Change something, watch your chances change',
+			body: 'Sharpen an essay, add an activity, then re-run across all 39 schools. The prediction updates so you can see what actually helped.',
+			icon: 'search',
+			shot: '/onboarding/schools.png'
 		},
 		{
 			kind: 'benefit',

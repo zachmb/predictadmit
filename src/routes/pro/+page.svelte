@@ -897,10 +897,10 @@
 </script>
 
 <svelte:head>
-	<title>PredictAdmit Pro: your real admission decision, months early</title>
+	<title>PredictAdmit Pro: the workshop that fixes your application</title>
 	<meta
 		name="description"
-		content="PredictAdmit Pro is a full application workshop, not just a predictor: predicted decisions across 39 schools with deep-dive analysis, an AI essay editor that reads like an admissions officer, per-school strategy, a narrative mind map, and an AI counselor. First prediction free, then $9.99/mo (or $25 once)."
+		content="Your prediction is free. PredictAdmit Pro is the workshop that improves it: an AI essay editor that reads like an admissions officer, a per-school deep-dive with a plan to fix what's weak, and an AI counselor that knows your whole application. First prediction free, then $9.99/mo (or $25 once)."
 	/>
 </svelte:head>
 
@@ -2422,10 +2422,10 @@
 							</div>
 							<p class="mt-1 text-xs text-muted">Billed monthly. Cancel anytime.</p>
 							<p class="mt-3 text-sm leading-relaxed text-muted">
-								Everything, while you're applying. Your verdict at all 39 schools and the full workshop to fix what's weak.
+								Everything you need to fix your application while you're applying: the essay workshop, a plan for every school, and your counselor.
 							</p>
 							<ul class="mt-6 mb-8 space-y-2.5">
-								{#each ['Your verdict at all 39 top schools', 'The five-reader committee on every one', 'AI essay editor + per-school strategy', 'AI counselor + unlimited re-runs'] as f}
+								{#each ['The essay workshop: honest, line-by-line edits on every draft', "A per-school deep-dive: what's holding you back and how to fix it", 'An AI counselor that knows your whole application', 'Re-run your prediction any time and watch your odds move'] as f}
 									<li class="flex items-start gap-2.5 text-sm text-ink">
 										<svg class="mt-0.5 h-4 w-4 flex-none text-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
 										{f}
