@@ -71,10 +71,12 @@
 	// fix-it tools (what actually moves your odds); the prediction is the free,
 	// unbiased scoreboard those tools are graded against.
 	const fullFeatures = [
-		'The essay workshop: line-by-line notes and an honest admissions-officer read on every draft. You write it, we make it land.',
-		"A per-school deep-dive that names what's holding you back, then the plan to fix it.",
-		"An AI counselor that knows your whole application and has read thousands like it.",
-		"Re-run your prediction any time you change something, and watch your odds move."
+		'The essay workshop: line-by-line notes and honest admissions-officer reads on every draft.',
+		'Rewrites in your voice, a tighter version of your own words, never a new essay.',
+		"A per-school deep-dive with a mock admissions committee and a plan to fix what's weak.",
+		'Reviews of your activities, honors, and recommendation letters.',
+		'A Final Read of your whole application before you hit submit.',
+		'An AI counselor that knows your file, plus re-run your prediction any time.'
 	];
 
 	const freeFeatures = [

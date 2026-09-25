@@ -19,6 +19,7 @@
 	import ChanceMeProfile from '$lib/components/pro/ChanceMeProfile.svelte';
 	import SettingsView from '$lib/components/pro/SettingsView.svelte';
 	import ExtracurricularHelper from '$lib/components/pro/ExtracurricularHelper.svelte';
+	import ApplicationReview from '$lib/components/pro/ApplicationReview.svelte';
 	import UpgradeCarousel from '$lib/components/UpgradeCarousel.svelte';
 	import { track, trackViewItem, trackAddToCart, trackBeginCheckout } from '$lib/analytics';
 	import { STRIPE_PRODUCTS } from '$lib/config/stripe-products';
@@ -107,6 +108,8 @@
 		| 'schools'
 		| 'chanceme'
 		| 'extracurricular'
+		| 'recletter'
+		| 'finalread'
 		| 'settings'
 	>('dashboard');
 
@@ -1155,7 +1158,33 @@
 							/></svg
 						>
 					</span>
-					<span class="text-[13px] font-medium truncate">Activities</span>
+					<span class="text-[13px] font-medium truncate">Activities & Honors</span>
+				</button>
+
+				<button
+					onclick={() => (currentView = 'recletter')}
+					class="w-full h-9 flex items-center rounded-md text-left transition-colors {currentView ===
+					'recletter'
+						? 'bg-slate-100 text-slate-900'
+						: 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'}"
+				>
+					<span class="w-9 h-9 grid place-content-center shrink-0 {currentView === 'recletter' ? 'text-[#1A4CFF]' : ''}">
+						<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+					</span>
+					<span class="text-[13px] font-medium truncate">Letters of Rec</span>
+				</button>
+
+				<button
+					onclick={() => (currentView = 'finalread')}
+					class="w-full h-9 flex items-center rounded-md text-left transition-colors {currentView ===
+					'finalread'
+						? 'bg-slate-100 text-slate-900'
+						: 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'}"
+				>
+					<span class="w-9 h-9 grid place-content-center shrink-0 {currentView === 'finalread' ? 'text-[#1A4CFF]' : ''}">
+						<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+					</span>
+					<span class="text-[13px] font-medium truncate">Final Read</span>
 				</button>
 
 				<div class="mt-5 mb-1 px-3 flex items-center justify-between">
@@ -2374,6 +2403,22 @@
 					<ChanceMeProfile />
 				{:else if currentView === 'extracurricular'}
 					<ExtracurricularHelper />
+				{:else if currentView === 'recletter'}
+					<ApplicationReview
+						kind="rec_letter"
+						title="Letters of Rec"
+						description="Paste a recommendation letter and see how much it actually helps an admissions officer — and the one thing worth asking your recommender to add."
+						placeholder="Paste the recommendation letter here…"
+						cta="Read the letter"
+					/>
+				{:else if currentView === 'finalread'}
+					<ApplicationReview
+						kind="final_read"
+						title="Final Read before you submit"
+						description="Paste your essays, activities, honors, and stats together. Get one admissions-officer read of the whole application, and the fixes that matter most before you hit submit."
+						placeholder="Paste your essays, activities list, honors, GPA/test scores — everything, together…"
+						cta="Do my final read"
+					/>
 				{:else if currentView === 'settings'}
 					<SettingsView />
 			{/if}
@@ -2526,7 +2571,7 @@
 								The whole application season, yours to keep. Everything that makes your application stronger, from now until you hit submit.
 							</p>
 							<ul class="mt-6 mb-8 space-y-2.5">
-								{#each ['The essay workshop: honest, line-by-line edits on every draft', "A per-school deep-dive: what's holding you back and how to fix it", 'An AI counselor that knows your whole application', 'Re-run your prediction any time and watch your odds move'] as f}
+								{#each ['The essay workshop: line-by-line edits + rewrites in your voice', "A per-school deep-dive with a mock admissions committee", 'Reviews of your activities, honors, and rec letters', 'A Final Read of your whole application before you submit', 'An AI counselor that knows your file, plus unlimited re-runs'] as f}
 									<li class="flex items-start gap-2.5 text-sm text-ink">
 										<svg class="mt-0.5 h-4 w-4 flex-none text-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
 										{f}

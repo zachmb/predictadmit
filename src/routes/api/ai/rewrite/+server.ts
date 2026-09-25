@@ -1,6 +1,9 @@
 import { json } from '@sveltejs/kit';
 import { env } from '$env/dynamic/private';
 import type { RequestHandler } from './$types';
+import { guardAi } from '$lib/server/guard';
+
+export const config = { maxDuration: 60 };
 
 // Essay rewrite-in-your-voice tool. Unlike the grader (which only critiques), this
 // returns an improved version of the student's OWN passage — tighter, clearer, more
@@ -17,10 +20,14 @@ interface RewritePayload {
 	changes: string[];
 }
 
-export const POST: RequestHandler = async ({ request }) => {
+export const POST: RequestHandler = async (event) => {
+	// Signed-in + rate-limited: keep an anonymous script from hammering DeepSeek.
+	const g = await guardAi(event, { bucket: 'rewrite', max: 20 });
+	if (!g.ok) return g.response;
+
 	let body: any;
 	try {
-		body = await request.json();
+		body = await event.request.json();
 	} catch {
 		return json({ error: 'Invalid JSON body' }, { status: 400 });
 	}
