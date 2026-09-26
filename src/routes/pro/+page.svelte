@@ -960,7 +960,7 @@
 	     purchase), NOT on mere Google sign-in. Free signed-in users fall through
 	     to the pricing/paywall branch below. -->
 
-	<div class="relative flex h-[100dvh] w-full bg-slate-50 text-slate-900 font-sans overflow-hidden">
+	<div class="relative flex h-[100dvh] w-full bg-paper text-ink font-sans overflow-hidden">
 		<!-- Mobile drawer backdrop -->
 		{#if sidebarOpen}
 			<div
@@ -972,7 +972,7 @@
 
 		<!-- SIDEBAR NAVIGATION (off-canvas drawer on mobile, static from md up) -->
 		<aside
-			class="fixed inset-y-0 left-0 z-50 flex w-60 flex-col border-r border-slate-200/80 bg-white transition-transform duration-300 md:static md:translate-x-0 {sidebarOpen
+			class="fixed inset-y-0 left-0 z-50 flex w-60 flex-col border-r border-navy/10 bg-card transition-transform duration-300 md:static md:translate-x-0 {sidebarOpen
 				? 'translate-x-0 shadow-2xl'
 				: '-translate-x-full'} md:shadow-none"
 		>
@@ -1333,7 +1333,7 @@
 		</aside>
 
 		<!-- MAIN AREA -->
-		<main class="flex-1 flex flex-col min-w-0 bg-slate-50 relative">
+		<main class="flex-1 flex flex-col min-w-0 bg-paper relative">
 			<!-- Mobile top bar: opens the workspace drawer (hidden from md up) -->
 			<div
 				class="md:hidden h-14 shrink-0 flex items-center gap-3 px-4 border-b border-slate-200 bg-white z-30"
