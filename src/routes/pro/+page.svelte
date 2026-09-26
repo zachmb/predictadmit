@@ -1981,7 +1981,7 @@
 
 									<!-- Content Area -->
 									<div
-										class="w-full bg-slate-50 text-slate-800 font-serif text-lg leading-loose p-4 md:p-8 rounded-xl border border-slate-100"
+										class="w-full bg-card text-ink font-serif text-lg leading-loose p-4 md:p-8 rounded-xl border border-navy/10"
 										onclick={(e) => {
 											// @ts-ignore
 											const span = e.target.closest('.highlight-span');
@@ -2011,7 +2011,7 @@
 									<div class="relative group flex-1 flex flex-col">
 										<textarea
 											bind:value={activeFile.content}
-											class="w-full flex-1 bg-white text-slate-800 p-4 md:p-8 rounded-2xl border border-slate-200 focus:border-[#1A4CFF] focus:ring-4 focus:ring-blue-500/10 outline-none font-serif text-base md:text-lg leading-loose shadow-sm transition-all resize-none"
+											class="w-full flex-1 bg-card text-ink p-4 md:p-8 rounded-2xl border border-navy/12 focus:border-[#1A4CFF] focus:ring-4 focus:ring-blue-500/10 outline-none font-serif text-base md:text-lg leading-loose shadow-sm transition-all resize-none"
 											placeholder="# Prompt\nPaste prompt here...\n\n# Response\nStart writing..."
 											spellcheck="false"
 										></textarea>
@@ -2030,7 +2030,7 @@
 
 						<!-- Bottom Action Bar — h-24 to line up with the sidebar user menu -->
 						<div
-							class="h-24 bg-white border-t border-slate-200 flex items-center justify-between gap-3 px-4 md:px-8 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] z-50"
+							class="h-24 bg-card border-t border-navy/10 flex items-center justify-between gap-3 px-4 md:px-8 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] z-50"
 						>
 							<div class="hidden md:flex items-center gap-6 flex-1">
 								<div class="text-xs text-slate-500 font-medium">
