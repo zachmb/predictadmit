@@ -136,14 +136,14 @@
 	]);
 </script>
 
-<div class="flex-1 min-h-0 overflow-y-auto bg-slate-50">
+<div class="flex-1 min-h-0 overflow-y-auto bg-paper">
 	<div class="max-w-6xl mx-auto px-6 md:px-10 py-8">
 		<!-- Greeting -->
 		<header class="mb-8">
-			<h1 class="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight">
+			<h1 class="text-2xl md:text-3xl font-bold text-navy tracking-tight">
 				{timeGreeting}, {firstName}
 			</h1>
-			<p class="mt-1 text-slate-500">Here's your application command center.</p>
+			<p class="mt-1 text-muted">Here's your application command center.</p>
 		</header>
 
 		<!-- Hero + Countdown -->
@@ -199,11 +199,11 @@
 			</div>
 
 			<!-- Countdown -->
-			<div class="lg:col-span-2 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+			<div class="lg:col-span-2 rounded-2xl border border-navy/12 bg-card p-6 shadow-sm">
 				<div class="flex items-center justify-between">
 					<div>
-						<p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Countdown</p>
-						<h3 class="mt-0.5 text-lg font-bold text-slate-900">Early Deadlines · Nov 1, 2026</h3>
+						<p class="text-xs font-semibold uppercase tracking-wide text-muted">Countdown</p>
+						<h3 class="mt-0.5 text-lg font-bold text-navy">Early Deadlines · Nov 1, 2026</h3>
 					</div>
 					<span class="flex items-center gap-1.5 text-xs font-semibold text-[#1A4CFF]">
 						<span class="relative flex h-2 w-2">
@@ -217,11 +217,11 @@
 				</div>
 				<div class="mt-5 grid grid-cols-4 gap-2">
 					{#each [{ label: 'Days', value: countdown.days }, { label: 'Hours', value: countdown.hours }, { label: 'Min', value: countdown.minutes }, { label: 'Sec', value: countdown.seconds }] as box}
-						<div class="rounded-xl bg-slate-50 border border-slate-100 py-3 text-center">
-							<div class="text-2xl font-bold tabular-nums text-slate-900">
+						<div class="rounded-xl bg-paper-deep border border-navy/10 py-3 text-center">
+							<div class="text-2xl font-bold tabular-nums text-navy">
 								{box.label === 'Days' ? box.value : pad(box.value)}
 							</div>
-							<div class="mt-0.5 text-[11px] font-medium uppercase tracking-wide text-slate-400">
+							<div class="mt-0.5 text-[11px] font-medium uppercase tracking-wide text-muted">
 								{box.label}
 							</div>
 						</div>
@@ -238,15 +238,15 @@
 		<!-- Recommended for you -->
 		<section class="mb-8">
 			<div class="mb-4 flex items-baseline justify-between">
-				<h2 class="text-lg font-bold text-slate-900">Recommended for you</h2>
-				<span class="text-sm text-slate-400">Your next best moves</span>
+				<h2 class="text-lg font-bold text-navy">Recommended for you</h2>
+				<span class="text-sm text-muted">Your next best moves</span>
 			</div>
 			<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
 				{#each recs as rec}
 					{#if rec.href}
 						<a
 							href={rec.href}
-							class="group flex flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-[#1A4CFF]/40 hover:shadow-md"
+							class="group flex flex-col rounded-2xl border border-navy/12 bg-card p-5 shadow-sm transition hover:border-[#1A4CFF]/40 hover:shadow-md"
 						>
 							<div class="flex items-start justify-between">
 								<div
@@ -261,8 +261,8 @@
 									>
 								{/if}
 							</div>
-							<h3 class="mt-4 font-semibold text-slate-900">{rec.title}</h3>
-							<p class="mt-1 text-sm text-slate-500 leading-relaxed">{rec.desc}</p>
+							<h3 class="mt-4 font-semibold text-navy">{rec.title}</h3>
+							<p class="mt-1 text-sm text-muted leading-relaxed">{rec.desc}</p>
 							<span
 								class="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-[#1A4CFF] group-hover:gap-2 transition-all"
 							>
@@ -273,7 +273,7 @@
 						<button
 							type="button"
 							onclick={rec.action}
-							class="group flex flex-col rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:border-[#1A4CFF]/40 hover:shadow-md"
+							class="group flex flex-col rounded-2xl border border-navy/12 bg-card p-5 text-left shadow-sm transition hover:border-[#1A4CFF]/40 hover:shadow-md"
 						>
 							<div class="flex items-start justify-between">
 								<div
@@ -288,8 +288,8 @@
 									>
 								{/if}
 							</div>
-							<h3 class="mt-4 font-semibold text-slate-900">{rec.title}</h3>
-							<p class="mt-1 text-sm text-slate-500 leading-relaxed">{rec.desc}</p>
+							<h3 class="mt-4 font-semibold text-navy">{rec.title}</h3>
+							<p class="mt-1 text-sm text-muted leading-relaxed">{rec.desc}</p>
 							<span
 								class="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-[#1A4CFF] group-hover:gap-2 transition-all"
 							>
@@ -303,15 +303,15 @@
 
 		<!-- Quick stats -->
 		<section>
-			<h2 class="mb-4 text-lg font-bold text-slate-900">Quick stats</h2>
+			<h2 class="mb-4 text-lg font-bold text-navy">Quick stats</h2>
 			<div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
 				<!-- Academic Index -->
-				<div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-					<p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Academic Index</p>
+				<div class="rounded-2xl border border-navy/12 bg-card p-5 shadow-sm">
+					<p class="text-xs font-semibold uppercase tracking-wide text-muted">Academic Index</p>
 					{#if academicIndex !== null}
 						<div class="mt-2 flex items-baseline gap-1">
-							<span class="text-3xl font-bold text-slate-900">{academicIndex}</span>
-							<span class="text-sm text-slate-400">/ 100</span>
+							<span class="text-3xl font-bold text-navy">{academicIndex}</span>
+							<span class="text-sm text-muted">/ 100</span>
 						</div>
 						<div class="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-slate-100">
 							<div
@@ -335,11 +335,11 @@
 				<button
 					type="button"
 					onclick={() => setView('schools')}
-					class="rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:border-[#1A4CFF]/40 hover:shadow-md"
+					class="rounded-2xl border border-navy/12 bg-card p-5 text-left shadow-sm transition hover:border-[#1A4CFF]/40 hover:shadow-md"
 				>
-					<p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Schools on list</p>
-					<div class="mt-2 text-3xl font-bold text-slate-900">{schoolCount}</div>
-					<p class="mt-3 text-sm text-slate-400">
+					<p class="text-xs font-semibold uppercase tracking-wide text-muted">Schools on list</p>
+					<div class="mt-2 text-3xl font-bold text-navy">{schoolCount}</div>
+					<p class="mt-3 text-sm text-muted">
 						{schoolCount === 0 ? 'Add your first school →' : 'Manage your list →'}
 					</p>
 				</button>
@@ -348,13 +348,13 @@
 				<button
 					type="button"
 					onclick={() => setView('editor')}
-					class="rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:border-[#1A4CFF]/40 hover:shadow-md"
+					class="rounded-2xl border border-navy/12 bg-card p-5 text-left shadow-sm transition hover:border-[#1A4CFF]/40 hover:shadow-md"
 				>
-					<p class="text-xs font-semibold uppercase tracking-wide text-slate-500">
+					<p class="text-xs font-semibold uppercase tracking-wide text-muted">
 						Essays in progress
 					</p>
-					<div class="mt-2 text-3xl font-bold text-slate-900">{essaysInProgress}</div>
-					<p class="mt-3 text-sm text-slate-400">
+					<div class="mt-2 text-3xl font-bold text-navy">{essaysInProgress}</div>
+					<p class="mt-3 text-sm text-muted">
 						{essaysInProgress === 0 ? 'Start an essay →' : 'Keep writing →'}
 					</p>
 				</button>
