@@ -136,6 +136,18 @@
 		padding: 0.5rem 1.1rem;
 		font-size: 0.85rem;
 	}
+	/* The Sign in / Account button is an <a> inside .site-nav, so the global
+	   `.site-nav a { color: navy }` (and its yellow hover) were beating
+	   .btn-primary and painting dark text on the blue fill. Force white text +
+	   the proper blue hover with a two-class selector so it always wins. */
+	.nav-account.btn-primary,
+	.nav-account.btn-primary:hover,
+	.nav-account.btn-primary:focus {
+		color: #fff;
+	}
+	.nav-account.btn-primary:hover {
+		background: var(--blue-dark);
+	}
 	/* Mail-mode back button reuses .btn but shouldn't stretch */
 	.logo-link.btn {
 		font-size: 0.85rem;

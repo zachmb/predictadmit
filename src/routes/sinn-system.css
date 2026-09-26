@@ -3134,23 +3134,24 @@ main [id] {
   border-radius: 8px;
 }
 
-/* Grid-paper background (no forced padding, unlike .section-soft) */
+/* Grid-paper background (no forced padding, unlike .section-soft).
+   Larger 48px cells — bigger, calmer graph-paper squares (Zach). */
 .pa-grid {
   background-color: var(--paper-deep);
   background-image:
     linear-gradient(var(--grid-line) 1px, transparent 1px),
     linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-  background-size: 26px 26px;
+  background-size: 48px 48px;
 }
 
-/* Hero: grid paper + contour art in the corner */
+/* Hero: grid paper + contour art in the corner. 48px grid cells to match .pa-grid. */
 .pa-hero-bg {
   background-color: var(--paper-deep);
   background-image:
     var(--contour),
     linear-gradient(var(--grid-line) 1px, transparent 1px),
     linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-  background-size: 640px 640px, 26px 26px, 26px 26px;
+  background-size: 640px 640px, 48px 48px, 48px 48px;
   background-position: right -120px bottom -180px, 0 0, 0 0;
   background-repeat: no-repeat, repeat, repeat;
 }
