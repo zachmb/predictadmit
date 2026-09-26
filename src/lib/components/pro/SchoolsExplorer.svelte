@@ -167,15 +167,15 @@
 	const pct = (n: number) => `${Math.round(n * 100)}%`;
 </script>
 
-<div class="flex-1 min-h-0 overflow-y-auto bg-slate-50">
+<div class="flex-1 min-h-0 overflow-y-auto bg-paper">
 	<div class="max-w-6xl mx-auto px-6 md:px-10 py-8">
 		<!-- Header -->
 		<header class="mb-6">
-			<h1 class="text-2xl font-bold tracking-tight text-slate-900">Universities</h1>
-			<p class="mt-1 text-sm text-slate-500">
+			<h1 class="text-2xl font-bold tracking-tight text-navy">Universities</h1>
+			<p class="mt-1 text-sm text-muted">
 				Explore schools with real admissions data and your personalized chances.
 			</p>
-			<p class="mt-1 text-xs text-slate-400">
+			<p class="mt-1 text-xs text-muted">
 				Chances use factor weights from NACAC's Factors in the Admission Decision survey,
 				calibrated on 2026-cycle HYPSM &amp; T20 admits.
 				<a href="/methodology" class="font-medium text-[#1A4CFF] hover:underline" target="_blank"
@@ -205,20 +205,20 @@
 
 		<!-- Summary bar -->
 		<div class="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
-			<div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-				<div class="text-xs font-semibold uppercase tracking-wide text-slate-400">On your list</div>
-				<div class="mt-1 text-2xl font-bold text-slate-900">{$userProfile.schoolList.length}</div>
+			<div class="rounded-2xl border border-navy/12 bg-card p-4 shadow-sm">
+				<div class="text-xs font-semibold uppercase tracking-wide text-muted">On your list</div>
+				<div class="mt-1 text-2xl font-bold text-navy">{$userProfile.schoolList.length}</div>
 			</div>
-			<div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-				<div class="text-xs font-semibold uppercase tracking-wide text-slate-400">Safety</div>
+			<div class="rounded-2xl border border-navy/12 bg-card p-4 shadow-sm">
+				<div class="text-xs font-semibold uppercase tracking-wide text-muted">Safety</div>
 				<div class="mt-1 text-2xl font-bold text-blue">{summary.Safety}</div>
 			</div>
-			<div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-				<div class="text-xs font-semibold uppercase tracking-wide text-slate-400">Target</div>
+			<div class="rounded-2xl border border-navy/12 bg-card p-4 shadow-sm">
+				<div class="text-xs font-semibold uppercase tracking-wide text-muted">Target</div>
 				<div class="mt-1 text-2xl font-bold text-blue-600">{summary.Target}</div>
 			</div>
-			<div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-				<div class="text-xs font-semibold uppercase tracking-wide text-slate-400">Reach</div>
+			<div class="rounded-2xl border border-navy/12 bg-card p-4 shadow-sm">
+				<div class="text-xs font-semibold uppercase tracking-wide text-muted">Reach</div>
 				<div class="mt-1 text-2xl font-bold text-amber-600">
 					{summary.Reach + summary['Hard reach']}
 				</div>
@@ -227,12 +227,12 @@
 
 		<!-- Toolbar -->
 		<div
-			class="mb-6 flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm md:flex-row md:items-center"
+			class="mb-6 flex flex-col gap-3 rounded-2xl border border-navy/12 bg-card p-4 shadow-sm md:flex-row md:items-center"
 		>
 			<div class="relative flex-1">
 				<svg
 					viewBox="0 0 24 24"
-					class="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400"
+					class="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted"
 					fill="none"
 					stroke="currentColor"
 					stroke-width="2"
@@ -246,16 +246,16 @@
 					type="text"
 					bind:value={search}
 					placeholder="Search by school or location…"
-					class="w-full rounded-xl border border-slate-200 bg-slate-50 py-2 pl-9 pr-3 text-sm text-slate-900 placeholder:text-slate-400 focus:border-[#1A4CFF] focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-100"
+					class="w-full rounded-xl border border-slate-200 bg-slate-50 py-2 pl-9 pr-3 text-sm text-navy placeholder:text-muted focus:border-[#1A4CFF] focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-100"
 				/>
 			</div>
 
 			<div class="flex flex-wrap gap-2">
-				<label class="flex items-center gap-1.5 text-xs font-medium text-slate-500">
+				<label class="flex items-center gap-1.5 text-xs font-medium text-muted">
 					<span class="hidden sm:inline">Size</span>
 					<select
 						bind:value={sizeFilter}
-						class="rounded-xl border border-slate-200 bg-white py-2 pl-3 pr-8 text-sm font-medium text-slate-700 focus:border-[#1A4CFF] focus:outline-none focus:ring-2 focus:ring-blue-100"
+						class="rounded-xl border border-navy/12 bg-card py-2 pl-3 pr-8 text-sm font-medium text-slate-700 focus:border-[#1A4CFF] focus:outline-none focus:ring-2 focus:ring-blue-100"
 					>
 						<option value="All">All sizes</option>
 						<option value="Small">Small</option>
@@ -264,11 +264,11 @@
 					</select>
 				</label>
 
-				<label class="flex items-center gap-1.5 text-xs font-medium text-slate-500">
+				<label class="flex items-center gap-1.5 text-xs font-medium text-muted">
 					<span class="hidden sm:inline">Setting</span>
 					<select
 						bind:value={settingFilter}
-						class="rounded-xl border border-slate-200 bg-white py-2 pl-3 pr-8 text-sm font-medium text-slate-700 focus:border-[#1A4CFF] focus:outline-none focus:ring-2 focus:ring-blue-100"
+						class="rounded-xl border border-navy/12 bg-card py-2 pl-3 pr-8 text-sm font-medium text-slate-700 focus:border-[#1A4CFF] focus:outline-none focus:ring-2 focus:ring-blue-100"
 					>
 						<option value="All">All settings</option>
 						<option value="Urban">Urban</option>
@@ -278,11 +278,11 @@
 					</select>
 				</label>
 
-				<label class="flex items-center gap-1.5 text-xs font-medium text-slate-500">
+				<label class="flex items-center gap-1.5 text-xs font-medium text-muted">
 					<span class="hidden sm:inline">Sort by</span>
 					<select
 						bind:value={sortBy}
-						class="rounded-xl border border-slate-200 bg-white py-2 pl-3 pr-8 text-sm font-medium text-slate-700 focus:border-[#1A4CFF] focus:outline-none focus:ring-2 focus:ring-blue-100"
+						class="rounded-xl border border-navy/12 bg-card py-2 pl-3 pr-8 text-sm font-medium text-slate-700 focus:border-[#1A4CFF] focus:outline-none focus:ring-2 focus:ring-blue-100"
 					>
 						<option value="Rank">Rank</option>
 						<option value="Acceptance rate">Acceptance rate</option>
@@ -294,7 +294,7 @@
 		</div>
 
 		<!-- Results count -->
-		<div class="mb-3 px-1 text-xs font-medium text-slate-400">
+		<div class="mb-3 px-1 text-xs font-medium text-muted">
 			{rows.length}
 			{rows.length === 1 ? 'school' : 'schools'}
 		</div>
@@ -307,7 +307,7 @@
 				<div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-slate-100">
 					<svg
 						viewBox="0 0 24 24"
-						class="h-6 w-6 text-slate-400"
+						class="h-6 w-6 text-muted"
 						fill="none"
 						stroke="currentColor"
 						stroke-width="2"
@@ -319,14 +319,14 @@
 					</svg>
 				</div>
 				<p class="mt-3 text-sm font-semibold text-slate-700">No schools match your filters</p>
-				<p class="mt-1 text-sm text-slate-500">Try adjusting your search or filters.</p>
+				<p class="mt-1 text-sm text-muted">Try adjusting your search or filters.</p>
 			</div>
 		{:else}
 			<div class="grid grid-cols-1 gap-3 lg:grid-cols-2">
 				{#each rows as row (row.slug)}
 					{@const onList = listSlugs.has(row.slug)}
 					<div
-						class="group flex flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:border-slate-300 hover:shadow-md"
+						class="group flex flex-col gap-4 rounded-2xl border border-navy/12 bg-card p-4 shadow-sm transition hover:border-slate-300 hover:shadow-md"
 					>
 						<!-- Top: identity + rank -->
 						<div class="flex items-start gap-3">
@@ -338,13 +338,13 @@
 							</div>
 							<div class="min-w-0 flex-1">
 								<div class="flex items-center gap-2">
-									<h3 class="truncate text-sm font-semibold text-slate-900">{row.name}</h3>
+									<h3 class="truncate text-sm font-semibold text-navy">{row.name}</h3>
 									<span
-										class="flex-none rounded-md bg-slate-100 px-1.5 py-0.5 text-xs font-semibold text-slate-500"
+										class="flex-none rounded-md bg-slate-100 px-1.5 py-0.5 text-xs font-semibold text-muted"
 										>#{row.stat.rank}</span
 									>
 								</div>
-								<p class="mt-0.5 truncate text-xs text-slate-500">
+								<p class="mt-0.5 truncate text-xs text-muted">
 									{row.stat.location} · {row.stat.size} · {row.stat.setting}
 								</p>
 							</div>
@@ -360,7 +360,7 @@
 						<!-- Stats grid -->
 						<div class="grid grid-cols-4 gap-2 rounded-xl bg-slate-50 p-3">
 							<div>
-								<div class="text-[10px] font-semibold uppercase tracking-wide text-slate-400">
+								<div class="text-[10px] font-semibold uppercase tracking-wide text-muted">
 									Accept
 								</div>
 								<div class="mt-0.5 text-sm font-semibold text-slate-800">
@@ -368,13 +368,13 @@
 								</div>
 							</div>
 							<div>
-								<div class="text-[10px] font-semibold uppercase tracking-wide text-slate-400">
+								<div class="text-[10px] font-semibold uppercase tracking-wide text-muted">
 									SAT
 								</div>
 								<div class="mt-0.5 text-sm font-semibold text-slate-800">{row.stat.satAvg}</div>
 							</div>
 							<div>
-								<div class="text-[10px] font-semibold uppercase tracking-wide text-slate-400">
+								<div class="text-[10px] font-semibold uppercase tracking-wide text-muted">
 									GPA
 								</div>
 								<div class="mt-0.5 text-sm font-semibold text-slate-800">
@@ -382,7 +382,7 @@
 								</div>
 							</div>
 							<div>
-								<div class="text-[10px] font-semibold uppercase tracking-wide text-slate-400">
+								<div class="text-[10px] font-semibold uppercase tracking-wide text-muted">
 									Tuition
 								</div>
 								<div class="mt-0.5 text-sm font-semibold text-slate-800">
@@ -395,7 +395,7 @@
 						<div class="flex items-center justify-between gap-3">
 							<div class="flex items-center gap-2">
 								<span class="text-2xl font-bold tabular-nums text-[#1A4CFF]">{row.chance}%</span>
-								<span class="text-xs font-medium leading-tight text-slate-500"
+								<span class="text-xs font-medium leading-tight text-muted"
 									>your<br />chance</span
 								>
 							</div>

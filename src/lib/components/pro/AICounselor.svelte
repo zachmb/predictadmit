@@ -221,10 +221,10 @@
 	}
 </script>
 
-<div class="flex-1 min-h-0 overflow-y-auto bg-slate-50">
+<div class="flex-1 min-h-0 overflow-y-auto bg-paper">
 	<div class="max-w-6xl mx-auto px-6 md:px-10 py-8">
 		<div
-			class="flex h-[calc(100vh-8rem)] min-h-[560px] flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
+			class="flex h-[calc(100vh-8rem)] min-h-[560px] flex-col overflow-hidden rounded-2xl border border-navy/12 bg-card shadow-sm"
 		>
 			<!-- Header -->
 			<header
@@ -239,8 +239,8 @@
 						AI
 					</div>
 					<div class="leading-tight">
-						<h2 class="text-base font-semibold text-slate-900">AI Counselor</h2>
-						<p class="flex items-center gap-1.5 text-xs text-slate-500">
+						<h2 class="text-base font-semibold text-navy">AI Counselor</h2>
+						<p class="flex items-center gap-1.5 text-xs text-muted">
 							<span class="inline-block h-1.5 w-1.5 rounded-full bg-blue"></span>
 							PredictAI · online
 						</p>
@@ -249,7 +249,7 @@
 				<button
 					type="button"
 					onclick={newChat}
-					class="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-600 transition hover:bg-slate-50 hover:text-slate-900"
+					class="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-600 transition hover:bg-slate-50 hover:text-navy"
 				>
 					<svg
 						width="16"
@@ -280,8 +280,8 @@
 						>
 							AI
 						</div>
-						<h3 class="text-xl font-semibold text-slate-900">How can I help you today?</h3>
-						<p class="mt-2 text-sm text-slate-500">
+						<h3 class="text-xl font-semibold text-navy">How can I help you today?</h3>
+						<p class="mt-2 text-sm text-muted">
 							Ask me anything about your college list, essays, activities, or admissions
 							strategy.
 						</p>
@@ -291,7 +291,7 @@
 								<button
 									type="button"
 									onclick={() => handleSuggestion(prompt)}
-									class="group flex items-center gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3 text-left text-sm font-medium text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-[#1A4CFF] hover:text-slate-900 hover:shadow"
+									class="group flex items-center gap-3 rounded-xl border border-navy/12 bg-card px-4 py-3 text-left text-sm font-medium text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-[#1A4CFF] hover:text-navy hover:shadow"
 								>
 									<span
 										class="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-[#1A4CFF] transition group-hover:bg-[#1A4CFF] group-hover:text-white"
@@ -337,7 +337,7 @@
 										AI
 									</div>
 									<div
-										class="max-w-[85%] break-words rounded-2xl rounded-tl-md border border-slate-200 bg-white px-4 py-3 text-sm leading-relaxed text-slate-700 shadow-sm"
+										class="max-w-[85%] break-words rounded-2xl rounded-tl-md border border-navy/12 bg-card px-4 py-3 text-sm leading-relaxed text-slate-700 shadow-sm"
 									>
 										<!-- markdown is escaped before transforms in renderMarkdown() -->
 										{@html renderMarkdown(message.content)}
@@ -356,7 +356,7 @@
 									AI
 								</div>
 								<div
-									class="rounded-2xl rounded-tl-md border border-slate-200 bg-white px-4 py-3.5 shadow-sm"
+									class="rounded-2xl rounded-tl-md border border-navy/12 bg-card px-4 py-3.5 shadow-sm"
 								>
 									<div class="flex items-center gap-1.5">
 										<span class="h-2 w-2 animate-bounce rounded-full bg-slate-300 [animation-delay:-0.3s]"></span>
@@ -407,7 +407,7 @@
 						rows="1"
 						placeholder="Message your AI Counselor…"
 						disabled={isThinking}
-						class="max-h-[200px] flex-1 resize-none bg-transparent py-1.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none disabled:opacity-60"
+						class="max-h-[200px] flex-1 resize-none bg-transparent py-1.5 text-sm text-navy placeholder:text-muted focus:outline-none disabled:opacity-60"
 					></textarea>
 					<button
 						type="submit"
@@ -430,7 +430,7 @@
 						</svg>
 					</button>
 				</form>
-				<p class="mt-2 text-center text-[11px] text-slate-400">
+				<p class="mt-2 text-center text-[11px] text-muted">
 					PredictAI can make mistakes. Verify deadlines and details with official sources.
 				</p>
 			</div>

@@ -230,7 +230,7 @@
 	}
 </script>
 
-<div class="flex-1 min-h-0 overflow-y-auto bg-slate-50">
+<div class="flex-1 min-h-0 overflow-y-auto bg-paper">
 	<div class="max-w-6xl mx-auto px-6 md:px-10 py-8">
 		<!-- Header -->
 		<header class="flex flex-col md:flex-row md:items-center md:justify-between gap-5">
@@ -250,22 +250,22 @@
 					</div>
 				{/if}
 				<div>
-					<h1 class="text-2xl font-bold text-slate-900 tracking-tight">
+					<h1 class="text-2xl font-bold text-navy tracking-tight">
 						{firstName}'s Chance Me profile
 					</h1>
-					<p class="text-sm text-slate-500 mt-0.5">
+					<p class="text-sm text-muted mt-0.5">
 						Complete your profile to get sharper, personalized admissions odds.
 					</p>
 				</div>
 			</div>
 
 			<!-- Completion meter -->
-			<div class="w-full md:w-64 rounded-2xl border border-slate-200 bg-white shadow-sm p-4">
+			<div class="w-full md:w-64 rounded-2xl border border-navy/12 bg-card shadow-sm p-4">
 				<div class="flex items-baseline justify-between">
-					<span class="text-xs font-semibold uppercase tracking-wide text-slate-500"
+					<span class="text-xs font-semibold uppercase tracking-wide text-muted"
 						>Profile</span
 					>
-					<span class="text-sm font-bold text-slate-900"
+					<span class="text-sm font-bold text-navy"
 						>{completeCount} / {totalCount} sections</span
 					>
 				</div>
@@ -275,7 +275,7 @@
 						style="width:{completionPct}%;background:#1A4CFF"
 					></div>
 				</div>
-				<p class="mt-2 text-xs text-slate-500">
+				<p class="mt-2 text-xs text-muted">
 					{#if completeCount === totalCount}
 						All set. Your profile is complete!
 					{:else}
@@ -286,10 +286,10 @@
 		</header>
 
 		<!-- Name field (editable, backs userProfile.name) -->
-		<div class="mt-6 rounded-2xl border border-slate-200 bg-white shadow-sm p-5">
+		<div class="mt-6 rounded-2xl border border-navy/12 bg-card shadow-sm p-5">
 			<label
 				for="cm-name"
-				class="block text-xs font-semibold uppercase tracking-wide text-slate-500 mb-1.5"
+				class="block text-xs font-semibold uppercase tracking-wide text-muted mb-1.5"
 				>Display name</label
 			>
 			<input
@@ -298,9 +298,9 @@
 				value={$userProfile.name}
 				placeholder="Your name"
 				oninput={(e) => setNameField(e.currentTarget.value)}
-				class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/40 focus:border-[#1A4CFF]"
+				class="w-full rounded-xl border border-navy/12 bg-card px-4 py-2.5 text-sm text-navy focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/40 focus:border-[#1A4CFF]"
 			/>
-			<p class="mt-1.5 text-xs text-slate-400">
+			<p class="mt-1.5 text-xs text-muted">
 				{#if $page.data?.session?.user?.name}
 					Signed in as {$page.data.session.user.name}.
 				{:else}
@@ -311,12 +311,12 @@
 
 		<!-- Section checklist -->
 		<section class="mt-6">
-			<h2 class="text-sm font-semibold uppercase tracking-wide text-slate-500 mb-3">
+			<h2 class="text-sm font-semibold uppercase tracking-wide text-muted mb-3">
 				Complete profile
 			</h2>
 			<div class="space-y-3">
 				{#each sections as section (section.id)}
-					<div class="rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
+					<div class="rounded-2xl border border-navy/12 bg-card shadow-sm overflow-hidden">
 						<div class="flex items-center gap-4 p-4">
 							<!-- Status circle -->
 							{#if section.complete}
@@ -344,12 +344,12 @@
 							{/if}
 
 							<div class="flex-1 min-w-0">
-								<h3 class="text-sm font-semibold text-slate-900">{section.title}</h3>
-								<p class="text-xs text-slate-500 truncate">{section.hint}</p>
+								<h3 class="text-sm font-semibold text-navy">{section.title}</h3>
+								<p class="text-xs text-muted truncate">{section.hint}</p>
 							</div>
 
 							{#if section.id === 'targets'}
-								<span class="text-xs font-medium text-slate-400 shrink-0">
+								<span class="text-xs font-medium text-muted shrink-0">
 									{$userProfile.schoolList.length} tracked
 								</span>
 							{:else}
@@ -378,7 +378,7 @@
 										value={bio}
 										placeholder="Tell your story in a few sentences: who you are, what drives you..."
 										oninput={(e) => setLoose('bio', e.currentTarget.value)}
-										class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/40 focus:border-[#1A4CFF]"
+										class="w-full rounded-xl border border-navy/12 bg-card px-4 py-3 text-sm text-navy focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/40 focus:border-[#1A4CFF]"
 									></textarea>
 								{:else if section.id === 'gradmajor'}
 									<div class="grid sm:grid-cols-2 gap-4">
@@ -392,7 +392,7 @@
 												id="cm-gradyear"
 												value={gradYear}
 												onchange={(e) => setLoose('gradYear', e.currentTarget.value)}
-												class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/40 focus:border-[#1A4CFF]"
+												class="w-full rounded-xl border border-navy/12 bg-card px-4 py-2.5 text-sm text-navy focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/40 focus:border-[#1A4CFF]"
 											>
 												<option value="">Select…</option>
 												{#each gradYears as y}
@@ -412,12 +412,12 @@
 												value={intendedMajor}
 												placeholder="e.g. Computer Science"
 												oninput={(e) => setLoose('intendedMajor', e.currentTarget.value)}
-												class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/40 focus:border-[#1A4CFF]"
+												class="w-full rounded-xl border border-navy/12 bg-card px-4 py-2.5 text-sm text-navy focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/40 focus:border-[#1A4CFF]"
 											/>
 										</div>
 									</div>
 								{:else if section.id === 'academics'}
-									<p class="text-xs text-slate-500">
+									<p class="text-xs text-muted">
 										Scroll down to the Academics panel to enter scores and see how you
 										compare to admits.
 									</p>
@@ -427,7 +427,7 @@
 										value={$userProfile.applicationProfile.activities}
 										placeholder="List your extracurriculars: role, organization, and impact for each."
 										oninput={(e) => setAppProfile('activities', e.currentTarget.value)}
-										class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/40 focus:border-[#1A4CFF]"
+										class="w-full rounded-xl border border-navy/12 bg-card px-4 py-3 text-sm text-navy focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/40 focus:border-[#1A4CFF]"
 									></textarea>
 								{:else if section.id === 'awards'}
 									<textarea
@@ -435,7 +435,7 @@
 										value={$userProfile.applicationProfile.awards}
 										placeholder="List honors and awards, with the level (school / regional / national)."
 										oninput={(e) => setAppProfile('awards', e.currentTarget.value)}
-										class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/40 focus:border-[#1A4CFF]"
+										class="w-full rounded-xl border border-navy/12 bg-card px-4 py-3 text-sm text-navy focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/40 focus:border-[#1A4CFF]"
 									></textarea>
 								{:else if section.id === 'essays'}
 									<textarea
@@ -443,7 +443,7 @@
 										value={$userProfile.applicationProfile.essays}
 										placeholder="Paste your personal statement draft or notes here."
 										oninput={(e) => setAppProfile('essays', e.currentTarget.value)}
-										class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/40 focus:border-[#1A4CFF]"
+										class="w-full rounded-xl border border-navy/12 bg-card px-4 py-3 text-sm text-navy focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/40 focus:border-[#1A4CFF]"
 									></textarea>
 								{/if}
 							</div>
@@ -455,11 +455,11 @@
 
 		<!-- Academics block -->
 		<section class="mt-8">
-			<h2 class="text-sm font-semibold uppercase tracking-wide text-slate-500 mb-3">
+			<h2 class="text-sm font-semibold uppercase tracking-wide text-muted mb-3">
 				Academics
 			</h2>
 
-			<div class="rounded-2xl border border-slate-200 bg-white shadow-sm p-5">
+			<div class="rounded-2xl border border-navy/12 bg-card shadow-sm p-5">
 				<div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
 					<div>
 						<label for="cm-sat" class="block text-xs font-semibold text-slate-600 mb-1.5"
@@ -473,7 +473,7 @@
 							value={academics.sat}
 							placeholder="—"
 							oninput={(e) => (academics.sat = clampNum(e.currentTarget.value, 400, 1600))}
-							class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/40 focus:border-[#1A4CFF]"
+							class="w-full rounded-xl border border-navy/12 bg-card px-4 py-2.5 text-sm text-navy focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/40 focus:border-[#1A4CFF]"
 						/>
 					</div>
 					<div>
@@ -488,7 +488,7 @@
 							value={academics.act}
 							placeholder="—"
 							oninput={(e) => (academics.act = clampNum(e.currentTarget.value, 1, 36))}
-							class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/40 focus:border-[#1A4CFF]"
+							class="w-full rounded-xl border border-navy/12 bg-card px-4 py-2.5 text-sm text-navy focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/40 focus:border-[#1A4CFF]"
 						/>
 					</div>
 					<div>
@@ -505,7 +505,7 @@
 							placeholder="—"
 							oninput={(e) =>
 								(academics.weightedGpa = clampNum(e.currentTarget.value, 0, 5))}
-							class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/40 focus:border-[#1A4CFF]"
+							class="w-full rounded-xl border border-navy/12 bg-card px-4 py-2.5 text-sm text-navy focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/40 focus:border-[#1A4CFF]"
 						/>
 					</div>
 					<div>
@@ -522,7 +522,7 @@
 							placeholder="—"
 							oninput={(e) =>
 								(academics.unweightedGpa = clampNum(e.currentTarget.value, 0, 4))}
-							class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/40 focus:border-[#1A4CFF]"
+							class="w-full rounded-xl border border-navy/12 bg-card px-4 py-2.5 text-sm text-navy focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/40 focus:border-[#1A4CFF]"
 						/>
 					</div>
 				</div>
@@ -531,10 +531,10 @@
 
 		<!-- Admit distribution charts -->
 		<section class="mt-8">
-			<h2 class="text-sm font-semibold uppercase tracking-wide text-slate-500 mb-3">
+			<h2 class="text-sm font-semibold uppercase tracking-wide text-muted mb-3">
 				Admit distributions
 			</h2>
-			<p class="text-sm text-slate-500 mb-4 -mt-1">
+			<p class="text-sm text-muted mb-4 -mt-1">
 				How admitted students at competitive universities are distributed. Your value is
 				highlighted in blue.
 			</p>
@@ -559,9 +559,9 @@
 	value: number | '',
 	unit: string
 )}
-	<div class="rounded-2xl border border-slate-200 bg-white shadow-sm p-5 flex flex-col">
+	<div class="rounded-2xl border border-navy/12 bg-card shadow-sm p-5 flex flex-col">
 		<div class="flex items-center justify-between">
-			<h3 class="text-sm font-semibold text-slate-900">{title}</h3>
+			<h3 class="text-sm font-semibold text-navy">{title}</h3>
 			{#if value !== ''}
 				<span
 					class="text-xs font-bold px-2 py-0.5 rounded-full"
@@ -579,7 +579,7 @@
 					<span
 						class="text-[10px] font-semibold mb-1 {i === activeIdx
 							? 'text-[#1A4CFF]'
-							: 'text-slate-400'}"
+							: 'text-muted'}"
 					>
 						{b.pct}%
 					</span>
@@ -601,7 +601,7 @@
 				<div
 					class="flex-1 text-center text-[9px] leading-tight {i === activeIdx
 						? 'text-[#1A4CFF] font-semibold'
-						: 'text-slate-400'}"
+						: 'text-muted'}"
 				>
 					{b.label}
 				</div>
@@ -609,7 +609,7 @@
 		</div>
 
 		<!-- Caption -->
-		<p class="mt-4 text-xs text-slate-500 border-t border-slate-100 pt-3">
+		<p class="mt-4 text-xs text-muted border-t border-slate-100 pt-3">
 			{#if value === ''}
 				Enter your {title} above to see where you land.
 			{:else}

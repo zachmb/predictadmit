@@ -157,12 +157,12 @@
 	};
 </script>
 
-<div class="flex-1 min-h-0 overflow-y-auto bg-slate-50">
+<div class="flex-1 min-h-0 overflow-y-auto bg-paper">
 	<div class="max-w-6xl mx-auto px-6 md:px-10 py-8">
 		<!-- Profile hero -->
 		<div class="mb-8">
-			<p class="text-sm font-medium text-slate-500">Settings</p>
-			<div class="mt-3 flex flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between md:p-8">
+			<p class="text-sm font-medium text-muted">Settings</p>
+			<div class="mt-3 flex flex-col gap-4 rounded-2xl border border-navy/12 bg-card p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between md:p-8">
 				<div class="flex items-center gap-4">
 					{#if avatarImage}
 						<img
@@ -180,7 +180,7 @@
 					{/if}
 					<div class="min-w-0">
 						<div class="flex items-center gap-2">
-							<h1 class="truncate text-xl font-bold tracking-tight text-slate-900">{displayName}</h1>
+							<h1 class="truncate text-xl font-bold tracking-tight text-navy">{displayName}</h1>
 							<span
 								class="inline-flex items-center gap-1 rounded-full bg-blue/10 px-2 py-0.5 text-xs font-medium text-blue ring-1 ring-inset ring-blue/30"
 							>
@@ -194,7 +194,7 @@
 								Verified
 							</span>
 						</div>
-						<p class="truncate text-sm text-slate-500">{displayEmail}</p>
+						<p class="truncate text-sm text-muted">{displayEmail}</p>
 					</div>
 				</div>
 				{#if !billingLoading}
@@ -207,21 +207,21 @@
 
 		<div class="grid gap-6">
 			<!-- Account -->
-			<section class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm md:p-8">
-				<h2 class="text-xs font-semibold uppercase tracking-wide text-slate-500">Account</h2>
+			<section class="rounded-2xl border border-navy/12 bg-card p-6 shadow-sm md:p-8">
+				<h2 class="text-xs font-semibold uppercase tracking-wide text-muted">Account</h2>
 
 				<dl class="mt-5 divide-y divide-slate-100 border-t border-slate-100">
 					<div class="flex items-center justify-between py-3">
-						<dt class="text-sm text-slate-500">Role</dt>
-						<dd class="text-sm font-medium text-slate-900">Applicant</dd>
+						<dt class="text-sm text-muted">Role</dt>
+						<dd class="text-sm font-medium text-navy">Applicant</dd>
 					</div>
 					<div class="flex items-center justify-between py-3">
-						<dt class="text-sm text-slate-500">Status</dt>
+						<dt class="text-sm text-muted">Status</dt>
 						<dd class="text-sm font-medium text-blue">Verified</dd>
 					</div>
 					<div class="flex items-center justify-between py-3">
-						<dt class="text-sm text-slate-500">Joined</dt>
-						<dd class="text-sm font-medium text-slate-900">{joined}</dd>
+						<dt class="text-sm text-muted">Joined</dt>
+						<dd class="text-sm font-medium text-navy">{joined}</dd>
 					</div>
 				</dl>
 
@@ -229,7 +229,7 @@
 					<button
 						type="button"
 						onclick={() => signOut({ callbackUrl: '/' })}
-						class="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 hover:text-slate-900"
+						class="inline-flex items-center gap-2 rounded-lg border border-navy/12 bg-card px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 hover:text-navy"
 					>
 						<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" class="h-4 w-4" aria-hidden="true">
 							<path stroke-linecap="round" stroke-linejoin="round" d="M13 4H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h7" />
@@ -241,11 +241,11 @@
 			</section>
 
 			<!-- Current plan -->
-			<section class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm md:p-8">
-				<h2 class="text-xs font-semibold uppercase tracking-wide text-slate-500">Current plan</h2>
+			<section class="rounded-2xl border border-navy/12 bg-card p-6 shadow-sm md:p-8">
+				<h2 class="text-xs font-semibold uppercase tracking-wide text-muted">Current plan</h2>
 
 				{#if billingLoading}
-					<div class="mt-5 flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-50/60 p-5 text-sm text-slate-500">
+					<div class="mt-5 flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-50/60 p-5 text-sm text-muted">
 						<span class="h-4 w-4 animate-spin rounded-full border-2 border-slate-300 border-t-[#1A4CFF]"></span>
 						Checking your plan...
 					</div>
@@ -266,7 +266,7 @@
 							</div>
 							<div>
 								<div class="flex flex-wrap items-center gap-2">
-									<p class="text-base font-semibold text-slate-900">{planName}</p>
+									<p class="text-base font-semibold text-navy">{planName}</p>
 									{#if plan === 'monthly' && sub?.cancelAtPeriodEnd}
 										<span class="inline-flex items-center gap-1.5 rounded-full bg-amber-50 px-2.5 py-0.5 text-xs font-semibold text-amber-700 ring-1 ring-inset ring-amber-200">
 											Cancels soon
@@ -281,7 +281,7 @@
 
 								{#if plan === 'monthly'}
 									<p class="mt-1 text-sm font-medium text-slate-700">$9.99 per month</p>
-									<p class="mt-0.5 text-sm text-slate-500">
+									<p class="mt-0.5 text-sm text-muted">
 										{#if sub?.cancelAtPeriodEnd && sub?.currentPeriodEnd}
 											Your access stays on until {fmtDate(sub.currentPeriodEnd)}, then it will not renew.
 										{:else if sub?.currentPeriodEnd}
@@ -292,25 +292,25 @@
 									</p>
 								{:else if plan === 'lifetime'}
 									<p class="mt-1 text-sm font-medium text-slate-700">Paid once. Yours forever.</p>
-									<p class="mt-0.5 text-sm text-slate-500">Every Pro feature, no subscription and nothing to renew.</p>
+									<p class="mt-0.5 text-sm text-muted">Every Pro feature, no subscription and nothing to renew.</p>
 								{:else if plan === 'single'}
 									<p class="mt-1 text-sm font-medium text-slate-700">One school unlocked</p>
-									<p class="mt-0.5 text-sm text-slate-500">Upgrade to full Pro for every school and the whole workshop.</p>
+									<p class="mt-0.5 text-sm text-muted">Upgrade to full Pro for every school and the whole workshop.</p>
 								{:else if billing && !billing.billingConfigured}
 									<p class="mt-1 text-sm font-medium text-slate-700">Unlocked</p>
-									<p class="mt-0.5 text-sm text-slate-500">Every Pro feature is included right now.</p>
+									<p class="mt-0.5 text-sm text-muted">Every Pro feature is included right now.</p>
 								{:else}
 									<p class="mt-1 text-sm font-medium text-slate-700">Free plan</p>
-									<p class="mt-0.5 text-sm text-slate-500">Your first prediction is free. Upgrade to unlock every school and the workshop.</p>
+									<p class="mt-0.5 text-sm text-muted">Your first prediction is free. Upgrade to unlock every school and the workshop.</p>
 								{/if}
 							</div>
 						</div>
 
 						<div class="text-right">
 							{#if plan === 'monthly'}
-								<p class="text-2xl font-bold text-slate-900">$9.99<span class="text-sm font-medium text-slate-400">/mo</span></p>
+								<p class="text-2xl font-bold text-navy">$9.99<span class="text-sm font-medium text-muted">/mo</span></p>
 							{:else if plan === 'lifetime'}
-								<p class="text-2xl font-bold text-slate-900">$25<span class="text-sm font-medium text-slate-400"> once</span></p>
+								<p class="text-2xl font-bold text-navy">$25<span class="text-sm font-medium text-muted"> once</span></p>
 							{/if}
 						</div>
 					</div>
@@ -331,7 +331,7 @@
 									{plan === 'monthly' ? 'Manage subscription' : 'Manage billing'}
 								{/if}
 							</button>
-							<p class="text-xs text-slate-500 sm:ml-1">
+							<p class="text-xs text-muted sm:ml-1">
 								{plan === 'monthly'
 									? 'Update your card, cancel, or download invoices in Stripe.'
 									: 'Update your card or download invoices in Stripe.'}
@@ -340,7 +340,7 @@
 								<a href="/pro" class="text-sm font-semibold text-[#1A4CFF] hover:underline sm:ml-auto">Upgrade to full Pro</a>
 							{/if}
 						{:else if billing && !billing.billingConfigured}
-							<p class="text-xs text-slate-500">Billing is not set up yet, so there's nothing to manage.</p>
+							<p class="text-xs text-muted">Billing is not set up yet, so there's nothing to manage.</p>
 						{:else}
 							<a
 								href="/pro"
@@ -348,7 +348,7 @@
 							>
 								Upgrade to Pro
 							</a>
-							<p class="text-xs text-slate-500 sm:ml-1">Lifetime is $25 once, or $9.99 a month.</p>
+							<p class="text-xs text-muted sm:ml-1">Lifetime is $25 once, or $9.99 a month.</p>
 						{/if}
 					</div>
 
@@ -359,15 +359,15 @@
 			</section>
 
 			<!-- Preferences -->
-			<section class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm md:p-8">
-				<h2 class="text-xs font-semibold uppercase tracking-wide text-slate-500">Preferences</h2>
+			<section class="rounded-2xl border border-navy/12 bg-card p-6 shadow-sm md:p-8">
+				<h2 class="text-xs font-semibold uppercase tracking-wide text-muted">Preferences</h2>
 
 				<div class="mt-5 divide-y divide-slate-100">
 					<!-- Transactional (locked on) -->
 					<div class="flex items-center justify-between gap-4 py-4">
 						<div class="min-w-0">
-							<p class="text-sm font-medium text-slate-900">Transactional emails</p>
-							<p class="text-sm text-slate-500">Login links and account notices</p>
+							<p class="text-sm font-medium text-navy">Transactional emails</p>
+							<p class="text-sm text-muted">Login links and account notices</p>
 						</div>
 						<button
 							type="button"
@@ -385,8 +385,8 @@
 					<!-- Marketing (toggleable) -->
 					<div class="flex items-center justify-between gap-4 py-4">
 						<div class="min-w-0">
-							<p class="text-sm font-medium text-slate-900">Marketing emails</p>
-							<p class="text-sm text-slate-500">Product tips, new features, and admissions insights</p>
+							<p class="text-sm font-medium text-navy">Marketing emails</p>
+							<p class="text-sm text-muted">Product tips, new features, and admissions insights</p>
 						</div>
 						<button
 							type="button"
@@ -411,7 +411,7 @@
 
 				<div class="mt-4 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
 					<div class="min-w-0">
-						<p class="text-sm font-semibold text-slate-900">Delete account</p>
+						<p class="text-sm font-semibold text-navy">Delete account</p>
 						<p class="mt-1 max-w-xl text-sm text-slate-600">
 							Permanently clear your PredictAdmit profile and data from this browser. This cannot be
 							undone.
@@ -424,7 +424,7 @@
 							<button
 								type="button"
 								onclick={() => (confirmingDelete = false)}
-								class="rounded-lg border border-slate-200 bg-white px-3.5 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50"
+								class="rounded-lg border border-navy/12 bg-card px-3.5 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50"
 							>
 								Cancel
 							</button>

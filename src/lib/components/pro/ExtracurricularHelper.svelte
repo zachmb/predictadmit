@@ -65,22 +65,22 @@
 
 <div class="mx-auto max-w-3xl px-4 py-8 sm:px-6">
 	<header class="mb-6">
-		<h1 class="text-2xl font-black tracking-tight text-slate-900">Extracurricular Helper</h1>
-		<p class="mt-1 text-sm text-slate-500">
+		<h1 class="text-2xl font-black tracking-tight text-navy">Extracurricular Helper</h1>
+		<p class="mt-1 text-sm text-muted">
 			A blunt, AO-style read of your activities, tiered by real impact, with the one move that
 			raises each. It grades what you list; it never invents anything.
 		</p>
 	</header>
 
-	<div class="rounded-2xl border border-slate-200 bg-white p-5">
-		<label for="ec-major" class="block text-xs font-bold uppercase tracking-wide text-slate-500">Intended major (optional)</label>
+	<div class="rounded-2xl border border-navy/12 bg-card p-5">
+		<label for="ec-major" class="block text-xs font-bold uppercase tracking-wide text-muted">Intended major (optional)</label>
 		<input
 			id="ec-major"
 			bind:value={major}
 			placeholder="e.g. Computer Science"
 			class="mt-1.5 w-full max-w-xs rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none focus:border-[#1A4CFF] focus:ring-4 focus:ring-blue-600/10"
 		/>
-		<label for="ec-acts" class="mt-4 block text-xs font-bold uppercase tracking-wide text-slate-500">Your activities / résumé</label>
+		<label for="ec-acts" class="mt-4 block text-xs font-bold uppercase tracking-wide text-muted">Your activities / résumé</label>
 		<textarea
 			id="ec-acts"
 			bind:value={activities}
@@ -107,24 +107,24 @@
 	{#if !analysis && !loading}
 		<!-- Value preview so the tool sells itself before the first run. -->
 		<div class="mt-6 rounded-2xl border border-slate-200 bg-slate-50/60 p-5">
-			<h2 class="text-xs font-bold uppercase tracking-wide text-slate-500">What you'll get</h2>
+			<h2 class="text-xs font-bold uppercase tracking-wide text-muted">What you'll get</h2>
 			<p class="mt-1.5 text-sm text-slate-600">Every activity sorted into the four tiers admissions officers actually use:</p>
 			<div class="mt-3 grid gap-2 sm:grid-cols-2">
 				{#each [['Standout', 'National impact: the rare, résumé-defining kind', 'bg-[#1A4CFF] text-white'], ['Strong', 'State/regional leadership or real, sustained results', 'bg-blue/10 text-blue'], ['Solid', 'School-level involvement: good, but expected', 'bg-slate-200 text-slate-700'], ['Filler', 'Brief or passive: little real impact', 'bg-amber-100 text-amber-800']] as [tier, desc, cls]}
-					<div class="flex items-start gap-2.5 rounded-xl border border-slate-200 bg-white p-3">
+					<div class="flex items-start gap-2.5 rounded-xl border border-navy/12 bg-card p-3">
 						<span class="shrink-0 rounded-full px-2.5 py-0.5 text-[11px] font-bold {cls}">{tier}</span>
 						<span class="text-xs leading-snug text-slate-600">{desc}</span>
 					</div>
 				{/each}
 			</div>
-			<p class="mt-3 text-xs text-slate-400">Plus your <span class="font-semibold text-slate-600">spike</span> (the theme tying it together) and one concrete move to raise each activity.</p>
+			<p class="mt-3 text-xs text-muted">Plus your <span class="font-semibold text-slate-600">spike</span> (the theme tying it together) and one concrete move to raise each activity.</p>
 		</div>
 	{/if}
 
 	{#if analysis}
 		<div class="mt-6 space-y-5">
 			<div class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
-				<h2 class="text-xs font-bold uppercase tracking-wide text-slate-500">The read</h2>
+				<h2 class="text-xs font-bold uppercase tracking-wide text-muted">The read</h2>
 				<p class="mt-2 text-sm leading-relaxed text-slate-800">{analysis.overall}</p>
 				<div class="mt-3 rounded-xl border border-[#1A4CFF]/20 bg-[#1A4CFF]/[0.05] px-4 py-3">
 					<span class="text-xs font-bold uppercase tracking-wide text-[#1A4CFF]">Your spike</span>
@@ -134,9 +134,9 @@
 
 			<div class="space-y-3">
 				{#each sorted as a}
-					<div class="rounded-2xl border border-slate-200 bg-white p-4">
+					<div class="rounded-2xl border border-navy/12 bg-card p-4">
 						<div class="flex items-start justify-between gap-3">
-							<p class="text-sm font-bold text-slate-900">{a.name}</p>
+							<p class="text-sm font-bold text-navy">{a.name}</p>
 							<span class="shrink-0 rounded-full px-2.5 py-0.5 text-[11px] font-bold {tierStyle[a.tier] ?? 'bg-slate-100 text-slate-700'}">{a.tier}</span>
 						</div>
 						<p class="mt-1.5 text-sm leading-relaxed text-slate-600">{a.why}</p>
@@ -149,8 +149,8 @@
 			</div>
 
 			{#if analysis.next_moves?.length}
-				<div class="rounded-2xl border border-slate-200 bg-white p-5">
-					<h2 class="text-xs font-bold uppercase tracking-wide text-slate-500">Your next moves</h2>
+				<div class="rounded-2xl border border-navy/12 bg-card p-5">
+					<h2 class="text-xs font-bold uppercase tracking-wide text-muted">Your next moves</h2>
 					<ol class="mt-3 space-y-2">
 						{#each analysis.next_moves as m, i}
 							<li class="flex items-start gap-3 text-sm text-slate-800">
