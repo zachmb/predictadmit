@@ -1,0 +1,27 @@
+#!/bin/sh
+# Auto-regenerate the landing's Pro screenshots when the underlying Pro pages or
+# the global design tokens change, so the marketing shots never drift from the
+# real app. Enable once with:  git config core.hooksPath .githooks
+#
+# Skip with:  git commit --no-verify   (or SKIP_SHOTS=1 git commit ...)
+
+[ -n "$SKIP_SHOTS" ] && exit 0
+
+# Paths whose design changes should refresh the screenshots.
+WATCH='^(src/routes/pro/|src/lib/components/pro/|src/routes/layout\.css|src/app\.html|src/routes/\+layout\.svelte)'
+
+changed=$(git diff --cached --name-only | grep -E "$WATCH")
+[ -z "$changed" ] && exit 0
+
+echo "pre-commit: Pro/design files changed — regenerating landing screenshots…"
+echo "$changed" | sed 's/^/  • /'
+
+if ! npm run shots --silent; then
+	echo "pre-commit: screenshot regeneration FAILED. Commit aborted."
+	echo "  Fix the app, or bypass once with:  SKIP_SHOTS=1 git commit …"
+	exit 1
+fi
+
+git add static/screenshots/
+echo "pre-commit: screenshots updated + staged."
+exit 0
