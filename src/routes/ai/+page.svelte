@@ -8,6 +8,7 @@
 
 	// NEW: bring in AdmitMail + types from the existing simulator
 	import BetterAdmitMail from '$lib/components/BetterAdmitMail.svelte';
+	import DecisionChat from '$lib/components/DecisionChat.svelte';
 	import UpgradeCarousel from '$lib/components/UpgradeCarousel.svelte';
 	import {
 		sentEmails as baseSentEmails,
@@ -2337,6 +2338,44 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 											>
 												{item.explanation}
 											</div>
+										{/if}
+
+										<!-- Follow-up chat, grounded in this school's decision. Pro/School-Pass
+										     feature (like the results page); locked users get a teaser → paywall.
+										     Uses the full decision when we have it, else the deep-dive item. -->
+										{#if hasSchoolAccess(item.slug)}
+											<div class="mt-5">
+												<DecisionChat
+													decision={aiDecisions.find((d) => d.slug === item.slug) ?? item}
+												/>
+											</div>
+										{:else}
+											<button
+												type="button"
+												onclick={() =>
+													openPaywall(
+														'decision',
+														aiDecisions.find((d) => d.slug === item.slug) ??
+															({ slug: item.slug, school: item.school } as AiDecision)
+													)}
+												class="mt-5 flex w-full items-center gap-3 rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:border-[#316DE4] hover:shadow-md"
+											>
+												<div
+													class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white"
+													style="background-color:#316DE4"
+													aria-hidden="true"
+												>
+													AI
+												</div>
+												<div>
+													<p class="text-sm font-semibold text-slate-900">
+														Ask PredictAI about this decision
+													</p>
+													<p class="text-xs text-slate-500">
+														Unlock to chat about why you got this call and what would move it.
+													</p>
+												</div>
+											</button>
 										{/if}
 									</article>
 								{/each}

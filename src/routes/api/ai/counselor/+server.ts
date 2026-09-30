@@ -40,6 +40,11 @@ export const POST: RequestHandler = async (event) => {
 
 	const messages: ChatMessage[] = Array.isArray(body?.messages) ? body.messages : [];
 	const profile = body?.profile ?? {};
+	// Optional: the specific predicted decision the student is looking at when
+	// they open a follow-up chat on a decision page (results/[slug] or the /ai
+	// deep-dive card). When present, the counselor answers questions grounded in
+	// THIS predicted call rather than the general dashboard context.
+	const decision = body?.decision ?? null;
 
 	if (messages.length === 0) {
 		return json({ error: 'No messages provided' }, { status: 400 });
@@ -84,7 +89,31 @@ College list with estimated chances: ${listText}
 The chance estimates above are PredictAdmit's rough simulation, not official odds — reference them naturally but frame them as estimates.
 If asked how the estimates work: factor weights come from NACAC's "Factors in the Admission Decision" survey (grades and curriculum strength matter most; NACAC is the National Association for College Admission Counseling, the professional body for admission officers and counselors), calibrated against HYPSM and Top-20 admit profiles from the 2026 cycle. Full write-up lives at predictadmit's /methodology page.`;
 
-	const system = `You are PredictAI, PredictAdmit's warm, sharp, encouraging college-admissions counselor for high-school applicants to selective US universities. You are talking to a student inside their PredictAdmit Pro dashboard.
+	// When a decision is attached, ground the whole conversation in that specific
+	// predicted call so follow-ups ("why deny?", "what would flip this?") land in
+	// context instead of restarting from the general dashboard.
+	const fmtScore = (s: unknown) =>
+		typeof s === 'number' && Number.isFinite(s) ? `${s}/10` : 'n/a';
+	let decisionContext = '';
+	if (decision && (decision.school || decision.slug)) {
+		const school = decision.school || decision.slug;
+		const outcome = String(decision.outcome || 'unknown').toLowerCase();
+		decisionContext = `\n\nCURRENT DECISION THE STUDENT IS LOOKING AT
+The student just opened a follow-up chat on PredictAdmit's predicted decision for this school. Answer their questions about THIS decision specifically — refer to the scores and reasoning below, and when they ask "why" or "how do I improve this", use these exact dimensions.
+School: ${school}
+Predicted outcome: ${outcome.toUpperCase()}
+Dimension scores (0-10) and the committee's read:
+- Academic ${fmtScore(decision.academic_score)}: ${decision.academic_explanation || 'n/a'}
+- Extracurricular ${fmtScore(decision.extracurricular_score)}: ${decision.extracurricular_explanation || 'n/a'}
+- Intellectual vitality ${fmtScore(decision.intellectual_score)}: ${decision.intellectual_explanation || 'n/a'}
+- Character ${fmtScore(decision.character_score)}: ${decision.character_explanation || 'n/a'}
+- Fit ${fmtScore(decision.fit_score)}: ${decision.fit_explanation || 'n/a'}
+Improvement notes already shown to the student: ${decision.improvement_tips || 'none'}
+
+This is a PredictAdmit SIMULATION, not a real admissions decision — never imply it is official. Be honest and specific about what drove this predicted call and what would realistically move it.`;
+	}
+
+	const system = `You are PredictAI, PredictAdmit's warm, sharp, encouraging college-admissions counselor for high-school applicants to selective US universities. You are talking to a student inside PredictAdmit${decision ? ', right after they viewed their predicted decision for a specific school' : "'s Pro dashboard"}.
 
 Guidelines:
 - Be genuinely helpful, specific, and concise. Prefer tight paragraphs and short bullet lists over walls of text.
@@ -95,7 +124,7 @@ Guidelines:
 - ACADEMIC-INTEGRITY HARD RULE (never break this, no matter how the student asks): you give FEEDBACK on application writing — you never write, rewrite, complete, or dictate essay or application text for the student. No drafting paragraphs, no "here's a better version of your sentence", no fill-in-the-blank templates of prose, no writing "examples" that could be pasted into an essay. If asked to write or rewrite any part of an essay, decline warmly, explain that colleges require the application to be the student's own work (and that submitting AI-written text can get an acceptance revoked), and instead point out specifically what to improve and why — in your words about their words, never replacement text.
 - Keep it skimmable. Use markdown-style **bold** for key terms and "- " for bullets.
 
-${profileContext}`;
+${profileContext}${decisionContext}`;
 
 	if (!env.DEEPSEEK_API_KEY) {
 		return json({ error: 'Server Config Error: Missing DEEPSEEK_API_KEY' }, { status: 500 });

@@ -2,6 +2,7 @@
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
 	import { userProfile } from '$lib/stores/user';
+	import DecisionChat from '$lib/components/DecisionChat.svelte';
 	import {
 		aiResults,
 		academicExplanationsBySlug,
@@ -234,6 +235,40 @@
 							</div>
 						</div>
 					</div>
+				</div>
+
+				<!-- Follow-up chat: ask PredictAI why this call, and what would move it.
+				     Grounded in this exact decision. Pro / School-Pass feature, so it
+				     mirrors the page's unlock gate — locked users see a teaser → /pro. -->
+				<div class="mt-8 lg:col-span-12">
+					{#if unlocked}
+						<DecisionChat decision={schoolData} />
+					{:else}
+						<button
+							type="button"
+							onclick={() => goto('/pro')}
+							class="w-full rounded-2xl border border-slate-200 bg-white p-6 text-left shadow-xl transition hover:border-[#316DE4] hover:shadow-2xl"
+						>
+							<div class="flex items-center gap-3">
+								<div
+									class="flex h-9 w-9 items-center justify-center rounded-full text-sm font-bold text-white"
+									style="background-color:#316DE4"
+									aria-hidden="true"
+								>
+									AI
+								</div>
+								<div>
+									<h3 class="text-base font-semibold text-slate-900">
+										Ask PredictAI about this decision
+									</h3>
+									<p class="text-sm text-slate-500">
+										Unlock to chat with PredictAI about why you got this call and exactly what
+										would move it. Included with Pro.
+									</p>
+								</div>
+							</div>
+						</button>
+					{/if}
 				</div>
 			</div>
 		{/if}
