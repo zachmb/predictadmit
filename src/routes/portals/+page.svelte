@@ -205,7 +205,7 @@
 							identify the institution being simulated. PredictAdmit does not access, connect to, or
 							interact with any university's actual application systems or applicant data. If you
 							represent an institution and have questions or concerns, please
-							<a href="/contact" class="font-semibold text-[#1A4CFF] underline hover:text-[#003d99]"
+							<a href="/contact" class="font-semibold text-[#316DE4] underline hover:text-[#003d99]"
 								>contact us</a
 							>.
 						</p>

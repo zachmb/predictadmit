@@ -934,7 +934,7 @@
 			<div class="h-14 px-4 flex items-center shrink-0">
 				<div class="flex items-center gap-2.5 min-w-0">
 					<!-- Logo Icon -->
-					<div class="w-6 h-6 rounded-md bg-[#1A4CFF] flex items-center justify-center shrink-0">
+					<div class="w-6 h-6 rounded-md bg-[#316DE4] flex items-center justify-center shrink-0">
 						<svg class="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"
 							><path
 								stroke-linecap="round"
@@ -948,7 +948,7 @@
 						>PredictAdmit</span
 					>
 					<span
-						class="rounded-md border border-blue-100 bg-blue-50 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[#1A4CFF]"
+						class="rounded-md border border-blue-100 bg-blue-50 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[#316DE4]"
 						>Pro</span
 					>
 				</div>
@@ -970,7 +970,7 @@
 				>
 					<span
 						class="w-9 h-9 grid place-content-center shrink-0 {currentView === 'dashboard'
-							? 'text-[#1A4CFF]'
+							? 'text-[#316DE4]'
 							: ''}"
 					>
 						<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
@@ -995,7 +995,7 @@
 				>
 					<span
 						class="w-9 h-9 grid place-content-center shrink-0 {currentView === 'mindmap'
-							? 'text-[#1A4CFF]'
+							? 'text-[#316DE4]'
 							: ''}"
 					>
 						<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1020,7 +1020,7 @@
 				>
 					<span
 						class="w-9 h-9 grid place-content-center shrink-0 {currentView === 'counselor'
-							? 'text-[#1A4CFF]'
+							? 'text-[#316DE4]'
 							: ''}"
 					>
 						<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
@@ -1045,7 +1045,7 @@
 				>
 					<span
 						class="w-9 h-9 grid place-content-center shrink-0 {currentView === 'schools'
-							? 'text-[#1A4CFF]'
+							? 'text-[#316DE4]'
 							: ''}"
 					>
 						<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
@@ -1075,7 +1075,7 @@
 				>
 					<span
 						class="w-9 h-9 grid place-content-center shrink-0 {currentView === 'chanceme'
-							? 'text-[#1A4CFF]'
+							? 'text-[#316DE4]'
 							: ''}"
 					>
 						<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
@@ -1100,7 +1100,7 @@
 				>
 					<span
 						class="w-9 h-9 grid place-content-center shrink-0 {currentView === 'extracurricular'
-							? 'text-[#1A4CFF]'
+							? 'text-[#316DE4]'
 							: ''}"
 					>
 						<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
@@ -1143,7 +1143,7 @@
 					>
 						<svg
 							class="w-3.5 h-3.5 shrink-0 {currentView === 'editor' && activeFileIndex === i
-								? 'text-[#1A4CFF]'
+								? 'text-[#316DE4]'
 								: 'text-slate-400'}"
 							fill="none"
 							viewBox="0 0 24 24"
@@ -1190,7 +1190,7 @@
 							</p>
 							<textarea
 								bind:value={importText}
-								class="w-full h-40 border border-slate-200 rounded-lg p-3 text-sm focus:ring-2 focus:ring-[#1A4CFF] outline-none"
+								class="w-full h-40 border border-slate-200 rounded-lg p-3 text-sm focus:ring-2 focus:ring-[#316DE4] outline-none"
 								placeholder="Debate Club - Captain - 5&#10;Varsity Soccer - Starter - 10"
 							></textarea>
 							<div class="flex justify-end gap-2">
@@ -1200,7 +1200,7 @@
 								>
 								<button
 									onclick={parseAndImportActivities}
-									class="px-4 py-2 bg-[#1A4CFF] text-white font-bold rounded-lg text-sm"
+									class="px-4 py-2 bg-[#316DE4] text-white font-bold rounded-lg text-sm"
 									>Import</button
 								>
 							</div>
@@ -1231,7 +1231,7 @@
 						/>
 					{:else}
 						<div
-							class="w-6 h-6 rounded-full bg-[#1A4CFF] flex items-center justify-center text-[11px] font-semibold text-white shrink-0"
+							class="w-6 h-6 rounded-full bg-[#316DE4] flex items-center justify-center text-[11px] font-semibold text-white shrink-0"
 						>
 							{session?.user?.name?.[0] || 'U'}
 						</div>
@@ -1283,7 +1283,7 @@
 				<div class="flex items-center gap-2 min-w-0">
 					<span class="text-sm font-semibold tracking-tight text-slate-900 truncate">PredictAdmit</span>
 					<span
-						class="rounded-md border border-blue-100 bg-blue-50 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[#1A4CFF]"
+						class="rounded-md border border-blue-100 bg-blue-50 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[#316DE4]"
 						>Pro</span
 					>
 				</div>
@@ -1344,7 +1344,7 @@
 												bind:value={profile.gpa_uw}
 												type="text"
 												placeholder="4.0"
-												class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#1A4CFF] font-bold text-slate-900"
+												class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#316DE4] font-bold text-slate-900"
 											/>
 										</div>
 										<div>
@@ -1355,7 +1355,7 @@
 												bind:value={profile.gpa_w}
 												type="text"
 												placeholder="4.5"
-												class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#1A4CFF] font-bold text-slate-900"
+												class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#316DE4] font-bold text-slate-900"
 											/>
 										</div>
 										<div>
@@ -1366,7 +1366,7 @@
 												bind:value={profile.testScore}
 												type="text"
 												placeholder="1500"
-												class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#1A4CFF] font-bold text-slate-900"
+												class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#316DE4] font-bold text-slate-900"
 											/>
 										</div>
 										<div>
@@ -1375,7 +1375,7 @@
 											>
 											<select
 												bind:value={profile.rigor}
-												class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#1A4CFF] font-bold text-slate-900"
+												class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#316DE4] font-bold text-slate-900"
 											>
 												<option>Regular</option><option>Honors</option><option>AP/IB</option>
 											</select>
@@ -1386,7 +1386,7 @@
 											>
 											<select
 												bind:value={profile.gradeTrend}
-												class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#1A4CFF] font-bold text-slate-900"
+												class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#316DE4] font-bold text-slate-900"
 											>
 												<option>Rising</option><option>Steady</option><option>Dipping</option>
 											</select>
@@ -1397,7 +1397,7 @@
 											>
 											<select
 												bind:value={profile.lowestGrade}
-												class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#1A4CFF] font-bold text-slate-900"
+												class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#316DE4] font-bold text-slate-900"
 											>
 												<option>A</option><option>A-</option><option>B+</option><option>B</option
 												><option>B-</option><option>C+</option><option>C</option><option>C-</option
@@ -1414,7 +1414,7 @@
 												onblur={() => setTimeout(() => (showMajorDropdown = false), 200)}
 												type="text"
 												placeholder="Computer Science"
-												class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#1A4CFF] font-bold text-slate-900"
+												class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#316DE4] font-bold text-slate-900"
 											/>
 											{#if showMajorDropdown && majorSuggestions.length > 0}
 												<div
@@ -1455,7 +1455,7 @@
 													onblur={() => setTimeout(() => (showStateSuggestions = false), 200)}
 													type="text"
 													placeholder="e.g. California"
-													class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#1A4CFF] font-bold text-slate-900"
+													class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#316DE4] font-bold text-slate-900"
 												/>
 												{#if showStateSuggestions && filteredStates.length > 0}
 													<div
@@ -1480,7 +1480,7 @@
 											>
 											<select
 												bind:value={profile.environment}
-												class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#1A4CFF] font-bold text-slate-900"
+												class="w-full px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#316DE4] font-bold text-slate-900"
 											>
 												<option>Urban</option><option>Suburban</option><option>Rural</option>
 											</select>
@@ -1494,7 +1494,7 @@
 													<button
 														class="flex-1 py-2 text-xs font-bold rounded-lg border transition-all {profile.living ===
 														opt
-															? 'bg-[#1A4CFF] text-white border-[#1A4CFF]'
+															? 'bg-[#316DE4] text-white border-[#316DE4]'
 															: 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100'}"
 														onclick={() =>
 															(profile.living = opt as 'On Campus' | 'Off Campus' | 'Commuter')}
@@ -1519,10 +1519,10 @@
 												onclick={() => (showImportModal = true)}
 												class="text-xs font-bold text-slate-500 hover:text-slate-900">Import</button
 											>
-											<button onclick={addActivity} class="text-xs font-bold text-[#1A4CFF]"
+											<button onclick={addActivity} class="text-xs font-bold text-[#316DE4]"
 												>+ Actv.</button
 											>
-											<button onclick={addHonor} class="text-xs font-bold text-[#1A4CFF]"
+											<button onclick={addHonor} class="text-xs font-bold text-[#316DE4]"
 												>+ Honor</button
 											>
 										</div>
@@ -1566,7 +1566,7 @@
 										{/each}
 										{#each profile.honors as honor (honor.id)}
 											<div
-												class="flex gap-2 items-start p-3 bg-slate-50 rounded-lg border border-slate-200 border-l-[#1A4CFF] border-l-4"
+												class="flex gap-2 items-start p-3 bg-slate-50 rounded-lg border border-slate-200 border-l-[#316DE4] border-l-4"
 											>
 												<div class="flex-1 space-y-2">
 													<div class="flex gap-2">
@@ -1608,7 +1608,7 @@
 							<div class="p-6 bg-slate-50 border-t border-slate-200 flex justify-end">
 								<button
 									onclick={() => (showProfileEditor = false)}
-									class="bg-[#1A4CFF] hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-md transition-colors shadow-sm"
+									class="bg-[#316DE4] hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-md transition-colors shadow-sm"
 								>
 									Done
 								</button>
@@ -1646,7 +1646,7 @@
 							<button
 								onclick={generateMindMap}
 								disabled={isGeneratingMindMap}
-								class="px-4 py-2 bg-blue-50 text-[#1A4CFF] font-bold rounded-lg hover:bg-blue-100 disabled:opacity-50 transition-all flex items-center gap-2 text-sm"
+								class="px-4 py-2 bg-blue-50 text-[#316DE4] font-bold rounded-lg hover:bg-blue-100 disabled:opacity-50 transition-all flex items-center gap-2 text-sm"
 							>
 								{#if isGeneratingMindMap}
 									<svg class="animate-spin h-4 w-4" viewBox="0 0 24 24"
@@ -1680,7 +1680,7 @@
 							<button
 								onclick={analyzeMindMap}
 								disabled={isAnalyzingMindMap || mindMapNodes.length === 0}
-								class="px-4 py-2 bg-[#1A4CFF] text-white font-bold rounded-lg shadow-lg hover:bg-[#1540E0] disabled:opacity-50 transition-all flex items-center gap-2 text-sm"
+								class="px-4 py-2 bg-[#316DE4] text-white font-bold rounded-lg shadow-lg hover:bg-[#1C57CC] disabled:opacity-50 transition-all flex items-center gap-2 text-sm"
 							>
 								{#if isAnalyzingMindMap}
 									<svg class="animate-spin h-4 w-4" viewBox="0 0 24 24"
@@ -1778,14 +1778,14 @@
 							<div
 								class="absolute inset-0 flex flex-col items-center justify-center gap-3 px-6 text-center pointer-events-none"
 							>
-								<div class="grid h-14 w-14 place-items-center rounded-2xl bg-[color-mix(in_oklab,#1A4CFF_10%,transparent)] text-[#1A4CFF]">
+								<div class="grid h-14 w-14 place-items-center rounded-2xl bg-[color-mix(in_oklab,#316DE4_10%,transparent)] text-[#316DE4]">
 									<svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.989-2.386l-.548-.547z" /></svg>
 								</div>
 								<p class="text-lg font-bold text-slate-700">Map the story behind your application</p>
 								<p class="max-w-xs text-sm leading-relaxed text-slate-400">
 									Click anywhere to drop an idea, whether an experience, an obsession, or a value, or hit
-									<span class="font-semibold text-[#1A4CFF]">AI&nbsp;Brainstorm</span> to auto-generate themes from your profile, then
-									<span class="font-semibold text-[#1A4CFF]">Analyze&nbsp;Themes</span> to find the thread that ties them together.
+									<span class="font-semibold text-[#316DE4]">AI&nbsp;Brainstorm</span> to auto-generate themes from your profile, then
+									<span class="font-semibold text-[#316DE4]">Analyze&nbsp;Themes</span> to find the thread that ties them together.
 								</p>
 							</div>
 						{/if}
@@ -1793,7 +1793,7 @@
 
 					{#if mindMapAnalysis}
 						<div class="h-48 bg-blue-50 border-t border-blue-100 p-6 overflow-y-auto">
-							<h3 class="text-xs font-bold uppercase text-[#1A4CFF] mb-2">AI Analysis</h3>
+							<h3 class="text-xs font-bold uppercase text-[#316DE4] mb-2">AI Analysis</h3>
 							<p class="text-sm text-slate-800 whitespace-pre-line">{mindMapAnalysis}</p>
 						</div>
 					{/if}
@@ -1939,7 +1939,7 @@
 									<div class="relative group flex-1 flex flex-col">
 										<textarea
 											bind:value={activeFile.content}
-											class="w-full flex-1 bg-white text-slate-800 p-4 md:p-8 rounded-2xl border border-slate-200 focus:border-[#1A4CFF] focus:ring-4 focus:ring-blue-500/10 outline-none font-serif text-base md:text-lg leading-loose shadow-sm transition-all resize-none"
+											class="w-full flex-1 bg-white text-slate-800 p-4 md:p-8 rounded-2xl border border-slate-200 focus:border-[#316DE4] focus:ring-4 focus:ring-blue-500/10 outline-none font-serif text-base md:text-lg leading-loose shadow-sm transition-all resize-none"
 											placeholder="# Prompt\nPaste prompt here...\n\n# Response\nStart writing..."
 											spellcheck="false"
 										></textarea>
@@ -1994,7 +1994,7 @@
 								<button
 									onclick={runBuild}
 									disabled={isBuilding}
-									class="flex items-center justify-center gap-3 w-full md:w-auto px-5 md:px-8 py-3.5 md:py-4 bg-[#1A4CFF] text-white rounded-xl font-bold hover:bg-blue-700 transition-all shadow-xl shadow-blue-200 disabled:opacity-50 disabled:shadow-none transform active:scale-95 duration-200 text-base md:text-lg"
+									class="flex items-center justify-center gap-3 w-full md:w-auto px-5 md:px-8 py-3.5 md:py-4 bg-[#316DE4] text-white rounded-xl font-bold hover:bg-blue-700 transition-all shadow-xl shadow-blue-200 disabled:opacity-50 disabled:shadow-none transform active:scale-95 duration-200 text-base md:text-lg"
 								>
 									{#if isBuilding}
 										<svg class="animate-spin h-4 w-4" viewBox="0 0 24 24"
@@ -2069,7 +2069,7 @@
 													cy="64"
 												/>
 												<circle
-													class="text-[#1A4CFF] transition-all duration-500 ease-out"
+													class="text-[#316DE4] transition-all duration-500 ease-out"
 													stroke-width="8"
 													stroke-dasharray={365}
 													stroke-dashoffset={365 - (365 * progressPercent) / 100}
@@ -2092,7 +2092,7 @@
 										</div>
 
 										<div
-											class="space-y-1 pl-4 border-l-2 border-[color-mix(in_oklab,#1A4CFF_30%,transparent)] opacity-80 bg-slate-900 rounded-r-lg p-2 font-mono text-[10px] text-green-400 shadow-inner"
+											class="space-y-1 pl-4 border-l-2 border-[color-mix(in_oklab,#316DE4_30%,transparent)] opacity-80 bg-slate-900 rounded-r-lg p-2 font-mono text-[10px] text-green-400 shadow-inner"
 										>
 											{#each buildOutput.slice(-4) as line}
 												<div class="truncate">
@@ -2145,7 +2145,7 @@
 															}))}
 															size={220}
 															max={100}
-															color="text-[#1A4CFF]"
+															color="text-[#316DE4]"
 														/>
 													</div>
 												{/if}
@@ -2293,7 +2293,7 @@
 				<div class="text-center lg:text-left">
 					<p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">PredictAdmit Pro</p>
 					<h1 class="mt-5 font-serif text-5xl md:text-6xl font-medium tracking-tight text-slate-900 leading-[1.05]">
-						Perfect your applications <span class="text-[#1A4CFF]">before it's too late.</span>
+						Perfect your applications <span class="text-[#316DE4]">before it's too late.</span>
 					</h1>
 					<p class="mt-5 mx-auto lg:mx-0 max-w-xl text-lg text-slate-500 leading-relaxed">
 						PredictAdmit runs your real application through every top school and shows you the decision waiting there: accept, deny, or waitlist. Then it names the one thing holding you back, while you still have months to fix it. Your first prediction is free.
@@ -2349,7 +2349,7 @@
 										<span>{row.l}</span><span>{row.s}/10</span>
 									</div>
 									<div class="mt-1 h-1.5 rounded-full bg-slate-100">
-										<div class="h-1.5 rounded-full bg-[#1A4CFF]" style="width: {row.s * 10}%"></div>
+										<div class="h-1.5 rounded-full bg-[#316DE4]" style="width: {row.s * 10}%"></div>
 									</div>
 								</div>
 							{/each}
@@ -2432,7 +2432,7 @@
 							<ul class="mt-6 mb-8 space-y-2.5">
 								{#each ['Your verdict at all 39 top schools', 'The five-reader committee on every one', 'AI essay editor + per-school strategy', 'AI counselor + unlimited re-runs'] as f}
 									<li class="flex items-start gap-2.5 text-sm text-slate-700">
-										<svg class="mt-0.5 h-4 w-4 flex-none text-[#1A4CFF]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+										<svg class="mt-0.5 h-4 w-4 flex-none text-[#316DE4]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
 										{f}
 									</li>
 								{/each}
@@ -2525,7 +2525,7 @@
 									{#each [{ l: 'Academics', s: 9 }, { l: 'Activities', s: 8 }, { l: 'Fit', s: 7 }, { l: 'Intellect', s: 8 }, { l: 'Character', s: 7 }] as row}
 										<div>
 											<div class="flex items-center justify-between text-[11px] font-medium text-slate-500"><span>{row.l}</span><span>{row.s}/10</span></div>
-											<div class="mt-1 h-1.5 rounded-full bg-slate-100"><div class="h-1.5 rounded-full bg-[#1A4CFF]" style="width: {row.s * 10}%"></div></div>
+											<div class="mt-1 h-1.5 rounded-full bg-slate-100"><div class="h-1.5 rounded-full bg-[#316DE4]" style="width: {row.s * 10}%"></div></div>
 										</div>
 									{/each}
 								</div>
@@ -2544,11 +2544,11 @@
 						<div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
 							<p class="text-xs font-bold uppercase tracking-wide text-slate-500">Personal statement</p>
 							<div class="mt-3 space-y-1.5 text-[13px] leading-relaxed text-slate-600">
-								<p class="rounded bg-[color-mix(in_oklab,#1A4CFF_10%,transparent)] px-1.5 py-0.5 text-slate-900 ring-1 ring-[color-mix(in_oklab,#1A4CFF_20%,transparent)]">Ever since I was young, I have loved science.</p>
+								<p class="rounded bg-[color-mix(in_oklab,#316DE4_10%,transparent)] px-1.5 py-0.5 text-slate-900 ring-1 ring-[color-mix(in_oklab,#316DE4_20%,transparent)]">Ever since I was young, I have loved science.</p>
 								<p class="text-slate-400">The lab was quiet except for the hum of the centrifuge.</p>
 							</div>
 							<div class="mt-3 flex items-start gap-2 rounded-xl border border-slate-200 bg-white p-3 shadow-sm">
-								<span class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#1A4CFF] text-[10px] font-black text-white">AI</span>
+								<span class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#316DE4] text-[10px] font-black text-white">AI</span>
 								<p class="text-xs leading-relaxed text-slate-600">A reader has seen this opener a thousand times. Start on the moment in the lab.</p>
 							</div>
 						</div>
@@ -2565,7 +2565,7 @@
 						<div class="space-y-3 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
 							<div class="ml-auto max-w-[80%] rounded-2xl rounded-br-md bg-slate-900 px-3.5 py-2 text-[13px] text-white">Is my school list too top-heavy?</div>
 							<div class="flex items-start gap-2">
-								<span class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#1A4CFF] text-[10px] font-black text-white">PA</span>
+								<span class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#316DE4] text-[10px] font-black text-white">PA</span>
 								<div class="max-w-[85%] rounded-2xl rounded-bl-md border border-slate-200 bg-white px-3.5 py-2 text-[13px] leading-relaxed text-slate-700">A little. Add two matches where you're above their median. Want me to name them?</div>
 							</div>
 						</div>

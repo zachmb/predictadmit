@@ -112,7 +112,7 @@
 				<span
 					class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-600 text-xs font-bold tracking-wide"
 				>
-					<span class="w-1.5 h-1.5 rounded-full bg-[#1A4CFF]"></span>
+					<span class="w-1.5 h-1.5 rounded-full bg-[#316DE4]"></span>
 					STEP {step} OF {totalSteps} · {stepTitles[step - 1].toUpperCase()}
 				</span>
 				<h1 class="mt-4 font-serif text-3xl md:text-4xl font-medium tracking-tight text-slate-900">
@@ -128,7 +128,7 @@
 				<div class="h-2 w-full rounded-full bg-slate-200 overflow-hidden">
 					<div
 						class="h-full rounded-full transition-all duration-500"
-						style="width:{(step / totalSteps) * 100}%;background:#1A4CFF"
+						style="width:{(step / totalSteps) * 100}%;background:#316DE4"
 					></div>
 				</div>
 			</div>

@@ -710,7 +710,7 @@
 				<h1
 					class="font-serif text-5xl sm:text-6xl md:text-[5.5rem] font-medium tracking-tight leading-[1.0] text-slate-900 animate-in fade-in slide-in-from-bottom-6 duration-1000 fill-mode-both"
 				>
-					Predict Your <span class="hand-underline">Real</span> <br class="hidden md:block" /> College <span class="text-[#1A4CFF]">Decisions</span>
+					Predict Your <span class="hand-underline">Real</span> <br class="hidden md:block" /> College <span class="text-[#316DE4]">Decisions</span>
 				</h1>
 				<p
 					class="text-lg md:text-xl text-slate-500 max-w-2xl mx-auto leading-relaxed tracking-tight font-medium mt-5 animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-[200ms] fill-mode-both"
@@ -778,7 +778,7 @@
 					></textarea>
 					<button
 						on:click={startPrediction}
-						class="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#1A4CFF] px-6 py-3.5 text-base font-semibold text-white shadow-sm transition-all hover:bg-[#1540d6] active:scale-95"
+						class="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#316DE4] px-6 py-3.5 text-base font-semibold text-white shadow-sm transition-all hover:bg-[#1C57CC] active:scale-95"
 					>
 						Predict all 39 decisions, free
 						<span aria-hidden="true">&rarr;</span>
@@ -792,10 +792,10 @@
 							<p class="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Early Deadlines</p>
 							<p class="text-sm font-bold text-slate-900">Nov 1, 2026</p>
 						</div>
-						<span class="flex items-center gap-1.5 text-xs font-semibold text-[#1A4CFF]">
+						<span class="flex items-center gap-1.5 text-xs font-semibold text-[#316DE4]">
 							<span class="relative flex h-2 w-2">
-								<span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#1A4CFF] opacity-75"></span>
-								<span class="relative inline-flex h-2 w-2 rounded-full bg-[#1A4CFF]"></span>
+								<span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#316DE4] opacity-75"></span>
+								<span class="relative inline-flex h-2 w-2 rounded-full bg-[#316DE4]"></span>
 							</span>
 							LIVE
 						</span>
@@ -817,7 +817,7 @@
 			<div class="mt-8 w-full max-w-4xl mx-auto grid gap-4 sm:grid-cols-3 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300 fill-mode-both">
 				<!-- Card 1: Free -->
 				<div class="text-left rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-					<span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-[color-mix(in_oklab,#1A4CFF_10%,transparent)] text-[#1A4CFF]">
+					<span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-[color-mix(in_oklab,#316DE4_10%,transparent)] text-[#316DE4]">
 						<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
 					</span>
 					<p class="mt-3 text-sm font-bold text-slate-900">Free</p>
@@ -825,7 +825,7 @@
 				</div>
 				<!-- Card 2: Calibrated -->
 				<div class="text-left rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-					<span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-[color-mix(in_oklab,#1A4CFF_10%,transparent)] text-[#1A4CFF]">
+					<span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-[color-mix(in_oklab,#316DE4_10%,transparent)] text-[#316DE4]">
 						<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
 					</span>
 					<p class="mt-3 text-sm font-bold text-slate-900">Calibrated on real results</p>
@@ -833,7 +833,7 @@
 				</div>
 				<!-- Card 3: Private -->
 				<div class="text-left rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-					<span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-[color-mix(in_oklab,#1A4CFF_10%,transparent)] text-[#1A4CFF]">
+					<span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-[color-mix(in_oklab,#316DE4_10%,transparent)] text-[#316DE4]">
 						<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
 					</span>
 					<p class="mt-3 text-sm font-bold text-slate-900">Private to your browser</p>
@@ -884,7 +884,7 @@
 				<div use:reveal class="grid items-center gap-8 md:grid-cols-2 md:gap-14">
 					<div>
 						<div class="flex items-center gap-3">
-							<span class="font-serif text-4xl font-medium leading-none text-[#1A4CFF]">01</span>
+							<span class="font-serif text-4xl font-medium leading-none text-[#316DE4]">01</span>
 							<span class="h-px w-10 bg-slate-200"></span>
 						</div>
 						<h3 class="mt-3 font-serif text-3xl font-medium tracking-tight text-slate-900">A full committee reads your file</h3>
@@ -901,7 +901,7 @@
 								{#each [{ l: 'Academic reader', s: 9 }, { l: 'Essays reader', s: 8 }, { l: 'Fit reader', s: 7 }, { l: 'Impact reader', s: 8 }, { l: 'Character reader', s: 7 }] as r}
 									<div>
 										<div class="flex items-center justify-between text-[11px] font-medium text-slate-500"><span>{r.l}</span><span>{r.s}/10</span></div>
-										<div class="mt-1 h-1.5 rounded-full bg-slate-200"><div class="h-1.5 rounded-full bg-[#1A4CFF]" style="width: {r.s * 10}%"></div></div>
+										<div class="mt-1 h-1.5 rounded-full bg-slate-200"><div class="h-1.5 rounded-full bg-[#316DE4]" style="width: {r.s * 10}%"></div></div>
 									</div>
 								{/each}
 							</div>
@@ -913,7 +913,7 @@
 				<div use:reveal={100} class="grid items-center gap-8 md:grid-cols-2 md:gap-14">
 					<div class="md:order-2">
 						<div class="flex items-center gap-3">
-							<span class="font-serif text-4xl font-medium leading-none text-[#1A4CFF]">02</span>
+							<span class="font-serif text-4xl font-medium leading-none text-[#316DE4]">02</span>
 							<span class="h-px w-10 bg-slate-200"></span>
 						</div>
 						<h3 class="mt-3 font-serif text-3xl font-medium tracking-tight text-slate-900">Essay feedback, line by line</h3>
@@ -924,12 +924,12 @@
 						<div class="rounded-2xl border border-slate-200 bg-slate-50/60 p-5">
 							<p class="text-xs font-bold uppercase tracking-wide text-slate-500">Personal statement</p>
 							<div class="mt-3 space-y-1.5 text-[13px] leading-relaxed text-slate-600">
-								<p class="rounded bg-[color-mix(in_oklab,#1A4CFF_10%,transparent)] px-1.5 py-0.5 text-slate-900 ring-1 ring-[color-mix(in_oklab,#1A4CFF_20%,transparent)]">Ever since I was young, I have loved science.</p>
+								<p class="rounded bg-[color-mix(in_oklab,#316DE4_10%,transparent)] px-1.5 py-0.5 text-slate-900 ring-1 ring-[color-mix(in_oklab,#316DE4_20%,transparent)]">Ever since I was young, I have loved science.</p>
 								<p class="text-slate-400">The lab was quiet except for the hum of the</p>
 								<p class="text-slate-400">centrifuge, and I realized I had lost track of time.</p>
 							</div>
 							<div class="mt-3 flex items-start gap-2 rounded-xl bg-white border border-slate-200 p-3 shadow-sm">
-								<span class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#1A4CFF] text-white text-[10px] font-black">AI</span>
+								<span class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#316DE4] text-white text-[10px] font-black">AI</span>
 								<p class="text-xs leading-relaxed text-slate-600">This opening is a cliché a reader has seen a thousand times. Start on the moment in the lab. Your words, just sharper.</p>
 							</div>
 						</div>
@@ -940,7 +940,7 @@
 				<div use:reveal={200} class="grid items-center gap-8 md:grid-cols-2 md:gap-14">
 					<div>
 						<div class="flex items-center gap-3">
-							<span class="font-serif text-4xl font-medium leading-none text-[#1A4CFF]">03</span>
+							<span class="font-serif text-4xl font-medium leading-none text-[#316DE4]">03</span>
 							<span class="h-px w-10 bg-slate-200"></span>
 						</div>
 						<h3 class="mt-3 font-serif text-3xl font-medium tracking-tight text-slate-900">Per-school strategy for 50+ schools</h3>
@@ -963,7 +963,7 @@
 				<div use:reveal={300} class="grid items-center gap-8 md:grid-cols-2 md:gap-14">
 					<div class="md:order-2">
 						<div class="flex items-center gap-3">
-							<span class="font-serif text-4xl font-medium leading-none text-[#1A4CFF]">04</span>
+							<span class="font-serif text-4xl font-medium leading-none text-[#316DE4]">04</span>
 							<span class="h-px w-10 bg-slate-200"></span>
 						</div>
 						<h3 class="mt-3 font-serif text-3xl font-medium tracking-tight text-slate-900">A counselor in your pocket</h3>
@@ -974,7 +974,7 @@
 						<div class="rounded-2xl border border-slate-200 bg-slate-50/60 p-5 space-y-3">
 							<div class="ml-auto max-w-[80%] rounded-2xl rounded-br-md bg-slate-900 px-3.5 py-2 text-[13px] text-white">Is my school list too top-heavy?</div>
 							<div class="flex items-start gap-2 max-w-[85%]">
-								<span class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#1A4CFF] text-white text-[10px] font-black">PA</span>
+								<span class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#316DE4] text-white text-[10px] font-black">PA</span>
 								<div class="rounded-2xl rounded-bl-md bg-white border border-slate-200 px-3.5 py-2 text-[13px] leading-relaxed text-slate-700">A little. Add two matches where your profile is above their median. Want me to name them?</div>
 							</div>
 						</div>
@@ -1052,7 +1052,7 @@
 				<div>
 					<span class="inline-block px-3 py-1 bg-slate-50 border border-slate-200 text-slate-600 text-[10px] font-bold uppercase tracking-widest rounded-full">The numbers behind it</span>
 					<h2 class="mt-5 font-serif text-4xl md:text-5xl font-medium tracking-tight text-slate-900 leading-[1.05]">
-						Anchored to the data <span class="text-[#1A4CFF]">schools publish.</span>
+						Anchored to the data <span class="text-[#316DE4]">schools publish.</span>
 					</h2>
 					<p class="mt-5 text-lg text-slate-500 leading-relaxed">
 						This is not a magic 8-ball. Every read starts from the same public numbers colleges report in their Common Data Sets, weighted by what admissions officers themselves say matters most in the NACAC Factors in the Admission Decision survey.
@@ -1060,7 +1060,7 @@
 					<ul class="mt-6 space-y-3">
 						{#each ['Each school’s published acceptance rate and middle-50% test range', 'The factors committees rate "very important," weighted per NACAC', 'Calibrated against HYPSM and Top-20 admitted-student profiles'] as point}
 							<li class="flex items-start gap-3 text-slate-700">
-								<span class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[color-mix(in_oklab,#1A4CFF_10%,transparent)] text-[#1A4CFF]">
+								<span class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[color-mix(in_oklab,#316DE4_10%,transparent)] text-[#316DE4]">
 									<svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
 								</span>
 								<span class="leading-relaxed">{point}</span>
@@ -1085,7 +1085,7 @@
 									<span class="text-slate-400">{row.w >= 80 ? 'Very important' : row.w >= 55 ? 'Important' : 'Considered'}</span>
 								</div>
 								<div class="mt-1.5 h-2 rounded-full bg-slate-200">
-									<div class="h-2 rounded-full bg-[#1A4CFF]" style="width: {row.w}%"></div>
+									<div class="h-2 rounded-full bg-[#316DE4]" style="width: {row.w}%"></div>
 								</div>
 							</div>
 						{/each}
@@ -1103,7 +1103,7 @@
 		<div class="max-w-[1000px] mx-auto px-6">
 			<div class="max-w-2xl mx-auto text-center space-y-4 mb-14">
 				<h2 class="font-serif text-4xl md:text-5xl font-medium tracking-tight text-slate-900 leading-[1.05]">
-					Counselors charge thousands. <span class="text-[#1A4CFF]">This is $9.99/mo.</span>
+					Counselors charge thousands. <span class="text-[#316DE4]">This is $9.99/mo.</span>
 				</h2>
 				<p class="text-lg text-slate-500 leading-relaxed">
 					Start free and see your first read. When you upgrade, it is $9.99 a month while you're applying, or $25 once.
@@ -1119,8 +1119,8 @@
 								<div class="text-sm font-bold text-slate-900">Free</div>
 								<div class="text-xs text-slate-400">$0</div>
 							</th>
-							<th class="p-5 text-center bg-[color-mix(in_oklab,#1A4CFF_4%,transparent)]">
-								<div class="text-sm font-bold text-[#1A4CFF]">PredictAdmit Pro</div>
+							<th class="p-5 text-center bg-[color-mix(in_oklab,#316DE4_4%,transparent)]">
+								<div class="text-sm font-bold text-[#316DE4]">PredictAdmit Pro</div>
 								<div class="text-xs text-slate-500">$9.99/mo</div>
 							</th>
 							<th class="p-5 text-center">
@@ -1142,9 +1142,9 @@
 							<tr class="border-b border-slate-100 last:border-0">
 								<td class="p-5 text-sm font-medium text-slate-700">{row.f}</td>
 								{#each [row.free, row.pro, row.con] as cell, i}
-									<td class="p-5 text-center align-middle {i === 1 ? 'bg-[color-mix(in_oklab,#1A4CFF_4%,transparent)]' : ''}">
+									<td class="p-5 text-center align-middle {i === 1 ? 'bg-[color-mix(in_oklab,#316DE4_4%,transparent)]' : ''}">
 										{#if cell === true}
-											<svg class="mx-auto h-5 w-5 {i === 1 ? 'text-[#1A4CFF]' : 'text-slate-900'}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+											<svg class="mx-auto h-5 w-5 {i === 1 ? 'text-[#316DE4]' : 'text-slate-900'}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
 										{:else if cell === false}
 											<span class="text-slate-300">&mdash;</span>
 										{:else}
@@ -1198,7 +1198,7 @@
 		<div class="max-w-[1200px] mx-auto px-6 text-center">
 			<div class="max-w-3xl mx-auto space-y-8">
 				<p class="hand text-3xl md:text-4xl text-[#5b8bff]">what students say</p>
-				<div class="flex justify-center text-[#1A4CFF]">
+				<div class="flex justify-center text-[#316DE4]">
 					{#each Array(5) as _}
 						<svg class="w-6 h-6 fill-current" viewBox="0 0 20 20"
 							><path
@@ -1247,7 +1247,7 @@
 				being simulated. PredictAdmit does not access, connect to, or interact with any
 				university's actual application systems or applicant data. If you represent an institution
 				and have questions or concerns, please
-				<a href="/contact" class="font-semibold text-[#1A4CFF] underline hover:text-[#003d99]"
+				<a href="/contact" class="font-semibold text-[#316DE4] underline hover:text-[#003d99]"
 					>contact us</a
 				>.
 			</p>

@@ -63,7 +63,7 @@
 {#if reduced}
 	<div class="mx-auto max-w-3xl px-6 py-24 text-center space-y-6">
 		<h2 class="font-serif text-4xl md:text-5xl font-medium tracking-tight text-slate-900 leading-[1.05]">
-			Pro can do <span class="text-[#1A4CFF]">waaaaay more</span>
+			Pro can do <span class="text-[#316DE4]">waaaaay more</span>
 		</h2>
 		<p class="text-lg leading-relaxed text-slate-500">
 			Re-run infinite predictions and see what'll happen. Our tools improve your essays with
@@ -82,7 +82,7 @@
 				class="absolute px-6 text-center font-serif font-medium tracking-tight text-slate-900 whitespace-nowrap"
 				style="--s:{s1}; font-size: calc(clamp(1.6rem, 8vw, 6.25rem) * var(--s)); line-height: 1; transform: rotate({r1}deg); opacity:{o1};"
 			>
-				Pro can do <span class="text-[#1A4CFF]">waaaaay more</span>
+				Pro can do <span class="text-[#316DE4]">waaaaay more</span>
 			</h2>
 
 			<!-- Line 2 — constant size, rises + fades in (no resize = no reflow) -->

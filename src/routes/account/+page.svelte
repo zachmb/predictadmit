@@ -25,7 +25,7 @@
 		>
 			<div class="w-full max-w-[400px]">
 				<a href="/" class="inline-flex items-center gap-2.5">
-					<span class="grid h-9 w-9 place-items-center rounded-xl bg-[#1A4CFF] text-white shadow-sm">
+					<span class="grid h-9 w-9 place-items-center rounded-xl bg-[#316DE4] text-white shadow-sm">
 						<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
 							<path d="M4 18h16l-3-4H7l-3 4z" />
 							<path d="M7 12h10l-2-3H9l-2 3z" />
@@ -64,8 +64,8 @@
 
 				<p class="mt-10 text-[12px] leading-[1.6] text-slate-400">
 					By continuing you agree to our
-					<a href="/terms" class="font-medium text-[#1A4CFF] hover:underline">Terms</a> and
-					<a href="/privacy" class="font-medium text-[#1A4CFF] hover:underline">Privacy Policy</a>.
+					<a href="/terms" class="font-medium text-[#316DE4] hover:underline">Terms</a> and
+					<a href="/privacy" class="font-medium text-[#316DE4] hover:underline">Privacy Policy</a>.
 				</p>
 			</div>
 		</main>

@@ -96,7 +96,7 @@
 	<div class="max-w-6xl mx-auto px-4 py-16 space-y-14">
 		<header class="text-center space-y-4">
 			<h1 class="font-serif text-5xl font-medium tracking-tight text-slate-900">
-				Your admissions strategist, <span class="text-[#1A4CFF]">not your consultant's invoice.</span>
+				Your admissions strategist, <span class="text-[#316DE4]">not your consultant's invoice.</span>
 			</h1>
 			<p class="text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
 				Private admissions consultants run $200–500 an hour and $5,000+ per application season.
@@ -146,7 +146,7 @@
 						<ul class="mt-6 mb-8 space-y-2.5">
 							{#each fullFeatures as f}
 								<li class="flex items-start gap-2.5 text-sm text-slate-700">
-									<svg class="mt-0.5 h-4 w-4 flex-none text-[#1A4CFF]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+									<svg class="mt-0.5 h-4 w-4 flex-none text-[#316DE4]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
 									{f}
 								</li>
 							{/each}

@@ -108,7 +108,7 @@
 		<div class="text-center">
 			<p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">PredictAdmit</p>
 			<h1 class="mt-4 font-serif text-4xl font-medium leading-[1.05] tracking-tight text-slate-900 sm:text-5xl">
-				Perfect your applications <span class="text-[#1A4CFF]">before it's too late.</span>
+				Perfect your applications <span class="text-[#316DE4]">before it's too late.</span>
 			</h1>
 			<p class="mx-auto mt-4 max-w-md text-lg leading-relaxed text-slate-500">
 				Your real AI verdict at every top school, in about 20 seconds. Free.
@@ -121,7 +121,7 @@
 				<select
 					id="school"
 					bind:value={schoolSlug}
-					class="mt-2 w-full cursor-pointer rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 transition hover:border-slate-300 focus:border-[#1A4CFF] focus:outline-none focus:ring-4 focus:ring-[color-mix(in_oklab,#1A4CFF_10%,transparent)]"
+					class="mt-2 w-full cursor-pointer rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 transition hover:border-slate-300 focus:border-[#316DE4] focus:outline-none focus:ring-4 focus:ring-[color-mix(in_oklab,#316DE4_10%,transparent)]"
 				>
 					<option value="">All 39 schools</option>
 					{#each schoolOptions as s}
@@ -138,7 +138,7 @@
 						bind:value={gpa}
 						inputmode="decimal"
 						placeholder="3.9"
-						class="mt-2 w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 transition hover:border-slate-300 focus:border-[#1A4CFF] focus:outline-none focus:ring-4 focus:ring-[color-mix(in_oklab,#1A4CFF_10%,transparent)]"
+						class="mt-2 w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 transition hover:border-slate-300 focus:border-[#316DE4] focus:outline-none focus:ring-4 focus:ring-[color-mix(in_oklab,#316DE4_10%,transparent)]"
 					/>
 				</div>
 				<div>
@@ -147,7 +147,7 @@
 						id="test"
 						bind:value={testScore}
 						placeholder="1520"
-						class="mt-2 w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 transition hover:border-slate-300 focus:border-[#1A4CFF] focus:outline-none focus:ring-4 focus:ring-[color-mix(in_oklab,#1A4CFF_10%,transparent)]"
+						class="mt-2 w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 transition hover:border-slate-300 focus:border-[#316DE4] focus:outline-none focus:ring-4 focus:ring-[color-mix(in_oklab,#316DE4_10%,transparent)]"
 					/>
 				</div>
 			</div>
@@ -161,7 +161,7 @@
 					placeholder="Computer Science"
 					onfocus={() => (showMajorDropdown = true)}
 					onblur={() => setTimeout(() => (showMajorDropdown = false), 200)}
-					class="mt-2 w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 transition hover:border-slate-300 focus:border-[#1A4CFF] focus:outline-none focus:ring-4 focus:ring-[color-mix(in_oklab,#1A4CFF_10%,transparent)]"
+					class="mt-2 w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 transition hover:border-slate-300 focus:border-[#316DE4] focus:outline-none focus:ring-4 focus:ring-[color-mix(in_oklab,#316DE4_10%,transparent)]"
 				/>
 				{#if showMajorDropdown && majorSuggestions.length > 0}
 					<div class="absolute left-0 right-0 top-full z-50 mt-2 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-2xl">
@@ -190,7 +190,7 @@
 					bind:value={extras}
 					rows="3"
 					placeholder="Activities, awards, a line about your essay. The more you add, the sharper the read."
-					class="mt-2 w-full resize-none rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 transition hover:border-slate-300 focus:border-[#1A4CFF] focus:outline-none focus:ring-4 focus:ring-[color-mix(in_oklab,#1A4CFF_10%,transparent)]"
+					class="mt-2 w-full resize-none rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 transition hover:border-slate-300 focus:border-[#316DE4] focus:outline-none focus:ring-4 focus:ring-[color-mix(in_oklab,#316DE4_10%,transparent)]"
 				></textarea>
 			</div>
 

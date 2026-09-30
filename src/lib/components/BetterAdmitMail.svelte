@@ -127,7 +127,7 @@
 	// Single brand-blue avatar tint — one accent, consistent with the rest of the
 	// app (was a 7-color pastel rainbow, which read as AI-generated).
 	function tintFor(_portal: PortalEmail): string {
-		return 'bg-[color-mix(in_oklab,#1A4CFF_10%,transparent)] text-[#1A4CFF]';
+		return 'bg-[color-mix(in_oklab,#316DE4_10%,transparent)] text-[#316DE4]';
 	}
 </script>
 
@@ -141,7 +141,7 @@
 		>
 			<div class="flex items-center gap-3">
 				<div
-					class="w-9 h-9 rounded-xl bg-[#1A4CFF] flex items-center justify-center shadow-sm"
+					class="w-9 h-9 rounded-xl bg-[#316DE4] flex items-center justify-center shadow-sm"
 				>
 					<svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 						<path
@@ -193,7 +193,7 @@
 				<nav class="space-y-1">
 					<button
 						on:click={() => switchFolder('inbox')}
-						class={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-semibold transition-colors ${activeFolder === 'inbox' ? 'bg-white text-[#1A4CFF] shadow-sm ring-1 ring-slate-200' : 'text-slate-600 hover:bg-slate-100'}`}
+						class={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-semibold transition-colors ${activeFolder === 'inbox' ? 'bg-white text-[#316DE4] shadow-sm ring-1 ring-slate-200' : 'text-slate-600 hover:bg-slate-100'}`}
 					>
 						<div class="flex items-center gap-2.5">
 							<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -202,7 +202,7 @@
 							<span>Inbox</span>
 						</div>
 						{#if unreadCount > 0}
-							<span class="text-[11px] font-bold bg-[#1A4CFF] text-white px-2 py-0.5 rounded-full">{unreadCount}</span>
+							<span class="text-[11px] font-bold bg-[#316DE4] text-white px-2 py-0.5 rounded-full">{unreadCount}</span>
 						{:else if visiblePortals.length > 0}
 							<span class="text-[11px] font-bold bg-slate-200 text-slate-600 px-2 py-0.5 rounded-full">{visiblePortals.length}</span>
 						{/if}
@@ -210,7 +210,7 @@
 
 					<button
 						on:click={() => switchFolder('sent')}
-						class={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-semibold transition-colors ${activeFolder === 'sent' ? 'bg-white text-[#1A4CFF] shadow-sm ring-1 ring-slate-200' : 'text-slate-600 hover:bg-slate-100'}`}
+						class={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-semibold transition-colors ${activeFolder === 'sent' ? 'bg-white text-[#316DE4] shadow-sm ring-1 ring-slate-200' : 'text-slate-600 hover:bg-slate-100'}`}
 					>
 						<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
 							<path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
@@ -221,7 +221,7 @@
 
 				<div class="mt-auto rounded-xl border border-slate-200 bg-white p-3">
 					<p class="flex items-center gap-1.5 text-[11px] font-bold text-slate-700">
-						<svg class="h-3.5 w-3.5 text-[#1A4CFF]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+						<svg class="h-3.5 w-3.5 text-[#316DE4]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
 						Simulation only
 					</p>
 					<p class="mt-1 text-[11px] leading-snug text-slate-400">AI predictions from your file. Not real emails or official decisions.</p>
@@ -241,16 +241,16 @@
 					<div class="md:hidden flex items-center gap-2 border-b border-slate-100 px-4 py-2.5 bg-white">
 						<button
 							on:click={() => switchFolder('inbox')}
-							class={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition-colors ${activeFolder === 'inbox' ? 'bg-[#1A4CFF] text-white' : 'bg-slate-100 text-slate-600'}`}
+							class={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition-colors ${activeFolder === 'inbox' ? 'bg-[#316DE4] text-white' : 'bg-slate-100 text-slate-600'}`}
 						>
 							Inbox
 							{#if unreadCount > 0}
-								<span class={`rounded-full px-1.5 text-[10px] font-bold ${activeFolder === 'inbox' ? 'bg-white/25 text-white' : 'bg-[#1A4CFF] text-white'}`}>{unreadCount}</span>
+								<span class={`rounded-full px-1.5 text-[10px] font-bold ${activeFolder === 'inbox' ? 'bg-white/25 text-white' : 'bg-[#316DE4] text-white'}`}>{unreadCount}</span>
 							{/if}
 						</button>
 						<button
 							on:click={() => switchFolder('sent')}
-							class={`rounded-full px-3 py-1.5 text-xs font-semibold transition-colors ${activeFolder === 'sent' ? 'bg-[#1A4CFF] text-white' : 'bg-slate-100 text-slate-600'}`}
+							class={`rounded-full px-3 py-1.5 text-xs font-semibold transition-colors ${activeFolder === 'sent' ? 'bg-[#316DE4] text-white' : 'bg-slate-100 text-slate-600'}`}
 						>
 							Sent
 						</button>
@@ -278,7 +278,7 @@
 								type="text"
 								bind:value={searchQuery}
 								placeholder="Search mail..."
-								class="w-full pl-10 pr-4 py-2 bg-slate-50 border-none rounded-xl text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-[color-mix(in_oklab,#1A4CFF_20%,transparent)] focus:bg-white transition-all"
+								class="w-full pl-10 pr-4 py-2 bg-slate-50 border-none rounded-xl text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-[color-mix(in_oklab,#316DE4_20%,transparent)] focus:bg-white transition-all"
 							/>
 						</div>
 					</div>
@@ -353,7 +353,7 @@
 										<!-- Unread dot -->
 										<div class="w-2 flex-shrink-0 self-center">
 											{#if !readPortalSlugs.has(portal.slug)}
-												<span class="block w-2 h-2 rounded-full bg-[#1A4CFF]"></span>
+												<span class="block w-2 h-2 rounded-full bg-[#316DE4]"></span>
 											{/if}
 										</div>
 
@@ -492,10 +492,10 @@
 									</p>
 									<p>Log in with the credentials you set up when you applied.</p>
 
-									<div class="flex items-start gap-2.5 rounded-xl border border-[color-mix(in_oklab,#1A4CFF_15%,transparent)] bg-[color-mix(in_oklab,#1A4CFF_5%,transparent)] px-4 py-3">
-										<svg class="mt-0.5 h-4 w-4 shrink-0 text-[#1A4CFF]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" /></svg>
+									<div class="flex items-start gap-2.5 rounded-xl border border-[color-mix(in_oklab,#316DE4_15%,transparent)] bg-[color-mix(in_oklab,#316DE4_5%,transparent)] px-4 py-3">
+										<svg class="mt-0.5 h-4 w-4 shrink-0 text-[#316DE4]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" /></svg>
 										<p class="text-sm leading-relaxed text-slate-600">
-											<span class="font-semibold text-[#1A4CFF]">First time?</span> This is a
+											<span class="font-semibold text-[#316DE4]">First time?</span> This is a
 											simulation, so just tap <span class="font-semibold text-slate-900">Login</span> to reveal your
 											decision. Your details are pre-filled and no real credentials are needed.
 										</p>
@@ -504,7 +504,7 @@
 									<div class="mt-7 flex flex-wrap items-center gap-3">
 										<a
 											href={`/portals/${selectedPortal.slug}`}
-											class="inline-flex items-center justify-center gap-2 rounded-xl bg-[#1A4CFF] px-6 py-3 text-sm font-semibold text-white shadow-sm transition-all hover:bg-[#1540E0] active:scale-[0.99] no-underline"
+											class="inline-flex items-center justify-center gap-2 rounded-xl bg-[#316DE4] px-6 py-3 text-sm font-semibold text-white shadow-sm transition-all hover:bg-[#1C57CC] active:scale-[0.99] no-underline"
 										>
 											View Simulated Decision
 										</a>
@@ -530,7 +530,7 @@
 												type="button"
 												class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-medium text-slate-600 cursor-default"
 											>
-												<svg class="h-4 w-4 text-[#1A4CFF]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+												<svg class="h-4 w-4 text-[#316DE4]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
 												Deep dive ready
 											</button>
 										{:else if deepDiveLoadingSlug === selectedPortal.slug}
@@ -547,7 +547,7 @@
 										{:else}
 											<button
 												type="button"
-												class="inline-flex items-center gap-2 rounded-xl bg-[#1A4CFF] px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#1540E0] active:scale-[0.99]"
+												class="inline-flex items-center gap-2 rounded-xl bg-[#316DE4] px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#1C57CC] active:scale-[0.99]"
 												on:click={() => requestDeepDiveForSlug(selectedPortal.slug)}
 											>
 												<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>

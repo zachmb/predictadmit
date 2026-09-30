@@ -28,7 +28,7 @@
 			<div
 				class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-100 px-3 py-1 text-xs font-bold uppercase tracking-wide text-slate-500"
 			>
-				<span class="h-1.5 w-1.5 rounded-full bg-[#1A4CFF]"></span>
+				<span class="h-1.5 w-1.5 rounded-full bg-[#316DE4]"></span>
 				College Admissions Guide
 			</div>
 
@@ -170,7 +170,7 @@
 					<em>applicant</em> instead of the average <em>admit</em>. The admit bar is meaningfully
 					higher, and it's the only bar that matters. If doing this by hand feels imprecise, this is
 					exactly the comparison
-					<a href="/pro" class="font-semibold text-[#1A4CFF] underline decoration-blue-200 underline-offset-2 hover:decoration-blue-500">PredictAdmit Pro</a>
+					<a href="/pro" class="font-semibold text-[#316DE4] underline decoration-blue-200 underline-offset-2 hover:decoration-blue-500">PredictAdmit Pro</a>
 					automates &mdash; it plots your profile against real admit distributions instead of leaving
 					you to eyeball it.
 				</p>
@@ -420,7 +420,7 @@
 						<p class="mt-2 text-slate-600">
 							A great counselor is invaluable, but most manage hundreds of students and can't run a
 							data-driven, per-school projection for each one. That's the specific job
-							<a href="/pro" class="font-semibold text-[#1A4CFF] underline decoration-blue-200 underline-offset-2 hover:decoration-blue-500">PredictAdmit Pro</a>
+							<a href="/pro" class="font-semibold text-[#316DE4] underline decoration-blue-200 underline-offset-2 hover:decoration-blue-500">PredictAdmit Pro</a>
 							is built to handle &mdash; the number-crunching, so your counselor can focus on the
 							human guidance.
 						</p>
@@ -434,7 +434,7 @@
 					Junior year is the one window where seeing your gaps still lets you close them. Run the
 					diagnostic, fix what's fixable, and walk into senior fall knowing exactly where you stand.
 					When you're ready to skip the manual math,
-					<a href="/pro" class="font-semibold text-[#1A4CFF] underline decoration-blue-200 underline-offset-2 hover:decoration-blue-500">PredictAdmit Pro</a>
+					<a href="/pro" class="font-semibold text-[#316DE4] underline decoration-blue-200 underline-offset-2 hover:decoration-blue-500">PredictAdmit Pro</a>
 					does all of it in minutes.
 				</p>
 			</section>

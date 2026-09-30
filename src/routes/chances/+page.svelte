@@ -26,13 +26,13 @@
 	];
 	const toneBar: Record<string, string> = {
 		emerald: 'bg-emerald-500',
-		blue: 'bg-[#1A4CFF]',
+		blue: 'bg-[#316DE4]',
 		amber: 'bg-amber-500',
 		rose: 'bg-rose-500'
 	};
 	const toneChip: Record<string, string> = {
 		emerald: 'text-emerald-700',
-		blue: 'text-[#1A4CFF]',
+		blue: 'text-[#316DE4]',
 		amber: 'text-amber-700',
 		rose: 'text-rose-700'
 	};
@@ -101,7 +101,7 @@
 	<div class="mx-auto max-w-2xl px-5 py-14 sm:py-20">
 		<header class="text-center">
 			<div class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-100 px-3.5 py-1.5">
-				<span class="h-1.5 w-1.5 rounded-full bg-[#1A4CFF]"></span>
+				<span class="h-1.5 w-1.5 rounded-full bg-[#316DE4]"></span>
 				<span class="text-[11px] font-bold uppercase tracking-[0.14em] text-slate-600">Free · No sign-up</span>
 			</div>
 			<h1 class="mt-5 font-serif text-4xl font-medium tracking-tight text-slate-900 sm:text-5xl">

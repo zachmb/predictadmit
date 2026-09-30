@@ -73,7 +73,7 @@ body {
 
 /* ---- GradGPT-style editorial accents (handwritten notes + hand-drawn marks) ----
    Additive charm layer over the clean slate/blue base. Single blue ink accent
-   (#1A4CFF) to match the brand — no second accent color. */
+   (#316DE4) to match the brand — no second accent color. */
 
 /* In @layer components so Tailwind utilities (text-[...], etc.) can still
    override — an unlayered rule would beat every utility. */
@@ -82,7 +82,7 @@ body {
 	.hand {
 		font-family: var(--font-hand);
 		font-weight: 600;
-		color: #1a4cff;
+		color: #316DE4;
 		line-height: 1;
 	}
 }
@@ -102,7 +102,7 @@ body {
 	height: 0.34em;
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
-	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 16' preserveAspectRatio='none'%3E%3Cpath d='M3 11 C 60 4, 120 4, 180 8 S 260 13, 297 6' fill='none' stroke='%231A4CFF' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E");
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 16' preserveAspectRatio='none'%3E%3Cpath d='M3 11 C 60 4, 120 4, 180 8 S 260 13, 297 6' fill='none' stroke='%23316DE4' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E");
 	pointer-events: none;
 }
 
@@ -113,5 +113,5 @@ body {
 	height: 2.2rem;
 	background-repeat: no-repeat;
 	background-size: contain;
-	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 44'%3E%3Cpath d='M4 8 C 20 2, 44 6, 54 26' fill='none' stroke='%231A4CFF' stroke-width='3.5' stroke-linecap='round'/%3E%3Cpath d='M44 24 L 55 28 L 50 16' fill='none' stroke='%231A4CFF' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 44'%3E%3Cpath d='M4 8 C 20 2, 44 6, 54 26' fill='none' stroke='%23316DE4' stroke-width='3.5' stroke-linecap='round'/%3E%3Cpath d='M44 24 L 55 28 L 50 16' fill='none' stroke='%23316DE4' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 }

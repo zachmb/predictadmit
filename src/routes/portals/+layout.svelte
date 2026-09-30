@@ -138,7 +138,7 @@
 		width: 8px;
 		height: 8px;
 		border-radius: 9999px;
-		background: #1a4cff;
+		background: #316DE4;
 		box-shadow: 0 0 0 4px rgba(26, 76, 255, 0.25);
 		flex-shrink: 0;
 	}

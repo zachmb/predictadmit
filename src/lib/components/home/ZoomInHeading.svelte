@@ -67,7 +67,7 @@
 	<div class="mx-auto max-w-2xl px-6 pt-24 pb-10 text-center space-y-4">
 		{#if eyebrow}<span class="inline-block px-3 py-1 bg-white border border-slate-200 text-slate-600 text-[10px] font-bold uppercase tracking-widest rounded-full">{eyebrow}</span>{/if}
 		<h2 class="font-serif text-4xl md:text-5xl font-medium tracking-tight text-slate-900 leading-[1.05]">
-			{pre} <span class="text-[#1A4CFF]">{accent}</span>
+			{pre} <span class="text-[#316DE4]">{accent}</span>
 		</h2>
 		{#if sub}<p class="text-lg text-slate-500 leading-relaxed">{sub}</p>{/if}
 		{#if reveal}<div class="mt-10">{@render reveal()}</div>{/if}
@@ -99,7 +99,7 @@
 				class="relative z-10 font-serif font-medium tracking-tight text-slate-900 whitespace-nowrap"
 				style="--s:{s}; font-size: calc(clamp(1.5rem, 7vw, 6rem) * var(--s)); line-height: 1.02; opacity:{headOpacity};"
 			>
-				{pre} <span class="text-[#1A4CFF]">{accent}</span>
+				{pre} <span class="text-[#316DE4]">{accent}</span>
 			</h2>
 
 			{#if sub}

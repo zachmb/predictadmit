@@ -246,7 +246,7 @@
 
 				{#if billingLoading}
 					<div class="mt-5 flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-50/60 p-5 text-sm text-slate-500">
-						<span class="h-4 w-4 animate-spin rounded-full border-2 border-slate-300 border-t-[#1A4CFF]"></span>
+						<span class="h-4 w-4 animate-spin rounded-full border-2 border-slate-300 border-t-[#316DE4]"></span>
 						Checking your plan...
 					</div>
 				{:else}
@@ -256,7 +256,7 @@
 						<div class="flex items-start gap-4">
 							<div
 								class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-white shadow"
-								style="background-color: #1A4CFF;"
+								style="background-color: #316DE4;"
 							>
 								<svg viewBox="0 0 20 20" fill="currentColor" class="h-6 w-6" aria-hidden="true">
 									<path
@@ -337,7 +337,7 @@
 									: 'Update your card or download invoices in Stripe.'}
 							</p>
 							{#if plan === 'single'}
-								<a href="/pro" class="text-sm font-semibold text-[#1A4CFF] hover:underline sm:ml-auto">Upgrade to full Pro</a>
+								<a href="/pro" class="text-sm font-semibold text-[#316DE4] hover:underline sm:ml-auto">Upgrade to full Pro</a>
 							{/if}
 						{:else if billing && !billing.billingConfigured}
 							<p class="text-xs text-slate-500">Billing is not set up yet, so there's nothing to manage.</p>
@@ -376,7 +376,7 @@
 							aria-label="Transactional emails (always on)"
 							disabled
 							class="relative inline-flex h-6 w-11 shrink-0 cursor-not-allowed rounded-full transition-colors"
-							style="background-color: #1A4CFF; opacity: 0.55;"
+							style="background-color: #316DE4; opacity: 0.55;"
 						>
 							<span class="inline-block h-5 w-5 translate-x-[22px] transform rounded-full bg-white shadow transition mt-0.5 ml-0.5"></span>
 						</button>
@@ -395,7 +395,7 @@
 							aria-label="Marketing emails"
 							onclick={toggleMarketing}
 							class="relative inline-flex h-6 w-11 shrink-0 rounded-full transition-colors {marketing ? '' : 'bg-slate-200'}"
-							style={marketing ? 'background-color: #1A4CFF;' : ''}
+							style={marketing ? 'background-color: #316DE4;' : ''}
 						>
 							<span
 								class="inline-block h-5 w-5 transform rounded-full bg-white shadow transition mt-0.5 ml-0.5 {marketing ? 'translate-x-[22px]' : 'translate-x-0'}"

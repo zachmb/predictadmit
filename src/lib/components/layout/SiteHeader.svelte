@@ -107,7 +107,7 @@
 					</a>
 				{:else}
 					<a href="/" class="text-xl font-[700] tracking-tight text-slate-900 transition-colors">
-						predictadmit<span class="text-[#1A4CFF]">.com</span>
+						predictadmit<span class="text-[#316DE4]">.com</span>
 					</a>
 				{/if}
 			</div>

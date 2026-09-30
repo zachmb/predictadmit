@@ -246,7 +246,7 @@
 	<!-- Floating launcher -->
 	<button
 		type="button"
-		class="share-launcher fixed right-4 z-50 flex items-center gap-2 rounded-full bg-[#1A4CFF] px-4 py-3 font-sans text-sm font-semibold text-white shadow-lg shadow-[color-mix(in_oklab,#1A4CFF_25%,transparent)] transition-all hover:bg-[#1540E0] hover:scale-105 focus:ring-4 focus:ring-[color-mix(in_oklab,#1A4CFF_20%,transparent)] focus:outline-none sm:right-5 sm:px-5"
+		class="share-launcher fixed right-4 z-50 flex items-center gap-2 rounded-full bg-[#316DE4] px-4 py-3 font-sans text-sm font-semibold text-white shadow-lg shadow-[color-mix(in_oklab,#316DE4_25%,transparent)] transition-all hover:bg-[#1C57CC] hover:scale-105 focus:ring-4 focus:ring-[color-mix(in_oklab,#316DE4_20%,transparent)] focus:outline-none sm:right-5 sm:px-5"
 		style="bottom: calc(1.25rem + env(safe-area-inset-bottom));"
 		onclick={openModal}
 	>
@@ -312,7 +312,7 @@
 				<div class="mt-5 grid grid-cols-2 gap-2.5">
 					<button
 						type="button"
-						class="col-span-2 flex items-center justify-center gap-2 rounded-xl bg-[#1A4CFF] px-4 py-3 text-sm font-semibold text-white shadow-sm transition-all hover:bg-[#1540E0] active:scale-[0.99]"
+						class="col-span-2 flex items-center justify-center gap-2 rounded-xl bg-[#316DE4] px-4 py-3 text-sm font-semibold text-white shadow-sm transition-all hover:bg-[#1C57CC] active:scale-[0.99]"
 						onclick={copyLink}
 					>
 						{#if copied}

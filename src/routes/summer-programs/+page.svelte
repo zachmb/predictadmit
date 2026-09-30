@@ -279,7 +279,7 @@
 								href="https://{p.website}"
 								target="_blank"
 								rel="noopener noreferrer"
-								class="mt-3 inline-block text-xs font-semibold text-[#1A4CFF] hover:underline"
+								class="mt-3 inline-block text-xs font-semibold text-[#316DE4] hover:underline"
 							>
 								Official site: {p.website} ↗
 							</a>

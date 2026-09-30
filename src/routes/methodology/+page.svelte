@@ -123,14 +123,14 @@
 						{#each sortedFactors as f}
 							<tr>
 								<td class="px-4 py-3 font-medium text-slate-900">{f.label}</td>
-								<td class="px-4 py-3 text-right font-semibold text-[#1A4CFF]">{pct(f.considerable)}</td>
+								<td class="px-4 py-3 text-right font-semibold text-[#316DE4]">{pct(f.considerable)}</td>
 								<td class="px-4 py-3 text-right text-slate-600 hidden sm:table-cell">{pct(f.moderate)}</td>
 								<td class="px-4 py-3 text-right text-slate-600 hidden md:table-cell">{pct(f.limited)}</td>
 								<td class="px-4 py-3 text-right text-slate-600 hidden md:table-cell">{pct(f.none)}</td>
 								<td class="px-4 py-3 hidden sm:table-cell">
 									<div class="h-2 rounded-full bg-slate-100">
 										<div
-											class="h-2 rounded-full bg-[#1A4CFF]"
+											class="h-2 rounded-full bg-[#316DE4]"
 											style="width: {(factorScore(f) / maxScore) * 100}%"
 										></div>
 									</div>
@@ -170,10 +170,10 @@
 					<div class="rounded-xl border border-slate-100 bg-slate-50 p-4">
 						<div class="flex items-center justify-between mb-1">
 							<span class="font-semibold text-slate-900">{d.label}</span>
-							<span class="font-bold text-[#1A4CFF]">~{d.weight}%</span>
+							<span class="font-bold text-[#316DE4]">~{d.weight}%</span>
 						</div>
 						<div class="mb-2 h-2 rounded-full bg-slate-200">
-							<div class="h-2 rounded-full bg-[#1A4CFF]" style="width: {d.weight}%"></div>
+							<div class="h-2 rounded-full bg-[#316DE4]" style="width: {d.weight}%"></div>
 						</div>
 						<p class="text-xs text-slate-500">{d.covers}</p>
 					</div>
