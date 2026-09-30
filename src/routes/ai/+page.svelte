@@ -600,6 +600,9 @@
 			if (!honors && savedProfile.awards) honors = savedProfile.awards;
 			if (!transcript && savedProfile.rigor) transcript = savedProfile.rigor;
 		}
+		// Restore the intended major from its persisted home (stats.major) just like
+		// the fields above, so it stays filled across reloads + the sign-in redirect.
+		if (!major && $userProfile.stats?.major) major = $userProfile.stats.major;
 
 		// Hand-off from /verdict (structured fields) and from the landing hero (a raw
 		// `paste` blob). If the prefill payload + autorun flag are present, populate the
@@ -718,9 +721,12 @@
 				activities: activities,
 				awards: honors,
 				rigor: transcript
-				// Note: major and supplementals aren't in the default profile type yet,
-				// but we can add them or just rely on these main ones for now.
-			}
+			},
+			// Persist the intended major too, so it survives a reload AND the Google
+			// sign-in round-trip (saveToStore runs right before those redirects). It
+			// lives on stats.major — the canonical home the portals + decision letters
+			// read from — mirroring where runEvaluation writes the applied major.
+			stats: { ...u.stats, major: major.trim() ? major.trim() : u.stats.major }
 		}));
 	}
 
