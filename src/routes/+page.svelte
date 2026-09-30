@@ -707,7 +707,6 @@
 		<div class="max-w-[1200px] mx-auto px-6 text-center relative z-10 flex flex-col items-center">
 			<!-- Headline -->
 			<div class="space-y-6 max-w-4xl mx-auto mb-10">
-				<p class="hand text-2xl md:text-3xl mb-1 animate-in fade-in duration-1000 fill-mode-both">find out now, not in March</p>
 				<h1
 					class="font-serif text-5xl sm:text-6xl md:text-[5.5rem] font-medium tracking-tight leading-[1.0] text-slate-900 animate-in fade-in slide-in-from-bottom-6 duration-1000 fill-mode-both"
 				>
@@ -814,38 +813,41 @@
 				</div>
 			</div>
 
-			<!-- Under-hero: one cohesive trust strip (lead line · unified signal bar · one fine-print line) -->
-			<div class="mt-8 w-full max-w-xl mx-auto flex flex-col items-center gap-3 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300 fill-mode-both">
-				<p class="text-sm text-slate-500">
-					<span class="font-semibold text-slate-900">Free.</span> Sign in with Google to see all your real decisions.
-				</p>
-
-				<!-- Trust signals unified into a single pill so they read as one element -->
-				<div class="inline-flex flex-wrap items-center justify-center gap-x-3.5 gap-y-1 rounded-full border border-slate-200 bg-white px-5 py-2 text-xs font-medium text-slate-600 shadow-sm">
-					<span class="inline-flex items-center gap-1.5">
-						<svg class="h-3.5 w-3.5 text-[#1A4CFF]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-						Calibrated on real results
+			<!-- Under-hero: three trust cards side by side -->
+			<div class="mt-8 w-full max-w-4xl mx-auto grid gap-4 sm:grid-cols-3 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300 fill-mode-both">
+				<!-- Card 1: Free -->
+				<div class="text-left rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+					<span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-[color-mix(in_oklab,#1A4CFF_10%,transparent)] text-[#1A4CFF]">
+						<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
 					</span>
-					<span class="h-3 w-px bg-slate-200"></span>
-					<span class="inline-flex items-center gap-1.5">
-						<svg class="h-3.5 w-3.5 text-[#1A4CFF]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 10-4 0m8 0a4 4 0 10-3-7" /></svg>
-						5,000+ applicants
-					</span>
-					<span class="h-3 w-px bg-slate-200"></span>
-					<span class="inline-flex items-center gap-1.5">
-						<svg class="h-3.5 w-3.5 text-[#1A4CFF]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
-						Private to your browser
-					</span>
+					<p class="mt-3 text-sm font-bold text-slate-900">Free</p>
+					<p class="mt-1 text-[13px] leading-relaxed text-slate-500">Sign in with Google to see all your real decisions. No credit card.</p>
 				</div>
-
-				<!-- One merged fine-print line -->
-				<p class="max-w-xl text-center text-[11px] leading-relaxed text-slate-400">
-					An estimate from NACAC factor weights, not an official decision and never affiliated with any school.
-					<a href="/methodology" class="font-medium text-slate-500 underline underline-offset-2 hover:text-slate-900">Methodology →</a>
-					<span class="mx-1.5 text-slate-300">·</span>
-					<a href="/portals" class="font-medium text-slate-500 underline underline-offset-2 hover:text-slate-900">Rehearse a portal →</a>
-				</p>
+				<!-- Card 2: Calibrated -->
+				<div class="text-left rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+					<span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-[color-mix(in_oklab,#1A4CFF_10%,transparent)] text-[#1A4CFF]">
+						<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+					</span>
+					<p class="mt-3 text-sm font-bold text-slate-900">Calibrated on real results</p>
+					<p class="mt-1 text-[13px] leading-relaxed text-slate-500">Read against 5,000+ applicant profiles and the NACAC factors committees actually weigh.</p>
+				</div>
+				<!-- Card 3: Private -->
+				<div class="text-left rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+					<span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-[color-mix(in_oklab,#1A4CFF_10%,transparent)] text-[#1A4CFF]">
+						<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+					</span>
+					<p class="mt-3 text-sm font-bold text-slate-900">Private to your browser</p>
+					<p class="mt-1 text-[13px] leading-relaxed text-slate-500">Your inputs stay on your device. Nothing is stored on a server.</p>
+				</div>
 			</div>
+
+			<!-- One merged fine-print line -->
+			<p class="mt-5 max-w-xl mx-auto text-center text-[11px] leading-relaxed text-slate-400">
+				An estimate from NACAC factor weights, not an official decision and never affiliated with any school.
+				<a href="/methodology" class="font-medium text-slate-500 underline underline-offset-2 hover:text-slate-900">Methodology →</a>
+				<span class="mx-1.5 text-slate-300">·</span>
+				<a href="/portals" class="font-medium text-slate-500 underline underline-offset-2 hover:text-slate-900">Rehearse a portal →</a>
+			</p>
 
 			<!-- School trust row: the schools PredictAdmit simulates (honest — not endorsements) -->
 			<div class="mt-14 w-full max-w-4xl mx-auto animate-in fade-in duration-1000 delay-500 fill-mode-both">
