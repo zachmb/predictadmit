@@ -707,16 +707,23 @@
 		<div class="max-w-[1200px] mx-auto px-6 text-center relative z-10 flex flex-col items-center">
 			<!-- Headline -->
 			<div class="space-y-6 max-w-4xl mx-auto mb-10">
+				<p class="hand text-2xl md:text-3xl mb-1 animate-in fade-in duration-1000 fill-mode-both">find out now, not in March</p>
 				<h1
 					class="font-serif text-5xl sm:text-6xl md:text-[5.5rem] font-medium tracking-tight leading-[1.0] text-slate-900 animate-in fade-in slide-in-from-bottom-6 duration-1000 fill-mode-both"
 				>
-					Predict Your Real <br class="hidden md:block" /> College <span class="text-[#1A4CFF]">Decisions</span>
+					Predict Your <span class="hand-underline">Real</span> <br class="hidden md:block" /> College <span class="text-[#1A4CFF]">Decisions</span>
 				</h1>
 				<p
 					class="text-lg md:text-xl text-slate-500 max-w-2xl mx-auto leading-relaxed tracking-tight font-medium mt-5 animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-[200ms] fill-mode-both"
 				>
 					Enter your stats and the AI predicts your real decision at all 39 top schools, free. It sits a full admissions committee on your file and shows you exactly what to fix.
 				</p>
+			</div>
+
+			<!-- Handwritten note pointing to the card (GradGPT-style margin annotation) -->
+			<div class="mb-2 flex items-end justify-center gap-1.5 md:mr-40">
+				<span class="hand text-xl md:text-2xl">paste anything · 20 seconds</span>
+				<span class="hand-arrow translate-y-1 rotate-[8deg]"></span>
 			</div>
 
 			<!-- Hero action row: autofill card (left) + live countdown (right) -->
@@ -839,6 +846,19 @@
 					<a href="/portals" class="font-medium text-slate-500 underline underline-offset-2 hover:text-slate-900">Rehearse a portal →</a>
 				</p>
 			</div>
+
+			<!-- School trust row: the schools PredictAdmit simulates (honest — not endorsements) -->
+			<div class="mt-14 w-full max-w-4xl mx-auto animate-in fade-in duration-1000 delay-500 fill-mode-both">
+				<p class="text-center text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">
+					Simulates real committee decisions at 39 schools
+				</p>
+				<div class="mt-4 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 font-serif text-lg text-slate-400">
+					{#each ['Harvard', 'Stanford', 'MIT', 'Yale', 'Princeton', 'Columbia', 'Chicago', 'Penn', 'Duke', 'Brown', 'Cornell', 'Berkeley'] as s}
+						<span>{s}</span>
+					{/each}
+					<span class="text-slate-300">+ 27 more</span>
+				</div>
+			</div>
 	</section>
 
 
@@ -850,11 +870,23 @@
 	<!-- SECTION 2: EVERYTHING IN PRO (feature showcase) -->
 	<section class="py-24 bg-white border-t border-slate-100">
 		<div class="max-w-[1200px] mx-auto px-6">
+			<!-- Section header (GradGPT-style handwritten eyebrow + serif head) -->
+			<div class="mb-16 text-center md:mb-20">
+				<p class="hand text-2xl md:text-3xl">what you get in Pro</p>
+				<h2 class="mt-1 font-serif text-4xl md:text-5xl font-medium tracking-tight text-slate-900 leading-[1.05]">
+					Everything a $300/hr counselor does
+				</h2>
+			</div>
 			<div class="space-y-16 md:space-y-24">
 				<!-- Row 1: committee (text left) -->
 				<div use:reveal class="grid items-center gap-8 md:grid-cols-2 md:gap-14">
 					<div>
+						<div class="flex items-center gap-3">
+							<span class="font-serif text-4xl font-medium leading-none text-[#1A4CFF]">01</span>
+							<span class="h-px w-10 bg-slate-200"></span>
+						</div>
 						<h3 class="mt-3 font-serif text-3xl font-medium tracking-tight text-slate-900">A full committee reads your file</h3>
+						<p class="hand mt-1 text-xl">five readers, one verdict</p>
 						<p class="mt-3 text-[15px] leading-relaxed text-slate-500">Five readers argue over your file the way a real committee does, then land a verdict. You find out which one is holding you back, and exactly why.</p>
 					</div>
 					<div class="rounded-3xl border border-slate-200 bg-white p-5 sm:p-6">
@@ -878,7 +910,12 @@
 				<!-- Row 2: essay (text right) -->
 				<div use:reveal={100} class="grid items-center gap-8 md:grid-cols-2 md:gap-14">
 					<div class="md:order-2">
+						<div class="flex items-center gap-3">
+							<span class="font-serif text-4xl font-medium leading-none text-[#1A4CFF]">02</span>
+							<span class="h-px w-10 bg-slate-200"></span>
+						</div>
 						<h3 class="mt-3 font-serif text-3xl font-medium tracking-tight text-slate-900">Essay feedback, line by line</h3>
+						<p class="hand mt-1 text-xl">the exact lines to fix</p>
 						<p class="mt-3 text-[15px] leading-relaxed text-slate-500">Every supplement in one place. Hand it over and it marks the weak lines like an admissions reader would, and tells you why. It never writes a word for you.</p>
 					</div>
 					<div class="rounded-3xl border border-slate-200 bg-white p-5 sm:p-6 md:order-1">
@@ -900,7 +937,12 @@
 				<!-- Row 3: per-school (text left) -->
 				<div use:reveal={200} class="grid items-center gap-8 md:grid-cols-2 md:gap-14">
 					<div>
+						<div class="flex items-center gap-3">
+							<span class="font-serif text-4xl font-medium leading-none text-[#1A4CFF]">03</span>
+							<span class="h-px w-10 bg-slate-200"></span>
+						</div>
 						<h3 class="mt-3 font-serif text-3xl font-medium tracking-tight text-slate-900">Per-school strategy for 50+ schools</h3>
+						<p class="hand mt-1 text-xl">aim at the right reader</p>
 						<p class="mt-3 text-[15px] leading-relaxed text-slate-500">Stanford and MIT do not want the same thing. See what each one actually weighs, then aim your application at that reader instead of sending one generic app everywhere.</p>
 					</div>
 					<div class="rounded-3xl border border-slate-200 bg-white p-5 sm:p-6">
@@ -918,7 +960,12 @@
 				<!-- Row 4: counselor (text right) -->
 				<div use:reveal={300} class="grid items-center gap-8 md:grid-cols-2 md:gap-14">
 					<div class="md:order-2">
+						<div class="flex items-center gap-3">
+							<span class="font-serif text-4xl font-medium leading-none text-[#1A4CFF]">04</span>
+							<span class="h-px w-10 bg-slate-200"></span>
+						</div>
 						<h3 class="mt-3 font-serif text-3xl font-medium tracking-tight text-slate-900">A counselor in your pocket</h3>
+						<p class="hand mt-1 text-xl">no $300 appointment</p>
 						<p class="mt-3 text-[15px] leading-relaxed text-slate-500">Ask the stuff you would pay a consultant $300 an hour for. Where to apply, how to explain a rough semester, what a school is really looking for. Any time, no appointment.</p>
 					</div>
 					<div class="rounded-3xl border border-slate-200 bg-white p-5 sm:p-6 md:order-1">
@@ -1148,6 +1195,7 @@
 	<section class="py-24 bg-[#001F3F] text-white">
 		<div class="max-w-[1200px] mx-auto px-6 text-center">
 			<div class="max-w-3xl mx-auto space-y-8">
+				<p class="hand text-3xl md:text-4xl text-[#5b8bff]">what students say</p>
 				<div class="flex justify-center text-[#1A4CFF]">
 					{#each Array(5) as _}
 						<svg class="w-6 h-6 fill-current" viewBox="0 0 20 20"

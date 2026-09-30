@@ -18,6 +18,8 @@
 	--font-sans: 'Söhne', 'Hanken Grotesk', 'Inter', ui-sans-serif, system-ui, sans-serif;
 	--font-serif: 'Newsreader', ui-serif, Georgia, 'Times New Roman', serif;
 	--font-inter: 'Söhne', 'Hanken Grotesk', 'Inter', ui-sans-serif, system-ui, sans-serif;
+	/* Handwritten accent (GradGPT-style margin notes / eyebrows). Blue-ink hand. */
+	--font-hand: 'Caveat', 'Segoe Script', cursive;
 
 	/* Shadows */
 	--shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
@@ -67,4 +69,49 @@ body {
 		font-weight: 400;
 		line-height: 1.6;
 	}
+}
+
+/* ---- GradGPT-style editorial accents (handwritten notes + hand-drawn marks) ----
+   Additive charm layer over the clean slate/blue base. Single blue ink accent
+   (#1A4CFF) to match the brand — no second accent color. */
+
+/* In @layer components so Tailwind utilities (text-[...], etc.) can still
+   override — an unlayered rule would beat every utility. */
+@layer components {
+	/* Handwritten note / eyebrow (Caveat), blue ink by default. */
+	.hand {
+		font-family: var(--font-hand);
+		font-weight: 600;
+		color: #1a4cff;
+		line-height: 1;
+	}
+}
+
+/* Hand-drawn squiggle underline under an emphasized word. Wrap the word:
+   <span class="hand-underline">Real</span>. The stroke sits just below the word. */
+.hand-underline {
+	position: relative;
+	white-space: nowrap;
+}
+.hand-underline::after {
+	content: '';
+	position: absolute;
+	left: -2%;
+	right: -2%;
+	bottom: -0.16em;
+	height: 0.34em;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 16' preserveAspectRatio='none'%3E%3Cpath d='M3 11 C 60 4, 120 4, 180 8 S 260 13, 297 6' fill='none' stroke='%231A4CFF' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E");
+	pointer-events: none;
+}
+
+/* Hand-drawn curved arrow (points toward a CTA/card). */
+.hand-arrow {
+	display: inline-block;
+	width: 3.2rem;
+	height: 2.2rem;
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 44'%3E%3Cpath d='M4 8 C 20 2, 44 6, 54 26' fill='none' stroke='%231A4CFF' stroke-width='3.5' stroke-linecap='round'/%3E%3Cpath d='M44 24 L 55 28 L 50 16' fill='none' stroke='%231A4CFF' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 }
