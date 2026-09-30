@@ -851,11 +851,11 @@
 			</p>
 
 			<!-- School trust row: the schools PredictAdmit simulates (honest — not endorsements) -->
-			<div class="mt-14 w-full max-w-4xl mx-auto animate-in fade-in duration-1000 delay-500 fill-mode-both">
+			<div class="mt-14 w-full max-w-6xl mx-auto animate-in fade-in duration-1000 delay-500 fill-mode-both">
 				<p class="text-center text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">
 					Simulates real committee decisions at 39 schools
 				</p>
-				<div class="mt-5">
+				<div class="mt-6">
 					<SchoolLogoMarquee />
 				</div>
 			</div>
