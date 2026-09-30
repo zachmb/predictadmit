@@ -13,6 +13,7 @@
 	} from '$lib/scoring/model';
 	import SiteFooter from '$lib/components/layout/SiteFooter.svelte';
 	import ScrollZoomStory from '$lib/components/home/ScrollZoomStory.svelte';
+	import SchoolLogoMarquee from '$lib/components/home/SchoolLogoMarquee.svelte';
 	import ZoomInHeading from '$lib/components/home/ZoomInHeading.svelte';
 	import AdmitMail from '$lib/components/AdmitMail.svelte';
 	import Card from '$lib/components/common/Card.svelte';
@@ -854,11 +855,8 @@
 				<p class="text-center text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">
 					Simulates real committee decisions at 39 schools
 				</p>
-				<div class="mt-4 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 font-serif text-lg text-slate-400">
-					{#each ['Harvard', 'Stanford', 'MIT', 'Yale', 'Princeton', 'Columbia', 'Chicago', 'Penn', 'Duke', 'Brown', 'Cornell', 'Berkeley'] as s}
-						<span>{s}</span>
-					{/each}
-					<span class="text-slate-300">+ 27 more</span>
+				<div class="mt-5">
+					<SchoolLogoMarquee />
 				</div>
 			</div>
 	</section>
