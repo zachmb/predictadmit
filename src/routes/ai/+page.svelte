@@ -890,9 +890,18 @@
 			// problem is on our side, so we say so honestly (and they weren't charged).
 			let upstreamFailures = 0;
 
-			// 3. Loop through each school slug
-			// Note: Ensure SCHOOLS is imported or defined in your script
-			for (const { slug } of SCHOOLS) {
+			// 3. Loop through each school slug — the applicant's ED/REA pick goes
+			// FIRST so its decision streams in and lands at the top of the inbox
+			// (it's their binding early-round choice, so it's the one that matters
+			// most). Everything else follows in the normal SCHOOLS order.
+			const orderedSchools =
+				edSlug && SCHOOLS.some((s) => s.slug === edSlug)
+					? [
+							...SCHOOLS.filter((s) => s.slug === edSlug),
+							...SCHOOLS.filter((s) => s.slug !== edSlug)
+					  ]
+					: SCHOOLS;
+			for (const { slug } of orderedSchools) {
 				if (myValidId !== currentStoreVersion) return;
 
 				const schoolSpecificSupplemental = supplementals[slug] || '';
