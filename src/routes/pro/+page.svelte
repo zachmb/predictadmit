@@ -9,7 +9,7 @@
 	import { cubicOut } from 'svelte/easing';
 	import RadarChart from '$lib/components/common/RadarChart.svelte';
 	import { schoolConfigs } from '$lib/config/schools';
-	import { schoolPrompts } from '$lib/config/prompts';
+	import { schoolPrompts, commonAppPrompts } from '$lib/config/prompts';
 	import { majors } from '$lib/config/majors';
 	import { states } from '$lib/config/states';
 	import { onMount } from 'svelte';
@@ -202,13 +202,18 @@
 		lastAnalysis?: any;
 	};
 
+	// Common App personal statement: list all 7 official prompts (student picks one).
+	const commonAppContent =
+		'# Common App Personal Statement\n\nChoose ONE of the 7 prompts below (650 words):\n\n' +
+		commonAppPrompts.map((p, i) => `### ${i + 1}. ${p.title}\n${p.description}`).join('\n\n') +
+		'\n\n---\n\n[Paste your essay here...]';
+
 	let files = $state<File[]>([
 		{
 			id: 'common-app',
 			name: 'Common App Personal',
 			language: 'markdown',
-			content:
-				'# Personal Statement\n\n### Prompt\nSome students have a background, identity, interest, or talent that is so meaningful they believe their application would be incomplete without it. If this sounds like you, then please share your story.\n\n[Paste your essay here...]',
+			content: commonAppContent,
 			school: 'Common App',
 			isOpen: true,
 			isModified: false
