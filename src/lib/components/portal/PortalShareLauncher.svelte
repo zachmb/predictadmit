@@ -246,7 +246,7 @@
 	<!-- Floating launcher -->
 	<button
 		type="button"
-		class="share-launcher fixed right-4 z-50 flex items-center gap-2 rounded-full bg-[#1A4CFF] px-4 py-3 font-sans text-sm font-semibold text-white shadow-lg shadow-[#1A4CFF]/25 transition-all hover:bg-[#1540E0] hover:scale-105 focus:ring-4 focus:ring-[#1A4CFF]/20 focus:outline-none sm:right-5 sm:px-5"
+		class="share-launcher fixed right-4 z-50 flex items-center gap-2 rounded-full bg-[#1A4CFF] px-4 py-3 font-sans text-sm font-semibold text-white shadow-lg shadow-[color-mix(in_oklab,#1A4CFF_25%,transparent)] transition-all hover:bg-[#1540E0] hover:scale-105 focus:ring-4 focus:ring-[color-mix(in_oklab,#1A4CFF_20%,transparent)] focus:outline-none sm:right-5 sm:px-5"
 		style="bottom: calc(1.25rem + env(safe-area-inset-bottom));"
 		onclick={openModal}
 	>

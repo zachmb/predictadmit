@@ -190,7 +190,7 @@
 		<!-- Gold footer -->
 		<footer class="bg-[#B3A369] text-[#003057] text-[11px] mt-16">
 			<div class="max-w-6xl mx-auto px-6 py-8">
-				<div class="flex justify-end gap-3 mb-6 text-[#003057]/90 text-sm">
+				<div class="flex justify-end gap-3 mb-6 text-[color-mix(in_oklab,#003057_90%,transparent)] text-sm">
 					<span>f</span><span>◎</span><span>▶</span><span>◉</span><span>❦</span>
 				</div>
 				<div class="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -377,7 +377,7 @@
 		<footer class="bg-[#B3A369] text-[#003057] text-[11px]">
 			<div class="max-w-6xl mx-auto px-6 py-6 flex justify-between items-center">
 				<span>&copy; 2026 Georgia Institute of Technology</span>
-				<span class="text-[#003057]/80"
+				<span class="text-[color-mix(in_oklab,#003057_80%,transparent)]"
 					>PredictAdmit simulation · Not affiliated with the Georgia Institute of Technology</span
 				>
 			</div>

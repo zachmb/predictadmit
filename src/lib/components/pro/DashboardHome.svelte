@@ -150,7 +150,7 @@
 		<div class="grid grid-cols-1 lg:grid-cols-5 gap-5 mb-8">
 			<!-- AI Counselor hero -->
 			<div
-				class="lg:col-span-3 relative overflow-hidden rounded-2xl border border-[#1A4CFF]/20 bg-gradient-to-br from-[#1A4CFF] to-[#0a63e6] p-7 md:p-8 shadow-sm"
+				class="lg:col-span-3 relative overflow-hidden rounded-2xl border border-[color-mix(in_oklab,#1A4CFF_20%,transparent)] bg-gradient-to-br from-[#1A4CFF] to-[#0a63e6] p-7 md:p-8 shadow-sm"
 			>
 				<div
 					class="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/10 blur-2xl"
@@ -246,11 +246,11 @@
 					{#if rec.href}
 						<a
 							href={rec.href}
-							class="group flex flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-[#1A4CFF]/40 hover:shadow-md"
+							class="group flex flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-[color-mix(in_oklab,#1A4CFF_40%,transparent)] hover:shadow-md"
 						>
 							<div class="flex items-start justify-between">
 								<div
-									class="flex h-10 w-10 items-center justify-center rounded-xl bg-[#1A4CFF]/10 text-[#1A4CFF]"
+									class="flex h-10 w-10 items-center justify-center rounded-xl bg-[color-mix(in_oklab,#1A4CFF_10%,transparent)] text-[#1A4CFF]"
 								>
 									{@render icon(rec.icon)}
 								</div>
@@ -273,11 +273,11 @@
 						<button
 							type="button"
 							onclick={rec.action}
-							class="group flex flex-col rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:border-[#1A4CFF]/40 hover:shadow-md"
+							class="group flex flex-col rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:border-[color-mix(in_oklab,#1A4CFF_40%,transparent)] hover:shadow-md"
 						>
 							<div class="flex items-start justify-between">
 								<div
-									class="flex h-10 w-10 items-center justify-center rounded-xl bg-[#1A4CFF]/10 text-[#1A4CFF]"
+									class="flex h-10 w-10 items-center justify-center rounded-xl bg-[color-mix(in_oklab,#1A4CFF_10%,transparent)] text-[#1A4CFF]"
 								>
 									{@render icon(rec.icon)}
 								</div>
@@ -335,7 +335,7 @@
 				<button
 					type="button"
 					onclick={() => setView('schools')}
-					class="rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:border-[#1A4CFF]/40 hover:shadow-md"
+					class="rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:border-[color-mix(in_oklab,#1A4CFF_40%,transparent)] hover:shadow-md"
 				>
 					<p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Schools on list</p>
 					<div class="mt-2 text-3xl font-bold text-slate-900">{schoolCount}</div>
@@ -348,7 +348,7 @@
 				<button
 					type="button"
 					onclick={() => setView('editor')}
-					class="rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:border-[#1A4CFF]/40 hover:shadow-md"
+					class="rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:border-[color-mix(in_oklab,#1A4CFF_40%,transparent)] hover:shadow-md"
 				>
 					<p class="text-xs font-semibold uppercase tracking-wide text-slate-500">
 						Essays in progress

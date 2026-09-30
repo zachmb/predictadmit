@@ -885,7 +885,7 @@
 						<div class="rounded-2xl border border-slate-200 bg-slate-50/60 p-5">
 							<p class="text-xs font-bold uppercase tracking-wide text-slate-500">Personal statement</p>
 							<div class="mt-3 space-y-1.5 text-[13px] leading-relaxed text-slate-600">
-								<p class="rounded bg-[#1A4CFF]/10 px-1.5 py-0.5 text-slate-900 ring-1 ring-[#1A4CFF]/20">Ever since I was young, I have loved science.</p>
+								<p class="rounded bg-[color-mix(in_oklab,#1A4CFF_10%,transparent)] px-1.5 py-0.5 text-slate-900 ring-1 ring-[color-mix(in_oklab,#1A4CFF_20%,transparent)]">Ever since I was young, I have loved science.</p>
 								<p class="text-slate-400">The lab was quiet except for the hum of the</p>
 								<p class="text-slate-400">centrifuge, and I realized I had lost track of time.</p>
 							</div>
@@ -1011,7 +1011,7 @@
 					<ul class="mt-6 space-y-3">
 						{#each ['Each school’s published acceptance rate and middle-50% test range', 'The factors committees rate "very important," weighted per NACAC', 'Calibrated against HYPSM and Top-20 admitted-student profiles'] as point}
 							<li class="flex items-start gap-3 text-slate-700">
-								<span class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#1A4CFF]/10 text-[#1A4CFF]">
+								<span class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[color-mix(in_oklab,#1A4CFF_10%,transparent)] text-[#1A4CFF]">
 									<svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
 								</span>
 								<span class="leading-relaxed">{point}</span>
@@ -1070,7 +1070,7 @@
 								<div class="text-sm font-bold text-slate-900">Free</div>
 								<div class="text-xs text-slate-400">$0</div>
 							</th>
-							<th class="p-5 text-center bg-[#1A4CFF]/[0.04]">
+							<th class="p-5 text-center bg-[color-mix(in_oklab,#1A4CFF_4%,transparent)]">
 								<div class="text-sm font-bold text-[#1A4CFF]">PredictAdmit Pro</div>
 								<div class="text-xs text-slate-500">$9.99/mo</div>
 							</th>
@@ -1093,7 +1093,7 @@
 							<tr class="border-b border-slate-100 last:border-0">
 								<td class="p-5 text-sm font-medium text-slate-700">{row.f}</td>
 								{#each [row.free, row.pro, row.con] as cell, i}
-									<td class="p-5 text-center align-middle {i === 1 ? 'bg-[#1A4CFF]/[0.04]' : ''}">
+									<td class="p-5 text-center align-middle {i === 1 ? 'bg-[color-mix(in_oklab,#1A4CFF_4%,transparent)]' : ''}">
 										{#if cell === true}
 											<svg class="mx-auto h-5 w-5 {i === 1 ? 'text-[#1A4CFF]' : 'text-slate-900'}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
 										{:else if cell === false}

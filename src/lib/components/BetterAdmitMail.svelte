@@ -127,7 +127,7 @@
 	// Single brand-blue avatar tint — one accent, consistent with the rest of the
 	// app (was a 7-color pastel rainbow, which read as AI-generated).
 	function tintFor(_portal: PortalEmail): string {
-		return 'bg-[#1A4CFF]/10 text-[#1A4CFF]';
+		return 'bg-[color-mix(in_oklab,#1A4CFF_10%,transparent)] text-[#1A4CFF]';
 	}
 </script>
 
@@ -278,7 +278,7 @@
 								type="text"
 								bind:value={searchQuery}
 								placeholder="Search mail..."
-								class="w-full pl-10 pr-4 py-2 bg-slate-50 border-none rounded-xl text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-[#1A4CFF]/20 focus:bg-white transition-all"
+								class="w-full pl-10 pr-4 py-2 bg-slate-50 border-none rounded-xl text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-[color-mix(in_oklab,#1A4CFF_20%,transparent)] focus:bg-white transition-all"
 							/>
 						</div>
 					</div>
@@ -492,7 +492,7 @@
 									</p>
 									<p>Log in with the credentials you set up when you applied.</p>
 
-									<div class="flex items-start gap-2.5 rounded-xl border border-[#1A4CFF]/15 bg-[#1A4CFF]/5 px-4 py-3">
+									<div class="flex items-start gap-2.5 rounded-xl border border-[color-mix(in_oklab,#1A4CFF_15%,transparent)] bg-[color-mix(in_oklab,#1A4CFF_5%,transparent)] px-4 py-3">
 										<svg class="mt-0.5 h-4 w-4 shrink-0 text-[#1A4CFF]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" /></svg>
 										<p class="text-sm leading-relaxed text-slate-600">
 											<span class="font-semibold text-[#1A4CFF]">First time?</span> This is a

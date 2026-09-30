@@ -2502,7 +2502,7 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 				<ul class="mt-4 grid grid-cols-1 gap-x-3 gap-y-2 sm:grid-cols-2">
 					{#each ['Decisions across all 39 top schools', 'Committee-style deep-dive on every verdict', 'AI essay editor with reader feedback', 'Per-school strategy for 50+ schools', 'AI counselor, available any time', 'Unlimited re-runs as you edit'] as benefit}
 						<li class="flex items-center gap-2 text-[13px] text-slate-700">
-							<span class="grid h-4 w-4 shrink-0 place-items-center rounded-full bg-[#1A4CFF]/10 text-[#1A4CFF]">
+							<span class="grid h-4 w-4 shrink-0 place-items-center rounded-full bg-[color-mix(in_oklab,#1A4CFF_10%,transparent)] text-[#1A4CFF]">
 								<svg class="h-2.5 w-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
 							</span>
 							{benefit}

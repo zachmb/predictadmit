@@ -126,7 +126,7 @@
 			<div class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
 				<h2 class="text-xs font-bold uppercase tracking-wide text-slate-500">The read</h2>
 				<p class="mt-2 text-sm leading-relaxed text-slate-800">{analysis.overall}</p>
-				<div class="mt-3 rounded-xl border border-[#1A4CFF]/20 bg-[#1A4CFF]/[0.05] px-4 py-3">
+				<div class="mt-3 rounded-xl border border-[color-mix(in_oklab,#1A4CFF_20%,transparent)] bg-[color-mix(in_oklab,#1A4CFF_5%,transparent)] px-4 py-3">
 					<span class="text-xs font-bold uppercase tracking-wide text-[#1A4CFF]">Your spike</span>
 					<p class="mt-1 text-sm text-slate-800">{analysis.spike}</p>
 				</div>

@@ -1773,7 +1773,7 @@
 							<div
 								class="absolute inset-0 flex flex-col items-center justify-center gap-3 px-6 text-center pointer-events-none"
 							>
-								<div class="grid h-14 w-14 place-items-center rounded-2xl bg-[#1A4CFF]/10 text-[#1A4CFF]">
+								<div class="grid h-14 w-14 place-items-center rounded-2xl bg-[color-mix(in_oklab,#1A4CFF_10%,transparent)] text-[#1A4CFF]">
 									<svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.989-2.386l-.548-.547z" /></svg>
 								</div>
 								<p class="text-lg font-bold text-slate-700">Map the story behind your application</p>
@@ -2087,7 +2087,7 @@
 										</div>
 
 										<div
-											class="space-y-1 pl-4 border-l-2 border-[#1A4CFF]/30 opacity-80 bg-slate-900 rounded-r-lg p-2 font-mono text-[10px] text-green-400 shadow-inner"
+											class="space-y-1 pl-4 border-l-2 border-[color-mix(in_oklab,#1A4CFF_30%,transparent)] opacity-80 bg-slate-900 rounded-r-lg p-2 font-mono text-[10px] text-green-400 shadow-inner"
 										>
 											{#each buildOutput.slice(-4) as line}
 												<div class="truncate">
@@ -2539,7 +2539,7 @@
 						<div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
 							<p class="text-xs font-bold uppercase tracking-wide text-slate-500">Personal statement</p>
 							<div class="mt-3 space-y-1.5 text-[13px] leading-relaxed text-slate-600">
-								<p class="rounded bg-[#1A4CFF]/10 px-1.5 py-0.5 text-slate-900 ring-1 ring-[#1A4CFF]/20">Ever since I was young, I have loved science.</p>
+								<p class="rounded bg-[color-mix(in_oklab,#1A4CFF_10%,transparent)] px-1.5 py-0.5 text-slate-900 ring-1 ring-[color-mix(in_oklab,#1A4CFF_20%,transparent)]">Ever since I was young, I have loved science.</p>
 								<p class="text-slate-400">The lab was quiet except for the hum of the centrifuge.</p>
 							</div>
 							<div class="mt-3 flex items-start gap-2 rounded-xl border border-slate-200 bg-white p-3 shadow-sm">

@@ -298,7 +298,7 @@
 				value={$userProfile.name}
 				placeholder="Your name"
 				oninput={(e) => setNameField(e.currentTarget.value)}
-				class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/40 focus:border-[#1A4CFF]"
+				class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[color-mix(in_oklab,#1A4CFF_40%,transparent)] focus:border-[#1A4CFF]"
 			/>
 			<p class="mt-1.5 text-xs text-slate-400">
 				{#if $page.data?.session?.user?.name}
@@ -378,7 +378,7 @@
 										value={bio}
 										placeholder="Tell your story in a few sentences: who you are, what drives you..."
 										oninput={(e) => setLoose('bio', e.currentTarget.value)}
-										class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/40 focus:border-[#1A4CFF]"
+										class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[color-mix(in_oklab,#1A4CFF_40%,transparent)] focus:border-[#1A4CFF]"
 									></textarea>
 								{:else if section.id === 'gradmajor'}
 									<div class="grid sm:grid-cols-2 gap-4">
@@ -392,7 +392,7 @@
 												id="cm-gradyear"
 												value={gradYear}
 												onchange={(e) => setLoose('gradYear', e.currentTarget.value)}
-												class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/40 focus:border-[#1A4CFF]"
+												class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[color-mix(in_oklab,#1A4CFF_40%,transparent)] focus:border-[#1A4CFF]"
 											>
 												<option value="">Select…</option>
 												{#each gradYears as y}
@@ -412,7 +412,7 @@
 												value={intendedMajor}
 												placeholder="e.g. Computer Science"
 												oninput={(e) => setLoose('intendedMajor', e.currentTarget.value)}
-												class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/40 focus:border-[#1A4CFF]"
+												class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[color-mix(in_oklab,#1A4CFF_40%,transparent)] focus:border-[#1A4CFF]"
 											/>
 										</div>
 									</div>
@@ -427,7 +427,7 @@
 										value={$userProfile.applicationProfile.activities}
 										placeholder="List your extracurriculars: role, organization, and impact for each."
 										oninput={(e) => setAppProfile('activities', e.currentTarget.value)}
-										class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/40 focus:border-[#1A4CFF]"
+										class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[color-mix(in_oklab,#1A4CFF_40%,transparent)] focus:border-[#1A4CFF]"
 									></textarea>
 								{:else if section.id === 'awards'}
 									<textarea
@@ -435,7 +435,7 @@
 										value={$userProfile.applicationProfile.awards}
 										placeholder="List honors and awards, with the level (school / regional / national)."
 										oninput={(e) => setAppProfile('awards', e.currentTarget.value)}
-										class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/40 focus:border-[#1A4CFF]"
+										class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[color-mix(in_oklab,#1A4CFF_40%,transparent)] focus:border-[#1A4CFF]"
 									></textarea>
 								{:else if section.id === 'essays'}
 									<textarea
@@ -443,7 +443,7 @@
 										value={$userProfile.applicationProfile.essays}
 										placeholder="Paste your personal statement draft or notes here."
 										oninput={(e) => setAppProfile('essays', e.currentTarget.value)}
-										class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/40 focus:border-[#1A4CFF]"
+										class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[color-mix(in_oklab,#1A4CFF_40%,transparent)] focus:border-[#1A4CFF]"
 									></textarea>
 								{/if}
 							</div>
@@ -473,7 +473,7 @@
 							value={academics.sat}
 							placeholder="—"
 							oninput={(e) => (academics.sat = clampNum(e.currentTarget.value, 400, 1600))}
-							class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/40 focus:border-[#1A4CFF]"
+							class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[color-mix(in_oklab,#1A4CFF_40%,transparent)] focus:border-[#1A4CFF]"
 						/>
 					</div>
 					<div>
@@ -488,7 +488,7 @@
 							value={academics.act}
 							placeholder="—"
 							oninput={(e) => (academics.act = clampNum(e.currentTarget.value, 1, 36))}
-							class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/40 focus:border-[#1A4CFF]"
+							class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[color-mix(in_oklab,#1A4CFF_40%,transparent)] focus:border-[#1A4CFF]"
 						/>
 					</div>
 					<div>
@@ -505,7 +505,7 @@
 							placeholder="—"
 							oninput={(e) =>
 								(academics.weightedGpa = clampNum(e.currentTarget.value, 0, 5))}
-							class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/40 focus:border-[#1A4CFF]"
+							class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[color-mix(in_oklab,#1A4CFF_40%,transparent)] focus:border-[#1A4CFF]"
 						/>
 					</div>
 					<div>
@@ -522,7 +522,7 @@
 							placeholder="—"
 							oninput={(e) =>
 								(academics.unweightedGpa = clampNum(e.currentTarget.value, 0, 4))}
-							class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1A4CFF]/40 focus:border-[#1A4CFF]"
+							class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[color-mix(in_oklab,#1A4CFF_40%,transparent)] focus:border-[#1A4CFF]"
 						/>
 					</div>
 				</div>

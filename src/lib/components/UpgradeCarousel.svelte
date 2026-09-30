@@ -148,7 +148,7 @@
 					{#key step}
 						<div in:fly={{ x: 18, duration: 240 }} class="flex flex-1 flex-col">
 							<div class="text-center">
-								<div class="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-[#1A4CFF]/10 text-[#1A4CFF]">
+								<div class="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-[color-mix(in_oklab,#1A4CFF_10%,transparent)] text-[#1A4CFF]">
 									{#if s.icon === 'bolt'}
 										<svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
 									{:else if s.icon === 'pencil'}
@@ -180,7 +180,7 @@
 									<p class="text-[13px] leading-relaxed text-slate-700">
 										Ever since I was little, I have <span class="rounded bg-amber-100 px-0.5 text-amber-900 line-through decoration-amber-400/70">always been passionate about</span> helping people.
 									</p>
-									<div class="mt-3 flex items-start gap-2 rounded-xl bg-[#1A4CFF]/[0.06] p-3">
+									<div class="mt-3 flex items-start gap-2 rounded-xl bg-[color-mix(in_oklab,#1A4CFF_6%,transparent)] p-3">
 										<div class="grid h-5 w-5 flex-none place-items-center rounded-full bg-[#1A4CFF] text-white">
 											<svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
 										</div>
