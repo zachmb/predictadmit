@@ -2110,8 +2110,8 @@ See what we read from your file
 							decisions. PredictAdmit isn't affiliated with any school.
 						</p>
 						<p class="mt-1 text-[11px] leading-snug font-medium text-slate-600">
-							We're sorry if this feels brutal or disappointing. We calibrated the AI to our actual
-							admissions results, so it runs a lot harsher than a generic AI would.
+							We calibrated the AI to real admissions outcomes, so it's realistic rather than
+							flattering. It can still be wrong in either direction, so treat it as a gut-check, not a verdict.
 						</p>
 					</div>
 					<!-- Conversion moment: the free prediction has landed. A non-Pro user who has

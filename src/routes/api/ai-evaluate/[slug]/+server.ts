@@ -54,6 +54,45 @@ const SCHOOL_MAP: Record<string, string> = {
 	wwu: 'Western Washington University'
 };
 
+// Selectivity tier per school — calibrates the bar to the ACTUAL school. The old
+// prompt anchored EVERY school to "HYPSM / near-perfect academics are the baseline",
+// so a ~25%-admit public (UCI, UF) got judged by Harvard's bar and strong applicants
+// with a real spike were wrongly denied. Tier tells the model how high the bar is and
+// how much an outsized extracurricular spike can offset a slightly-below-average GPA.
+type Tier = 'elite' | 'highly_selective' | 'selective' | 'accessible';
+const SCHOOL_TIER: Record<string, Tier> = {
+	// Elite (~<8% admit): near-perfect academics are the baseline; even a strong spike
+	// rarely rescues a below-range transcript.
+	harvard: 'elite', stanford: 'elite', mit: 'elite', princeton: 'elite', yale: 'elite',
+	columbia: 'elite', uchicago: 'elite', upenn: 'elite', caltech: 'elite', duke: 'elite',
+	brown: 'elite', dartmouth: 'elite', jhu: 'elite', northwestern: 'elite',
+	vanderbilt: 'elite', rice: 'elite', notredame: 'elite',
+	// Highly selective (~8–22%): strong academics expected, but a genuine high-impact
+	// spike can offset a slightly-below-average GPA and tip a decision to admit.
+	cornell: 'highly_selective', wustl: 'highly_selective', georgetown: 'highly_selective',
+	emory: 'highly_selective', ucberkeley: 'highly_selective', ucla: 'highly_selective',
+	usc: 'highly_selective', cmu: 'highly_selective', nyu: 'highly_selective',
+	umich: 'highly_selective', unc: 'highly_selective', uva: 'highly_selective',
+	georgiatech: 'highly_selective', wakeforest: 'highly_selective',
+	// Selective (~22–55%): a solid-but-not-perfect transcript PLUS a real, outsized spike
+	// is typically an ADMIT here, not a deny.
+	ucsd: 'selective', uci: 'selective', ucdavis: 'selective', uf: 'selective',
+	wisconsin: 'selective', purdue: 'selective', osu: 'selective',
+	// Accessible (>55%): most academically qualified applicants are admitted.
+	wwu: 'accessible'
+};
+
+const TIER_GUIDANCE: Record<Tier, string> = {
+	elite:
+		"This is an ELITE school (roughly under 8% admit rate). Near-perfect academics are the baseline, not a differentiator; the applicant pool is saturated with top stats, so essays, character, fit, and a rare spike decide among the academically-perfect. A below-range transcript is rarely rescued even by a strong spike. Most qualified applicants are still denied — reserve 'admit' for the genuinely exceptional.",
+	highly_selective:
+		"This is a HIGHLY SELECTIVE school (roughly 8–22% admit rate). Strong academics are expected, but the bar is below the elites and the class is more stats-varied. A genuine, high-impact extracurricular spike (real scale, leadership, or national-level achievement) CAN offset a slightly-below-average GPA and tip a decision from waitlist/deny toward admit. Judge against THIS school's admitted profile, not an Ivy's.",
+	selective:
+		"This is a SELECTIVE school (roughly 22–55% admit rate). A solid-but-not-perfect transcript (e.g. ~3.6–3.8 unweighted) with strong test scores and a real, outsized extracurricular spike is TYPICALLY AN ADMIT here, not a deny. Do NOT apply elite-school standards. Do NOT invent hard requirements the school does not actually gate on (a specific AP course, demonstrated interest, a 'why us' essay, a particular class rank at a non-ranking school). Reserve 'deny' for files clearly below the school's admitted range (well-below-average GPA with no offsetting strength), not for strong applicants with a minor weakness.",
+	accessible:
+		"This is an ACCESSIBLE school (over ~55% admit rate). Most academically qualified applicants are admitted. Reserve 'deny' for genuinely weak files."
+};
+
 function truncateForModel(text: string, maxChars = 14000): string {
 	if (text.length <= maxChars) return text;
 	return text.slice(0, maxChars) + '\n\n[Truncated for length]';
@@ -127,8 +166,14 @@ export const POST: RequestHandler = async (event) => {
 		return json({ error: 'Please provide application data.' }, { status: 400 });
 	}
 
-	const systemPrompt = `You are a harsh, brutally honest, realistic admissions officer for ${schoolName}.
-Evaluate the applicant strictly based on ${schoolName}'s specific institutional values, culture, and academic rigor.
+	const tier = SCHOOL_TIER[slug] ?? 'highly_selective';
+
+	const systemPrompt = `You are an honest, realistic, well-calibrated admissions officer for ${schoolName}.
+Evaluate the applicant based on ${schoolName}'s specific institutional values, culture, and academic rigor.
+
+SELECTIVITY CALIBRATION — this is the most important instruction, read it first:
+${TIER_GUIDANCE[tier]}
+Calibrate every judgment to THIS school's real admitted-student profile and admit rate. The single biggest error to avoid is judging a less-selective school by an elite school's bar — that produces false denials of applicants who are genuinely competitive here.
 
 Provide a decision and five granular scores (1-10):
 1. **Academic**: Stats/rigor fit for ${schoolName}.
@@ -142,11 +187,9 @@ Your read is grounded in the ${NACAC_SOURCE.orgShort} "${NACAC_SOURCE.report}" s
 ${factorTableForPrompt()}
 
 Derived dimension weights for the overall decision: ${dimensionWeightSummary()}.
-Grades in college-prep courses and strength of curriculum dominate; nothing offsets a weak transcript. NACAC notes importance shifts by institution type — and your calibration set is admitted-student profiles from HYPSM and Top-20 universities in the 2026 admissions cycle, where near-perfect academics are the baseline and test scores carry more weight than at the average NACAC college. Treat academics as the gate, then let character, essays, extracurricular spikes, and demonstrated fit decide among academically qualified applicants.
+Grades in college-prep courses and curriculum strength establish a BASELINE, and importance shifts by institution type (NACAC). But "baseline" is relative to THIS school's tier above — a transcript that is below-range at an elite school can be solidly competitive at a selective one. A genuinely weak transcript (clearly below the school's admitted range, with no offsetting strength) still gates. But outside the elite tier, a rare, high-impact extracurricular spike — real scale, founding and leading something with outsized measurable impact, national-level achievement — IS a major positive that can offset a slightly-below-average GPA and move a decision from deny to admit. Do not let minor rigor nitpicks (one missing AP, no class rank at a school that doesn't rank, a couple of B's) override an otherwise strong, spiky file at a non-elite school.
 
-BE BRUTALLY HONEST. Act like an actual admissions officer at one of the top of universities that only takes the best of the best.
-Don't manufacture issues that aren't there, but be harsh and forthright if there are problems. Your job is to be as accurate as possible when judging 
-what the applicant's decision will be. 
+Be HONEST and accurate, not harsh for its own sake. Your single goal is to predict the REAL decision this applicant would receive as accurately as possible — not to find the maximum number of flaws. Name real weaknesses plainly, but do not manufacture concerns, do not invent requirements the school doesn't actually gate on, and do not pile on criticism that wouldn't actually change the committee's decision. An accurate "admit" for a strong applicant is just as important as an accurate "deny" for a weak one.
 
 That said, there is some randomness to college applications. If an applicant is borderline, or maybe lacking slightly in some areas, 
 if their essays or other parts of their application really stood out to the admissions officer or really aligned with the institution
@@ -160,7 +203,7 @@ specific and detailed.
 
 Take into account the competitiveness of the applicant's selected major at ${schoolName}, and what types of people are usually admitted to this major at the school.
 
-Be brutally honest and realistic. If you admit someone you should have rejected or rejected someone you should have admitted, your job is on the line.
+Be honest and realistic. Accuracy cuts BOTH ways: if you admit someone you should have rejected OR reject someone you should have admitted, your job is on the line. Denying a genuinely competitive applicant is just as serious an error as admitting an unqualified one.
 
 ROUND MATTERS — the applicant metadata tells you whether ${schoolName} is this applicant's ED/REA (early-round) choice:
 - If it IS their ED/REA choice, they applied in the early round. APPLY THE REAL EARLY-ROUND ADMIT BOOST: at nearly every school the early-round admit rate runs materially higher than Regular Decision (often 2–3x), because a binding/committed early applicant signals demonstrated interest and yield certainty that committees reward. So judge this file MORE generously than you would in RD — a borderline-but-academically-qualified applicant who would be a "waitlist"/near-miss in RD should tilt toward "admit" or "defer" here, not "deny". This boost helps applicants who are already in the qualified range; it does NOT rescue a clearly-underqualified file (a weak transcript still gates). A non-admit is EITHER "defer" (their strong-but-not-clear file is pushed to the regular round for another look — the most common early non-admit) OR a hard "deny". NEVER use "waitlist" for an early-round applicant; the waitlist does not exist in the early round.

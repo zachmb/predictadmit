@@ -206,7 +206,7 @@
 							<h3
 								class="text-rose-600 text-xs font-black uppercase tracking-widest border-l-2 border-rose-600 pl-3"
 							>
-								Harsh Critique
+								The Committee's Read
 							</h3>
 
 							<div class="space-y-4 text-[13px] leading-relaxed italic text-slate-600">
