@@ -1191,6 +1191,10 @@
 		</div>
 	</section>
 
+	<div class="max-w-[1200px] mx-auto px-6 py-12">
+		<div id="favente-recruit"></div>
+	</div>
+
 	<!-- TESTIMONIAL (NAVY) -->
 	<section class="py-24 bg-[#001F3F] text-white">
 		<div class="max-w-[1200px] mx-auto px-6 text-center">
