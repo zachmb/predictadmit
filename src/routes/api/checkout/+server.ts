@@ -9,7 +9,7 @@ const STRIPE_SECRET_KEY = env.STRIPE_SECRET_KEY;
 
 const STRIPE_PRICE_ID = env.STRIPE_PRICE_ID;
 
-export const POST: RequestHandler = async ({ request, locals, cookies }) => {
+export const POST: RequestHandler = async ({ request, locals }) => {
 	try {
 		if (!STRIPE_SECRET_KEY) {
 			return json(
@@ -132,14 +132,6 @@ export const POST: RequestHandler = async ({ request, locals, cookies }) => {
 				sessionConfig.customer_creation = 'always';
 			}
 		}
-
-		// Favente's global pixel persists creator referrals in this cookie.
-		// Preserve each plan's existing metadata while attributing the checkout.
-		sessionConfig.metadata = {
-			...sessionConfig.metadata,
-			deo_company: 'predictadmit',
-			deo_ref: cookies.get('deo_ref') ?? ''
-		};
 
 		const session = await stripe.checkout.sessions.create(sessionConfig);
 
