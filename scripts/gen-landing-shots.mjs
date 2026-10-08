@@ -10,7 +10,7 @@
 // tokens via .githooks/pre-commit (see that file).
 
 import { chromium } from 'playwright';
-import { spawn } from 'node:child_process';
+import { spawn, spawnSync } from 'node:child_process';
 import { setTimeout as sleep } from 'node:timers/promises';
 import { mkdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
@@ -62,7 +62,14 @@ function waitForServer(log) {
 async function main() {
 	mkdirSync(OUT, { recursive: true });
 
-	const server = spawn('npx', ['vite', 'dev', '--port', String(PORT), '--strictPort'], {
+	// Build + preview, NOT `vite dev`: the dev server's SSR stalls on the
+	// lucide-svelte barrel import on some machines (fetchModule timeout -> /pro
+	// 500s -> the networkidle goto below times out and the pre-commit hook
+	// aborts every design commit). The production build is deterministic and is
+	// also the exact code the screenshots should show.
+	const built = spawnSync('npm', ['run', 'build'], { cwd: ROOT, stdio: 'inherit' });
+	if (built.status !== 0) throw new Error('build failed before screenshots');
+	const server = spawn('npx', ['vite', 'preview', '--port', String(PORT), '--strictPort'], {
 		cwd: ROOT,
 		stdio: ['ignore', 'pipe', 'pipe']
 	});
@@ -75,8 +82,11 @@ async function main() {
 		const pg = await ctx.newPage();
 		await pg.addInitScript((u) => localStorage.setItem('predictadmit:user', JSON.stringify(u)), SEED_USER);
 
-		await pg.goto(`${BASE}/pro`, { waitUntil: 'networkidle', timeout: 45000 });
-		await sleep(2500);
+		// 'load' + a settle sleep, NOT networkidle: with the seeded Pro profile the
+		// page keeps background requests going (analytics, API retries), so
+		// networkidle never fires and the hook aborted every design commit.
+		await pg.goto(`${BASE}/pro`, { waitUntil: 'load', timeout: 45000 });
+		await sleep(3500);
 
 		for (const { file, click } of SHOTS) {
 			if (click) {
