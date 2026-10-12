@@ -233,6 +233,10 @@
 
 <style>
 	.pa-burger { position: relative; display: inline-flex; flex-direction: column; justify-content: center; gap: 4px; width: 40px; height: 40px; border: none; background: transparent; cursor: pointer; border-radius: 10px; }
+	/* Mobile only. The scoped .pa-burger display beats Tailwind's lg:hidden (equal
+	   specificity, scoped class wins), so hide it on desktop here where the inline
+	   nav is shown (Zach 2026-10-12). */
+	@media (min-width: 1024px) { .pa-burger { display: none; } }
 	.pa-burger:hover { background: rgb(241 245 249); }
 	.pa-burger span { display: block; width: 20px; height: 2px; margin: 0 auto; border-radius: 2px; background: #0f172a; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease; }
 	.pa-burger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
