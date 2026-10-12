@@ -35,6 +35,13 @@
 	let showHeader = true;
 	let timer: ReturnType<typeof setTimeout> | undefined;
 
+	// Mobile menu (the nav links are hidden below lg, so phones had no way to reach
+	// /ai, /portals, /pro, /about). A hamburger opens a slide-down sheet with them.
+	let menuOpen = false;
+	let lastPath = path;
+	$: if (path !== lastPath) { lastPath = path; menuOpen = false; } // close on navigate
+	$: if (typeof document !== 'undefined') document.body.style.overflow = menuOpen ? 'hidden' : '';
+
 	$: session = $page.data.session;
 	// When any overlay/toast is up, the nav grays out + goes non-interactive so it
 	// never competes with the overlay. Driven by the global overlayActive counter.
@@ -134,7 +141,19 @@
 				{/each}
 			</nav>
 
-			<div class="flex items-center pr-1">
+			<div class="flex items-center gap-1.5 pr-1">
+				<!-- Mobile hamburger: the centered nav is hidden below lg, so this is the
+				     only way to reach the pages on a phone. Toggles the slide-down sheet. -->
+				<button
+					type="button"
+					class="pa-burger lg:hidden"
+					class:open={menuOpen}
+					on:click={() => (menuOpen = !menuOpen)}
+					aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+					aria-expanded={menuOpen}
+				>
+					<span></span><span></span><span></span>
+				</button>
 				<a
 					href="/account"
 					class="inline-flex items-center gap-2 bg-slate-900 text-white px-4 py-2 rounded-full hover:bg-black transition-colors font-semibold text-sm shadow-sm"
@@ -181,4 +200,46 @@
 			</div>
 		</div>
 	</header>
+
+	<!-- Mobile nav sheet: slides down below the header with the primary links, so
+	     phones can reach every page. Scrim closes it; links close on navigate. -->
+	{#if menuOpen}
+		<button type="button" class="pa-scrim lg:hidden" aria-label="Close menu" on:click={() => (menuOpen = false)}></button>
+	{/if}
+	<div class="pa-sheet lg:hidden" class:open={menuOpen} aria-hidden={!menuOpen}>
+		<nav class="flex flex-col gap-1 px-4 pb-5">
+			{#each navLinks as link}
+				<a
+					href={link.href}
+					aria-current={link.active ? 'page' : undefined}
+					on:click={() => (menuOpen = false)}
+					class="rounded-xl px-4 py-3 text-[17px] font-medium transition-colors {link.active
+						? 'bg-slate-900 text-white'
+						: 'text-slate-700 hover:bg-slate-100'}"
+				>
+					{link.label}
+				</a>
+			{/each}
+			<a
+				href="/account"
+				on:click={() => (menuOpen = false)}
+				class="mt-1 rounded-xl px-4 py-3 text-[17px] font-semibold text-[#316DE4] hover:bg-slate-100 transition-colors"
+			>
+				{session ? 'Account' : 'Sign in'}
+			</a>
+		</nav>
+	</div>
 {/if}
+
+<style>
+	.pa-burger { position: relative; display: inline-flex; flex-direction: column; justify-content: center; gap: 4px; width: 40px; height: 40px; border: none; background: transparent; cursor: pointer; border-radius: 10px; }
+	.pa-burger:hover { background: rgb(241 245 249); }
+	.pa-burger span { display: block; width: 20px; height: 2px; margin: 0 auto; border-radius: 2px; background: #0f172a; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease; }
+	.pa-burger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+	.pa-burger.open span:nth-child(2) { opacity: 0; }
+	.pa-burger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+	.pa-scrim { position: fixed; inset: 0; z-index: 9997; border: none; padding: 0; background: rgba(15, 23, 42, 0.3); cursor: pointer; }
+	.pa-sheet { position: fixed; inset-inline: 0; top: 0; z-index: 9998; background: rgba(255, 255, 255, 0.97); backdrop-filter: blur(16px); border-bottom: 1px solid rgb(226 232 240); box-shadow: 0 22px 44px -24px rgba(15, 23, 42, 0.28); padding-top: 96px; transform: translateY(-100%); transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1); }
+	.pa-sheet.open { transform: translateY(0); }
+	@media (prefers-reduced-motion: reduce) { .pa-sheet { transition: none; } .pa-burger span { transition: none; } }
+</style>
