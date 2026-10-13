@@ -39,15 +39,15 @@ const firstName = (name?: string) => (name && name.trim() ? name.trim().split(/\
 /** Sent right after a user first signs in — their predictions are waiting. */
 export function welcomeEmail(name?: string): { subject: string; html: string } {
 	return {
-		subject: 'Your 39 admissions predictions are ready to open',
+		subject: 'Your T30 admissions predictions are ready to open',
 		html: layout(
 			`<h1 style="margin:0 0 12px;font-size:22px;font-weight:800;">Hi ${firstName(name)} — your predictions are waiting.</h1>
 			<p style="margin:0 0 16px;font-size:15px;line-height:1.6;color:#475569;">
-				PredictAdmit's AI reads your real application and calls your likely decision — accept, deny, or waitlist — at all 39 top schools. Your first one is free to open.
+				PredictAdmit's AI reads your real application and calls your likely decision — accept, deny, or waitlist — at every T30 school. Your first one is free to open.
 			</p>
 			${button(`${SITE}/ai`, 'Open my predictions →')}
 			<p style="margin:18px 0 0;font-size:13px;line-height:1.6;color:#94a3b8;">It's an estimate calibrated on real admissions results, not an official decision.</p>`,
-			{ preheader: 'Open your first prediction free — accept, deny, or waitlist at 39 top schools.' }
+			{ preheader: 'Open your first prediction free — accept, deny, or waitlist at every T30 school.' }
 		)
 	};
 }
@@ -55,15 +55,15 @@ export function welcomeEmail(name?: string): { subject: string; html: string } {
 /** Nudge after they've opened their one free decision but haven't upgraded. */
 export function seeTheRestEmail(name?: string): { subject: string; html: string } {
 	return {
-		subject: 'You opened 1 of your 39 — here’s what the rest say',
+		subject: 'You opened 1 of your predictions — here’s what the rest say',
 		html: layout(
 			`<h1 style="margin:0 0 12px;font-size:22px;font-weight:800;">Curious about the other 38, ${firstName(name)}?</h1>
 			<p style="margin:0 0 16px;font-size:15px;line-height:1.6;color:#475569;">
-				You've seen one predicted decision. Open any other for $4.99 (deep-dive on why included), or unlock all 39 — plus unlimited re-runs and Pro essay editing — for $25 once (or $9.99/mo).
+				You've seen one predicted decision. Open any other for $4.99 (deep-dive on why included), or unlock the full T30 — plus unlimited re-runs and Pro essay editing — for $25 once (or $9.99/mo).
 			</p>
 			${button(`${SITE}/ai`, 'See the rest of my decisions →')}
 			<p style="margin:18px 0 0;font-size:13px;line-height:1.6;color:#94a3b8;">A private counselor runs $5,000+ a season. This is a fraction of one hour.</p>`,
-			{ preheader: 'Open any decision for $4.99, or unlock all 39 for $25 once.' }
+			{ preheader: 'Open any decision for $4.99, or unlock the full T30 for $25 once.' }
 		)
 	};
 }

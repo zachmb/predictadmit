@@ -76,14 +76,14 @@
 </script>
 
 <svelte:head>
-	<title>Free College Chances Calculator: Your Odds at 39 Top Schools | PredictAdmit</title>
+	<title>Free College Chances Calculator: Your Odds at the T30 | PredictAdmit</title>
 	<meta
 		name="description"
-		content="Free college chances calculator, no sign-up. Enter your GPA, test score, and activities to see your admission odds at Harvard, Stanford, MIT and 36 other top schools in seconds, sorted into likely, target, and reach."
+		content="Free college chances calculator, no sign-up. Enter your GPA, test score, and activities to see your admission odds at Harvard, Stanford, MIT and the rest of the T30 in seconds, sorted into likely, target, and reach."
 	/>
 	<link rel="canonical" href="https://predictadmit.com/chances" />
-	<meta property="og:title" content="Free College Chances Calculator: Your Odds at 39 Top Schools" />
-	<meta property="og:description" content="See your admission odds at 39 top schools in seconds. No sign-up." />
+	<meta property="og:title" content="Free College Chances Calculator: Your Odds at the T30" />
+	<meta property="og:description" content="See your admission odds at the T30 in seconds. No sign-up." />
 	<meta property="og:url" content="https://predictadmit.com/chances" />
 	<script type="application/ld+json">
 		{
@@ -92,7 +92,7 @@
 			"name": "PredictAdmit Chances Calculator",
 			"applicationCategory": "EducationApplication",
 			"offers": { "@type": "Offer", "price": "0" },
-			"description": "Free college admissions chances calculator for 39 top US universities."
+			"description": "Free college admissions chances calculator for the T30 US universities."
 		}
 	</script>
 </svelte:head>
@@ -108,7 +108,7 @@
 				College Chances Calculator
 			</h1>
 			<p class="mx-auto mt-4 max-w-lg text-base leading-relaxed text-slate-500 sm:text-lg">
-				See your admission odds at <span class="font-semibold text-slate-700">39 top schools</span> in
+				See your admission odds at <span class="font-semibold text-slate-700">the T30</span> in
 				about 10 seconds. No account, no credit card, just the math.
 			</p>
 		</header>

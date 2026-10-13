@@ -59,8 +59,8 @@
 			</button>
 			<p class="text-sm font-bold leading-snug">That was a simulation. Want your real one?</p>
 			<p class="mt-1 text-xs leading-relaxed text-blue-100">
-				PredictAdmit's AI reads your actual application and predicts your decision at all 39 top
-				schools. Your first prediction is free.
+				PredictAdmit's AI reads your actual application and predicts your decision at every T30
+				school. Your first prediction is free.
 			</p>
 			<button
 				onclick={go}

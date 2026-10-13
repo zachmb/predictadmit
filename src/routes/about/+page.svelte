@@ -3,7 +3,7 @@
 
 	const stats = [
 		{ value: '5,000+', label: 'Students on PredictAdmit' },
-		{ value: '39', label: 'School scenarios' },
+		{ value: 'T30', label: 'Top schools' },
 		{ value: '$25', label: 'Lifetime, one-time' },
 		{ value: 'Free', label: 'First prediction' }
 	];
@@ -12,7 +12,7 @@
 		{
 			icon: '🎯',
 			title: 'Rehearse decision day',
-			body: 'Open a fictional portal, status page, or decision letter for any of 39 schools and feel the moment before it counts. Every screen says "simulation" on it. That is the point: you get to flinch here instead of on the real day.'
+			body: 'Open a fictional portal, status page, or decision letter for any of the T30 and feel the moment before it counts. Every screen says "simulation" on it. That is the point: you get to flinch here instead of on the real day.'
 		},
 		{
 			icon: '✍️',
@@ -42,7 +42,7 @@
 	const faqs: { q: string; a: string; link?: { href: string; label: string } }[] = [
 		{
 			q: 'Is PredictAdmit free?',
-			a: 'The portal decision simulations are free. Open any school, rehearse the moment, no card required. Your first AI prediction is free too. After that, Lifetime access is $25 once (or $9.99/mo) for all 39 schools, unlimited re-runs, and the essay workshop. Care about one school only? A single-school unlock is $4.99.'
+			a: 'The portal decision simulations are free. Open any school, rehearse the moment, no card required. Your first AI prediction is free too. After that, Lifetime access is $25 once (or $9.99/mo) for the full T30, unlimited re-runs, and the essay workshop. Care about one school only? A single-school unlock is $4.99.'
 		},
 		{
 			q: 'Are the decision letters real?',
@@ -50,7 +50,7 @@
 		},
 		{
 			q: 'What does Pro include?',
-			a: 'The AI reading of your application across all 39 schools, the full analysis behind each prediction (five scored dimensions plus what to fix), unlimited essay grading, the AI counselor, and the mind-map planner. One payment, no add-ons.'
+			a: 'The AI reading of your application across every T30 school, the full analysis behind each prediction (five scored dimensions plus what to fix), unlimited essay grading, the AI counselor, and the mind-map planner. One payment, no add-ons.'
 		},
 		{
 			q: 'How accurate is the predictor?',
@@ -176,7 +176,7 @@
 		</div>
 		<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
 			{#each [
-				{ icon: '🔮', title: 'Unlimited AI predictions', body: 'Run your real profile against all 39 schools as often as you like. Change an essay, rerun, see what moved. That is the loop consultants bill by the hour.' },
+				{ icon: '🔮', title: 'Unlimited AI predictions', body: 'Run your real profile against every T30 school as often as you like. Change an essay, rerun, see what moved. That is the loop consultants bill by the hour.' },
 				{ icon: '🔬', title: 'The full analysis', body: 'Every prediction comes with five scored dimensions, a committee-style written critique, and a ranked list of what to fix for that school. The why, not just the verdict.' },
 				{ icon: '📝', title: 'Unlimited essay grading', body: 'Ten inline notes plus a harsh read and an honest admissions-officer read on every draft. See it before a real committee does.' }
 			] as f}

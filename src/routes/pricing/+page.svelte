@@ -68,7 +68,7 @@
 	}
 
 	const fullFeatures = [
-		'Unlimited AI admissions rehearsals across all 39 schools',
+		'Unlimited AI admissions rehearsals across every T30 school',
 		'Every deep-dive decision analysis: 5 scored dimensions, AO-style critique, and an improvement plan per school',
 		'Unlimited essay grading: 10 inline annotations + harsh and honest AO reads on every draft',
 		'AI counselor with your full application in context',
@@ -77,7 +77,7 @@
 	];
 
 	const freeFeatures = [
-		'Run the AI across all 39 schools, free',
+		'Run the AI across every T30 school, free',
 		'Open your first predicted decision free',
 		'Clearly labeled fictional portals and decision letters',
 		'No credit card required'
@@ -115,7 +115,7 @@
 							<span class="text-sm text-slate-400">to start</span>
 						</div>
 						<p class="mt-4 text-sm leading-relaxed text-slate-500">
-							Run the AI across all 39 schools and open your first decision. See where you stand, no card.
+							Run the AI across every T30 school and open your first decision. See where you stand, no card.
 						</p>
 						<ul class="mt-6 mb-8 space-y-2.5">
 							{#each freeFeatures as f}

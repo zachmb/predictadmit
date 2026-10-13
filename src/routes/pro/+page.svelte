@@ -884,7 +884,7 @@
 		},
 		{
 			q: 'Is this a subscription?',
-			a: "You have two options. Monthly is $9.99 a month while you're applying. Cancel anytime, and it's the easiest way to start. Or Lifetime, a single $25 payment with no subscription and nothing to cancel; about two and a half months of Monthly costs the same. Both cover all 39 schools, unlimited re-runs, and the essay workshop. Your first prediction is free, so you see the value before you pay."
+			a: "You have two options. Monthly is $9.99 a month while you're applying. Cancel anytime, and it's the easiest way to start. Or Lifetime, a single $25 payment with no subscription and nothing to cancel; about two and a half months of Monthly costs the same. Both cover every T30 school, unlimited re-runs, and the essay workshop. Your first prediction is free, so you see the value before you pay."
 		},
 		{
 			q: 'What if I only care about one school?',
@@ -905,7 +905,7 @@
 	<title>PredictAdmit Pro: your real admission decision, months early</title>
 	<meta
 		name="description"
-		content="PredictAdmit Pro is a full application workshop, not just a predictor: predicted decisions across 39 schools with deep-dive analysis, an AI essay editor that reads like an admissions officer, per-school strategy, a narrative mind map, and an AI counselor. First prediction free, then $9.99/mo (or $25 once)."
+		content="PredictAdmit Pro is a full application workshop, not just a predictor: predicted decisions across every T30 school with deep-dive analysis, an AI essay editor that reads like an admissions officer, per-school strategy, a narrative mind map, and an AI counselor. First prediction free, then $9.99/mo (or $25 once)."
 	/>
 </svelte:head>
 
@@ -2369,7 +2369,7 @@
 			<div class="grid gap-4 sm:grid-cols-3">
 				{#each [
 					{ n: '1', t: 'Paste your application', d: 'Drop in your essays, activities, honors, and scores. Or upload the file and let the AI read it.' },
-					{ n: '2', t: 'Get your decisions', d: 'Watch accept, waitlist, and deny letters land in a real-feeling inbox across all 39 top schools.' },
+					{ n: '2', t: 'Get your decisions', d: 'Watch accept, waitlist, and deny letters land in a real-feeling inbox across every T30 school.' },
 					{ n: '3', t: 'Fix what is weak, re-run', d: 'Use the workshop to tighten essays and framing, then run it again and watch your odds move.' }
 				] as step}
 					<div>
@@ -2427,10 +2427,10 @@
 							</div>
 							<p class="mt-1 text-xs text-slate-400">Billed monthly. Cancel anytime.</p>
 							<p class="mt-3 text-sm leading-relaxed text-slate-500">
-								Everything, while you're applying. Your verdict at all 39 schools and the full workshop to fix what's weak.
+								Everything, while you're applying. Your verdict at every T30 school and the full workshop to fix what's weak.
 							</p>
 							<ul class="mt-6 mb-8 space-y-2.5">
-								{#each ['Your verdict at all 39 top schools', 'The five-reader committee on every one', 'AI essay editor + per-school strategy', 'AI counselor + unlimited re-runs'] as f}
+								{#each ['Your verdict at every T30 school', 'The five-reader committee on every one', 'AI essay editor + per-school strategy', 'AI counselor + unlimited re-runs'] as f}
 									<li class="flex items-start gap-2.5 text-sm text-slate-700">
 										<svg class="mt-0.5 h-4 w-4 flex-none text-[#316DE4]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
 										{f}
@@ -2491,10 +2491,10 @@
 				<!-- Alternating feature rows: a bold headline + one line beside a real
 				     product mock (Trajecta-style editorial layout). -->
 				<div class="space-y-16 md:space-y-24">
-					<!-- Row 1: verdict across all 39 -->
+					<!-- Row 1: verdict across the T30 -->
 					<div class="grid items-center gap-8 md:grid-cols-2 md:gap-14">
 						<div>
-							<h3 class="mt-3 font-serif text-3xl font-medium tracking-tight text-slate-900">Your verdict at all 39 top schools</h3>
+							<h3 class="mt-3 font-serif text-3xl font-medium tracking-tight text-slate-900">Your verdict at every T30 school</h3>
 							<p class="mt-3 text-[15px] leading-relaxed text-slate-500">Run your real application through the AI once and watch accept, waitlist, and deny land across every top school. Change an essay or a score and re-run it, no cap.</p>
 						</div>
 						<div class="rounded-3xl border border-slate-200 bg-slate-50 p-5 sm:p-6">

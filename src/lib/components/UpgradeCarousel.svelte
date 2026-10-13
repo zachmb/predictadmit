@@ -35,7 +35,7 @@
 			kind: 'benefit',
 			eyebrow: 'PredictAdmit Pro',
 			title: "Perfect your applications before it's too late.",
-			body: 'The AI reads your real application and calls your decision at all 39 top schools: admit, deny, waitlist, or defer. Then a five-reader committee shows you exactly what drove it.',
+			body: 'The AI reads your real application and calls your decision at every T30 school: admit, deny, waitlist, or defer. Then a five-reader committee shows you exactly what drove it.',
 			icon: 'bolt',
 			shot: '/onboarding/dashboard.png'
 		},
@@ -43,7 +43,7 @@
 			kind: 'benefit',
 			eyebrow: 'Unlimited',
 			title: 'Run it as many times as you want',
-			body: 'Change an essay, a score, an activity. Re-run across all 39 schools and watch your odds move in real time.',
+			body: 'Change an essay, a score, an activity. Re-run across every T30 school and watch your odds move in real time.',
 			icon: 'search',
 			shot: '/onboarding/schools.png'
 		},
@@ -237,7 +237,7 @@
 						<div class="text-center">
 							<h2 class="font-serif text-[28px] font-medium leading-[1.1] tracking-tight text-slate-900">Pick your plan</h2>
 							<p class="mx-auto mt-2 max-w-xs text-[15px] leading-relaxed text-slate-500">
-								Your first prediction is free. This unlocks all 39, forever.
+								Your first prediction is free. This unlocks the full T30, forever.
 							</p>
 						</div>
 
@@ -277,7 +277,7 @@
 						</div>
 
 						<ul class="mx-auto mt-5 max-w-[17rem] space-y-1.5">
-							{#each ['All 39 predicted decisions', 'Unlimited re-runs', 'Deep-dive on every verdict', 'Unlimited essay editing', 'AI counselor + founder advice'] as f}
+							{#each ['Every T30 predicted decision', 'Unlimited re-runs', 'Deep-dive on every verdict', 'Unlimited essay editing', 'AI counselor + founder advice'] as f}
 								<li class="flex items-center gap-2.5 text-sm text-slate-600">
 									<svg class="h-4 w-4 flex-none text-[#316DE4]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
 									{f}
@@ -286,7 +286,7 @@
 						</ul>
 
 						<p class="mx-auto mt-5 max-w-xs text-center text-xs text-slate-400">
-							<span class="font-semibold text-slate-600">Less than a single college application fee</span>, and it covers all 39.
+							<span class="font-semibold text-slate-600">Less than a single college application fee</span>, and it covers the full T30.
 						</p>
 					</div>
 				{/if}

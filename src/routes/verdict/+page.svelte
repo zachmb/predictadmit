@@ -98,7 +98,7 @@
 	<title>Run your full admission simulation — PredictAdmit</title>
 	<meta
 		name="description"
-		content="Add your stats and run your real AI admission simulation across all 39 top schools in about 20 seconds. Accept, deny, or waitlist at every school. First run free."
+		content="Add your stats and run your real AI admission simulation across every T30 school in about 20 seconds. Accept, deny, or waitlist at every school. First run free."
 	/>
 </svelte:head>
 
@@ -123,7 +123,7 @@
 					bind:value={schoolSlug}
 					class="mt-2 w-full cursor-pointer rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 transition hover:border-slate-300 focus:border-[#316DE4] focus:outline-none focus:ring-4 focus:ring-[color-mix(in_oklab,#316DE4_10%,transparent)]"
 				>
-					<option value="">All 39 schools</option>
+					<option value="">Every T30 school</option>
 					{#each schoolOptions as s}
 						<option value={s.slug}>{s.name}</option>
 					{/each}
@@ -206,7 +206,7 @@
 				{launching ? 'Starting your simulation…' : 'Run my full simulation →'}
 			</button>
 			<p class="text-center text-xs text-slate-400">
-				A real AI read of your file across all 39 schools. Not a real or official decision; not affiliated with any school.
+				A real AI read of your file across every T30 school. Not a real or official decision; not affiliated with any school.
 			</p>
 		</div>
 	</div>
