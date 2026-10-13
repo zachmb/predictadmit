@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { get } from 'svelte/store';
 	import { schoolConfigs } from '$lib/config/schools';
-	import { onDestroy, onMount } from 'svelte';
+	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { userProfile } from '$lib/stores/user';
 	import { aiResults, manualOverrideMode } from '$lib/stores/results';
@@ -308,6 +308,10 @@
 	// prediction runs the moment they arrive (Zach, 2026-09-17). The portal
 	// simulator lives on /portals now, not the landing.
 	let heroStats = '';
+	// Hero entry mode: predict real decisions (paste/upload) vs. rehearse one
+	// school's portal. Both paths already exist in this script; the toggle just
+	// surfaces the simulate path, which previously had no entry point.
+	let heroMode: 'predict' | 'simulate' = 'predict';
 	function startPrediction() {
 		const stats = heroStats.trim();
 		try {
@@ -374,29 +378,6 @@
 			pdfReading = false;
 		}
 	}
-
-	// ---- Early-deadline countdown (mirrors the Pro dashboard) ---------------
-	const deadlineTarget = new Date('2026-11-01T00:00:00-06:00');
-	let nowTs = Date.now();
-	let countdownTimer: ReturnType<typeof setInterval> | null = null;
-	onMount(() => {
-		countdownTimer = setInterval(() => (nowTs = Date.now()), 1000);
-	});
-	onDestroy(() => {
-		if (countdownTimer) clearInterval(countdownTimer);
-	});
-	const pad2 = (n: number) => String(n).padStart(2, '0');
-	$: heroCountdown = (() => {
-		let diff = Math.max(0, deadlineTarget.getTime() - nowTs);
-		const days = Math.floor(diff / 86_400_000);
-		diff -= days * 86_400_000;
-		const hours = Math.floor(diff / 3_600_000);
-		diff -= hours * 3_600_000;
-		const minutes = Math.floor(diff / 60_000);
-		diff -= minutes * 60_000;
-		const seconds = Math.floor(diff / 1000);
-		return { days, hours, minutes, seconds };
-	})();
 
 	// ... [Keeping existing helper functions: startCalendar, startRdEmailTimeline, formatTime, etc.] ...
 	const startCalendar = () => {
@@ -628,14 +609,14 @@
 				operatingSystem: 'Web',
 				url: 'https://predictadmit.com',
 				description:
-					'PredictAdmit predicts your college admissions decisions at 39 top schools and gives you the tools to improve your application: an AI essay editor, per-school strategy, a narrative mind map, and an AI counselor.',
+					'PredictAdmit predicts your college admissions decisions at every T30 school and gives you the tools to improve your application: an AI essay editor, per-school strategy, a narrative mind map, and an AI counselor.',
 				offers: [
 					{ '@type': 'Offer', price: '0', priceCurrency: 'USD', name: 'First prediction free' },
 					{ '@type': 'Offer', price: '25', priceCurrency: 'USD', name: 'Lifetime access' },
 					{ '@type': 'Offer', price: '9.99', priceCurrency: 'USD', name: 'Monthly' }
 				],
 				featureList: [
-					'AI admissions decision predictions across 39 top schools',
+					'AI admissions decision predictions across every T30 school',
 					'Essay editor with AI feedback that reads like an admissions officer',
 					'Per-school application strategy for 50+ schools',
 					'Narrative mind map to shape your application story',
@@ -658,7 +639,7 @@
 						name: 'Does PredictAdmit only predict decisions, or does it help improve my application?',
 						acceptedAnswer: {
 							'@type': 'Answer',
-							text: 'Both. Beyond predicting your decision at 39 top schools, PredictAdmit includes a full workshop to improve your application: an essay editor with AI feedback that reads like an admissions officer and keeps your own voice, per-school strategy notes, a narrative mind map, and an AI counselor. The prediction shows exactly where you stand and why; the workshop helps you fix it before you submit.'
+							text: 'Both. Beyond predicting your decision at every T30 school, PredictAdmit includes a full workshop to improve your application: an essay editor with AI feedback that reads like an admissions officer and keeps your own voice, per-school strategy notes, a narrative mind map, and an AI counselor. The prediction shows exactly where you stand and why; the workshop helps you fix it before you submit.'
 						}
 					},
 					{
@@ -687,12 +668,12 @@
 	<title>PredictAdmit: Predict your college decisions, then improve your application</title>
 	<meta
 		name="description"
-		content="PredictAdmit predicts your admissions decision at 39 top schools, shows exactly why, and gives you the tools to fix it: an AI essay editor, per-school strategy, a narrative mind map, and an AI counselor. Your first prediction is free."
+		content="PredictAdmit predicts your admissions decision at every T30 school, shows exactly why, and gives you the tools to fix it: an AI essay editor, per-school strategy, a narrative mind map, and an AI counselor. Your first prediction is free."
 	/>
 	<meta property="og:title" content="PredictAdmit: Predict your decisions, then improve your application" />
 	<meta
 		property="og:description"
-		content="Predict your admissions decision at 39 top schools and get the full workshop to improve your application: AI essay feedback, per-school strategy, and an AI counselor. First prediction free."
+		content="Predict your admissions decision at every T30 school and get the full workshop to improve your application: AI essay feedback, per-school strategy, and an AI counselor. First prediction free."
 	/>
 	<meta property="og:type" content="website" />
 	<meta property="og:url" content="https://predictadmit.com" />
@@ -709,151 +690,140 @@
 			<!-- Headline -->
 			<div class="space-y-6 max-w-4xl mx-auto mb-10">
 				<h1
-					class="font-serif text-5xl sm:text-6xl md:text-[5.5rem] font-medium tracking-tight leading-[1.0] text-slate-900 animate-in fade-in slide-in-from-bottom-6 duration-1000 fill-mode-both"
+					class="font-serif text-4xl sm:text-5xl md:text-[4rem] font-medium tracking-tight leading-[1.05] text-slate-900 animate-in fade-in slide-in-from-bottom-6 duration-1000 fill-mode-both"
 				>
-					Predict Your <span class="hand-underline">Real</span> <br class="hidden md:block" /> College <span class="text-[#316DE4]">Decisions</span>
+					The first AI that accurately <span class="text-[#316DE4]">predicts and simulates</span> college decisions
 				</h1>
 				<p
 					class="text-lg md:text-xl text-slate-500 max-w-2xl mx-auto leading-relaxed tracking-tight font-medium mt-5 animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-[200ms] fill-mode-both"
 				>
-					Enter your stats and the AI predicts your real decision at all 39 top schools, free. It sits a full admissions committee on your file and shows you exactly what to fix.
+					Predict your decisions, simulate any portal manually, and edit your application based on your results.
 				</p>
 			</div>
 
-			<!-- Handwritten note pointing to the card (GradGPT-style margin annotation) -->
-			<div class="mb-2 flex items-end justify-center gap-1.5 md:mr-40">
-				<span class="hand text-xl md:text-2xl">paste anything · 20 seconds</span>
-				<span class="hand-arrow translate-y-1 rotate-[8deg]"></span>
-			</div>
-
-			<!-- Hero action row: autofill card (left) + live countdown (right) -->
+			<!-- Hero start card -->
 			<div
-				class="w-full max-w-4xl mx-auto flex flex-col md:flex-row items-start justify-center gap-4 md:gap-5 relative z-20 animate-in fade-in slide-in-from-bottom-5 duration-700 delay-150 fill-mode-both"
+				class="w-full max-w-xl mx-auto text-left rounded-3xl border border-slate-200 bg-white p-2 shadow-[0_30px_80px_-30px_rgba(15,23,42,0.18)] relative z-20 animate-in fade-in slide-in-from-bottom-5 duration-700 delay-150 fill-mode-both"
 			>
-				<!-- PRIMARY action: a simplified version of the /ai "Autofill the boxes"
-				     card. Upload a PDF (read client-side with unpdf) or paste text; the
-				     handoff to /ai then splits it across every field (startPrediction
-				     stashes it as pa_sim_prefill + autoruns on /ai). -->
-				<div class="flex-1 w-full md:max-w-xl text-left rounded-3xl border border-slate-200 bg-white p-6 sm:p-7 shadow-[0_30px_80px_-30px_rgba(15,23,42,0.18)]">
-					<!-- Autofill header — matches /ai -->
-					<div class="flex items-center justify-between gap-3 mb-4">
-						<div class="flex items-center gap-3">
-							<div class="w-10 h-10 rounded-xl bg-slate-900 flex items-center justify-center shrink-0">
-								<svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" /></svg>
-							</div>
-							<div>
-								<h3 class="text-sm font-bold text-slate-900">Autofill the boxes</h3>
-								<p class="text-xs text-slate-500 mt-0.5">Upload a PDF or paste a wall of text. The AI splits it into every field.</p>
-							</div>
-						</div>
-						<label class="shrink-0 cursor-pointer inline-flex items-center gap-2 rounded-xl border-2 border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition-all hover:border-blue-400 hover:text-blue-700 hover:bg-slate-50">
-							{#if pdfReading}
-								<span class="h-3.5 w-3.5 animate-spin rounded-full border-2 border-slate-300 border-t-blue-600"></span>
-								Reading…
-							{:else}
-								<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" /></svg>
-								Choose PDF
-							{/if}
-							<input type="file" accept="application/pdf" class="hidden" on:change={handleHeroPdf} />
-						</label>
-					</div>
-
-					{#if pdfDone}
-						<p class="mb-3 flex items-center gap-1.5 text-xs font-semibold text-emerald-600">
-							<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
-							Got your PDF — review the text below, then predict.
-						</p>
-					{/if}
-					{#if pdfError}
-						<p class="mb-3 flex items-start gap-1.5 text-xs font-medium text-rose-600">
-							<svg class="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" /></svg>
-							{pdfError}
-						</p>
-					{/if}
-
-					<textarea
-						bind:value={heroStats}
-						rows="4"
-						placeholder="Dump it all here: GPA, SAT/ACT, activities, awards, intended major, essay. The AI sorts it into the right boxes."
-						class="w-full resize-y rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-900 outline-none placeholder:text-slate-400 shadow-sm transition-all hover:border-slate-300 focus:border-blue-600 focus:ring-4 focus:ring-blue-600/10"
-					></textarea>
+				<!-- Segmented mode switch: predict real decisions, or rehearse one
+				     school's portal. Both paths already exist in this script. -->
+				<div class="grid grid-cols-2 gap-1 rounded-2xl bg-slate-100 p-1" role="tablist">
 					<button
-						on:click={startPrediction}
-						class="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#316DE4] px-6 py-3.5 text-base font-semibold text-white shadow-sm transition-all hover:bg-[#1C57CC] active:scale-95"
+						type="button"
+						role="tab"
+						aria-selected={heroMode === 'predict'}
+						on:click={() => (heroMode = 'predict')}
+						class="rounded-xl px-3 py-2 text-sm font-semibold transition-all {heroMode === 'predict' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-700'}"
 					>
-						Predict all 39 decisions, free
-						<span aria-hidden="true">&rarr;</span>
+						Predict my decisions
+					</button>
+					<button
+						type="button"
+						role="tab"
+						aria-selected={heroMode === 'simulate'}
+						on:click={() => (heroMode = 'simulate')}
+						class="rounded-xl px-3 py-2 text-sm font-semibold transition-all {heroMode === 'simulate' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-700'}"
+					>
+						Simulate a school
 					</button>
 				</div>
 
-				<!-- Live countdown (right of the card) -->
-				<div class="w-full md:w-64 shrink-0 text-left rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-					<div class="flex items-start justify-between gap-2">
-						<div>
-							<p class="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Early Deadlines</p>
-							<p class="text-sm font-bold text-slate-900">Nov 1, 2026</p>
+				<div class="p-4 sm:p-5">
+					{#if heroMode === 'predict'}
+						<div class="flex items-center justify-between gap-3 mb-3">
+							<h3 class="text-sm font-bold text-slate-900">Predict your decisions</h3>
+							<label class="shrink-0 cursor-pointer inline-flex items-center gap-2 rounded-xl border-2 border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition-all hover:border-blue-400 hover:text-blue-700 hover:bg-slate-50">
+								{#if pdfReading}
+									<span class="h-3.5 w-3.5 animate-spin rounded-full border-2 border-slate-300 border-t-blue-600"></span>
+									Reading…
+								{:else}
+									<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" /></svg>
+									upload application pdf
+								{/if}
+								<input type="file" accept="application/pdf" class="hidden" on:change={handleHeroPdf} />
+							</label>
 						</div>
-						<span class="flex items-center gap-1.5 text-xs font-semibold text-[#316DE4]">
-							<span class="relative flex h-2 w-2">
-								<span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#316DE4] opacity-75"></span>
-								<span class="relative inline-flex h-2 w-2 rounded-full bg-[#316DE4]"></span>
-							</span>
-							LIVE
-						</span>
-					</div>
-					<div class="mt-4 grid grid-cols-2 gap-2">
-						{#each [{ label: 'Days', value: heroCountdown.days }, { label: 'Hours', value: heroCountdown.hours }, { label: 'Min', value: heroCountdown.minutes }, { label: 'Sec', value: heroCountdown.seconds }] as box}
-							<div class="rounded-xl bg-slate-50 border border-slate-100 py-2.5 text-center">
-								<div class="text-xl font-bold tabular-nums text-slate-900">
-									{box.label === 'Days' ? box.value : pad2(box.value)}
-								</div>
-								<div class="mt-0.5 text-[10px] font-medium uppercase tracking-wide text-slate-400">{box.label}</div>
+
+						{#if pdfDone}
+							<p class="mb-3 flex items-center gap-1.5 text-xs font-semibold text-emerald-600">
+								<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
+								Got your PDF. Review the text below, then predict.
+							</p>
+						{/if}
+						{#if pdfError}
+							<p class="mb-3 flex items-start gap-1.5 text-xs font-medium text-rose-600">
+								<svg class="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" /></svg>
+								{pdfError}
+							</p>
+						{/if}
+
+						<textarea
+							bind:value={heroStats}
+							rows="4"
+							placeholder="or paste your stats and essays in - ai will sort it"
+							class="w-full resize-y rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-900 outline-none placeholder:text-slate-400 shadow-sm transition-all hover:border-slate-300 focus:border-blue-600 focus:ring-4 focus:ring-blue-600/10"
+						></textarea>
+						<button
+							on:click={startPrediction}
+							class="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#316DE4] px-6 py-3.5 text-base font-semibold text-white shadow-sm transition-all hover:bg-[#1C57CC] active:scale-95"
+						>
+							Predict every T30 decision, free
+							<span aria-hidden="true">&rarr;</span>
+						</button>
+					{:else}
+						<div class="mb-3 flex items-center justify-between gap-3">
+							<h3 class="text-sm font-bold text-slate-900">Rehearse a school's portal</h3>
+							<!-- Rehearse an acceptance or a rejection (sets manualOverrideMode) -->
+							<div class="grid grid-cols-2 gap-1 rounded-xl bg-slate-100 p-1 text-xs font-semibold">
+								<button type="button" on:click={() => manualOverrideMode.set('accepted')} class="rounded-lg px-2.5 py-1 transition-all {$manualOverrideMode === 'accepted' ? 'bg-white text-emerald-700 shadow-sm' : 'text-slate-500 hover:text-slate-700'}">Acceptance</button>
+								<button type="button" on:click={() => manualOverrideMode.set('denied')} class="rounded-lg px-2.5 py-1 transition-all {$manualOverrideMode !== 'accepted' ? 'bg-white text-rose-700 shadow-sm' : 'text-slate-500 hover:text-slate-700'}">Rejection</button>
 							</div>
-						{/each}
-					</div>
+						</div>
+						<div class="relative">
+							<input
+								type="text"
+								bind:value={searchQuery}
+								on:keydown={handleKeydown}
+								placeholder="Search a school, then open its portal…"
+								class="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-900 outline-none placeholder:text-slate-400 shadow-sm transition-all hover:border-slate-300 focus:border-blue-600 focus:ring-4 focus:ring-blue-600/10"
+							/>
+							{#if showSearchResults}
+								<ul class="absolute left-0 right-0 top-full z-30 mt-2 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl">
+									{#each filteredUniversities as uni, i}
+										<li>
+											<button
+												type="button"
+												on:click={() => handleUniversitySelect(uni.slug)}
+												class="flex w-full items-center justify-between gap-3 px-4 py-2.5 text-left text-sm font-medium text-slate-700 transition-colors {i === selectedIndex ? 'bg-slate-50' : 'hover:bg-slate-50'}"
+											>
+												{uni.name}
+												<span class="text-xs text-slate-400">Open portal &rarr;</span>
+											</button>
+										</li>
+									{/each}
+								</ul>
+							{/if}
+						</div>
+						<p class="mt-3 text-xs leading-relaxed text-slate-400">A fictional practice portal, clearly labeled as a simulation. Not a real decision or any school's system.</p>
+					{/if}
 				</div>
 			</div>
 
-			<!-- Under-hero: three trust cards side by side -->
-			<div class="mt-8 w-full max-w-4xl mx-auto grid gap-4 sm:grid-cols-3 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300 fill-mode-both">
-				<!-- Card 1: Free -->
-				<div class="text-left rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-					<span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-[color-mix(in_oklab,#316DE4_10%,transparent)] text-[#316DE4]">
-						<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-					</span>
-					<p class="mt-3 text-sm font-bold text-slate-900">Free</p>
-					<p class="mt-1 text-[13px] leading-relaxed text-slate-500">Sign in with Google to see all your real decisions. No credit card.</p>
-				</div>
-				<!-- Card 2: Calibrated -->
-				<div class="text-left rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-					<span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-[color-mix(in_oklab,#316DE4_10%,transparent)] text-[#316DE4]">
-						<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
-					</span>
-					<p class="mt-3 text-sm font-bold text-slate-900">Calibrated on real results</p>
-					<p class="mt-1 text-[13px] leading-relaxed text-slate-500">Read against 5,000+ applicant profiles and the NACAC factors committees actually weigh.</p>
-				</div>
-				<!-- Card 3: Private -->
-				<div class="text-left rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-					<span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-[color-mix(in_oklab,#316DE4_10%,transparent)] text-[#316DE4]">
-						<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
-					</span>
-					<p class="mt-3 text-sm font-bold text-slate-900">Private to your browser</p>
-					<p class="mt-1 text-[13px] leading-relaxed text-slate-500">Your inputs stay on your device. Nothing is stored on a server.</p>
-				</div>
-			</div>
+			<!-- One quiet trust line (was three cards) -->
+			<p class="mt-6 text-center text-sm text-slate-500 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300 fill-mode-both">
+				Free with Google, no card. Calibrated on 5,000+ real profiles. Private to your browser.
+			</p>
 
 			<!-- One merged fine-print line -->
 			<p class="mt-5 max-w-xl mx-auto text-center text-[11px] leading-relaxed text-slate-400">
 				An estimate from NACAC factor weights, not an official decision and never affiliated with any school.
 				<a href="/methodology" class="font-medium text-slate-500 underline underline-offset-2 hover:text-slate-900">Methodology →</a>
-				<span class="mx-1.5 text-slate-300">·</span>
-				<a href="/portals" class="font-medium text-slate-500 underline underline-offset-2 hover:text-slate-900">Rehearse a portal →</a>
 			</p>
 
 			<!-- School trust row: the schools PredictAdmit simulates (honest — not endorsements) -->
 			<div class="mt-14 w-full max-w-6xl mx-auto animate-in fade-in duration-1000 delay-500 fill-mode-both">
 				<p class="text-center text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">
-					Simulates real committee decisions at 39 schools
+					Simulates real committee decisions at every T30 school
 				</p>
 				<div class="mt-6">
 					<SchoolLogoMarquee />
@@ -1139,7 +1109,7 @@
 					</thead>
 					<tbody>
 						{#each [
-							{ f: 'Predicted decisions at 39 schools', free: 'One school', pro: true, con: 'Guesswork' },
+							{ f: 'Predicted decisions at every T30', free: 'One school', pro: true, con: 'Guesswork' },
 							{ f: 'Committee-style deep-dive on every verdict', free: 'One school', pro: true, con: 'Sometimes' },
 							{ f: 'Unlimited re-runs as you edit', free: false, pro: true, con: false },
 							{ f: 'Line-by-line essay feedback', free: false, pro: true, con: true },
@@ -1183,7 +1153,7 @@
 			<div class="divide-y divide-slate-200 border-t border-slate-200">
 				{#each [
 					{ q: 'Can an AI really predict my admissions decision?', a: 'It predicts, it does not promise. The read is trained on real admitted-student profiles and the factors committees actually weigh, then it scores your file the way five readers would. Treat it as a sharp dry run, not a verdict to lose sleep over.' },
-					{ q: 'What do I get for free?', a: 'Run one full simulation across all 39 schools, unlock one school’s results, and open one full committee deep-dive. No card, no account beyond a Google sign-in. You only pay once it has already shown you something you did not know.' },
+					{ q: 'What do I get for free?', a: 'Run one full simulation across every T30 school, unlock one school’s results, and open one full committee deep-dive. No card, no account beyond a Google sign-in. You only pay once it has already shown you something you did not know.' },
 					{ q: 'Does it just predict, or does it help me improve?', a: 'Both, and the improving is the point. Pro reads your essays line by line, tells you what each school weighs, and answers your questions like a counselor. The prediction shows where you stand; the workshop is how you move.' },
 					{ q: 'Will it write my essays for me?', a: 'No, on purpose. It marks what is weak and asks the questions a reader would, but it never writes or rewrites a sentence you could paste in. Colleges can revoke an offer over AI-written text, and the work has to sound like you.' },
 					{ q: 'Is this affiliated with the universities?', a: 'No. The decision portals are clearly labeled simulations, and PredictAdmit is not affiliated with, endorsed by, or connected to any school.' },
