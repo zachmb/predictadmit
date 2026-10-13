@@ -1039,6 +1039,16 @@
 					Unlock all of Pro for $9.99/mo
 				</a>
 			</div>
+
+			<aside class="mt-16 flex flex-col gap-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between sm:p-8" aria-labelledby="creator-invite-title">
+				<div class="max-w-xl">
+					<h3 id="creator-invite-title" class="font-serif text-2xl font-medium tracking-tight text-slate-900">Already using PredictAdmit?</h3>
+					<p class="mt-2 text-sm leading-relaxed text-slate-500">Share your application journey as a paid creator for PredictAdmit.</p>
+				</div>
+				<div class="shrink-0">
+					<div id="favente-recruit"></div>
+				</div>
+			</aside>
 		</div>
 	</section>
 
@@ -1190,10 +1200,6 @@
 			</div>
 		</div>
 	</section>
-
-	<div class="max-w-[1200px] mx-auto flex justify-center px-6 py-12">
-		<div id="favente-recruit"></div>
-	</div>
 
 	<!-- TESTIMONIAL (NAVY) -->
 	<section class="py-24 bg-[#001F3F] text-white">
