@@ -13,30 +13,9 @@
 	import { userProfile } from '$lib/stores/user';
 	import { majors } from '$lib/config/majors';
 	import { track } from '$lib/analytics';
-	import { onMount } from 'svelte';
+	import DeadlineCountdown from '$lib/components/DeadlineCountdown.svelte';
 
 	const signedIn = $derived(!!$page.data.session?.user);
-
-	// Early-deadline countdown to Nov 1, 2026 (ED/EA). Ticks live every second.
-	const deadline = new Date('2026-11-01T00:00:00').getTime();
-	let now = $state(deadline);
-	let cd = $derived.by(() => {
-		const d = Math.max(0, deadline - now);
-		const s = Math.floor(d / 1000);
-		return {
-			days: Math.floor(s / 86400),
-			hours: Math.floor((s % 86400) / 3600),
-			mins: Math.floor((s % 3600) / 60),
-			secs: s % 60,
-			over: d <= 0
-		};
-	});
-	onMount(() => {
-		now = Date.now();
-		const t = setInterval(() => (now = Date.now()), 1000);
-		return () => clearInterval(t);
-	});
-	const pad = (n: number) => String(n).padStart(2, '0');
 
 	// School picker options (name + slug for all 39), alphabetized for scanning.
 	const schoolOptions = [...portals]
@@ -125,34 +104,12 @@
 </svelte:head>
 
 <main class="min-h-screen bg-[#f4f4f0] font-sans text-slate-900">
-	<!-- Sticky early-deadline countdown — right rail on large screens, stays put on scroll -->
+	<!-- Sticky early-deadline countdown — same card as the Pro dashboard, pinned to
+	     the right rail on large screens, stays put on scroll. -->
 	<aside class="pointer-events-none fixed right-6 top-1/2 z-40 hidden -translate-y-1/2 xl:block 2xl:right-12">
-		<div class="pointer-events-auto w-[220px] overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-xl">
-			<div class="flex items-center justify-between gap-2 border-b border-slate-100 px-5 py-3">
-				<span class="text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">Countdown</span>
-				<span class="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.14em] text-[#0c0c09]">
-					<span class="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-[#0c0c09]"></span>
-					Live
-				</span>
-			</div>
-			<div class="px-5 py-4">
-				<p class="text-sm font-semibold text-slate-900">Early deadlines</p>
-				<p class="text-xs text-slate-400">Nov 1, 2026</p>
-				{#if cd.over}
-					<p class="mt-4 text-sm font-semibold text-[#0c0c09]">Deadlines are here.</p>
-				{:else}
-					<div class="mt-4 grid grid-cols-4 gap-1.5 text-center">
-						{#each [{ v: cd.days, l: 'days' }, { v: cd.hours, l: 'hrs' }, { v: cd.mins, l: 'min' }, { v: cd.secs, l: 'sec' }] as u}
-							<div class="rounded-xl bg-[#f4f4f0] py-2">
-								<div class="font-serif text-xl font-medium tabular-nums text-slate-900">{pad(u.v)}</div>
-								<div class="mt-0.5 text-[9px] font-semibold uppercase tracking-wide text-slate-400">{u.l}</div>
-							</div>
-						{/each}
-					</div>
-				{/if}
-				<p class="mt-4 text-[11px] leading-snug text-slate-500">Run your read now, while there's still time to fix it.</p>
-			</div>
-		</div>
+		<DeadlineCountdown
+			wrapperClass="pointer-events-auto w-[300px] rounded-2xl border border-slate-200 bg-white p-6 shadow-xl"
+		/>
 	</aside>
 	<div class="mx-auto flex min-h-screen max-w-xl flex-col justify-center px-6 py-16">
 		<!-- Header copy stays constant across phases so it reads as one moment. -->

@@ -10,6 +10,7 @@
 	import BetterAdmitMail from '$lib/components/BetterAdmitMail.svelte';
 	import DecisionChat from '$lib/components/DecisionChat.svelte';
 	import UpgradeCarousel from '$lib/components/UpgradeCarousel.svelte';
+	import DeadlineCountdown from '$lib/components/DeadlineCountdown.svelte';
 	import {
 		sentEmails as baseSentEmails,
 		type PortalEmail,
@@ -996,7 +997,7 @@
 			}
 		} catch (err: any) {
 			console.error(err);
-			aiError = 'Something broke on the way to the AI. Try running it again.';
+			aiError = 'Something broke on the way to PredictAdmit AI. Try running it again.';
 			return;
 		} finally {
 			if (currentStoreVersion === myValidId) {
@@ -1368,6 +1369,17 @@
 		></div>
 	</div>
 
+	<!-- Sticky early-deadline countdown — same card as the Pro dashboard, pinned to
+	     the right rail on large screens. Shown in the builder phase only (the inbox
+	     renders full-width once results land, so the card hides to avoid overlap). -->
+	{#if !hasUsedFreeSimulation && !$userProfile.isSubmittingAI}
+		<aside class="pointer-events-none fixed right-6 top-1/2 z-40 hidden -translate-y-1/2 xl:block 2xl:right-12">
+			<DeadlineCountdown
+				wrapperClass="pointer-events-auto w-[300px] rounded-2xl border border-slate-200 bg-white p-6 shadow-xl"
+			/>
+		</aside>
+	{/if}
+
 	<!-- Main content wrapper -->
 	<div class="relative z-10">
 		<div class="max-w-7xl mx-auto px-6 lg:px-10 py-24 space-y-16">
@@ -1379,7 +1391,7 @@
 
 				<!-- Bolder + skimmable: the value reads in one glance, key phrases bolded. -->
 				<p class="max-w-2xl text-lg sm:text-xl leading-relaxed text-slate-600">
-					AI <span class="font-semibold text-slate-900">calls your decision</span> at every T30 school. A <span class="font-semibold text-slate-900">five-reader committee</span> shows you why.
+					<span class="font-semibold text-slate-900">PredictAdmit AI</span> calls your decision at every T30 school. A <span class="font-semibold text-slate-900">five-reader committee</span> shows you why.
 				</p>
 
 				<!-- Skimmable value list (new serif register), ending on the free hook. -->
@@ -1930,7 +1942,7 @@ Picking one applies that school's real early-round odds
 											/>
 										</svg>
 										<p class="text-xs text-slate-600 leading-relaxed">
-											Your inputs go to the AI to be scored, and that's it. We <strong
+											Your inputs go to PredictAdmit AI to be scored, and that's it. We <strong
 												class="text-slate-900">don't keep them</strong
 											>, and nothing ever reaches a college.
 										</p>
@@ -2027,7 +2039,7 @@ Picking one applies that school's real early-round odds
 									class="text-sm text-slate-400 hover:text-slate-600 underline decoration-dotted underline-offset-2 transition-colors whitespace-nowrap"
 									onclick={resetInboxState}
 								>
-									Clear AI inbox
+									Clear inbox
 								</button>
 							</div>
 
@@ -2089,11 +2101,11 @@ See what we read from your file
 					     A student must not mistake the inbox metaphor for an actual result. -->
 					<div class="px-6 py-2.5 bg-slate-50 border-b border-slate-100">
 						<p class="text-[11px] leading-snug text-slate-500">
-							These are the AI's best guess from what you gave it. Estimates, not real or official
+							These are PredictAdmit AI's best guess from what you gave it. Estimates, not real or official
 							decisions. PredictAdmit isn't affiliated with any school.
 						</p>
 						<p class="mt-1 text-[11px] leading-snug font-medium text-slate-600">
-							We calibrated the AI to real admissions outcomes, so it's realistic rather than
+							We calibrated PredictAdmit AI to real admissions outcomes, so it's realistic rather than
 							flattering. It can still be wrong in either direction, so treat it as a gut-check, not a verdict.
 						</p>
 					</div>
@@ -2475,7 +2487,7 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 								: 'You’ve used your one free decision. Open this one for $4.99 (deep-dive included), or unlock the full T30.'
 							: paywallMode === 'deepDive'
 								? 'Open the full breakdown of this decision. What drove it, and what would move it.'
-								: 'Point the AI at your real application: predicted decisions at every school, a committee-style deep-dive on each, and an essay editor to fix what is weak.'}
+								: 'Point PredictAdmit AI at your real application: predicted decisions at every school, a committee-style deep-dive on each, and an essay editor to fix what is weak.'}
 					</p>
 				</div>
 			</div>

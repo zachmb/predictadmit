@@ -346,55 +346,48 @@
 								</div>
 							{:else}
 								{#each filteredPortals as portal (portal.slug)}
+									{@const unread = !readPortalSlugs.has(portal.slug)}
+									<!-- Gmail-style row: checkbox · star · sender · subject — snippet · date.
+									     Unread = white + bold; read = faint gray + normal. Hover lifts the
+									     row (Gmail's signature shadow) and swaps the date for action icons. -->
 									<button
 										on:click={() => selectPortal(portal)}
-										class={`w-full text-left px-6 py-4 border-b border-slate-50 hover:bg-slate-50 transition-colors flex items-start gap-4 group ${readPortalSlugs.has(portal.slug) ? 'opacity-80' : 'bg-white'}`}
+										class={`group relative flex w-full items-center gap-3 px-4 text-left border-b border-slate-100 h-12 transition-shadow hover:z-10 hover:shadow-[0_1px_2px_0_rgba(12,12,9,0.18),0_2px_6px_1px_rgba(12,12,9,0.1)] ${unread ? 'bg-white' : 'bg-slate-50/60'}`}
 									>
-										<!-- Unread dot -->
-										<div class="w-2 flex-shrink-0 self-center">
-											{#if !readPortalSlugs.has(portal.slug)}
-												<span class="block w-2 h-2 rounded-full bg-[#0c0c09]"></span>
+										<!-- checkbox (decorative) -->
+										<span class="shrink-0 text-slate-300">
+											<svg class="h-[18px] w-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="3" /></svg>
+										</span>
+										<!-- star (decorative) -->
+										<span class={`shrink-0 ${unread ? 'text-slate-300' : 'text-slate-200'}`}>
+											<svg class="h-[18px] w-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6"><path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.5l2.2 4.46 4.92.72-3.56 3.47.84 4.9-4.4-2.31-4.4 2.31.84-4.9L4.4 8.68l4.92-.72 2.16-4.46z" /></svg>
+										</span>
+										<!-- sender -->
+										<span class={`w-36 sm:w-44 shrink-0 truncate text-sm ${unread ? 'font-bold text-slate-900' : 'text-slate-600'}`}>
+											{portal.name}
+										</span>
+										<!-- subject — snippet -->
+										<span class="flex min-w-0 flex-1 items-center gap-2 text-sm">
+											<span class="truncate">
+												<span class={unread ? 'font-semibold text-slate-900' : 'text-slate-600'}>{portal.subject}</span>
+												<span class="text-slate-400"> - {previewFor(portal)}</span>
+											</span>
+											{#if lockedSlugs.has(portal.slug)}
+												<span class="shrink-0 inline-flex items-center gap-1 rounded-full border border-slate-200 bg-slate-100 px-2 py-[1px] text-[9px] font-bold text-slate-500">
+													<svg class="h-2.5 w-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+													$4.99
+												</span>
 											{/if}
-										</div>
-
-										<!-- Avatar/Icon -->
-										<div
-											class={`w-10 h-10 rounded-full flex-shrink-0 flex items-center justify-center text-sm font-bold ${readPortalSlugs.has(portal.slug) ? 'bg-slate-100 text-slate-400' : tintFor(portal)}`}
-										>
-											{portal.name[0]}
-										</div>
-
-										<div class="flex-1 min-w-0">
-											<div class="flex justify-between items-baseline mb-1">
-												<span
-													class={`text-sm truncate pr-2 ${readPortalSlugs.has(portal.slug) ? 'font-medium text-slate-500' : 'font-bold text-slate-900'}`}
-												>
-													{portal.name}
-												</span>
-												<span class="text-xs text-slate-400 font-medium whitespace-nowrap">
-													{getReceivedLabel(portal)}
-												</span>
-											</div>
-											<div class="text-sm text-slate-600 truncate flex items-center gap-2">
-												<div class="truncate">
-													<span
-														class={readPortalSlugs.has(portal.slug)
-															? 'text-slate-500'
-															: 'font-semibold text-slate-800'}>{portal.subject}</span
-													>
-													<span class="text-slate-300 mx-1.5">·</span>
-													<span class="text-slate-400">{previewFor(portal)}</span>
-												</div>
-												{#if lockedSlugs.has(portal.slug)}
-													<span
-														class="shrink-0 inline-flex items-center gap-1 rounded-full border border-slate-200 bg-slate-100 px-2 py-[1px] text-[9px] font-bold text-slate-500"
-													>
-														<svg class="h-2.5 w-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
-														$4.99
-													</span>
-												{/if}
-											</div>
-										</div>
+										</span>
+										<!-- date (default) / action icons (hover) -->
+										<span class={`shrink-0 text-xs whitespace-nowrap group-hover:hidden ${unread ? 'font-bold text-slate-900' : 'text-slate-500'}`}>
+											{getReceivedLabel(portal)}
+										</span>
+										<span class="hidden shrink-0 items-center gap-1.5 text-slate-500 group-hover:flex" aria-hidden="true">
+											<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M5 8h14M5 8l1 11a2 2 0 002 2h8a2 2 0 002-2l1-11M9 8V5a2 2 0 012-2h2a2 2 0 012 2v3" /></svg>
+											<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M4 7l.7 12a2 2 0 002 1.9h10.6a2 2 0 002-1.9L20 7M9 7V5a2 2 0 012-2h2a2 2 0 012 2v2" /></svg>
+											<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l9 6 9-6M4 6h16a1 1 0 011 1v10a1 1 0 01-1 1H4a1 1 0 01-1-1V7a1 1 0 011-1z" /></svg>
+										</span>
 									</button>
 								{/each}
 							{/if}
@@ -402,28 +395,20 @@
 							{#each sentEmails as message (message.id)}
 								<button
 									on:click={() => selectSent(message)}
-									class="w-full text-left px-6 py-4 border-b border-slate-50 hover:bg-slate-50 transition-colors flex items-start gap-4 group"
+									class="group relative flex w-full items-center gap-3 px-4 text-left border-b border-slate-100 h-12 bg-white transition-shadow hover:z-10 hover:shadow-[0_1px_2px_0_rgba(12,12,9,0.18),0_2px_6px_1px_rgba(12,12,9,0.1)]"
 								>
-									<div
-										class="w-10 h-10 rounded-full bg-slate-100 text-slate-500 flex-shrink-0 flex items-center justify-center text-xs font-bold"
-									>
-										Me
-									</div>
-									<div class="flex-1 min-w-0">
-										<div class="flex justify-between items-baseline mb-1">
-											<span class="text-sm font-bold text-slate-900 truncate pr-2"
-												>To: {message.to}</span
-											>
-											<span class="text-xs text-slate-400 font-medium whitespace-nowrap"
-												>{message.sent}</span
-											>
-										</div>
-										<div class="text-sm text-slate-600 truncate">
-											<span class="font-medium text-slate-800">{message.subject}</span>
-											<span class="text-slate-400 mx-1">·</span>
-											<span class="text-slate-500">{message.preview}</span>
-										</div>
-									</div>
+									<span class="shrink-0 text-slate-300">
+										<svg class="h-[18px] w-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="3" /></svg>
+									</span>
+									<span class="shrink-0 text-slate-200">
+										<svg class="h-[18px] w-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6"><path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.5l2.2 4.46 4.92.72-3.56 3.47.84 4.9-4.4-2.31-4.4 2.31.84-4.9L4.4 8.68l4.92-.72 2.16-4.46z" /></svg>
+									</span>
+									<span class="w-36 sm:w-44 shrink-0 truncate text-sm text-slate-600">To: {message.to}</span>
+									<span class="min-w-0 flex-1 truncate text-sm">
+										<span class="text-slate-600">{message.subject}</span>
+										<span class="text-slate-400"> - {message.preview}</span>
+									</span>
+									<span class="shrink-0 text-xs whitespace-nowrap text-slate-500">{message.sent}</span>
 								</button>
 							{/each}
 						{/if}
@@ -451,27 +436,38 @@
 
 					<div class="flex-1 overflow-y-auto p-8 bg-white">
 						{#if activeFolder === 'inbox' && selectedPortal}
-							<div class="max-w-2xl mx-auto">
-								<span class="inline-flex items-center gap-1.5 rounded-full border border-amber-200 bg-amber-50 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-amber-700">
-									<svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-									Simulated notification
-								</span>
+							<div class="max-w-3xl mx-auto">
+								<!-- Subject row (Gmail: 22px normal weight) + decorative actions -->
+								<div class="flex items-start justify-between gap-4">
+									<h1 class="text-[22px] font-normal leading-snug text-slate-800">
+										{selectedPortal.subject}
+										<span class="ml-1.5 inline-block translate-y-[-1px] rounded bg-slate-100 px-1.5 py-0.5 align-middle text-[11px] font-medium text-slate-500">Simulated</span>
+									</h1>
+									<div class="flex shrink-0 items-center gap-1 pt-1 text-slate-400" aria-hidden="true">
+										<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7"><path stroke-linecap="round" stroke-linejoin="round" d="M5 8h14M5 8l1 11a2 2 0 002 2h8a2 2 0 002-2l1-11M9 8V5a2 2 0 012-2h2a2 2 0 012 2v3" /></svg>
+										<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M4 7l.7 12a2 2 0 002 1.9h10.6a2 2 0 002-1.9L20 7M9 7V5a2 2 0 012-2h2a2 2 0 012 2v2" /></svg>
+									</div>
+								</div>
 
-								<h1 class="mt-3 font-serif text-2xl sm:text-3xl font-medium tracking-tight leading-tight text-slate-900">{selectedPortal.subject}</h1>
-
-								<!-- Sender card -->
-								<div class="mt-5 flex items-center gap-3.5 rounded-2xl border border-slate-200 bg-slate-50/70 p-4">
-									<div
-										class={`h-11 w-11 shrink-0 rounded-full flex items-center justify-center text-base font-bold ${tintFor(selectedPortal)}`}
-									>
+								<!-- Sender line (Gmail conversation header) -->
+								<div class="mt-5 flex items-start gap-3">
+									<div class={`h-10 w-10 shrink-0 rounded-full flex items-center justify-center text-base font-bold ${tintFor(selectedPortal)}`}>
 										{selectedPortal.name[0]}
 									</div>
 									<div class="min-w-0 flex-1">
-										<div class="flex items-center justify-between gap-2">
-											<p class="truncate text-sm font-bold text-slate-900">{selectedPortal.name} Admissions</p>
-											<span class="shrink-0 text-[11px] font-medium text-slate-500">{getReceivedLabel(selectedPortal)}</span>
+										<div class="flex flex-wrap items-center gap-x-2 gap-y-0.5">
+											<span class="text-sm font-bold text-slate-900">{selectedPortal.name} Admissions</span>
+											<span class="truncate text-xs text-slate-500">&lt;{selectedPortal.from}&gt;</span>
 										</div>
-										<p class="truncate text-xs text-slate-500">{selectedPortal.from} · to you</p>
+										<div class="flex items-center gap-1 text-xs text-slate-500">
+											to me
+											<svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
+										</div>
+									</div>
+									<div class="flex shrink-0 items-center gap-3 text-slate-400">
+										<span class="whitespace-nowrap text-xs text-slate-500">{getReceivedLabel(selectedPortal)}</span>
+										<svg class="h-[18px] w-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6"><path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.5l2.2 4.46 4.92.72-3.56 3.47.84 4.9-4.4-2.31-4.4 2.31.84-4.9L4.4 8.68l4.92-.72 2.16-4.46z" /></svg>
+										<svg class="h-[18px] w-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h10a4 4 0 014 4v1M3 10l5-5M3 10l5 5" /></svg>
 									</div>
 								</div>
 
@@ -525,6 +521,18 @@
 										Office of Undergraduate Admissions<br />
 										{selectedPortal.name}
 									</p>
+
+									<!-- Gmail reply / forward footer (decorative — the real action is View above) -->
+									<div class="mt-8 flex flex-wrap gap-3" aria-hidden="true">
+										<span class="inline-flex items-center gap-2 rounded-full border border-slate-300 px-5 py-2 text-sm font-medium text-slate-600">
+											<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h10a4 4 0 014 4v1M3 10l5-5M3 10l5 5" /></svg>
+											Reply
+										</span>
+										<span class="inline-flex items-center gap-2 rounded-full border border-slate-300 px-5 py-2 text-sm font-medium text-slate-600">
+											<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M21 10H11a4 4 0 00-4 4v1m14-5l-5-5m5 5l-5 5" /></svg>
+											Forward
+										</span>
+									</div>
 								</div>
 							</div>
 						{:else if activeFolder === 'sent' && selectedSent}

@@ -767,7 +767,7 @@
 					class="hero-sub text-lg md:text-xl text-slate-500 max-w-3xl leading-relaxed tracking-tight font-medium mt-5 animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-[200ms] fill-mode-both"
 				>
 					<span class="font-semibold text-slate-900 tabular-nums">{predictedCountLabel}+</span> students have
-					predicted their decisions, simulated exact portals and acceptance letters to their dream schools, and used
+					predicted their decisions, simulated exact portals and real acceptance letters to their dream schools, and used
 					<a href="/pro" class="font-semibold text-slate-900 underline decoration-slate-300 underline-offset-2 transition-colors hover:decoration-slate-900">Pro's</a>
 					application help to get in.
 				</p>
@@ -1096,9 +1096,9 @@
 			<div class="columns-1 sm:columns-2 lg:columns-3 gap-5 [column-fill:_balance]">
 				{#each [
 					{ quote: 'ts was lowkey genuinely accurate. ran my file before decisions dropped and it basically called it.', name: 'Miao S.', school: 'Accepted to Northwestern, Class of 2030', tint: 6 },
-					{ quote: 'The deep-dive REALLY helped me. It showed me exactly what each committee was going to catch before they caught it.', name: 'Daniel R.', school: 'Class of 2030', tint: 10 },
-					{ quote: 'The line-by-line editing got me into Stanford, and half the T20s. I cannot overstate how much the essay feedback changed my application.', name: 'Kabir A.', school: 'Accepted to Stanford, Class of 2030', tint: 14 },
-					{ quote: 'This tool helped me progress in scholarships such as the Robertson full ride to Duke.', name: 'Zachary B.', school: 'Robertson Scholar, Duke', tint: 8 }
+					{ quote: 'The deep-dive REALLY helped me. It showed me exactly what each committee was going to catch before they caught it.', name: 'Daniel G.', school: 'Class of 2030', tint: 10 },
+					{ quote: 'The line-by-line editing got me into Stanford, and half the T20s. I cannot overstate how much the essay feedback changed my application.', name: 'Kabir K.', school: 'Accepted to Stanford, Class of 2030', tint: 14 },
+					{ quote: 'This tool helped me progress in scholarships such as the Robertson full ride to Duke.', name: 'Zachary B.', school: 'Class of 2030', tint: 8 }
 				] as t}
 					<div class="mb-5 break-inside-avoid rounded-3xl border border-slate-200 bg-white p-7" style="background-color: color-mix(in oklab, #0c0c09 {t.tint}%, #ffffff)">
 						<div class="flex items-center gap-1 text-amber-500">
