@@ -119,7 +119,7 @@
 				class="absolute max-w-[22ch] px-6 text-center font-serif text-3xl font-medium leading-tight tracking-tight text-white sm:max-w-2xl sm:text-5xl"
 				style="opacity:{o2}; transform: translateY({y2}px);"
 			>
-				Re-run infinite predictions. <span class="text-[#474739]">See what'll happen.</span>
+				Re-run infinite predictions. <span class="text-[#c9c7b5]">See what'll happen.</span>
 			</h2>
 
 			<!-- Line 3 + "and more" — constant size, rises + fades in -->
