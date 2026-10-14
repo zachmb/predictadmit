@@ -2370,8 +2370,7 @@
 			     funnels toward pasting essays for help (the paid essay grader). -->
 			<section>
 				<div class="max-w-2xl">
-					<p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Free · no card</p>
-					<h2 class="mt-4 font-serif text-4xl md:text-5xl font-medium tracking-tight text-slate-900 leading-[1.05]">
+					<h2 class="font-serif text-4xl md:text-5xl font-medium tracking-tight text-slate-900 leading-[1.05]">
 						Talk to the admissions AI that <span class="text-[#0c0c09]">actually tells you the truth.</span>
 					</h2>
 					<p class="mt-4 text-lg text-slate-500 leading-relaxed">
