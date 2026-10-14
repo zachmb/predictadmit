@@ -919,7 +919,7 @@
 						     loading can't shift the page (mobile scroll-jump guard). -->
 						<div class="relative {i % 2 === 1 ? 'md:order-2' : ''}">
 							<div
-								class="overflow-hidden rounded-2xl border-[6px] border-[#0c0c09] bg-white shadow-[0_32px_80px_-28px_rgba(12,12,9,0.4)]"
+								class="overflow-hidden rounded-2xl border-[3px] border-[#0c0c09] bg-white shadow-[0_32px_80px_-28px_rgba(12,12,9,0.4)]"
 							>
 								<img src={c.img} alt={c.heading} width={c.w} height={c.h} loading="lazy" class="block h-auto w-full" />
 							</div>
