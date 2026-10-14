@@ -2,6 +2,7 @@
 	import './layout.css';
 	import favicon from '$lib/assets/favicon.ico';
 	import SiteHeader from '$lib/components/layout/SiteHeader.svelte';
+	import SiteFooter from '$lib/components/layout/SiteFooter.svelte';
 	import PortalShareLauncher from '$lib/components/portal/PortalShareLauncher.svelte';
 	import SimulationBadge from '$lib/components/portal/SimulationBadge.svelte';
 	import { page } from '$app/stores';
@@ -15,6 +16,11 @@
 	import { computeDecisionForSchool, hasEnoughToScore } from '$lib/scoring/model';
 
 	let { children } = $props();
+
+	// The site footer shows on every page EXCEPT individual portal/simulation pages
+	// (/portals/<slug>), where it would break the immersive decision experience.
+	// The /portals index itself still gets the footer.
+	const isPortalPage = $derived(/^\/portals\/[^/]+/.test($page.url.pathname));
 
 	// Reset portal view state when navigating between schools or back home
 	$effect(() => {
@@ -152,6 +158,10 @@
 <div class="relative min-h-screen">
 	{@render children()}
 </div>
+
+{#if !isPortalPage}
+	<SiteFooter />
+{/if}
 
 <PortalShareLauncher />
 <SimulationBadge />

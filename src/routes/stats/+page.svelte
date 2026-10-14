@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { fly, fade } from 'svelte/transition';
-	import SiteFooter from '$lib/components/layout/SiteFooter.svelte';
 	import { userProfile } from '$lib/stores/user';
 	import { aiResults } from '$lib/stores/results';
 	import { majors } from '$lib/config/majors';
@@ -423,5 +422,4 @@
 		</div>
 	</div>
 
-	<SiteFooter />
 </main>

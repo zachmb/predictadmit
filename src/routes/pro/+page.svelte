@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { userProfile } from '$lib/stores/user';
 	import { goto } from '$app/navigation';
-	import SiteFooter from '$lib/components/layout/SiteFooter.svelte';
 	import { page } from '$app/stores';
 	import { signIn } from '@auth/sveltekit/client';
 	import { fly, fade, slide } from 'svelte/transition';
@@ -2292,10 +2291,10 @@
 				<!-- Left: copy, price, CTAs -->
 				<div class="text-center lg:text-left">
 					<h1 class="font-serif text-5xl md:text-6xl font-medium tracking-tight text-slate-900 leading-[1.05]">
-						Perfect your applications <span class="text-[#0c0c09]">before it's too late.</span>
+						Get into your <span class="text-[#0c0c09]">dream school.</span>
 					</h1>
-					<p class="mt-5 mx-auto lg:mx-0 max-w-xl text-lg text-slate-500 leading-relaxed">
-						PredictAdmit runs your real application through every top school and shows you the decision waiting there: accept, deny, or waitlist. Then it names the one thing holding you back, while you still have months to fix it. Your first prediction is free.
+					<p class="mt-5 mx-auto lg:mx-0 max-w-md text-lg text-slate-500 leading-relaxed">
+						Your real verdict at every top school, and the one fix that moves it. First prediction free.
 					</p>
 
 					<div class="mt-7 flex items-baseline justify-center lg:justify-start gap-2.5">
@@ -2328,38 +2327,18 @@
 					</p>
 				</div>
 
-				<!-- Right: product preview on a clean neutral card (no loud color block). -->
-				<div class="rounded-3xl border border-slate-200 bg-slate-50 p-6 sm:p-8">
-					<div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-						<div class="flex items-center justify-between gap-3">
-							<div class="flex items-center gap-2.5">
-								<div class="grid h-9 w-9 place-items-center rounded-lg bg-slate-100 text-xs font-bold text-slate-700">S</div>
-								<div>
-									<p class="text-sm font-bold text-slate-900">Stanford University</p>
-									<p class="text-[11px] text-slate-400">Your predicted decision</p>
-								</div>
-							</div>
-							<span class="shrink-0 rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-semibold text-emerald-700">Admitted</span>
-						</div>
-						<div class="mt-4 space-y-2.5">
-							{#each [{ l: 'Academics', s: 9 }, { l: 'Essays', s: 8 }, { l: 'Fit', s: 7 }] as row}
-								<div>
-									<div class="flex items-center justify-between text-[11px] font-medium text-slate-500">
-										<span>{row.l}</span><span>{row.s}/10</span>
-									</div>
-									<div class="mt-1 h-1.5 rounded-full bg-slate-100">
-										<div class="h-1.5 rounded-full bg-[#0c0c09]" style="width: {row.s * 10}%"></div>
-									</div>
-								</div>
-							{/each}
-						</div>
+				<!-- Right: real elite-university campus photos (the dream schools you're
+				     running your application against). Public-domain / CC-licensed. -->
+				<div class="grid grid-cols-2 gap-3 sm:gap-4">
+					<div class="relative col-span-2 overflow-hidden rounded-2xl border border-slate-200 shadow-sm">
+						<img src="/images/stanford-campus.jpg" alt="A top university campus" width="1280" height="720" loading="lazy" class="h-48 w-full object-cover sm:h-56" />
+						<span class="absolute bottom-2 left-3 rounded-full bg-black/45 px-2.5 py-1 text-[11px] font-semibold text-white">The dream schools, in reach</span>
 					</div>
-					<div class="mt-3 ml-6 flex items-center justify-between gap-3 rounded-2xl border border-slate-200 bg-white p-3.5 shadow-sm">
-						<div class="flex items-center gap-2.5">
-							<div class="grid h-8 w-8 place-items-center rounded-lg bg-slate-100 text-xs font-bold text-slate-700">M</div>
-							<p class="text-sm font-bold text-slate-900">MIT</p>
-						</div>
-						<span class="shrink-0 rounded-full bg-amber-50 px-2.5 py-1 text-[11px] font-semibold text-amber-700">Waitlist</span>
+					<div class="overflow-hidden rounded-2xl border border-slate-200 shadow-sm">
+						<img src="/images/mit-dome.jpg" alt="A top university campus" width="1280" height="960" loading="lazy" class="h-36 w-full object-cover sm:h-40" />
+					</div>
+					<div class="overflow-hidden rounded-2xl border border-slate-200 shadow-sm">
+						<img src="/images/harvard-campus.jpg" alt="A top university campus" width="1280" height="1707" loading="lazy" class="h-36 w-full object-cover object-top sm:h-40" />
 					</div>
 				</div>
 			</div>
@@ -2502,7 +2481,7 @@
 			<div class="space-y-10">
 				<div class="max-w-2xl">
 					<h2 class="font-serif text-4xl md:text-5xl font-medium leading-[1.1] tracking-tight text-slate-900">Everything Pro gives you</h2>
-					<p class="mt-4 text-lg leading-relaxed text-slate-500">Two jobs, done properly. See exactly where you stand today, then fix what's holding you back.</p>
+					<p class="mt-4 text-lg leading-relaxed text-slate-500">See where you stand, then fix what's holding you back.</p>
 				</div>
 
 				<!-- Alternating feature rows: a bold headline + one line beside a real
@@ -2512,16 +2491,16 @@
 					<div class="grid items-center gap-8 md:grid-cols-2 md:gap-14">
 						<div>
 							<h3 class="mt-3 font-serif text-3xl font-medium tracking-tight text-slate-900">Your verdict at every T30 school</h3>
-							<p class="mt-3 text-[15px] leading-relaxed text-slate-500">Run your real application through the AI once and watch accept, waitlist, and deny land across every top school. Change an essay or a score and re-run it, no cap.</p>
+							<p class="mt-3 text-[15px] leading-relaxed text-slate-500">Accept, waitlist, deny, across every top school. Re-run it any time.</p>
 						</div>
 						<div class="rounded-3xl border border-slate-200 bg-slate-50 p-5 sm:p-6">
-							<div class="space-y-2.5">
-								{#each [{ s: 'Stanford University', o: 'Admit', cls: 'bg-emerald-50 text-emerald-700 ring-emerald-200' }, { s: 'Cornell University', o: 'Waitlist', cls: 'bg-amber-50 text-amber-700 ring-amber-200' }, { s: 'MIT', o: 'Deny', cls: 'bg-rose-50 text-rose-700 ring-rose-200' }] as r}
-									<div class="flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm">
-										<span class="text-sm font-bold text-slate-900">{r.s}</span>
-										<span class="rounded-full px-2.5 py-1 text-[11px] font-semibold ring-1 ring-inset {r.cls}">{r.o}</span>
-									</div>
-								{/each}
+							<div class="relative">
+								<div class="overflow-hidden rounded-2xl border-[3px] border-[#0c0c09] bg-white shadow-[0_24px_60px_-24px_rgba(12,12,9,0.35)]">
+									<img src="/screenshots/zoom/universities.png" alt="Predicted decisions across every T30 school" width="2391" height="1260" loading="lazy" class="block h-auto w-full" />
+								</div>
+								<span class="pa-cursor" aria-hidden="true">
+									<svg width="24" height="24" viewBox="0 0 24 24" fill="#0c0c09" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"><path d="M5 2.5l5.6 16.5 2.3-6.9 6.9-2.3L5 2.5z" /></svg>
+								</span>
 							</div>
 						</div>
 					</div>
@@ -2530,22 +2509,16 @@
 					<div class="grid items-center gap-8 md:grid-cols-2 md:gap-14">
 						<div class="md:order-2">
 							<h3 class="mt-3 font-serif text-3xl font-medium tracking-tight text-slate-900">A five-reader committee on every decision</h3>
-							<p class="mt-3 text-[15px] leading-relaxed text-slate-500">Academics, activities, fit, intellect, and character, each scored and explained. It names the one reader holding you back and the single change that would move the verdict.</p>
+							<p class="mt-3 text-[15px] leading-relaxed text-slate-500">Five dimensions scored, with the one fix that moves the verdict.</p>
 						</div>
 						<div class="rounded-3xl border border-slate-200 bg-slate-50 p-5 sm:p-6 md:order-1">
-							<div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-								<div class="flex items-center justify-between">
-									<p class="text-xs font-bold uppercase tracking-wide text-slate-500">Committee read · Stanford</p>
-									<span class="rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-bold text-emerald-700 ring-1 ring-inset ring-emerald-200">Admit-leaning</span>
+							<div class="relative">
+								<div class="overflow-hidden rounded-2xl border-[3px] border-[#0c0c09] bg-white shadow-[0_24px_60px_-24px_rgba(12,12,9,0.35)]">
+									<img src="/screenshots/zoom/chanceme.png" alt="Scored committee read of your application" width="2391" height="1152" loading="lazy" class="block h-auto w-full" />
 								</div>
-								<div class="mt-4 space-y-2.5">
-									{#each [{ l: 'Academics', s: 9 }, { l: 'Activities', s: 8 }, { l: 'Fit', s: 7 }, { l: 'Intellect', s: 8 }, { l: 'Character', s: 7 }] as row}
-										<div>
-											<div class="flex items-center justify-between text-[11px] font-medium text-slate-500"><span>{row.l}</span><span>{row.s}/10</span></div>
-											<div class="mt-1 h-1.5 rounded-full bg-slate-100"><div class="h-1.5 rounded-full bg-[#0c0c09]" style="width: {row.s * 10}%"></div></div>
-										</div>
-									{/each}
-								</div>
+								<span class="pa-cursor" aria-hidden="true">
+									<svg width="24" height="24" viewBox="0 0 24 24" fill="#0c0c09" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"><path d="M5 2.5l5.6 16.5 2.3-6.9 6.9-2.3L5 2.5z" /></svg>
+								</span>
 							</div>
 						</div>
 					</div>
@@ -2555,19 +2528,16 @@
 				<div class="grid items-center gap-8 md:grid-cols-2 md:gap-14">
 					<div>
 						<h3 class="mt-3 font-serif text-3xl font-medium tracking-tight text-slate-900">Essays marked up like an admissions reader</h3>
-						<p class="mt-3 text-[15px] leading-relaxed text-slate-500">Hand over any supplement and the AI flags the weak lines and tells you why, the way a reader would. You write every word. It never writes one for you.</p>
+						<p class="mt-3 text-[15px] leading-relaxed text-slate-500">It flags the weak lines and says why. You write every word.</p>
 					</div>
 					<div class="rounded-3xl border border-slate-200 bg-slate-50 p-5 sm:p-6">
-						<div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-							<p class="text-xs font-bold uppercase tracking-wide text-slate-500">Personal statement</p>
-							<div class="mt-3 space-y-1.5 text-[13px] leading-relaxed text-slate-600">
-								<p class="rounded bg-[color-mix(in_oklab,#0c0c09_10%,transparent)] px-1.5 py-0.5 text-slate-900 ring-1 ring-[color-mix(in_oklab,#0c0c09_20%,transparent)]">Ever since I was young, I have loved science.</p>
-								<p class="text-slate-400">The lab was quiet except for the hum of the centrifuge.</p>
+						<div class="relative">
+							<div class="overflow-hidden rounded-2xl border-[3px] border-[#0c0c09] bg-white shadow-[0_24px_60px_-24px_rgba(12,12,9,0.35)]">
+								<img src="/screenshots/zoom/essay.png" alt="Essay marked up line by line" width="2391" height="1260" loading="lazy" class="block h-auto w-full" />
 							</div>
-							<div class="mt-3 flex items-start gap-2 rounded-xl border border-slate-200 bg-white p-3 shadow-sm">
-								<span class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#0c0c09] text-[10px] font-black text-white">AI</span>
-								<p class="text-xs leading-relaxed text-slate-600">A reader has seen this opener a thousand times. Start on the moment in the lab.</p>
-							</div>
+							<span class="pa-cursor" aria-hidden="true">
+								<svg width="24" height="24" viewBox="0 0 24 24" fill="#0c0c09" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"><path d="M5 2.5l5.6 16.5 2.3-6.9 6.9-2.3L5 2.5z" /></svg>
+							</span>
 						</div>
 					</div>
 				</div>
@@ -2576,15 +2546,16 @@
 				<div class="grid items-center gap-8 md:grid-cols-2 md:gap-14">
 					<div class="md:order-2">
 						<h3 class="mt-3 font-serif text-3xl font-medium tracking-tight text-slate-900">A counselor in your pocket</h3>
-						<p class="mt-3 text-[15px] leading-relaxed text-slate-500">Ask the things you'd pay a consultant $300 an hour for. Where to apply, how to explain a rough semester, what a school actually wants. In plain language, any time.</p>
+						<p class="mt-3 text-[15px] leading-relaxed text-slate-500">Ask what you'd pay a consultant $300 an hour for. Any time.</p>
 					</div>
 					<div class="rounded-3xl border border-slate-200 bg-slate-50 p-5 sm:p-6 md:order-1">
-						<div class="space-y-3 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-							<div class="ml-auto max-w-[80%] rounded-2xl rounded-br-md bg-slate-900 px-3.5 py-2 text-[13px] text-white">Is my school list too top-heavy?</div>
-							<div class="flex items-start gap-2">
-								<span class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#0c0c09] text-[10px] font-black text-white">PA</span>
-								<div class="max-w-[85%] rounded-2xl rounded-bl-md border border-slate-200 bg-white px-3.5 py-2 text-[13px] leading-relaxed text-slate-700">A little. Add two matches where you're above their median. Want me to name them?</div>
+						<div class="relative">
+							<div class="overflow-hidden rounded-2xl border-[3px] border-[#0c0c09] bg-white shadow-[0_24px_60px_-24px_rgba(12,12,9,0.35)]">
+								<img src="/screenshots/zoom/counselor.png" alt="Ask the AI counselor anything" width="2391" height="1368" loading="lazy" class="block h-auto w-full" />
 							</div>
+							<span class="pa-cursor" aria-hidden="true">
+								<svg width="24" height="24" viewBox="0 0 24 24" fill="#0c0c09" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"><path d="M5 2.5l5.6 16.5 2.3-6.9 6.9-2.3L5 2.5z" /></svg>
+							</span>
 						</div>
 					</div>
 				</div>
@@ -2593,7 +2564,7 @@
 				<div class="flex flex-col items-center gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-6 text-center sm:flex-row sm:justify-between sm:text-left">
 					<div>
 						<p class="font-bold text-slate-900">All of it, no limits</p>
-						<p class="mt-0.5 text-sm text-slate-600">Run the simulation as often as you like, read every deep-dive, and grade essays until they're right. Your first prediction is free. $9.99/mo unlocks the rest, or $25 once.</p>
+						<p class="mt-0.5 text-sm text-slate-600">Unlimited re-runs, deep-dives, and essay passes. $9.99/mo, or $25 once.</p>
 					</div>
 					<button
 						onclick={() => startUpgrade('monthly')}
@@ -2629,7 +2600,7 @@
 				<div class="bg-slate-900 rounded-[2rem] p-12 text-center text-white space-y-6">
 					<h3 class="font-serif text-3xl md:text-4xl font-medium text-white">The consultant's read, without the consultant's bill.</h3>
 					<p class="text-slate-300 text-lg max-w-2xl mx-auto leading-relaxed">
-						Private counselors charge thousands a season for one judgment call: is this student getting in, and what should they fix. PredictAdmit is $9.99 a month while you're applying, or $25 once. Every simulation, every deep-dive, every essay pass. Your first prediction is free, so you only pay once it has already told you something you didn't know.
+						Counselors charge thousands for the same read. Pro is $9.99/mo, or $25 once. First prediction free.
 					</p>
 					<button
 						onclick={() => startUpgrade('monthly')}
@@ -2667,5 +2638,22 @@
 	}
 	.custom-scrollbar::-webkit-scrollbar-thumb:hover {
 		background: #94a3b8;
+	}
+	/* Drifting cursor over the product screenshots (matches the landing). */
+	.pa-cursor {
+		position: absolute;
+		left: 56%;
+		top: 54%;
+		pointer-events: none;
+		animation: pa-cursor-drift 5s ease-in-out infinite;
+	}
+	@keyframes pa-cursor-drift {
+		0%, 100% { transform: translate(0, 0); }
+		25% { transform: translate(-32px, 18px); }
+		50% { transform: translate(26px, -10px); }
+		75% { transform: translate(10px, 24px); }
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.pa-cursor { animation: none; }
 	}
 </style>

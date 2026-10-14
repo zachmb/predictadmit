@@ -4,7 +4,6 @@
 	import { signIn } from '@auth/sveltekit/client';
 	import { goto } from '$app/navigation';
 	import type { PageData } from './$types';
-	import SiteFooter from '$lib/components/layout/SiteFooter.svelte';
 
 	// NEW: bring in AdmitMail + types from the existing simulator
 	import BetterAdmitMail from '$lib/components/BetterAdmitMail.svelte';
@@ -2652,7 +2651,6 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 	</div>
 {/if}
 
-<SiteFooter />
 
 <!-- Mobile-only spacer so the fixed sticky CTA above never covers the footer's
      last line (the NACAC disclaimer). Only present while the bar is shown. -->

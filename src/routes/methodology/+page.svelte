@@ -1,5 +1,4 @@
 <script lang="ts">
-	import SiteFooter from '$lib/components/layout/SiteFooter.svelte';
 	import {
 		admissionFactors,
 		factorScore,
@@ -248,5 +247,4 @@
 		</div>
 	</section>
 
-	<SiteFooter />
 </main>

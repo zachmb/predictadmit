@@ -1,5 +1,4 @@
 <script lang="ts">
-	import SiteFooter from '$lib/components/layout/SiteFooter.svelte';
 	import { signIn } from '@auth/sveltekit/client';
 	import { page } from '$app/stores';
 	import { portals } from '$lib/config/admitMail';
@@ -96,11 +95,10 @@
 	<div class="max-w-6xl mx-auto px-4 py-16 space-y-14">
 		<header class="text-center space-y-4">
 			<h1 class="font-serif text-5xl font-medium tracking-tight text-slate-900">
-				Your admissions strategist, <span class="text-[#0c0c09]">not your consultant's invoice.</span>
+				Get into your <span class="text-[#0c0c09]">dream school.</span>
 			</h1>
-			<p class="text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
-				Private admissions consultants run $200–500 an hour and $5,000+ per application season.
-				PredictAdmit is $9.99/mo while you're applying, or $25 once. Start free and see where you stand first.
+			<p class="text-xl text-slate-600 max-w-xl mx-auto leading-relaxed">
+				A counselor runs $5,000+ a season. Pro is $9.99/mo, or $25 once. Start free.
 			</p>
 		</header>
 
@@ -216,6 +214,43 @@
 			</div>
 		</section>
 
+		<!-- Stanford fee comparison: one application fee vs a month of Pro -->
+		<section class="overflow-hidden rounded-[2rem] border border-slate-200 bg-white">
+			<div class="grid md:grid-cols-2">
+				<div class="relative min-h-[260px] md:min-h-full">
+					<img
+						src="/images/stanford-campus.jpg"
+						alt="A top university campus"
+						width="1280"
+						height="720"
+						loading="lazy"
+						class="absolute inset-0 h-full w-full object-cover"
+					/>
+					<span class="absolute bottom-2 right-2 rounded bg-black/40 px-1.5 py-0.5 text-[9px] text-white/80">Wikimedia Commons · CC BY-SA 4.0</span>
+				</div>
+				<div class="flex flex-col justify-center gap-5 p-8 sm:p-12">
+					<p class="text-xs font-bold uppercase tracking-widest text-slate-400">Put it in perspective</p>
+					<div class="flex items-end gap-6">
+						<div>
+							<div class="font-serif text-5xl font-medium text-slate-900">$90</div>
+							<div class="mt-1 text-sm text-slate-500">One Stanford application fee</div>
+						</div>
+						<div class="pb-2 text-xl font-medium text-slate-300">vs</div>
+						<div>
+							<div class="font-serif text-5xl font-medium text-[#0c0c09]">$9.99</div>
+							<div class="mt-1 text-sm text-slate-500">One month of Pro</div>
+						</div>
+					</div>
+					<p class="text-lg leading-relaxed text-slate-600">
+						For about a <strong class="text-slate-900">tenth of one application fee</strong>, Pro gives you your real verdict at every T30, all season.
+					</p>
+					<a href="/verdict" class="inline-flex w-fit items-center gap-1.5 rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-800">
+						Start free <span aria-hidden="true">→</span>
+					</a>
+				</div>
+			</div>
+		</section>
+
 		<!-- Value math -->
 		<section class="max-w-3xl mx-auto grid gap-4 sm:grid-cols-3 text-center">
 			<div class="rounded-2xl border border-slate-200 bg-white p-5">
@@ -238,12 +273,9 @@
 				<div class="space-y-4">
 					<h3 class="text-2xl font-bold text-slate-900">Why this pricing?</h3>
 					<p class="text-lg text-slate-600 font-medium leading-relaxed">
-						The feedback loop consultants sell by the hour (a blunt read of your application,
-						school by school, with a concrete plan to fix it) is what Pro gives you
-						unlimited, for less than one-tenth of a single consultant hour. Only care about one dream school?
-						A single-school unlock gets you its full analysis for $4.99.
+						Counselors bill the read by the hour. Pro gives it to you unlimited.
 					</p>
-					<p class="text-slate-500 italic">"The read is the same either way. We just don't bill you by the hour for it."</p>
+					<p class="text-slate-500 italic">"The read is the same. We just don't bill you by the hour for it."</p>
 				</div>
 			</div>
 		</section>
@@ -253,4 +285,3 @@
 <!-- Pre-checkout benefit carousel (Monthly/Lifetime upgrade path) -->
 <UpgradeCarousel bind:open={showUpgradeCarousel} loading={isProcessing} oncontinue={(plan) => startCheckout(plan)} />
 
-<SiteFooter />

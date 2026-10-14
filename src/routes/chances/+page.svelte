@@ -4,7 +4,6 @@
 	// no account), shows odds at 39 top schools bucketed Likely/Target/Reach/Hard
 	// reach, then converts to the paid AI funnel. SEO-prerendered + shareable.
 	import { computeAllDecisions, emptyScoringProfile, type ScoringProfile } from '$lib/scoring/model';
-	import SiteFooter from '$lib/components/layout/SiteFooter.svelte';
 	import { track } from '$lib/analytics';
 
 	let gpa = $state('');
@@ -191,5 +190,4 @@
 			</div>
 		{/if}
 	</div>
-	<SiteFooter />
 </main>

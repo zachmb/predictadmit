@@ -1,5 +1,4 @@
 <script lang="ts">
-	import SiteFooter from '$lib/components/layout/SiteFooter.svelte';
 </script>
 
 <svelte:head>
@@ -441,5 +440,4 @@
 		</div>
 	</article>
 
-	<SiteFooter />
 </main>

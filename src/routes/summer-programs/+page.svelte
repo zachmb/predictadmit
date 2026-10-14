@@ -1,5 +1,4 @@
 <script lang="ts">
-	import SiteFooter from '$lib/components/layout/SiteFooter.svelte';
 	import {
 		summerPrograms,
 		inviteOnlyPipelines,
@@ -328,5 +327,4 @@
 		</div>
 	</section>
 
-	<SiteFooter />
 </main>

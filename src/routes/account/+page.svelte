@@ -1,5 +1,4 @@
 <script lang="ts">
-	import SiteFooter from '$lib/components/layout/SiteFooter.svelte';
 	import SettingsView from '$lib/components/pro/SettingsView.svelte';
 
 	import { signIn } from '@auth/sveltekit/client';
@@ -122,6 +121,5 @@
 {:else}
 	<div class="min-h-[calc(100vh-64px)] bg-slate-50 flex flex-col">
 		<SettingsView />
-		<SiteFooter />
 	</div>
 {/if}

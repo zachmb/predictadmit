@@ -2,7 +2,6 @@
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import { get } from 'svelte/store';
-	import SiteFooter from '$lib/components/layout/SiteFooter.svelte';
 	import { userProfile } from '$lib/stores/user';
 
 	import {
@@ -347,7 +346,6 @@
 		</div>
 	</div>
 
-	<SiteFooter />
 </main>
 
 <style>

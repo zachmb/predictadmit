@@ -1,5 +1,4 @@
 <script lang="ts">
-	import SiteFooter from '$lib/components/layout/SiteFooter.svelte';
 
 	const stats = [
 		{ value: '15,000+', label: 'Students on PredictAdmit' },
@@ -275,5 +274,4 @@
 		</div>
 	</section>
 
-	<SiteFooter />
 </main>

@@ -11,7 +11,6 @@
 		decisionResultToAiDecision,
 		hasEnoughToScore
 	} from '$lib/scoring/model';
-	import SiteFooter from '$lib/components/layout/SiteFooter.svelte';
 	import ScrollZoomStory from '$lib/components/home/ScrollZoomStory.svelte';
 	import SchoolLogoMarquee from '$lib/components/home/SchoolLogoMarquee.svelte';
 	import AdmitMail from '$lib/components/AdmitMail.svelte';
@@ -1174,7 +1173,6 @@
 		</div>
 	</section>
 
-	<SiteFooter />
 </main>
 
 {#if showSimDisclosure}
