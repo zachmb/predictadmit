@@ -385,7 +385,7 @@
 							<button
 								type="button"
 								onclick={() => send(opt)}
-								class="rounded-full border border-blue-200 bg-blue-50 px-3 py-1.5 text-sm font-medium text-[#0c0c09] transition hover:border-[#0c0c09] hover:bg-[#0c0c09] hover:text-white active:scale-[0.98]"
+								class="rounded-full border border-[color-mix(in_oklab,#0c0c09_20%,transparent)] bg-[color-mix(in_oklab,#0c0c09_7%,transparent)] px-3 py-1.5 text-sm font-medium text-[#0c0c09] transition hover:border-[#0c0c09] hover:bg-[#0c0c09] hover:text-white active:scale-[0.98]"
 							>
 								{opt}
 							</button>

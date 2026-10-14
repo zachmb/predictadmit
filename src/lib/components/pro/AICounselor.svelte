@@ -355,7 +355,7 @@
 									class="group flex items-center gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3 text-left text-sm font-medium text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-[#0c0c09] hover:text-slate-900 hover:shadow"
 								>
 									<span
-										class="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-[#0c0c09] transition group-hover:bg-[#0c0c09] group-hover:text-white"
+										class="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[color-mix(in_oklab,#0c0c09_8%,transparent)] text-[#0c0c09] transition group-hover:bg-[#0c0c09] group-hover:text-white"
 									>
 										<svg
 											width="16"
@@ -434,7 +434,7 @@
 									<button
 										type="button"
 										onclick={() => send(opt)}
-										class="rounded-full border border-blue-200 bg-blue-50 px-3.5 py-1.5 text-sm font-medium text-[#0c0c09] transition hover:border-[#0c0c09] hover:bg-[#0c0c09] hover:text-white active:scale-[0.98]"
+										class="rounded-full border border-[color-mix(in_oklab,#0c0c09_20%,transparent)] bg-[color-mix(in_oklab,#0c0c09_7%,transparent)] px-3.5 py-1.5 text-sm font-medium text-[#0c0c09] transition hover:border-[#0c0c09] hover:bg-[#0c0c09] hover:text-white active:scale-[0.98]"
 									>
 										{opt}
 									</button>
