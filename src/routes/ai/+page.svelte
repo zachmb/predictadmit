@@ -1379,15 +1379,15 @@
 
 				<!-- Bolder + skimmable: the value reads in one glance, key phrases bolded. -->
 				<p class="max-w-2xl text-lg sm:text-xl leading-relaxed text-slate-600">
-					PredictAdmit's AI reads your real application and <span class="font-semibold text-slate-900">calls your decision</span> — admit, deny, waitlist, or defer — <span class="font-semibold text-slate-900">at every T30 school</span>. Then a <span class="font-semibold text-slate-900">five-reader committee</span> shows you exactly what drove it.
+					AI <span class="font-semibold text-slate-900">calls your decision</span> at every T30 school. A <span class="font-semibold text-slate-900">five-reader committee</span> shows you why.
 				</p>
 
 				<!-- Skimmable value list (new serif register), ending on the free hook. -->
 				<ul class="max-w-2xl space-y-2 font-serif text-lg md:text-xl font-normal leading-snug tracking-tight text-slate-700">
-					<li><span class="font-medium text-slate-900">Calibrated</span> on 5,000+ real admissions results.</li>
-					<li>A full <span class="font-medium text-slate-900">committee verdict</span> at every T30 school.</li>
-					<li>Your data <span class="font-medium text-slate-900">never leaves your browser</span>.</li>
-					<li class="text-slate-900 font-medium">Your first simulation is free — unlock one school's full results.</li>
+					<li><span class="font-medium text-slate-900">Calibrated</span> on 5,000+ results.</li>
+					<li>Full <span class="font-medium text-slate-900">committee verdict</span>, every T30.</li>
+					<li>Data <span class="font-medium text-slate-900">never leaves your browser</span>.</li>
+					<li class="text-slate-900 font-medium">First simulation free.</li>
 				</ul>
 
 				<p class="max-w-xl text-xs leading-relaxed text-slate-400">
