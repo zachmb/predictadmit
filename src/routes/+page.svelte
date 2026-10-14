@@ -14,7 +14,6 @@
 	import SiteFooter from '$lib/components/layout/SiteFooter.svelte';
 	import ScrollZoomStory from '$lib/components/home/ScrollZoomStory.svelte';
 	import SchoolLogoMarquee from '$lib/components/home/SchoolLogoMarquee.svelte';
-	import ZoomInHeading from '$lib/components/home/ZoomInHeading.svelte';
 	import AdmitMail from '$lib/components/AdmitMail.svelte';
 	import Card from '$lib/components/common/Card.svelte';
 
@@ -337,6 +336,39 @@
 	// little over time, so the number feels alive without ever overstating.
 	let predictedCount = 15000;
 	$: predictedCountLabel = predictedCount.toLocaleString('en-US');
+
+	// "What you get in Pro" — alternating product cards: a real, zoomed screenshot
+	// in a framed window + a short line + a CTA. Copy is deliberately tight.
+	const proCards = [
+		{
+			heading: 'Your real decision at every T30',
+			sub: 'Run your actual application and watch accept, waitlist, and deny land across every top school. Months before March.',
+			img: '/screenshots/zoom/universities.png',
+			href: '/verdict',
+			ctaText: 'Predict free'
+		},
+		{
+			heading: 'Essay feedback, line by line',
+			sub: 'It flags the weak lines the way an admissions reader would, and tells you why. It never writes a word for you.',
+			img: '/screenshots/zoom/essay.png',
+			href: '/pro',
+			ctaText: 'See it'
+		},
+		{
+			heading: 'A counselor that gives it straight',
+			sub: "Ask what you'd pay a consultant $300 an hour for. Your odds, your essay, your list. Any time, no appointment.",
+			img: '/screenshots/zoom/counselor.png',
+			href: '/pro',
+			ctaText: 'Try it free'
+		},
+		{
+			heading: 'See exactly where you stand',
+			sub: 'Build your profile once and get sharper, personalized odds at every school on your list.',
+			img: '/screenshots/zoom/chanceme.png',
+			href: '/pro',
+			ctaText: 'Check yours'
+		}
+	];
 	function startPrediction() {
 		const stats = heroStats.trim();
 		try {
@@ -855,8 +887,8 @@
 	<!-- SECTION 2A: PRO SCROLL-ZOOM STORY (replaces the static section header) -->
 	<ScrollZoomStory />
 
-	<!-- SECTION 2: EVERYTHING IN PRO (feature showcase) -->
-	<section class="py-24 bg-white border-t border-slate-100">
+	<!-- SECTION 2: WHAT YOU GET IN PRO — alternating framed-screenshot cards -->
+	<section class="py-20 md:py-28 bg-[#f4f4f0]">
 		<div class="max-w-[1200px] mx-auto px-6">
 			<!-- Section header (GradGPT-style handwritten eyebrow + serif head) -->
 			<div class="mb-16 text-center md:mb-20">
@@ -865,107 +897,41 @@
 					Everything a $300/hr counselor does
 				</h2>
 			</div>
-			<div class="space-y-16 md:space-y-24">
-				<!-- Row 1: committee (text left) -->
-				<div use:reveal class="grid items-center gap-8 md:grid-cols-2 md:gap-14">
-					<div>
-						<div class="flex items-center gap-3">
-							<span class="font-serif text-4xl font-medium leading-none text-[#0c0c09]">01</span>
-							<span class="h-px w-10 bg-slate-200"></span>
-						</div>
-						<h3 class="mt-3 font-serif text-3xl font-medium tracking-tight text-slate-900">A full committee reads your file</h3>
-						<p class="hand mt-1 text-xl">five readers, one verdict</p>
-						<p class="mt-3 text-[15px] leading-relaxed text-slate-500">Five readers argue over your file the way a real committee does, then land a verdict. You find out which one is holding you back, and exactly why.</p>
-					</div>
-					<div class="rounded-3xl border border-slate-200 bg-white p-5 sm:p-6">
-						<div class="rounded-2xl border border-slate-200 bg-slate-50/60 p-5">
-							<div class="flex items-center justify-between">
-								<p class="text-xs font-bold uppercase tracking-wide text-slate-500">Committee read · Stanford</p>
-								<span class="rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-bold text-emerald-700 ring-1 ring-inset ring-emerald-200">Admit-leaning</span>
+			<div class="space-y-6 md:space-y-8">
+				{#each proCards as c, i}
+					<div
+						use:reveal={i * 80}
+						class="grid items-center gap-8 overflow-hidden rounded-[2rem] border border-slate-200/70 px-6 py-10 md:grid-cols-2 md:gap-12 md:px-12 md:py-14 {i % 2 ===
+						0
+							? 'bg-white'
+							: 'bg-[color-mix(in_oklab,#0c0c09_4%,#f4f4f0)]'}"
+					>
+						<!-- Real, zoomed PredictAdmit screenshot in a framed window, with a
+						     cursor drifting over it. -->
+						<div class="relative {i % 2 === 1 ? 'md:order-2' : ''}">
+							<div
+								class="overflow-hidden rounded-2xl border-[5px] border-[#0c0c09] bg-white shadow-[0_24px_60px_-24px_rgba(12,12,9,0.35)]"
+							>
+								<img src={c.img} alt={c.heading} loading="lazy" class="block w-full" />
 							</div>
-							<div class="mt-4 space-y-2.5">
-								{#each [{ l: 'Academic reader', s: 9 }, { l: 'Essays reader', s: 8 }, { l: 'Fit reader', s: 7 }, { l: 'Impact reader', s: 8 }, { l: 'Character reader', s: 7 }] as r}
-									<div>
-										<div class="flex items-center justify-between text-[11px] font-medium text-slate-500"><span>{r.l}</span><span>{r.s}/10</span></div>
-										<div class="mt-1 h-1.5 rounded-full bg-slate-200"><div class="h-1.5 rounded-full bg-[#0c0c09]" style="width: {r.s * 10}%"></div></div>
-									</div>
-								{/each}
-							</div>
+							<span class="pa-cursor" aria-hidden="true">
+								<svg width="24" height="24" viewBox="0 0 24 24" fill="#0c0c09" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"><path d="M5 2.5l5.6 16.5 2.3-6.9 6.9-2.3L5 2.5z" /></svg>
+							</span>
+						</div>
+						<div class={i % 2 === 1 ? 'md:order-1' : ''}>
+							<h3 class="font-serif text-3xl md:text-[2.5rem] font-medium tracking-tight leading-[1.08] text-slate-900">
+								{c.heading}
+							</h3>
+							<p class="mt-4 max-w-md text-lg leading-relaxed text-slate-600">{c.sub}</p>
+							<a
+								href={c.href}
+								class="mt-6 inline-flex items-center gap-1.5 rounded-full bg-[#0c0c09] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#2b2b22] active:scale-95"
+							>
+								{c.ctaText} <span aria-hidden="true">→</span>
+							</a>
 						</div>
 					</div>
-				</div>
-
-				<!-- Row 2: essay (text right) -->
-				<div use:reveal={100} class="grid items-center gap-8 md:grid-cols-2 md:gap-14">
-					<div class="md:order-2">
-						<div class="flex items-center gap-3">
-							<span class="font-serif text-4xl font-medium leading-none text-[#0c0c09]">02</span>
-							<span class="h-px w-10 bg-slate-200"></span>
-						</div>
-						<h3 class="mt-3 font-serif text-3xl font-medium tracking-tight text-slate-900">Essay feedback, line by line</h3>
-						<p class="hand mt-1 text-xl">the exact lines to fix</p>
-						<p class="mt-3 text-[15px] leading-relaxed text-slate-500">Every supplement in one place. Hand it over and it marks the weak lines like an admissions reader would, and tells you why. It never writes a word for you.</p>
-					</div>
-					<div class="rounded-3xl border border-slate-200 bg-white p-5 sm:p-6 md:order-1">
-						<div class="rounded-2xl border border-slate-200 bg-slate-50/60 p-5">
-							<p class="text-xs font-bold uppercase tracking-wide text-slate-500">Personal statement</p>
-							<div class="mt-3 space-y-1.5 text-[13px] leading-relaxed text-slate-600">
-								<p class="rounded bg-[color-mix(in_oklab,#0c0c09_10%,transparent)] px-1.5 py-0.5 text-slate-900 ring-1 ring-[color-mix(in_oklab,#0c0c09_20%,transparent)]">Ever since I was young, I have loved science.</p>
-								<p class="text-slate-400">The lab was quiet except for the hum of the</p>
-								<p class="text-slate-400">centrifuge, and I realized I had lost track of time.</p>
-							</div>
-							<div class="mt-3 flex items-start gap-2 rounded-xl bg-white border border-slate-200 p-3 shadow-sm">
-								<span class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#0c0c09] text-white text-[10px] font-black">AI</span>
-								<p class="text-xs leading-relaxed text-slate-600">This opening is a cliché a reader has seen a thousand times. Start on the moment in the lab. Your words, just sharper.</p>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<!-- Row 3: per-school (text left) -->
-				<div use:reveal={200} class="grid items-center gap-8 md:grid-cols-2 md:gap-14">
-					<div>
-						<div class="flex items-center gap-3">
-							<span class="font-serif text-4xl font-medium leading-none text-[#0c0c09]">03</span>
-							<span class="h-px w-10 bg-slate-200"></span>
-						</div>
-						<h3 class="mt-3 font-serif text-3xl font-medium tracking-tight text-slate-900">Per-school strategy for 50+ schools</h3>
-						<p class="hand mt-1 text-xl">aim at the right reader</p>
-						<p class="mt-3 text-[15px] leading-relaxed text-slate-500">Stanford and MIT do not want the same thing. See what each one actually weighs, then aim your application at that reader instead of sending one generic app everywhere.</p>
-					</div>
-					<div class="rounded-3xl border border-slate-200 bg-white p-5 sm:p-6">
-						<div class="rounded-2xl border border-slate-200 bg-slate-50/60 p-5 space-y-2.5">
-							{#each [{ s: 'Stanford', w: 'Intellectual vitality, essays' }, { s: 'MIT', w: 'STEM depth, maker spirit' }, { s: 'Yale', w: 'Community impact, voice' }] as row}
-								<div class="flex items-center justify-between gap-3 rounded-xl bg-white border border-slate-200 px-3.5 py-2.5">
-									<span class="text-sm font-bold text-slate-900 shrink-0">{row.s}</span>
-									<span class="text-[11px] text-slate-500 text-right">Weighs: {row.w}</span>
-								</div>
-							{/each}
-						</div>
-					</div>
-				</div>
-
-				<!-- Row 4: counselor (text right) -->
-				<div use:reveal={300} class="grid items-center gap-8 md:grid-cols-2 md:gap-14">
-					<div class="md:order-2">
-						<div class="flex items-center gap-3">
-							<span class="font-serif text-4xl font-medium leading-none text-[#0c0c09]">04</span>
-							<span class="h-px w-10 bg-slate-200"></span>
-						</div>
-						<h3 class="mt-3 font-serif text-3xl font-medium tracking-tight text-slate-900">A counselor in your pocket</h3>
-						<p class="hand mt-1 text-xl">no $300 appointment</p>
-						<p class="mt-3 text-[15px] leading-relaxed text-slate-500">Ask the stuff you would pay a consultant $300 an hour for. Where to apply, how to explain a rough semester, what a school is really looking for. Any time, no appointment.</p>
-					</div>
-					<div class="rounded-3xl border border-slate-200 bg-white p-5 sm:p-6 md:order-1">
-						<div class="rounded-2xl border border-slate-200 bg-slate-50/60 p-5 space-y-3">
-							<div class="ml-auto max-w-[80%] rounded-2xl rounded-br-md bg-slate-900 px-3.5 py-2 text-[13px] text-white">Is my school list too top-heavy?</div>
-							<div class="flex items-start gap-2 max-w-[85%]">
-								<span class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#0c0c09] text-white text-[10px] font-black">PA</span>
-								<div class="rounded-2xl rounded-bl-md bg-white border border-slate-200 px-3.5 py-2 text-[13px] leading-relaxed text-slate-700">A little. Add two matches where your profile is above their median. Want me to name them?</div>
-							</div>
-						</div>
-					</div>
-				</div>
+				{/each}
 			</div>
 
 			<div class="mt-12 text-center">
@@ -976,59 +942,10 @@
 		</div>
 	</section>
 
-	<!-- SECTION 2.4A: SEE INSIDE PRO — pinned massive-zoom heading (crisp) -->
-	<ZoomInHeading
-		eyebrow="See inside Pro"
-		pre="See the actual app"
-		accent="before you pay."
-		sub="Real screenshots from inside Pro. Everything you see below works today."
-	>
-		{#snippet reveal()}
-			<!-- Featured snapshot — revealed BEHIND the zoom text as it clears. -->
-			<figure class="rounded-2xl border border-slate-200 bg-white shadow-[0_30px_80px_-30px_rgba(12,12,9,0.25)] overflow-hidden">
-				<div class="flex items-center gap-1.5 border-b border-slate-100 bg-slate-50/70 px-4 py-2.5">
-					<span class="h-2.5 w-2.5 rounded-full bg-slate-200"></span>
-					<span class="h-2.5 w-2.5 rounded-full bg-slate-200"></span>
-					<span class="h-2.5 w-2.5 rounded-full bg-slate-200"></span>
-					<span class="ml-3 rounded-md bg-white border border-slate-200 px-3 py-1 text-[11px] font-medium text-slate-400">app.predictadmit.com/pro</span>
-				</div>
-				<img src="/screenshots/pro-hub.png" alt="PredictAdmit Pro dashboard: your application command center" loading="lazy" class="block w-full" />
-			</figure>
-		{/snippet}
-	</ZoomInHeading>
-
-	<!-- SECTION 2.4: SEE INSIDE PRO (dashboard snapshots) -->
-	<section class="py-24 bg-slate-50 border-t border-slate-100 overflow-hidden">
+	<!-- Creator invite (cross-product recruit embed) -->
+	<section class="py-14 bg-[#f4f4f0] border-t border-slate-100">
 		<div class="max-w-[1100px] mx-auto px-6">
-			<p class="mb-10 text-center text-sm font-medium text-slate-500">Your command center: stats, streak, and next best moves in one place. And the rest of Pro:</p>
-
-			<!-- Supporting snapshots -->
-			<div class="mt-8 grid gap-6 md:grid-cols-2">
-				<figure use:reveal={0} class="rounded-2xl border border-slate-200 bg-white shadow-lg overflow-hidden">
-					<img src="/screenshots/pro-universities.png" alt="PredictAdmit Pro: explore schools with real admissions data and your chances" loading="lazy" class="block w-full" />
-					<figcaption class="px-5 py-4 text-sm font-medium text-slate-600 border-t border-slate-100">Every school, with real data and your odds on each.</figcaption>
-				</figure>
-				<figure use:reveal={80} class="rounded-2xl border border-slate-200 bg-white shadow-lg overflow-hidden">
-					<img src="/screenshots/pro-counselor.png" alt="PredictAdmit Pro: AI counselor chat" loading="lazy" class="block w-full" />
-					<figcaption class="px-5 py-4 text-sm font-medium text-slate-600 border-t border-slate-100">A counselor on call for the questions you'd pay hundreds to ask.</figcaption>
-				</figure>
-				<figure use:reveal={160} class="rounded-2xl border border-slate-200 bg-white shadow-lg overflow-hidden">
-					<img src="/screenshots/pro-essay.png" alt="PredictAdmit Pro: essay editor with AI feedback" loading="lazy" class="block w-full" />
-					<figcaption class="px-5 py-4 text-sm font-medium text-slate-600 border-t border-slate-100">Draft every supplement in one place, feedback a click away.</figcaption>
-				</figure>
-				<figure use:reveal={240} class="rounded-2xl border border-slate-200 bg-white shadow-lg overflow-hidden">
-					<img src="/screenshots/pro-chanceme.png" alt="PredictAdmit Pro: build your Chance Me profile for personalized odds" loading="lazy" class="block w-full" />
-					<figcaption class="px-5 py-4 text-sm font-medium text-slate-600 border-t border-slate-100">Build your profile once, sharpen every prediction.</figcaption>
-				</figure>
-			</div>
-
-			<div class="mt-12 text-center">
-				<a href="/pro" class="inline-flex items-center justify-center rounded-full bg-slate-900 px-8 py-4 text-base font-semibold text-white transition hover:bg-slate-800 active:scale-[0.99]">
-					Unlock all of Pro for $9.99/mo
-				</a>
-			</div>
-
-			<aside class="mt-16 flex flex-col gap-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between sm:p-8" aria-labelledby="creator-invite-title">
+			<aside class="flex flex-col gap-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between sm:p-8" aria-labelledby="creator-invite-title">
 				<div class="max-w-xl">
 					<h3 id="creator-invite-title" class="font-serif text-2xl font-medium tracking-tight text-slate-900">Already using PredictAdmit?</h3>
 					<p class="mt-2 text-sm leading-relaxed text-slate-500">Share your application journey as a paid creator for PredictAdmit.</p>
@@ -1421,6 +1338,36 @@
 	@media (max-width: 430px) and (max-height: 680px) {
 		.hero-sub {
 			display: none;
+		}
+	}
+
+	/* A cursor that drifts over the product screenshots so they read as live. */
+	.pa-cursor {
+		position: absolute;
+		left: 58%;
+		top: 52%;
+		pointer-events: none;
+		filter: drop-shadow(0 2px 3px rgba(12, 12, 9, 0.25));
+		animation: pa-cursor-drift 5s ease-in-out infinite;
+	}
+	@keyframes pa-cursor-drift {
+		0%,
+		100% {
+			transform: translate(0, 0);
+		}
+		20% {
+			transform: translate(-34px, -26px);
+		}
+		45% {
+			transform: translate(22px, -8px) scale(0.92);
+		}
+		70% {
+			transform: translate(-6px, 24px);
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.pa-cursor {
+			animation: none;
 		}
 	}
 </style>
