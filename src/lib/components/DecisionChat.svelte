@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { userProfile } from '$lib/stores/user';
+	import { aiResults } from '$lib/stores/results';
 
 	// A compact, reusable follow-up chat grounded in ONE predicted decision. Drops
 	// onto any decision-read surface (results/[slug], the /ai deep-dive card) and
@@ -56,6 +57,8 @@
 	let isThinking = $state(false);
 	let errorMsg = $state('');
 	let loadedKey = $state('');
+	// Tappable multiple-choice chips the AI offers each turn (tap = send it).
+	let latestOptions = $state<string[]>([]);
 
 	let scrollEl = $state<HTMLDivElement | null>(null);
 	let textareaEl = $state<HTMLTextAreaElement | null>(null);
@@ -123,11 +126,29 @@
 		};
 	}
 
+	// The student's full predicted slate — so PredictAI remembers their whole
+	// picture even inside a single-decision follow-up.
+	function buildDecisions() {
+		const decisions = $aiResults?.decisions;
+		if (!Array.isArray(decisions)) return [];
+		return decisions.slice(0, 40).map((d) => ({
+			school: d.school,
+			slug: d.slug,
+			outcome: d.outcome,
+			academic_score: d.academic_score,
+			extracurricular_score: d.extracurricular_score,
+			intellectual_score: d.intellectual_score,
+			character_score: d.character_score,
+			fit_score: d.fit_score
+		}));
+	}
+
 	async function send(text: string) {
 		const content = text.trim();
 		if (!content || isThinking) return;
 
 		errorMsg = '';
+		latestOptions = [];
 		messages = [...messages, { role: 'user', content }];
 		draft = '';
 		if (textareaEl) textareaEl.style.height = 'auto';
@@ -141,6 +162,7 @@
 					messages: $state.snapshot(messages),
 					profile: buildProfile(),
 					decision,
+					decisions: buildDecisions(),
 					academics: (() => {
 						try {
 							return JSON.parse(localStorage.getItem('predictadmit:pro:academics') || '{}');
@@ -157,6 +179,9 @@
 				errorMsg = data?.error || 'Something went wrong reaching PredictAI. Please try again.';
 			} else if (typeof data?.reply === 'string') {
 				messages = [...messages, { role: 'assistant', content: data.reply }];
+				latestOptions = Array.isArray(data?.options)
+					? data.options.filter((o: unknown) => typeof o === 'string' && o.trim()).slice(0, 4)
+					: [];
 			} else {
 				errorMsg = 'PredictAI returned an empty response. Please try again.';
 			}
@@ -209,7 +234,11 @@
 	}
 
 	function inlineFormat(escaped: string): string {
-		return escaped.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+		// Accent-blue bold so key terms pop with colour.
+		return escaped.replace(
+			/\*\*([^*]+)\*\*/g,
+			'<strong class="font-semibold text-[#316DE4]">$1</strong>'
+		);
 	}
 
 	function renderMarkdown(raw: string): string {
@@ -347,6 +376,20 @@
 								<span class="h-2 w-2 animate-bounce rounded-full bg-slate-300"></span>
 							</div>
 						</div>
+					</div>
+				{/if}
+
+				{#if latestOptions.length && !isThinking}
+					<div class="ml-9 flex flex-wrap gap-2 pt-1">
+						{#each latestOptions as opt}
+							<button
+								type="button"
+								onclick={() => send(opt)}
+								class="rounded-full border border-blue-200 bg-blue-50 px-3 py-1.5 text-sm font-medium text-[#316DE4] transition hover:border-[#316DE4] hover:bg-[#316DE4] hover:text-white active:scale-[0.98]"
+							>
+								{opt}
+							</button>
+						{/each}
 					</div>
 				{/if}
 			</div>

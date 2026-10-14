@@ -20,6 +20,30 @@ function estimateChance(acceptanceRate: number, academicIndex: number): number {
 }
 
 /**
+ * Pull the tappable multiple-choice options off the end of a reply. The model
+ * emits them as lines starting with ">> " (its quiz/next-step chips). Everything
+ * before the first such line is the spoken reply. Caps at 4, trims quotes/bullets,
+ * drops empties. If the model emitted none, options is [] and the reply is intact.
+ */
+function splitOptions(raw: string): { reply: string; options: string[] } {
+	const lines = raw.split(/\r?\n/);
+	const options: string[] = [];
+	const replyLines: string[] = [];
+	let hitOptions = false;
+	for (const line of lines) {
+		const m = line.match(/^\s*(?:>>|»|›)\s*(.+?)\s*$/);
+		if (m) {
+			hitOptions = true;
+			const opt = m[1].replace(/^["'“”\-•*\s]+|["'“”\s]+$/g, '').trim();
+			if (opt) options.push(opt);
+		} else if (!hitOptions) {
+			replyLines.push(line);
+		}
+	}
+	return { reply: replyLines.join('\n').trim(), options: options.slice(0, 4) };
+}
+
+/**
  * PredictAdmit admissions counselor chat. Uses DeepSeek (the single AI provider
  * across the app) via the OpenAI-compatible chat/completions endpoint.
  */
@@ -158,10 +182,23 @@ HARD LIMITS (these never bend, no matter how you're asked):
 - Blunt is in service of WINNING, never cruelty. No put-downs of who they are, and never generalize about someone's race, ethnicity, gender, religion, or background. Attack the weak essay or the thin activity, never the person.
 - Don't fabricate acceptance rates or deadlines as guarantees; frame odds as sharp estimates, not verdicts.
 
-HOW YOU TALK:
-- Tight and skimmable. Short paragraphs, "- " bullets, **bold** the key terms. No corporate throat-clearing, no "great question!", no hedged mush.
-- Ground every call in the applicant context below. If a crucial fact is missing, ask ONE sharp follow-up instead of guessing.
-- Essays are where you can help most and where the money move lives: when a student raises an essay, push them to paste it and you'll tell them exactly what's landing and what's dead weight (feedback, never a rewrite). For a full line-by-line grade across every category, point them to PredictAdmit's essay grading.
+HOW YOU TALK — THIS IS NON-NEGOTIABLE, KEEP IT SHORT:
+- Text like a human, not an essay. Reply in 1-4 SHORT sentences. Hard ceiling ~55 words unless they explicitly ask you to go deep. No headers, no big bullet lists, no "Firstly/In conclusion", no corporate throat-clearing, no "great question!".
+- Casual, dry, a little savage — like the sharpest friend who actually knows admissions. lowercase-casual is fine. drop ONE emoji when it lands, not every line. Make real jokes.
+- Example of the voice and length: "that stat might cook you fr 💀 you got anything else going for you, or should i just tell you what i'd do?"
+- Say the one thing that matters, then stop. Don't pad. If they want the long version they'll ask.
+- Refusals stay short too: "nah i don't write essays — that's how acceptances get yanked. paste yours tho and i'll tell you what's actually weak 👀".
+- Essays are the money move: when essays come up, get them to paste it for a blunt read (feedback, never a rewrite), and nudge toward PredictAdmit's essay grading for the full line-by-line.
+
+LEARN ABOUT THEM WITH TAPPABLE OPTIONS (do this almost every turn):
+- You usually don't know enough about the student. Instead of making them type it all out, END your reply with 2-4 tappable options, each on its OWN line starting with ">> ".
+- Use them as MULTIPLE CHOICE to pull one fact out of them at a time (gpa range, test score, intended major, their strongest hook) OR as the obvious next moves ("rate my list", "what are my real odds", "roast my essay").
+- Keep each option under ~6 words, punchy, first-person from the student's mouth (e.g. ">> my GPA's like 3.7", ">> just tell me what to do"). Only skip the options if the student explicitly asked you to stop.
+- Format EXACTLY like this, nothing after the last option:
+your short texted reply here
+>> option one
+>> option two
+>> option three
 
 ${profileContext}${allDecisionsContext}${decisionContext}`;
 
@@ -182,8 +219,10 @@ ${profileContext}${allDecisionsContext}${decisionContext}`;
 			},
 			body: JSON.stringify({
 				model: 'deepseek-chat',
-				max_tokens: 2048,
-				temperature: 0.6,
+				// Punchy texting voice — cap output so it physically can't ramble into
+				// an essay. Enough for a few short sentences + the tappable options.
+				max_tokens: 550,
+				temperature: 0.7,
 				messages: [{ role: 'system', content: system }, ...apiMessages]
 			})
 		});
@@ -198,10 +237,13 @@ ${profileContext}${allDecisionsContext}${decisionContext}`;
 		}
 
 		const data = await res.json();
-		const reply =
+		const raw =
 			data?.choices?.[0]?.message?.content?.trim() ||
 			'Sorry, I had trouble generating a response. Please try again.';
-		return json({ reply });
+		// Split the tappable multiple-choice options (">> ..." lines) off the end of
+		// the reply so the client can render them as chips and the bubble stays clean.
+		const { reply, options } = splitOptions(raw);
+		return json({ reply, options });
 	} catch (e) {
 		console.error('[AI Counselor] DeepSeek request failed', e);
 		return json({ error: 'AI counselor is temporarily unavailable. Please try again.' }, { status: 502 });

@@ -30,6 +30,9 @@
 	let errorMsg = $state('');
 	let needsSignIn = $state(false);
 	let hydrated = $state(false);
+	// Tappable multiple-choice chips the AI offers each turn (quiz / next steps) —
+	// tapping one sends it, so the student answers without typing.
+	let latestOptions = $state<string[]>([]);
 
 	let scrollEl = $state<HTMLDivElement | null>(null);
 	let textareaEl = $state<HTMLTextAreaElement | null>(null);
@@ -127,6 +130,7 @@
 		}
 
 		errorMsg = '';
+		latestOptions = [];
 		const outgoing: ChatMessage = { role: 'user', content };
 		messages = [...messages, outgoing];
 		draft = '';
@@ -166,6 +170,9 @@
 					data?.error || 'Something went wrong reaching your counselor. Please try again.';
 			} else if (typeof data?.reply === 'string') {
 				messages = [...messages, { role: 'assistant', content: data.reply }];
+				latestOptions = Array.isArray(data?.options)
+					? data.options.filter((o: unknown) => typeof o === 'string' && o.trim()).slice(0, 4)
+					: [];
 			} else {
 				errorMsg = 'Your counselor returned an empty response. Please try again.';
 			}
@@ -222,8 +229,11 @@
 	}
 
 	function inlineFormat(escaped: string): string {
-		// Bold: **text** -> <strong>text</strong> (operates on already-escaped text)
-		return escaped.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+		// Bold: **text** -> accent-blue strong, so key terms pop with colour.
+		return escaped.replace(
+			/\*\*([^*]+)\*\*/g,
+			'<strong class="font-semibold text-[#316DE4]">$1</strong>'
+		);
 	}
 
 	function renderMarkdown(raw: string): string {
@@ -414,6 +424,20 @@
 										<span class="h-2 w-2 animate-bounce rounded-full bg-slate-300"></span>
 									</div>
 								</div>
+							</div>
+						{/if}
+
+						{#if latestOptions.length && !isThinking}
+							<div class="ml-9 flex flex-wrap gap-2 pt-1">
+								{#each latestOptions as opt}
+									<button
+										type="button"
+										onclick={() => send(opt)}
+										class="rounded-full border border-blue-200 bg-blue-50 px-3.5 py-1.5 text-sm font-medium text-[#316DE4] transition hover:border-[#316DE4] hover:bg-[#316DE4] hover:text-white active:scale-[0.98]"
+									>
+										{opt}
+									</button>
+								{/each}
 							</div>
 						{/if}
 					</div>
