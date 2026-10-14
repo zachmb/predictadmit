@@ -2284,7 +2284,7 @@
 	</div>
 {:else}
 	<!-- SIGN IN PROMPT -->
-	<main class="min-h-screen bg-white font-sans text-slate-900 flex flex-col items-center pt-20 pb-28 px-6 relative overflow-hidden">
+	<main class="min-h-screen bg-[#f4f4f0] font-sans text-slate-900 flex flex-col items-center pt-20 pb-28 px-6 relative overflow-hidden">
 		<div class="max-w-5xl w-full mx-auto space-y-28 relative z-10">
 			<!-- Hero -->
 			<div class="grid items-center gap-10 lg:grid-cols-2">
@@ -2338,7 +2338,7 @@
 						<img src="/images/mit-dome.jpg" alt="A top university campus" width="1280" height="960" loading="lazy" class="h-36 w-full object-cover sm:h-40" />
 					</div>
 					<div class="overflow-hidden rounded-2xl border border-slate-200 shadow-sm">
-						<img src="/images/harvard-campus.jpg" alt="A top university campus" width="1280" height="1707" loading="lazy" class="h-36 w-full object-cover object-top sm:h-40" />
+						<img src="/images/princeton-campus.jpg" alt="A top university campus" width="1280" height="853" loading="lazy" class="h-36 w-full object-cover sm:h-40" />
 					</div>
 				</div>
 			</div>
@@ -2375,6 +2375,44 @@
 					</div>
 				{/each}
 			</div>
+
+			<!-- Stanford fee comparison: one application fee vs a month of Pro (merged in
+			     from the former standalone pricing page). -->
+			<section class="overflow-hidden rounded-[2rem] border border-slate-200 bg-white">
+				<div class="grid md:grid-cols-2">
+					<div class="relative min-h-[260px] md:min-h-full">
+						<img
+							src="/images/stanford-campus.jpg"
+							alt="A top university campus"
+							width="1280"
+							height="720"
+							loading="lazy"
+							class="absolute inset-0 h-full w-full object-cover"
+						/>
+						<span class="absolute bottom-2 right-2 rounded bg-black/40 px-1.5 py-0.5 text-[9px] text-white/80">Wikimedia Commons · CC BY-SA 4.0</span>
+					</div>
+					<div class="flex flex-col justify-center gap-5 p-8 sm:p-12">
+						<p class="text-xs font-bold uppercase tracking-widest text-slate-400">Put it in perspective</p>
+						<div class="flex items-end gap-6">
+							<div>
+								<div class="font-serif text-5xl font-medium text-slate-900">$90</div>
+								<div class="mt-1 text-sm text-slate-500">One Stanford application fee</div>
+							</div>
+							<div class="pb-2 text-xl font-medium text-slate-300">vs</div>
+							<div>
+								<div class="font-serif text-5xl font-medium text-[#0c0c09]">$9.99</div>
+								<div class="mt-1 text-sm text-slate-500">One month of Pro</div>
+							</div>
+						</div>
+						<p class="text-lg leading-relaxed text-slate-600">
+							For about a <strong class="text-slate-900">tenth of one application fee</strong>, Pro gives you your real verdict at every T30, all season.
+						</p>
+						<a href="/verdict" class="inline-flex w-fit items-center gap-1.5 rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-800">
+							Start free <span aria-hidden="true">→</span>
+						</a>
+					</div>
+				</div>
+			</section>
 
 			<!-- Pricing: editorial three-tier (Free / Monthly / Lifetime). Buttons go
 			     straight to Stripe. Monthly is the recommended, lifted plan. -->

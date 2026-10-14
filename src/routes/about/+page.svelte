@@ -107,7 +107,7 @@
 					Start free →
 				</a>
 				<a
-					href="/pricing"
+					href="/pro"
 					class="inline-flex items-center justify-center font-semibold text-sm bg-white text-slate-900 px-8 py-3.5 rounded-full border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-colors"
 				>
 					See Pro pricing
@@ -188,7 +188,7 @@
 		</div>
 		<div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
 			<a
-				href="/pricing"
+				href="/pro"
 				class="inline-flex items-center justify-center font-semibold text-sm bg-slate-900 text-white px-8 py-3.5 rounded-full hover:bg-slate-800 transition-colors shadow-sm"
 			>
 				Get PredictAdmit for $9.99/mo →

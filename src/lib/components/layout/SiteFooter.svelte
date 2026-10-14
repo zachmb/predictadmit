@@ -27,7 +27,7 @@
 						>
 					</li>
 					<li>
-						<a href="/pricing" class="hover:text-slate-900 hover:font-bold transition-all p-1 block"
+						<a href="/pro" class="hover:text-slate-900 hover:font-bold transition-all p-1 block"
 							>Pricing</a
 						>
 					</li>

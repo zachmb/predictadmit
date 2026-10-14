@@ -8,7 +8,6 @@ const PATHS = [
 	'/',
 	'/pro',
 	'/ai',
-	'/pricing',
 	'/about',
 	'/methodology',
 	'/chances',
