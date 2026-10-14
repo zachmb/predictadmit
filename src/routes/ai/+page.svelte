@@ -1369,21 +1369,15 @@
 		></div>
 	</div>
 
-	<!-- Sticky early-deadline countdown — same card as the Pro dashboard, pinned to
-	     the right rail on large screens. Shown in the builder phase only (the inbox
-	     renders full-width once results land, so the card hides to avoid overlap). -->
-	{#if !hasUsedFreeSimulation && !$userProfile.isSubmittingAI}
-		<aside class="pointer-events-none fixed right-6 top-1/2 z-40 hidden -translate-y-1/2 xl:block 2xl:right-10">
-			<DeadlineCountdown
-				size="lg"
-				wrapperClass="pointer-events-auto w-[380px] rounded-3xl border border-slate-200 bg-white p-8 shadow-2xl"
-			/>
-		</aside>
-	{/if}
-
 	<!-- Main content wrapper -->
 	<div class="relative z-10">
 		<div class="max-w-7xl mx-auto px-6 lg:px-10 py-24 space-y-16">
+			<!-- Builder row: left-aligned content on the left, the early-deadline
+			     countdown centered in the whitespace to its right (sticky on scroll).
+			     The card shows in the builder phase only — once results land the inbox
+			     takes the full width below this row. -->
+			<div class="xl:flex xl:items-start xl:gap-8">
+			<div class="min-w-0 space-y-16 xl:max-w-3xl xl:shrink-0">
 			<!-- Hero — left-aligned to match the landing hero. -->
 			<header class="text-left space-y-6 max-w-3xl">
 				<h1 class="font-serif text-5xl sm:text-6xl md:text-[4.5rem] font-normal tracking-tight text-slate-900 leading-[1.03]">
@@ -2091,6 +2085,21 @@ See what we read from your file
 					</div>
 				</Card>
 			</section>
+
+			</div>
+			<!-- Right column: countdown centered in the whitespace beside the content,
+			     sticky as you scroll. Builder phase only. -->
+			{#if !hasUsedFreeSimulation && !$userProfile.isSubmittingAI}
+				<div class="hidden xl:flex xl:flex-1 xl:justify-center">
+					<div class="sticky top-32 w-[380px]">
+						<DeadlineCountdown
+							size="lg"
+							wrapperClass="w-full rounded-3xl border border-slate-200 bg-white p-8 shadow-xl"
+						/>
+					</div>
+				</div>
+			{/if}
+			</div>
 
 			<!-- AIMail Inbox -->
 			{#if hasUsedFreeSimulation || $userProfile.isSubmittingAI}
