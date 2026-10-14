@@ -1,4 +1,4 @@
-<footer class="bg-slate-50 border-t border-slate-200 mt-24">
+<footer class="bg-[#f4f4f0] border-t border-slate-200 mt-24">
 	<div class="max-w-[1200px] mx-auto px-6 py-12">
 		<div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
 			<!-- Brand Column -->

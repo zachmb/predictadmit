@@ -1,14 +1,101 @@
 @import 'tailwindcss';
 
 @theme {
-	/* Default (Light Mode) Palette */
-	--color-brand-bg: #f8fafc; /* slate-50 */
-	--color-brand-text: #0f172a; /* slate-900 */
+	/* ────────────────────────────────────────────────────────────────────
+	   KOLLY-IDENTICAL PALETTE (kolly.ai). PredictAdmit is a warm-olive
+	   monochrome clone of Kolly: cream canvas (olive-100), near-black warm
+	   ink (olive-950), white cards. There is NO blue and NO cool-gray in the
+	   brand — every neutral/accent family below is remapped onto Kolly's
+	   `olive` scale so existing slate/gray/blue utilities render warm olive
+	   with zero per-file churn. Semantic amber/emerald/rose are kept (Kolly
+	   uses the same warm amber + emerald/rose states). School-identity hues
+	   inside portal accept/deny letters stay as inline hex (that's the
+	   simulation's job — the only thing that differs from Kolly). */
 
-	/* Vigilante/Authority Accents (Universal) */
-	--color-brand-crimson: #a51c30; /* Harvard/Stress */
-	--color-brand-navy: #00356b; /* Yale/Authority */
-	--color-brand-gold: #cfb87c; /* Prestige */
+	/* Kolly olive scale (oklch-derived from kolly.ai) */
+	--color-olive-50: #fbfbf8;
+	--color-olive-100: #f4f4f0;
+	--color-olive-200: #e8e8e3;
+	--color-olive-300: #d8d8d0;
+	--color-olive-400: #abab9c;
+	--color-olive-500: #7c7c67;
+	--color-olive-600: #5b5b4b;
+	--color-olive-700: #474739;
+	--color-olive-800: #2b2b22;
+	--color-olive-900: #1d1d16;
+	--color-olive-950: #0c0c09;
+
+	/* Remap cool neutral + blue families → olive (index-aligned) so the whole
+	   app inherits Kolly's warm monochrome. slate/gray = neutrals; blue/sky/
+	   cyan/indigo/violet = the old brand blue, now erased. */
+	--color-slate-50: #fbfbf8;
+	--color-slate-100: #f4f4f0;
+	--color-slate-200: #e8e8e3;
+	--color-slate-300: #d8d8d0;
+	--color-slate-400: #abab9c;
+	--color-slate-500: #7c7c67;
+	--color-slate-600: #5b5b4b;
+	--color-slate-700: #474739;
+	--color-slate-800: #2b2b22;
+	--color-slate-900: #0c0c09; /* headings + primary pills → Kolly ink */
+	--color-slate-950: #0c0c09;
+
+	--color-gray-50: #fbfbf8;
+	--color-gray-100: #f4f4f0;
+	--color-gray-200: #e8e8e3;
+	--color-gray-300: #d8d8d0;
+	--color-gray-400: #abab9c;
+	--color-gray-500: #7c7c67;
+	--color-gray-600: #5b5b4b;
+	--color-gray-700: #474739;
+	--color-gray-800: #2b2b22;
+	--color-gray-900: #0c0c09;
+	--color-gray-950: #0c0c09;
+
+	/* Blue erased → warm ink. Light blue tints become warm oatmeal tints;
+	   mid/strong blues become dark olive ink so old blue accents read as
+	   Kolly's near-black. */
+	--color-blue-50: #f4f4f0;
+	--color-blue-100: #e8e8e3;
+	--color-blue-200: #e8e8e3;
+	--color-blue-300: #d8d8d0;
+	--color-blue-400: #abab9c;
+	--color-blue-500: #474739;
+	--color-blue-600: #1d1d16;
+	--color-blue-700: #0c0c09;
+	--color-blue-800: #0c0c09;
+	--color-blue-900: #0c0c09;
+	--color-blue-950: #0c0c09;
+
+	--color-sky-50: #f4f4f0;
+	--color-sky-100: #e8e8e3;
+	--color-sky-200: #e8e8e3;
+	--color-sky-300: #d8d8d0;
+	--color-sky-400: #abab9c;
+	--color-sky-500: #474739;
+	--color-sky-600: #1d1d16;
+	--color-sky-700: #0c0c09;
+	--color-sky-800: #0c0c09;
+	--color-sky-900: #0c0c09;
+	--color-sky-950: #0c0c09;
+
+	--color-cyan-400: #abab9c;
+	--color-cyan-500: #7c7c67;
+	--color-cyan-600: #5b5b4b;
+
+	--color-indigo-400: #abab9c;
+	--color-indigo-700: #2b2b22;
+
+	--color-violet-400: #abab9c;
+
+	/* Default (Kolly) Palette */
+	--color-brand-bg: #f4f4f0; /* olive-100 — Kolly cream canvas */
+	--color-brand-text: #0c0c09; /* olive-950 — Kolly warm ink */
+
+	/* Legacy authority accents (kept defined; unused on the Kolly surface) */
+	--color-brand-crimson: #a51c30;
+	--color-brand-navy: #00356b;
+	--color-brand-gold: #cfb87c;
 
 	/* Typography (Kolly-matched, 2026-09-11): Kolly's marketing site uses Söhne
 	   (a paid Klim font) for sans + Newsreader for serif. We can't ship Söhne's
@@ -21,16 +108,16 @@
 	/* Handwritten accent (GradGPT-style margin notes / eyebrows). Blue-ink hand. */
 	--font-hand: 'Caveat', 'Segoe Script', cursive;
 
-	/* Shadows */
-	--shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-	--shadow-glow: 0 0 20px -5px rgba(34, 211, 238, 0.15);
+	/* Shadows — warm olive ink, never blue/cyan */
+	--shadow-soft: 0 4px 6px -1px rgba(12, 12, 9, 0.05), 0 2px 4px -1px rgba(12, 12, 9, 0.03);
+	--shadow-glow: 0 0 20px -5px rgba(12, 12, 9, 0.12);
 
 	--radius-card: 16px;
-	--radius-btn: 8px; /* Restored to 8px for friendly UI */
+	--radius-btn: 9999px; /* Kolly buttons are full pills */
 }
 
 /* Shared Brand Colors */
---color-brand-primary: #0f172a; /* Slate 900 - Main Text/Header */
+--color-brand-primary: #0c0c09; /* olive-950 — Kolly ink (primary pills/header) */
 
 :root {
 	font-family: var(--font-sans);
@@ -71,18 +158,18 @@ body {
 	}
 }
 
-/* ---- GradGPT-style editorial accents (handwritten notes + hand-drawn marks) ----
-   Additive charm layer over the clean slate/blue base. Single blue ink accent
-   (#316DE4) to match the brand — no second accent color. */
+/* ---- Editorial accents (handwritten notes + hand-drawn marks) ----
+   Additive charm layer over the warm olive base. Single olive ink accent
+   (olive-700 #474739) — no blue, matching Kolly's monochrome register. */
 
 /* In @layer components so Tailwind utilities (text-[...], etc.) can still
    override — an unlayered rule would beat every utility. */
 @layer components {
-	/* Handwritten note / eyebrow (Caveat), blue ink by default. */
+	/* Handwritten note / eyebrow (Caveat), olive ink by default. */
 	.hand {
 		font-family: var(--font-hand);
 		font-weight: 600;
-		color: #316DE4;
+		color: #474739;
 		line-height: 1;
 	}
 }
@@ -102,7 +189,7 @@ body {
 	height: 0.34em;
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
-	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 16' preserveAspectRatio='none'%3E%3Cpath d='M3 11 C 60 4, 120 4, 180 8 S 260 13, 297 6' fill='none' stroke='%23316DE4' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E");
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 16' preserveAspectRatio='none'%3E%3Cpath d='M3 11 C 60 4, 120 4, 180 8 S 260 13, 297 6' fill='none' stroke='%23474739' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E");
 	pointer-events: none;
 }
 
@@ -113,5 +200,5 @@ body {
 	height: 2.2rem;
 	background-repeat: no-repeat;
 	background-size: contain;
-	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 44'%3E%3Cpath d='M4 8 C 20 2, 44 6, 54 26' fill='none' stroke='%23316DE4' stroke-width='3.5' stroke-linecap='round'/%3E%3Cpath d='M44 24 L 55 28 L 50 16' fill='none' stroke='%23316DE4' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 44'%3E%3Cpath d='M4 8 C 20 2, 44 6, 54 26' fill='none' stroke='%23474739' stroke-width='3.5' stroke-linecap='round'/%3E%3Cpath d='M44 24 L 55 28 L 50 16' fill='none' stroke='%23474739' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 }

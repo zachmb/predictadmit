@@ -58,12 +58,12 @@
 
 			<div class="rounded-2xl border border-blue-100 bg-blue-50/60 p-6">
 				<div class="flex items-center gap-2">
-					<span class="grid h-8 w-8 place-items-center rounded-lg bg-[#316DE4] text-white">
+					<span class="grid h-8 w-8 place-items-center rounded-lg bg-[#0c0c09] text-white">
 						<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
 							<path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
 						</svg>
 					</span>
-					<span class="text-[11px] font-bold tracking-wider text-[#316DE4] uppercase">Pro</span>
+					<span class="text-[11px] font-bold tracking-wider text-[#0c0c09] uppercase">Pro</span>
 				</div>
 				<h2 class="mt-3 text-base font-bold text-slate-900">AI decision predictions</h2>
 				<p class="mt-1.5 text-sm leading-relaxed text-slate-600">
@@ -97,7 +97,7 @@
 		<div class="mt-12 flex flex-col gap-3 sm:flex-row">
 			<a
 				href="/"
-				class="inline-flex flex-1 items-center justify-center rounded-xl bg-[#316DE4] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#1C57CC]"
+				class="inline-flex flex-1 items-center justify-center rounded-xl bg-[#0c0c09] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#2b2b22]"
 			>
 				Open a decision portal
 			</a>

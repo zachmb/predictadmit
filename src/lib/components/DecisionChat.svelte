@@ -234,10 +234,10 @@
 	}
 
 	function inlineFormat(escaped: string): string {
-		// Accent-blue bold so key terms pop with colour.
+		// Accent-blue bold so key terms pop with colour (the Appybara look).
 		return escaped.replace(
 			/\*\*([^*]+)\*\*/g,
-			'<strong class="font-semibold text-[#316DE4]">$1</strong>'
+			'<strong class="font-semibold text-[#0c0c09]">$1</strong>'
 		);
 	}
 
@@ -289,7 +289,7 @@
 		<div class="flex items-center gap-3">
 			<div
 				class="flex h-9 w-9 items-center justify-center rounded-full text-sm font-bold text-white"
-				style="background-color:#316DE4"
+				style="background-color:#0c0c09"
 				aria-hidden="true"
 			>
 				AI
@@ -322,7 +322,7 @@
 						<button
 							type="button"
 							onclick={() => send(prompt)}
-							class="rounded-xl border border-slate-200 bg-white px-4 py-3 text-left text-sm font-medium text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-[#316DE4] hover:text-slate-900 hover:shadow"
+							class="rounded-xl border border-slate-200 bg-white px-4 py-3 text-left text-sm font-medium text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-[#0c0c09] hover:text-slate-900 hover:shadow"
 						>
 							{prompt}
 						</button>
@@ -336,7 +336,7 @@
 						<div class="flex justify-end">
 							<div
 								class="max-w-[85%] whitespace-pre-wrap break-words rounded-2xl rounded-br-md px-4 py-2.5 text-sm text-white shadow-sm"
-								style="background-color:#316DE4"
+								style="background-color:#0c0c09"
 							>
 								{message.content}
 							</div>
@@ -345,7 +345,7 @@
 						<div class="flex items-start gap-2.5">
 							<div
 								class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[11px] font-bold text-white"
-								style="background-color:#316DE4"
+								style="background-color:#0c0c09"
 								aria-hidden="true"
 							>
 								AI
@@ -364,7 +364,7 @@
 					<div class="flex items-start gap-2.5">
 						<div
 							class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[11px] font-bold text-white"
-							style="background-color:#316DE4"
+							style="background-color:#0c0c09"
 							aria-hidden="true"
 						>
 							AI
@@ -385,7 +385,7 @@
 							<button
 								type="button"
 								onclick={() => send(opt)}
-								class="rounded-full border border-blue-200 bg-blue-50 px-3 py-1.5 text-sm font-medium text-[#316DE4] transition hover:border-[#316DE4] hover:bg-[#316DE4] hover:text-white active:scale-[0.98]"
+								class="rounded-full border border-blue-200 bg-blue-50 px-3 py-1.5 text-sm font-medium text-[#0c0c09] transition hover:border-[#0c0c09] hover:bg-[#0c0c09] hover:text-white active:scale-[0.98]"
 							>
 								{opt}
 							</button>
@@ -408,7 +408,7 @@
 
 		<form
 			onsubmit={handleSubmit}
-			class="flex items-end gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2 transition focus-within:border-[#316DE4] focus-within:bg-white"
+			class="flex items-end gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2 transition focus-within:border-[#0c0c09] focus-within:bg-white"
 		>
 			<textarea
 				bind:this={textareaEl}
@@ -425,7 +425,7 @@
 				disabled={isThinking || draft.trim() === ''}
 				aria-label="Send message"
 				class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-white transition disabled:cursor-not-allowed disabled:opacity-40"
-				style="background-color:#316DE4"
+				style="background-color:#0c0c09"
 			>
 				<svg
 					width="18"

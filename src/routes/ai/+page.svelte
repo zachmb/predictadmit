@@ -1356,7 +1356,7 @@
 </svelte:head>
 
 <main
-	class="relative min-h-screen bg-[#FAFAFA] text-slate-900 overflow-hidden font-sans"
+	class="relative min-h-screen bg-[#f4f4f0] text-slate-900 overflow-hidden font-sans"
 >
 	<!-- Decorative background elements -->
 	<div class="absolute inset-0 overflow-hidden pointer-events-none">
@@ -1374,7 +1374,7 @@
 			<!-- Hero -->
 			<header class="text-center space-y-5 max-w-2xl mx-auto">
 				<h1 class="font-serif text-4xl sm:text-5xl md:text-6xl font-medium tracking-tight text-slate-900 leading-[1.05]">
-					Predict your college <span class="text-[#316DE4]">decisions</span>
+					Predict your college <span class="text-[#0c0c09]">decisions</span>
 				</h1>
 
 				<p class="mx-auto max-w-xl text-base sm:text-lg leading-relaxed text-slate-600">
@@ -1417,7 +1417,7 @@
 			<section class="max-w-2xl mx-auto">
 				<!-- Application card -->
 				<Card
-					class="bg-white border border-slate-200 shadow-[0_30px_80px_-30px_rgba(15,23,42,0.18)] text-slate-900 rounded-3xl overflow-hidden"
+					class="bg-white border border-slate-200 shadow-[0_30px_80px_-30px_rgba(12,12,9,0.18)] text-slate-900 rounded-3xl overflow-hidden"
 				>
 					<div class="p-8 md:p-10">
 						<!-- Google sign-in bar -->
@@ -1834,8 +1834,8 @@ One fills the rest
 										/>
 										{#if hasDeepDiveAccess}
 											<div class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
-												<span class="w-2 h-2 bg-[#316DE4] rounded-full"></span>
-												<span class="text-xs text-[#316DE4] font-bold">Active</span>
+												<span class="w-2 h-2 bg-[#0c0c09] rounded-full"></span>
+												<span class="text-xs text-[#0c0c09] font-bold">Active</span>
 											</div>
 										{/if}
 									</div>
@@ -2051,7 +2051,7 @@ Picking one applies that school's real early-round odds
 							<!-- Trust + pricing clarity right at the CTA (GPT-vision: add trust
 							     signals + set price expectations next to the button). -->
 							<div class="mt-4 flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 text-xs text-slate-500">
-								<span class="inline-flex items-center gap-1 text-[#316DE4]">
+								<span class="inline-flex items-center gap-1 text-[#0c0c09]">
 									{#each Array(5) as _}
 										<svg class="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.07 3.3a1 1 0 00.95.68h3.46c.97 0 1.37 1.24.59 1.81l-2.8 2.03a1 1 0 00-.36 1.12l1.07 3.29c.3.92-.76 1.69-1.54 1.12l-2.8-2.03a1 1 0 00-1.18 0l-2.8 2.03c-.78.57-1.83-.2-1.54-1.12l1.07-3.29a1 1 0 00-.36-1.12L2.4 8.72c-.78-.57-.38-1.81.59-1.81h3.46a1 1 0 00.95-.68l1.07-3.3z" /></svg>
 									{/each}
@@ -2100,7 +2100,7 @@ See what we read from your file
 			{#if hasUsedFreeSimulation || $userProfile.isSubmittingAI}
 				<section
 					id="aimailTop"
-					class="scroll-mt-24 rounded-3xl border border-slate-200 bg-white shadow-[0_30px_80px_-30px_rgba(15,23,42,0.18)] overflow-hidden mt-12"
+					class="scroll-mt-24 rounded-3xl border border-slate-200 bg-white shadow-[0_30px_80px_-30px_rgba(12,12,9,0.18)] overflow-hidden mt-12"
 				>
 					<!-- Honesty caveat: these are AI-simulated letters, never real decisions.
 					     A student must not mistake the inbox metaphor for an actual result. -->
@@ -2324,7 +2324,7 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 														<ul class="mt-2 space-y-1.5">
 															{#each item.advice as a}
 																<li class="flex items-start gap-2 text-sm text-slate-700">
-																	<span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#316DE4]"></span>
+																	<span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#0c0c09]"></span>
 																	{a}
 																</li>
 															{/each}
@@ -2358,11 +2358,11 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 														aiDecisions.find((d) => d.slug === item.slug) ??
 															({ slug: item.slug, school: item.school } as AiDecision)
 													)}
-												class="mt-5 flex w-full items-center gap-3 rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:border-[#316DE4] hover:shadow-md"
+												class="mt-5 flex w-full items-center gap-3 rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:border-[#0c0c09] hover:shadow-md"
 											>
 												<div
 													class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white"
-													style="background-color:#316DE4"
+													style="background-color:#0c0c09"
 													aria-hidden="true"
 												>
 													AI
@@ -2546,7 +2546,7 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 					</div>
 					<svg class="h-4 w-4 shrink-0 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
 					<div class="leading-tight">
-						<p class="text-[11px] font-bold uppercase tracking-wide text-[#316DE4]">PredictAdmit Pro</p>
+						<p class="text-[11px] font-bold uppercase tracking-wide text-[#0c0c09]">PredictAdmit Pro</p>
 						<p class="text-lg font-black text-slate-900">$9.99/mo</p>
 					</div>
 				</div>
@@ -2556,7 +2556,7 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 				<ul class="mt-4 grid grid-cols-1 gap-x-3 gap-y-2 sm:grid-cols-2">
 					{#each ['Decisions across every T30 school', 'Committee-style deep-dive on every verdict', 'AI essay editor with reader feedback', 'Per-school strategy for 50+ schools', 'AI counselor, available any time', 'Unlimited re-runs as you edit'] as benefit}
 						<li class="flex items-center gap-2 text-[13px] text-slate-700">
-							<span class="grid h-4 w-4 shrink-0 place-items-center rounded-full bg-[color-mix(in_oklab,#316DE4_10%,transparent)] text-[#316DE4]">
+							<span class="grid h-4 w-4 shrink-0 place-items-center rounded-full bg-[color-mix(in_oklab,#0c0c09_10%,transparent)] text-[#0c0c09]">
 								<svg class="h-2.5 w-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
 							</span>
 							{benefit}

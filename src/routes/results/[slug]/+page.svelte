@@ -195,8 +195,8 @@
 
 								<polygon
 									points={getRadarPoints()}
-									fill="rgba(37, 99, 235, 0.15)"
-									stroke="#2563eb"
+									fill="rgba(12,12,9,0.12)"
+									stroke="#474739"
 									stroke-width="2"
 								/>
 							</svg>
@@ -247,12 +247,12 @@
 						<button
 							type="button"
 							onclick={() => goto('/pro')}
-							class="w-full rounded-2xl border border-slate-200 bg-white p-6 text-left shadow-xl transition hover:border-[#316DE4] hover:shadow-2xl"
+							class="w-full rounded-2xl border border-slate-200 bg-white p-6 text-left shadow-xl transition hover:border-[#0c0c09] hover:shadow-2xl"
 						>
 							<div class="flex items-center gap-3">
 								<div
 									class="flex h-9 w-9 items-center justify-center rounded-full text-sm font-bold text-white"
-									style="background-color:#316DE4"
+									style="background-color:#0c0c09"
 									aria-hidden="true"
 								>
 									AI

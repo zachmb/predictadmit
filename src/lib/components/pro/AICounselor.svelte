@@ -229,10 +229,11 @@
 	}
 
 	function inlineFormat(escaped: string): string {
-		// Bold: **text** -> accent-blue strong, so key terms pop with colour.
+		// Bold: **text** -> accent-blue strong, so key terms pop with colour
+		// (the Appybara look) instead of flat grey text.
 		return escaped.replace(
 			/\*\*([^*]+)\*\*/g,
-			'<strong class="font-semibold text-[#316DE4]">$1</strong>'
+			'<strong class="font-semibold text-[#0c0c09]">$1</strong>'
 		);
 	}
 
@@ -293,7 +294,7 @@
 				<div class="flex items-center gap-3">
 					<div
 						class="flex h-9 w-9 items-center justify-center rounded-full text-sm font-bold text-white"
-						style="background-color:#316DE4"
+						style="background-color:#0c0c09"
 						aria-hidden="true"
 					>
 						AI
@@ -335,7 +336,7 @@
 					>
 						<div
 							class="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl text-lg font-bold text-white shadow-sm"
-							style="background-color:#316DE4"
+							style="background-color:#0c0c09"
 							aria-hidden="true"
 						>
 							AI
@@ -351,10 +352,10 @@
 								<button
 									type="button"
 									onclick={() => handleSuggestion(prompt)}
-									class="group flex items-center gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3 text-left text-sm font-medium text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-[#316DE4] hover:text-slate-900 hover:shadow"
+									class="group flex items-center gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3 text-left text-sm font-medium text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-[#0c0c09] hover:text-slate-900 hover:shadow"
 								>
 									<span
-										class="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-[#316DE4] transition group-hover:bg-[#316DE4] group-hover:text-white"
+										class="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-[#0c0c09] transition group-hover:bg-[#0c0c09] group-hover:text-white"
 									>
 										<svg
 											width="16"
@@ -382,7 +383,7 @@
 								<div class="flex justify-end">
 									<div
 										class="max-w-[85%] whitespace-pre-wrap break-words rounded-2xl rounded-br-md px-4 py-2.5 text-sm text-white shadow-sm"
-										style="background-color:#316DE4"
+										style="background-color:#0c0c09"
 									>
 										{message.content}
 									</div>
@@ -391,7 +392,7 @@
 								<div class="flex items-start gap-2.5">
 									<div
 										class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[11px] font-bold text-white"
-										style="background-color:#316DE4"
+										style="background-color:#0c0c09"
 										aria-hidden="true"
 									>
 										AI
@@ -410,7 +411,7 @@
 							<div class="flex items-start gap-2.5">
 								<div
 									class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[11px] font-bold text-white"
-									style="background-color:#316DE4"
+									style="background-color:#0c0c09"
 									aria-hidden="true"
 								>
 									AI
@@ -433,7 +434,7 @@
 									<button
 										type="button"
 										onclick={() => send(opt)}
-										class="rounded-full border border-blue-200 bg-blue-50 px-3.5 py-1.5 text-sm font-medium text-[#316DE4] transition hover:border-[#316DE4] hover:bg-[#316DE4] hover:text-white active:scale-[0.98]"
+										class="rounded-full border border-blue-200 bg-blue-50 px-3.5 py-1.5 text-sm font-medium text-[#0c0c09] transition hover:border-[#0c0c09] hover:bg-[#0c0c09] hover:text-white active:scale-[0.98]"
 									>
 										{opt}
 									</button>
@@ -475,7 +476,7 @@
 					<button
 						type="button"
 						onclick={() => signIn('google', { callbackUrl: '/pro' })}
-						class="flex w-full items-center justify-center gap-2.5 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-[#316DE4] hover:text-slate-900"
+						class="flex w-full items-center justify-center gap-2.5 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-[#0c0c09] hover:text-slate-900"
 					>
 						<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
 							<path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" />
@@ -491,7 +492,7 @@
 				{:else}
 					<form
 						onsubmit={handleSubmit}
-						class="flex items-end gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2 transition focus-within:border-[#316DE4] focus-within:bg-white"
+						class="flex items-end gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2 transition focus-within:border-[#0c0c09] focus-within:bg-white"
 					>
 						<textarea
 							bind:this={textareaEl}
@@ -508,7 +509,7 @@
 							disabled={isThinking || draft.trim() === ''}
 							aria-label="Send message"
 							class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-white transition disabled:cursor-not-allowed disabled:opacity-40"
-							style="background-color:#316DE4"
+							style="background-color:#0c0c09"
 						>
 							<svg
 								width="18"
@@ -528,7 +529,7 @@
 						<span>PredictAI can make mistakes. Verify details with official sources.</span>
 						{#if embedded}
 							<span class="text-slate-300">·</span>
-							<a href="/essay-grader" class="font-semibold text-[#316DE4] hover:underline">
+							<a href="/essay-grader" class="font-semibold text-[#0c0c09] hover:underline">
 								Get your essay graded line-by-line →
 							</a>
 						{/if}

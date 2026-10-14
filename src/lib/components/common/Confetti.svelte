@@ -19,7 +19,7 @@
 	}
 	function buildPalette(hex: string): string[] {
 		const rgb = toRgb(hex);
-		const fallback = ['#FDBB2D', '#22c55e', '#3b82f6', '#ef4444', '#a855f7', '#f97316'];
+		const fallback = ['#FDBB2D', '#22c55e', '#0c0c09', '#ef4444', '#474739', '#f97316'];
 		if (!rgb) return fallback;
 		return [
 			`rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`, // brand

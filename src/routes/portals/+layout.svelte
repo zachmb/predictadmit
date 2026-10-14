@@ -128,7 +128,7 @@
 		font-size: 13px;
 		font-weight: 500;
 		line-height: 1.35;
-		box-shadow: 0 12px 30px -8px rgba(15, 23, 42, 0.45);
+		box-shadow: 0 12px 30px -8px rgba(12,12,9, 0.45);
 		animation: sim-nudge-in 0.25s ease-out both;
 	}
 	.sim-nudge strong {
@@ -138,8 +138,8 @@
 		width: 8px;
 		height: 8px;
 		border-radius: 9999px;
-		background: #316DE4;
-		box-shadow: 0 0 0 4px rgba(26, 76, 255, 0.25);
+		background: #0c0c09;
+		box-shadow: 0 0 0 4px rgba(12,12,9,0.18);
 		flex-shrink: 0;
 	}
 	@keyframes sim-nudge-in {

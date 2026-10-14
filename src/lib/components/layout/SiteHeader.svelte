@@ -90,7 +90,7 @@
 		class:opacity-30={dimmed}
 		class:pointer-events-none={dimmed}
 		class:grayscale={dimmed}
-		class="fixed left-1/2 -translate-x-1/2 z-[9999] bg-white/80 backdrop-blur-xl transition-[width,max-width,height,top,border-radius,padding,box-shadow] duration-300 ease-out shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden
+		class="fixed left-1/2 -translate-x-1/2 z-[9999] bg-[#f4f4f0]/85 backdrop-blur-xl transition-[width,max-width,height,top,border-radius,padding,box-shadow] duration-300 ease-out shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden
 		{floatingIsland
 			? 'top-6 h-[68px] border border-slate-200/80 rounded-full px-2'
 			: 'top-0 h-[76px] border-b border-transparent lg:border-slate-200/80 rounded-none px-4'}"
@@ -114,7 +114,7 @@
 					</a>
 				{:else}
 					<a href="/" class="text-xl font-[700] tracking-tight text-slate-900 transition-colors">
-						predictadmit<span class="text-[#316DE4]">.com</span>
+						predictadmit<span class="text-[#0c0c09]">.com</span>
 					</a>
 				{/if}
 			</div>
@@ -223,7 +223,7 @@
 			<a
 				href="/account"
 				on:click={() => (menuOpen = false)}
-				class="mt-1 rounded-xl px-4 py-3 text-[17px] font-semibold text-[#316DE4] hover:bg-slate-100 transition-colors"
+				class="mt-1 rounded-xl px-4 py-3 text-[17px] font-semibold text-[#0c0c09] hover:bg-slate-100 transition-colors"
 			>
 				{session ? 'Account' : 'Sign in'}
 			</a>
@@ -242,8 +242,8 @@
 	.pa-burger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
 	.pa-burger.open span:nth-child(2) { opacity: 0; }
 	.pa-burger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
-	.pa-scrim { position: fixed; inset: 0; z-index: 9997; border: none; padding: 0; background: rgba(15, 23, 42, 0.3); cursor: pointer; }
-	.pa-sheet { position: fixed; inset-inline: 0; top: 0; z-index: 9998; background: rgba(255, 255, 255, 0.97); backdrop-filter: blur(16px); border-bottom: 1px solid rgb(226 232 240); box-shadow: 0 22px 44px -24px rgba(15, 23, 42, 0.28); padding-top: 96px; transform: translateY(-100%); transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1); }
+	.pa-scrim { position: fixed; inset: 0; z-index: 9997; border: none; padding: 0; background: rgba(12,12,9, 0.3); cursor: pointer; }
+	.pa-sheet { position: fixed; inset-inline: 0; top: 0; z-index: 9998; background: rgba(255, 255, 255, 0.97); backdrop-filter: blur(16px); border-bottom: 1px solid rgb(226 232 240); box-shadow: 0 22px 44px -24px rgba(12,12,9, 0.28); padding-top: 96px; transform: translateY(-100%); transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1); }
 	.pa-sheet.open { transform: translateY(0); }
 	@media (prefers-reduced-motion: reduce) { .pa-sheet { transition: none; } .pa-burger span { transition: none; } }
 </style>

@@ -11,13 +11,13 @@
 </script>
 
 <section
-	class="relative overflow-hidden rounded-xl border border-slate-800 bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900 text-slate-50 shadow-[0_18px_45px_rgba(15,23,42,0.9)]"
+	class="relative overflow-hidden rounded-xl border border-slate-800 bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900 text-slate-50 shadow-[0_18px_45px_rgba(12,12,9,0.9)]"
 >
 	<!-- glow / grid overlay -->
 	<div class="pointer-events-none absolute inset-0">
 		<div class="absolute -top-24 -right-24 h-56 w-56 rounded-full bg-sky-500/20 blur-3xl"></div>
 		<div
-			class="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(148,163,184,0.25)_0,_transparent_55%)]"
+			class="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(171,171,156,0.28)_0,_transparent_55%)]"
 		></div>
 	</div>
 

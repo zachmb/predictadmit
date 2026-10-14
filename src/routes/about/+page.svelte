@@ -239,7 +239,7 @@
 					{#if faq.link}
 						<a
 							href={faq.link.href}
-							class="mt-2 inline-block text-sm font-semibold text-[#316DE4] hover:underline"
+							class="mt-2 inline-block text-sm font-semibold text-[#0c0c09] hover:underline"
 						>
 							{faq.link.label}
 						</a>
