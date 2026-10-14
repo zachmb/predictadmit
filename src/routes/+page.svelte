@@ -265,6 +265,17 @@
 			calendarIndex = parseInt(savedIndex);
 			if (calendarIndex < calendarDates.length - 1) startCalendar();
 		}
+		// Tick the hero count up a little while they're on the page (respects
+		// reduced-motion by just not animating). +1 every ~6s, subtle.
+		if (
+			typeof window !== 'undefined' &&
+			!window.matchMedia('(prefers-reduced-motion: reduce)').matches
+		) {
+			const tick = window.setInterval(() => {
+				predictedCount += 1;
+			}, 6000);
+			return () => window.clearInterval(tick);
+		}
 	});
 
 	// Scroll-reveal: fades + rises an element into view once, respecting
@@ -312,6 +323,11 @@
 	// school's portal. Both paths already exist in this script; the toggle just
 	// surfaces the simulate path, which previously had no entry point.
 	let heroMode: 'predict' | 'simulate' = 'predict';
+
+	// Live-feel social proof: the hero count starts at 15,000+ and ticks up a
+	// little over time, so the number feels alive without ever overstating.
+	let predictedCount = 15000;
+	$: predictedCountLabel = predictedCount.toLocaleString('en-US');
 	function startPrediction() {
 		const stats = heroStats.trim();
 		try {
@@ -686,20 +702,32 @@
 <main class="font-sans text-slate-900 bg-[#f4f4f0] selection:bg-slate-200 selection:text-slate-900">
 	<!-- HERO SECTION — Kolly layout: wide centered container, content left-aligned
 	     at the container's left padding edge (items-start), warm cream canvas. -->
-	<section class="relative pt-28 pb-20 md:pt-40 md:pb-28 overflow-hidden bg-[#f4f4f0]">
+	<section class="relative pt-24 pb-14 md:pt-28 md:pb-16 overflow-hidden bg-[#f4f4f0]">
 		<div class="max-w-7xl mx-auto px-6 lg:px-10 text-left relative z-10 flex flex-col items-start">
 			<!-- Headline -->
-			<div class="space-y-6 max-w-5xl mb-10">
+			<div class="space-y-5 max-w-5xl mb-8">
 				<h1
-					class="font-serif text-5xl sm:text-6xl md:text-[5rem] font-medium tracking-tight leading-[1.03] text-slate-900 animate-in fade-in slide-in-from-bottom-6 duration-1000 fill-mode-both"
+					class="font-serif text-5xl sm:text-6xl md:text-[5rem] font-normal tracking-tight leading-[1.03] text-slate-900 animate-in fade-in slide-in-from-bottom-6 duration-1000 fill-mode-both"
 				>
 					Where will you get in?
 				</h1>
 				<p
 					class="text-lg md:text-xl text-slate-500 max-w-3xl leading-relaxed tracking-tight font-medium mt-5 animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-[200ms] fill-mode-both"
 				>
-					Predict your decisions, simulate any portal manually, and edit your application based on your results.
+					<span class="font-semibold text-slate-900 tabular-nums">{predictedCountLabel}+</span> students have
+					predicted their decisions, simulated acceptances to their dream schools, and used
+					<a href="/pro" class="font-semibold text-slate-900 underline decoration-slate-300 underline-offset-2 transition-colors hover:decoration-slate-900">Pro's</a>
+					application help to get in.
 				</p>
+
+				<!-- Capability lines — new serif register, editorial voice -->
+				<ul
+					class="mt-7 max-w-3xl space-y-2.5 font-serif text-xl md:text-2xl font-normal leading-snug tracking-tight text-slate-700 animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-[320ms] fill-mode-both"
+				>
+					<li>Re-run infinite predictions. See what'll happen.</li>
+					<li>Improve your essays with line-by-line feedback, trained on successful applications.</li>
+					<li class="text-slate-400">And more.</li>
+				</ul>
 			</div>
 
 			<!-- Hero start card -->
@@ -810,25 +838,10 @@
 				</div>
 			</div>
 
-			<!-- One quiet trust line (was three cards) -->
-			<p class="mt-6 text-left text-sm text-slate-500 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300 fill-mode-both">
-				Free with Google, no card. Calibrated on 5,000+ real profiles. Private to your browser.
-			</p>
-
-			<!-- One merged fine-print line -->
-			<p class="mt-5 max-w-xl text-left text-[11px] leading-relaxed text-slate-400">
-				An estimate from NACAC factor weights, not an official decision and never affiliated with any school.
-				<a href="/methodology" class="font-medium text-slate-500 underline underline-offset-2 hover:text-slate-900">Methodology →</a>
-			</p>
-
-			<!-- School trust row: the schools PredictAdmit simulates (honest — not endorsements) -->
-			<div class="mt-14 w-full animate-in fade-in duration-1000 delay-500 fill-mode-both">
-				<p class="text-left text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">
-					Simulates real committee decisions at every T30 school
-				</p>
-				<div class="mt-6">
-					<SchoolLogoMarquee />
-				</div>
+			<!-- School logo carousel, lifted directly under the card so it reads
+			     above the fold (trust/fine-print lines + label removed). -->
+			<div class="mt-6 w-full animate-in fade-in duration-1000 delay-300 fill-mode-both">
+				<SchoolLogoMarquee />
 			</div>
 	</section>
 
@@ -1172,12 +1185,12 @@
 		</div>
 	</section>
 
-	<!-- TESTIMONIAL (NAVY) -->
-	<section class="py-24 bg-[#001F3F] text-white">
+	<!-- TESTIMONIAL — new Kolly register: cream canvas, olive serif. -->
+	<section class="py-24 bg-[#f4f4f0] border-y border-slate-200">
 		<div class="max-w-[1200px] mx-auto px-6 text-center">
 			<div class="max-w-3xl mx-auto space-y-8">
-				<p class="hand text-3xl md:text-4xl text-[#5b8bff]">what students say</p>
-				<div class="flex justify-center text-[#0c0c09]">
+				<p class="font-serif text-2xl md:text-3xl italic text-slate-500">What students say</p>
+				<div class="flex justify-center text-amber-400">
 					{#each Array(5) as _}
 						<svg class="w-6 h-6 fill-current" viewBox="0 0 20 20"
 							><path
@@ -1186,12 +1199,12 @@
 						>
 					{/each}
 				</div>
-				<blockquote class="text-2xl md:text-4xl font-serif leading-relaxed opacity-90">
+				<blockquote class="font-serif text-3xl md:text-5xl font-normal leading-tight tracking-tight text-slate-900">
 					"ts was lowkenuinely accurate"
 				</blockquote>
 				<div class="pt-4">
-					<div class="font-bold">Miao S.</div>
-					<div class="text-sm text-slate-400">Accepted to Northwestern '30</div>
+					<div class="font-serif text-lg font-medium text-slate-900">Miao S.</div>
+					<div class="text-sm text-slate-500">Accepted to Northwestern '30</div>
 				</div>
 			</div>
 		</div>

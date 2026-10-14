@@ -1370,38 +1370,27 @@
 
 	<!-- Main content wrapper -->
 	<div class="relative z-10">
-		<div class="max-w-[1000px] mx-auto px-6 py-24 space-y-16">
-			<!-- Hero -->
-			<header class="text-center space-y-5 max-w-2xl mx-auto">
-				<h1 class="font-serif text-4xl sm:text-5xl md:text-6xl font-medium tracking-tight text-slate-900 leading-[1.05]">
-					Predict your college <span class="text-[#0c0c09]">decisions</span>
+		<div class="max-w-7xl mx-auto px-6 lg:px-10 py-24 space-y-16">
+			<!-- Hero — left-aligned to match the landing hero. -->
+			<header class="text-left space-y-6 max-w-3xl">
+				<h1 class="font-serif text-5xl sm:text-6xl md:text-[4.5rem] font-normal tracking-tight text-slate-900 leading-[1.03]">
+					Predict your college decisions
 				</h1>
 
-				<p class="mx-auto max-w-xl text-base sm:text-lg leading-relaxed text-slate-600">
-					PredictAdmit's AI reads your real application and calls your decision (admit, deny,
-					waitlist, or defer) at every T30 school, then a five-reader committee shows you what drove it.
-					<span class="font-semibold text-slate-900">Your first simulation is free, and you can unlock one school's full results.</span>
+				<!-- Bolder + skimmable: the value reads in one glance, key phrases bolded. -->
+				<p class="max-w-2xl text-lg sm:text-xl leading-relaxed text-slate-600">
+					PredictAdmit's AI reads your real application and <span class="font-semibold text-slate-900">calls your decision</span> — admit, deny, waitlist, or defer — <span class="font-semibold text-slate-900">at every T30 school</span>. Then a <span class="font-semibold text-slate-900">five-reader committee</span> shows you exactly what drove it.
 				</p>
 
-				<!-- Trust band — calibration, scale, privacy (the signals a nervous applicant needs). -->
-				<div class="flex flex-wrap items-center justify-center gap-x-3.5 gap-y-2 text-xs font-medium text-slate-500">
-					<span class="inline-flex items-center gap-1.5">
-						<svg class="h-3.5 w-3.5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-						Calibrated on real admissions results
-					</span>
-					<span class="hidden sm:block h-3 w-px bg-slate-200"></span>
-					<span class="inline-flex items-center gap-1.5">
-						<svg class="h-3.5 w-3.5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 10-4 0m8 0a4 4 0 10-3-7" /></svg>
-						5,000+ applicants
-					</span>
-					<span class="hidden sm:block h-3 w-px bg-slate-200"></span>
-					<span class="inline-flex items-center gap-1.5">
-						<svg class="h-3.5 w-3.5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
-						Your data never leaves your browser
-					</span>
-				</div>
+				<!-- Skimmable value list (new serif register), ending on the free hook. -->
+				<ul class="max-w-2xl space-y-2 font-serif text-lg md:text-xl font-normal leading-snug tracking-tight text-slate-700">
+					<li><span class="font-medium text-slate-900">Calibrated</span> on 5,000+ real admissions results.</li>
+					<li>A full <span class="font-medium text-slate-900">committee verdict</span> at every T30 school.</li>
+					<li>Your data <span class="font-medium text-slate-900">never leaves your browser</span>.</li>
+					<li class="text-slate-900 font-medium">Your first simulation is free — unlock one school's full results.</li>
+				</ul>
 
-				<p class="mx-auto max-w-md text-xs leading-relaxed text-slate-400">
+				<p class="max-w-xl text-xs leading-relaxed text-slate-400">
 					An estimate from NACAC factor weights. Not an official decision, and never affiliated with any school.
 					<a href="/methodology" class="font-medium text-slate-600 underline underline-offset-2 hover:text-slate-900">Methodology →</a>
 				</p>
@@ -1414,7 +1403,7 @@
 			     (guardEvaluation meters the one free run). Letting people invest the
 			     effort + feel the aha BEFORE the wall lifts conversion. -->
 			<!-- Application builder + AI controls -->
-			<section class="max-w-2xl mx-auto">
+			<section class="max-w-2xl">
 				<!-- Application card -->
 				<Card
 					class="bg-white border border-slate-200 shadow-[0_30px_80px_-30px_rgba(12,12,9,0.18)] text-slate-900 rounded-3xl overflow-hidden"
@@ -1514,12 +1503,6 @@
 												</p>
 											</div>
 										</div>
-										<span
-											class="inline-flex items-center gap-1.5 text-[10px] uppercase font-bold tracking-wider text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-full border border-emerald-200/60 shadow-sm"
-										>
-											
-											OCR Beta
-										</span>
 									</div>
 
 									{#if !googleSignedIn}
