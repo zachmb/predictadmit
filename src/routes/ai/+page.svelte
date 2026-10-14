@@ -1389,13 +1389,25 @@
 					<span class="font-semibold text-slate-900">PredictAdmit AI</span> calls your decision at every T30 school. A <span class="font-semibold text-slate-900">five-reader committee</span> shows you why.
 				</p>
 
-				<!-- Skimmable value list (new serif register), ending on the free hook. -->
-				<ul class="max-w-2xl space-y-2 font-serif text-lg md:text-xl font-normal leading-snug tracking-tight text-slate-700">
-					<li><span class="font-medium text-slate-900">Calibrated</span> on 15,000+ results.</li>
-					<li>Full <span class="font-medium text-slate-900">committee verdict</span>, every T30.</li>
-					<li>Data <span class="font-medium text-slate-900">never leaves your browser</span>.</li>
-					<li class="text-slate-900 font-medium">First simulation free.</li>
-				</ul>
+				<!-- Skimmable NUMBERED value list (new serif register), ending on the free hook. -->
+				<ol class="max-w-2xl space-y-3 font-serif text-lg md:text-xl font-normal leading-snug tracking-tight text-slate-700">
+					<li class="flex items-start gap-3">
+						<span class="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-[#0c0c09] font-sans text-xs font-bold text-white">1</span>
+						<span><span class="font-medium text-slate-900">Calibrated</span> on 15,000+ results.</span>
+					</li>
+					<li class="flex items-start gap-3">
+						<span class="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-[#0c0c09] font-sans text-xs font-bold text-white">2</span>
+						<span>Full <span class="font-medium text-slate-900">committee verdict</span>, every T30.</span>
+					</li>
+					<li class="flex items-start gap-3">
+						<span class="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-[#0c0c09] font-sans text-xs font-bold text-white">3</span>
+						<span>Data <span class="font-medium text-slate-900">never leaves your browser</span>.</span>
+					</li>
+					<li class="flex items-start gap-3">
+						<span class="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-[#0c0c09] font-sans text-xs font-bold text-white">4</span>
+						<span class="text-slate-900 font-medium">First simulation free.</span>
+					</li>
+				</ol>
 
 				<p class="max-w-xl text-xs leading-relaxed text-slate-400">
 					An estimate from NACAC factor weights. Not an official decision, and never affiliated with any school.
