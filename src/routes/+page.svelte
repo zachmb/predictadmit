@@ -265,14 +265,23 @@
 			calendarIndex = parseInt(savedIndex);
 			if (calendarIndex < calendarDates.length - 1) startCalendar();
 		}
-		// Tick the hero count up a little while they're on the page (respects
-		// reduced-motion by just not animating). +1 every ~6s, subtle.
+		// Live-feel social proof counter. PERSIST it across navigations so returning
+		// to the landing keeps the incremented value instead of resetting to 15,000
+		// (a reset breaks the "always growing" illusion). Load any saved value (never
+		// below the 15,000 floor), then tick +1 every ~6s and save each tick.
+		try {
+			const saved = parseInt(localStorage.getItem('pa_predicted_count') || '', 10);
+			if (Number.isFinite(saved) && saved >= predictedCount) predictedCount = saved;
+		} catch {}
 		if (
 			typeof window !== 'undefined' &&
 			!window.matchMedia('(prefers-reduced-motion: reduce)').matches
 		) {
 			const tick = window.setInterval(() => {
 				predictedCount += 1;
+				try {
+					localStorage.setItem('pa_predicted_count', String(predictedCount));
+				} catch {}
 			}, 6000);
 			return () => window.clearInterval(tick);
 		}

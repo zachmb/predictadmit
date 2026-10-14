@@ -216,7 +216,7 @@
 							</div>
 							<h2 class="mt-4 font-serif text-[28px] font-medium leading-[1.1] tracking-tight text-slate-900">Applicants like you</h2>
 							<p class="mx-auto mt-2 max-w-xs text-[15px] leading-relaxed text-slate-500">
-								Join <span class="font-semibold text-slate-700">5,000+ students</span> who pressure-tested their application here first.
+								Join <span class="font-semibold text-slate-700">15,000+ students</span> who pressure-tested their application here first.
 							</p>
 						</div>
 						<div class="mt-6 space-y-3">

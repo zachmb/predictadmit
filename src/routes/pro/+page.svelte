@@ -2613,7 +2613,7 @@
 							<svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.07 3.3a1 1 0 00.95.68h3.46c.97 0 1.37 1.24.59 1.81l-2.8 2.03a1 1 0 00-.36 1.12l1.07 3.29c.3.92-.76 1.69-1.54 1.12l-2.8-2.03a1 1 0 00-1.18 0l-2.8 2.03c-.78.57-1.83-.2-1.54-1.12l1.07-3.29a1 1 0 00-.36-1.12L2.4 8.72c-.78-.57-.38-1.81.59-1.81h3.46a1 1 0 00.95-.68l1.07-3.3z" /></svg>
 						{/each}
 					</div>
-					<p class="mt-2 text-sm font-semibold text-slate-500">Loved by 5,000+ applicants</p>
+					<p class="mt-2 text-sm font-semibold text-slate-500">Loved by 15,000+ applicants</p>
 				</div>
 				<figure class="mx-auto max-w-xl rounded-2xl border border-slate-200 bg-white p-8 text-center">
 					<blockquote class="font-serif text-xl leading-relaxed text-slate-800">"ts was lowkenuinely accurate"</blockquote>

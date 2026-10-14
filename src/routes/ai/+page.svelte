@@ -1384,7 +1384,7 @@
 
 				<!-- Skimmable value list (new serif register), ending on the free hook. -->
 				<ul class="max-w-2xl space-y-2 font-serif text-lg md:text-xl font-normal leading-snug tracking-tight text-slate-700">
-					<li><span class="font-medium text-slate-900">Calibrated</span> on 5,000+ results.</li>
+					<li><span class="font-medium text-slate-900">Calibrated</span> on 15,000+ results.</li>
 					<li>Full <span class="font-medium text-slate-900">committee verdict</span>, every T30.</li>
 					<li>Data <span class="font-medium text-slate-900">never leaves your browser</span>.</li>
 					<li class="text-slate-900 font-medium">First simulation free.</li>
@@ -2039,7 +2039,7 @@ Picking one applies that school's real early-round odds
 										<svg class="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.07 3.3a1 1 0 00.95.68h3.46c.97 0 1.37 1.24.59 1.81l-2.8 2.03a1 1 0 00-.36 1.12l1.07 3.29c.3.92-.76 1.69-1.54 1.12l-2.8-2.03a1 1 0 00-1.18 0l-2.8 2.03c-.78.57-1.83-.2-1.54-1.12l1.07-3.29a1 1 0 00-.36-1.12L2.4 8.72c-.78-.57-.38-1.81.59-1.81h3.46a1 1 0 00.95-.68l1.07-3.3z" /></svg>
 									{/each}
 								</span>
-								<span class="font-medium text-slate-600">5,000+ applicants</span>
+								<span class="font-medium text-slate-600">15,000+ applicants</span>
 								<span class="hidden sm:block h-3 w-px bg-slate-200"></span>
 								<span>Free: one school unlocked · <span class="font-semibold text-slate-700">Pro: unlimited simulations + the workshop</span></span>
 							</div>
