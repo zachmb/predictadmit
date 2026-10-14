@@ -2365,6 +2365,25 @@
 				</div>
 			</div>
 
+			<!-- FREE AI CHAT TEASER (value before the ask): let a visitor talk to the
+			     blunt PredictAI for free right on the pricing page. It remembers their
+			     profile + predicted decisions, says the things counselors won't, and
+			     funnels toward pasting essays for help (the paid essay grader). -->
+			<section>
+				<div class="max-w-2xl">
+					<p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Free · no card</p>
+					<h2 class="mt-4 font-serif text-4xl md:text-5xl font-medium tracking-tight text-slate-900 leading-[1.05]">
+						Talk to the admissions AI that <span class="text-[#316DE4]">actually tells you the truth.</span>
+					</h2>
+					<p class="mt-4 text-lg text-slate-500 leading-relaxed">
+						Ask it anything — your real odds, which activities are just padding, what's quietly dragging your application down. It says what counselors and ChatGPT are too careful to. Free to use right now.
+					</p>
+				</div>
+				<div class="mt-8">
+					<AICounselor embedded signedIn={googleSignedIn} />
+				</div>
+			</section>
+
 			<!-- How it works: three concrete steps so the product is tangible. -->
 			<div class="grid gap-4 sm:grid-cols-3">
 				{#each [

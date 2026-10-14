@@ -1,23 +1,34 @@
 <script lang="ts">
 	import { userProfile } from '$lib/stores/user';
+	import { aiResults } from '$lib/stores/results';
+	import { signIn } from '@auth/sveltekit/client';
 
 	type ChatMessage = { role: 'user' | 'assistant'; content: string };
+
+	// `embedded` renders the chat inside a page section (the free teaser on /pro)
+	// instead of the full-height Pro dashboard view. `signedIn` gates the composer:
+	// the counselor API requires a signed-in user, so a signed-out visitor gets a
+	// Google sign-in prompt instead of a dead textarea. Both default to the existing
+	// Pro-dashboard behaviour so that usage is unchanged.
+	let { embedded = false, signedIn = true }: { embedded?: boolean; signedIn?: boolean } =
+		$props();
 
 	const STORAGE_KEY = 'predictadmit:pro:counselor';
 
 	const SUGGESTIONS = [
-		'Rate my college list',
-		'How do I stand out as an applicant?',
-		'What are the best extracurriculars for my major?',
+		'Rate my college list — no sugarcoating',
+		"What's the hard truth about my chances?",
+		'Paste my essay and tell me what is actually weak',
 		'Should I apply Early Decision or Regular?',
-		'How can I improve my activities list?',
-		'Help me brainstorm my personal statement'
+		'What is secretly dragging my application down?',
+		'Which of my activities are just résumé padding?'
 	];
 
 	let messages = $state<ChatMessage[]>([]);
 	let draft = $state('');
 	let isThinking = $state(false);
 	let errorMsg = $state('');
+	let needsSignIn = $state(false);
 	let hydrated = $state(false);
 
 	let scrollEl = $state<HTMLDivElement | null>(null);
@@ -73,6 +84,10 @@
 		return {
 			name: u.name,
 			email: u.email,
+			// Everything we know, so PredictAI "remembers" the whole applicant:
+			// intended major, structured stats, and their essays/activities/awards.
+			major: u.stats?.major,
+			stats: u.stats,
 			applicationProfile: { ...u.applicationProfile },
 			schoolList: u.schoolList.map((s) => ({
 				slug: s.slug,
@@ -83,9 +98,33 @@
 		};
 	}
 
+	// The student's full predicted slate (every school they ran) in a compact
+	// shape — passed so the counselor reasons across ALL their decisions, not just
+	// the one in front of them.
+	function buildDecisions() {
+		const decisions = $aiResults?.decisions;
+		if (!Array.isArray(decisions)) return [];
+		return decisions.slice(0, 40).map((d) => ({
+			school: d.school,
+			slug: d.slug,
+			outcome: d.outcome,
+			academic_score: d.academic_score,
+			extracurricular_score: d.extracurricular_score,
+			intellectual_score: d.intellectual_score,
+			character_score: d.character_score,
+			fit_score: d.fit_score
+		}));
+	}
+
 	async function send(text: string) {
 		const content = text.trim();
 		if (!content || isThinking) return;
+		// Signed-out visitors can't call the (auth-guarded) counselor API — prompt
+		// sign-in up front instead of firing a request that will 401.
+		if (!signedIn) {
+			needsSignIn = true;
+			return;
+		}
 
 		errorMsg = '';
 		const outgoing: ChatMessage = { role: 'user', content };
@@ -101,6 +140,7 @@
 				body: JSON.stringify({
 					messages: $state.snapshot(messages),
 					profile: buildProfile(),
+					decisions: buildDecisions(),
 					academics: (() => {
 						try {
 							return JSON.parse(localStorage.getItem('predictadmit:pro:academics') || '{}');
@@ -110,6 +150,14 @@
 					})()
 				})
 			});
+
+			// Session expired / never signed in — flip to the sign-in prompt and
+			// drop the optimistic user bubble so the thread isn't left dangling.
+			if (res.status === 401) {
+				needsSignIn = true;
+				messages = messages.slice(0, -1);
+				return;
+			}
 
 			const data = await res.json().catch(() => ({}));
 
@@ -221,10 +269,12 @@
 	}
 </script>
 
-<div class="flex-1 min-h-0 overflow-y-auto bg-slate-50">
-	<div class="max-w-6xl mx-auto px-6 md:px-10 py-8">
+<div class={embedded ? '' : 'flex-1 min-h-0 overflow-y-auto bg-slate-50'}>
+	<div class={embedded ? '' : 'max-w-6xl mx-auto px-6 md:px-10 py-8'}>
 		<div
-			class="flex h-[calc(100vh-8rem)] min-h-[560px] flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
+			class="flex {embedded
+				? 'h-[520px] sm:h-[560px]'
+				: 'h-[calc(100vh-8rem)] min-h-[560px]'} flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
 		>
 			<!-- Header -->
 			<header
@@ -280,10 +330,10 @@
 						>
 							AI
 						</div>
-						<h3 class="text-xl font-semibold text-slate-900">How can I help you today?</h3>
+						<h3 class="text-xl font-semibold text-slate-900">Ask me anything. I'll give it to you straight.</h3>
 						<p class="mt-2 text-sm text-slate-500">
-							Ask me anything about your college list, essays, activities, or admissions
-							strategy.
+							Your list, your essays, your activities, your real odds — the honest read a
+							counselor won't give you. No sugarcoating.
 						</p>
 
 						<div class="mt-6 grid w-full grid-cols-1 gap-3 sm:grid-cols-2">
@@ -395,44 +445,71 @@
 					</div>
 				{/if}
 
-				<form
-					onsubmit={handleSubmit}
-					class="flex items-end gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2 transition focus-within:border-[#316DE4] focus-within:bg-white"
-				>
-					<textarea
-						bind:this={textareaEl}
-						bind:value={draft}
-						oninput={autoGrow}
-						onkeydown={handleKeydown}
-						rows="1"
-						placeholder="Message your AI Counselor…"
-						disabled={isThinking}
-						class="max-h-[200px] flex-1 resize-none bg-transparent py-1.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none disabled:opacity-60"
-					></textarea>
+				{#if needsSignIn || !signedIn}
+					<!-- Signed-out: the counselor API needs a session, so prompt Google
+					     sign-in rather than fire a request that 401s. Free to chat after. -->
 					<button
-						type="submit"
-						disabled={isThinking || draft.trim() === ''}
-						aria-label="Send message"
-						class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-white transition disabled:cursor-not-allowed disabled:opacity-40"
-						style="background-color:#316DE4"
+						type="button"
+						onclick={() => signIn('google', { callbackUrl: '/pro' })}
+						class="flex w-full items-center justify-center gap-2.5 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-[#316DE4] hover:text-slate-900"
 					>
-						<svg
-							width="18"
-							height="18"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-						>
-							<path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z" />
+						<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+							<path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" />
+							<path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.99.66-2.26 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84A11 11 0 0 0 12 23z" />
+							<path fill="#FBBC05" d="M5.84 14.1a6.6 6.6 0 0 1 0-4.2V7.06H2.18a11 11 0 0 0 0 9.88l3.66-2.84z" />
+							<path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1A11 11 0 0 0 2.18 7.06l3.66 2.84C6.71 7.31 9.14 5.38 12 5.38z" />
 						</svg>
+						Sign in with Google to chat free
 					</button>
-				</form>
-				<p class="mt-2 text-center text-[11px] text-slate-400">
-					PredictAI can make mistakes. Verify deadlines and details with official sources.
-				</p>
+					<p class="mt-2 text-center text-[11px] text-slate-400">
+						Free, no card. PredictAI remembers your profile and decisions once you're in.
+					</p>
+				{:else}
+					<form
+						onsubmit={handleSubmit}
+						class="flex items-end gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2 transition focus-within:border-[#316DE4] focus-within:bg-white"
+					>
+						<textarea
+							bind:this={textareaEl}
+							bind:value={draft}
+							oninput={autoGrow}
+							onkeydown={handleKeydown}
+							rows="1"
+							placeholder="Message your AI Counselor…"
+							disabled={isThinking}
+							class="max-h-[200px] flex-1 resize-none bg-transparent py-1.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none disabled:opacity-60"
+						></textarea>
+						<button
+							type="submit"
+							disabled={isThinking || draft.trim() === ''}
+							aria-label="Send message"
+							class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-white transition disabled:cursor-not-allowed disabled:opacity-40"
+							style="background-color:#316DE4"
+						>
+							<svg
+								width="18"
+								height="18"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+							>
+								<path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z" />
+							</svg>
+						</button>
+					</form>
+					<div class="mt-2 flex items-center justify-center gap-x-3 gap-y-1 flex-wrap text-[11px] text-slate-400">
+						<span>PredictAI can make mistakes. Verify details with official sources.</span>
+						{#if embedded}
+							<span class="text-slate-300">·</span>
+							<a href="/essay-grader" class="font-semibold text-[#316DE4] hover:underline">
+								Get your essay graded line-by-line →
+							</a>
+						{/if}
+					</div>
+				{/if}
 			</div>
 		</div>
 	</div>
