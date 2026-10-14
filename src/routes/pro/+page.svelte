@@ -2291,8 +2291,7 @@
 			<div class="grid items-center gap-10 lg:grid-cols-2">
 				<!-- Left: copy, price, CTAs -->
 				<div class="text-center lg:text-left">
-					<p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">PredictAdmit Pro</p>
-					<h1 class="mt-5 font-serif text-5xl md:text-6xl font-medium tracking-tight text-slate-900 leading-[1.05]">
+					<h1 class="font-serif text-5xl md:text-6xl font-medium tracking-tight text-slate-900 leading-[1.05]">
 						Perfect your applications <span class="text-[#0c0c09]">before it's too late.</span>
 					</h1>
 					<p class="mt-5 mx-auto lg:mx-0 max-w-xl text-lg text-slate-500 leading-relaxed">
