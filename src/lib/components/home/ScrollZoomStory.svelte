@@ -13,28 +13,51 @@
 	let section = $state<HTMLElement | null>(null);
 	let p = $state(0);
 	let reduced = $state(false);
+	// Stable viewport height in px, LOCKED at mount. On mobile the address bar
+	// shows/hides as you scroll, which changes `100vh` — if the tall pin section
+	// were sized in vh it would resize mid-scroll and the browser would re-anchor,
+	// yanking the page back up ("scrolls back after you let go"). We measure once
+	// and only re-measure on a real orientation/width change, never on the
+	// address-bar-driven height wobble. The section + inner stage use this px value.
+	let vh = $state(0);
 
 	onMount(() => {
 		reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 		if (reduced) return;
 		let raf = 0;
+		let lastW = window.innerWidth;
+		const measure = () => {
+			vh = window.innerHeight;
+		};
 		const update = () => {
 			raf = 0;
-			if (!section) return;
+			if (!section || !vh) return;
 			const rect = section.getBoundingClientRect();
-			const total = rect.height - window.innerHeight;
+			const total = rect.height - vh;
 			const scrolled = Math.min(Math.max(-rect.top, 0), Math.max(total, 1));
 			p = total > 0 ? scrolled / total : 0;
 		};
 		const onScroll = () => {
 			if (!raf) raf = requestAnimationFrame(update);
 		};
+		const onResize = () => {
+			// Only relock height on a genuine layout change (orientation / width),
+			// NOT on the pure-height wobble from the mobile URL bar.
+			if (Math.abs(window.innerWidth - lastW) > 40) {
+				lastW = window.innerWidth;
+				measure();
+			}
+			onScroll();
+		};
+		measure();
 		window.addEventListener('scroll', onScroll, { passive: true });
-		window.addEventListener('resize', onScroll, { passive: true });
+		window.addEventListener('resize', onResize, { passive: true });
+		window.addEventListener('orientationchange', measure, { passive: true });
 		update();
 		return () => {
 			window.removeEventListener('scroll', onScroll);
-			window.removeEventListener('resize', onScroll);
+			window.removeEventListener('resize', onResize);
+			window.removeEventListener('orientationchange', measure);
 		};
 	});
 
@@ -77,8 +100,8 @@
 		</p>
 	</div>
 {:else}
-	<section bind:this={section} class="relative h-[540vh] bg-white">
-		<div class="sticky top-0 flex h-[100svh] items-center justify-center overflow-hidden">
+	<section bind:this={section} class="relative bg-white" style={vh ? `height:${vh * 5.4}px` : 'height:540svh'}>
+		<div class="sticky top-0 flex items-center justify-center overflow-hidden" style={vh ? `height:${vh}px` : 'height:100svh'}>
 			<!-- Black wash that fills as line 1 swallows the screen -->
 			<div class="pointer-events-none absolute inset-0 bg-slate-950" style="opacity:{bg}"></div>
 

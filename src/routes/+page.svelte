@@ -344,6 +344,8 @@
 			heading: 'Your real decision at every T30',
 			sub: 'Run your actual application and watch accept, waitlist, and deny land across every top school. Months before March.',
 			img: '/screenshots/zoom/universities.png',
+			w: 2391,
+			h: 1260,
 			href: '/verdict',
 			ctaText: 'Predict free'
 		},
@@ -351,6 +353,8 @@
 			heading: 'Essay feedback, line by line',
 			sub: 'It flags the weak lines the way an admissions reader would, and tells you why. It never writes a word for you.',
 			img: '/screenshots/zoom/essay.png',
+			w: 2391,
+			h: 1260,
 			href: '/pro',
 			ctaText: 'See it'
 		},
@@ -358,6 +362,8 @@
 			heading: 'A counselor that gives it straight',
 			sub: "Ask what you'd pay a consultant $300 an hour for. Your odds, your essay, your list. Any time, no appointment.",
 			img: '/screenshots/zoom/counselor.png',
+			w: 2391,
+			h: 1368,
 			href: '/pro',
 			ctaText: 'Try it free'
 		},
@@ -365,6 +371,8 @@
 			heading: 'See exactly where you stand',
 			sub: 'Build your profile once and get sharper, personalized odds at every school on your list.',
 			img: '/screenshots/zoom/chanceme.png',
+			w: 2391,
+			h: 1152,
 			href: '/pro',
 			ctaText: 'Check yours'
 		}
@@ -747,7 +755,7 @@
 		<!-- Content grows to fill the space between the (overlay) nav and the
 		     carousel, and centers within it, so the hero stays balanced at any
 		     viewport height while the carousel stays pinned to the fold. -->
-		<div class="hero-content flex-1 min-h-0 flex flex-col justify-center w-full max-w-7xl mx-auto px-6 lg:px-10 text-left relative z-10 py-4 md:py-6">
+		<div class="hero-content flex-1 min-h-0 flex flex-col justify-center w-full max-w-[1400px] mx-auto px-5 lg:px-10 text-left relative z-10 py-4 md:py-6">
 			<!-- Headline -->
 			<div class="hero-headwrap space-y-5 max-w-5xl mb-8">
 				<h1
@@ -876,7 +884,7 @@
 
 		<!-- School logo carousel — pinned to the very bottom of the above-the-fold
 		     on any screen height, with the content above spaced to fill the rest. -->
-		<div class="hero-carousel shrink-0 w-full max-w-7xl mx-auto px-6 lg:px-10 pb-5 md:pb-7 animate-in fade-in duration-1000 delay-300 fill-mode-both">
+		<div class="hero-carousel shrink-0 w-full max-w-[1400px] mx-auto px-5 lg:px-10 pb-5 md:pb-7 animate-in fade-in duration-1000 delay-300 fill-mode-both">
 			<SchoolLogoMarquee />
 		</div>
 	</section>
@@ -887,45 +895,46 @@
 	<!-- SECTION 2A: PRO SCROLL-ZOOM STORY (replaces the static section header) -->
 	<ScrollZoomStory />
 
-	<!-- SECTION 2: WHAT YOU GET IN PRO — alternating framed-screenshot cards -->
-	<section class="py-20 md:py-28 bg-[#f4f4f0]">
-		<div class="max-w-[1200px] mx-auto px-6">
+	<!-- SECTION 2: WHAT YOU GET IN PRO — large alternating framed-screenshot cards (Appybara scale) -->
+	<section class="py-20 md:py-32 bg-[#f4f4f0]">
+		<div class="max-w-[1400px] mx-auto px-5 md:px-10">
 			<!-- Section header (GradGPT-style handwritten eyebrow + serif head) -->
-			<div class="mb-16 text-center md:mb-20">
+			<div class="mb-16 text-center md:mb-24">
 				<p class="hand text-2xl md:text-3xl">what you get in Pro</p>
-				<h2 class="mt-1 font-serif text-4xl md:text-5xl font-medium tracking-tight text-slate-900 leading-[1.05]">
+				<h2 class="mt-1 font-serif text-4xl md:text-6xl font-medium tracking-tight text-slate-900 leading-[1.03]">
 					Everything a $300/hr counselor does
 				</h2>
 			</div>
-			<div class="space-y-6 md:space-y-8">
+			<div class="space-y-8 md:space-y-12">
 				{#each proCards as c, i}
 					<div
 						use:reveal={i * 80}
-						class="grid items-center gap-8 overflow-hidden rounded-[2rem] border border-slate-200/70 px-6 py-10 md:grid-cols-2 md:gap-12 md:px-12 md:py-14 {i % 2 ===
+						class="grid items-center gap-8 overflow-hidden rounded-[2.5rem] border border-slate-200/70 px-6 py-10 md:grid-cols-2 md:gap-16 md:px-16 md:py-20 {i % 2 ===
 						0
 							? 'bg-white'
 							: 'bg-[color-mix(in_oklab,#0c0c09_4%,#f4f4f0)]'}"
 					>
 						<!-- Real, zoomed PredictAdmit screenshot in a framed window, with a
-						     cursor drifting over it. -->
+						     cursor drifting over it. width/height reserve the box so lazy
+						     loading can't shift the page (mobile scroll-jump guard). -->
 						<div class="relative {i % 2 === 1 ? 'md:order-2' : ''}">
 							<div
-								class="overflow-hidden rounded-2xl border-[5px] border-[#0c0c09] bg-white shadow-[0_24px_60px_-24px_rgba(12,12,9,0.35)]"
+								class="overflow-hidden rounded-2xl border-[6px] border-[#0c0c09] bg-white shadow-[0_32px_80px_-28px_rgba(12,12,9,0.4)]"
 							>
-								<img src={c.img} alt={c.heading} loading="lazy" class="block w-full" />
+								<img src={c.img} alt={c.heading} width={c.w} height={c.h} loading="lazy" class="block h-auto w-full" />
 							</div>
 							<span class="pa-cursor" aria-hidden="true">
-								<svg width="24" height="24" viewBox="0 0 24 24" fill="#0c0c09" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"><path d="M5 2.5l5.6 16.5 2.3-6.9 6.9-2.3L5 2.5z" /></svg>
+								<svg width="26" height="26" viewBox="0 0 24 24" fill="#0c0c09" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"><path d="M5 2.5l5.6 16.5 2.3-6.9 6.9-2.3L5 2.5z" /></svg>
 							</span>
 						</div>
 						<div class={i % 2 === 1 ? 'md:order-1' : ''}>
-							<h3 class="font-serif text-3xl md:text-[2.5rem] font-medium tracking-tight leading-[1.08] text-slate-900">
+							<h3 class="font-serif text-4xl md:text-[3.25rem] font-medium tracking-tight leading-[1.04] text-slate-900">
 								{c.heading}
 							</h3>
-							<p class="mt-4 max-w-md text-lg leading-relaxed text-slate-600">{c.sub}</p>
+							<p class="mt-5 max-w-lg text-lg md:text-xl leading-relaxed text-slate-600">{c.sub}</p>
 							<a
 								href={c.href}
-								class="mt-6 inline-flex items-center gap-1.5 rounded-full bg-[#0c0c09] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#2b2b22] active:scale-95"
+								class="mt-8 inline-flex items-center gap-1.5 rounded-full bg-[#0c0c09] px-6 py-3 text-base font-semibold text-white transition hover:bg-[#2b2b22] active:scale-95"
 							>
 								{c.ctaText} <span aria-hidden="true">→</span>
 							</a>
@@ -934,7 +943,7 @@
 				{/each}
 			</div>
 
-			<div class="mt-12 text-center">
+			<div class="mt-14 text-center">
 				<a href="/pro" class="inline-flex items-center justify-center rounded-full bg-slate-900 px-8 py-4 text-base font-semibold text-white transition hover:bg-slate-800 active:scale-[0.99]">
 					See everything in Pro
 				</a>
@@ -944,7 +953,7 @@
 
 	<!-- Creator invite (cross-product recruit embed) -->
 	<section class="py-14 bg-[#f4f4f0] border-t border-slate-100">
-		<div class="max-w-[1100px] mx-auto px-6">
+		<div class="max-w-[1400px] mx-auto px-5 md:px-10">
 			<aside class="flex flex-col gap-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between sm:p-8" aria-labelledby="creator-invite-title">
 				<div class="max-w-xl">
 					<h3 id="creator-invite-title" class="font-serif text-2xl font-medium tracking-tight text-slate-900">Already using PredictAdmit?</h3>
@@ -959,7 +968,7 @@
 
 	<!-- SECTION 2.5: DATA CREDIBILITY — near-full-screen dark card (Appybara "Algorithm" style) -->
 	<section class="py-20 md:py-28 bg-[#f4f4f0]">
-		<div class="max-w-[1180px] mx-auto px-6">
+		<div class="max-w-[1400px] mx-auto px-5 md:px-10">
 			<div class="relative overflow-hidden rounded-[2.5rem] bg-[#0c0c09] px-7 py-14 sm:px-12 md:px-16 md:py-20">
 				<!-- watermark seal -->
 				<div class="pointer-events-none absolute -right-20 -top-24 h-80 w-80 rounded-full bg-[color-mix(in_oklab,#ffffff_6%,transparent)] blur-2xl"></div>
@@ -1007,7 +1016,7 @@
 
 	<!-- SECTION 3: COMPARISON TABLE -->
 	<section class="py-24 bg-slate-50 border-t border-slate-100">
-		<div class="max-w-[1000px] mx-auto px-6">
+		<div class="max-w-[1200px] mx-auto px-5 md:px-10">
 			<div class="max-w-2xl mx-auto text-center space-y-4 mb-14">
 				<h2 class="font-serif text-4xl md:text-5xl font-medium tracking-tight text-slate-900 leading-[1.05]">
 					Counselors charge thousands. <span class="text-[#0c0c09]">This is $9.99/mo.</span>
@@ -1075,7 +1084,7 @@
 
 	<!-- TESTIMONIALS — Appybara masonry style: tinted cards, star badge, quote, name + class -->
 	<section class="py-20 md:py-28 bg-[#f4f4f0] border-t border-slate-100">
-		<div class="max-w-[1180px] mx-auto px-6">
+		<div class="max-w-[1400px] mx-auto px-5 md:px-10">
 			<div class="max-w-2xl mx-auto text-center mb-14">
 				<h2 class="font-serif text-4xl md:text-5xl font-medium tracking-tight text-slate-900 leading-[1.05]">
 					Students who got in.
@@ -1139,7 +1148,7 @@
 
 	<!-- CTA FOOTER — Appybara style: huge headline, pill CTA, campus building image -->
 	<section class="relative overflow-hidden bg-[#0c0c09]">
-		<div class="max-w-[1180px] mx-auto px-6 pt-20 md:pt-28 text-center">
+		<div class="max-w-[1400px] mx-auto px-5 md:px-10 pt-20 md:pt-28 text-center">
 			<h2 class="font-serif text-4xl sm:text-5xl md:text-[4rem] font-medium tracking-tight text-white leading-[1.02]">
 				Join {predictedCountLabel}+ students<br class="hidden sm:block" /> acing their applications.
 			</h2>
@@ -1155,7 +1164,9 @@
 				<img
 					src="/images/mit-dome.jpg"
 					alt="University campus"
-					class="mx-auto w-full max-w-[920px] rounded-t-[2rem] object-cover object-top"
+					width="1280"
+					height="960"
+					class="mx-auto h-auto w-full max-w-[1120px] rounded-t-[2rem] object-cover object-top"
 					style="mask-image: linear-gradient(to bottom, #000 72%, transparent); -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent);"
 					loading="lazy"
 				/>
