@@ -129,6 +129,12 @@
 	function tintFor(_portal: PortalEmail): string {
 		return 'bg-[color-mix(in_oklab,#0c0c09_10%,transparent)] text-[#0c0c09]';
 	}
+	// `from` is stored as "Name <email@domain>" — pull just the address so the
+	// Gmail sender line reads "Sender Name <email>" without double angle brackets.
+	function emailOf(from: string): string {
+		const m = from.match(/<([^>]+)>/);
+		return m ? m[1] : from;
+	}
 </script>
 
 <section id="inboxSection" bind:this={inboxSection} class="scroll-mt-24 font-sans">
@@ -457,7 +463,7 @@
 									<div class="min-w-0 flex-1">
 										<div class="flex flex-wrap items-center gap-x-2 gap-y-0.5">
 											<span class="text-sm font-bold text-slate-900">{selectedPortal.name} Admissions</span>
-											<span class="truncate text-xs text-slate-500">&lt;{selectedPortal.from}&gt;</span>
+											<span class="truncate text-xs text-slate-500">&lt;{emailOf(selectedPortal.from)}&gt;</span>
 										</div>
 										<div class="flex items-center gap-1 text-xs text-slate-500">
 											to me

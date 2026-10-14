@@ -1373,9 +1373,10 @@
 	     the right rail on large screens. Shown in the builder phase only (the inbox
 	     renders full-width once results land, so the card hides to avoid overlap). -->
 	{#if !hasUsedFreeSimulation && !$userProfile.isSubmittingAI}
-		<aside class="pointer-events-none fixed right-6 top-1/2 z-40 hidden -translate-y-1/2 xl:block 2xl:right-12">
+		<aside class="pointer-events-none fixed right-6 top-1/2 z-40 hidden -translate-y-1/2 xl:block 2xl:right-10">
 			<DeadlineCountdown
-				wrapperClass="pointer-events-auto w-[300px] rounded-2xl border border-slate-200 bg-white p-6 shadow-xl"
+				size="lg"
+				wrapperClass="pointer-events-auto w-[380px] rounded-3xl border border-slate-200 bg-white p-8 shadow-2xl"
 			/>
 		</aside>
 	{/if}

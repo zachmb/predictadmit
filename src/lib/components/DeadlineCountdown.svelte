@@ -2,9 +2,14 @@
 	// Shared early-deadline countdown card (Nov 1, 2026 EA/ED). Visual twin of the
 	// Pro dashboard card (pro/DashboardHome.svelte) so the /ai predict page and
 	// /verdict show the exact same card the logged-in dashboard does.
+	// size='md' is the Pro-dashboard twin (default). size='lg' is the big,
+	// Appybara-scale variant used on the /ai predict page.
 	let {
-		wrapperClass = 'rounded-2xl border border-slate-200 bg-white p-6 shadow-sm'
-	}: { wrapperClass?: string } = $props();
+		wrapperClass = 'rounded-2xl border border-slate-200 bg-white p-6 shadow-sm',
+		size = 'md'
+	}: { wrapperClass?: string; size?: 'md' | 'lg' } = $props();
+
+	const big = $derived(size === 'lg');
 
 	// Midnight CST (UTC-6) on Nov 1, 2026 — the classic early-application deadline.
 	const target = new Date('2026-11-01T00:00:00-06:00');
@@ -33,12 +38,12 @@
 </script>
 
 <div class={wrapperClass}>
-	<div class="flex items-center justify-between">
+	<div class="flex items-center justify-between gap-3">
 		<div>
-			<p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Countdown</p>
-			<h3 class="mt-0.5 text-lg font-bold text-slate-900">Early Deadlines · Nov 1, 2026</h3>
+			<p class={`font-semibold uppercase tracking-wide text-slate-500 ${big ? 'text-sm' : 'text-xs'}`}>Countdown</p>
+			<h3 class={`mt-0.5 font-bold text-slate-900 ${big ? 'text-2xl tracking-tight' : 'text-lg'}`}>Early Deadlines · Nov 1, 2026</h3>
 		</div>
-		<span class="flex items-center gap-1.5 text-xs font-semibold text-[#0c0c09]">
+		<span class={`flex shrink-0 items-center gap-1.5 font-semibold text-[#0c0c09] ${big ? 'text-sm' : 'text-xs'}`}>
 			<span class="relative flex h-2 w-2">
 				<span
 					class="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#0c0c09] opacity-75"
@@ -48,16 +53,21 @@
 			LIVE
 		</span>
 	</div>
-	<div class="mt-5 grid grid-cols-4 gap-2">
+	<div class={`grid grid-cols-4 ${big ? 'mt-7 gap-3' : 'mt-5 gap-2'}`}>
 		{#each [{ label: 'Days', value: cd.days }, { label: 'Hours', value: cd.hours }, { label: 'Min', value: cd.minutes }, { label: 'Sec', value: cd.seconds }] as box}
-			<div class="rounded-xl bg-slate-50 border border-slate-100 py-3 text-center">
-				<div class="text-2xl font-bold tabular-nums text-slate-900">
+			<div class={`rounded-xl bg-slate-50 border border-slate-100 text-center ${big ? 'py-5' : 'py-3'}`}>
+				<div class={`font-bold tabular-nums text-slate-900 ${big ? 'text-4xl' : 'text-2xl'}`}>
 					{box.label === 'Days' ? box.value : pad(box.value)}
 				</div>
-				<div class="mt-0.5 text-[11px] font-medium uppercase tracking-wide text-slate-400">
+				<div class={`mt-0.5 font-medium uppercase tracking-wide text-slate-400 ${big ? 'text-xs' : 'text-[11px]'}`}>
 					{box.label}
 				</div>
 			</div>
 		{/each}
 	</div>
+	{#if big}
+		<p class="mt-6 text-sm leading-snug text-slate-500">
+			Early-application deadlines are closing. Run your read now, while there's still time to fix it.
+		</p>
+	{/if}
 </div>
