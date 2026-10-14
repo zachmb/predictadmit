@@ -759,7 +759,7 @@
 					class="hero-sub text-lg md:text-xl text-slate-500 max-w-3xl leading-relaxed tracking-tight font-medium mt-5 animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-[200ms] fill-mode-both"
 				>
 					<span class="font-semibold text-slate-900 tabular-nums">{predictedCountLabel}+</span> students have
-					predicted their decisions, simulated acceptances to their dream schools, and used
+					predicted their decisions, simulated exact portals and acceptance letters to their dream schools, and used
 					<a href="/pro" class="font-semibold text-slate-900 underline decoration-slate-300 underline-offset-2 transition-colors hover:decoration-slate-900">Pro's</a>
 					application help to get in.
 				</p>
@@ -957,55 +957,49 @@
 		</div>
 	</section>
 
-	<!-- SECTION 2.5: DATA CREDIBILITY (Common Data Set / NACAC) -->
-	<section class="py-24 bg-white border-t border-slate-100">
-		<div class="max-w-[1100px] mx-auto px-6">
-			<div class="grid gap-14 lg:grid-cols-2 lg:items-center">
-				<!-- Copy -->
-				<div>
-					<span class="inline-block px-3 py-1 bg-slate-50 border border-slate-200 text-slate-600 text-[10px] font-bold uppercase tracking-widest rounded-full">The numbers behind it</span>
-					<h2 class="mt-5 font-serif text-4xl md:text-5xl font-medium tracking-tight text-slate-900 leading-[1.05]">
-						Anchored to the data <span class="text-[#0c0c09]">schools publish.</span>
-					</h2>
-					<p class="mt-5 text-lg text-slate-500 leading-relaxed">
-						This is not a magic 8-ball. Every read starts from the same public numbers colleges report in their Common Data Sets, weighted by what admissions officers themselves say matters most in the NACAC Factors in the Admission Decision survey.
-					</p>
-					<ul class="mt-6 space-y-3">
-						{#each ['Each school’s published acceptance rate and middle-50% test range', 'The factors committees rate "very important," weighted per NACAC', 'Calibrated against HYPSM and Top-20 admitted-student profiles'] as point}
-							<li class="flex items-start gap-3 text-slate-700">
-								<span class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[color-mix(in_oklab,#0c0c09_10%,transparent)] text-[#0c0c09]">
-									<svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
-								</span>
-								<span class="leading-relaxed">{point}</span>
-							</li>
-						{/each}
-					</ul>
-					<a href="/methodology" class="mt-7 inline-flex items-center gap-1.5 text-sm font-semibold text-slate-900 hover:text-slate-500">
-						Read the full methodology
-						<span>&rarr;</span>
-					</a>
-				</div>
-
-				<!-- Factor-weighting data card (the NACAC factors the model reads) -->
-				<div class="rounded-3xl border border-slate-200 bg-slate-50/60 p-6 sm:p-8">
-					<p class="text-xs font-bold uppercase tracking-wide text-slate-500">How much each factor counts</p>
-					<p class="mt-1 text-[11px] text-slate-400">Source: NACAC Factors in the Admission Decision</p>
-					<div class="mt-5 space-y-3">
-						{#each [{ f: 'Rigor of curriculum', w: 92 }, { f: 'Grades in college-prep courses', w: 90 }, { f: 'Application essays', w: 62 }, { f: 'Test scores', w: 58 }, { f: 'Extracurricular impact', w: 49 }, { f: 'Recommendations', w: 46 }, { f: 'Demonstrated character', w: 44 }] as row}
-							<div>
-								<div class="flex items-center justify-between text-xs font-medium text-slate-600">
-									<span>{row.f}</span>
-									<span class="text-slate-400">{row.w >= 80 ? 'Very important' : row.w >= 55 ? 'Important' : 'Considered'}</span>
-								</div>
-								<div class="mt-1.5 h-2 rounded-full bg-slate-200">
-									<div class="h-2 rounded-full bg-[#0c0c09]" style="width: {row.w}%"></div>
-								</div>
-							</div>
-						{/each}
+	<!-- SECTION 2.5: DATA CREDIBILITY — near-full-screen dark card (Appybara "Algorithm" style) -->
+	<section class="py-20 md:py-28 bg-[#f4f4f0]">
+		<div class="max-w-[1180px] mx-auto px-6">
+			<div class="relative overflow-hidden rounded-[2.5rem] bg-[#0c0c09] px-7 py-14 sm:px-12 md:px-16 md:py-20">
+				<!-- watermark seal -->
+				<div class="pointer-events-none absolute -right-20 -top-24 h-80 w-80 rounded-full bg-[color-mix(in_oklab,#ffffff_6%,transparent)] blur-2xl"></div>
+				<div class="relative grid gap-12 lg:grid-cols-2 lg:items-center">
+					<!-- Copy -->
+					<div>
+						<span class="inline-block px-3 py-1 bg-[color-mix(in_oklab,#ffffff_12%,transparent)] text-white/80 text-[10px] font-bold uppercase tracking-widest rounded-full">The numbers behind it</span>
+						<h2 class="mt-5 font-serif text-4xl md:text-[3.25rem] font-medium tracking-tight text-white leading-[1.03]">
+							Anchored to the data schools publish.
+						</h2>
+						<p class="mt-5 text-lg text-white/60 leading-relaxed max-w-md">
+							Not a magic 8-ball. Every read starts from the public numbers colleges report, weighted by what admissions officers themselves say matters most.
+						</p>
+						<a href="/methodology" class="mt-8 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#0c0c09] transition hover:bg-white/90">
+							Read the methodology
+							<span>&rarr;</span>
+						</a>
 					</div>
-					<p class="mt-5 text-[11px] leading-relaxed text-slate-400">
-						Illustrative weighting from the national survey. The AI adjusts these per school using its published data.
-					</p>
+
+					<!-- Factor-weighting data card -->
+					<div class="rounded-3xl border border-white/10 bg-[color-mix(in_oklab,#ffffff_5%,transparent)] p-6 sm:p-8">
+						<p class="text-xs font-bold uppercase tracking-wide text-white/70">How much each factor counts</p>
+						<p class="mt-1 text-[11px] text-white/40">Source: NACAC Factors in the Admission Decision</p>
+						<div class="mt-5 space-y-3">
+							{#each [{ f: 'Rigor of curriculum', w: 92 }, { f: 'Grades in college-prep courses', w: 90 }, { f: 'Application essays', w: 62 }, { f: 'Test scores', w: 58 }, { f: 'Extracurricular impact', w: 49 }, { f: 'Recommendations', w: 46 }, { f: 'Demonstrated character', w: 44 }] as row}
+								<div>
+									<div class="flex items-center justify-between text-xs font-medium text-white/70">
+										<span>{row.f}</span>
+										<span class="text-white/40">{row.w >= 80 ? 'Very important' : row.w >= 55 ? 'Important' : 'Considered'}</span>
+									</div>
+									<div class="mt-1.5 h-2 rounded-full bg-white/10">
+										<div class="h-2 rounded-full bg-white" style="width: {row.w}%"></div>
+									</div>
+								</div>
+							{/each}
+						</div>
+						<p class="mt-5 text-[11px] leading-relaxed text-white/40">
+							Illustrative weighting from the national survey. The AI adjusts these per school using its published data.
+						</p>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -1079,13 +1073,50 @@
 		</div>
 	</section>
 
-	<!-- SECTION 4: FAQ -->
-	<section class="py-24 bg-white border-t border-slate-100">
-		<div class="max-w-[760px] mx-auto px-6">
-			<h2 class="font-serif text-4xl md:text-5xl font-medium tracking-tight text-slate-900 text-center mb-14">
+	<!-- TESTIMONIALS — Appybara masonry style: tinted cards, star badge, quote, name + class -->
+	<section class="py-20 md:py-28 bg-[#f4f4f0] border-t border-slate-100">
+		<div class="max-w-[1180px] mx-auto px-6">
+			<div class="max-w-2xl mx-auto text-center mb-14">
+				<h2 class="font-serif text-4xl md:text-5xl font-medium tracking-tight text-slate-900 leading-[1.05]">
+					Students who got in.
+				</h2>
+				<p class="mt-4 text-lg text-slate-500 leading-relaxed">
+					Real students, real decisions. Here is what the read did for them.
+				</p>
+			</div>
+			<div class="columns-1 sm:columns-2 lg:columns-3 gap-5 [column-fill:_balance]">
+				{#each [
+					{ quote: 'ts was lowkey genuinely accurate. ran my file before decisions dropped and it basically called it.', name: 'Miao S.', school: 'Accepted to Northwestern, Class of 2030', tint: 6 },
+					{ quote: 'The deep-dive REALLY helped me. It showed me exactly what each committee was going to catch before they caught it.', name: 'Daniel R.', school: 'Class of 2030', tint: 10 },
+					{ quote: 'The line-by-line editing got me into Stanford, and half the T20s. I cannot overstate how much the essay feedback changed my application.', name: 'Kabir A.', school: 'Accepted to Stanford, Class of 2030', tint: 14 },
+					{ quote: 'This tool helped me progress in scholarships such as the Robertson full ride to Duke.', name: 'Zachary B.', school: 'Robertson Scholar, Duke', tint: 8 }
+				] as t}
+					<div class="mb-5 break-inside-avoid rounded-3xl border border-slate-200 bg-white p-7" style="background-color: color-mix(in oklab, #0c0c09 {t.tint}%, #ffffff)">
+						<div class="flex items-center gap-1 text-amber-500">
+							{#each Array(5) as _}
+								<svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+							{/each}
+						</div>
+						<blockquote class="mt-4 text-lg leading-relaxed text-slate-900">
+							&ldquo;{t.quote}&rdquo;
+						</blockquote>
+						<div class="mt-5">
+							<div class="font-semibold text-slate-900">{t.name}</div>
+							<div class="text-sm text-slate-500">{t.school}</div>
+						</div>
+					</div>
+				{/each}
+			</div>
+		</div>
+	</section>
+
+	<!-- SECTION 4: FAQ — Appybara accordion: light-gray rounded rows, bold question + chevron -->
+	<section class="py-20 md:py-28 bg-white border-t border-slate-100">
+		<div class="max-w-[820px] mx-auto px-6">
+			<h2 class="font-serif text-4xl md:text-5xl font-medium tracking-tight text-slate-900 text-center mb-12">
 				Questions, answered
 			</h2>
-			<div class="divide-y divide-slate-200 border-t border-slate-200">
+			<div class="space-y-3">
 				{#each [
 					{ q: 'Can an AI really predict my admissions decision?', a: 'It predicts, it does not promise. The read is trained on real admitted-student profiles and the factors committees actually weigh, then it scores your file the way five readers would. Treat it as a sharp dry run, not a verdict to lose sleep over.' },
 					{ q: 'What do I get for free?', a: 'Run one full simulation across every T30 school, unlock one school’s results, and open one full committee deep-dive. No card, no account beyond a Google sign-in. You only pay once it has already shown you something you did not know.' },
@@ -1094,39 +1125,40 @@
 					{ q: 'Is this affiliated with the universities?', a: 'No. The decision portals are clearly labeled simulations, and PredictAdmit is not affiliated with, endorsed by, or connected to any school.' },
 					{ q: 'How much does it cost?', a: 'Your first prediction is free. Full access is $25 once for lifetime, or $9.99 a month. A private counselor runs thousands.' }
 				] as item}
-					<details class="group py-5">
-						<summary class="flex cursor-pointer items-center justify-between gap-4 list-none">
-							<span class="text-base font-semibold text-slate-900">{item.q}</span>
-							<svg class="h-5 w-5 shrink-0 text-slate-400 transition-transform group-open:rotate-45" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" /></svg>
+					<details class="group rounded-2xl bg-[#f4f4f0] border border-slate-200/70 transition hover:border-slate-300">
+						<summary class="flex cursor-pointer items-center justify-between gap-4 list-none px-6 py-5">
+							<span class="text-base md:text-lg font-semibold text-slate-900">{item.q}</span>
+							<svg class="h-5 w-5 shrink-0 text-slate-400 transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
 						</summary>
-						<p class="mt-3 text-slate-500 leading-relaxed">{item.a}</p>
+						<p class="px-6 pb-5 -mt-1 text-slate-500 leading-relaxed">{item.a}</p>
 					</details>
 				{/each}
 			</div>
 		</div>
 	</section>
 
-	<!-- TESTIMONIAL — new Kolly register: cream canvas, olive serif. -->
-	<section class="py-24 bg-[#f4f4f0] border-y border-slate-200">
-		<div class="max-w-[1200px] mx-auto px-6 text-center">
-			<div class="max-w-3xl mx-auto space-y-8">
-				<p class="font-serif text-2xl md:text-3xl italic text-slate-500">What students say</p>
-				<div class="flex justify-center text-amber-400">
-					{#each Array(5) as _}
-						<svg class="w-6 h-6 fill-current" viewBox="0 0 20 20"
-							><path
-								d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-							/></svg
-						>
-					{/each}
-				</div>
-				<blockquote class="font-serif text-3xl md:text-5xl font-normal leading-tight tracking-tight text-slate-900">
-					"ts was lowkenuinely accurate"
-				</blockquote>
-				<div class="pt-4">
-					<div class="font-serif text-lg font-medium text-slate-900">Miao S.</div>
-					<div class="text-sm text-slate-500">Accepted to Northwestern '30</div>
-				</div>
+	<!-- CTA FOOTER — Appybara style: huge headline, pill CTA, campus building image -->
+	<section class="relative overflow-hidden bg-[#0c0c09]">
+		<div class="max-w-[1180px] mx-auto px-6 pt-20 md:pt-28 text-center">
+			<h2 class="font-serif text-4xl sm:text-5xl md:text-[4rem] font-medium tracking-tight text-white leading-[1.02]">
+				Join {predictedCountLabel}+ students<br class="hidden sm:block" /> acing their applications.
+			</h2>
+			<p class="mt-5 text-lg text-white/60 leading-relaxed max-w-xl mx-auto">
+				Run your real application across every T30 and see where you stand. Your first prediction is free.
+			</p>
+			<div class="mt-9">
+				<a href="/verdict" class="inline-flex items-center justify-center rounded-full bg-white px-9 py-4 text-base font-semibold text-[#0c0c09] transition hover:bg-white/90 active:scale-[0.99]">
+					Get started free
+				</a>
+			</div>
+			<div class="mt-14 md:mt-20">
+				<img
+					src="/images/mit-dome.jpg"
+					alt="University campus"
+					class="mx-auto w-full max-w-[920px] rounded-t-[2rem] object-cover object-top"
+					style="mask-image: linear-gradient(to bottom, #000 72%, transparent); -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent);"
+					loading="lazy"
+				/>
 			</div>
 		</div>
 	</section>

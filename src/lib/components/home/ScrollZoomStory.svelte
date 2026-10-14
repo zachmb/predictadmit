@@ -41,23 +41,29 @@
 	const clamp = (x: number, a = 0, b = 1) => Math.min(Math.max(x, a), b);
 	const seg = (x: number, a: number, b: number) => clamp((x - a) / (b - a));
 
-	// Line 1 — starts well zoomed OUT (0.32x), accelerates (ease-in) to fill the
-	// screen and tilt, fading out just as the black wash swallows it.
-	let s1 = $derived(0.32 + Math.pow(seg(p, 0, 0.34), 2) * 44);
-	let r1 = $derived(seg(p, 0, 0.34) * 5);
-	let o1 = $derived(1 - seg(p, 0.29, 0.35));
-	let bg = $derived(seg(p, 0.22, 0.34));
+	// Line 1 — three phases so impatient fast-scrollers can still READ it:
+	//   grow   (0    → 0.09): zoom from 0.32x up to a comfortable readable size (1x)
+	//   HOLD   (0.09 → 0.30): PAUSE at readable size — the line sits still-and-legible
+	//                         for a big stretch of scroll before the dramatic zoom
+	//   explode(0.30 → 0.44): ease-in to fill the screen + tilt, then fade to black
+	// Driven by font-size (crisp), not transform:scale.
+	let grow = $derived(seg(p, 0, 0.09));
+	let explode = $derived(seg(p, 0.3, 0.44));
+	let s1 = $derived(0.32 + grow * 0.68 + Math.pow(explode, 2) * 44);
+	let r1 = $derived(explode * 5);
+	let o1 = $derived(1 - seg(p, 0.39, 0.45));
+	let bg = $derived(seg(p, 0.32, 0.44));
 
 	// Lines 2 & 3 do NOT resize — they rise + fade in at a CONSTANT font size so
 	// their wrapping (line count, words per line) is identical every frame. Only the
 	// single-line headlines do the dramatic zoom. y2/y3 are a small translate for the
 	// "rise out of the black" feel; opacity handles the reveal/crossfade.
-	let o2 = $derived(clamp(seg(p, 0.33, 0.42) - seg(p, 0.6, 0.68)));
-	let y2 = $derived((1 - seg(p, 0.33, 0.46)) * 24);
+	let o2 = $derived(clamp(seg(p, 0.44, 0.52) - seg(p, 0.66, 0.74)));
+	let y2 = $derived((1 - seg(p, 0.44, 0.56)) * 24);
 
-	let o3 = $derived(seg(p, 0.62, 0.72));
-	let y3 = $derived((1 - seg(p, 0.62, 0.75)) * 24);
-	let o4 = $derived(seg(p, 0.82, 0.92));
+	let o3 = $derived(seg(p, 0.68, 0.78));
+	let y3 = $derived((1 - seg(p, 0.68, 0.81)) * 24);
+	let o4 = $derived(seg(p, 0.86, 0.95));
 </script>
 
 {#if reduced}
