@@ -702,17 +702,20 @@
 <main class="font-sans text-slate-900 bg-[#f4f4f0] selection:bg-slate-200 selection:text-slate-900">
 	<!-- HERO SECTION — Kolly layout: wide centered container, content left-aligned
 	     at the container's left padding edge (items-start), warm cream canvas. -->
-	<section class="relative pt-24 pb-14 md:pt-28 md:pb-16 overflow-hidden bg-[#f4f4f0]">
-		<div class="max-w-7xl mx-auto px-6 lg:px-10 text-left relative z-10 flex flex-col items-start">
+	<section class="hero-root relative flex flex-col min-h-[100svh] pt-[100px] overflow-hidden bg-[#f4f4f0]">
+		<!-- Content grows to fill the space between the (overlay) nav and the
+		     carousel, and centers within it, so the hero stays balanced at any
+		     viewport height while the carousel stays pinned to the fold. -->
+		<div class="hero-content flex-1 min-h-0 flex flex-col justify-center w-full max-w-7xl mx-auto px-6 lg:px-10 text-left relative z-10 py-4 md:py-6">
 			<!-- Headline -->
-			<div class="space-y-5 max-w-5xl mb-8">
+			<div class="hero-headwrap space-y-5 max-w-5xl mb-8">
 				<h1
-					class="font-serif text-5xl sm:text-6xl md:text-[5rem] font-normal tracking-tight leading-[1.03] text-slate-900 animate-in fade-in slide-in-from-bottom-6 duration-1000 fill-mode-both"
+					class="hero-h1 font-serif text-5xl sm:text-6xl md:text-[5rem] font-normal tracking-tight leading-[1.03] text-slate-900 animate-in fade-in slide-in-from-bottom-6 duration-1000 fill-mode-both"
 				>
 					Where will you get in?
 				</h1>
 				<p
-					class="text-lg md:text-xl text-slate-500 max-w-3xl leading-relaxed tracking-tight font-medium mt-5 animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-[200ms] fill-mode-both"
+					class="hero-sub text-lg md:text-xl text-slate-500 max-w-3xl leading-relaxed tracking-tight font-medium mt-5 animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-[200ms] fill-mode-both"
 				>
 					<span class="font-semibold text-slate-900 tabular-nums">{predictedCountLabel}+</span> students have
 					predicted their decisions, simulated acceptances to their dream schools, and used
@@ -781,7 +784,7 @@
 							bind:value={heroStats}
 							rows="4"
 							placeholder="or paste your stats and essays in - ai will sort it"
-							class="w-full resize-y rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-900 outline-none placeholder:text-slate-400 shadow-sm transition-all hover:border-slate-300 focus:border-blue-600 focus:ring-4 focus:ring-blue-600/10"
+							class="hero-ta w-full resize-y rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-900 outline-none placeholder:text-slate-400 shadow-sm transition-all hover:border-slate-300 focus:border-blue-600 focus:ring-4 focus:ring-blue-600/10"
 						></textarea>
 						<button
 							on:click={startPrediction}
@@ -828,12 +831,13 @@
 					{/if}
 				</div>
 			</div>
+		</div>
 
-			<!-- School logo carousel, lifted directly under the card so it reads
-			     above the fold (trust/fine-print lines + label removed). -->
-			<div class="mt-6 w-full animate-in fade-in duration-1000 delay-300 fill-mode-both">
-				<SchoolLogoMarquee />
-			</div>
+		<!-- School logo carousel — pinned to the very bottom of the above-the-fold
+		     on any screen height, with the content above spaced to fill the rest. -->
+		<div class="hero-carousel shrink-0 w-full max-w-7xl mx-auto px-6 lg:px-10 pb-5 md:pb-7 animate-in fade-in duration-1000 delay-300 fill-mode-both">
+			<SchoolLogoMarquee />
+		</div>
 	</section>
 
 
@@ -1272,6 +1276,142 @@
 			opacity: 1;
 			transform: none;
 			transition: none;
+		}
+	}
+
+	/* Short viewports (small laptops / windowed browsers): the hero's intrinsic
+	   content height is what overruns the fold, so compress it by VIEWPORT HEIGHT
+	   (Tailwind only breaks on width) — shrink the headline, the top offset, the
+	   gaps, and the paste box — so the school-logo carousel still lands at the
+	   very bottom of the above-the-fold instead of spilling below it. These
+	   two-class selectors out-specify the Tailwind size utilities, so they win
+	   when a screen is wide but short. */
+	@media (max-height: 860px) {
+		.hero-h1 {
+			font-size: 3.5rem;
+			line-height: 1.02;
+		}
+		.hero-headwrap {
+			margin-bottom: 1rem;
+		}
+		.hero-ta {
+			min-height: 72px;
+		}
+	}
+	@media (max-height: 760px) {
+		.hero-h1 {
+			font-size: 2.9rem;
+		}
+		.hero-sub {
+			margin-top: 0.6rem;
+		}
+		.hero-content {
+			padding-top: 0;
+			padding-bottom: 0;
+		}
+		.hero-ta {
+			min-height: 56px;
+		}
+		.hero-carousel {
+			padding-bottom: 0.9rem;
+		}
+	}
+	@media (max-height: 680px) {
+		.hero-h1 {
+			font-size: 2.35rem;
+		}
+		.hero-headwrap {
+			margin-bottom: 0.55rem;
+		}
+		.hero-sub {
+			font-size: 0.95rem;
+			margin-top: 0.4rem;
+			line-height: 1.35;
+		}
+		.hero-ta {
+			min-height: 46px;
+		}
+		.hero-carousel {
+			padding-bottom: 0.6rem;
+		}
+	}
+	@media (max-height: 600px) {
+		.hero-root {
+			padding-top: 92px; /* floor: still clears the floating nav (bottom 92px) */
+		}
+		.hero-h1 {
+			font-size: 1.8rem;
+		}
+		.hero-headwrap {
+			margin-bottom: 0.4rem;
+		}
+		.hero-sub {
+			font-size: 0.9rem;
+			margin-top: 0.3rem;
+			line-height: 1.3;
+		}
+		.hero-ta {
+			min-height: 38px;
+		}
+		.hero-carousel {
+			padding-bottom: 0.4rem;
+		}
+	}
+	/* Narrow phones: the headline + card wrap taller, so compress the CONTENT a
+	   touch more on all but the tallest phones (the top offset stays constant so
+	   the headline always clears the floating nav). Safe — the carousel is
+	   flex-pinned to the fold, so shrinking content never leaves a gap below it. */
+	@media (max-width: 430px) and (max-height: 880px) {
+		.hero-h1 {
+			font-size: 2rem;
+		}
+		.hero-headwrap {
+			margin-bottom: 0.5rem;
+		}
+		.hero-sub {
+			font-size: 0.95rem;
+			margin-top: 0.4rem;
+			line-height: 1.35;
+		}
+		.hero-ta {
+			min-height: 44px;
+		}
+	}
+	@media (max-width: 430px) and (max-height: 720px) {
+		.hero-root {
+			padding-top: 92px; /* floor: still clears the floating nav (bottom 92px) */
+		}
+		.hero-h1 {
+			font-size: 1.7rem;
+		}
+		.hero-headwrap {
+			margin-bottom: 0.4rem;
+		}
+		.hero-sub {
+			margin-top: 0.3rem;
+			line-height: 1.3;
+		}
+		.hero-ta {
+			min-height: 36px;
+		}
+		.hero-carousel {
+			padding-bottom: 0.4rem;
+		}
+	}
+	/* Extremely short folds (half-height laptop windows, tiny/old phones): the full
+	   card + headline + carousel won't all fit, so drop the descriptive subhead to
+	   keep the carousel on the fold — the explicit priority. */
+	@media (max-height: 560px) {
+		.hero-sub {
+			display: none;
+		}
+		.hero-headwrap {
+			margin-bottom: 0.3rem;
+		}
+	}
+	@media (max-width: 430px) and (max-height: 680px) {
+		.hero-sub {
+			display: none;
 		}
 	}
 </style>
