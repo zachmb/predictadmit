@@ -719,15 +719,6 @@
 					<a href="/pro" class="font-semibold text-slate-900 underline decoration-slate-300 underline-offset-2 transition-colors hover:decoration-slate-900">Pro's</a>
 					application help to get in.
 				</p>
-
-				<!-- Capability lines — new serif register, editorial voice -->
-				<ul
-					class="mt-7 max-w-3xl space-y-2.5 font-serif text-xl md:text-2xl font-normal leading-snug tracking-tight text-slate-700 animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-[320ms] fill-mode-both"
-				>
-					<li>Re-run infinite predictions. See what'll happen.</li>
-					<li>Improve your essays with line-by-line feedback, trained on successful applications.</li>
-					<li class="text-slate-400">And more.</li>
-				</ul>
 			</div>
 
 			<!-- Hero start card -->
