@@ -2318,13 +2318,6 @@
 						</a>
 					</div>
 
-					<p class="mt-6 flex flex-wrap items-center justify-center lg:justify-start gap-x-2 gap-y-1 text-xs text-slate-400">
-						<span>First prediction free</span>
-						<span class="text-slate-300">·</span>
-						<span>Nothing to install</span>
-						<span class="text-slate-300">·</span>
-						<span>Secure checkout by Stripe</span>
-					</p>
 				</div>
 
 				<!-- Right: real elite-university campus photos (the dream schools you're
@@ -2353,7 +2346,7 @@
 						Talk to the admissions AI that <span class="text-[#0c0c09]">actually tells you the truth.</span>
 					</h2>
 					<p class="mt-4 text-lg text-slate-500 leading-relaxed">
-						Ask it anything — your real odds, which activities are just padding, what's quietly dragging your application down. It says what counselors and ChatGPT are too careful to. Free to use right now.
+						Ask it anything — your real odds, which activities are just padding, what's quietly dragging your application down.
 					</p>
 				</div>
 				<div class="mt-8">
@@ -2392,8 +2385,7 @@
 						<span class="absolute bottom-2 right-2 rounded bg-black/40 px-1.5 py-0.5 text-[9px] text-white/80">Wikimedia Commons · CC BY-SA 4.0</span>
 					</div>
 					<div class="flex flex-col justify-center gap-5 p-8 sm:p-12">
-						<p class="text-xs font-bold uppercase tracking-widest text-slate-400">Put it in perspective</p>
-						<div class="flex items-end gap-6">
+							<div class="flex items-end gap-6">
 							<div>
 								<div class="font-serif text-5xl font-medium text-slate-900">$90</div>
 								<div class="mt-1 text-sm text-slate-500">One Stanford application fee</div>
@@ -2526,12 +2518,12 @@
 				     product mock (Trajecta-style editorial layout). -->
 				<div class="space-y-16 md:space-y-24">
 					<!-- Row 1: verdict across the T30 -->
-					<div class="grid items-center gap-8 md:grid-cols-2 md:gap-14">
+					<div class="grid items-center gap-10 md:grid-cols-2 md:gap-16">
 						<div>
-							<h3 class="mt-3 font-serif text-3xl font-medium tracking-tight text-slate-900">Your verdict at every T30 school</h3>
-							<p class="mt-3 text-[15px] leading-relaxed text-slate-500">Accept, waitlist, deny, across every top school. Re-run it any time.</p>
+							<h3 class="mt-3 font-serif text-4xl md:text-[3.25rem] font-medium tracking-tight leading-[1.05] text-slate-900">Your verdict at every T30 school</h3>
+							<p class="mt-4 max-w-md text-lg md:text-xl leading-relaxed text-slate-500">Accept, waitlist, deny, across every top school. Re-run it any time.</p>
 						</div>
-						<div class="rounded-3xl border border-slate-200 bg-slate-50 p-5 sm:p-6">
+						<div class="rounded-[2rem] border border-slate-200 bg-slate-50 p-6 sm:p-8 md:p-10">
 							<div class="relative">
 								<div class="overflow-hidden rounded-2xl border-[3px] border-[#0c0c09] bg-white shadow-[0_24px_60px_-24px_rgba(12,12,9,0.35)]">
 									<img src="/screenshots/zoom/universities.png" alt="Predicted decisions across every T30 school" width="2391" height="1260" loading="lazy" class="block h-auto w-full" />
@@ -2544,12 +2536,12 @@
 					</div>
 
 					<!-- Row 2: committee reasoning (mock left) -->
-					<div class="grid items-center gap-8 md:grid-cols-2 md:gap-14">
+					<div class="grid items-center gap-10 md:grid-cols-2 md:gap-16">
 						<div class="md:order-2">
-							<h3 class="mt-3 font-serif text-3xl font-medium tracking-tight text-slate-900">A five-reader committee on every decision</h3>
-							<p class="mt-3 text-[15px] leading-relaxed text-slate-500">Five dimensions scored, with the one fix that moves the verdict.</p>
+							<h3 class="mt-3 font-serif text-4xl md:text-[3.25rem] font-medium tracking-tight leading-[1.05] text-slate-900">A five-reader committee on every decision</h3>
+							<p class="mt-4 max-w-md text-lg md:text-xl leading-relaxed text-slate-500">Five dimensions scored, with the one fix that moves the verdict.</p>
 						</div>
-						<div class="rounded-3xl border border-slate-200 bg-slate-50 p-5 sm:p-6 md:order-1">
+						<div class="rounded-[2rem] border border-slate-200 bg-slate-50 p-6 sm:p-8 md:p-10 md:order-1">
 							<div class="relative">
 								<div class="overflow-hidden rounded-2xl border-[3px] border-[#0c0c09] bg-white shadow-[0_24px_60px_-24px_rgba(12,12,9,0.35)]">
 									<img src="/screenshots/zoom/chanceme.png" alt="Scored committee read of your application" width="2391" height="1152" loading="lazy" class="block h-auto w-full" />
@@ -2563,12 +2555,12 @@
 				</div>
 
 				<!-- Row 3: essay markup -->
-				<div class="grid items-center gap-8 md:grid-cols-2 md:gap-14">
+				<div class="grid items-center gap-10 md:grid-cols-2 md:gap-16">
 					<div>
-						<h3 class="mt-3 font-serif text-3xl font-medium tracking-tight text-slate-900">Essays marked up like an admissions reader</h3>
-						<p class="mt-3 text-[15px] leading-relaxed text-slate-500">It flags the weak lines and says why. You write every word.</p>
+						<h3 class="mt-3 font-serif text-4xl md:text-[3.25rem] font-medium tracking-tight leading-[1.05] text-slate-900">Essays marked up like an admissions reader</h3>
+						<p class="mt-4 max-w-md text-lg md:text-xl leading-relaxed text-slate-500">It flags the weak lines and says why. You write every word.</p>
 					</div>
-					<div class="rounded-3xl border border-slate-200 bg-slate-50 p-5 sm:p-6">
+					<div class="rounded-[2rem] border border-slate-200 bg-slate-50 p-6 sm:p-8 md:p-10">
 						<div class="relative">
 							<div class="overflow-hidden rounded-2xl border-[3px] border-[#0c0c09] bg-white shadow-[0_24px_60px_-24px_rgba(12,12,9,0.35)]">
 								<img src="/screenshots/zoom/essay.png" alt="Essay marked up line by line" width="2391" height="1260" loading="lazy" class="block h-auto w-full" />
@@ -2581,12 +2573,12 @@
 				</div>
 
 				<!-- Row 4: AI counselor (mock left) -->
-				<div class="grid items-center gap-8 md:grid-cols-2 md:gap-14">
+				<div class="grid items-center gap-10 md:grid-cols-2 md:gap-16">
 					<div class="md:order-2">
-						<h3 class="mt-3 font-serif text-3xl font-medium tracking-tight text-slate-900">A counselor in your pocket</h3>
-						<p class="mt-3 text-[15px] leading-relaxed text-slate-500">Ask what you'd pay a consultant $300 an hour for. Any time.</p>
+						<h3 class="mt-3 font-serif text-4xl md:text-[3.25rem] font-medium tracking-tight leading-[1.05] text-slate-900">A counselor in your pocket</h3>
+						<p class="mt-4 max-w-md text-lg md:text-xl leading-relaxed text-slate-500">Ask what you'd pay a consultant $300 an hour for. Any time.</p>
 					</div>
-					<div class="rounded-3xl border border-slate-200 bg-slate-50 p-5 sm:p-6 md:order-1">
+					<div class="rounded-[2rem] border border-slate-200 bg-slate-50 p-6 sm:p-8 md:p-10 md:order-1">
 						<div class="relative">
 							<div class="overflow-hidden rounded-2xl border-[3px] border-[#0c0c09] bg-white shadow-[0_24px_60px_-24px_rgba(12,12,9,0.35)]">
 								<img src="/screenshots/zoom/counselor.png" alt="Ask the AI counselor anything" width="2391" height="1368" loading="lazy" class="block h-auto w-full" />
