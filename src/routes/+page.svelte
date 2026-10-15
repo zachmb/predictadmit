@@ -754,7 +754,7 @@
 		<!-- Content grows to fill the space between the (overlay) nav and the
 		     carousel, and centers within it, so the hero stays balanced at any
 		     viewport height while the carousel stays pinned to the fold. -->
-		<div class="hero-content flex-1 min-h-0 flex flex-col justify-center w-full max-w-[1400px] mx-auto px-5 lg:px-10 text-left relative z-10 py-4 md:py-6">
+		<div class="hero-content flex-1 min-h-0 flex flex-col justify-center w-full max-w-[1400px] mx-auto px-5 lg:px-10 lg:pl-20 text-left relative z-10 py-4 md:py-6">
 			<!-- Headline -->
 			<div class="hero-headwrap space-y-5 max-w-5xl mb-8">
 				<h1

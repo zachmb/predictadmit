@@ -2099,17 +2099,16 @@ See what we read from your file
 
 			</div>
 			<!-- Right column: countdown centered in the whitespace beside the content,
-			     sticky as you scroll. Builder phase only. -->
-			{#if !hasUsedFreeSimulation && !$userProfile.isSubmittingAI}
-				<div class="hidden xl:flex xl:flex-1 xl:justify-center">
-					<div class="sticky top-32 w-[380px]">
-						<DeadlineCountdown
-							size="lg"
-							wrapperClass="w-full rounded-3xl border border-slate-200 bg-white p-8 shadow-xl"
-						/>
-					</div>
+			     sticky as you scroll. Always present beside the builder (it's an
+			     in-flow column, so it never overlaps the full-width inbox below). -->
+			<div class="hidden xl:flex xl:flex-1 xl:justify-center">
+				<div class="sticky top-32 w-[380px]">
+					<DeadlineCountdown
+						size="lg"
+						wrapperClass="w-full rounded-3xl border border-slate-200 bg-white p-8 shadow-xl"
+					/>
 				</div>
-			{/if}
+			</div>
 			</div>
 
 			<!-- AIMail Inbox -->
