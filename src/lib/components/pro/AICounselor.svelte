@@ -13,7 +13,12 @@
 	let { embedded = false, signedIn = true }: { embedded?: boolean; signedIn?: boolean } =
 		$props();
 
+	// Legacy single-conversation key (migrated into a session on first load) and the
+	// new multi-session history store.
 	const STORAGE_KEY = 'predictadmit:pro:counselor';
+	const SESSIONS_KEY = 'predictadmit:pro:counselor:sessions';
+
+	type ChatSession = { id: string; title: string; messages: ChatMessage[]; updatedAt: number };
 
 	const SUGGESTIONS = [
 		'Rate my college list — no sugarcoating',
@@ -25,11 +30,17 @@
 	];
 
 	let messages = $state<ChatMessage[]>([]);
+	let sessions = $state<ChatSession[]>([]);
+	let activeSessionId = $state<string | null>(null);
+	let showHistory = $state(false); // mobile history drawer
 	let draft = $state('');
 	let isThinking = $state(false);
 	let errorMsg = $state('');
 	let needsSignIn = $state(false);
 	let hydrated = $state(false);
+
+	// Most-recent-first list for the history panel.
+	let sortedSessions = $derived([...sessions].sort((a, b) => b.updatedAt - a.updatedAt));
 	// Tappable multiple-choice chips the AI offers each turn (quiz / next steps) —
 	// tapping one sends it, so the student answers without typing.
 	let latestOptions = $state<string[]>([]);
@@ -37,37 +48,99 @@
 	let scrollEl = $state<HTMLDivElement | null>(null);
 	let textareaEl = $state<HTMLTextAreaElement | null>(null);
 
-	// Load persisted conversation on mount.
+	function genId() {
+		try {
+			if (typeof crypto !== 'undefined' && crypto.randomUUID) return crypto.randomUUID();
+		} catch {
+			/* fall through */
+		}
+		return 'c-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8);
+	}
+
+	function titleFrom(msgs: ChatMessage[]): string {
+		const first = msgs.find((m) => m.role === 'user');
+		const t = (first?.content || 'New chat').trim().replace(/\s+/g, ' ');
+		return t.length > 42 ? t.slice(0, 42) + '…' : t;
+	}
+
+	function validMsg(m: any): m is ChatMessage {
+		return m && (m.role === 'user' || m.role === 'assistant') && typeof m.content === 'string';
+	}
+
+	function persistSessions() {
+		try {
+			window.localStorage.setItem(SESSIONS_KEY, JSON.stringify($state.snapshot(sessions)));
+		} catch {
+			// ignore storage errors
+		}
+	}
+
+	// Fold the live conversation back into its session (lazily creating one once the
+	// first message exists), then persist. Called explicitly after each turn so there
+	// is no reactive write-loop on the sessions store.
+	function syncActiveSession() {
+		const snap = $state.snapshot(messages) as ChatMessage[];
+		if (!snap.length) return;
+		let id = activeSessionId;
+		if (!id) {
+			id = genId();
+			activeSessionId = id;
+		}
+		const session: ChatSession = { id, title: titleFrom(snap), messages: snap, updatedAt: Date.now() };
+		const idx = sessions.findIndex((s) => s.id === id);
+		if (idx === -1) sessions = [session, ...sessions];
+		else {
+			const copy = [...sessions];
+			copy[idx] = session;
+			sessions = copy;
+		}
+		persistSessions();
+	}
+
+	// Load session history on mount, migrating any legacy single conversation.
 	$effect(() => {
 		if (hydrated) return;
 		try {
-			const raw = window.localStorage.getItem(STORAGE_KEY);
-			if (raw) {
-				const parsed = JSON.parse(raw);
+			const rawSessions = window.localStorage.getItem(SESSIONS_KEY);
+			if (rawSessions) {
+				const parsed = JSON.parse(rawSessions);
 				if (Array.isArray(parsed)) {
-					messages = parsed.filter(
-						(m) =>
-							m &&
-							(m.role === 'user' || m.role === 'assistant') &&
-							typeof m.content === 'string'
-					);
+					sessions = parsed
+						.filter((s) => s && typeof s.id === 'string' && Array.isArray(s.messages))
+						.map((s) => ({
+							id: s.id,
+							title: typeof s.title === 'string' ? s.title : titleFrom(s.messages.filter(validMsg)),
+							messages: s.messages.filter(validMsg),
+							updatedAt: typeof s.updatedAt === 'number' ? s.updatedAt : 0
+						}))
+						.filter((s) => s.messages.length);
 				}
+			}
+			// Migrate the old single-conversation store into a session.
+			if (sessions.length === 0) {
+				const raw = window.localStorage.getItem(STORAGE_KEY);
+				if (raw) {
+					const parsed = JSON.parse(raw);
+					if (Array.isArray(parsed)) {
+						const msgs = parsed.filter(validMsg);
+						if (msgs.length) {
+							sessions = [{ id: genId(), title: titleFrom(msgs), messages: msgs, updatedAt: Date.now() }];
+							persistSessions();
+						}
+					}
+					window.localStorage.removeItem(STORAGE_KEY);
+				}
+			}
+			// Open the most recent session so the user resumes where they left off.
+			if (sessions.length) {
+				const latest = [...sessions].sort((a, b) => b.updatedAt - a.updatedAt)[0];
+				activeSessionId = latest.id;
+				messages = [...latest.messages];
 			}
 		} catch {
 			// ignore corrupt storage
 		}
 		hydrated = true;
-	});
-
-	// Persist conversation whenever it changes (after hydration).
-	$effect(() => {
-		if (!hydrated) return;
-		const snapshot = $state.snapshot(messages);
-		try {
-			window.localStorage.setItem(STORAGE_KEY, JSON.stringify(snapshot));
-		} catch {
-			// ignore storage errors
-		}
 	});
 
 	// Auto-scroll to newest message when the conversation or pending state changes.
@@ -133,6 +206,7 @@
 		latestOptions = [];
 		const outgoing: ChatMessage = { role: 'user', content };
 		messages = [...messages, outgoing];
+		syncActiveSession();
 		draft = '';
 		if (textareaEl) textareaEl.style.height = 'auto';
 		isThinking = true;
@@ -170,6 +244,7 @@
 					data?.error || 'Something went wrong reaching your counselor. Please try again.';
 			} else if (typeof data?.reply === 'string') {
 				messages = [...messages, { role: 'assistant', content: data.reply }];
+				syncActiveSession();
 				latestOptions = Array.isArray(data?.options)
 					? data.options.filter((o: unknown) => typeof o === 'string' && o.trim()).slice(0, 4)
 					: [];
@@ -207,15 +282,39 @@
 	}
 
 	function newChat() {
+		// The prior conversation is already saved to its session on each turn, so a new
+		// chat just starts a fresh (unsaved-until-first-message) thread.
+		activeSessionId = null;
 		messages = [];
 		draft = '';
 		errorMsg = '';
-		try {
-			window.localStorage.removeItem(STORAGE_KEY);
-		} catch {
-			// ignore
-		}
+		latestOptions = [];
+		showHistory = false;
 		requestAnimationFrame(() => textareaEl?.focus());
+	}
+
+	function loadSession(id: string) {
+		const s = sessions.find((x) => x.id === id);
+		if (!s) return;
+		activeSessionId = id;
+		messages = [...s.messages];
+		errorMsg = '';
+		latestOptions = [];
+		showHistory = false;
+		requestAnimationFrame(() => {
+			if (scrollEl) scrollEl.scrollTop = scrollEl.scrollHeight;
+		});
+	}
+
+	function deleteSession(id: string, e: Event) {
+		e.stopPropagation();
+		sessions = sessions.filter((s) => s.id !== id);
+		persistSessions();
+		if (activeSessionId === id) {
+			activeSessionId = null;
+			messages = [];
+			latestOptions = [];
+		}
 	}
 
 	// --- Safe light-markdown rendering ---------------------------------------
@@ -283,10 +382,70 @@
 <div class={embedded ? '' : 'flex-1 min-h-0 overflow-y-auto bg-slate-50'}>
 	<div class={embedded ? '' : 'max-w-6xl mx-auto px-6 md:px-10 py-8'}>
 		<div
-			class="flex {embedded
+			class="relative flex {embedded
 				? 'h-[520px] sm:h-[560px]'
-				: 'h-[calc(100vh-8rem)] min-h-[560px]'} flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
+				: 'h-[calc(100vh-8rem)] min-h-[560px]'} overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
 		>
+			{#if !embedded}
+				<!-- Chat history drawer (persistent on md+, overlay on mobile) -->
+				{#if showHistory}
+					<button
+						type="button"
+						aria-label="Close history"
+						class="absolute inset-0 z-20 bg-slate-900/30 md:hidden"
+						onclick={() => (showHistory = false)}
+					></button>
+				{/if}
+				<aside
+					class="{showHistory
+						? 'flex'
+						: 'hidden'} absolute inset-y-0 left-0 z-30 w-64 flex-col border-r border-slate-200 bg-slate-50/80 md:static md:z-0 md:flex md:w-60"
+				>
+					<div class="p-3">
+						<button
+							type="button"
+							onclick={newChat}
+							class="flex w-full items-center justify-center gap-2 rounded-xl bg-[#0c0c09] px-3 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#2b2b22]"
+						>
+							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14" /></svg>
+							New chat
+						</button>
+					</div>
+					<p class="px-4 pb-1.5 text-[11px] font-semibold uppercase tracking-wider text-slate-400">History</p>
+					<div class="flex-1 overflow-y-auto px-2 pb-3">
+						{#if sortedSessions.length === 0}
+							<p class="px-2 py-2 text-xs leading-relaxed text-slate-400">
+								Your past chats show up here once you start one.
+							</p>
+						{:else}
+							{#each sortedSessions as s (s.id)}
+								<div class="group relative">
+									<button
+										type="button"
+										onclick={() => loadSession(s.id)}
+										class="flex w-full items-center gap-2 rounded-lg py-2 pl-2.5 pr-8 text-left text-[13px] font-medium transition {activeSessionId ===
+										s.id
+											? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200'
+											: 'text-slate-600 hover:bg-white/70 hover:text-slate-900'}"
+									>
+										<svg class="h-3.5 w-3.5 shrink-0 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></svg>
+										<span class="truncate">{s.title}</span>
+									</button>
+									<button
+										type="button"
+										aria-label="Delete chat"
+										onclick={(e) => deleteSession(s.id, e)}
+										class="absolute right-1.5 top-1/2 -translate-y-1/2 rounded-md p-1 text-slate-300 opacity-0 transition hover:bg-slate-200 hover:text-rose-500 focus:opacity-100 group-hover:opacity-100"
+									>
+										<svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" /></svg>
+									</button>
+								</div>
+							{/each}
+						{/if}
+					</div>
+				</aside>
+			{/if}
+			<div class="flex min-w-0 flex-1 flex-col">
 			<!-- Header -->
 			<header
 				class="flex items-center justify-between gap-3 border-b border-slate-200 px-5 py-4"
@@ -307,25 +466,40 @@
 						</p>
 					</div>
 				</div>
-				<button
-					type="button"
-					onclick={newChat}
-					class="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-600 transition hover:bg-slate-50 hover:text-slate-900"
-				>
-					<svg
-						width="16"
-						height="16"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2"
-						stroke-linecap="round"
-						stroke-linejoin="round"
+				<div class="flex items-center gap-2">
+					{#if !embedded}
+						<button
+							type="button"
+							onclick={() => (showHistory = !showHistory)}
+							aria-label="Chat history"
+							class="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-600 transition hover:bg-slate-50 hover:text-slate-900 md:hidden"
+						>
+							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v4l3 3M3.05 11a9 9 0 1 1 .5 4" /><path d="M3 4v4h4" /></svg>
+							History
+						</button>
+					{/if}
+					<button
+						type="button"
+						onclick={newChat}
+						class="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-600 transition hover:bg-slate-50 hover:text-slate-900 {embedded
+							? ''
+							: 'md:hidden'}"
 					>
-						<path d="M12 5v14M5 12h14" />
-					</svg>
-					New chat
-				</button>
+						<svg
+							width="16"
+							height="16"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+						>
+							<path d="M12 5v14M5 12h14" />
+						</svg>
+						New chat
+					</button>
+				</div>
 			</header>
 
 			<!-- Conversation / empty state -->
@@ -535,6 +709,7 @@
 						{/if}
 					</div>
 				{/if}
+			</div>
 			</div>
 		</div>
 	</div>

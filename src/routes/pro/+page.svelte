@@ -1908,7 +1908,7 @@
 
 									<!-- Content Area -->
 									<div
-										class="w-full bg-slate-50 text-slate-800 font-serif text-lg leading-loose p-4 md:p-8 rounded-xl border border-slate-100"
+										class="w-full bg-slate-50 text-slate-900 font-serif text-lg leading-loose p-4 md:p-8 rounded-xl border border-slate-100"
 										onclick={(e) => {
 											// @ts-ignore
 											const span = e.target.closest('.highlight-span');
@@ -1938,7 +1938,7 @@
 									<div class="relative group flex-1 flex flex-col">
 										<textarea
 											bind:value={activeFile.content}
-											class="w-full flex-1 bg-white text-slate-800 p-4 md:p-8 rounded-2xl border border-slate-200 focus:border-[#0c0c09] focus:ring-4 focus:ring-blue-500/10 outline-none font-serif text-base md:text-lg leading-loose shadow-sm transition-all resize-none"
+											class="w-full flex-1 bg-white text-slate-900 p-4 md:p-8 rounded-2xl border border-slate-200 focus:border-[#0c0c09] focus:ring-4 focus:ring-blue-500/10 outline-none font-serif text-base md:text-lg leading-loose shadow-sm transition-all resize-none"
 											placeholder="# Prompt\nPaste prompt here...\n\n# Response\nStart writing..."
 											spellcheck="false"
 										></textarea>
