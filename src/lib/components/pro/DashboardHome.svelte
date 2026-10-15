@@ -256,9 +256,11 @@
 								</div>
 								{#if rec.done}
 									<span
-										class="rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-600"
-										>Done ✓</span
+										class="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-600"
 									>
+										<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
+										Done
+									</span>
 								{/if}
 							</div>
 							<h3 class="mt-4 font-semibold text-slate-900">{rec.title}</h3>
@@ -283,9 +285,11 @@
 								</div>
 								{#if rec.done}
 									<span
-										class="rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-600"
-										>Done ✓</span
+										class="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-600"
 									>
+										<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
+										Done
+									</span>
 								{/if}
 							</div>
 							<h3 class="mt-4 font-semibold text-slate-900">{rec.title}</h3>

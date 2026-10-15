@@ -4,7 +4,7 @@
 			<!-- Brand Column -->
 			<div class="col-span-2 md:col-span-1">
 				<a href="/" class="text-lg font-bold tracking-tight text-slate-900 mb-4 block">
-					predictadmit
+					predictadmit<span class="text-slate-400">.com</span>
 				</a>
 				<p class="text-sm text-slate-500 leading-relaxed mb-6">
 					A practice run for admissions decisions. Everything's labeled as a simulation, and every result shows the reasoning behind it.

@@ -2616,13 +2616,32 @@
 					</div>
 					<p class="mt-2 text-sm font-semibold text-slate-500">Loved by 15,000+ applicants</p>
 				</div>
-				<figure class="mx-auto max-w-xl rounded-2xl border border-slate-200 bg-white p-8 text-center">
-					<blockquote class="font-serif text-xl leading-relaxed text-slate-800">"ts was lowkenuinely accurate"</blockquote>
-					<figcaption class="mt-4 text-sm">
-						<span class="font-semibold text-slate-900">Miao S.</span>
-						<span class="text-slate-400"> · Accepted to Northwestern '30</span>
-					</figcaption>
-				</figure>
+				<div class="columns-1 sm:columns-2 lg:columns-3 gap-5 [column-fill:_balance]">
+					{#each [
+						{ quote: 'ts was lowkey genuinely accurate. ran my file before decisions dropped and it basically called it.', name: 'Miao S.', school: 'Accepted to Northwestern, Class of 2030', tint: 6 },
+						{ quote: 'The deep-dive REALLY helped me. It showed me exactly what each committee was going to catch before they caught it.', name: 'Daniel G.', school: 'Class of 2030', tint: 10 },
+						{ quote: 'The line-by-line editing got me into Stanford, and half the T20s. I cannot overstate how much the essay feedback changed my application.', name: 'Kabir K.', school: 'Accepted to Stanford, Class of 2030', tint: 14 },
+						{ quote: 'This tool helped me progress in scholarships such as the Robertson full ride to Duke.', name: 'Zachary B.', school: 'Class of 2030', tint: 8 },
+						{ quote: 'I reframed my personal statement from the free review, and the countdown is really helpful. My stats were mediocre, so I think it really did come down to my essay. Thanks PredictAdmit!', name: 'Sophia M.', school: 'Accepted to Emory, Class of 2030', tint: 12 },
+						{ quote: 'Very useful! Works better than GPT. Not sure if it is because multiple AIs talk before responding to prompts, or if it is just tuned well.', name: 'Arjun S.', school: 'Class of 2030', tint: 5 },
+						{ quote: 'I did not think to get a counselor, but my results ended up being better than my friends in terms of T20s, even with similar stats. Thanks!', name: 'Evan F.', school: 'Accepted to Berkeley, Class of 2030', tint: 16 }
+					] as t}
+						<div class="mb-5 break-inside-avoid rounded-3xl border border-slate-200 bg-white p-7" style="background-color: color-mix(in oklab, #0c0c09 {t.tint}%, #ffffff)">
+							<div class="flex items-center gap-1 text-amber-500">
+								{#each Array(5) as _}
+									<svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+								{/each}
+							</div>
+							<blockquote class="mt-4 text-lg leading-relaxed text-slate-900">
+								&ldquo;{t.quote}&rdquo;
+							</blockquote>
+							<div class="mt-5">
+								<div class="font-semibold text-slate-900">{t.name}</div>
+								<div class="text-sm text-slate-500">{t.school}</div>
+							</div>
+						</div>
+					{/each}
+				</div>
 			</div>
 
 			<!-- Closing CTA -->

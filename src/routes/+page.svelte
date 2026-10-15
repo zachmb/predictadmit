@@ -1097,7 +1097,10 @@
 					{ quote: 'ts was lowkey genuinely accurate. ran my file before decisions dropped and it basically called it.', name: 'Miao S.', school: 'Accepted to Northwestern, Class of 2030', tint: 6 },
 					{ quote: 'The deep-dive REALLY helped me. It showed me exactly what each committee was going to catch before they caught it.', name: 'Daniel G.', school: 'Class of 2030', tint: 10 },
 					{ quote: 'The line-by-line editing got me into Stanford, and half the T20s. I cannot overstate how much the essay feedback changed my application.', name: 'Kabir K.', school: 'Accepted to Stanford, Class of 2030', tint: 14 },
-					{ quote: 'This tool helped me progress in scholarships such as the Robertson full ride to Duke.', name: 'Zachary B.', school: 'Class of 2030', tint: 8 }
+					{ quote: 'This tool helped me progress in scholarships such as the Robertson full ride to Duke.', name: 'Zachary B.', school: 'Class of 2030', tint: 8 },
+					{ quote: 'I reframed my personal statement from the free review, and the countdown is really helpful. My stats were mediocre, so I think it really did come down to my essay. Thanks PredictAdmit!', name: 'Sophia M.', school: 'Accepted to Emory, Class of 2030', tint: 12 },
+					{ quote: 'Very useful! Works better than GPT. Not sure if it is because multiple AIs talk before responding to prompts, or if it is just tuned well.', name: 'Arjun S.', school: 'Class of 2030', tint: 5 },
+					{ quote: 'I did not think to get a counselor, but my results ended up being better than my friends in terms of T20s, even with similar stats. Thanks!', name: 'Evan F.', school: 'Accepted to Berkeley, Class of 2030', tint: 16 }
 				] as t}
 					<div class="mb-5 break-inside-avoid rounded-3xl border border-slate-200 bg-white p-7" style="background-color: color-mix(in oklab, #0c0c09 {t.tint}%, #ffffff)">
 						<div class="flex items-center gap-1 text-amber-500">
@@ -1122,7 +1125,7 @@
 	<section class="py-20 md:py-28 bg-white border-t border-slate-100">
 		<div class="max-w-[820px] mx-auto px-6">
 			<h2 class="font-serif text-4xl md:text-5xl font-medium tracking-tight text-slate-900 text-center mb-12">
-				Questions, answered
+				Frequently asked questions
 			</h2>
 			<div class="space-y-3">
 				{#each [

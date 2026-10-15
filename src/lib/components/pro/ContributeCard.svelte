@@ -207,7 +207,7 @@
 			</svg>
 		</div>
 		<div>
-			<h3 class="text-base font-semibold text-slate-900">Thanks for contributing 💙</h3>
+			<h3 class="text-base font-semibold text-slate-900">Thanks for contributing</h3>
 			<p class="mt-0.5 text-sm text-slate-500">
 				Your results are helping the next class of applicants. You're part of the corpus that
 				powers Community Admits.
@@ -225,7 +225,7 @@
 				<path d="M20 6 9 17l-5-5" />
 			</svg>
 		</div>
-		<h3 class="mt-3 text-lg font-semibold text-slate-900">Thank you. You're helping the next class 💙</h3>
+		<h3 class="mt-3 text-lg font-semibold text-slate-900">Thank you. You're helping the next class</h3>
 		<p class="mx-auto mt-1 max-w-md text-sm text-slate-500">
 			Your {anonymous ? 'anonymized' : ''} profile is now part of the community corpus. It powers
 			Community Admits and sharper predictions for everyone.
