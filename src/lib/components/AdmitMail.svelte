@@ -404,9 +404,9 @@
 									<div class="my-8">
 										<a
 											href={`/portals/${selectedPortal.slug}`}
-											class="inline-flex items-center justify-center px-6 py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition-all shadow-lg shadow-blue-200 no-underline"
+											class="inline-flex items-center justify-center px-6 py-2.5 bg-[#1a73e8] text-white font-medium rounded hover:bg-[#1765cc] active:bg-[#1a56b4] transition-colors shadow-sm no-underline"
 										>
-											View Simulated Decision
+											View simulated decision
 										</a>
 									</div>
 

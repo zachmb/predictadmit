@@ -145,8 +145,10 @@
 								</div>
 								<button
 									on:click={() => removeSupplement(i)}
-									class="text-slate-400 hover:text-red-500">✕</button
-								>
+									aria-label="Remove supplement"
+									class="text-slate-400 hover:text-red-500">
+									<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12" /></svg>
+								</button>
 							</div>
 
 							<textarea
@@ -177,7 +179,7 @@
 									<h4
 										class="font-bold text-xs uppercase tracking-wide mb-1 flex items-center gap-2"
 									>
-										<span class="text-emerald-500">✨</span> AI Feedback
+										<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3.5 w-3.5 text-emerald-500" aria-hidden="true"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" /></svg> AI Feedback
 									</h4>
 									{supp.aiFeedback}
 								</div>

@@ -84,26 +84,6 @@
 		clearTimeout(toastTimer);
 		toastTimer = setTimeout(() => (toastMsg = ''), 2400);
 	}
-	async function shareDecision(portal: PortalEmail) {
-		if (typeof window === 'undefined') return;
-		const url = `${window.location.origin}/portals/${portal.slug}`;
-		const title = `My ${portal.name} decision`;
-		try {
-			if (navigator.share) {
-				await navigator.share({ title, url });
-				return;
-			}
-		} catch {
-			/* user cancelled or unsupported — fall through to copy */
-		}
-		try {
-			await navigator.clipboard.writeText(url);
-			showToast('Link copied to clipboard');
-		} catch {
-			showToast('Couldn’t copy. Please copy the URL manually');
-		}
-	}
-
 	// Unread decisions still waiting to be opened — powers the blue Inbox badge
 	// (a real mail app counts unread, not total).
 	$: unreadCount = visiblePortals.filter((p) => !readPortalSlugs.has(p.slug)).length;
@@ -478,7 +458,7 @@
 								</div>
 
 								<!-- Body -->
-								<div class="mt-6 space-y-4 text-[15px] leading-relaxed text-slate-600">
+								<div class="mt-6 space-y-4 text-[15px] leading-relaxed text-slate-800">
 									<p>Dear {displayName},</p>
 									<p>
 										Your application status for <strong class="font-semibold text-slate-900">{selectedPortal.name}</strong> has
@@ -489,37 +469,20 @@
 
 									<div class="flex items-start gap-2.5 rounded-xl border border-[color-mix(in_oklab,#0c0c09_15%,transparent)] bg-[color-mix(in_oklab,#0c0c09_5%,transparent)] px-4 py-3">
 										<svg class="mt-0.5 h-4 w-4 shrink-0 text-[#0c0c09]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" /></svg>
-										<p class="text-sm leading-relaxed text-slate-600">
+										<p class="text-sm leading-relaxed text-slate-700">
 											<span class="font-semibold text-[#0c0c09]">First time?</span> This is a
 											simulation, so just tap <span class="font-semibold text-slate-900">Login</span> to reveal your
 											decision. Your details are pre-filled and no real credentials are needed.
 										</p>
 									</div>
 
-									<div class="mt-7 flex flex-wrap items-center gap-3">
+									<div class="mt-7">
 										<a
 											href={`/portals/${selectedPortal.slug}`}
-											class="inline-flex items-center justify-center gap-2 rounded-xl bg-[#0c0c09] px-6 py-3 text-sm font-semibold text-white shadow-sm transition-all hover:bg-[#2b2b22] active:scale-[0.99] no-underline"
+											class="inline-flex items-center justify-center rounded bg-[#1a73e8] px-6 py-2.5 text-sm font-medium text-white shadow-sm transition-colors hover:bg-[#1765cc] active:bg-[#1a56b4] no-underline"
 										>
-											View Simulated Decision
+											View simulated decision
 										</a>
-
-										<button
-											type="button"
-											on:click={() => shareDecision(selectedPortal)}
-											class="inline-flex items-center gap-2 rounded-xl border-2 border-slate-300 bg-white px-4 py-3 text-sm font-semibold text-slate-700 shadow-sm transition-all hover:border-blue-400 hover:text-blue-700 hover:bg-slate-50"
-										>
-											<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-												<path
-													stroke-linecap="round"
-													stroke-linejoin="round"
-													stroke-width="2"
-													d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"
-												/>
-											</svg>
-											Share your decision
-										</button>
-
 									</div>
 
 									<p class="text-slate-500 text-xs mt-8 pt-8 border-t border-slate-100">
