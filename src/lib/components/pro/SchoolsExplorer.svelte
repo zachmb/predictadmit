@@ -3,55 +3,56 @@
 	import { schoolConfigs } from '$lib/config/schools';
 	import {
 		schoolStats,
-		computeAcademicIndex,
-		classifyLikelihood,
 		readableTextColor,
 		type SchoolStat,
 		type SchoolSize,
 		type CampusSetting,
 		type Likelihood
 	} from '$lib/config/schoolStats';
+	import { computeDecisionForSchool, hasEnoughToScore } from '$lib/scoring/model';
+	import { aiResults, type DecisionOutcome } from '$lib/stores/results';
 
-	const ACADEMICS_KEY = 'predictadmit:pro:academics';
+	// The SAME structured profile that drives the predicted decisions in the AI
+	// inbox — so the chances here can never contradict the prediction.
+	const scoring = $derived($userProfile.stats);
+	const hasStats = $derived(hasEnoughToScore(scoring));
 
-	// ---- Academic index (read once from localStorage) --------------------------
-	let academicIndex = $state(60);
-	let hasStats = $state(false);
-
-	$effect(() => {
-		if (typeof window === 'undefined') return;
-		try {
-			const raw = window.localStorage.getItem(ACADEMICS_KEY);
-			if (!raw) return;
-			const parsed = JSON.parse(raw) as {
-				sat?: number;
-				act?: number;
-				weightedGpa?: number;
-			};
-			const sat = Number(parsed.sat) || undefined;
-			const act = Number(parsed.act) || undefined;
-			const weightedGpa = Number(parsed.weightedGpa) || undefined;
-			if (sat || act || weightedGpa) {
-				academicIndex = computeAcademicIndex(sat, act, weightedGpa);
-				hasStats = true;
-			}
-		} catch {
-			// ignore malformed storage
+	// Actual run predictions (odds + outcome + fit) by slug, when a simulation has
+	// been run. These are preferred over a fresh model call so the Universities tab
+	// matches the inbox exactly.
+	const predBySlug = $derived.by(() => {
+		const m: Record<string, { odds?: number; outcome: DecisionOutcome; fit: number }> = {};
+		for (const d of $aiResults?.decisions ?? []) {
+			if (d.slug) m[d.slug] = { odds: d.odds, outcome: d.outcome, fit: d.fit_score };
 		}
+		return m;
 	});
 
-	// ---- Chance computation ----------------------------------------------------
-	// Base is the school's acceptance rate, scaled by how far the student's
-	// academic index sits from the school's selectivity. Clamped 1–99.
-	function computeChance(stat: SchoolStat, ai: number): number {
-		const base = stat.acceptanceRate * 100;
-		const selectivity = Math.min(1, Math.max(0, 1 - stat.acceptanceRate * 1.8)); // 0..1
-		const margin = ai / 100 - selectivity; // -1..1, strength vs. selectivity
-		// Strong students at selective schools can multiply base several-fold;
-		// weak students see it shrink toward the floor.
-		const multiplier = 1 + margin * 2.5;
-		const chance = base * Math.max(0.15, multiplier);
-		return Math.min(99, Math.max(1, Math.round(chance)));
+	// ---- Chance = the real model's admit odds + outcome ------------------------
+	// A predicted "admit" can never show a contradictory single-digit chance, because
+	// the odds, outcome, and likelihood label all come from one source of truth.
+	type Chance = { odds: number; outcome: DecisionOutcome; label: Likelihood; fit: number };
+
+	function labelFromOutcome(outcome: DecisionOutcome, odds: number): Likelihood {
+		if (outcome === 'admit') return odds >= 55 ? 'Safety' : 'Target';
+		if (outcome === 'waitlist' || outcome === 'defer') return 'Reach';
+		return 'Hard reach';
+	}
+
+	function chanceForSlug(slug: string): Chance {
+		const pred = predBySlug[slug];
+		if (pred && typeof pred.odds === 'number') {
+			return { odds: pred.odds, outcome: pred.outcome, label: labelFromOutcome(pred.outcome, pred.odds), fit: pred.fit ?? 0 };
+		}
+		if (hasStats) {
+			const r = computeDecisionForSchool(scoring, slug);
+			return { odds: r.odds, outcome: r.outcome, label: labelFromOutcome(r.outcome, r.odds), fit: 0 };
+		}
+		// No stats entered yet — show the school's raw acceptance rate as a neutral
+		// baseline (clearly not personalized until stats are added).
+		const stat = schoolStats[slug];
+		const base = stat ? Math.round(stat.acceptanceRate * 100) : 10;
+		return { odds: base, outcome: 'deny', label: base >= 40 ? 'Target' : 'Reach', fit: 0 };
 	}
 
 	// ---- Base rows -------------------------------------------------------------
@@ -61,7 +62,9 @@
 		color: string;
 		stat: SchoolStat;
 		chance: number;
+		outcome: DecisionOutcome;
 		likelihood: Likelihood;
+		fit: number;
 	};
 
 	const baseRows: Row[] = Object.values(schoolStats)
@@ -73,7 +76,9 @@
 				color: cfg?.primaryColor ?? stat.color ?? '#0c0c09',
 				stat,
 				chance: 0,
-				likelihood: 'Target' as Likelihood
+				outcome: 'deny' as DecisionOutcome,
+				likelihood: 'Target' as Likelihood,
+				fit: 0
 			};
 		})
 		.sort((a, b) => a.stat.rank - b.stat.rank);
@@ -87,11 +92,10 @@
 	// ---- Derived: rows with live chance + filtering + sorting ------------------
 	const rows = $derived.by(() => {
 		const q = search.trim().toLowerCase();
-		let list = baseRows.map((r) => ({
-			...r,
-			chance: computeChance(r.stat, academicIndex),
-			likelihood: classifyLikelihood(r.stat, academicIndex)
-		}));
+		let list = baseRows.map((r) => {
+			const c = chanceForSlug(r.slug);
+			return { ...r, chance: c.odds, outcome: c.outcome, likelihood: c.label, fit: c.fit };
+		});
 
 		if (q) {
 			list = list.filter(
@@ -142,11 +146,30 @@
 	const summary = $derived.by(() => {
 		const counts = { Safety: 0, Target: 0, Reach: 0, 'Hard reach': 0 };
 		for (const tracked of $userProfile.schoolList) {
-			const stat = schoolStats[tracked.slug];
-			if (!stat) continue;
-			counts[classifyLikelihood(stat, academicIndex)]++;
+			if (!schoolStats[tracked.slug]) continue;
+			counts[chanceForSlug(tracked.slug).label]++;
 		}
 		return counts;
+	});
+
+	// ---- PredictAI fit identifiers --------------------------------------------
+	// What the model thinks is a strong fit vs a stretch — surfaced as a quick-read
+	// panel so the page leads with guidance, not just a table.
+	const bestFits = $derived.by(() => {
+		if (!hasStats) return [];
+		return baseRows
+			.map((r) => ({ ...r, ...chanceForSlug(r.slug) }))
+			.filter((r) => r.outcome === 'admit')
+			.sort((a, b) => b.fit - a.fit || b.odds - a.odds)
+			.slice(0, 5);
+	});
+	const topReaches = $derived.by(() => {
+		if (!hasStats) return [];
+		return baseRows
+			.map((r) => ({ ...r, ...chanceForSlug(r.slug) }))
+			.filter((r) => r.outcome === 'waitlist')
+			.sort((a, b) => b.odds - a.odds)
+			.slice(0, 4);
 	});
 
 	// ---- Styling helpers -------------------------------------------------------
@@ -215,6 +238,53 @@
 				</div>
 			{/if}
 		</header>
+
+		<!-- PredictAI fit panel — leads with guidance: where you clear the bar vs the
+		     reaches worth a shot, straight from the same model as your predictions. -->
+		{#if hasStats && (bestFits.length || topReaches.length)}
+			<div class="mb-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+				<div class="flex items-center gap-2">
+					<span class="flex h-6 w-6 items-center justify-center rounded-lg bg-[#0c0c09] text-white">
+						<svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.66 17h4.68M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.2 1 2V16h6v-.5c0-.8.3-1.3 1-2A6 6 0 0 0 12 3z" /></svg>
+					</span>
+					<h2 class="text-sm font-bold text-slate-900">What PredictAI thinks fits you</h2>
+				</div>
+
+				{#if bestFits.length}
+					<div class="mt-4">
+						<div class="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-emerald-600">
+							<span class="h-2 w-2 rounded-full bg-emerald-500"></span>Strong fits — you clear the bar
+						</div>
+						<div class="mt-2 flex flex-wrap gap-2">
+							{#each bestFits as r}
+								<span class="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 py-1 pl-1 pr-3 text-sm font-medium text-emerald-800">
+									<span class="flex h-6 w-6 items-center justify-center rounded-full text-[11px] font-bold" style="background-color:{r.color};color:{readableTextColor(r.color)}">{initials(r.name)}</span>
+									{r.name}
+									<span class="tabular-nums font-semibold text-emerald-600">{r.chance}%</span>
+								</span>
+							{/each}
+						</div>
+					</div>
+				{/if}
+
+				{#if topReaches.length}
+					<div class="mt-4">
+						<div class="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-amber-600">
+							<span class="h-2 w-2 rounded-full bg-amber-500"></span>Reaches worth a shot
+						</div>
+						<div class="mt-2 flex flex-wrap gap-2">
+							{#each topReaches as r}
+								<span class="inline-flex items-center gap-2 rounded-full border border-amber-200 bg-amber-50 py-1 pl-1 pr-3 text-sm font-medium text-amber-800">
+									<span class="flex h-6 w-6 items-center justify-center rounded-full text-[11px] font-bold" style="background-color:{r.color};color:{readableTextColor(r.color)}">{initials(r.name)}</span>
+									{r.name}
+									<span class="tabular-nums font-semibold text-amber-600">{r.chance}%</span>
+								</span>
+							{/each}
+						</div>
+					</div>
+				{/if}
+			</div>
+		{/if}
 
 		<!-- Summary bar -->
 		<div class="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-4">

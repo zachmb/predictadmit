@@ -1084,7 +1084,7 @@
 	<!-- TESTIMONIALS — Appybara masonry style: tinted cards, star badge, quote, name + class -->
 	<section class="py-20 md:py-28 bg-[#f4f4f0] border-t border-slate-100">
 		<div class="max-w-[1400px] mx-auto px-5 md:px-10">
-			<div class="max-w-2xl mx-auto text-center mb-14">
+			<div class="max-w-2xl mx-auto text-center mb-10">
 				<h2 class="font-serif text-4xl md:text-5xl font-medium tracking-tight text-slate-900 leading-[1.05]">
 					Students who got in.
 				</h2>
@@ -1092,6 +1092,32 @@
 					Real students, real decisions. Here is what the read did for them.
 				</p>
 			</div>
+
+			<!-- Campus photo strip (same treatment as the top of the Go Pro page): the
+			     real dream schools these students landed. -->
+			<div class="mb-12 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4">
+				{#each [
+					{ src: '/images/harvard-campus.jpg', name: 'Harvard', w: 1280, h: 853 },
+					{ src: '/images/stanford-campus.jpg', name: 'Stanford', w: 1280, h: 720 },
+					{ src: '/images/mit-dome.jpg', name: 'MIT', w: 1280, h: 960 },
+					{ src: '/images/princeton-campus.jpg', name: 'Princeton', w: 1280, h: 853 }
+				] as campus}
+					<div class="relative overflow-hidden rounded-2xl border border-slate-200 shadow-sm">
+						<img
+							src={campus.src}
+							alt="{campus.name} campus"
+							width={campus.w}
+							height={campus.h}
+							loading="lazy"
+							class="h-28 w-full object-cover sm:h-36 lg:h-40"
+						/>
+						<span class="absolute bottom-2 left-3 rounded-full bg-black/45 px-2.5 py-1 text-[11px] font-semibold text-white">
+							{campus.name}
+						</span>
+					</div>
+				{/each}
+			</div>
+
 			<div class="columns-1 sm:columns-2 lg:columns-3 gap-5 [column-fill:_balance]">
 				{#each [
 					{ quote: 'ts was lowkey genuinely accurate. ran my file before decisions dropped and it basically called it.', name: 'Miao S.', school: 'Accepted to Northwestern, Class of 2030', tint: 6 },
