@@ -109,6 +109,16 @@
 		| 'settings'
 	>('dashboard');
 
+	// Primary workspace navigation — data-driven so the sidebar stays consistent.
+	const NAV_ITEMS = [
+		{ view: 'dashboard', label: 'Hub & Stats', icon: 'grid' },
+		{ view: 'schools', label: 'Universities', icon: 'cap' },
+		{ view: 'counselor', label: 'AI Counselor', icon: 'chat' },
+		{ view: 'chanceme', label: 'Chance Me', icon: 'user' },
+		{ view: 'extracurricular', label: 'Activities', icon: 'bolt' },
+		{ view: 'mindmap', label: 'Mind Map', icon: 'bulb' }
+	] as const;
+
 	// Mind Map State
 	type MindMapNode = {
 		id: string;
@@ -959,163 +969,30 @@
 				class="flex-1 overflow-y-auto px-2 py-2 space-y-px"
 				onclick={() => (sidebarOpen = false)}
 			>
-				<!-- DASHBOARD TAB -->
-				<button
-					onclick={() => (currentView = 'dashboard')}
-					class="w-full h-9 flex items-center rounded-md text-left transition-colors {currentView ===
-					'dashboard'
-						? 'bg-slate-100 text-slate-900'
-						: 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'}"
-				>
-					<span
-						class="w-9 h-9 grid place-content-center shrink-0 {currentView === 'dashboard'
-							? 'text-[#0c0c09]'
-							: ''}"
+				<p class="px-3 pt-1 pb-1.5 text-[10px] font-semibold uppercase tracking-wider text-slate-400">
+					Workspace
+				</p>
+				{#each NAV_ITEMS as item}
+					<button
+						onclick={() => (currentView = item.view)}
+						class="group w-full h-9 flex items-center gap-2.5 rounded-lg px-2.5 text-left transition-colors {currentView ===
+						item.view
+							? 'bg-[color-mix(in_oklab,#0c0c09_8%,transparent)] text-slate-900'
+							: 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'}"
 					>
-						<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-							><path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
-							/></svg
+						<span
+							class="grid h-6 w-6 place-content-center shrink-0 {currentView === item.view
+								? 'text-[#0c0c09]'
+								: 'text-slate-400 group-hover:text-slate-600'}"
 						>
-					</span>
-					<span class="text-[13px] font-medium truncate">Hub & Stats</span>
-				</button>
-
-				<!-- MIND MAP TAB -->
-				<button
-					onclick={() => (currentView = 'mindmap')}
-					class="w-full h-9 flex items-center rounded-md text-left transition-colors {currentView ===
-					'mindmap'
-						? 'bg-slate-100 text-slate-900'
-						: 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'}"
-				>
-					<span
-						class="w-9 h-9 grid place-content-center shrink-0 {currentView === 'mindmap'
-							? 'text-[#0c0c09]'
-							: ''}"
-					>
-						<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
-							/>
-						</svg>
-					</span>
-					<span class="text-[13px] font-medium truncate">Mind Map / Inspo</span>
-				</button>
-
-				<!-- AI COUNSELOR TAB -->
-				<button
-					onclick={() => (currentView = 'counselor')}
-					class="w-full h-9 flex items-center rounded-md text-left transition-colors {currentView ===
-					'counselor'
-						? 'bg-slate-100 text-slate-900'
-						: 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'}"
-				>
-					<span
-						class="w-9 h-9 grid place-content-center shrink-0 {currentView === 'counselor'
-							? 'text-[#0c0c09]'
-							: ''}"
-					>
-						<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-							><path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 3v-3z"
-							/></svg
-						>
-					</span>
-					<span class="text-[13px] font-medium truncate">AI Counselor</span>
-				</button>
-
-				<!-- SCHOOLS TAB -->
-				<button
-					onclick={() => (currentView = 'schools')}
-					class="w-full h-9 flex items-center rounded-md text-left transition-colors {currentView ===
-					'schools'
-						? 'bg-slate-100 text-slate-900'
-						: 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'}"
-				>
-					<span
-						class="w-9 h-9 grid place-content-center shrink-0 {currentView === 'schools'
-							? 'text-[#0c0c09]'
-							: ''}"
-					>
-						<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-							><path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								d="M12 14l9-5-9-5-9 5 9 5z"
-							/><path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								d="M12 14l6.16-3.422A12.083 12.083 0 0121 12.11c0 .93-.14 1.83-.4 2.68L12 21l-8.6-6.21A11.98 11.98 0 013 12.11c0-.9.14-1.79.4-2.63L12 14z"
-							/></svg
-						>
-					</span>
-					<span class="text-[13px] font-medium truncate">Universities</span>
-				</button>
-
-				<!-- CHANCE ME TAB -->
-				<button
-					onclick={() => (currentView = 'chanceme')}
-					class="w-full h-9 flex items-center rounded-md text-left transition-colors {currentView ===
-					'chanceme'
-						? 'bg-slate-100 text-slate-900'
-						: 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'}"
-				>
-					<span
-						class="w-9 h-9 grid place-content-center shrink-0 {currentView === 'chanceme'
-							? 'text-[#0c0c09]'
-							: ''}"
-					>
-						<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-							><path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-							/></svg
-						>
-					</span>
-					<span class="text-[13px] font-medium truncate">Chance Me</span>
-				</button>
-
-				<!-- EXTRACURRICULAR HELPER TAB -->
-				<button
-					onclick={() => (currentView = 'extracurricular')}
-					class="w-full h-9 flex items-center rounded-md text-left transition-colors {currentView ===
-					'extracurricular'
-						? 'bg-slate-100 text-slate-900'
-						: 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'}"
-				>
-					<span
-						class="w-9 h-9 grid place-content-center shrink-0 {currentView === 'extracurricular'
-							? 'text-[#0c0c09]'
-							: ''}"
-					>
-						<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-							><path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								d="M13 10V3L4 14h7v7l9-11h-7z"
-							/></svg
-						>
-					</span>
-					<span class="text-[13px] font-medium truncate">Activities</span>
-				</button>
+							{@render navSvg(item.icon)}
+						</span>
+						<span class="text-[13px] font-medium truncate">{item.label}</span>
+					</button>
+				{/each}
 
 				<div class="mt-5 mb-1 px-3 flex items-center justify-between">
-					<span class="text-[11px] font-medium uppercase tracking-wider text-slate-400">Essays</span>
+					<span class="text-[10px] font-semibold uppercase tracking-wider text-slate-400">Essays</span>
 					<button
 						onclick={addNewSupplemental}
 						class="p-1 rounded-md text-slate-300 hover:text-slate-700 hover:bg-slate-100 transition-colors"
@@ -1135,9 +1012,9 @@
 				{#each files as file, i}
 					<button
 						onclick={() => switchFile(i)}
-						class="w-full h-8 flex items-center gap-2 rounded-md px-3 text-left transition-colors {currentView ===
+						class="w-full h-8 flex items-center gap-2 rounded-lg px-3 text-left transition-colors {currentView ===
 							'editor' && activeFileIndex === i
-							? 'bg-slate-100 text-slate-900'
+							? 'bg-[color-mix(in_oklab,#0c0c09_8%,transparent)] text-slate-900'
 							: 'text-slate-600 hover:bg-slate-100/70 hover:text-slate-900'}"
 					>
 						<svg
@@ -2670,6 +2547,24 @@
 	loading={isProcessing}
 	oncontinue={(plan) => handleCheckout(plan)}
 />
+
+{#snippet navSvg(name: string)}
+	<svg class="h-[18px] w-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+		{#if name === 'grid'}
+			<rect x="3" y="3" width="7" height="7" rx="1.5" /><rect x="14" y="3" width="7" height="7" rx="1.5" /><rect x="3" y="14" width="7" height="7" rx="1.5" /><rect x="14" y="14" width="7" height="7" rx="1.5" />
+		{:else if name === 'cap'}
+			<path d="M22 10 12 5 2 10l10 5 10-5z" /><path d="M6 12v5c0 1 2.7 2.5 6 2.5s6-1.5 6-2.5v-5" />
+		{:else if name === 'chat'}
+			<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z" />
+		{:else if name === 'user'}
+			<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" />
+		{:else if name === 'bolt'}
+			<path d="M13 2 4.5 13H11l-1 9 8.5-11H12z" />
+		{:else}
+			<path d="M9.66 17h4.68M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.2 1 2V16h6v-.5c0-.8.3-1.3 1-2A6 6 0 0 0 12 3z" />
+		{/if}
+	</svg>
+{/snippet}
 
 <style>
 	/* Styling for the IDE scrollbars */

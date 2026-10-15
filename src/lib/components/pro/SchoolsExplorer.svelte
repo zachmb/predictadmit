@@ -157,6 +157,19 @@
 		'Hard reach': 'bg-rose-50 text-rose-700 ring-1 ring-rose-200'
 	};
 
+	// Solid fills for the per-card chance bar + the list-balance bar.
+	const likelihoodBar: Record<Likelihood, string> = {
+		Safety: 'bg-emerald-500',
+		Target: 'bg-blue-500',
+		Reach: 'bg-amber-500',
+		'Hard reach': 'bg-rose-500'
+	};
+
+	// Total schools on the list that resolve to a known likelihood (for the balance bar).
+	const listTotal = $derived(
+		summary.Safety + summary.Target + summary.Reach + summary['Hard reach']
+	);
+
 	function initials(name: string): string {
 		const words = name.replace(/[^a-zA-Z ]/g, '').trim().split(/\s+/);
 		if (words.length === 1) return words[0].slice(0, 2).toUpperCase();
@@ -224,6 +237,41 @@
 				</div>
 			</div>
 		</div>
+
+		<!-- List balance — a balanced list has a few of each -->
+		{#if listTotal > 0}
+			<div class="mb-6 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+				<div class="flex items-center justify-between">
+					<span class="text-xs font-semibold uppercase tracking-wide text-slate-400">List balance</span>
+					<span class="text-xs font-medium text-slate-500">
+						{$userProfile.schoolList.length}
+						{$userProfile.schoolList.length === 1 ? 'school' : 'schools'}
+					</span>
+				</div>
+				<div class="mt-2.5 flex h-2.5 w-full overflow-hidden rounded-full bg-slate-100">
+					{#if summary.Safety}
+						<div class="bg-emerald-500" style="width: {(summary.Safety / listTotal) * 100}%"></div>
+					{/if}
+					{#if summary.Target}
+						<div class="bg-blue-500" style="width: {(summary.Target / listTotal) * 100}%"></div>
+					{/if}
+					{#if summary.Reach}
+						<div class="bg-amber-500" style="width: {(summary.Reach / listTotal) * 100}%"></div>
+					{/if}
+					{#if summary['Hard reach']}
+						<div class="bg-rose-500" style="width: {(summary['Hard reach'] / listTotal) * 100}%"></div>
+					{/if}
+				</div>
+				<div class="mt-2.5 flex flex-wrap gap-x-4 gap-y-1 text-xs font-medium text-slate-500">
+					<span class="flex items-center gap-1.5"><span class="h-2 w-2 rounded-full bg-emerald-500"></span>Safety {summary.Safety}</span>
+					<span class="flex items-center gap-1.5"><span class="h-2 w-2 rounded-full bg-blue-500"></span>Target {summary.Target}</span>
+					<span class="flex items-center gap-1.5"><span class="h-2 w-2 rounded-full bg-amber-500"></span>Reach {summary.Reach}</span>
+					{#if summary['Hard reach']}
+						<span class="flex items-center gap-1.5"><span class="h-2 w-2 rounded-full bg-rose-500"></span>Hard reach {summary['Hard reach']}</span>
+					{/if}
+				</div>
+			</div>
+		{/if}
 
 		<!-- Toolbar -->
 		<div
@@ -391,51 +439,63 @@
 							</div>
 						</div>
 
-						<!-- Bottom: chance + action -->
-						<div class="flex items-center justify-between gap-3">
-							<div class="flex items-center gap-2">
-								<span class="text-2xl font-bold tabular-nums text-[#0c0c09]">{row.chance}%</span>
-								<span class="text-xs font-medium leading-tight text-slate-500"
-									>your<br />chance</span
-								>
+						<!-- Chance meter -->
+						<div>
+							<div class="flex items-center justify-between text-xs">
+								<span class="font-medium text-slate-500">Your chance</span>
+								<span class="font-bold tabular-nums text-slate-900">{row.chance}%</span>
 							</div>
-							<button
-								type="button"
-								onclick={() => toggleList(row)}
-								class="inline-flex items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-semibold transition
-									{onList
-									? 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200 hover:bg-emerald-100'
-									: 'bg-[#0c0c09] text-white hover:bg-[#2b2b22]'}"
+							<div
+								class="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-slate-100"
+								role="progressbar"
+								aria-valuenow={row.chance}
+								aria-valuemin="0"
+								aria-valuemax="100"
 							>
-								{#if onList}
-									<svg
-										viewBox="0 0 24 24"
-										class="h-4 w-4"
-										fill="none"
-										stroke="currentColor"
-										stroke-width="2.5"
-										stroke-linecap="round"
-										stroke-linejoin="round"
-									>
-										<path d="M20 6 9 17l-5-5" />
-									</svg>
-									On list
-								{:else}
-									<svg
-										viewBox="0 0 24 24"
-										class="h-4 w-4"
-										fill="none"
-										stroke="currentColor"
-										stroke-width="2.5"
-										stroke-linecap="round"
-										stroke-linejoin="round"
-									>
-										<path d="M12 5v14M5 12h14" />
-									</svg>
-									Add to list
-								{/if}
-							</button>
+								<div
+									class="h-full rounded-full transition-all {likelihoodBar[row.likelihood]}"
+									style="width: {row.chance}%"
+								></div>
+							</div>
 						</div>
+
+						<!-- Action -->
+						<button
+							type="button"
+							onclick={() => toggleList(row)}
+							class="inline-flex w-full items-center justify-center gap-1.5 rounded-xl px-3 py-2.5 text-sm font-semibold transition
+								{onList
+								? 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200 hover:bg-emerald-100'
+								: 'bg-[#0c0c09] text-white hover:bg-[#2b2b22]'}"
+						>
+							{#if onList}
+								<svg
+									viewBox="0 0 24 24"
+									class="h-4 w-4"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2.5"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								>
+									<path d="M20 6 9 17l-5-5" />
+								</svg>
+								On your list
+							{:else}
+								<svg
+									viewBox="0 0 24 24"
+									class="h-4 w-4"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2.5"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								>
+									<path d="M12 5v14M5 12h14" />
+								</svg>
+								Add to list
+							{/if}
+						</button>
 					</div>
 				{/each}
 			</div>
