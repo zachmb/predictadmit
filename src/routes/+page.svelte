@@ -342,36 +342,36 @@
 		{
 			heading: 'Your real decision at every T30',
 			sub: 'Run your actual application and watch accept, waitlist, and deny land across every top school. Months before March.',
-			img: '/screenshots/zoom/universities.png',
-			w: 2391,
-			h: 1260,
+			img: '/screenshots/pro-universities.png',
+			w: 2880,
+			h: 1800,
 			href: '/verdict',
 			ctaText: 'Predict free'
 		},
 		{
 			heading: 'Essay feedback, line by line',
 			sub: 'It flags the weak lines the way an admissions reader would, and tells you why. It never writes a word for you.',
-			img: '/screenshots/zoom/essay.png',
-			w: 2391,
-			h: 1260,
+			img: '/screenshots/pro-essay.png',
+			w: 2880,
+			h: 1800,
 			href: '/pro',
 			ctaText: 'See it'
 		},
 		{
 			heading: 'A counselor that gives it straight',
 			sub: "Ask what you'd pay a consultant $300 an hour for. Your odds, your essay, your list. Any time, no appointment.",
-			img: '/screenshots/zoom/counselor.png',
-			w: 2391,
-			h: 1368,
+			img: '/screenshots/pro-counselor.png',
+			w: 2880,
+			h: 1800,
 			href: '/pro',
 			ctaText: 'Try it free'
 		},
 		{
 			heading: 'See exactly where you stand',
 			sub: 'Build your profile once and get sharper, personalized odds at every school on your list.',
-			img: '/screenshots/zoom/chanceme.png',
-			w: 2391,
-			h: 1152,
+			img: '/screenshots/pro-chanceme.png',
+			w: 2880,
+			h: 1800,
 			href: '/pro',
 			ctaText: 'Check yours'
 		}

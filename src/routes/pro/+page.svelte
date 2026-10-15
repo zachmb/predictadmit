@@ -2403,7 +2403,7 @@
 						<div class="">
 							<div class="relative">
 								<div class="overflow-hidden rounded-2xl border-[3px] border-[#0c0c09] bg-white shadow-[0_24px_60px_-24px_rgba(12,12,9,0.35)]">
-									<img src="/screenshots/zoom/universities.png" alt="Predicted decisions across every T30 school" width="2391" height="1260" loading="lazy" class="block h-auto w-full" />
+									<img src="/screenshots/pro-universities.png" alt="Predicted decisions across every T30 school" width="2880" height="1800" loading="lazy" class="block h-auto w-full" />
 								</div>
 								<span class="pa-cursor pa-cursor--a" aria-hidden="true">
 									<svg width="24" height="24" viewBox="0 0 24 24" fill="#0c0c09" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"><path d="M5 2.5l5.6 16.5 2.3-6.9 6.9-2.3L5 2.5z" /></svg>
@@ -2421,7 +2421,7 @@
 						<div class=" md:order-1">
 							<div class="relative">
 								<div class="overflow-hidden rounded-2xl border-[3px] border-[#0c0c09] bg-white shadow-[0_24px_60px_-24px_rgba(12,12,9,0.35)]">
-									<img src="/screenshots/zoom/chanceme.png" alt="Scored committee read of your application" width="2391" height="1152" loading="lazy" class="block h-auto w-full" />
+									<img src="/screenshots/pro-chanceme.png" alt="Scored committee read of your application" width="2880" height="1800" loading="lazy" class="block h-auto w-full" />
 								</div>
 								<span class="pa-cursor pa-cursor--b" aria-hidden="true">
 									<svg width="24" height="24" viewBox="0 0 24 24" fill="#0c0c09" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"><path d="M5 2.5l5.6 16.5 2.3-6.9 6.9-2.3L5 2.5z" /></svg>
@@ -2440,7 +2440,7 @@
 					<div class="">
 						<div class="relative">
 							<div class="overflow-hidden rounded-2xl border-[3px] border-[#0c0c09] bg-white shadow-[0_24px_60px_-24px_rgba(12,12,9,0.35)]">
-								<img src="/screenshots/zoom/essay.png" alt="Essay marked up line by line" width="2391" height="1260" loading="lazy" class="block h-auto w-full" />
+								<img src="/screenshots/pro-essay.png" alt="Essay marked up line by line" width="2880" height="1800" loading="lazy" class="block h-auto w-full" />
 							</div>
 							<span class="pa-cursor pa-cursor--c" aria-hidden="true">
 								<svg width="24" height="24" viewBox="0 0 24 24" fill="#0c0c09" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"><path d="M5 2.5l5.6 16.5 2.3-6.9 6.9-2.3L5 2.5z" /></svg>
@@ -2458,7 +2458,7 @@
 					<div class=" md:order-1">
 						<div class="relative">
 							<div class="overflow-hidden rounded-2xl border-[3px] border-[#0c0c09] bg-white shadow-[0_24px_60px_-24px_rgba(12,12,9,0.35)]">
-								<img src="/screenshots/zoom/counselor.png" alt="Ask the AI counselor anything" width="2391" height="1368" loading="lazy" class="block h-auto w-full" />
+								<img src="/screenshots/pro-counselor.png" alt="Ask the AI counselor anything" width="2880" height="1800" loading="lazy" class="block h-auto w-full" />
 							</div>
 							<span class="pa-cursor pa-cursor--d" aria-hidden="true">
 								<svg width="24" height="24" viewBox="0 0 24 24" fill="#0c0c09" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"><path d="M5 2.5l5.6 16.5 2.3-6.9 6.9-2.3L5 2.5z" /></svg>
