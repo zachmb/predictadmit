@@ -35,6 +35,11 @@
 	let { data }: { data: PageData } = $props();
 	let activeGenerationId = $state(0);
 	const AI_PERSIST_KEY = 'predictadmit_ai_inbox_v1';
+	// Read/unread is scoped to the CURRENT run only (sessionStorage): it survives
+	// navigating out to a decision portal and back within the same run, but a fresh
+	// visit/run starts with every decision unread again until opened. A new
+	// generation (resetInboxState) also clears it.
+	const AI_READ_KEY = 'predictadmit:ai:readThisRun';
 	let activeSupTab = $state('harvard'); // Set a default school
 
 	type DecisionOutcome = 'admit' | 'deny' | 'waitlist' | 'defer';
@@ -344,7 +349,6 @@
 
 		const state = {
 			visiblePortals,
-			readPortalSlugs: Array.from(readPortalSlugs),
 			selectedPortal,
 			selectedSent,
 			mailViewMode,
@@ -356,6 +360,17 @@
 			localStorage.setItem(AI_PERSIST_KEY, JSON.stringify(state));
 		} catch (err) {
 			console.error('Failed to persist AI inbox state', err);
+		}
+	}
+
+	// Read/unread lives in sessionStorage, NOT the localStorage inbox blob, so it
+	// resets per run (see AI_READ_KEY note) while still surviving a portal round-trip.
+	function persistReadThisRun() {
+		if (typeof sessionStorage === 'undefined') return;
+		try {
+			sessionStorage.setItem(AI_READ_KEY, JSON.stringify(Array.from(readPortalSlugs)));
+		} catch {
+			/* ignore storage errors */
 		}
 	}
 
@@ -403,6 +418,7 @@
 		next.add(portal.slug);
 		readPortalSlugs = next;
 
+		persistReadThisRun();
 		saveAiInboxState();
 	}
 
@@ -466,6 +482,14 @@
 				localStorage.removeItem(AI_PERSIST_KEY);
 			} catch (err) {
 				console.error('Failed to clear AI inbox state', err);
+			}
+		}
+		// A new run starts all-unread again.
+		if (typeof sessionStorage !== 'undefined') {
+			try {
+				sessionStorage.removeItem(AI_READ_KEY);
+			} catch {
+				/* ignore */
 			}
 		}
 	}
@@ -556,19 +580,17 @@
 			})();
 		}
 
-		// Restore which inbox emails have already been read, so the blue unread dots
-		// stay cleared across reloads. saveAiInboxState() persists this on every open;
-		// without this restore, every decision showed unread again after a refresh.
+		// Restore which inbox emails were read IN THIS RUN (sessionStorage), so the
+		// unread dots stay cleared while the user hops out to a decision portal and
+		// back within the same run — but a fresh visit/run starts all-unread again.
 		try {
-			const rawInbox = localStorage.getItem(AI_PERSIST_KEY);
-			if (rawInbox) {
-				const savedInbox = JSON.parse(rawInbox);
-				if (Array.isArray(savedInbox?.readPortalSlugs)) {
-					readPortalSlugs = new Set(savedInbox.readPortalSlugs);
-				}
+			const rawRead = sessionStorage.getItem(AI_READ_KEY);
+			if (rawRead) {
+				const arr = JSON.parse(rawRead);
+				if (Array.isArray(arr)) readPortalSlugs = new Set(arr);
 			}
 		} catch {
-			/* corrupt/absent inbox state — fall back to all-unread, non-fatal */
+			/* corrupt/absent read state — fall back to all-unread, non-fatal */
 		}
 
 		// Restore free-tier usage flags (still used for non-Pro users)
@@ -2176,6 +2198,7 @@ See what we read from your file
 								{edEmailMustBeViewed}
 								{hasViewedEdEmail}
 								{readPortalSlugs}
+								allDecisionsSent={!$userProfile.isSubmittingAI && visiblePortals.length > 0}
 								{lockedSlugs}
 								{selectedPortal}
 								{selectedSent}

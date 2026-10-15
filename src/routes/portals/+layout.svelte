@@ -7,6 +7,7 @@
 	// click Login. It never fires on a quick Login click, on focus, or more than
 	// once per session.
 	import { onMount } from 'svelte';
+	import { portalDecisionHeaderVisible } from '$lib/stores/ui';
 
 	const SHOWN_KEY = 'pa_portal_nudge_shown';
 	const STUCK_MS = 8000; // "clearly stuck" = this long on a login screen with no progress
@@ -100,6 +101,16 @@
 		};
 	});
 </script>
+
+<!-- Blank backing space for the floating nav. On a decision letter the site nav
+     fades in ~4s after the decision is viewed; without this the floating pill
+     overlapped the top of the simulated letter/portal. This spacer grows in with
+     the nav so it sits on clean blank ground and covers nothing. -->
+<div
+	class="w-full bg-[#f4f4f0] transition-[height] duration-300 ease-out"
+	style="height: {$portalDecisionHeaderVisible ? '104px' : '0px'}"
+	aria-hidden="true"
+></div>
 
 <slot />
 

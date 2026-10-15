@@ -2,7 +2,9 @@
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
 
-	export let href = '/';
+	// Decision letters are reached from the AI inbox on /ai, so Back returns there
+	// (not the landing) and lands the user directly on the inbox card.
+	export let href = '/ai';
 	export let hash = '#inboxSection';
 	export let label = 'Back to admitMail inbox';
 	export let className = '';
@@ -27,18 +29,23 @@
 
 		const target = buildTarget();
 
-		// Navigate back to /
-		await goto(target, { noScroll: true }); // don't force scroll to top
+		// Navigate back without forcing a scroll to the top.
+		await goto(target, { noScroll: true });
 
-		// Then scroll to the inbox section
+		// Then scroll down to the inbox card. The /ai page mounts a heavy inbox that
+		// renders a tick or two after navigation, so retry a few times until the
+		// anchor exists instead of a single best-effort attempt.
 		if (typeof document !== 'undefined' && hash) {
-			// small delay in case layout needs a tick
-			setTimeout(() => {
+			let tries = 0;
+			const tryScroll = () => {
 				const el = document.querySelector(hash) as HTMLElement | null;
 				if (el) {
 					el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+					return;
 				}
-			}, 0);
+				if (tries++ < 12) setTimeout(tryScroll, 120);
+			};
+			setTimeout(tryScroll, 80);
 		}
 	};
 </script>

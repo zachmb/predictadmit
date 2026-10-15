@@ -3,6 +3,8 @@
 	import { onDestroy } from 'svelte';
 	import { pushOverlay, popOverlay } from '$lib/stores/ui';
 	import type { PortalEmail, SentEmail } from '$lib/config/admitMail';
+	import { schoolConfigs } from '$lib/config/schools';
+	import { readableTextColor } from '$lib/config/schoolStats';
 
 	// Dim the nav while the toast is visible (per the global overlay rule).
 	let toastShown = false;
@@ -31,6 +33,10 @@
 	export let searchQuery: string;
 	export let filteredPortals: PortalEmail[];
 	export let visiblePortals: PortalEmail[];
+
+	// True once the simulation has finished streaming every decision into the inbox —
+	// used to surface a "view them all on the portals page" card at the bottom.
+	export let allDecisionsSent: boolean = false;
 
 	// ED / RD state
 	export let currentEdPortal: PortalEmail | null;
@@ -108,6 +114,12 @@
 	// app (was a 7-color pastel rainbow, which read as AI-generated).
 	function tintFor(_portal: PortalEmail): string {
 		return 'bg-[color-mix(in_oklab,#0c0c09_10%,transparent)] text-[#0c0c09]';
+	}
+	// Per-school brand (color + wordmark) so each decision email is styled in its own
+	// school's identity — an original letterhead driven by our school config, not a
+	// copy of any real university email.
+	function brandFor(portal: PortalEmail | null) {
+		return portal ? (schoolConfigs[portal.slug] ?? null) : null;
 	}
 	// `from` is stored as "Name <email@domain>" — pull just the address so the
 	// Gmail sender line reads "Sender Name <email>" without double angle brackets.
@@ -376,6 +388,26 @@
 										</span>
 									</button>
 								{/each}
+								{#if allDecisionsSent && !searchQuery.trim()}
+									<!-- Every decision is in — point users to the portals page where they
+									     can browse all of them at once. -->
+									<a
+										href="/portals"
+										class="group flex items-center gap-3 border-b border-slate-100 bg-slate-50/60 px-4 py-4 text-left no-underline transition-colors hover:bg-slate-100"
+									>
+										<span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#0c0c09] text-white">
+											<svg class="h-[18px] w-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5z" /><path d="M6 12v5c0 1 2.7 2.5 6 2.5s6-1.5 6-2.5v-5" /></svg>
+										</span>
+										<span class="min-w-0 flex-1">
+											<span class="block text-sm font-semibold text-slate-900">All your decisions are in</span>
+											<span class="block text-xs text-slate-500">View every school's decision side by side on the portals page.</span>
+										</span>
+										<span class="inline-flex shrink-0 items-center gap-1 text-xs font-semibold text-[#0c0c09] group-hover:gap-1.5 transition-all">
+											Open portals
+											<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+										</span>
+									</a>
+								{/if}
 							{/if}
 						{:else if activeFolder === 'sent'}
 							{#each sentEmails as message (message.id)}
@@ -437,9 +469,19 @@
 
 								<!-- Sender line (Gmail conversation header) -->
 								<div class="mt-5 flex items-start gap-3">
-									<div class={`h-10 w-10 shrink-0 rounded-full flex items-center justify-center text-base font-bold ${tintFor(selectedPortal)}`}>
-										{selectedPortal.name[0]}
-									</div>
+									{#if brandFor(selectedPortal)}
+										{@const brand = brandFor(selectedPortal)}
+										<div
+											class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-base font-bold"
+											style="background-color:{brand.primaryColor};color:{readableTextColor(brand.primaryColor)}"
+										>
+											{selectedPortal.name[0]}
+										</div>
+									{:else}
+										<div class={`h-10 w-10 shrink-0 rounded-full flex items-center justify-center text-base font-bold ${tintFor(selectedPortal)}`}>
+											{selectedPortal.name[0]}
+										</div>
+									{/if}
 									<div class="min-w-0 flex-1">
 										<div class="flex flex-wrap items-center gap-x-2 gap-y-0.5">
 											<span class="text-sm font-bold text-slate-900">{selectedPortal.name} Admissions</span>
@@ -456,6 +498,29 @@
 										<svg class="h-[18px] w-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h10a4 4 0 014 4v1M3 10l5-5M3 10l5 5" /></svg>
 									</div>
 								</div>
+
+								<!-- School-branded letterhead — each decision email is styled in the
+								     school's own colors + wordmark so every school looks distinct. -->
+								{#if brandFor(selectedPortal)}
+									{@const brand = brandFor(selectedPortal)}
+									<div class="mt-6 overflow-hidden rounded-xl border border-slate-200">
+										<div
+											class="flex items-center justify-between gap-3 px-5 py-4"
+											style="background-color:{brand.primaryColor};color:{readableTextColor(brand.primaryColor)}"
+										>
+											<div class="min-w-0">
+												<div class="truncate font-serif text-xl font-bold leading-none">{brand.logoPrimary}</div>
+												<div class="mt-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] opacity-90">
+													{brand.logoSecondary}
+												</div>
+											</div>
+											<div class="shrink-0 text-right text-[10px] font-medium uppercase leading-tight tracking-wider opacity-85">
+												Office of<br />Undergraduate Admissions
+											</div>
+										</div>
+										<div class="h-1 w-full" style="background-color:{readableTextColor(brand.primaryColor) === '#ffffff' ? 'rgba(255,255,255,0.35)' : 'rgba(0,0,0,0.15)'}"></div>
+									</div>
+								{/if}
 
 								<!-- Body -->
 								<div class="mt-6 space-y-4 text-[15px] leading-relaxed text-slate-800">
