@@ -2508,7 +2508,7 @@
 			</div>
 
 			<!-- Everything you get: the full feature set, in two honest groups. -->
-			<div class="space-y-10">
+			<div class="space-y-10 relative left-1/2 -translate-x-1/2 w-[92vw] max-w-[1280px]">
 				<div class="max-w-2xl">
 					<h2 class="font-serif text-4xl md:text-5xl font-medium leading-[1.1] tracking-tight text-slate-900">Everything Pro gives you</h2>
 					<p class="mt-4 text-lg leading-relaxed text-slate-500">See where you stand, then fix what's holding you back.</p>
@@ -2523,12 +2523,12 @@
 							<h3 class="mt-3 font-serif text-4xl md:text-[3.25rem] font-medium tracking-tight leading-[1.05] text-slate-900">Your verdict at every T30 school</h3>
 							<p class="mt-4 max-w-md text-lg md:text-xl leading-relaxed text-slate-500">Accept, waitlist, deny, across every top school. Re-run it any time.</p>
 						</div>
-						<div class="rounded-[2rem] border border-slate-200 bg-slate-50 p-6 sm:p-8 md:p-10">
+						<div class="">
 							<div class="relative">
 								<div class="overflow-hidden rounded-2xl border-[3px] border-[#0c0c09] bg-white shadow-[0_24px_60px_-24px_rgba(12,12,9,0.35)]">
 									<img src="/screenshots/zoom/universities.png" alt="Predicted decisions across every T30 school" width="2391" height="1260" loading="lazy" class="block h-auto w-full" />
 								</div>
-								<span class="pa-cursor" aria-hidden="true">
+								<span class="pa-cursor pa-cursor--a" aria-hidden="true">
 									<svg width="24" height="24" viewBox="0 0 24 24" fill="#0c0c09" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"><path d="M5 2.5l5.6 16.5 2.3-6.9 6.9-2.3L5 2.5z" /></svg>
 								</span>
 							</div>
@@ -2541,12 +2541,12 @@
 							<h3 class="mt-3 font-serif text-4xl md:text-[3.25rem] font-medium tracking-tight leading-[1.05] text-slate-900">A five-reader committee on every decision</h3>
 							<p class="mt-4 max-w-md text-lg md:text-xl leading-relaxed text-slate-500">Five dimensions scored, with the one fix that moves the verdict.</p>
 						</div>
-						<div class="rounded-[2rem] border border-slate-200 bg-slate-50 p-6 sm:p-8 md:p-10 md:order-1">
+						<div class=" md:order-1">
 							<div class="relative">
 								<div class="overflow-hidden rounded-2xl border-[3px] border-[#0c0c09] bg-white shadow-[0_24px_60px_-24px_rgba(12,12,9,0.35)]">
 									<img src="/screenshots/zoom/chanceme.png" alt="Scored committee read of your application" width="2391" height="1152" loading="lazy" class="block h-auto w-full" />
 								</div>
-								<span class="pa-cursor" aria-hidden="true">
+								<span class="pa-cursor pa-cursor--b" aria-hidden="true">
 									<svg width="24" height="24" viewBox="0 0 24 24" fill="#0c0c09" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"><path d="M5 2.5l5.6 16.5 2.3-6.9 6.9-2.3L5 2.5z" /></svg>
 								</span>
 							</div>
@@ -2560,12 +2560,12 @@
 						<h3 class="mt-3 font-serif text-4xl md:text-[3.25rem] font-medium tracking-tight leading-[1.05] text-slate-900">Essays marked up like an admissions reader</h3>
 						<p class="mt-4 max-w-md text-lg md:text-xl leading-relaxed text-slate-500">It flags the weak lines and says why. You write every word.</p>
 					</div>
-					<div class="rounded-[2rem] border border-slate-200 bg-slate-50 p-6 sm:p-8 md:p-10">
+					<div class="">
 						<div class="relative">
 							<div class="overflow-hidden rounded-2xl border-[3px] border-[#0c0c09] bg-white shadow-[0_24px_60px_-24px_rgba(12,12,9,0.35)]">
 								<img src="/screenshots/zoom/essay.png" alt="Essay marked up line by line" width="2391" height="1260" loading="lazy" class="block h-auto w-full" />
 							</div>
-							<span class="pa-cursor" aria-hidden="true">
+							<span class="pa-cursor pa-cursor--c" aria-hidden="true">
 								<svg width="24" height="24" viewBox="0 0 24 24" fill="#0c0c09" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"><path d="M5 2.5l5.6 16.5 2.3-6.9 6.9-2.3L5 2.5z" /></svg>
 							</span>
 						</div>
@@ -2578,12 +2578,12 @@
 						<h3 class="mt-3 font-serif text-4xl md:text-[3.25rem] font-medium tracking-tight leading-[1.05] text-slate-900">A counselor in your pocket</h3>
 						<p class="mt-4 max-w-md text-lg md:text-xl leading-relaxed text-slate-500">Ask what you'd pay a consultant $300 an hour for. Any time.</p>
 					</div>
-					<div class="rounded-[2rem] border border-slate-200 bg-slate-50 p-6 sm:p-8 md:p-10 md:order-1">
+					<div class=" md:order-1">
 						<div class="relative">
 							<div class="overflow-hidden rounded-2xl border-[3px] border-[#0c0c09] bg-white shadow-[0_24px_60px_-24px_rgba(12,12,9,0.35)]">
 								<img src="/screenshots/zoom/counselor.png" alt="Ask the AI counselor anything" width="2391" height="1368" loading="lazy" class="block h-auto w-full" />
 							</div>
-							<span class="pa-cursor" aria-hidden="true">
+							<span class="pa-cursor pa-cursor--d" aria-hidden="true">
 								<svg width="24" height="24" viewBox="0 0 24 24" fill="#0c0c09" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"><path d="M5 2.5l5.6 16.5 2.3-6.9 6.9-2.3L5 2.5z" /></svg>
 							</span>
 						</div>
@@ -2669,21 +2669,52 @@
 	.custom-scrollbar::-webkit-scrollbar-thumb:hover {
 		background: #94a3b8;
 	}
-	/* Drifting cursor over the product screenshots (matches the landing). */
+	/* Cursor over the product screenshots — a DIFFERENT behavior per card so the
+	   four feature rows don't move in lockstep. */
 	.pa-cursor {
 		position: absolute;
 		left: 56%;
 		top: 54%;
 		pointer-events: none;
-		animation: pa-cursor-drift 5s ease-in-out infinite;
 	}
-	@keyframes pa-cursor-drift {
+	/* a — slow diagonal drift */
+	.pa-cursor--a { animation: pa-cur-a 5s ease-in-out infinite; }
+	@keyframes pa-cur-a {
 		0%, 100% { transform: translate(0, 0); }
-		25% { transform: translate(-32px, 18px); }
-		50% { transform: translate(26px, -10px); }
-		75% { transform: translate(10px, 24px); }
+		25% { transform: translate(-34px, 20px); }
+		50% { transform: translate(28px, -12px); }
+		75% { transform: translate(12px, 26px); }
+	}
+	/* b — glide right, then two clicks */
+	.pa-cursor--b { left: 34%; top: 44%; animation: pa-cur-b 6s ease-in-out infinite; }
+	@keyframes pa-cur-b {
+		0% { transform: translate(0, 0) scale(1); }
+		35% { transform: translate(78px, 10px) scale(1); }
+		43% { transform: translate(78px, 10px) scale(0.78); }
+		51% { transform: translate(78px, 10px) scale(1); }
+		59% { transform: translate(78px, 10px) scale(0.78); }
+		67% { transform: translate(78px, 10px) scale(1); }
+		100% { transform: translate(0, 0) scale(1); }
+	}
+	/* c — steady circular orbit */
+	.pa-cursor--c { left: 60%; top: 38%; animation: pa-cur-c 7s linear infinite; }
+	@keyframes pa-cur-c {
+		0% { transform: translate(0, 0); }
+		25% { transform: translate(30px, 20px); }
+		50% { transform: translate(0, 40px); }
+		75% { transform: translate(-30px, 20px); }
+		100% { transform: translate(0, 0); }
+	}
+	/* d — drop down, click, snap back up */
+	.pa-cursor--d { left: 46%; top: 60%; animation: pa-cur-d 4.5s ease-in-out infinite; }
+	@keyframes pa-cur-d {
+		0%, 100% { transform: translate(0, 0) scale(1); }
+		28% { transform: translate(-16px, 36px) scale(1); }
+		36% { transform: translate(-16px, 36px) scale(0.8); }
+		44% { transform: translate(-16px, 36px) scale(1); }
+		72% { transform: translate(22px, -10px) scale(1); }
 	}
 	@media (prefers-reduced-motion: reduce) {
-		.pa-cursor { animation: none; }
+		.pa-cursor { animation: none !important; }
 	}
 </style>

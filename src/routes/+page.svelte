@@ -922,7 +922,7 @@
 							>
 								<img src={c.img} alt={c.heading} width={c.w} height={c.h} loading="lazy" class="block h-auto w-full" />
 							</div>
-							<span class="pa-cursor" aria-hidden="true">
+							<span class="pa-cursor pa-cursor--{['a', 'b', 'c', 'd'][i % 4]}" aria-hidden="true">
 								<svg width="26" height="26" viewBox="0 0 24 24" fill="#0c0c09" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"><path d="M5 2.5l5.6 16.5 2.3-6.9 6.9-2.3L5 2.5z" /></svg>
 							</span>
 						</div>
@@ -1382,16 +1382,20 @@
 		}
 	}
 
-	/* A cursor that drifts over the product screenshots so they read as live. */
+	/* A cursor over the product screenshots so they read as live — a DIFFERENT
+	   behavior per card so the four cards don't move in lockstep. */
 	.pa-cursor {
 		position: absolute;
 		left: 58%;
 		top: 52%;
 		pointer-events: none;
 		filter: drop-shadow(0 2px 3px rgba(12, 12, 9, 0.25));
-		animation: pa-cursor-drift 5s ease-in-out infinite;
 	}
-	@keyframes pa-cursor-drift {
+	/* a — slow diagonal drift */
+	.pa-cursor--a {
+		animation: pa-cur-a 5s ease-in-out infinite;
+	}
+	@keyframes pa-cur-a {
 		0%,
 		100% {
 			transform: translate(0, 0);
@@ -1406,9 +1410,85 @@
 			transform: translate(-6px, 24px);
 		}
 	}
+	/* b — glide right, then two clicks */
+	.pa-cursor--b {
+		left: 36%;
+		top: 44%;
+		animation: pa-cur-b 6s ease-in-out infinite;
+	}
+	@keyframes pa-cur-b {
+		0% {
+			transform: translate(0, 0) scale(1);
+		}
+		35% {
+			transform: translate(80px, 12px) scale(1);
+		}
+		43% {
+			transform: translate(80px, 12px) scale(0.78);
+		}
+		51% {
+			transform: translate(80px, 12px) scale(1);
+		}
+		59% {
+			transform: translate(80px, 12px) scale(0.78);
+		}
+		67% {
+			transform: translate(80px, 12px) scale(1);
+		}
+		100% {
+			transform: translate(0, 0) scale(1);
+		}
+	}
+	/* c — steady circular orbit */
+	.pa-cursor--c {
+		left: 60%;
+		top: 38%;
+		animation: pa-cur-c 7s linear infinite;
+	}
+	@keyframes pa-cur-c {
+		0% {
+			transform: translate(0, 0);
+		}
+		25% {
+			transform: translate(30px, 20px);
+		}
+		50% {
+			transform: translate(0, 40px);
+		}
+		75% {
+			transform: translate(-30px, 20px);
+		}
+		100% {
+			transform: translate(0, 0);
+		}
+	}
+	/* d — drop down, click, snap back up */
+	.pa-cursor--d {
+		left: 46%;
+		top: 58%;
+		animation: pa-cur-d 4.5s ease-in-out infinite;
+	}
+	@keyframes pa-cur-d {
+		0%,
+		100% {
+			transform: translate(0, 0) scale(1);
+		}
+		28% {
+			transform: translate(-16px, 36px) scale(1);
+		}
+		36% {
+			transform: translate(-16px, 36px) scale(0.8);
+		}
+		44% {
+			transform: translate(-16px, 36px) scale(1);
+		}
+		72% {
+			transform: translate(22px, -10px) scale(1);
+		}
+	}
 	@media (prefers-reduced-motion: reduce) {
 		.pa-cursor {
-			animation: none;
+			animation: none !important;
 		}
 	}
 </style>
