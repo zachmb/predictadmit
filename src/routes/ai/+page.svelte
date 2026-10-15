@@ -28,6 +28,7 @@
 	import { STRIPE_PRODUCTS } from '$lib/config/stripe-products';
 	import { nextMilestonePhrase } from '$lib/admissionsCalendar';
 	import { majors } from '$lib/config/majors';
+	import { schoolConfigs } from '$lib/config/schools';
 
 	// NEW: store AI results globally so portals can read decisions
 	import { aiResults, currentStoreVersion } from '$lib/stores/results';
@@ -322,15 +323,31 @@
 	let displayName = $derived(googleName?.trim() || 'Applicant');
 	let displayEmail = $derived(googleEmail?.trim() || 'you@predictadmit.ai');
 
-	// Map an AI decision into a PortalEmail shape that AdmitMail expects
+	// Map an AI decision into a PortalEmail shape that AdmitMail expects. Sender and
+	// subject follow real status-notification conventions — the school's actual email
+	// domain and a believable, deterministic subject line — so the inbox reads like a
+	// genuine admissions update (original phrasing; clearly a labeled simulation).
 	function decisionToPortalEmail(decision: AiDecision): PortalEmail {
 		const schoolSlug = decision.slug || decision.school.toLowerCase().replace(/\s+/g, '-');
+		const cfg = schoolConfigs[schoolSlug];
+		const domain = cfg?.footerDomain ?? `${schoolSlug}.edu`;
+		const first = googleName?.trim().split(/\s+/)[0] || 'Applicant';
+
+		const subjects = [
+			`An update to your ${decision.school} application`,
+			`Your ${decision.school} admission decision is available`,
+			`${decision.school}: your application status has changed`,
+			`${first}, your ${decision.school} decision is available`,
+			`Action required: an update to your ${decision.school} application`
+		];
+		let h = 0;
+		for (let i = 0; i < schoolSlug.length; i++) h = (h * 31 + schoolSlug.charCodeAt(i)) >>> 0;
 
 		return {
 			slug: schoolSlug,
 			name: decision.school,
-			subject: `${decision.school} Application Status Update`,
-			from: `${decision.school} Admissions <no-reply@${schoolSlug}.edu>`
+			subject: subjects[h % subjects.length],
+			from: `${decision.school} Office of Admissions <admissions-noreply@${domain}>`
 		} as PortalEmail;
 	}
 

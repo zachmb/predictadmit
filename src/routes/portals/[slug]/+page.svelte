@@ -301,6 +301,8 @@
 						schoolName={school.schoolName}
 						primaryColor={school.primaryColor}
 						footerDomain={school.footerDomain}
+						admissionsId={school.admissionsId}
+						statusLastPosted={school.statusLastPosted}
 					/>
 				{:else}
 					<svelte:component
@@ -309,6 +311,8 @@
 						schoolName={school.schoolName}
 						primaryColor={school.primaryColor}
 						footerDomain={school.footerDomain}
+						admissionsId={school.admissionsId}
+						statusLastPosted={school.statusLastPosted}
 					/>
 				{/if}
 			{/key}

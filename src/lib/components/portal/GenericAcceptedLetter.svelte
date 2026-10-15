@@ -4,6 +4,8 @@
 	export let schoolName: string;
 	export let primaryColor: string;
 	export let footerDomain: string;
+	export let admissionsId: string = '';
+	export let statusLastPosted: string = '';
 	import BackToInboxButton from '$lib/components/common/BackToInboxButton.svelte';
 </script>
 
@@ -29,6 +31,20 @@
 		</div>
 		<div class="h-8" style={`background-color: ${primaryColor};`}></div>
 	</header>
+
+	<!-- Applicant status strip — the portal chrome a real decision page carries. -->
+	<div class="border-b border-slate-200 bg-slate-50">
+		<div class="max-w-5xl mx-auto px-6 py-2.5 flex flex-wrap items-center gap-x-6 gap-y-1 text-[11px] text-slate-600">
+			<span class="font-semibold uppercase tracking-wide text-slate-500">Application Status</span>
+			{#if admissionsId}<span>Application ID: <span class="font-semibold text-slate-800">{admissionsId}</span></span>{/if}
+			<span>Term: <span class="font-semibold text-slate-800">Autumn 2026</span></span>
+			{#if statusLastPosted}<span>Decision posted: <span class="font-semibold text-slate-800">{statusLastPosted}</span></span>{/if}
+			<span class="ml-auto inline-flex items-center gap-1.5 font-semibold" style={`color: ${primaryColor};`}>
+				<span class="h-1.5 w-1.5 rounded-full" style={`background-color: ${primaryColor};`}></span>
+				Decision available
+			</span>
+		</div>
+	</div>
 
 	<!-- LETTER -->
 	<section class="flex-1 bg-white">
