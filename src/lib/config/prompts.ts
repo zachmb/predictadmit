@@ -364,6 +364,11 @@ export const schoolPrompts: Record<string, EssayPrompt[]> = {
   osu: [
     { id: 'osu-1', title: 'No Required Supplement (Optional Scholarship Essay)', description: 'NOTE: The Ohio State University does NOT require a supplemental essay for general first-year applicants on the Common App. The only essay is for the Morrill Scholars Program (a merit scholarship with eligibility restrictions — U.S. citizens/permanent residents applying to the Columbus campus). Morrill prompt: In what ways have your life experiences and/or endeavors prepared you to be an active Morrill Scholar who will champion OSU’s Shared Values while investing in a culture of service reflective of our land-grant mission? (Optional / scholarship only; 350-500 words)' },
   ],
+  uw: [
+    { id: 'uw-1', title: 'Personal Statement (Essay)', description: 'Tell a story from your life, describing an experience that either demonstrates your character or helped to shape it. (Maximum 650 words)' },
+    { id: 'uw-2', title: 'Short Response', description: 'Our families and communities often define us and our individual worlds. Community might refer to your cultural group, extended family, religious group, neighborhood or school, sports team or club, co-workers, etc. Describe the world you come from and how you, as a product of it, might add to the diversity of the UW. (Maximum 300 words)' },
+    { id: 'uw-3', title: 'Additional Information About Yourself or Your Circumstances (Optional)', description: 'You are not required to write anything in this section, but you may include additional information if something has particular significance to you — for example, you may use this space if you are describing unusual circumstances or anything that will help the admissions staff better understand your situation. (Optional; maximum 200 words)' },
+  ],
 };
 
 // ============================================================================

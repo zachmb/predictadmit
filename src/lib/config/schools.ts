@@ -713,5 +713,23 @@ export const schoolConfigs: Record<string, SchoolConfig> = {
 		footerDomain: 'osu.edu',
 		difficulty: 5.5,
 		baseRate: 0.53
+	},
+	uw: {
+		slug: 'uw',
+		schoolName: 'University of Washington',
+		logoPrimary: 'University of Washington',
+		logoSecondary: 'OFFICE OF ADMISSIONS',
+		primaryColor: '#4b2e83',
+		admissionsId: 'UW-2026-471082',
+		financialAidId: 'FA-UW-410000',
+		bannerText: 'Thank you for applying to the University of Washington.',
+		noticeText:
+			'Your admission decision is now available. Please sign in to your MyUW applicant portal to view it.',
+		statusLastPosted: 'March 10, 2026',
+		statusLinkLabel: 'View Simulated Decision >>',
+		decision: 'admit',
+		footerDomain: 'washington.edu',
+		difficulty: 6,
+		baseRate: 0.43
 	}
 };
