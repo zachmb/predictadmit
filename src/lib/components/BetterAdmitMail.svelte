@@ -499,74 +499,75 @@
 									</div>
 								</div>
 
-								<!-- School-branded letterhead — each decision email is styled in the
-								     school's own colors + wordmark so every school looks distinct. -->
+								<!-- Authentic decision-email card, themed in the school's own brand
+								     (original monogram + wordmark + colors, not a real logo). -->
 								{#if brandFor(selectedPortal)}
 									{@const brand = brandFor(selectedPortal)}
-									<div class="mt-6 overflow-hidden rounded-xl border border-slate-200">
-										<div
-											class="flex items-center justify-between gap-3 px-5 py-4"
-											style="background-color:{brand.primaryColor};color:{readableTextColor(brand.primaryColor)}"
-										>
-											<div class="min-w-0">
-												<div class="truncate font-serif text-xl font-bold leading-none">{brand.logoPrimary}</div>
-												<div class="mt-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] opacity-90">
-													{brand.logoSecondary}
+									{@const onBrand = readableTextColor(brand.primaryColor)}
+									<div class="mt-6 overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 p-4 sm:p-6">
+										<div class="mx-auto max-w-[600px] overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-slate-200">
+											<!-- Masthead -->
+											<div class="flex items-center gap-4 px-6 py-5" style="background-color:{brand.primaryColor};color:{onBrand}">
+												<div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg font-serif text-2xl font-bold" style="background-color:{onBrand === '#ffffff' ? 'rgba(255,255,255,0.14)' : 'rgba(0,0,0,0.06)'};box-shadow:inset 0 0 0 1.5px {onBrand === '#ffffff' ? 'rgba(255,255,255,0.55)' : 'rgba(0,0,0,0.28)'}">
+													{selectedPortal.name[0]}
+												</div>
+												<div class="min-w-0">
+													<div class="truncate font-serif text-xl font-bold leading-tight">{brand.logoPrimary}</div>
+													<div class="mt-1 text-[10px] font-semibold uppercase tracking-[0.18em] opacity-90">{brand.logoSecondary}</div>
 												</div>
 											</div>
-											<div class="shrink-0 text-right text-[10px] font-medium uppercase leading-tight tracking-wider opacity-85">
-												Office of<br />Undergraduate Admissions
+											<!-- Body -->
+											<div class="px-6 py-7 sm:px-8">
+												<h2 class="font-serif text-xl font-bold text-slate-900">There's an update to your application.</h2>
+												<div class="mt-4 space-y-4 text-[15px] leading-relaxed text-slate-800">
+													<p>Dear {displayName},</p>
+													<p>The status of your application to <strong class="font-semibold text-slate-900">{selectedPortal.name}</strong> has changed. For your security, we don't include the decision in this email. Please sign in to your applicant portal to view it.</p>
+													<p>Log in with the credentials you created when you applied.</p>
+												</div>
+												<div class="mt-6">
+													<a href={`/portals/${selectedPortal.slug}`} class="inline-flex items-center justify-center rounded-md px-6 py-3 text-sm font-semibold no-underline shadow-sm transition-opacity hover:opacity-90" style="background-color:{brand.primaryColor};color:{onBrand}">
+														View your decision
+													</a>
+												</div>
+												<div class="mt-6 flex items-start gap-2.5 rounded-lg bg-slate-50 px-4 py-3 ring-1 ring-slate-200">
+													<svg class="mt-0.5 h-4 w-4 shrink-0 text-slate-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" /></svg>
+													<p class="text-xs leading-relaxed text-slate-500"><span class="font-semibold text-slate-700">First time?</span> This is a simulation. Just tap <span class="font-semibold text-slate-700">Login</span> to reveal your decision. Your details are pre-filled and no real credentials are needed.</p>
+												</div>
+												<p class="mt-7 text-sm leading-relaxed text-slate-600">
+													Sincerely,<br />
+													<span class="font-semibold text-slate-800">Office of Admissions</span><br />
+													{brand.schoolName}
+												</p>
+											</div>
+											<!-- Footer -->
+											<div class="border-t border-slate-200 bg-slate-50 px-6 py-4 sm:px-8">
+												<p class="text-[11px] leading-relaxed text-slate-400">
+													{brand.schoolName} · Office of Admissions · {brand.footerDomain}<br />
+													Sent to {displayEmail}. This is a PredictAdmit.com simulation and is not affiliated with, endorsed by, or sent by {brand.schoolName}.
+												</p>
 											</div>
 										</div>
-										<div class="h-1 w-full" style="background-color:{readableTextColor(brand.primaryColor) === '#ffffff' ? 'rgba(255,255,255,0.35)' : 'rgba(0,0,0,0.15)'}"></div>
+									</div>
+								{:else}
+									<div class="mt-6 space-y-4 text-[15px] leading-relaxed text-slate-800">
+										<p>Dear {displayName},</p>
+										<p>The status of your application to <strong class="font-semibold text-slate-900">{selectedPortal.name}</strong> has changed. Please sign in to your portal to view the decision.</p>
+										<div class="mt-6">
+											<a href={`/portals/${selectedPortal.slug}`} class="inline-flex items-center justify-center rounded-md bg-[#1a73e8] px-6 py-3 text-sm font-semibold text-white no-underline shadow-sm hover:bg-[#1765cc]">View your decision</a>
+										</div>
 									</div>
 								{/if}
 
-								<!-- Body -->
-								<div class="mt-6 space-y-4 text-[15px] leading-relaxed text-slate-800">
-									<p>Dear {displayName},</p>
-									<p>
-										Your application status for <strong class="font-semibold text-slate-900">{selectedPortal.name}</strong> has
-										changed. We don't send the decision itself over email, so you'll need to
-										sign in to your portal to see it.
-									</p>
-									<p>Log in with the credentials you set up when you applied.</p>
-
-									<div class="flex items-start gap-2.5 rounded-xl border border-[color-mix(in_oklab,#0c0c09_15%,transparent)] bg-[color-mix(in_oklab,#0c0c09_5%,transparent)] px-4 py-3">
-										<svg class="mt-0.5 h-4 w-4 shrink-0 text-[#0c0c09]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" /></svg>
-										<p class="text-sm leading-relaxed text-slate-700">
-											<span class="font-semibold text-[#0c0c09]">First time?</span> This is a
-											simulation, so just tap <span class="font-semibold text-slate-900">Login</span> to reveal your
-											decision. Your details are pre-filled and no real credentials are needed.
-										</p>
-									</div>
-
-									<div class="mt-7">
-										<a
-											href={`/portals/${selectedPortal.slug}`}
-											class="inline-flex items-center justify-center rounded bg-[#1a73e8] px-6 py-2.5 text-sm font-medium text-white shadow-sm transition-colors hover:bg-[#1765cc] active:bg-[#1a56b4] no-underline"
-										>
-											View simulated decision
-										</a>
-									</div>
-
-									<p class="text-slate-500 text-xs mt-8 pt-8 border-t border-slate-100">
-										Sincerely,<br />
-										Office of Undergraduate Admissions<br />
-										{selectedPortal.name}
-									</p>
-
-									<!-- Gmail reply / forward footer (decorative — the real action is View above) -->
-									<div class="mt-8 flex flex-wrap gap-3" aria-hidden="true">
-										<span class="inline-flex items-center gap-2 rounded-full border border-slate-300 px-5 py-2 text-sm font-medium text-slate-600">
-											<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h10a4 4 0 014 4v1M3 10l5-5M3 10l5 5" /></svg>
-											Reply
-										</span>
-										<span class="inline-flex items-center gap-2 rounded-full border border-slate-300 px-5 py-2 text-sm font-medium text-slate-600">
-											<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M21 10H11a4 4 0 00-4 4v1m14-5l-5-5m5 5l-5 5" /></svg>
-											Forward
-										</span>
-									</div>
+								<!-- Gmail reply / forward footer (decorative) -->
+								<div class="mt-6 flex flex-wrap gap-3" aria-hidden="true">
+									<span class="inline-flex items-center gap-2 rounded-full border border-slate-300 px-5 py-2 text-sm font-medium text-slate-600">
+										<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h10a4 4 0 014 4v1M3 10l5-5M3 10l5 5" /></svg>
+										Reply
+									</span>
+									<span class="inline-flex items-center gap-2 rounded-full border border-slate-300 px-5 py-2 text-sm font-medium text-slate-600">
+										<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M21 10H11a4 4 0 00-4 4v1m14-5l-5-5m5 5l-5 5" /></svg>
+										Forward
+									</span>
 								</div>
 							</div>
 						{:else if activeFolder === 'sent' && selectedSent}
