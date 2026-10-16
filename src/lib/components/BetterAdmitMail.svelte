@@ -476,9 +476,9 @@
 						</button>
 					</div>
 
-					<div class="flex-1 overflow-y-auto p-8 bg-white">
+					<div class="flex-1 overflow-y-auto px-4 py-5 sm:px-6 bg-white">
 						{#if activeFolder === 'inbox' && selectedPortal}
-							<div class="max-w-3xl mx-auto">
+							<div class="max-w-2xl mx-auto">
 								<!-- Subject row (Gmail: 22px normal weight) + decorative actions -->
 								<div class="flex items-start justify-between gap-4">
 									<h1 class="text-[22px] font-normal leading-snug text-slate-800">
@@ -492,7 +492,7 @@
 								</div>
 
 								<!-- Sender line (Gmail conversation header) -->
-								<div class="mt-5 flex items-start gap-3">
+								<div class="mt-4 flex items-start gap-3">
 									{#if brandFor(selectedPortal)}
 										{@const brand = brandFor(selectedPortal)}
 										<div
@@ -530,7 +530,7 @@
 									{@const brand = brandFor(selectedPortal)}
 									{@const onBrand = readableTextColor(brand.primaryColor)}
 									{@const design = emailDesignFor(selectedPortal.slug)}
-									<div class="mt-6 overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 p-4 sm:p-6">
+									<div class="mt-4 overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 p-3">
 										<div
 											class="mx-auto max-w-[600px] overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-slate-200"
 											style={design === 'minimal' ? `border-top:4px solid ${brand.primaryColor}` : design === 'sidebar' ? `border-left:8px solid ${brand.primaryColor}` : ''}
@@ -627,7 +627,7 @@
 
 {#snippet emailBody(brand: any, onBrand: string, design: string, portal: PortalEmail)}
 	{@const center = design === 'crest'}
-	<div class="px-6 py-7 sm:px-8 {center ? 'text-center' : ''}">
+	<div class="px-5 py-6 sm:px-7 {center ? 'text-center' : ''}">
 		<h2 class="font-serif text-xl font-bold text-slate-900">There's an update to your application.</h2>
 		<div class="mt-4 space-y-4 text-[15px] leading-relaxed text-slate-800">
 			<p>Dear {displayName},</p>
@@ -674,13 +674,13 @@
 				are pre-filled and no real credentials are needed.
 			</p>
 		</div>
-		<p class="mt-7 text-sm leading-relaxed text-slate-600 {center ? 'text-center' : ''}">
+		<p class="mt-6 text-sm leading-relaxed text-slate-600 {center ? 'text-center' : ''}">
 			Sincerely,<br />
 			<span class="font-semibold text-slate-800">Office of Admissions</span><br />
 			{brand.schoolName}
 		</p>
 	</div>
-	<div class="border-t border-slate-200 bg-slate-50 px-6 py-4 sm:px-8">
+	<div class="border-t border-slate-200 bg-slate-50 px-5 py-4 sm:px-7">
 		<p class="text-[11px] leading-relaxed text-slate-400">
 			{brand.schoolName} · Office of Admissions · {brand.footerDomain}<br />
 			Sent to {displayEmail}. This is a PredictAdmit.com simulation and is not affiliated with,
