@@ -457,31 +457,20 @@
 					</div>
 				{:else}
 					<!-- EMAIL DETAIL VIEW -->
-					<div
-						class="h-16 border-b border-slate-100 flex items-center justify-between px-6 bg-white z-10 sticky top-0"
-					>
-						<button
-							on:click={openInboxList}
-							class="flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-slate-900 transition-colors"
-						>
-							<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-								<path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									stroke-width="2"
-									d="M10 19l-7-7m0 0l7-7m-7 7h18"
-								/>
-							</svg>
-							Back
-						</button>
-					</div>
-
 					<div class="flex-1 overflow-y-auto px-4 py-5 sm:px-6 bg-white">
 						{#if activeFolder === 'inbox' && selectedPortal}
 							<div class="max-w-2xl mx-auto">
-								<!-- Subject row (Gmail: 22px normal weight) + decorative actions -->
-								<div class="flex items-start justify-between gap-4">
-									<h1 class="text-[22px] font-normal leading-snug text-slate-800">
+								<!-- Subject row (Gmail: 22px normal weight) with an inline back arrow
+								     (no dedicated row) + decorative actions -->
+								<div class="flex items-start gap-3">
+									<button
+										on:click={openInboxList}
+										aria-label="Back to inbox"
+										class="mt-0.5 shrink-0 rounded-full p-1.5 text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900"
+									>
+										<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+									</button>
+									<h1 class="min-w-0 flex-1 text-[22px] font-normal leading-snug text-slate-800">
 										{selectedPortal.subject}
 										<span class="ml-1.5 inline-block translate-y-[-1px] rounded bg-slate-100 px-1.5 py-0.5 align-middle text-[11px] font-medium text-slate-500">Simulated</span>
 									</h1>
