@@ -10,7 +10,6 @@
 	import { portalDecisionHeaderVisible, portalDecisionViewed, headerVisible } from '$lib/stores/ui';
 	import { captureReferral, redeemReferralIfJoined } from '$lib/referral';
 	import { captureAttribution } from '$lib/attribution';
-	import AiUpsell from '$lib/components/portal/AiUpsell.svelte';
 	import { decisionsBySlug } from '$lib/stores/results';
 	import { schoolConfigs } from '$lib/config/schools';
 	import { computeDecisionForSchool, hasEnoughToScore } from '$lib/scoring/model';
@@ -165,4 +164,3 @@
 
 <PortalShareLauncher />
 <SimulationBadge />
-<AiUpsell />

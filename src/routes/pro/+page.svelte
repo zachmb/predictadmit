@@ -2189,7 +2189,7 @@
 						>
 							{isProcessing ? 'Taking you to checkout…' : 'Start for $9.99/mo'}
 						</button>
-						<a href="/verdict" class="group inline-flex items-center gap-1.5 text-base font-semibold text-slate-900 hover:text-slate-500">
+						<a href="/ai" class="group inline-flex items-center gap-1.5 text-base font-semibold text-slate-900 hover:text-slate-500">
 							Try your first verdict free
 							<span class="transition group-hover:translate-x-0.5">→</span>
 						</a>
@@ -2276,7 +2276,7 @@
 						<p class="text-lg leading-relaxed text-slate-600">
 							For about a <strong class="text-slate-900">tenth of one application fee</strong>, Pro gives you your real verdict at every T30, all season.
 						</p>
-						<a href="/verdict" class="inline-flex w-fit items-center gap-1.5 rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-800">
+						<a href="/ai" class="inline-flex w-fit items-center gap-1.5 rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-800">
 							Start free <span aria-hidden="true">→</span>
 						</a>
 					</div>
@@ -2314,7 +2314,7 @@
 									</li>
 								{/each}
 							</ul>
-							<a href="/verdict" class="mt-auto block w-full rounded-full border border-slate-300 bg-white px-5 py-3.5 text-center text-sm font-semibold text-slate-900 transition hover:bg-slate-100">
+							<a href="/ai" class="mt-auto block w-full rounded-full border border-slate-300 bg-white px-5 py-3.5 text-center text-sm font-semibold text-slate-900 transition hover:bg-slate-100">
 								Start free →
 							</a>
 						</div>

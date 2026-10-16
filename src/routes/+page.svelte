@@ -345,7 +345,7 @@
 			img: '/screenshots/pro-universities.png',
 			w: 2880,
 			h: 1800,
-			href: '/verdict',
+			href: '/ai',
 			ctaText: 'Predict free'
 		},
 		{
@@ -1184,7 +1184,7 @@
 				Run your real application across every T30 and see where you stand. Your first prediction is free.
 			</p>
 			<div class="mt-9">
-				<a href="/verdict" class="inline-flex items-center justify-center rounded-full bg-white px-9 py-4 text-base font-semibold text-[#0c0c09] transition hover:bg-white/90 active:scale-[0.99]">
+				<a href="/ai" class="inline-flex items-center justify-center rounded-full bg-white px-9 py-4 text-base font-semibold text-[#0c0c09] transition hover:bg-white/90 active:scale-[0.99]">
 					Get started free
 				</a>
 			</div>
