@@ -121,6 +121,30 @@
 	function brandFor(portal: PortalEmail | null) {
 		return portal ? (schoolConfigs[portal.slug] ?? null) : null;
 	}
+
+	// Each school's decision email has its OWN layout archetype (masthead
+	// composition, type register, button + framing), not one recoloured template —
+	// so every school's email looks genuinely different. Assigned per school, with a
+	// deterministic hash fallback for any school not explicitly mapped.
+	const EMAIL_DESIGNS = ['crest', 'banner', 'letterhead', 'sidebar', 'minimal', 'stacked'] as const;
+	type EmailDesign = (typeof EMAIL_DESIGNS)[number];
+	const EMAIL_DESIGN_BY_SLUG: Record<string, EmailDesign> = {
+		harvard: 'crest', princeton: 'letterhead', yale: 'crest', stanford: 'banner',
+		mit: 'minimal', caltech: 'minimal', columbia: 'letterhead', upenn: 'stacked',
+		duke: 'banner', jhu: 'sidebar', northwestern: 'stacked', dartmouth: 'letterhead',
+		brown: 'minimal', vanderbilt: 'crest', rice: 'sidebar', wustl: 'stacked',
+		cornell: 'sidebar', uchicago: 'letterhead', ucla: 'banner', ucberkeley: 'sidebar',
+		georgiatech: 'minimal', nyu: 'banner', usc: 'stacked', georgetown: 'crest',
+		notredame: 'crest', emory: 'stacked', uva: 'letterhead', cmu: 'minimal',
+		umich: 'banner', unc: 'sidebar', uw: 'stacked', wakeforest: 'crest',
+		uf: 'banner', wisconsin: 'sidebar', purdue: 'minimal', osu: 'banner'
+	};
+	function emailDesignFor(slug: string): EmailDesign {
+		if (EMAIL_DESIGN_BY_SLUG[slug]) return EMAIL_DESIGN_BY_SLUG[slug];
+		let h = 0;
+		for (let i = 0; i < slug.length; i++) h = (h * 31 + slug.charCodeAt(i)) >>> 0;
+		return EMAIL_DESIGNS[h % EMAIL_DESIGNS.length];
+	}
 	// `from` is stored as "Name <email@domain>" — pull just the address so the
 	// Gmail sender line reads "Sender Name <email>" without double angle brackets.
 	function emailOf(from: string): string {
@@ -499,53 +523,56 @@
 									</div>
 								</div>
 
-								<!-- Authentic decision-email card, themed in the school's own brand
-								     (original monogram + wordmark + colors, not a real logo). -->
+								<!-- Authentic decision-email card. Each school gets its OWN layout
+								     archetype (masthead, type, button, framing) themed in its own brand.
+								     Original design primitives, not a real logo or a cloned email. -->
 								{#if brandFor(selectedPortal)}
 									{@const brand = brandFor(selectedPortal)}
 									{@const onBrand = readableTextColor(brand.primaryColor)}
+									{@const design = emailDesignFor(selectedPortal.slug)}
 									<div class="mt-6 overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 p-4 sm:p-6">
-										<div class="mx-auto max-w-[600px] overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-slate-200">
-											<!-- Masthead -->
-											<div class="flex items-center gap-4 px-6 py-5" style="background-color:{brand.primaryColor};color:{onBrand}">
-												<div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg font-serif text-2xl font-bold" style="background-color:{onBrand === '#ffffff' ? 'rgba(255,255,255,0.14)' : 'rgba(0,0,0,0.06)'};box-shadow:inset 0 0 0 1.5px {onBrand === '#ffffff' ? 'rgba(255,255,255,0.55)' : 'rgba(0,0,0,0.28)'}">
-													{selectedPortal.name[0]}
+										<div
+											class="mx-auto max-w-[600px] overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-slate-200"
+											style={design === 'minimal' ? `border-top:4px solid ${brand.primaryColor}` : design === 'sidebar' ? `border-left:8px solid ${brand.primaryColor}` : ''}
+										>
+											{#if design === 'crest'}
+												<div class="px-6 py-7 text-center" style="background-color:{brand.primaryColor};color:{onBrand}">
+													<div class="mx-auto flex h-14 w-14 items-center justify-center rounded-full font-serif text-2xl font-bold" style="box-shadow:inset 0 0 0 2px {onBrand === '#ffffff' ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.28)'}">{selectedPortal.name[0]}</div>
+													<div class="mt-3 font-serif text-xl font-bold leading-tight">{brand.logoPrimary}</div>
+													<div class="mt-1 text-[10px] font-semibold uppercase tracking-[0.2em] opacity-90">{brand.logoSecondary}</div>
 												</div>
-												<div class="min-w-0">
-													<div class="truncate font-serif text-xl font-bold leading-tight">{brand.logoPrimary}</div>
-													<div class="mt-1 text-[10px] font-semibold uppercase tracking-[0.18em] opacity-90">{brand.logoSecondary}</div>
+											{:else if design === 'banner'}
+												<div class="px-6 py-6" style="background-color:{brand.primaryColor};color:{onBrand}">
+													<div class="font-serif text-2xl font-extrabold tracking-tight leading-none">{brand.logoPrimary}</div>
+													<div class="mt-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] opacity-90">{brand.logoSecondary}</div>
 												</div>
-											</div>
-											<!-- Body -->
-											<div class="px-6 py-7 sm:px-8">
-												<h2 class="font-serif text-xl font-bold text-slate-900">There's an update to your application.</h2>
-												<div class="mt-4 space-y-4 text-[15px] leading-relaxed text-slate-800">
-													<p>Dear {displayName},</p>
-													<p>The status of your application to <strong class="font-semibold text-slate-900">{selectedPortal.name}</strong> has changed. For your security, we don't include the decision in this email. Please sign in to your applicant portal to view it.</p>
-													<p>Log in with the credentials you created when you applied.</p>
+												<div class="h-1.5" style="background-color:{onBrand === '#ffffff' ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.18)'}"></div>
+											{:else if design === 'letterhead'}
+												<div class="flex items-center gap-3 px-6 pt-6 pb-4">
+													<div class="flex h-10 w-10 shrink-0 items-center justify-center rounded font-serif text-lg font-bold" style="background-color:{brand.primaryColor};color:{onBrand}">{selectedPortal.name[0]}</div>
+													<div class="min-w-0">
+														<div class="truncate font-serif text-lg font-bold text-slate-900">{brand.logoPrimary}</div>
+														<div class="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500">{brand.logoSecondary}</div>
+													</div>
 												</div>
-												<div class="mt-6">
-													<a href={`/portals/${selectedPortal.slug}`} class="inline-flex items-center justify-center rounded-md px-6 py-3 text-sm font-semibold no-underline shadow-sm transition-opacity hover:opacity-90" style="background-color:{brand.primaryColor};color:{onBrand}">
-														View your decision
-													</a>
+												<div class="h-0.5 w-full" style="background-color:{brand.primaryColor}"></div>
+											{:else if design === 'stacked'}
+												<div class="px-6 pt-6 pb-4">
+													<div class="flex h-12 w-12 items-center justify-center rounded-xl font-serif text-xl font-bold" style="background-color:{brand.primaryColor};color:{onBrand}">{selectedPortal.name[0]}</div>
+													<div class="mt-3 font-serif text-xl font-bold leading-tight text-slate-900">{brand.logoPrimary}</div>
+													<div class="mt-0.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500">{brand.logoSecondary}</div>
 												</div>
-												<div class="mt-6 flex items-start gap-2.5 rounded-lg bg-slate-50 px-4 py-3 ring-1 ring-slate-200">
-													<svg class="mt-0.5 h-4 w-4 shrink-0 text-slate-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" /></svg>
-													<p class="text-xs leading-relaxed text-slate-500"><span class="font-semibold text-slate-700">First time?</span> This is a simulation. Just tap <span class="font-semibold text-slate-700">Login</span> to reveal your decision. Your details are pre-filled and no real credentials are needed.</p>
+												<div class="mx-6 h-px" style="background-color:{brand.primaryColor}"></div>
+											{:else}
+												<div class="flex items-center gap-2.5 px-6 pt-6 pb-3">
+													<span class="flex h-7 w-7 shrink-0 items-center justify-center rounded font-serif text-sm font-bold" style="background-color:{brand.primaryColor};color:{onBrand}">{selectedPortal.name[0]}</span>
+													<div class="min-w-0">
+														<div class="truncate text-sm font-bold text-slate-900">{brand.logoPrimary}</div>
+														<div class="text-[9px] font-semibold uppercase tracking-[0.18em] text-slate-500">{brand.logoSecondary}</div>
+													</div>
 												</div>
-												<p class="mt-7 text-sm leading-relaxed text-slate-600">
-													Sincerely,<br />
-													<span class="font-semibold text-slate-800">Office of Admissions</span><br />
-													{brand.schoolName}
-												</p>
-											</div>
-											<!-- Footer -->
-											<div class="border-t border-slate-200 bg-slate-50 px-6 py-4 sm:px-8">
-												<p class="text-[11px] leading-relaxed text-slate-400">
-													{brand.schoolName} · Office of Admissions · {brand.footerDomain}<br />
-													Sent to {displayEmail}. This is a PredictAdmit.com simulation and is not affiliated with, endorsed by, or sent by {brand.schoolName}.
-												</p>
-											</div>
+											{/if}
+											{@render emailBody(brand, onBrand, design, selectedPortal)}
 										</div>
 									</div>
 								{:else}
@@ -597,6 +624,70 @@
 		</div>
 	</div>
 </section>
+
+{#snippet emailBody(brand: any, onBrand: string, design: string, portal: PortalEmail)}
+	{@const center = design === 'crest'}
+	<div class="px-6 py-7 sm:px-8 {center ? 'text-center' : ''}">
+		<h2 class="font-serif text-xl font-bold text-slate-900">There's an update to your application.</h2>
+		<div class="mt-4 space-y-4 text-[15px] leading-relaxed text-slate-800">
+			<p>Dear {displayName},</p>
+			<p>
+				The status of your application to
+				<strong class="font-semibold text-slate-900">{portal.name}</strong> has changed. For your
+				security, we don't include the decision in this email. Please sign in to your applicant
+				portal to view it.
+			</p>
+			<p>Log in with the credentials you created when you applied.</p>
+		</div>
+		<div class="mt-6 {center ? 'flex justify-center' : ''}">
+			{#if design === 'letterhead'}
+				<a
+					href={`/portals/${portal.slug}`}
+					class="inline-flex items-center justify-center rounded-sm border-2 px-6 py-2.5 text-sm font-semibold no-underline transition-colors hover:bg-slate-50"
+					style="border-color:{brand.primaryColor};color:{brand.primaryColor}"
+				>
+					View your decision
+				</a>
+			{:else if design === 'sidebar' || design === 'minimal'}
+				<a
+					href={`/portals/${portal.slug}`}
+					class="inline-flex items-center justify-center rounded-full px-6 py-2.5 text-sm font-semibold no-underline shadow-sm transition-opacity hover:opacity-90"
+					style="background-color:{brand.primaryColor};color:{onBrand}"
+				>
+					View your decision
+				</a>
+			{:else}
+				<a
+					href={`/portals/${portal.slug}`}
+					class="inline-flex items-center justify-center rounded-md px-6 py-3 text-sm font-semibold no-underline shadow-sm transition-opacity hover:opacity-90"
+					style="background-color:{brand.primaryColor};color:{onBrand}"
+				>
+					View your decision
+				</a>
+			{/if}
+		</div>
+		<div class="mt-6 flex items-start gap-2.5 rounded-lg bg-slate-50 px-4 py-3 text-left ring-1 ring-slate-200">
+			<svg class="mt-0.5 h-4 w-4 shrink-0 text-slate-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" /></svg>
+			<p class="text-xs leading-relaxed text-slate-500">
+				<span class="font-semibold text-slate-700">First time?</span> This is a simulation. Just tap
+				<span class="font-semibold text-slate-700">Login</span> to reveal your decision. Your details
+				are pre-filled and no real credentials are needed.
+			</p>
+		</div>
+		<p class="mt-7 text-sm leading-relaxed text-slate-600 {center ? 'text-center' : ''}">
+			Sincerely,<br />
+			<span class="font-semibold text-slate-800">Office of Admissions</span><br />
+			{brand.schoolName}
+		</p>
+	</div>
+	<div class="border-t border-slate-200 bg-slate-50 px-6 py-4 sm:px-8">
+		<p class="text-[11px] leading-relaxed text-slate-400">
+			{brand.schoolName} · Office of Admissions · {brand.footerDomain}<br />
+			Sent to {displayEmail}. This is a PredictAdmit.com simulation and is not affiliated with,
+			endorsed by, or sent by {brand.schoolName}.
+		</p>
+	</div>
+{/snippet}
 
 {#if toastMsg}
 	<div
