@@ -2171,7 +2171,7 @@
 						Get into your <span class="text-[#0c0c09]">dream school.</span>
 					</h1>
 					<p class="mt-5 mx-auto lg:mx-0 max-w-md text-lg text-slate-500 leading-relaxed">
-						Your real verdict at every top school, and the one fix that moves it. First prediction free.
+						Everything you need to get into your dream school. We used it to get into ours.
 					</p>
 
 					<div class="mt-7 flex items-baseline justify-center lg:justify-start gap-2.5">
@@ -2264,7 +2264,7 @@
 					<div class="flex flex-col justify-center gap-5 p-8 sm:p-12">
 							<div class="flex items-end gap-6">
 							<div>
-								<div class="font-serif text-5xl font-medium text-slate-900">$90</div>
+								<div class="font-serif text-5xl font-medium text-slate-900">$100</div>
 								<div class="mt-1 text-sm text-slate-500">One Stanford application fee</div>
 							</div>
 							<div class="pb-2 text-xl font-medium text-slate-300">vs</div>
