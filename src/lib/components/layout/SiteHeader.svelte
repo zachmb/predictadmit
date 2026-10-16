@@ -8,6 +8,13 @@
 	} from '$lib/stores/ui';
 	import { page } from '$app/stores';
 	import { onDestroy } from 'svelte';
+	import { crossfade } from 'svelte/transition';
+	import { cubicOut } from 'svelte/easing';
+
+	// Shared-element "magic move" for the active nav pill: one pill keyed across all
+	// nav items, so switching pages slides it from the old tab to the new one instead
+	// of popping out and back in.
+	const [sendPill, receivePill] = crossfade({ duration: 240, easing: cubicOut });
 
 	$: isPortal = $page.url.pathname.startsWith('/portals/');
 	// During an AI simulation, viewing a school's decision page, the nav morphs
@@ -132,11 +139,19 @@
 						href={link.href}
 						aria-current={link.active ? 'page' : undefined}
 						on:click={(e) => e.currentTarget.blur()}
-						class="whitespace-nowrap shrink-0 text-[15px] font-medium px-4 py-2 rounded-full transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-300 {link.active
-							? 'bg-slate-900 text-white'
+						class="relative whitespace-nowrap shrink-0 text-[15px] font-medium px-4 py-2 rounded-full transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-300 {link.active
+							? 'text-white'
 							: 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'}"
 					>
-						{link.label}
+						{#if link.active}
+							<!-- The single active pill — keyed so it slides between tabs on navigate. -->
+							<span
+								class="absolute inset-0 rounded-full bg-slate-900"
+								in:receivePill={{ key: 'nav-pill' }}
+								out:sendPill={{ key: 'nav-pill' }}
+							></span>
+						{/if}
+						<span class="relative z-10">{link.label}</span>
 					</a>
 				{/each}
 			</nav>
