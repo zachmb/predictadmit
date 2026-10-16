@@ -459,7 +459,7 @@
 					<!-- EMAIL DETAIL VIEW -->
 					<div class="flex-1 overflow-y-auto px-4 py-5 sm:px-6 bg-white">
 						{#if activeFolder === 'inbox' && selectedPortal}
-							<div class="max-w-2xl mx-auto">
+							<div class="w-full">
 								<!-- Subject row (Gmail: 22px normal weight) with an inline back arrow
 								     (no dedicated row) + decorative actions -->
 								<div class="flex items-start gap-3">
@@ -519,9 +519,9 @@
 									{@const brand = brandFor(selectedPortal)}
 									{@const onBrand = readableTextColor(brand.primaryColor)}
 									{@const design = emailDesignFor(selectedPortal.slug)}
-									<div class="mt-4 overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 p-3">
+									<div class="mt-4">
 										<div
-											class="mx-auto max-w-[600px] overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-slate-200"
+											class="w-full overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-slate-200"
 											style={design === 'minimal' ? `border-top:4px solid ${brand.primaryColor}` : design === 'sidebar' ? `border-left:8px solid ${brand.primaryColor}` : ''}
 										>
 											{#if design === 'crest'}
