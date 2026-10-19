@@ -862,6 +862,8 @@
 			.sort((a, b) => b.quote.length - a.quote.length);
 
 		sortedanns.forEach((ann: any) => {
+			// Once a note is addressed or dismissed it no longer highlights the line.
+			if (ann.status) return;
 			const quote = ann.quote.replace(/</g, '&lt;').replace(/>/g, '&gt;');
 			if (quote.length < 5) return;
 
@@ -2067,12 +2069,20 @@
 
 												<!-- ANNOTATIONS LIST -->
 												{#if essay.annotations?.length}
+													{@const reviewed = essay.annotations.filter((a: any) => a.status).length}
 													<div class="space-y-3 mb-8">
-														<h3
-															class="text-xs font-bold text-slate-900 uppercase tracking-widest border-b border-slate-100 pb-2"
+														<div
+															class="flex items-center justify-between gap-3 border-b border-slate-100 pb-2"
 														>
-															Critique
-														</h3>
+															<h3
+																class="text-xs font-bold text-slate-900 uppercase tracking-widest"
+															>
+																Critique
+															</h3>
+															<span class="text-[11px] font-semibold text-slate-400">
+																{reviewed} of {essay.annotations.length} reviewed
+															</span>
+														</div>
 														{#each essay.annotations as note, i}
 															{@const globalIndex =
 																analysisResult.essays
@@ -2083,23 +2093,105 @@
 																	) + i}
 															<div
 																id={`annotation-${globalIndex}`}
-																class="p-3 rounded-lg bg-yellow-50 border border-yellow-100 text-xs space-y-1 hover:border-yellow-300 transition-all cursor-pointer group scroll-mt-20 {activeAnnotationIndex ===
-																globalIndex
-																	? 'ring-2 ring-blue-400 bg-blue-50'
+																class="rounded-lg border text-xs transition-all scroll-mt-20 {note.status ===
+																'accepted'
+																	? 'border-emerald-200 bg-emerald-50'
+																	: note.status === 'rejected'
+																		? 'border-slate-200 bg-slate-50 opacity-75'
+																		: 'border-yellow-100 bg-yellow-50'} {activeAnnotationIndex ===
+																	globalIndex && !note.status
+																	? 'ring-2 ring-blue-400'
 																	: ''}"
-																onclick={() => handleAnnotationClick(globalIndex.toString())}
-																onkeydown={(e) =>
-																	e.key === 'Enter' &&
-																	handleAnnotationClick(globalIndex.toString())}
-																role="button"
-																tabindex="0"
 															>
 																<div
-																	class="font-serif italic text-slate-600 border-l-2 border-yellow-400 pl-2"
+																	class="cursor-pointer space-y-1 p-3"
+																	onclick={() => handleAnnotationClick(globalIndex.toString())}
+																	onkeydown={(e) =>
+																		e.key === 'Enter' &&
+																		handleAnnotationClick(globalIndex.toString())}
+																	role="button"
+																	tabindex="0"
 																>
-																	"{note.quote}"
+																	<div
+																		class="border-l-2 pl-2 font-serif italic {note.status
+																			? 'border-slate-300 text-slate-400 line-through'
+																			: 'border-yellow-400 text-slate-600'}"
+																	>
+																		"{note.quote}"
+																	</div>
+																	<div
+																		class="font-medium {note.status
+																			? 'text-slate-400'
+																			: 'text-slate-800'}"
+																	>
+																		{note.comment}
+																	</div>
 																</div>
-																<div class="text-slate-800 font-medium">{note.comment}</div>
+																<div
+																	class="flex items-center gap-2 border-t px-3 py-2 {note.status ===
+																	'accepted'
+																		? 'border-emerald-100'
+																		: note.status === 'rejected'
+																			? 'border-slate-200'
+																			: 'border-yellow-100'}"
+																>
+																	{#if !note.status}
+																		<button
+																			type="button"
+																			onclick={() => (note.status = 'accepted')}
+																			class="inline-flex items-center gap-1 rounded-md bg-emerald-600 px-2.5 py-1 text-[11px] font-bold text-white transition hover:bg-emerald-700"
+																		>
+																			<svg
+																				class="h-3 w-3"
+																				fill="none"
+																				viewBox="0 0 24 24"
+																				stroke="currentColor"
+																				stroke-width="3"
+																				><path
+																					stroke-linecap="round"
+																					stroke-linejoin="round"
+																					d="M5 13l4 4L19 7"
+																				/></svg
+																			>
+																			Mark addressed
+																		</button>
+																		<button
+																			type="button"
+																			onclick={() => (note.status = 'rejected')}
+																			class="inline-flex items-center gap-1 rounded-md border border-slate-200 bg-white px-2.5 py-1 text-[11px] font-bold text-slate-500 transition hover:border-slate-300 hover:text-slate-700"
+																		>
+																			<svg
+																				class="h-3 w-3"
+																				fill="none"
+																				viewBox="0 0 24 24"
+																				stroke="currentColor"
+																				stroke-width="2.5"
+																				><path
+																					stroke-linecap="round"
+																					stroke-linejoin="round"
+																					d="M6 18L18 6M6 6l12 12"
+																				/></svg
+																			>
+																			Dismiss
+																		</button>
+																	{:else}
+																		<span
+																			class="inline-flex items-center gap-1 text-[11px] font-bold {note.status ===
+																			'accepted'
+																				? 'text-emerald-700'
+																				: 'text-slate-500'}"
+																		>
+																			{note.status === 'accepted' ? 'Addressed' : 'Dismissed'}
+																		</span>
+																		<button
+																			type="button"
+																			onclick={() => (note.status = undefined)}
+																			class="ml-auto text-[11px] font-semibold text-slate-400 transition hover:text-slate-700"
+																		>
+																			Undo
+																		</button>
+																	{/if}
+																</div>
 															</div>
 														{/each}
 													</div>
