@@ -2336,19 +2336,18 @@
 					</div>
 				</div>
 
-				<!-- Right: real elite-university campus photos (the dream schools you're
-				     running your application against). Public-domain / CC-licensed. -->
+				<!-- Right: real top-university photos (the dream schools you're running your
+				     application against) — Stanford, MIT, Princeton, and the John Harvard
+				     statue. Public-domain / CC-licensed. -->
 				<div class="grid grid-cols-2 gap-3 sm:gap-4">
-					<div
-						class="relative col-span-2 overflow-hidden rounded-2xl border border-slate-200 shadow-sm"
-					>
+					<div class="relative overflow-hidden rounded-2xl border border-slate-200 shadow-sm">
 						<img
 							src="/images/stanford-campus.jpg"
-							alt="A top university campus"
+							alt="Stanford University"
 							width="1280"
 							height="720"
 							loading="lazy"
-							class="h-48 w-full object-cover sm:h-56"
+							class="h-40 w-full object-cover sm:h-44"
 						/>
 						<span
 							class="absolute bottom-2 left-3 rounded-full bg-black/45 px-2.5 py-1 text-[11px] font-semibold text-white"
@@ -2357,22 +2356,32 @@
 					</div>
 					<div class="overflow-hidden rounded-2xl border border-slate-200 shadow-sm">
 						<img
+							src="/images/harvard-statue.jpg"
+							alt="The John Harvard statue at Harvard University"
+							width="1280"
+							height="988"
+							loading="lazy"
+							class="h-40 w-full object-cover object-top sm:h-44"
+						/>
+					</div>
+					<div class="overflow-hidden rounded-2xl border border-slate-200 shadow-sm">
+						<img
 							src="/images/mit-dome.jpg"
-							alt="A top university campus"
+							alt="MIT"
 							width="1280"
 							height="960"
 							loading="lazy"
-							class="h-36 w-full object-cover sm:h-40"
+							class="h-40 w-full object-cover sm:h-44"
 						/>
 					</div>
 					<div class="overflow-hidden rounded-2xl border border-slate-200 shadow-sm">
 						<img
 							src="/images/princeton-campus.jpg"
-							alt="A top university campus"
+							alt="Princeton University"
 							width="1280"
 							height="853"
 							loading="lazy"
-							class="h-36 w-full object-cover sm:h-40"
+							class="h-40 w-full object-cover sm:h-44"
 						/>
 					</div>
 				</div>
@@ -2599,7 +2608,7 @@
 					<p class="mt-2 text-sm font-semibold text-slate-500">Loved by 15,000+ applicants</p>
 				</div>
 				<div class="columns-1 sm:columns-2 lg:columns-3 gap-5 [column-fill:_balance]">
-					{#each [{ quote: 'ts was lowkey genuinely accurate. ran my file before decisions dropped and it basically called it.', name: 'Miao S.', school: 'Accepted to Northwestern, Class of 2030', tint: 6 }, { quote: 'The deep-dive REALLY helped me. It showed me exactly what each committee was going to catch before they caught it.', name: 'Daniel G.', school: 'Class of 2030', tint: 10 }, { quote: 'The line-by-line editing got me into Stanford, and half the T20s. I cannot overstate how much the essay feedback changed my application.', name: 'Kabir K.', school: 'Accepted to Stanford, Class of 2030', tint: 14 }, { quote: 'This tool helped me progress in scholarships such as the Robertson full ride to Duke.', name: 'Zachary B.', school: 'Class of 2030', tint: 8 }, { quote: 'I reframed my personal statement from the free review, and the countdown is really helpful. My stats were mediocre, so I think it really did come down to my essay. Thanks PredictAdmit!', name: 'Sophia M.', school: 'Accepted to Emory, Class of 2030', tint: 12 }, { quote: 'Very useful! Works better than GPT. Not sure if it is because multiple AIs talk before responding to prompts, or if it is just tuned well.', name: 'Arjun S.', school: 'Class of 2030', tint: 5 }, { quote: 'I did not think to get a counselor, but my results ended up being better than my friends in terms of T20s, even with similar stats. Thanks!', name: 'Evan F.', school: 'Accepted to Berkeley, Class of 2030', tint: 16 }] as t}
+					{#each [{ quote: 'ts was lowkenuinely accurate', name: 'Miao S.', school: 'Accepted to Northwestern, Class of 2030', tint: 6 }, { quote: 'The deep-dive REALLY helped me. It showed me exactly what each committee was going to catch before they caught it.', name: 'Daniel G.', school: 'Class of 2030', tint: 10 }, { quote: 'The line-by-line editing got me into Stanford, and half the T20s. I cannot overstate how much the essay feedback changed my application.', name: 'Kabir K.', school: 'Accepted to Stanford, Class of 2030', tint: 14 }, { quote: 'This tool helped me progress in scholarships such as the Robertson full ride to Duke.', name: 'Zachary B.', school: 'Class of 2030', tint: 8 }, { quote: 'I reframed my personal statement from the free review, and the countdown is really helpful. My stats were mediocre, so I think it really did come down to my essay. Thanks PredictAdmit!', name: 'Sophia M.', school: 'Accepted to Emory, Class of 2030', tint: 12 }, { quote: 'Very useful! Works better than GPT. Not sure if it is because multiple AIs talk before responding to prompts, or if it is just tuned well.', name: 'Arjun S.', school: 'Class of 2030', tint: 5 }, { quote: 'I did not think to get a counselor, but my results ended up being better than my friends in terms of T20s, even with similar stats. Thanks!', name: 'Evan F.', school: 'Accepted to Berkeley, Class of 2030', tint: 16 }] as t}
 						<div
 							class="mb-5 break-inside-avoid rounded-3xl border border-slate-200 bg-white p-7"
 							style="background-color: color-mix(in oklab, #0c0c09 {t.tint}%, #ffffff)"

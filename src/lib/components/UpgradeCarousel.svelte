@@ -65,12 +65,48 @@
 		}
 	];
 
-	// Real testimonial (also shown on the landing + /pro).
+	// Real testimonials (the same set shown on the landing + /pro).
 	const testimonials = [
 		{
 			quote: 'ts was lowkenuinely accurate',
 			name: 'Miao S.',
 			role: "Accepted to Northwestern '30"
+		},
+		{
+			quote:
+				'The deep-dive REALLY helped me. It showed me exactly what each committee was going to catch before they caught it.',
+			name: 'Daniel G.',
+			role: "Class of '30"
+		},
+		{
+			quote:
+				'The line-by-line editing got me into Stanford, and half the T20s. I cannot overstate how much the essay feedback changed my application.',
+			name: 'Kabir K.',
+			role: "Accepted to Stanford '30"
+		},
+		{
+			quote:
+				'This tool helped me progress in scholarships such as the Robertson full ride to Duke.',
+			name: 'Zachary B.',
+			role: "Class of '30"
+		},
+		{
+			quote:
+				'I reframed my personal statement from the free review, and the countdown is really helpful. My stats were mediocre, so it really came down to my essay. Thanks PredictAdmit!',
+			name: 'Sophia M.',
+			role: "Accepted to Emory '30"
+		},
+		{
+			quote:
+				'Very useful! Works better than GPT. Not sure if it is because multiple AIs talk before responding, or if it is just tuned well.',
+			name: 'Arjun S.',
+			role: "Class of '30"
+		},
+		{
+			quote:
+				'I did not think to get a counselor, but my results ended up better than my friends in terms of T20s, even with similar stats. Thanks!',
+			name: 'Evan F.',
+			role: "Accepted to Berkeley '30"
 		}
 	];
 
@@ -239,7 +275,7 @@
 									<!-- Real Pro screenshot, framed in device chrome, with a live cursor
 								     drifting + a slow push-in so it reads as a working product (like the landing). -->
 									<div
-										class="relative flex max-h-full w-full max-w-[264px] flex-col overflow-hidden rounded-[26px] border border-slate-200 bg-slate-900 shadow-xl"
+										class="relative flex max-h-full w-full max-w-[340px] flex-col overflow-hidden rounded-[26px] border border-slate-200 bg-slate-900 shadow-xl"
 									>
 										<div class="flex flex-none items-center gap-1.5 px-4 py-2.5">
 											<span class="h-2 w-2 rounded-full bg-white/25"></span>
@@ -331,8 +367,8 @@
 					{/key}
 				{:else if onSocial}
 					<!-- Social proof (GPT-vision's top ask) — real applicant quotes + scale. -->
-					<div in:fly={{ x: 18, duration: 240 }} class="flex flex-1 flex-col">
-						<div class="text-center">
+					<div in:fly={{ x: 18, duration: 240 }} class="flex min-h-0 flex-1 flex-col">
+						<div class="flex-none text-center">
 							<div class="flex items-center justify-center gap-0.5 text-[#0c0c09]">
 								{#each Array(5) as _}
 									<svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"
@@ -352,11 +388,11 @@
 								their application here first.
 							</p>
 						</div>
-						<div class="mt-6 space-y-3">
+						<div class="mt-5 min-h-0 flex-1 space-y-2.5 overflow-y-auto pr-1">
 							{#each testimonials as t}
-								<div class="rounded-2xl border border-slate-200 bg-slate-50/60 p-4">
-									<p class="text-[13.5px] leading-relaxed text-slate-700">“{t.quote}”</p>
-									<div class="mt-2.5 flex items-center gap-2">
+								<div class="rounded-2xl border border-slate-200 bg-slate-50/60 p-3.5">
+									<p class="text-[13px] leading-relaxed text-slate-700">“{t.quote}”</p>
+									<div class="mt-2 flex items-center gap-2">
 										<div
 											class="grid h-6 w-6 flex-none place-items-center rounded-full bg-[#0c0c09] text-[11px] font-bold text-white"
 										>
@@ -496,16 +532,18 @@
 	/* Product screenshots read as LIVE — a slow push-in on the image plus a cursor
 	   drifting over it, the same treatment as the landing page. */
 	.ob-shot {
+		/* Zoom in on the top of the dashboard so the real details (school rows, odds)
+		   are legible in the small onboarding frame, with a slow push-in on top. */
 		transform-origin: 50% 0%;
 		animation: ob-shot-zoom 12s ease-in-out infinite alternate;
 		will-change: transform;
 	}
 	@keyframes ob-shot-zoom {
 		0% {
-			transform: scale(1);
+			transform: scale(1.35);
 		}
 		100% {
-			transform: scale(1.06) translateY(-2%);
+			transform: scale(1.5) translateY(-2%);
 		}
 	}
 

@@ -280,6 +280,13 @@
 	};
 
 	let aiError = $state('');
+	// Clear the "give it something to read first" validation error the moment the user
+	// actually provides input, so a fixed mistake doesn't leave a stale error on screen.
+	$effect(() => {
+		if (aiError.startsWith('Give it something to read') && ensureHasSomeInput()) {
+			aiError = '';
+		}
+	});
 	let aiDecisions = $state<AiDecision[]>([]);
 	let deepDiveItems = $state<DeepDiveItem[]>([]);
 	let deepDiveLoadingSlug = $state<string | null>(null);
@@ -1460,18 +1467,18 @@
 							</li>
 							<li class="flex items-start gap-3">
 								<span
-									class="mt-1 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-[#0c0c09] font-sans text-xs font-bold text-white"
+									class="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-[#0c0c09] font-sans text-xs font-bold text-white"
 									>3</span
 								>
-								<span class="font-sans text-xs leading-relaxed text-slate-400">
-									An estimate from NACAC factor weights. Not an official decision, and never
+								<span
+									>An estimate from NACAC factor weights. Not an official decision, and never
 									affiliated with any school.
 									<a
 										href="/methodology"
-										class="font-medium text-slate-600 underline underline-offset-2 hover:text-slate-900"
+										class="font-medium text-slate-900 underline underline-offset-2 hover:text-slate-500"
 										>Methodology →</a
-									>
-								</span>
+									></span
+								>
 							</li>
 						</ol>
 					</header>

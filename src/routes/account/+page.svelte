@@ -119,9 +119,9 @@
 					</div>
 					<div class="flex items-center gap-3 rounded-2xl bg-white/90 p-3.5 shadow-md">
 						<img
-							src="/images/harvard-campus.jpg"
+							src="/images/harvard-statue.jpg"
 							alt="Harvard University"
-							class="h-11 w-11 shrink-0 rounded-xl object-cover"
+							class="h-11 w-11 shrink-0 rounded-xl object-cover object-top"
 						/>
 						<div class="min-w-0 flex-1">
 							<p class="truncate text-sm font-bold text-slate-900">Harvard University</p>

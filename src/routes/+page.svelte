@@ -773,8 +773,8 @@
 					class="hero-sub text-lg md:text-xl text-slate-500 max-w-3xl leading-relaxed tracking-tight font-medium mt-5 animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-[200ms] fill-mode-both"
 				>
 					<span class="font-semibold text-slate-900 tabular-nums">{predictedCountLabel}+</span>
-					students have predicted their decisions, simulated exact portals and real acceptance
-					letters to their dream schools, and used
+					students have predicted their decisions, simulated exact portals and real acceptance letters
+					to their dream schools, and used
 					<a
 						href="/pro"
 						class="font-semibold text-slate-900 underline decoration-slate-300 underline-offset-2 transition-colors hover:decoration-slate-900"
@@ -1228,7 +1228,7 @@
 			<!-- Campus photo strip (same treatment as the top of the Go Pro page): the
 			     real dream schools these students landed. -->
 			<div class="mb-12 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4">
-				{#each [{ src: '/images/harvard-campus.jpg', name: 'Harvard', w: 1280, h: 853 }, { src: '/images/stanford-campus.jpg', name: 'Stanford', w: 1280, h: 720 }, { src: '/images/mit-dome.jpg', name: 'MIT', w: 1280, h: 960 }, { src: '/images/princeton-campus.jpg', name: 'Princeton', w: 1280, h: 853 }] as campus}
+				{#each [{ src: '/images/harvard-statue.jpg', name: 'Harvard', w: 1280, h: 988 }, { src: '/images/stanford-campus.jpg', name: 'Stanford', w: 1280, h: 720 }, { src: '/images/mit-dome.jpg', name: 'MIT', w: 1280, h: 960 }, { src: '/images/princeton-campus.jpg', name: 'Princeton', w: 1280, h: 853 }] as campus}
 					<div class="relative overflow-hidden rounded-2xl border border-slate-200 shadow-sm">
 						<img
 							src={campus.src}
@@ -1248,7 +1248,7 @@
 			</div>
 
 			<div class="columns-1 sm:columns-2 lg:columns-3 gap-5 [column-fill:_balance]">
-				{#each [{ quote: 'ts was lowkey genuinely accurate. ran my file before decisions dropped and it basically called it.', name: 'Miao S.', school: 'Accepted to Northwestern, Class of 2030', tint: 6 }, { quote: 'The deep-dive REALLY helped me. It showed me exactly what each committee was going to catch before they caught it.', name: 'Daniel G.', school: 'Class of 2030', tint: 10 }, { quote: 'The line-by-line editing got me into Stanford, and half the T20s. I cannot overstate how much the essay feedback changed my application.', name: 'Kabir K.', school: 'Accepted to Stanford, Class of 2030', tint: 14 }, { quote: 'This tool helped me progress in scholarships such as the Robertson full ride to Duke.', name: 'Zachary B.', school: 'Class of 2030', tint: 8 }, { quote: 'I reframed my personal statement from the free review, and the countdown is really helpful. My stats were mediocre, so I think it really did come down to my essay. Thanks PredictAdmit!', name: 'Sophia M.', school: 'Accepted to Emory, Class of 2030', tint: 12 }, { quote: 'Very useful! Works better than GPT. Not sure if it is because multiple AIs talk before responding to prompts, or if it is just tuned well.', name: 'Arjun S.', school: 'Class of 2030', tint: 5 }, { quote: 'I did not think to get a counselor, but my results ended up being better than my friends in terms of T20s, even with similar stats. Thanks!', name: 'Evan F.', school: 'Accepted to Berkeley, Class of 2030', tint: 16 }] as t}
+				{#each [{ quote: 'ts was lowkenuinely accurate', name: 'Miao S.', school: 'Accepted to Northwestern, Class of 2030', tint: 6 }, { quote: 'The deep-dive REALLY helped me. It showed me exactly what each committee was going to catch before they caught it.', name: 'Daniel G.', school: 'Class of 2030', tint: 10 }, { quote: 'The line-by-line editing got me into Stanford, and half the T20s. I cannot overstate how much the essay feedback changed my application.', name: 'Kabir K.', school: 'Accepted to Stanford, Class of 2030', tint: 14 }, { quote: 'This tool helped me progress in scholarships such as the Robertson full ride to Duke.', name: 'Zachary B.', school: 'Class of 2030', tint: 8 }, { quote: 'I reframed my personal statement from the free review, and the countdown is really helpful. My stats were mediocre, so I think it really did come down to my essay. Thanks PredictAdmit!', name: 'Sophia M.', school: 'Accepted to Emory, Class of 2030', tint: 12 }, { quote: 'Very useful! Works better than GPT. Not sure if it is because multiple AIs talk before responding to prompts, or if it is just tuned well.', name: 'Arjun S.', school: 'Class of 2030', tint: 5 }, { quote: 'I did not think to get a counselor, but my results ended up being better than my friends in terms of T20s, even with similar stats. Thanks!', name: 'Evan F.', school: 'Accepted to Berkeley, Class of 2030', tint: 16 }] as t}
 					<div
 						class="mb-5 break-inside-avoid rounded-3xl border border-slate-200 bg-white p-7"
 						style="background-color: color-mix(in oklab, #0c0c09 {t.tint}%, #ffffff)"
@@ -1365,8 +1365,8 @@
 				PredictAdmit is an independent educational tool and is <strong
 					>not affiliated with, endorsed by, sponsored by, or connected to</strong
 				>
-				any college or university shown on this site. Every portal, status page, and decision letter
-				here is a
+				any college or university shown on this site. Every portal, status page, and decision letter here
+				is a
 				<strong>fictional simulation</strong> created for practice and preparation. Nothing on this
 				page is an official communication from any institution, and no simulated outcome reflects,
 				predicts, or affects any real application or admission decision. University names and marks
