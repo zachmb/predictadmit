@@ -182,10 +182,36 @@
 				<div
 					class="border-b border-slate-300 bg-gradient-to-r from-slate-100 via-slate-50 to-slate-100 px-5 py-4"
 				>
-					<h1 class="text-3xl font-bold text-slate-900 mb-2">All College Portals</h1>
-					<p class="text-slate-700">
-						Explore clearly labeled admissions outcome rehearsals. Choose a result for any school scenario, or use rehearsal mode to update every portal at once.
-					</p>
+					<div class="flex flex-wrap items-start justify-between gap-3">
+						<div>
+							<h1 class="text-3xl font-bold text-slate-900 mb-2">All College Portals</h1>
+							<p class="text-slate-700">
+								Explore clearly labeled admissions outcome rehearsals. Choose a result for any
+								school scenario, or use rehearsal mode to update every portal at once.
+							</p>
+						</div>
+						{#if $userProfile.isPro || ($aiResults?.decisions?.length ?? 0) > 0}
+							<!-- Pro users: jump straight to their filed Deep Dives (the AIMail folder). -->
+							<a
+								href="/ai#deepdive"
+								class="inline-flex shrink-0 items-center gap-2 rounded-full bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800 active:scale-[0.99]"
+							>
+								<svg
+									class="h-4 w-4"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke="currentColor"
+									stroke-width="2"
+									><path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										d="M21 21l-5.2-5.2M17 10a7 7 0 11-14 0 7 7 0 0114 0z"
+									/></svg
+								>
+								Your Deep Dives
+							</a>
+						{/if}
+					</div>
 
 					<div
 						class="mt-3 rounded-md border border-slate-300 bg-slate-50 px-4 py-3 text-[11px] leading-relaxed text-slate-600"
@@ -194,9 +220,11 @@
 							Important disclosure — simulation only
 						</p>
 						<p>
-							PredictAdmit is an independent educational tool and is <strong>not affiliated with,
-							endorsed by, sponsored by, or connected to</strong> any college or university shown on
-							this site. Every portal, status page, and decision letter here is a
+							PredictAdmit is an independent educational tool and is <strong
+								>not affiliated with, endorsed by, sponsored by, or connected to</strong
+							>
+							any college or university shown on this site. Every portal, status page, and decision
+							letter here is a
 							<strong>fictional simulation</strong> created for practice and preparation. Nothing on
 							this page is an official communication from any institution, and no simulated outcome
 							reflects, predicts, or affects any real application or admission decision. University
@@ -240,7 +268,8 @@
 						/>
 						{#if $userProfile.email}
 							<span class="text-[11px] text-slate-500"
-								>Login email: <span class="font-semibold text-slate-700">{$userProfile.email}</span></span
+								>Login email: <span class="font-semibold text-slate-700">{$userProfile.email}</span
+								></span
 							>
 						{:else}
 							<span class="text-[11px] text-slate-400">Personalizes every portal &amp; letter</span>
@@ -337,15 +366,14 @@
 
 					<div class="mt-8 p-4 bg-blue-50 border border-blue-200 rounded-md">
 						<p class="text-sm text-blue-800">
-							<strong>Rehearsal Controls:</strong> Individual buttons update that school's
-							portal and letter. The rehearsal mode above can still force every school at once.
+							<strong>Rehearsal Controls:</strong> Individual buttons update that school's portal and
+							letter. The rehearsal mode above can still force every school at once.
 						</p>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-
 </main>
 
 <style>

@@ -2497,7 +2497,7 @@
 						<h3
 							class="mt-3 font-serif text-4xl md:text-[3.25rem] font-medium tracking-tight leading-[1.05] text-slate-900"
 						>
-							Essays marked up like an admissions reader
+							Line by line essay feedback, unique per school
 						</h3>
 						<p class="mt-4 max-w-md text-lg md:text-xl leading-relaxed text-slate-500">
 							It flags the weak lines and says why. You write every word.

@@ -8,10 +8,14 @@
 	export let hash = '#inboxSection';
 	export let label = 'Back to admitMail inbox';
 	export let className = '';
+	// `immediate` shows the button right away (no 4s reveal delay) — used on deep-dive
+	// pages where "Back to inbox" must always be available, not fade in after a beat.
+	export let immediate = false;
 
-	let visible = false;
+	let visible = immediate;
 
 	onMount(() => {
+		if (immediate) return;
 		const timer = setTimeout(() => {
 			visible = true;
 		}, 4000);

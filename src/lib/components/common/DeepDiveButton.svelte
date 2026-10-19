@@ -33,16 +33,26 @@
 		transition:fade={{ duration: 300 }}
 	>
 		<button
-			on:click={() => goto(`/results/${slug}`)}
+			on:click={() => {
+				// Flag so the AIMail inbox flashes "filed to Deep Dives" when they return.
+				try {
+					sessionStorage.setItem('pa_stored_deepdive', '1');
+				} catch {
+					/* ignore */
+				}
+				goto(`/results/${slug}`);
+			}}
 			class="flex items-center gap-2 rounded-full px-4 py-3 font-sans text-sm font-bold text-white shadow-xl transition-all hover:-translate-y-0.5 hover:shadow-2xl active:scale-95 sm:px-5"
 			style="background-color: {color};"
 		>
-			<svg class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-				<path
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					d="M13 10V3L4 14h7v7l9-11h-7z"
-				/>
+			<svg
+				class="h-4 w-4 shrink-0"
+				fill="none"
+				viewBox="0 0 24 24"
+				stroke="currentColor"
+				stroke-width="2"
+			>
+				<path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
 			</svg>
 			<span class="hidden sm:inline">Deep Dive: Why did I get {decision}?</span>
 			<span class="sm:hidden">Deep Dive</span>

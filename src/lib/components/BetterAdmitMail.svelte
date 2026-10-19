@@ -27,7 +27,7 @@
 
 	// view state
 	export let viewMode: 'inbox' | 'email';
-	export let activeFolder: 'inbox' | 'sent';
+	export let activeFolder: 'inbox' | 'sent' | 'deepdive';
 
 	// search + lists
 	export let searchQuery: string;
@@ -63,12 +63,17 @@
 	export let resetSimulation: () => void;
 	export let selectPortal: (portal: PortalEmail) => void;
 	export let selectSent: (message: SentEmail) => void;
-	export let switchFolder: (folder: 'inbox' | 'sent') => void;
+	export let switchFolder: (folder: 'inbox' | 'sent' | 'deepdive') => void;
+	// Open a school's full deep dive (/results/<slug>) from the Deep Dive folder.
+	export let openDeepDive: (slug: string) => void = () => {};
+	// Set true briefly when the user just came back from viewing a deep dive, so the
+	// Deep Dive folder badge pulses — "your dive was filed here".
+	export let flashStored = false;
 	export let openInboxList: () => void;
 
-	// 🔍 Deep dive integration
-	// We only need the slug to know what's already got a deep dive.
-	type DeepDiveMeta = { slug: string };
+	// 🔍 Deep dive integration — slug identifies it; school + outcome render the
+	// Deep Dive folder row.
+	type DeepDiveMeta = { slug: string; school: string; outcome: string };
 
 	// List of deep dives that already exist (by slug)
 	export let deepDiveItems: DeepDiveMeta[] = [];
@@ -93,6 +98,21 @@
 	// Unread decisions still waiting to be opened — powers the blue Inbox badge
 	// (a real mail app counts unread, not total).
 	$: unreadCount = visiblePortals.filter((p) => !readPortalSlugs.has(p.slug)).length;
+
+	// "Stored into the Deep Dive folder" flourish: when a new deep dive lands (the
+	// user just opened one and came back), pulse the folder badge + fly the row in.
+	let justStored = false;
+	let _prevDDCount = deepDiveItems.length;
+	$: {
+		if (deepDiveItems.length > _prevDDCount) {
+			justStored = true;
+			setTimeout(() => (justStored = false), 2400);
+		}
+		_prevDDCount = deepDiveItems.length;
+	}
+	function outcomeLabel(o: string): string {
+		return o === 'admit' ? 'Admitted' : o === 'deny' ? 'Denied' : 'Waitlisted';
+	}
 
 	// A real inbox never shows the same one-line preview on every message. Pick a
 	// varied, believable snippet deterministically per school so the simulated
@@ -295,6 +315,38 @@
 						</svg>
 						<span>Sent</span>
 					</button>
+
+					<!-- Deep Dives: the full committee read for every school you opened, filed
+					     here so you can reopen any school's deep dive from the inbox. -->
+					<button
+						on:click={() => switchFolder('deepdive')}
+						class={`w-full flex items-center justify-between px-3 py-2.5 rounded-md text-sm font-semibold transition-colors ${activeFolder === 'deepdive' ? 'bg-white text-[#0c0c09] shadow-sm ring-1 ring-slate-200' : 'text-slate-600 hover:bg-slate-100'}`}
+					>
+						<div class="flex items-center gap-2.5">
+							<svg
+								class="w-4 h-4"
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke="currentColor"
+								stroke-width="2"
+							>
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									d="M21 21l-5.2-5.2M17 10a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m-3-3h6"
+								/>
+							</svg>
+							<span>Deep Dives</span>
+						</div>
+						{#if deepDiveItems.length > 0}
+							<span
+								class="text-[11px] font-bold bg-[#0c0c09] text-white px-2 py-0.5 rounded-full {justStored ||
+								flashStored
+									? 'dd-pulse'
+									: ''}">{deepDiveItems.length}</span
+							>
+						{/if}
+					</button>
 				</nav>
 
 				<div class="mt-auto rounded-md border border-slate-200 bg-white p-3">
@@ -349,6 +401,18 @@
 							class={`rounded-full px-3 py-1.5 text-xs font-semibold transition-colors ${activeFolder === 'sent' ? 'bg-[#0c0c09] text-white' : 'bg-slate-100 text-slate-600'}`}
 						>
 							Sent
+						</button>
+						<button
+							on:click={() => switchFolder('deepdive')}
+							class={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition-colors ${activeFolder === 'deepdive' ? 'bg-[#0c0c09] text-white' : 'bg-slate-100 text-slate-600'}`}
+						>
+							Deep Dives
+							{#if deepDiveItems.length > 0}
+								<span
+									class={`rounded-full px-1.5 text-[10px] font-bold ${activeFolder === 'deepdive' ? 'bg-white/25 text-white' : 'bg-[#0c0c09] text-white'} ${justStored || flashStored ? 'dd-pulse' : ''}`}
+									>{deepDiveItems.length}</span
+								>
+							{/if}
 						</button>
 					</div>
 
@@ -659,6 +723,84 @@
 									>
 								</button>
 							{/each}
+						{:else if activeFolder === 'deepdive'}
+							<!-- DEEP DIVE FOLDER: every school's full committee read, filed here.
+							     Each opens /results/<slug>. New dives fly in as they're stored. -->
+							{#if deepDiveItems.length === 0}
+								<div class="flex h-full flex-col items-center justify-center p-8 text-center">
+									<div
+										class="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-slate-50"
+									>
+										<svg
+											class="h-8 w-8 text-slate-300"
+											fill="none"
+											viewBox="0 0 24 24"
+											stroke="currentColor"
+											stroke-width="1.8"
+											><path
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												d="M21 21l-5.2-5.2M17 10a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m-3-3h6"
+											/></svg
+										>
+									</div>
+									<h3 class="mb-1 font-bold text-slate-900">No deep dives yet</h3>
+									<p class="max-w-xs text-sm text-slate-500">
+										Open a decision and tap <span class="font-semibold">Deep Dive</span> to see why each
+										school called it. They file here for every school.
+									</p>
+								</div>
+							{:else}
+								{#each deepDiveItems as item (item.slug)}
+									<button
+										in:fly={{ y: 12, duration: 360 }}
+										on:click={() => openDeepDive(item.slug)}
+										class="group relative flex w-full items-center gap-3 border-b border-slate-100 bg-white px-4 py-3 text-left transition-shadow hover:z-10 hover:shadow-[0_1px_2px_0_rgba(12,12,9,0.18),0_2px_6px_1px_rgba(12,12,9,0.1)]"
+									>
+										<span
+											class="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-[color-mix(in_oklab,#0c0c09_10%,transparent)] text-[#0c0c09]"
+										>
+											<svg
+												class="h-[18px] w-[18px]"
+												fill="none"
+												viewBox="0 0 24 24"
+												stroke="currentColor"
+												stroke-width="1.9"
+												><path
+													stroke-linecap="round"
+													stroke-linejoin="round"
+													d="M21 21l-5.2-5.2M17 10a7 7 0 11-14 0 7 7 0 0114 0z"
+												/></svg
+											>
+										</span>
+										<span class="min-w-0 flex-1">
+											<span class="block truncate text-sm font-bold text-slate-900"
+												>{item.school}</span
+											>
+											<span class="block truncate text-xs text-slate-500"
+												>Deep dive · why you got {outcomeLabel(item.outcome).toLowerCase()}</span
+											>
+										</span>
+										<span
+											class={`shrink-0 rounded-full px-2.5 py-1 text-[11px] font-bold ring-1 ring-inset ${
+												item.outcome === 'admit'
+													? 'bg-emerald-50 text-emerald-700 ring-emerald-200'
+													: item.outcome === 'deny'
+														? 'bg-rose-50 text-rose-700 ring-rose-200'
+														: 'bg-amber-50 text-amber-700 ring-amber-200'
+											}`}>{outcomeLabel(item.outcome)}</span
+										>
+										<svg
+											class="h-4 w-4 shrink-0 text-slate-300 transition-colors group-hover:text-slate-500"
+											fill="none"
+											viewBox="0 0 24 24"
+											stroke="currentColor"
+											stroke-width="2"
+											><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg
+										>
+									</button>
+								{/each}
+							{/if}
 						{/if}
 					</div>
 				{:else}
@@ -1091,3 +1233,25 @@
 		{toastMsg}
 	</div>
 {/if}
+
+<style>
+	/* "Stored into the folder" flourish: the Deep Dive badge pulses when a new
+	   dive files in (the user just opened one and came back). */
+	.dd-pulse {
+		animation: dd-pulse 0.6s ease-in-out 3;
+	}
+	@keyframes dd-pulse {
+		0%,
+		100% {
+			transform: scale(1);
+		}
+		50% {
+			transform: scale(1.35);
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.dd-pulse {
+			animation: none;
+		}
+	}
+</style>

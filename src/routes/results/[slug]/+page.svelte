@@ -3,6 +3,7 @@
 	import { goto } from '$app/navigation';
 	import { userProfile } from '$lib/stores/user';
 	import DecisionChat from '$lib/components/DecisionChat.svelte';
+	import BackToInboxButton from '$lib/components/common/BackToInboxButton.svelte';
 	import {
 		aiResults,
 		academicExplanationsBySlug,
@@ -20,9 +21,7 @@
 
 	const slug = $derived($page.params.slug ?? '');
 	// Full Access or a School Pass for this school unlocks the full analysis.
-	const unlocked = $derived(
-		$userProfile.isPro || ($userProfile.proSchools ?? []).includes(slug)
-	);
+	const unlocked = $derived($userProfile.isPro || ($userProfile.proSchools ?? []).includes(slug));
 	const schoolData = $derived($aiResults.decisions.find((d) => d.slug === slug));
 	$effect(() => {
 		if (schoolData && schoolData.academic_explanation === 'N/A: random sim') {
@@ -70,6 +69,11 @@
 {#if schoolData && schoolData.academic_explanation !== 'N/A: random sim'}
 	<div class="min-h-screen bg-slate-50 text-slate-700 p-4 md:p-8 font-sans">
 		<header class="mb-8">
+			<!-- Persistent on deep-dive pages: always return to the AIMail inbox, where
+			     this dive is filed under the Deep Dive folder. -->
+			<div class="mb-4">
+				<BackToInboxButton immediate label="Back to inbox" />
+			</div>
 			<h1 class="text-3xl font-bold text-slate-900 mb-2">Where you stand with this school</h1>
 			<p class="text-slate-500 text-sm italic">
 				A blunt read of your saved profile and essays. It's an estimate, not a real decision.
@@ -133,8 +137,8 @@
 								Decision Outcome
 							</h2>
 							<p class="max-w-xl text-xs leading-relaxed text-slate-500">
-								Remember: this is just an AI prediction. It could be completely wrong, so
-								don't think about it too deeply or treat it like a real admissions decision.
+								Remember: this is just an AI prediction. It could be completely wrong, so don't
+								think about it too deeply or treat it like a real admissions decision.
 							</p>
 						</div>
 						<div class="flex items-center gap-4">
@@ -262,8 +266,8 @@
 										Ask PredictAI about this decision
 									</h3>
 									<p class="text-sm text-slate-500">
-										Unlock to chat with PredictAI about why you got this call and exactly what
-										would move it. Included with Pro.
+										Unlock to chat with PredictAI about why you got this call and exactly what would
+										move it. Included with Pro.
 									</p>
 								</div>
 							</div>

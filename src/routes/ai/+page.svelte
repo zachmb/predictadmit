@@ -299,10 +299,20 @@
 
 	// view state for AdmitMail
 	let mailViewMode = $state<'inbox' | 'email'>('inbox');
-	let mailActiveFolder = $state<'inbox' | 'sent'>('inbox');
+	let mailActiveFolder = $state<'inbox' | 'sent' | 'deepdive'>('inbox');
+	// Flashes the Deep Dive folder badge when the user returns from viewing a dive.
+	let justStoredDive = $state(false);
 	// search + lists
 	let searchQuery = $state('');
 	let visiblePortals = $derived($aiResults?.decisions?.map(decisionToPortalEmail) ?? []);
+	// The Deep Dive folder lists every school with a real AI decision (persisted in
+	// aiResults), so a dive stays reachable per school across reloads — each opens
+	// /results/<slug>. (The ephemeral deepDiveItems only tracks freshly-generated ones.)
+	let folderDeepDives = $derived(
+		($aiResults?.decisions ?? [])
+			.filter((d) => d.academic_explanation && d.academic_explanation !== 'N/A: random sim')
+			.map((d) => ({ slug: d.slug, school: d.school, outcome: d.outcome }))
+	);
 
 	// For complex logic like your search filter:
 	let filteredPortals = $derived.by(() => {
@@ -457,7 +467,7 @@
 		saveAiInboxState();
 	}
 
-	function switchFolder(folder: 'inbox' | 'sent') {
+	function switchFolder(folder: 'inbox' | 'sent' | 'deepdive') {
 		mailActiveFolder = folder;
 		mailViewMode = 'inbox';
 		saveAiInboxState();
@@ -524,6 +534,31 @@
 	// Restore free-tier usage + Pro flag from localStorage and handle Stripe return
 	onMount(() => {
 		if (typeof window === 'undefined') return;
+
+		// Just came back from viewing a deep dive → flash the Deep Dive folder badge so
+		// the user sees it was filed there (set in DeepDiveButton before navigating).
+		try {
+			if (sessionStorage.getItem('pa_stored_deepdive') === '1') {
+				sessionStorage.removeItem('pa_stored_deepdive');
+				justStoredDive = true;
+				setTimeout(() => (justStoredDive = false), 2800);
+			}
+		} catch {
+			/* ignore storage errors */
+		}
+
+		// Arriving via /ai#deepdive (the "Your Deep Dives" button on /portals) opens the
+		// Deep Dive folder directly and scrolls to the AIMail inbox.
+		if (window.location.hash === '#deepdive') {
+			mailActiveFolder = 'deepdive';
+			let tries = 0;
+			const tick = () => {
+				const el = document.getElementById('inboxSection');
+				if (el) el.scrollIntoView({ behavior: tries === 0 ? 'auto' : 'smooth', block: 'start' });
+				if (tries++ < 14) setTimeout(tick, 100);
+			};
+			setTimeout(tick, 80);
+		}
 
 		const params = new URLSearchParams(window.location.search);
 
@@ -2347,7 +2382,9 @@
 								{selectSent}
 								{switchFolder}
 								{openInboxList}
-								{deepDiveItems}
+								openDeepDive={(slug) => goto(`/results/${slug}`)}
+								flashStored={justStoredDive}
+								deepDiveItems={folderDeepDives}
 								{deepDiveLoadingSlug}
 								requestDeepDiveForSlug={(slug: string) => {
 									const decision = aiDecisions.find(
