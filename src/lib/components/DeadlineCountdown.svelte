@@ -54,10 +54,13 @@
 <div class={wrapperClass}>
 	<div class="flex items-center justify-between gap-3">
 		<div>
-			<p class={`font-semibold uppercase tracking-wide text-slate-500 ${big ? 'text-sm' : 'text-xs'}`}>Countdown</p>
-			<h3 class={`mt-0.5 font-bold text-slate-900 ${big ? 'text-2xl tracking-tight' : 'text-lg'}`}>{deadline.label} · {deadline.date}</h3>
+			<h3 class={`font-bold text-slate-900 ${big ? 'text-2xl tracking-tight' : 'text-lg'}`}>
+				{deadline.label} · {deadline.date}
+			</h3>
 		</div>
-		<span class={`flex shrink-0 items-center gap-1.5 font-semibold text-[#0c0c09] ${big ? 'text-sm' : 'text-xs'}`}>
+		<span
+			class={`flex shrink-0 items-center gap-1.5 font-semibold text-[#0c0c09] ${big ? 'text-sm' : 'text-xs'}`}
+		>
 			<span class="relative flex h-2 w-2">
 				<span
 					class="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#0c0c09] opacity-75"
@@ -69,19 +72,18 @@
 	</div>
 	<div class={`grid grid-cols-4 ${big ? 'mt-7 gap-3' : 'mt-5 gap-2'}`}>
 		{#each [{ label: 'Days', value: cd.days }, { label: 'Hours', value: cd.hours }, { label: 'Min', value: cd.minutes }, { label: 'Sec', value: cd.seconds }] as box}
-			<div class={`rounded-xl bg-slate-50 border border-slate-100 text-center ${big ? 'py-5' : 'py-3'}`}>
+			<div
+				class={`rounded-xl bg-slate-50 border border-slate-100 text-center ${big ? 'py-5' : 'py-3'}`}
+			>
 				<div class={`font-bold tabular-nums text-slate-900 ${big ? 'text-4xl' : 'text-2xl'}`}>
 					{box.label === 'Days' ? box.value : pad(box.value)}
 				</div>
-				<div class={`mt-0.5 font-medium uppercase tracking-wide text-slate-400 ${big ? 'text-xs' : 'text-[11px]'}`}>
+				<div
+					class={`mt-0.5 font-medium uppercase tracking-wide text-slate-400 ${big ? 'text-xs' : 'text-[11px]'}`}
+				>
 					{box.label}
 				</div>
 			</div>
 		{/each}
 	</div>
-	{#if big}
-		<p class="mt-6 text-sm leading-snug text-slate-500">
-			Application deadlines are closing. Run your read now, while there's still time to fix it.
-		</p>
-	{/if}
 </div>

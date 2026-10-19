@@ -660,7 +660,10 @@
 		carouselPlan = plan;
 		showUpgradeCarousel = true;
 		// GA4 funnel Step 3 "Add to cart" — user picked a plan (before Stripe).
-		const cents = plan === 'monthly' ? STRIPE_PRODUCTS.monthly.amountCents : STRIPE_PRODUCTS.lifetime.amountCents;
+		const cents =
+			plan === 'monthly'
+				? STRIPE_PRODUCTS.monthly.amountCents
+				: STRIPE_PRODUCTS.lifetime.amountCents;
 		trackAddToCart(plan, cents / 100);
 	}
 
@@ -675,7 +678,10 @@
 		isProcessing = true;
 		// GA4 funnel Step 4 "Begin checkout" — Stripe checkout opening.
 		{
-			const cents = plan === 'monthly' ? STRIPE_PRODUCTS.monthly.amountCents : STRIPE_PRODUCTS.lifetime.amountCents;
+			const cents =
+				plan === 'monthly'
+					? STRIPE_PRODUCTS.monthly.amountCents
+					: STRIPE_PRODUCTS.lifetime.amountCents;
 			track('checkout_step_1', { plan, where: 'pro' });
 			trackBeginCheckout(plan, cents / 100);
 		}
@@ -889,7 +895,7 @@
 	const faqs = [
 		{
 			q: 'Does a good prediction mean I get in?',
-			a: "No, and anyone who tells you otherwise is lying. We run the odds off real historical data. Admissions officers are humans reading on a Tuesday afternoon, and no model gets inside their heads. Treat the number as a sharp estimate, not a verdict."
+			a: 'No, and anyone who tells you otherwise is lying. We run the odds off real historical data. Admissions officers are humans reading on a Tuesday afternoon, and no model gets inside their heads. Treat the number as a sharp estimate, not a verdict.'
 		},
 		{
 			q: 'Is this a subscription?',
@@ -897,11 +903,11 @@
 		},
 		{
 			q: 'What if I only care about one school?',
-			a: "Run your free prediction first, then unlock the full deep-dive for any one school for a one-time $4.99. That covers the AI decision simulation, the breakdown of why, and essay grading for that school."
+			a: 'Run your free prediction first, then unlock the full deep-dive for any one school for a one-time $4.99. That covers the AI decision simulation, the breakdown of why, and essay grading for that school.'
 		},
 		{
 			q: 'How good is the essay grader, really?',
-			a: "It was built on thousands of essays that actually got people into Top 20 schools. It reads for structure, voice, and whether the essay fits the specific school you are targeting, then tells you where it is weak. It grades and gives notes. It never writes a line for you."
+			a: 'It was built on thousands of essays that actually got people into Top 20 schools. It reads for structure, voice, and whether the essay fits the specific school you are targeting, then tells you where it is weak. It grades and gives notes. It never writes a line for you.'
 		}
 	];
 
@@ -944,7 +950,11 @@
 				<div class="flex items-center gap-2.5 min-w-0">
 					<!-- Logo Icon -->
 					<div class="w-6 h-6 rounded-md bg-[#0c0c09] flex items-center justify-center shrink-0">
-						<svg class="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+						<svg
+							class="w-3.5 h-3.5 text-white"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke="currentColor"
 							><path
 								stroke-linecap="round"
 								stroke-linejoin="round"
@@ -969,7 +979,9 @@
 				class="flex-1 overflow-y-auto px-2 py-2 space-y-px"
 				onclick={() => (sidebarOpen = false)}
 			>
-				<p class="px-3 pt-1 pb-1.5 text-[10px] font-semibold uppercase tracking-wider text-slate-400">
+				<p
+					class="px-3 pt-1 pb-1.5 text-[10px] font-semibold uppercase tracking-wider text-slate-400"
+				>
 					Workspace
 				</p>
 				{#each NAV_ITEMS as item}
@@ -992,7 +1004,9 @@
 				{/each}
 
 				<div class="mt-5 mb-1 px-3 flex items-center justify-between">
-					<span class="text-[10px] font-semibold uppercase tracking-wider text-slate-400">Essays</span>
+					<span class="text-[10px] font-semibold uppercase tracking-wider text-slate-400"
+						>Essays</span
+					>
 					<button
 						onclick={addNewSupplemental}
 						class="p-1 rounded-md text-slate-300 hover:text-slate-700 hover:bg-slate-100 transition-colors"
@@ -1032,7 +1046,9 @@
 								d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
 							/>
 						</svg>
-						<span class="text-[13px] font-medium truncate flex-1">{file.name.replace(/.md|.txt/g, '')}</span>
+						<span class="text-[13px] font-medium truncate flex-1"
+							>{file.name.replace(/.md|.txt/g, '')}</span
+						>
 					</button>
 				{/each}
 
@@ -1061,7 +1077,8 @@
 						<div class="bg-white rounded-xl shadow-2xl w-full max-w-lg relative z-10 p-6 space-y-4">
 							<h3 class="text-lg font-bold">Import Activities</h3>
 							<p class="text-sm text-slate-500">
-								Paste straight from your resume, one activity per line. <br />We'll split each on the dashes:
+								Paste straight from your resume, one activity per line. <br />We'll split each on
+								the dashes:
 								<code class="bg-slate-100 px-1 rounded">Name - Role - Hours</code>
 							</p>
 							<textarea
@@ -1157,7 +1174,9 @@
 					>
 				</button>
 				<div class="flex items-center gap-2 min-w-0">
-					<span class="text-sm font-semibold tracking-tight text-slate-900 truncate">PredictAdmit</span>
+					<span class="text-sm font-semibold tracking-tight text-slate-900 truncate"
+						>PredictAdmit</span
+					>
 					<span
 						class="rounded-md border border-blue-100 bg-blue-50 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[#0c0c09]"
 						>Pro</span
@@ -1166,7 +1185,7 @@
 			</div>
 
 			{#if currentView === 'dashboard'}
-					<DashboardHome setView={(v) => (currentView = v as typeof currentView)} />
+				<DashboardHome setView={(v) => (currentView = v as typeof currentView)} />
 
 				<!-- PROFILE EDITOR MODAL / SLIDE-OVER -->
 				{#if showProfileEditor}
@@ -1654,14 +1673,32 @@
 							<div
 								class="absolute inset-0 flex flex-col items-center justify-center gap-3 px-6 text-center pointer-events-none"
 							>
-								<div class="grid h-14 w-14 place-items-center rounded-2xl bg-[color-mix(in_oklab,#0c0c09_10%,transparent)] text-[#0c0c09]">
-									<svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.989-2.386l-.548-.547z" /></svg>
+								<div
+									class="grid h-14 w-14 place-items-center rounded-2xl bg-[color-mix(in_oklab,#0c0c09_10%,transparent)] text-[#0c0c09]"
+								>
+									<svg
+										class="h-7 w-7"
+										fill="none"
+										viewBox="0 0 24 24"
+										stroke="currentColor"
+										stroke-width="1.8"
+										><path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.989-2.386l-.548-.547z"
+										/></svg
+									>
 								</div>
-								<p class="text-lg font-bold text-slate-700">Map the story behind your application</p>
+								<p class="text-lg font-bold text-slate-700">
+									Map the story behind your application
+								</p>
 								<p class="max-w-xs text-sm leading-relaxed text-slate-400">
-									Click anywhere to drop an idea, whether an experience, an obsession, or a value, or hit
-									<span class="font-semibold text-[#0c0c09]">AI&nbsp;Brainstorm</span> to auto-generate themes from your profile, then
-									<span class="font-semibold text-[#0c0c09]">Analyze&nbsp;Themes</span> to find the thread that ties them together.
+									Click anywhere to drop an idea, whether an experience, an obsession, or a value,
+									or hit
+									<span class="font-semibold text-[#0c0c09]">AI&nbsp;Brainstorm</span> to
+									auto-generate themes from your profile, then
+									<span class="font-semibold text-[#0c0c09]">Analyze&nbsp;Themes</span> to find the thread
+									that ties them together.
 								</p>
 							</div>
 						{/if}
@@ -1683,7 +1720,9 @@
 					<div class="flex items-center gap-2 text-sm min-w-0">
 						<span class="text-slate-400 font-medium hidden sm:inline">Editor</span>
 						<span class="text-slate-300 hidden sm:inline">/</span>
-						<span class="font-bold text-slate-900 truncate">{activeFile.name.replace('.md', '')}</span>
+						<span class="font-bold text-slate-900 truncate"
+							>{activeFile.name.replace('.md', '')}</span
+						>
 					</div>
 					<div class="flex items-center gap-2 md:gap-4 shrink-0">
 						<!-- View Toggles -->
@@ -2146,29 +2185,33 @@
 						</div>
 					{/if}
 				</div>
-				{:else if currentView === 'counselor'}
-					<AICounselor />
-				{:else if currentView === 'schools'}
-					<SchoolsExplorer />
-				{:else if currentView === 'chanceme'}
-					<ChanceMeProfile />
-				{:else if currentView === 'extracurricular'}
-					<ExtracurricularHelper />
-				{:else if currentView === 'settings'}
-					<SettingsView />
+			{:else if currentView === 'counselor'}
+				<AICounselor />
+			{:else if currentView === 'schools'}
+				<SchoolsExplorer />
+			{:else if currentView === 'chanceme'}
+				<ChanceMeProfile />
+			{:else if currentView === 'extracurricular'}
+				<ExtracurricularHelper />
+			{:else if currentView === 'settings'}
+				<SettingsView />
 			{/if}
 		</main>
 	</div>
 {:else}
 	<!-- SIGN IN PROMPT -->
-	<main class="min-h-screen bg-[#f4f4f0] font-sans text-slate-900 flex flex-col items-center pt-20 pb-28 px-6 relative overflow-hidden">
+	<main
+		class="min-h-screen bg-[#f4f4f0] font-sans text-slate-900 flex flex-col items-center pt-20 pb-28 px-6 relative overflow-hidden"
+	>
 		<div class="max-w-5xl w-full mx-auto space-y-28 relative z-10">
 			<!-- Hero -->
 			<div class="grid items-center gap-10 lg:grid-cols-2">
 				<!-- Left: copy, price, CTAs -->
 				<div class="text-center lg:text-left">
-					<h1 class="font-serif text-5xl md:text-6xl font-medium tracking-tight text-slate-900 leading-[1.05]">
-						Get into your <span class="text-[#0c0c09]">dream school.</span>
+					<h1
+						class="font-serif text-5xl md:text-6xl font-medium tracking-tight text-slate-900 leading-[1.05]"
+					>
+						Get into your dream school.
 					</h1>
 					<p class="mt-5 mx-auto lg:mx-0 max-w-md text-lg text-slate-500 leading-relaxed">
 						Everything you need to get into your dream school. We used it to get into ours.
@@ -2181,7 +2224,9 @@
 						<span class="text-sm text-slate-500">or $25 once</span>
 					</div>
 
-					<div class="mt-7 flex flex-col sm:flex-row items-center lg:justify-start justify-center gap-4">
+					<div
+						class="mt-7 flex flex-col sm:flex-row items-center lg:justify-start justify-center gap-4"
+					>
 						<button
 							onclick={() => startUpgrade('monthly')}
 							disabled={isProcessing}
@@ -2189,26 +2234,54 @@
 						>
 							{isProcessing ? 'Taking you to checkout…' : 'Start for $9.99/mo'}
 						</button>
-						<a href="/ai" class="group inline-flex items-center gap-1.5 text-base font-semibold text-slate-900 hover:text-slate-500">
+						<a
+							href="/ai"
+							class="group inline-flex items-center gap-1.5 text-base font-semibold text-slate-900 hover:text-slate-500"
+						>
 							Try your first verdict free
 							<span class="transition group-hover:translate-x-0.5">→</span>
 						</a>
 					</div>
-
 				</div>
 
 				<!-- Right: real elite-university campus photos (the dream schools you're
 				     running your application against). Public-domain / CC-licensed. -->
 				<div class="grid grid-cols-2 gap-3 sm:gap-4">
-					<div class="relative col-span-2 overflow-hidden rounded-2xl border border-slate-200 shadow-sm">
-						<img src="/images/stanford-campus.jpg" alt="A top university campus" width="1280" height="720" loading="lazy" class="h-48 w-full object-cover sm:h-56" />
-						<span class="absolute bottom-2 left-3 rounded-full bg-black/45 px-2.5 py-1 text-[11px] font-semibold text-white">The dream schools, in reach</span>
+					<div
+						class="relative col-span-2 overflow-hidden rounded-2xl border border-slate-200 shadow-sm"
+					>
+						<img
+							src="/images/stanford-campus.jpg"
+							alt="A top university campus"
+							width="1280"
+							height="720"
+							loading="lazy"
+							class="h-48 w-full object-cover sm:h-56"
+						/>
+						<span
+							class="absolute bottom-2 left-3 rounded-full bg-black/45 px-2.5 py-1 text-[11px] font-semibold text-white"
+							>The dream schools, in reach</span
+						>
 					</div>
 					<div class="overflow-hidden rounded-2xl border border-slate-200 shadow-sm">
-						<img src="/images/mit-dome.jpg" alt="A top university campus" width="1280" height="960" loading="lazy" class="h-36 w-full object-cover sm:h-40" />
+						<img
+							src="/images/mit-dome.jpg"
+							alt="A top university campus"
+							width="1280"
+							height="960"
+							loading="lazy"
+							class="h-36 w-full object-cover sm:h-40"
+						/>
 					</div>
 					<div class="overflow-hidden rounded-2xl border border-slate-200 shadow-sm">
-						<img src="/images/princeton-campus.jpg" alt="A top university campus" width="1280" height="853" loading="lazy" class="h-36 w-full object-cover sm:h-40" />
+						<img
+							src="/images/princeton-campus.jpg"
+							alt="A top university campus"
+							width="1280"
+							height="853"
+							loading="lazy"
+							class="h-36 w-full object-cover sm:h-40"
+						/>
 					</div>
 				</div>
 			</div>
@@ -2219,11 +2292,16 @@
 			     funnels toward pasting essays for help (the paid essay grader). -->
 			<section>
 				<div class="max-w-2xl">
-					<h2 class="font-serif text-4xl md:text-5xl font-medium tracking-tight text-slate-900 leading-[1.05]">
-						Talk to the admissions AI that <span class="text-[#0c0c09]">actually tells you the truth.</span>
+					<h2
+						class="font-serif text-4xl md:text-5xl font-medium tracking-tight text-slate-900 leading-[1.05]"
+					>
+						Talk to the admissions AI that <span class="text-[#0c0c09]"
+							>actually tells you the truth.</span
+						>
 					</h2>
 					<p class="mt-4 text-lg text-slate-500 leading-relaxed">
-						Ask it anything — your real odds, which activities are just padding, what's quietly dragging your application down.
+						Ask it anything — your real odds, which activities are just padding, what's quietly
+						dragging your application down.
 					</p>
 				</div>
 				<div class="mt-8">
@@ -2233,11 +2311,7 @@
 
 			<!-- How it works: three concrete steps so the product is tangible. -->
 			<div class="grid gap-4 sm:grid-cols-3">
-				{#each [
-					{ n: '1', t: 'Paste your application', d: 'Drop in your essays, activities, honors, and scores. Or upload the file and let the AI read it.' },
-					{ n: '2', t: 'Get your decisions', d: 'Watch accept, waitlist, and deny letters land in a real-feeling inbox across every T30 school.' },
-					{ n: '3', t: 'Fix what is weak, re-run', d: 'Use the workshop to tighten essays and framing, then run it again and watch your odds move.' }
-				] as step}
+				{#each [{ n: '1', t: 'Paste your application', d: 'Drop in your essays, activities, honors, and scores. Or upload the file and let the AI read it.' }, { n: '2', t: 'Get your decisions', d: 'Watch accept, waitlist, and deny letters land in a real-feeling inbox across every T30 school.' }, { n: '3', t: 'Fix what is weak, re-run', d: 'Use the workshop to tighten essays and framing, then run it again and watch your odds move.' }] as step}
 					<div>
 						<span class="font-serif text-4xl text-slate-300">{step.n}</span>
 						<p class="mt-3 font-bold text-slate-900">{step.t}</p>
@@ -2259,10 +2333,13 @@
 							loading="lazy"
 							class="absolute inset-0 h-full w-full object-cover"
 						/>
-						<span class="absolute bottom-2 right-2 rounded bg-black/40 px-1.5 py-0.5 text-[9px] text-white/80">Wikimedia Commons · CC BY-SA 4.0</span>
+						<span
+							class="absolute bottom-2 right-2 rounded bg-black/40 px-1.5 py-0.5 text-[9px] text-white/80"
+							>Wikimedia Commons · CC BY-SA 4.0</span
+						>
 					</div>
 					<div class="flex flex-col justify-center gap-5 p-8 sm:p-12">
-							<div class="flex items-end gap-6">
+						<div class="flex items-end gap-6">
 							<div>
 								<div class="font-serif text-5xl font-medium text-slate-900">$100</div>
 								<div class="mt-1 text-sm text-slate-500">One Stanford application fee</div>
@@ -2274,9 +2351,13 @@
 							</div>
 						</div>
 						<p class="text-lg leading-relaxed text-slate-600">
-							For about a <strong class="text-slate-900">tenth of one application fee</strong>, Pro gives you your real verdict at every T30, all season.
+							For about a <strong class="text-slate-900">tenth of one application fee</strong>, Pro
+							gives you your real verdict at every T30, all season.
 						</p>
-						<a href="/ai" class="inline-flex w-fit items-center gap-1.5 rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-800">
+						<a
+							href="/ai"
+							class="inline-flex w-fit items-center gap-1.5 rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
+						>
 							Start free <span aria-hidden="true">→</span>
 						</a>
 					</div>
@@ -2287,11 +2368,14 @@
 			     straight to Stripe. Monthly is the recommended, lifted plan. -->
 			<div>
 				<div class="max-w-2xl">
-					<h2 class="font-serif text-4xl md:text-5xl font-medium leading-[1.1] tracking-tight text-slate-900">
+					<h2
+						class="font-serif text-4xl md:text-5xl font-medium leading-[1.1] tracking-tight text-slate-900"
+					>
 						Your first prediction is free. Upgrade when you want your verdict at every school.
 					</h2>
 					<p class="mt-5 text-lg leading-relaxed text-slate-500">
-						See where you stand for free, no card. Then go month to month while you're applying, or pay once for the whole season.
+						See where you stand for free, no card. Then go month to month while you're applying, or
+						pay once for the whole season.
 					</p>
 				</div>
 
@@ -2304,17 +2388,32 @@
 								<span class="font-serif text-4xl font-medium text-slate-900">$0</span>
 							</div>
 							<p class="mt-4 text-sm leading-relaxed text-slate-500">
-								Run one full AI prediction and open one school's decision. See where you stand before you spend a cent.
+								Run one full AI prediction and open one school's decision. See where you stand
+								before you spend a cent.
 							</p>
 							<ul class="mt-6 mb-8 space-y-2.5">
 								{#each ['One full AI prediction', "Open one school's decision", 'No credit card to start'] as f}
 									<li class="flex items-start gap-2.5 text-sm text-slate-600">
-										<svg class="mt-0.5 h-4 w-4 flex-none text-slate-900" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+										<svg
+											class="mt-0.5 h-4 w-4 flex-none text-slate-900"
+											fill="none"
+											viewBox="0 0 24 24"
+											stroke="currentColor"
+											stroke-width="2.5"
+											><path
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												d="M5 13l4 4L19 7"
+											/></svg
+										>
 										{f}
 									</li>
 								{/each}
 							</ul>
-							<a href="/ai" class="mt-auto block w-full rounded-full border border-slate-300 bg-white px-5 py-3.5 text-center text-sm font-semibold text-slate-900 transition hover:bg-slate-100">
+							<a
+								href="/ai"
+								class="mt-auto block w-full rounded-full border border-slate-300 bg-white px-5 py-3.5 text-center text-sm font-semibold text-slate-900 transition hover:bg-slate-100"
+							>
 								Start free →
 							</a>
 						</div>
@@ -2322,7 +2421,10 @@
 						<!-- Monthly: recommended, lifted in white. On mobile it jumps to the
 						     top (order-first) so the primary plan + Buy button lead the stack. -->
 						<div class="relative order-first flex flex-col bg-white p-8 md:order-none">
-							<span class="absolute right-6 top-8 rounded-full bg-slate-900 px-3 py-1 text-[10px] font-semibold uppercase tracking-wide text-white">Recommended</span>
+							<span
+								class="absolute right-6 top-8 rounded-full bg-slate-900 px-3 py-1 text-[10px] font-semibold uppercase tracking-wide text-white"
+								>Recommended</span
+							>
 							<h3 class="font-serif text-2xl text-slate-900">Monthly</h3>
 							<div class="mt-3 flex items-baseline gap-1.5">
 								<span class="font-serif text-4xl font-medium text-slate-900">$9.99</span>
@@ -2330,12 +2432,24 @@
 							</div>
 							<p class="mt-1 text-xs text-slate-400">Billed monthly. Cancel anytime.</p>
 							<p class="mt-3 text-sm leading-relaxed text-slate-500">
-								Everything, while you're applying. Your verdict at every T30 school and the full workshop to fix what's weak.
+								Everything, while you're applying. Your verdict at every T30 school and the full
+								workshop to fix what's weak.
 							</p>
 							<ul class="mt-6 mb-8 space-y-2.5">
 								{#each ['Your verdict at every T30 school', 'The five-reader committee on every one', 'AI essay editor + per-school strategy', 'AI counselor + unlimited re-runs'] as f}
 									<li class="flex items-start gap-2.5 text-sm text-slate-700">
-										<svg class="mt-0.5 h-4 w-4 flex-none text-[#0c0c09]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+										<svg
+											class="mt-0.5 h-4 w-4 flex-none text-[#0c0c09]"
+											fill="none"
+											viewBox="0 0 24 24"
+											stroke="currentColor"
+											stroke-width="2.5"
+											><path
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												d="M5 13l4 4L19 7"
+											/></svg
+										>
 										{f}
 									</li>
 								{/each}
@@ -2358,12 +2472,24 @@
 							</div>
 							<p class="mt-1 text-xs text-slate-400">One payment. No subscription.</p>
 							<p class="mt-3 text-sm leading-relaxed text-slate-500">
-								The same full access, paid once. About two and a half months of Monthly costs the same.
+								The same full access, paid once. About two and a half months of Monthly costs the
+								same.
 							</p>
 							<ul class="mt-6 mb-8 space-y-2.5">
 								{#each ['Everything in Monthly, forever', 'Nothing to renew or cancel', 'One payment for the whole season'] as f}
 									<li class="flex items-start gap-2.5 text-sm text-slate-600">
-										<svg class="mt-0.5 h-4 w-4 flex-none text-slate-900" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+										<svg
+											class="mt-0.5 h-4 w-4 flex-none text-slate-900"
+											fill="none"
+											viewBox="0 0 24 24"
+											stroke="currentColor"
+											stroke-width="2.5"
+											><path
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												d="M5 13l4 4L19 7"
+											/></svg
+										>
 										{f}
 									</li>
 								{/each}
@@ -2380,33 +2506,68 @@
 				</div>
 
 				<p class="mt-5 text-center text-xs text-slate-400">
-					Just one school? Run your free prediction, then unlock a single deep-dive for $4.99. Secure checkout by Stripe.
+					Just one school? Run your free prediction, then unlock a single deep-dive for $4.99.
+					Secure checkout by Stripe.
 				</p>
+			</div>
+
+			<!-- Full-bleed black header band (white heading), then the feature rows. -->
+			<div class="relative left-1/2 -translate-x-1/2 w-screen bg-[#0c0c09] py-16 md:py-24">
+				<div class="mx-auto w-[92vw] max-w-[1280px]">
+					<div class="max-w-2xl">
+						<h2
+							class="font-serif text-4xl md:text-5xl font-medium leading-[1.1] tracking-tight text-white"
+						>
+							Everything Pro gives you
+						</h2>
+						<p class="mt-4 text-lg leading-relaxed text-white/60">
+							See where you stand, then fix what's holding you back.
+						</p>
+					</div>
+				</div>
 			</div>
 
 			<!-- Everything you get: the full feature set, in two honest groups. -->
 			<div class="space-y-10 relative left-1/2 -translate-x-1/2 w-[92vw] max-w-[1280px]">
-				<div class="max-w-2xl">
-					<h2 class="font-serif text-4xl md:text-5xl font-medium leading-[1.1] tracking-tight text-slate-900">Everything Pro gives you</h2>
-					<p class="mt-4 text-lg leading-relaxed text-slate-500">See where you stand, then fix what's holding you back.</p>
-				</div>
-
 				<!-- Alternating feature rows: a bold headline + one line beside a real
 				     product mock (Trajecta-style editorial layout). -->
 				<div class="space-y-16 md:space-y-24">
 					<!-- Row 1: verdict across the T30 -->
 					<div class="grid items-center gap-10 md:grid-cols-2 md:gap-16">
 						<div>
-							<h3 class="mt-3 font-serif text-4xl md:text-[3.25rem] font-medium tracking-tight leading-[1.05] text-slate-900">Your verdict at every T30 school</h3>
-							<p class="mt-4 max-w-md text-lg md:text-xl leading-relaxed text-slate-500">Accept, waitlist, deny, across every top school. Re-run it any time.</p>
+							<h3
+								class="mt-3 font-serif text-4xl md:text-[3.25rem] font-medium tracking-tight leading-[1.05] text-slate-900"
+							>
+								Your verdict at every T30 school
+							</h3>
+							<p class="mt-4 max-w-md text-lg md:text-xl leading-relaxed text-slate-500">
+								Accept, waitlist, deny, across every top school. Re-run it any time.
+							</p>
 						</div>
 						<div class="">
 							<div class="relative">
-								<div class="overflow-hidden rounded-2xl border-[3px] border-[#0c0c09] bg-white shadow-[0_24px_60px_-24px_rgba(12,12,9,0.35)]">
-									<img src="/screenshots/pro-universities.png" alt="Predicted decisions across every T30 school" width="2880" height="1800" loading="lazy" class="block h-auto w-full" />
+								<div
+									class="overflow-hidden rounded-2xl border-[3px] border-[#0c0c09] bg-white shadow-[0_24px_60px_-24px_rgba(12,12,9,0.35)]"
+								>
+									<img
+										src="/screenshots/pro-universities.png"
+										alt="Predicted decisions across every T30 school"
+										width="2880"
+										height="1800"
+										loading="lazy"
+										class="block h-auto w-full"
+									/>
 								</div>
 								<span class="pa-cursor pa-cursor--a" aria-hidden="true">
-									<svg width="24" height="24" viewBox="0 0 24 24" fill="#0c0c09" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"><path d="M5 2.5l5.6 16.5 2.3-6.9 6.9-2.3L5 2.5z" /></svg>
+									<svg
+										width="24"
+										height="24"
+										viewBox="0 0 24 24"
+										fill="#0c0c09"
+										stroke="#fff"
+										stroke-width="1.6"
+										stroke-linejoin="round"><path d="M5 2.5l5.6 16.5 2.3-6.9 6.9-2.3L5 2.5z" /></svg
+									>
 								</span>
 							</div>
 						</div>
@@ -2415,16 +2576,39 @@
 					<!-- Row 2: committee reasoning (mock left) -->
 					<div class="grid items-center gap-10 md:grid-cols-2 md:gap-16">
 						<div class="md:order-2">
-							<h3 class="mt-3 font-serif text-4xl md:text-[3.25rem] font-medium tracking-tight leading-[1.05] text-slate-900">A five-reader committee on every decision</h3>
-							<p class="mt-4 max-w-md text-lg md:text-xl leading-relaxed text-slate-500">Five dimensions scored, with the one fix that moves the verdict.</p>
+							<h3
+								class="mt-3 font-serif text-4xl md:text-[3.25rem] font-medium tracking-tight leading-[1.05] text-slate-900"
+							>
+								A five-reader committee on every decision
+							</h3>
+							<p class="mt-4 max-w-md text-lg md:text-xl leading-relaxed text-slate-500">
+								Five dimensions scored, with the one fix that moves the verdict.
+							</p>
 						</div>
 						<div class=" md:order-1">
 							<div class="relative">
-								<div class="overflow-hidden rounded-2xl border-[3px] border-[#0c0c09] bg-white shadow-[0_24px_60px_-24px_rgba(12,12,9,0.35)]">
-									<img src="/screenshots/pro-chanceme.png" alt="Scored committee read of your application" width="2880" height="1800" loading="lazy" class="block h-auto w-full" />
+								<div
+									class="overflow-hidden rounded-2xl border-[3px] border-[#0c0c09] bg-white shadow-[0_24px_60px_-24px_rgba(12,12,9,0.35)]"
+								>
+									<img
+										src="/screenshots/pro-chanceme.png"
+										alt="Scored committee read of your application"
+										width="2880"
+										height="1800"
+										loading="lazy"
+										class="block h-auto w-full"
+									/>
 								</div>
 								<span class="pa-cursor pa-cursor--b" aria-hidden="true">
-									<svg width="24" height="24" viewBox="0 0 24 24" fill="#0c0c09" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"><path d="M5 2.5l5.6 16.5 2.3-6.9 6.9-2.3L5 2.5z" /></svg>
+									<svg
+										width="24"
+										height="24"
+										viewBox="0 0 24 24"
+										fill="#0c0c09"
+										stroke="#fff"
+										stroke-width="1.6"
+										stroke-linejoin="round"><path d="M5 2.5l5.6 16.5 2.3-6.9 6.9-2.3L5 2.5z" /></svg
+									>
 								</span>
 							</div>
 						</div>
@@ -2434,16 +2618,39 @@
 				<!-- Row 3: essay markup -->
 				<div class="grid items-center gap-10 md:grid-cols-2 md:gap-16">
 					<div>
-						<h3 class="mt-3 font-serif text-4xl md:text-[3.25rem] font-medium tracking-tight leading-[1.05] text-slate-900">Essays marked up like an admissions reader</h3>
-						<p class="mt-4 max-w-md text-lg md:text-xl leading-relaxed text-slate-500">It flags the weak lines and says why. You write every word.</p>
+						<h3
+							class="mt-3 font-serif text-4xl md:text-[3.25rem] font-medium tracking-tight leading-[1.05] text-slate-900"
+						>
+							Essays marked up like an admissions reader
+						</h3>
+						<p class="mt-4 max-w-md text-lg md:text-xl leading-relaxed text-slate-500">
+							It flags the weak lines and says why. You write every word.
+						</p>
 					</div>
 					<div class="">
 						<div class="relative">
-							<div class="overflow-hidden rounded-2xl border-[3px] border-[#0c0c09] bg-white shadow-[0_24px_60px_-24px_rgba(12,12,9,0.35)]">
-								<img src="/screenshots/pro-essay.png" alt="Essay marked up line by line" width="2880" height="1800" loading="lazy" class="block h-auto w-full" />
+							<div
+								class="overflow-hidden rounded-2xl border-[3px] border-[#0c0c09] bg-white shadow-[0_24px_60px_-24px_rgba(12,12,9,0.35)]"
+							>
+								<img
+									src="/screenshots/pro-essay.png"
+									alt="Essay marked up line by line"
+									width="2880"
+									height="1800"
+									loading="lazy"
+									class="block h-auto w-full"
+								/>
 							</div>
 							<span class="pa-cursor pa-cursor--c" aria-hidden="true">
-								<svg width="24" height="24" viewBox="0 0 24 24" fill="#0c0c09" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"><path d="M5 2.5l5.6 16.5 2.3-6.9 6.9-2.3L5 2.5z" /></svg>
+								<svg
+									width="24"
+									height="24"
+									viewBox="0 0 24 24"
+									fill="#0c0c09"
+									stroke="#fff"
+									stroke-width="1.6"
+									stroke-linejoin="round"><path d="M5 2.5l5.6 16.5 2.3-6.9 6.9-2.3L5 2.5z" /></svg
+								>
 							</span>
 						</div>
 					</div>
@@ -2452,26 +2659,53 @@
 				<!-- Row 4: AI counselor (mock left) -->
 				<div class="grid items-center gap-10 md:grid-cols-2 md:gap-16">
 					<div class="md:order-2">
-						<h3 class="mt-3 font-serif text-4xl md:text-[3.25rem] font-medium tracking-tight leading-[1.05] text-slate-900">A counselor in your pocket</h3>
-						<p class="mt-4 max-w-md text-lg md:text-xl leading-relaxed text-slate-500">Ask what you'd pay a consultant $300 an hour for. Any time.</p>
+						<h3
+							class="mt-3 font-serif text-4xl md:text-[3.25rem] font-medium tracking-tight leading-[1.05] text-slate-900"
+						>
+							A counselor in your pocket
+						</h3>
+						<p class="mt-4 max-w-md text-lg md:text-xl leading-relaxed text-slate-500">
+							Ask what you'd pay a consultant $300 an hour for. Any time.
+						</p>
 					</div>
 					<div class=" md:order-1">
 						<div class="relative">
-							<div class="overflow-hidden rounded-2xl border-[3px] border-[#0c0c09] bg-white shadow-[0_24px_60px_-24px_rgba(12,12,9,0.35)]">
-								<img src="/screenshots/pro-counselor.png" alt="Ask the AI counselor anything" width="2880" height="1800" loading="lazy" class="block h-auto w-full" />
+							<div
+								class="overflow-hidden rounded-2xl border-[3px] border-[#0c0c09] bg-white shadow-[0_24px_60px_-24px_rgba(12,12,9,0.35)]"
+							>
+								<img
+									src="/screenshots/pro-counselor.png"
+									alt="Ask the AI counselor anything"
+									width="2880"
+									height="1800"
+									loading="lazy"
+									class="block h-auto w-full"
+								/>
 							</div>
 							<span class="pa-cursor pa-cursor--d" aria-hidden="true">
-								<svg width="24" height="24" viewBox="0 0 24 24" fill="#0c0c09" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"><path d="M5 2.5l5.6 16.5 2.3-6.9 6.9-2.3L5 2.5z" /></svg>
+								<svg
+									width="24"
+									height="24"
+									viewBox="0 0 24 24"
+									fill="#0c0c09"
+									stroke="#fff"
+									stroke-width="1.6"
+									stroke-linejoin="round"><path d="M5 2.5l5.6 16.5 2.3-6.9 6.9-2.3L5 2.5z" /></svg
+								>
 							</span>
 						</div>
 					</div>
 				</div>
 
 				<!-- Everything, no limits, banner. -->
-				<div class="flex flex-col items-center gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-6 text-center sm:flex-row sm:justify-between sm:text-left">
+				<div
+					class="flex flex-col items-center gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-6 text-center sm:flex-row sm:justify-between sm:text-left"
+				>
 					<div>
 						<p class="font-bold text-slate-900">All of it, no limits</p>
-						<p class="mt-0.5 text-sm text-slate-600">Unlimited re-runs, deep-dives, and essay passes. $9.99/mo, or $25 once.</p>
+						<p class="mt-0.5 text-sm text-slate-600">
+							Unlimited re-runs, deep-dives, and essay passes. $9.99/mo, or $25 once.
+						</p>
 					</div>
 					<button
 						onclick={() => startUpgrade('monthly')}
@@ -2488,25 +2722,28 @@
 				<div class="text-center mb-8">
 					<div class="inline-flex items-center gap-1 text-slate-900">
 						{#each Array(5) as _}
-							<svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.07 3.3a1 1 0 00.95.68h3.46c.97 0 1.37 1.24.59 1.81l-2.8 2.03a1 1 0 00-.36 1.12l1.07 3.29c.3.92-.76 1.69-1.54 1.12l-2.8-2.03a1 1 0 00-1.18 0l-2.8 2.03c-.78.57-1.83-.2-1.54-1.12l1.07-3.29a1 1 0 00-.36-1.12L2.4 8.72c-.78-.57-.38-1.81.59-1.81h3.46a1 1 0 00.95-.68l1.07-3.3z" /></svg>
+							<svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"
+								><path
+									d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.07 3.3a1 1 0 00.95.68h3.46c.97 0 1.37 1.24.59 1.81l-2.8 2.03a1 1 0 00-.36 1.12l1.07 3.29c.3.92-.76 1.69-1.54 1.12l-2.8-2.03a1 1 0 00-1.18 0l-2.8 2.03c-.78.57-1.83-.2-1.54-1.12l1.07-3.29a1 1 0 00-.36-1.12L2.4 8.72c-.78-.57-.38-1.81.59-1.81h3.46a1 1 0 00.95-.68l1.07-3.3z"
+								/></svg
+							>
 						{/each}
 					</div>
 					<p class="mt-2 text-sm font-semibold text-slate-500">Loved by 15,000+ applicants</p>
 				</div>
 				<div class="columns-1 sm:columns-2 lg:columns-3 gap-5 [column-fill:_balance]">
-					{#each [
-						{ quote: 'ts was lowkey genuinely accurate. ran my file before decisions dropped and it basically called it.', name: 'Miao S.', school: 'Accepted to Northwestern, Class of 2030', tint: 6 },
-						{ quote: 'The deep-dive REALLY helped me. It showed me exactly what each committee was going to catch before they caught it.', name: 'Daniel G.', school: 'Class of 2030', tint: 10 },
-						{ quote: 'The line-by-line editing got me into Stanford, and half the T20s. I cannot overstate how much the essay feedback changed my application.', name: 'Kabir K.', school: 'Accepted to Stanford, Class of 2030', tint: 14 },
-						{ quote: 'This tool helped me progress in scholarships such as the Robertson full ride to Duke.', name: 'Zachary B.', school: 'Class of 2030', tint: 8 },
-						{ quote: 'I reframed my personal statement from the free review, and the countdown is really helpful. My stats were mediocre, so I think it really did come down to my essay. Thanks PredictAdmit!', name: 'Sophia M.', school: 'Accepted to Emory, Class of 2030', tint: 12 },
-						{ quote: 'Very useful! Works better than GPT. Not sure if it is because multiple AIs talk before responding to prompts, or if it is just tuned well.', name: 'Arjun S.', school: 'Class of 2030', tint: 5 },
-						{ quote: 'I did not think to get a counselor, but my results ended up being better than my friends in terms of T20s, even with similar stats. Thanks!', name: 'Evan F.', school: 'Accepted to Berkeley, Class of 2030', tint: 16 }
-					] as t}
-						<div class="mb-5 break-inside-avoid rounded-3xl border border-slate-200 bg-white p-7" style="background-color: color-mix(in oklab, #0c0c09 {t.tint}%, #ffffff)">
+					{#each [{ quote: 'ts was lowkey genuinely accurate. ran my file before decisions dropped and it basically called it.', name: 'Miao S.', school: 'Accepted to Northwestern, Class of 2030', tint: 6 }, { quote: 'The deep-dive REALLY helped me. It showed me exactly what each committee was going to catch before they caught it.', name: 'Daniel G.', school: 'Class of 2030', tint: 10 }, { quote: 'The line-by-line editing got me into Stanford, and half the T20s. I cannot overstate how much the essay feedback changed my application.', name: 'Kabir K.', school: 'Accepted to Stanford, Class of 2030', tint: 14 }, { quote: 'This tool helped me progress in scholarships such as the Robertson full ride to Duke.', name: 'Zachary B.', school: 'Class of 2030', tint: 8 }, { quote: 'I reframed my personal statement from the free review, and the countdown is really helpful. My stats were mediocre, so I think it really did come down to my essay. Thanks PredictAdmit!', name: 'Sophia M.', school: 'Accepted to Emory, Class of 2030', tint: 12 }, { quote: 'Very useful! Works better than GPT. Not sure if it is because multiple AIs talk before responding to prompts, or if it is just tuned well.', name: 'Arjun S.', school: 'Class of 2030', tint: 5 }, { quote: 'I did not think to get a counselor, but my results ended up being better than my friends in terms of T20s, even with similar stats. Thanks!', name: 'Evan F.', school: 'Accepted to Berkeley, Class of 2030', tint: 16 }] as t}
+						<div
+							class="mb-5 break-inside-avoid rounded-3xl border border-slate-200 bg-white p-7"
+							style="background-color: color-mix(in oklab, #0c0c09 {t.tint}%, #ffffff)"
+						>
 							<div class="flex items-center gap-1 text-amber-500">
 								{#each Array(5) as _}
-									<svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+									<svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"
+										><path
+											d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+										/></svg
+									>
 								{/each}
 							</div>
 							<blockquote class="mt-4 text-lg leading-relaxed text-slate-900">
@@ -2524,9 +2761,12 @@
 			<!-- Closing CTA -->
 			<div>
 				<div class="bg-slate-900 rounded-[2rem] p-12 text-center text-white space-y-6">
-					<h3 class="font-serif text-3xl md:text-4xl font-medium text-white">The consultant's read, without the consultant's bill.</h3>
+					<h3 class="font-serif text-3xl md:text-4xl font-medium text-white">
+						The consultant's read, without the consultant's bill.
+					</h3>
 					<p class="text-slate-300 text-lg max-w-2xl mx-auto leading-relaxed">
-						Counselors charge thousands for the same read. Pro is $9.99/mo, or $25 once. First prediction free.
+						Counselors charge thousands for the same read. Pro is $9.99/mo, or $25 once. First
+						prediction free.
 					</p>
 					<button
 						onclick={() => startUpgrade('monthly')}
@@ -2549,19 +2789,43 @@
 />
 
 {#snippet navSvg(name: string)}
-	<svg class="h-[18px] w-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+	<svg
+		class="h-[18px] w-[18px]"
+		fill="none"
+		viewBox="0 0 24 24"
+		stroke="currentColor"
+		stroke-width="2"
+		stroke-linecap="round"
+		stroke-linejoin="round"
+	>
 		{#if name === 'grid'}
-			<rect x="3" y="3" width="7" height="7" rx="1.5" /><rect x="14" y="3" width="7" height="7" rx="1.5" /><rect x="3" y="14" width="7" height="7" rx="1.5" /><rect x="14" y="14" width="7" height="7" rx="1.5" />
+			<rect x="3" y="3" width="7" height="7" rx="1.5" /><rect
+				x="14"
+				y="3"
+				width="7"
+				height="7"
+				rx="1.5"
+			/><rect x="3" y="14" width="7" height="7" rx="1.5" /><rect
+				x="14"
+				y="14"
+				width="7"
+				height="7"
+				rx="1.5"
+			/>
 		{:else if name === 'cap'}
 			<path d="M22 10 12 5 2 10l10 5 10-5z" /><path d="M6 12v5c0 1 2.7 2.5 6 2.5s6-1.5 6-2.5v-5" />
 		{:else if name === 'chat'}
-			<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z" />
+			<path
+				d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z"
+			/>
 		{:else if name === 'user'}
 			<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" />
 		{:else if name === 'bolt'}
 			<path d="M13 2 4.5 13H11l-1 9 8.5-11H12z" />
 		{:else}
-			<path d="M9.66 17h4.68M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.2 1 2V16h6v-.5c0-.8.3-1.3 1-2A6 6 0 0 0 12 3z" />
+			<path
+				d="M9.66 17h4.68M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.2 1 2V16h6v-.5c0-.8.3-1.3 1-2A6 6 0 0 0 12 3z"
+			/>
 		{/if}
 	</svg>
 {/snippet}
@@ -2592,43 +2856,103 @@
 		pointer-events: none;
 	}
 	/* a — slow diagonal drift */
-	.pa-cursor--a { animation: pa-cur-a 5s ease-in-out infinite; }
+	.pa-cursor--a {
+		animation: pa-cur-a 5s ease-in-out infinite;
+	}
 	@keyframes pa-cur-a {
-		0%, 100% { transform: translate(0, 0); }
-		25% { transform: translate(-34px, 20px); }
-		50% { transform: translate(28px, -12px); }
-		75% { transform: translate(12px, 26px); }
+		0%,
+		100% {
+			transform: translate(0, 0);
+		}
+		25% {
+			transform: translate(-34px, 20px);
+		}
+		50% {
+			transform: translate(28px, -12px);
+		}
+		75% {
+			transform: translate(12px, 26px);
+		}
 	}
 	/* b — glide right, then two clicks */
-	.pa-cursor--b { left: 34%; top: 44%; animation: pa-cur-b 6s ease-in-out infinite; }
+	.pa-cursor--b {
+		left: 34%;
+		top: 44%;
+		animation: pa-cur-b 6s ease-in-out infinite;
+	}
 	@keyframes pa-cur-b {
-		0% { transform: translate(0, 0) scale(1); }
-		35% { transform: translate(78px, 10px) scale(1); }
-		43% { transform: translate(78px, 10px) scale(0.78); }
-		51% { transform: translate(78px, 10px) scale(1); }
-		59% { transform: translate(78px, 10px) scale(0.78); }
-		67% { transform: translate(78px, 10px) scale(1); }
-		100% { transform: translate(0, 0) scale(1); }
+		0% {
+			transform: translate(0, 0) scale(1);
+		}
+		35% {
+			transform: translate(78px, 10px) scale(1);
+		}
+		43% {
+			transform: translate(78px, 10px) scale(0.78);
+		}
+		51% {
+			transform: translate(78px, 10px) scale(1);
+		}
+		59% {
+			transform: translate(78px, 10px) scale(0.78);
+		}
+		67% {
+			transform: translate(78px, 10px) scale(1);
+		}
+		100% {
+			transform: translate(0, 0) scale(1);
+		}
 	}
 	/* c — steady circular orbit */
-	.pa-cursor--c { left: 60%; top: 38%; animation: pa-cur-c 7s linear infinite; }
+	.pa-cursor--c {
+		left: 60%;
+		top: 38%;
+		animation: pa-cur-c 7s linear infinite;
+	}
 	@keyframes pa-cur-c {
-		0% { transform: translate(0, 0); }
-		25% { transform: translate(30px, 20px); }
-		50% { transform: translate(0, 40px); }
-		75% { transform: translate(-30px, 20px); }
-		100% { transform: translate(0, 0); }
+		0% {
+			transform: translate(0, 0);
+		}
+		25% {
+			transform: translate(30px, 20px);
+		}
+		50% {
+			transform: translate(0, 40px);
+		}
+		75% {
+			transform: translate(-30px, 20px);
+		}
+		100% {
+			transform: translate(0, 0);
+		}
 	}
 	/* d — drop down, click, snap back up */
-	.pa-cursor--d { left: 46%; top: 60%; animation: pa-cur-d 4.5s ease-in-out infinite; }
+	.pa-cursor--d {
+		left: 46%;
+		top: 60%;
+		animation: pa-cur-d 4.5s ease-in-out infinite;
+	}
 	@keyframes pa-cur-d {
-		0%, 100% { transform: translate(0, 0) scale(1); }
-		28% { transform: translate(-16px, 36px) scale(1); }
-		36% { transform: translate(-16px, 36px) scale(0.8); }
-		44% { transform: translate(-16px, 36px) scale(1); }
-		72% { transform: translate(22px, -10px) scale(1); }
+		0%,
+		100% {
+			transform: translate(0, 0) scale(1);
+		}
+		28% {
+			transform: translate(-16px, 36px) scale(1);
+		}
+		36% {
+			transform: translate(-16px, 36px) scale(0.8);
+		}
+		44% {
+			transform: translate(-16px, 36px) scale(1);
+		}
+		72% {
+			transform: translate(22px, -10px) scale(1);
+		}
 	}
 	@media (prefers-reduced-motion: reduce) {
-		.pa-cursor { animation: none !important; }
+		.pa-cursor {
+			animation: none !important;
+		}
 	}
 </style>

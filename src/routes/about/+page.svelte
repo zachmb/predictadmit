@@ -1,5 +1,4 @@
 <script lang="ts">
-
 	const stats = [
 		{ value: '15,000+', label: 'Students on PredictAdmit' },
 		{ value: 'T30', label: 'Top schools' },
@@ -9,22 +8,22 @@
 
 	const differentiators = [
 		{
-			icon: '🎯',
+			icon: 'target',
 			title: 'Rehearse decision day',
 			body: 'Open a fictional portal, status page, or decision letter for any of the T30 and feel the moment before it counts. Every screen says "simulation" on it. That is the point: you get to flinch here instead of on the real day.'
 		},
 		{
-			icon: '✍️',
+			icon: 'pencil',
 			title: 'The portal sims are free',
 			body: 'Open any decision portal and rehearse it (accepted, denied, waitlisted) as many times as you want, no card required. The AI tools (essay grader, counselor, chances predictor, mind-map) you can try before you pay for anything.'
 		},
 		{
-			icon: '⚡',
+			icon: 'bolt',
 			title: 'Pro is the AI prediction',
 			body: 'Pro is where the AI reads your actual application and predicts your likely decision at every school, with the full analysis behind it and unlimited essay grading. Your first prediction is free; Lifetime access is $25 once (or $9.99/mo), or $4.99 for a single school. Cheaper than an hour with a private consultant.'
 		},
 		{
-			icon: '🔍',
+			icon: 'search',
 			title: 'We tell you what is fake',
 			body: 'Every simulated screen is labeled fictional and independent. We do not guarantee admission and we never dress up a prediction as an official decision. The AI critiques your writing. It does not write it. The essay stays yours.'
 		}
@@ -83,6 +82,71 @@
 	/>
 </svelte:head>
 
+{#snippet featureIcon(name: string)}
+	<div
+		class="mb-4 grid h-12 w-12 place-items-center rounded-xl bg-[color-mix(in_oklab,#0c0c09_8%,transparent)] text-[#0c0c09]"
+	>
+		{#if name === 'target'}
+			<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+				<circle cx="12" cy="12" r="8.5" />
+				<circle cx="12" cy="12" r="4" />
+				<circle cx="12" cy="12" r="1" fill="currentColor" stroke="none" />
+			</svg>
+		{:else if name === 'pencil'}
+			<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"
+				><path
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+				/></svg
+			>
+		{:else if name === 'bolt'}
+			<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"
+				><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg
+			>
+		{:else if name === 'search'}
+			<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"
+				><path
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+				/></svg
+			>
+		{:else if name === 'sparkles'}
+			<svg
+				class="h-6 w-6"
+				fill="none"
+				viewBox="0 0 24 24"
+				stroke="currentColor"
+				stroke-width="1.8"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+				><path d="M5 3v4M3 5h4M6 16v4m-2-2h4" /><path
+					d="M13 4l2.3 6.3L22 12.6l-6.7 2.3L13 21l-2.3-6.1L4 12.6l6.7-2.3z"
+				/></svg
+			>
+		{:else if name === 'chart'}
+			<svg
+				class="h-6 w-6"
+				fill="none"
+				viewBox="0 0 24 24"
+				stroke="currentColor"
+				stroke-width="1.8"
+				stroke-linecap="round"
+				stroke-linejoin="round"><path d="M3 3v18h18" /><path d="M7 14v4M12 9v9M17 5v13" /></svg
+			>
+		{:else if name === 'document'}
+			<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"
+				><path
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+				/></svg
+			>
+		{/if}
+	</div>
+{/snippet}
+
 <main class="min-h-screen bg-white font-sans text-slate-900">
 	<!-- Hero -->
 	<section class="relative overflow-hidden border-b border-slate-100">
@@ -92,7 +156,9 @@
 			>
 				About PredictAdmit
 			</p>
-			<h1 class="font-serif text-4xl md:text-6xl font-medium tracking-tight text-slate-900 mb-6 text-balance">
+			<h1
+				class="font-serif text-4xl md:text-6xl font-medium tracking-tight text-slate-900 mb-6 text-balance"
+			>
 				Feel decision day before it counts.
 			</h1>
 			<p class="text-lg md:text-xl text-slate-500 leading-relaxed max-w-2xl mx-auto mb-10">
@@ -116,7 +182,11 @@
 			<div class="mt-6 flex items-center justify-center gap-2 text-sm text-slate-400">
 				<span class="inline-flex items-center gap-0.5 text-slate-900">
 					{#each Array(5) as _}
-						<svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.07 3.3a1 1 0 00.95.68h3.46c.97 0 1.37 1.24.59 1.81l-2.8 2.03a1 1 0 00-.36 1.12l1.07 3.29c.3.92-.76 1.69-1.54 1.12l-2.8-2.03a1 1 0 00-1.18 0l-2.8 2.03c-.78.57-1.83-.2-1.54-1.12l1.07-3.29a1 1 0 00-.36-1.12L2.4 8.72c-.78-.57-.38-1.81.59-1.81h3.46a1 1 0 00.95-.68l1.07-3.3z" /></svg>
+						<svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20"
+							><path
+								d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.07 3.3a1 1 0 00.95.68h3.46c.97 0 1.37 1.24.59 1.81l-2.8 2.03a1 1 0 00-.36 1.12l1.07 3.29c.3.92-.76 1.69-1.54 1.12l-2.8-2.03a1 1 0 00-1.18 0l-2.8 2.03c-.78.57-1.83-.2-1.54-1.12l1.07-3.29a1 1 0 00-.36-1.12L2.4 8.72c-.78-.57-.38-1.81.59-1.81h3.46a1 1 0 00.95-.68l1.07-3.3z"
+							/></svg
+						>
 					{/each}
 				</span>
 				Trusted by 15,000+ students
@@ -153,7 +223,7 @@
 					<div
 						class="rounded-2xl bg-white border border-slate-100 p-8 hover:border-slate-300 hover:shadow-sm transition-all"
 					>
-						<div class="text-3xl mb-4">{item.icon}</div>
+						{@render featureIcon(item.icon)}
 						<h3 class="text-xl font-bold text-slate-900 mb-2">{item.title}</h3>
 						<p class="text-slate-500 leading-relaxed">{item.body}</p>
 					</div>
@@ -174,13 +244,11 @@
 			</p>
 		</div>
 		<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-			{#each [
-				{ icon: '🔮', title: 'Unlimited AI predictions', body: 'Run your real profile against every T30 school as often as you like. Change an essay, rerun, see what moved. That is the loop consultants bill by the hour.' },
-				{ icon: '🔬', title: 'The full analysis', body: 'Every prediction comes with five scored dimensions, a committee-style written critique, and a ranked list of what to fix for that school. The why, not just the verdict.' },
-				{ icon: '📝', title: 'Unlimited essay grading', body: 'Ten inline notes plus a harsh read and an honest admissions-officer read on every draft. See it before a real committee does.' }
-			] as f}
-				<div class="flex flex-col rounded-2xl border border-slate-100 bg-white p-6 hover:shadow-md transition-shadow">
-					<div class="text-3xl mb-3">{f.icon}</div>
+			{#each [{ icon: 'sparkles', title: 'Unlimited AI predictions', body: 'Run your real profile against every T30 school as often as you like. Change an essay, rerun, see what moved. That is the loop consultants bill by the hour.' }, { icon: 'chart', title: 'The full analysis', body: 'Every prediction comes with five scored dimensions, a committee-style written critique, and a ranked list of what to fix for that school. The why, not just the verdict.' }, { icon: 'document', title: 'Unlimited essay grading', body: 'Ten inline notes plus a harsh read and an honest admissions-officer read on every draft. See it before a real committee does.' }] as f}
+				<div
+					class="flex flex-col rounded-2xl border border-slate-100 bg-white p-6 hover:shadow-md transition-shadow"
+				>
+					{@render featureIcon(f.icon)}
 					<div class="font-bold text-slate-900 mb-2">{f.title}</div>
 					<p class="text-sm text-slate-600 leading-relaxed">{f.body}</p>
 				</div>
@@ -204,12 +272,16 @@
 				<h2 class="font-serif text-3xl md:text-4xl font-medium tracking-tight text-slate-900 mb-4">
 					What students tell us
 				</h2>
-				<p class="text-sm text-slate-400">From students who used PredictAdmit before their real decisions.</p>
+				<p class="text-sm text-slate-400">
+					From students who used PredictAdmit before their real decisions.
+				</p>
 			</div>
 			<div class="max-w-xl mx-auto">
 				{#each testimonials as t}
 					<figure class="rounded-2xl bg-white border border-slate-100 p-8 text-center">
-						<blockquote class="font-serif text-xl leading-relaxed text-slate-800 mb-5">"{t.quote}"</blockquote>
+						<blockquote class="font-serif text-xl leading-relaxed text-slate-800 mb-5">
+							"{t.quote}"
+						</blockquote>
 						<figcaption class="text-sm">
 							<span class="font-semibold text-slate-900">{t.name}</span>
 							<span class="text-slate-400"> · {t.role}</span>
@@ -222,7 +294,9 @@
 
 	<!-- FAQ -->
 	<section class="max-w-3xl mx-auto px-6 py-24">
-		<h2 class="font-serif text-3xl md:text-4xl font-medium tracking-tight text-slate-900 mb-12 text-center">
+		<h2
+			class="font-serif text-3xl md:text-4xl font-medium tracking-tight text-slate-900 mb-12 text-center"
+		>
 			Frequently asked questions
 		</h2>
 		<div class="divide-y divide-slate-100 border-y border-slate-100">
@@ -273,5 +347,4 @@
 			</div>
 		</div>
 	</section>
-
 </main>

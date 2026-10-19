@@ -33,7 +33,11 @@
 	// (which never changes), so the active highlight went stale after client-side
 	// navigation — that was the "glitched highlight". Deriving off `path` fixes it.
 	$: navLinks = [
-		{ href: '/ai', label: 'Predict My Decisions', active: path === '/ai' || path.startsWith('/ai/') },
+		{
+			href: '/ai',
+			label: 'Predict My Decisions',
+			active: path === '/ai' || path.startsWith('/ai/')
+		},
 		{ href: '/portals', label: 'Portal Simulator', active: path === '/portals' },
 		{ href: '/pro', label: 'Go Pro', active: path === '/pro' || path.startsWith('/pro/') },
 		{ href: '/about', label: 'About', active: path === '/about' || path.startsWith('/about/') }
@@ -46,7 +50,10 @@
 	// /ai, /portals, /pro, /about). A hamburger opens a slide-down sheet with them.
 	let menuOpen = false;
 	let lastPath = path;
-	$: if (path !== lastPath) { lastPath = path; menuOpen = false; } // close on navigate
+	$: if (path !== lastPath) {
+		lastPath = path;
+		menuOpen = false;
+	} // close on navigate
 	$: if (typeof document !== 'undefined') document.body.style.overflow = menuOpen ? 'hidden' : '';
 
 	$: session = $page.data.session;
@@ -116,7 +123,15 @@
 						href="/ai"
 						class="inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white no-underline transition-colors hover:bg-slate-800"
 					>
-						<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m0 0 7 7m-7-7 7-7"/></svg>
+						<svg
+							class="h-4 w-4"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"><path d="M19 12H5m0 0 7 7m-7-7 7-7" /></svg
+						>
 						Back to inbox
 					</a>
 				{:else}
@@ -171,7 +186,7 @@
 				</button>
 				<a
 					href="/account"
-					class="inline-flex items-center gap-2 bg-slate-900 text-white px-4 py-2 rounded-full hover:bg-black transition-colors font-semibold text-sm shadow-sm"
+					class="inline-flex items-center gap-2 bg-slate-900 text-white px-5 py-2.5 rounded-full hover:bg-black transition-colors font-semibold text-sm shadow-sm"
 				>
 					{#if session}
 						{#if session.user?.image}
@@ -191,7 +206,7 @@
 							{session.user?.name || 'Account'}
 						</span>
 					{:else}
-						<svg class="w-3.5 h-3.5" viewBox="0 0 24 24">
+						<svg class="w-4 h-4" viewBox="0 0 24 24">
 							<path
 								fill="#4285F4"
 								d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -209,7 +224,7 @@
 								d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
 							/>
 						</svg>
-						<span class="text-xs">Sign in</span>
+						<span class="text-sm">Sign in</span>
 					{/if}
 				</a>
 			</div>
@@ -219,7 +234,12 @@
 	<!-- Mobile nav sheet: slides down below the header with the primary links, so
 	     phones can reach every page. Scrim closes it; links close on navigate. -->
 	{#if menuOpen}
-		<button type="button" class="pa-scrim lg:hidden" aria-label="Close menu" on:click={() => (menuOpen = false)}></button>
+		<button
+			type="button"
+			class="pa-scrim lg:hidden"
+			aria-label="Close menu"
+			on:click={() => (menuOpen = false)}
+		></button>
 	{/if}
 	<div class="pa-sheet lg:hidden" class:open={menuOpen} aria-hidden={!menuOpen}>
 		<nav class="flex flex-col gap-1 px-4 pb-5">
@@ -247,18 +267,81 @@
 {/if}
 
 <style>
-	.pa-burger { position: relative; display: inline-flex; flex-direction: column; justify-content: center; gap: 4px; width: 40px; height: 40px; border: none; background: transparent; cursor: pointer; border-radius: 10px; }
+	.pa-burger {
+		position: relative;
+		display: inline-flex;
+		flex-direction: column;
+		justify-content: center;
+		gap: 4px;
+		width: 40px;
+		height: 40px;
+		border: none;
+		background: transparent;
+		cursor: pointer;
+		border-radius: 10px;
+	}
 	/* Mobile only. The scoped .pa-burger display beats Tailwind's lg:hidden (equal
 	   specificity, scoped class wins), so hide it on desktop here where the inline
 	   nav is shown (Zach 2026-10-12). */
-	@media (min-width: 1024px) { .pa-burger { display: none; } }
-	.pa-burger:hover { background: rgb(241 245 249); }
-	.pa-burger span { display: block; width: 20px; height: 2px; margin: 0 auto; border-radius: 2px; background: #0f172a; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease; }
-	.pa-burger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
-	.pa-burger.open span:nth-child(2) { opacity: 0; }
-	.pa-burger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
-	.pa-scrim { position: fixed; inset: 0; z-index: 9997; border: none; padding: 0; background: rgba(12,12,9, 0.3); cursor: pointer; }
-	.pa-sheet { position: fixed; inset-inline: 0; top: 0; z-index: 9998; background: rgba(255, 255, 255, 0.97); backdrop-filter: blur(16px); border-bottom: 1px solid rgb(226 232 240); box-shadow: 0 22px 44px -24px rgba(12,12,9, 0.28); padding-top: 96px; transform: translateY(-100%); transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1); }
-	.pa-sheet.open { transform: translateY(0); }
-	@media (prefers-reduced-motion: reduce) { .pa-sheet { transition: none; } .pa-burger span { transition: none; } }
+	@media (min-width: 1024px) {
+		.pa-burger {
+			display: none;
+		}
+	}
+	.pa-burger:hover {
+		background: rgb(241 245 249);
+	}
+	.pa-burger span {
+		display: block;
+		width: 20px;
+		height: 2px;
+		margin: 0 auto;
+		border-radius: 2px;
+		background: #0f172a;
+		transition:
+			transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+			opacity 0.2s ease;
+	}
+	.pa-burger.open span:nth-child(1) {
+		transform: translateY(6px) rotate(45deg);
+	}
+	.pa-burger.open span:nth-child(2) {
+		opacity: 0;
+	}
+	.pa-burger.open span:nth-child(3) {
+		transform: translateY(-6px) rotate(-45deg);
+	}
+	.pa-scrim {
+		position: fixed;
+		inset: 0;
+		z-index: 9997;
+		border: none;
+		padding: 0;
+		background: rgba(12, 12, 9, 0.3);
+		cursor: pointer;
+	}
+	.pa-sheet {
+		position: fixed;
+		inset-inline: 0;
+		top: 0;
+		z-index: 9998;
+		background: rgba(255, 255, 255, 0.97);
+		backdrop-filter: blur(16px);
+		border-bottom: 1px solid rgb(226 232 240);
+		box-shadow: 0 22px 44px -24px rgba(12, 12, 9, 0.28);
+		padding-top: 96px;
+		transform: translateY(-100%);
+		transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+	}
+	.pa-sheet.open {
+		transform: translateY(0);
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.pa-sheet {
+			transition: none;
+		}
+		.pa-burger span {
+			transition: none;
+		}
+	}
 </style>

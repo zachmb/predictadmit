@@ -7,6 +7,7 @@
 	// click Login. It never fires on a quick Login click, on focus, or more than
 	// once per session.
 	import { onMount } from 'svelte';
+	import { fly } from 'svelte/transition';
 	import { portalDecisionHeaderVisible } from '$lib/stores/ui';
 
 	const SHOWN_KEY = 'pa_portal_nudge_shown';
@@ -115,57 +116,26 @@
 <slot />
 
 {#if showNudge}
-	<div class="sim-nudge" role="status" aria-live="polite">
-		<span class="sim-nudge-dot"></span>
-		No password needed — this is a simulation. Just click <strong>Login</strong> to continue.
+	<div
+		class="fixed bottom-6 left-1/2 z-[9999] flex max-w-[calc(100vw-2rem)] -translate-x-1/2 items-center gap-2.5 rounded-full bg-[#0c0c09] py-2 pl-2 pr-5 text-[13px] font-medium leading-snug text-white shadow-[0_16px_40px_-12px_rgba(12,12,9,0.5)]"
+		style="bottom: calc(1.5rem + env(safe-area-inset-bottom));"
+		role="status"
+		aria-live="polite"
+		transition:fly={{ y: 10, duration: 220 }}
+	>
+		<span class="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-white/10 text-white">
+			<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+				<path
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+				/>
+			</svg>
+		</span>
+		<span
+			>No password needed. This is a simulation. Just tap <strong class="font-semibold"
+				>Login</strong
+			> to continue.</span
+		>
 	</div>
 {/if}
-
-<style>
-	.sim-nudge {
-		position: fixed;
-		left: 50%;
-		bottom: 24px;
-		transform: translateX(-50%);
-		z-index: 9999;
-		display: flex;
-		align-items: center;
-		gap: 8px;
-		max-width: calc(100vw - 32px);
-		padding: 10px 16px;
-		border-radius: 9999px;
-		background: #0f172a;
-		color: #fff;
-		font-size: 13px;
-		font-weight: 500;
-		line-height: 1.35;
-		box-shadow: 0 12px 30px -8px rgba(12,12,9, 0.45);
-		animation: sim-nudge-in 0.25s ease-out both;
-	}
-	.sim-nudge strong {
-		font-weight: 700;
-	}
-	.sim-nudge-dot {
-		width: 8px;
-		height: 8px;
-		border-radius: 9999px;
-		background: #0c0c09;
-		box-shadow: 0 0 0 4px rgba(12,12,9,0.18);
-		flex-shrink: 0;
-	}
-	@keyframes sim-nudge-in {
-		from {
-			opacity: 0;
-			transform: translate(-50%, 8px);
-		}
-		to {
-			opacity: 1;
-			transform: translate(-50%, 0);
-		}
-	}
-	@media (prefers-reduced-motion: reduce) {
-		.sim-nudge {
-			animation: none;
-		}
-	}
-</style>

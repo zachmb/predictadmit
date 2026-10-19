@@ -407,7 +407,10 @@
 		// decision (deep dive included) or upgrade.
 		if (!canOpenDecision(portal.slug)) {
 			const decision = aiDecisions.find((d) => d.slug === portal.slug);
-			openPaywall('decision', decision ?? ({ slug: portal.slug, school: portal.name } as AiDecision));
+			openPaywall(
+				'decision',
+				decision ?? ({ slug: portal.slug, school: portal.name } as AiDecision)
+			);
 			return;
 		}
 		// Claim a free open on a not-yet-opened locked decision for a non-Pro user.
@@ -539,8 +542,7 @@
 					const paid = complete && data.payment_status === 'paid';
 					const trialStarted =
 						complete &&
-						(data.subscription_status === 'trialing' ||
-							data.subscription_status === 'active');
+						(data.subscription_status === 'trialing' || data.subscription_status === 'active');
 					if (!paid && !trialStarted) return; // not confirmed → do NOT unlock
 					const vPlan = data.plan as string | null;
 					const vSlug = data.slug as string | null;
@@ -555,9 +557,7 @@
 					if ((vPlan === 'single' || vPlan === 'school') && vSlug) {
 						userProfile.update((u) => ({
 							...u,
-							proSchools: u.proSchools.includes(vSlug)
-								? u.proSchools
-								: [...u.proSchools, vSlug]
+							proSchools: u.proSchools.includes(vSlug) ? u.proSchools : [...u.proSchools, vSlug]
 						}));
 						trackPurchase(
 							vPlan,
@@ -623,9 +623,12 @@
 		} catch {
 			freeOpenedSlugs = [];
 		}
-		if (legacyOne && !freeOpenedSlugs.includes(legacyOne)) freeOpenedSlugs = [...freeOpenedSlugs, legacyOne];
+		if (legacyOne && !freeOpenedSlugs.includes(legacyOne))
+			freeOpenedSlugs = [...freeOpenedSlugs, legacyOne];
 		try {
-			freeDeepDiveSlugs = JSON.parse(localStorage.getItem('predictadmit_freeDeepDiveSlugs') || '[]');
+			freeDeepDiveSlugs = JSON.parse(
+				localStorage.getItem('predictadmit_freeDeepDiveSlugs') || '[]'
+			);
 		} catch {
 			freeDeepDiveSlugs = [];
 		}
@@ -770,7 +773,10 @@
 		}));
 	}
 
-	function openPaywall(mode: 'simulation' | 'ocr' | 'deepDive' | 'decision', decision?: AiDecision) {
+	function openPaywall(
+		mode: 'simulation' | 'ocr' | 'deepDive' | 'decision',
+		decision?: AiDecision
+	) {
 		paywallMode = mode;
 		paywallContextDecision = decision ?? null;
 		selectedPlan = 'lifetime';
@@ -825,15 +831,15 @@
 		showUpgradeCarousel = true;
 		track('upgrade_carousel_view', { plan });
 		// GA4 funnel Step 3 "Add to cart" — user picked a plan (before Stripe).
-		const cents = plan === 'monthly' ? STRIPE_PRODUCTS.monthly.amountCents : STRIPE_PRODUCTS.lifetime.amountCents;
+		const cents =
+			plan === 'monthly'
+				? STRIPE_PRODUCTS.monthly.amountCents
+				: STRIPE_PRODUCTS.lifetime.amountCents;
 		trackAddToCart(plan, cents / 100);
 	}
 
 	let checkoutLoading = $state(false);
-	async function startCheckout(
-		plan: 'single' | 'monthly' | 'lifetime',
-		decision?: AiDecision
-	) {
+	async function startCheckout(plan: 'single' | 'monthly' | 'lifetime', decision?: AiDecision) {
 		if (checkoutLoading) return;
 		if (!googleSignedIn) {
 			track('sign_in_click', { source: 'checkout', plan });
@@ -945,7 +951,7 @@
 					? [
 							...SCHOOLS.filter((s) => s.slug === edSlug),
 							...SCHOOLS.filter((s) => s.slug !== edSlug)
-					  ]
+						]
 					: SCHOOLS;
 			for (const { slug } of orderedSchools) {
 				if (myValidId !== currentStoreVersion) return;
@@ -1064,10 +1070,7 @@
 		}
 
 		// Claim the free deep-dive allowance for a non-Pro user on first use.
-		if (
-			!hasSchoolAccess(decision.slug) &&
-			!freeDeepDiveSlugs.includes(decision.slug)
-		) {
+		if (!hasSchoolAccess(decision.slug) && !freeDeepDiveSlugs.includes(decision.slug)) {
 			freeDeepDiveSlugs = [...freeDeepDiveSlugs, decision.slug];
 			if (typeof localStorage !== 'undefined')
 				localStorage.setItem('predictadmit_freeDeepDiveSlugs', JSON.stringify(freeDeepDiveSlugs));
@@ -1335,7 +1338,8 @@
 		parseNotice = '';
 		parsedFieldKeys = [];
 		if (source.length < 20) {
-			parseError = 'Need a bit more to work with. Paste a resume, a brag sheet, or your activities list.';
+			parseError =
+				'Need a bit more to work with. Paste a resume, a brag sheet, or your activities list.';
 			return;
 		}
 
@@ -1369,7 +1373,8 @@
 
 		const present = FILL_ORDER.filter((k) => fields && fields[k]);
 		if (!present.length) {
-			parseError = "Nothing in there looked like application details. A resume or brag sheet works better.";
+			parseError =
+				'Nothing in there looked like application details. A resume or brag sheet works better.';
 			return;
 		}
 		parsedFieldKeys = [...present];
@@ -1380,9 +1385,7 @@
 
 	// Glow applied to whichever field is currently being typed into.
 	function fillClass(key: string) {
-		return fillingField === key
-			? ' ring-4 ring-blue-500/40 border-blue-500 bg-blue-50/40'
-			: '';
+		return fillingField === key ? ' ring-4 ring-blue-500/40 border-blue-500 bg-blue-50/40' : '';
 	}
 
 	import Card from '$lib/components/common/Card.svelte';
@@ -1394,9 +1397,7 @@
 	<title>Predict My Decisions – PredictAdmit</title>
 </svelte:head>
 
-<main
-	class="relative min-h-screen bg-[#f4f4f0] text-slate-900 overflow-hidden font-sans"
->
+<main class="relative min-h-screen bg-[#f4f4f0] text-slate-900 overflow-hidden font-sans">
 	<!-- Decorative background elements -->
 	<div class="absolute inset-0 overflow-hidden pointer-events-none">
 		<div
@@ -1415,220 +1416,688 @@
 			     The card shows in the builder phase only — once results land the inbox
 			     takes the full width below this row. -->
 			<div class="xl:flex xl:items-start xl:gap-8">
-			<div class="min-w-0 space-y-16 xl:max-w-3xl xl:shrink-0">
-			<!-- Hero — left-aligned to match the landing hero. -->
-			<header class="text-left space-y-6 max-w-3xl">
-				<h1 class="font-serif text-5xl sm:text-6xl md:text-[4.5rem] font-normal tracking-tight text-slate-900 leading-[1.03]">
-					Predict your college decisions
-				</h1>
+				<div class="min-w-0 space-y-16 xl:max-w-3xl xl:shrink-0">
+					<!-- Hero — left-aligned to match the landing hero. -->
+					<header class="text-left space-y-6 max-w-3xl">
+						<h1
+							class="font-serif text-5xl sm:text-6xl md:text-6xl font-normal tracking-tight text-slate-900 leading-[1.03]"
+						>
+							Predict your college decisions
+						</h1>
 
-				<!-- Bolder + skimmable: the value reads in one glance, key phrases bolded. -->
-				<p class="max-w-2xl text-lg sm:text-xl leading-relaxed text-slate-600">
-					<span class="font-semibold text-slate-900">PredictAdmit AI</span> calls your decision at every T30 school. A <span class="font-semibold text-slate-900">five-reader committee</span> shows you why.
-				</p>
+						<!-- Bolder + skimmable: the value reads in one glance, key phrases bolded. -->
+						<p class="max-w-2xl text-lg sm:text-xl leading-relaxed text-slate-600">
+							<span class="font-semibold text-slate-900">PredictAdmit AI</span> calls your decision
+							at every T30 school. A
+							<span class="font-semibold text-slate-900">five-reader committee</span> shows you why.
+						</p>
 
-				<!-- Skimmable NUMBERED value list (new serif register), ending on the free hook. -->
-				<ol class="max-w-2xl space-y-3 font-serif text-lg md:text-xl font-normal leading-snug tracking-tight text-slate-700">
-					<li class="flex items-start gap-3">
-						<span class="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-[#0c0c09] font-sans text-xs font-bold text-white">1</span>
-						<span><span class="font-medium text-slate-900">Calibrated</span> on 15,000+ results.</span>
-					</li>
-					<li class="flex items-start gap-3">
-						<span class="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-[#0c0c09] font-sans text-xs font-bold text-white">2</span>
-						<span>Full <span class="font-medium text-slate-900">committee verdict</span>, every T30.</span>
-					</li>
-					<li class="flex items-start gap-3">
-						<span class="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-[#0c0c09] font-sans text-xs font-bold text-white">3</span>
-						<span>Data <span class="font-medium text-slate-900">never leaves your browser</span>.</span>
-					</li>
-					<li class="flex items-start gap-3">
-						<span class="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-[#0c0c09] font-sans text-xs font-bold text-white">4</span>
-						<span class="text-slate-900 font-medium">First simulation free.</span>
-					</li>
-				</ol>
+						<!-- Skimmable NUMBERED value list (serif register): security, free, then the
+				     NACAC methodology note as the muted third line. -->
+						<ol
+							class="max-w-2xl space-y-3 font-serif text-lg md:text-xl font-normal leading-snug tracking-tight text-slate-700"
+						>
+							<li class="flex items-start gap-3">
+								<span
+									class="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-[#0c0c09] font-sans text-xs font-bold text-white"
+									>1</span
+								>
+								<span
+									>Your data <span class="font-medium text-slate-900"
+										>never leaves your browser</span
+									>.</span
+								>
+							</li>
+							<li class="flex items-start gap-3">
+								<span
+									class="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-[#0c0c09] font-sans text-xs font-bold text-white"
+									>2</span
+								>
+								<span
+									>Your <span class="font-medium text-slate-900">first prediction is free</span
+									>.</span
+								>
+							</li>
+							<li class="flex items-start gap-3">
+								<span
+									class="mt-1 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-[#0c0c09] font-sans text-xs font-bold text-white"
+									>3</span
+								>
+								<span class="font-sans text-xs leading-relaxed text-slate-400">
+									An estimate from NACAC factor weights. Not an official decision, and never
+									affiliated with any school.
+									<a
+										href="/methodology"
+										class="font-medium text-slate-600 underline underline-offset-2 hover:text-slate-900"
+										>Methodology →</a
+									>
+								</span>
+							</li>
+						</ol>
+					</header>
 
-				<p class="max-w-xl text-xs leading-relaxed text-slate-400">
-					An estimate from NACAC factor weights. Not an official decision, and never affiliated with any school.
-					<a href="/methodology" class="font-medium text-slate-600 underline underline-offset-2 hover:text-slate-900">Methodology →</a>
-				</p>
-			</header>
-
-			<!-- Anyone can fill in their application below and run ONE free prediction.
+					<!-- Anyone can fill in their application below and run ONE free prediction.
 			     After that, RUNNING again requires Full Season — the submit button
 			     flips to "Unlock all 39 schools" for used-free non-Pro users,
 			     runEvaluation double-checks, and the AI route is server-enforced
 			     (guardEvaluation meters the one free run). Letting people invest the
 			     effort + feel the aha BEFORE the wall lifts conversion. -->
-			<!-- Application builder + AI controls -->
-			<section class="max-w-2xl">
-				<!-- Application card -->
-				<Card
-					class="bg-white border border-slate-200 shadow-[0_30px_80px_-30px_rgba(12,12,9,0.18)] text-slate-900 rounded-3xl overflow-hidden"
-				>
-					<div class="p-8 md:p-10">
-						<!-- Google sign-in bar -->
-						<div
-							class="mb-10 flex flex-col items-center justify-between gap-4 border-b border-slate-200 pb-8 md:flex-row"
+					<!-- Application builder + AI controls -->
+					<section class="max-w-2xl">
+						<!-- Application card -->
+						<Card
+							class="bg-white border border-slate-200 shadow-[0_30px_80px_-30px_rgba(12,12,9,0.18)] text-slate-900 rounded-3xl overflow-hidden"
 						>
-							<div class="space-y-1.5">
-								<h2 class="font-serif text-2xl font-medium text-slate-900 tracking-tight">Your application</h2>
-								<p class="text-xs text-slate-500">Stays on your side. We don't keep it</p>
-							</div>
-
-							<div class="flex items-center gap-3">
-								{#if googleSignedIn}
-									<div
-										class="text-xs text-right bg-slate-50 rounded-xl px-4 py-3 border border-slate-200"
-									>
-										<div class="font-bold text-slate-900">
-											{googleName || 'Signed in'}
-										</div>
-										<div class="text-slate-500">
-											{googleEmail}
-										</div>
-									</div>
-								{:else}
-									<button
-										type="button"
-										class="group inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-bold text-slate-900 shadow-lg shadow-slate-900/5 border border-slate-200 hover:shadow-xl hover:border-slate-300 hover:-translate-y-0.5 transition-all duration-200"
-										onclick={() => {
-											saveToStore();
-											signIn('google', { callbackUrl: '/ai' });
-										}}
-									>
-										<svg class="w-4 h-4" viewBox="0 0 24 24">
-											<path
-												fill="#4285F4"
-												d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-											/>
-											<path
-												fill="#34A853"
-												d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-											/>
-											<path
-												fill="#FBBC05"
-												d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
-											/>
-											<path
-												fill="#EA4335"
-												d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
-											/>
-										</svg>
-										<span>Sign in with Google</span>
-									</button>
-								{/if}
-							</div>
-						</div>
-
-						<!-- Application inputs -->
-						<form
-							class="space-y-8"
-							onsubmit={(e) => {
-								e.preventDefault();
-								runEvaluation();
-							}}
-							aria-label="AI admissions evaluation form"
-						>
-							<!-- PDF info + OCR upload area -->
-							<div class="grid gap-6">
+							<div class="p-8 md:p-10">
+								<!-- Google sign-in bar -->
 								<div
-									class="group rounded-2xl bg-slate-50 p-6 border border-slate-200/60 hover:border-blue-300/40 transition-all duration-300"
+									class="mb-10 flex flex-col items-center justify-between gap-4 border-b border-slate-200 pb-8 md:flex-row"
 								>
-									<div class="flex items-center justify-between mb-4">
-										<div class="flex items-center gap-3">
-											<div
-												class="w-10 h-10 rounded-xl bg-slate-900 flex items-center justify-center "
-											>
-												<svg
-													class="w-5 h-5 text-white"
-													fill="none"
-													viewBox="0 0 24 24"
-													stroke="currentColor"
-												>
-													<path
-														stroke-linecap="round"
-														stroke-linejoin="round"
-														stroke-width="2"
-														d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-													/>
-												</svg>
-											</div>
-											<div>
-												<h3 class="text-sm font-bold text-slate-900">Autofill the boxes</h3>
-												<p class="text-xs text-slate-500 mt-0.5">
-													Drop in a PDF or a wall of text. We split it into the fields below.
-												</p>
-											</div>
-										</div>
+									<div class="space-y-1.5">
+										<h2 class="font-serif text-2xl font-medium text-slate-900 tracking-tight">
+											Your application
+										</h2>
+										<p class="text-xs text-slate-500">Stays on your side. We don't keep it</p>
 									</div>
 
-									{#if !googleSignedIn}
-										<!-- The upload API needs a session — ask for it up front instead of
-										     letting the file bounce off a 401 that looks like a broken reader. -->
-										<div class="flex flex-wrap items-center gap-3">
+									<div class="flex items-center gap-3">
+										{#if googleSignedIn}
+											<div
+												class="text-xs text-right bg-slate-50 rounded-xl px-4 py-3 border border-slate-200"
+											>
+												<div class="font-bold text-slate-900">
+													{googleName || 'Signed in'}
+												</div>
+												<div class="text-slate-500">
+													{googleEmail}
+												</div>
+											</div>
+										{:else}
 											<button
 												type="button"
-												class="inline-flex items-center gap-2 rounded-xl bg-white border-2 border-slate-300 px-5 py-2.5 text-sm font-semibold text-slate-900 shadow-sm hover:bg-slate-50 hover:border-blue-400 transition-all duration-200"
+												class="group inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-bold text-slate-900 shadow-lg shadow-slate-900/5 border border-slate-200 hover:shadow-xl hover:border-slate-300 hover:-translate-y-0.5 transition-all duration-200"
 												onclick={() => {
 													saveToStore();
 													signIn('google', { callbackUrl: '/ai' });
 												}}
 											>
 												<svg class="w-4 h-4" viewBox="0 0 24 24">
-													<path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-													<path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-													<path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-													<path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+													<path
+														fill="#4285F4"
+														d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+													/>
+													<path
+														fill="#34A853"
+														d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+													/>
+													<path
+														fill="#FBBC05"
+														d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+													/>
+													<path
+														fill="#EA4335"
+														d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+													/>
 												</svg>
-												Sign in with Google to upload
+												<span>Sign in with Google</span>
 											</button>
-											<span class="text-sm text-slate-500 font-medium">Takes one click. Then drop in your PDF.</span>
-										</div>
-									{:else}
-									<label class="flex items-center gap-3 cursor-pointer group/button">
+										{/if}
+									</div>
+								</div>
+
+								<!-- Application inputs -->
+								<form
+									class="space-y-8"
+									onsubmit={(e) => {
+										e.preventDefault();
+										runEvaluation();
+									}}
+									aria-label="AI admissions evaluation form"
+								>
+									<!-- PDF info + OCR upload area -->
+									<div class="grid gap-6">
 										<div
-											class="bg-white border-2 border-slate-300 text-slate-700 px-5 py-2.5 rounded-xl text-sm font-semibold group-hover/button:bg-slate-50 group-hover/button:border-blue-400 group-hover/button:text-blue-700 transition-all duration-200 shadow-sm"
+											class="group rounded-2xl bg-slate-50 p-6 border border-slate-200/60 hover:border-blue-300/40 transition-all duration-300"
 										>
-											Choose File
-										</div>
-										<input
-											type="file"
-											accept="application/pdf"
-											class="hidden"
-											onchange={handleOcrChange}
-										/>
-										<span class="text-sm text-slate-500 font-medium">
-											{#if ocrUploading}
-												<span class="flex items-center gap-2">
-													<span
-														class="h-3 w-3 animate-spin rounded-full border-2 border-slate-300 border-t-blue-600"
-													></span>
-													Extracting...
-												</span>
-											{:else if ocrText}
-												<span class="text-emerald-600 flex items-center gap-1.5">
-													<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+											<div class="flex items-center justify-between mb-4">
+												<div class="flex items-center gap-3">
+													<div
+														class="w-10 h-10 rounded-xl bg-slate-900 flex items-center justify-center"
+													>
+														<svg
+															class="w-5 h-5 text-white"
+															fill="none"
+															viewBox="0 0 24 24"
+															stroke="currentColor"
+														>
+															<path
+																stroke-linecap="round"
+																stroke-linejoin="round"
+																stroke-width="2"
+																d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+															/>
+														</svg>
+													</div>
+													<div>
+														<h3 class="text-sm font-bold text-slate-900">Autofill the boxes</h3>
+														<p class="text-xs text-slate-500 mt-0.5">
+															Drop in a PDF or a wall of text. We split it into the fields below.
+														</p>
+													</div>
+												</div>
+											</div>
+
+											{#if !googleSignedIn}
+												<!-- The upload API needs a session — ask for it up front instead of
+										     letting the file bounce off a 401 that looks like a broken reader. -->
+												<div class="flex flex-wrap items-center gap-3">
+													<button
+														type="button"
+														class="inline-flex items-center gap-2 rounded-xl bg-white border-2 border-slate-300 px-5 py-2.5 text-sm font-semibold text-slate-900 shadow-sm hover:bg-slate-50 hover:border-blue-400 transition-all duration-200"
+														onclick={() => {
+															saveToStore();
+															signIn('google', { callbackUrl: '/ai' });
+														}}
+													>
+														<svg class="w-4 h-4" viewBox="0 0 24 24">
+															<path
+																fill="#4285F4"
+																d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+															/>
+															<path
+																fill="#34A853"
+																d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+															/>
+															<path
+																fill="#FBBC05"
+																d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+															/>
+															<path
+																fill="#EA4335"
+																d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+															/>
+														</svg>
+														Sign in with Google to upload
+													</button>
+													<span class="text-sm text-slate-500 font-medium"
+														>Takes one click. Then drop in your PDF.</span
+													>
+												</div>
+											{:else}
+												<label class="flex items-center gap-3 cursor-pointer group/button">
+													<div
+														class="bg-white border-2 border-slate-300 text-slate-700 px-5 py-2.5 rounded-xl text-sm font-semibold group-hover/button:bg-slate-50 group-hover/button:border-blue-400 group-hover/button:text-blue-700 transition-all duration-200 shadow-sm"
+													>
+														Choose File
+													</div>
+													<input
+														type="file"
+														accept="application/pdf"
+														class="hidden"
+														onchange={handleOcrChange}
+													/>
+													<span class="text-sm text-slate-500 font-medium">
+														{#if ocrUploading}
+															<span class="flex items-center gap-2">
+																<span
+																	class="h-3 w-3 animate-spin rounded-full border-2 border-slate-300 border-t-blue-600"
+																></span>
+																Extracting...
+															</span>
+														{:else if ocrText}
+															<span class="text-emerald-600 flex items-center gap-1.5">
+																<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+																	<path
+																		fill-rule="evenodd"
+																		d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+																		clip-rule="evenodd"
+																	/>
+																</svg>
+																Got the text
+															</span>
+														{:else}
+															Common App PDF works best
+														{/if}
+													</span>
+												</label>
+											{/if}
+
+											{#if ocrError}
+												<div
+													class="mt-3 flex items-start gap-2 p-3 rounded-lg bg-rose-50 border border-rose-200"
+												>
+													<svg
+														class="w-4 h-4 text-rose-500 mt-0.5"
+														fill="currentColor"
+														viewBox="0 0 20 20"
+													>
 														<path
 															fill-rule="evenodd"
-															d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+															d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
 															clip-rule="evenodd"
 														/>
 													</svg>
-													Got the text
-												</span>
-											{:else}
-												Common App PDF works best
+													<div>
+														<p class="text-xs text-rose-700 font-medium">{ocrError}</p>
+														{#if ocrNeedsSignIn}
+															<button
+																type="button"
+																class="mt-2 inline-flex items-center gap-1.5 rounded-full bg-white border border-rose-200 px-3 py-1.5 text-xs font-bold text-slate-900 shadow-sm hover:border-rose-300 transition-all"
+																onclick={() => {
+																	saveToStore();
+																	signIn('google', { callbackUrl: '/ai' });
+																}}
+															>
+																Sign in with Google
+															</button>
+														{/if}
+													</div>
+												</div>
 											{/if}
-										</span>
-									</label>
-									{/if}
 
-									{#if ocrError}
+											<!-- Autofill status: which fields got populated -->
+											{#if parsing}
+												<div
+													class="mt-3 flex items-center gap-2 text-sm font-medium text-slate-600"
+												>
+													<span
+														class="h-3.5 w-3.5 animate-spin rounded-full border-2 border-slate-300 border-t-blue-600"
+													></span>
+													Reading it and sorting the pieces into fields…
+												</div>
+											{:else if fillingField}
+												<div
+													class="mt-3 flex items-center gap-2 text-sm font-semibold text-blue-700"
+												>
+													<span
+														class="h-3.5 w-3.5 animate-spin rounded-full border-2 border-blue-200 border-t-blue-600"
+													></span>
+													Writing in your {FIELD_LABELS[fillingField] ?? fillingField}…
+												</div>
+											{:else if parseNotice}
+												<div class="mt-3 rounded-lg bg-emerald-50 border border-emerald-200 p-3">
+													<p
+														class="text-xs font-semibold text-emerald-700 flex items-center gap-1.5"
+													>
+														<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"
+															><path
+																fill-rule="evenodd"
+																d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+																clip-rule="evenodd"
+															/></svg
+														>
+														{parseNotice}
+													</p>
+													<div class="mt-2 flex flex-wrap gap-1.5">
+														{#each parsedFieldKeys as k}
+															<span
+																class="text-[10px] font-bold uppercase tracking-wide text-emerald-700 bg-white border border-emerald-200 rounded-full px-2 py-0.5"
+																>{FIELD_LABELS[k] ?? k}</span
+															>
+														{/each}
+													</div>
+												</div>
+											{/if}
+
+											{#if parseError}
+												<div
+													class="mt-3 flex items-start gap-2 p-3 rounded-lg bg-amber-50 border border-amber-200"
+												>
+													<svg
+														class="w-4 h-4 text-amber-500 mt-0.5"
+														fill="currentColor"
+														viewBox="0 0 20 20"
+														><path
+															fill-rule="evenodd"
+															d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
+															clip-rule="evenodd"
+														/></svg
+													>
+													<p class="text-xs text-amber-800 font-medium">{parseError}</p>
+												</div>
+											{/if}
+
+											<!-- Or paste one big blob -->
+											<div class="mt-4 pt-4 border-t border-slate-200/70">
+												<label
+													for="paste-blob"
+													class="block text-xs font-semibold text-slate-500 mb-2"
+												>
+													No PDF handy? Paste a resume, brag sheet, or your Common App activities:
+												</label>
+												<textarea
+													id="paste-blob"
+													bind:value={pasteBlob}
+													rows="4"
+													placeholder="Dump it all here: GPA, scores, activities, awards, essay. We'll split it into the right boxes."
+													class="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 transition-all shadow-sm resize-y font-sans"
+												></textarea>
+												<button
+													type="button"
+													onclick={() => {
+														if (!googleSignedIn) {
+															saveToStore();
+															signIn('google', { callbackUrl: '/ai' });
+															return;
+														}
+														parseAndFill(pasteBlob);
+													}}
+													disabled={googleSignedIn &&
+														(parsing || !!fillingField || pasteBlob.trim().length < 20)}
+													class="mt-2 inline-flex items-center gap-2 rounded-full bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-40"
+												>
+													<svg
+														class="w-4 h-4"
+														viewBox="0 0 24 24"
+														fill="none"
+														stroke="currentColor"
+														stroke-width="2"
+														stroke-linecap="round"
+														stroke-linejoin="round"
+														><path d="M5 3v4M3 5h4M6 17v4m-2-2h4" /><path
+															d="M13 3l3.5 8.5L21 13l-8.5 1.5L11 23l-1.5-8.5L1 13l8.5-1.5z"
+														/></svg
+													>
+													{!googleSignedIn
+														? 'Sign in with Google to autofill'
+														: parsing
+															? 'Reading…'
+															: fillingField
+																? 'Autofilling…'
+																: 'Autofill my application'}
+												</button>
+											</div>
+										</div>
+									</div>
+
+									<div class="space-y-7">
+										<!-- Major -->
+										<div class="space-y-2.5 relative">
+											<label
+												for="major"
+												class="block text-sm font-bold text-slate-900 flex items-center gap-2"
+											>
+												Intended Major
+											</label>
+											<input
+												id="major"
+												type="text"
+												bind:value={major}
+												class="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 transition-all shadow-sm hover:border-slate-300 font-sans{fillClass(
+													'major'
+												)}"
+												placeholder="e.g. Computer Science, Comparative Literature"
+												onfocus={() => (showMajorDropdown = true)}
+												onblur={() => setTimeout(() => (showMajorDropdown = false), 200)}
+											/>
+											{#if showMajorDropdown && majorSuggestions.length > 0}
+												<div
+													class="absolute top-full left-0 right-0 mt-2 bg-white border border-slate-200 rounded-xl shadow-2xl z-50 overflow-hidden backdrop-blur-xl"
+												>
+													{#each majorSuggestions as m}
+														<button
+															type="button"
+															onclick={() => {
+																major = m;
+																showMajorDropdown = false;
+															}}
+															class="w-full text-left px-4 py-3 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-700 font-medium transition-colors border-b border-slate-100 last:border-0"
+														>
+															{m}
+														</button>
+													{/each}
+												</div>
+											{/if}
+										</div>
+
+										<!-- Essay -->
+										<div class="space-y-2.5">
+											<label
+												for="essay"
+												class="block text-sm font-bold text-slate-900 flex items-center gap-2"
+											>
+												Personal Essay
+											</label>
+											<textarea
+												id="essay"
+												bind:value={essay}
+												rows="6"
+												class="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 transition-all shadow-sm hover:border-slate-300 font-sans resize-y{fillClass(
+													'essay'
+												)}"
+												placeholder="Paste your personal statement."
+											></textarea>
+										</div>
+
+										<!-- Supplements -->
+										<details class="rounded-2xl border border-slate-200/60 bg-slate-50/40">
+											<summary
+												class="cursor-pointer px-5 py-4 text-sm font-bold text-slate-900 flex items-center gap-2"
+											>
+												Supplemental essays <span class="ml-1 text-xs font-normal text-slate-500"
+													>(optional, sharpens per-school fit)</span
+												>
+											</summary>
+											<div class="px-2 pb-2">
+												<div class="space-y-4 bg-white p-6 rounded-2xl border border-slate-200/60">
+													<div class="flex items-center justify-between gap-3">
+														<div class="flex items-center gap-2.5">
+															<h3 class="text-base font-bold text-slate-900">
+																Supplemental Essays
+															</h3>
+														</div>
+														<span
+															class="inline-flex items-center gap-1.5 text-[10px] bg-blue-50 text-blue-700 px-3 py-1.5 rounded-full font-bold border border-blue-200/60 shadow-sm"
+														>
+															<svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+																<path
+																	d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 5.757a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zM8 16v-1h4v1a2 2 0 11-4 0zM12 14c.015-.34.208-.646.477-.859a4 4 0 10-4.954 0c.27.213.462.519.476.859h4.002z"
+																/>
+															</svg>
+															One fills the rest
+														</span>
+													</div>
+
+													<div
+														class="flex items-start gap-2 p-3 rounded-lg bg-blue-50/50 border border-blue-100"
+													>
+														<svg
+															class="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0"
+															fill="currentColor"
+															viewBox="0 0 20 20"
+														>
+															<path
+																fill-rule="evenodd"
+																d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+																clip-rule="evenodd"
+															/>
+														</svg>
+														<p class="text-xs text-blue-800 leading-relaxed">
+															Write one supplemental well and we read it as your baseline, then
+															estimate your fit and why-us answer for <strong
+																>every other school</strong
+															> from it.
+														</p>
+													</div>
+
+													<div
+														class="flex gap-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-slate-100"
+													>
+														{#each SCHOOLS as { school, slug }}
+															<button
+																type="button"
+																class="px-4 py-2 rounded-full border-2 transition-all duration-200 font-medium text-sm whitespace-nowrap
+                {activeSupTab === slug
+																	? 'bg-slate-900 text-white border-slate-900 shadow-sm'
+																	: 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50 hover:border-slate-300'}"
+																onclick={() => (activeSupTab = slug)}
+															>
+																{slug}
+															</button>
+														{/each}
+													</div>
+
+													<textarea
+														bind:value={supplementals[activeSupTab]}
+														placeholder="Paste your {activeSupTab} supplemental."
+														class="w-full h-48 bg-white border-2 border-slate-200 rounded-xl p-4 text-sm text-slate-900 placeholder:text-slate-400 focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 outline-none shadow-sm hover:border-slate-300 transition-all font-sans resize-y"
+													></textarea>
+												</div>
+											</div>
+										</details>
+
+										<!-- Promo Code — tucked into a disclosure so it doesn't clutter the
+								     core form (most people never have a code). -->
+										<details class="border-t border-slate-100 pt-4">
+											<summary
+												class="cursor-pointer text-xs font-semibold text-slate-500 hover:text-slate-700 transition-colors"
+											>
+												Have an access code?
+											</summary>
+											<div class="relative mt-3 max-w-xs">
+												<input
+													id="promoCode"
+													type="text"
+													bind:value={promoCodeInput}
+													onkeydown={handlePromoCode}
+													placeholder="Type a code, hit Enter"
+													class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 font-sans transition-all"
+												/>
+												{#if hasDeepDiveAccess}
+													<div
+														class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1.5"
+													>
+														<span class="w-2 h-2 bg-[#0c0c09] rounded-full"></span>
+														<span class="text-xs text-[#0c0c09] font-bold">Active</span>
+													</div>
+												{/if}
+											</div>
+										</details>
+
+										<!-- Activities -->
+										<div class="space-y-2.5">
+											<label
+												for="activities"
+												class="block text-sm font-bold text-slate-900 flex items-center gap-2"
+											>
+												Activities / Résumé
+											</label>
+											<textarea
+												id="activities"
+												bind:value={activities}
+												rows="4"
+												class="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 resize-y font-sans shadow-sm hover:border-slate-300 transition-all{fillClass(
+													'activities'
+												)}"
+												placeholder="Paste your activities list or résumé bullets. If it's a PDF, copy the text over."
+											></textarea>
+										</div>
+									</div>
+
+									<div class="grid gap-6 md:grid-cols-2">
+										<!-- Honors -->
+										<div class="space-y-2.5">
+											<label
+												for="honors"
+												class="block text-sm font-bold text-slate-900 flex items-center gap-2"
+											>
+												Honors & Awards
+											</label>
+											<textarea
+												id="honors"
+												bind:value={honors}
+												rows="3"
+												class="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 resize-y font-sans shadow-sm hover:border-slate-300 transition-all{fillClass(
+													'honors'
+												)}"
+												placeholder="Competitions, scholarships, anything you'd actually list."
+											></textarea>
+										</div>
+
+										<!-- Transcript -->
+										<div class="space-y-2.5">
+											<label
+												for="transcript"
+												class="block text-sm font-bold text-slate-900 flex items-center gap-2"
+											>
+												Transcript / GPA
+											</label>
+											<textarea
+												id="transcript"
+												bind:value={transcript}
+												rows="3"
+												class="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 resize-y font-sans shadow-sm hover:border-slate-300 transition-all{fillClass(
+													'transcript'
+												)}"
+												placeholder="GPA, course rigor, test scores, and any context that matters."
+											></textarea>
+										</div>
+									</div>
+
+									<!-- ED selection + privacy note -->
+									<div
+										class="grid gap-6 md:grid-cols-2 items-start pt-6 border-t-2 border-slate-100"
+									>
+										<div class="space-y-2.5">
+											<label
+												for="edSchool"
+												class="block text-sm font-bold text-slate-900 flex items-center gap-2"
+											>
+												Early Decision / REA
+												<span class="text-xs font-normal text-slate-500">(Optional)</span>
+											</label>
+											<select
+												id="edSchool"
+												bind:value={edSlug}
+												class="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 focus:outline-none focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 shadow-sm hover:border-slate-300 transition-all font-sans cursor-pointer"
+											>
+												<option value="">No ED selected (RD only)</option>
+												{#each ED_SCHOOLS as school}
+													<option value={school.slug}>{school.label}</option>
+												{/each}
+											</select>
+											<p class="text-xs text-slate-500 flex items-center gap-1.5">
+												<svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+													<path
+														fill-rule="evenodd"
+														d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
+														clip-rule="evenodd"
+													/>
+												</svg>
+												Picking one applies that school's real early-round odds
+											</p>
+										</div>
+
+										<div class="space-y-2 flex flex-col justify-end h-full">
+											<div
+												class="flex items-start gap-2 p-4 rounded-xl bg-slate-50 border border-slate-200"
+											>
+												<svg
+													class="w-4 h-4 text-slate-400 mt-0.5 flex-shrink-0"
+													fill="currentColor"
+													viewBox="0 0 20 20"
+												>
+													<path
+														fill-rule="evenodd"
+														d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+														clip-rule="evenodd"
+													/>
+												</svg>
+												<p class="text-xs text-slate-600 leading-relaxed">
+													Your inputs go to PredictAdmit AI to be scored, and that's it. We <strong
+														class="text-slate-900">don't keep them</strong
+													>, and nothing ever reaches a college.
+												</p>
+											</div>
+										</div>
+									</div>
+
+									{#if aiError}
 										<div
-											class="mt-3 flex items-start gap-2 p-3 rounded-lg bg-rose-50 border border-rose-200"
+											class="flex items-start gap-3 p-4 rounded-xl bg-red-50 border-2 border-red-200"
 										>
 											<svg
-												class="w-4 h-4 text-rose-500 mt-0.5"
+												class="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0"
 												fill="currentColor"
 												viewBox="0 0 20 20"
 											>
@@ -1638,516 +2107,153 @@
 													clip-rule="evenodd"
 												/>
 											</svg>
-											<div>
-												<p class="text-xs text-rose-700 font-medium">{ocrError}</p>
-												{#if ocrNeedsSignIn}
-													<button
-														type="button"
-														class="mt-2 inline-flex items-center gap-1.5 rounded-full bg-white border border-rose-200 px-3 py-1.5 text-xs font-bold text-slate-900 shadow-sm hover:border-rose-300 transition-all"
-														onclick={() => {
-															saveToStore();
-															signIn('google', { callbackUrl: '/ai' });
-														}}
-													>
-														Sign in with Google
-													</button>
-												{/if}
+											<p class="text-sm font-bold text-red-700">{aiError}</p>
+										</div>
+									{/if}
+
+									<!-- Submit button -->
+									<div class="flex flex-col sm:flex-row items-center gap-4 pt-6">
+										<button
+											type={googleSignedIn ? 'submit' : 'button'}
+											disabled={$userProfile.isSubmittingAI}
+											onclick={!googleSignedIn
+												? () => signIn('google', { callbackUrl: '/ai' })
+												: undefined}
+											class="group relative w-full rounded-full bg-slate-900 shadow-sm transition-all duration-200 hover:bg-slate-800 active:scale-[0.99] disabled:opacity-60 disabled:cursor-not-allowed"
+										>
+											<div class="px-8 py-5">
+												<div
+													class="text-base font-bold uppercase tracking-widest text-white flex items-center justify-center gap-3"
+												>
+													{#if !googleSignedIn}
+														<svg class="w-5 h-5" viewBox="0 0 24 24">
+															<path
+																fill="currentColor"
+																d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+															/>
+															<path
+																fill="currentColor"
+																d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+															/>
+															<path
+																fill="currentColor"
+																d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+															/>
+															<path
+																fill="currentColor"
+																d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+															/>
+														</svg>
+														<span>Sign in to run your free prediction</span>
+													{:else if $userProfile.isSubmittingAI}
+														<span class="flex items-center gap-3">
+															<span
+																class="h-5 w-5 animate-spin rounded-full border-3 border-white/30 border-t-white"
+															></span>
+															<span>Reading your file...</span>
+														</span>
+													{:else}
+														<!-- Running is free for everyone signed in; the paywall is on
+												     OPENING decisions, not on running the simulation. -->
+														<span class="flex items-center gap-2.5">
+															<svg
+																class="w-5 h-5"
+																fill="none"
+																viewBox="0 0 24 24"
+																stroke="currentColor"
+															>
+																<path
+																	stroke-linecap="round"
+																	stroke-linejoin="round"
+																	stroke-width="2"
+																	d="M13 10V3L4 14h7v7l9-11h-7z"
+																/>
+															</svg>
+															Run my predictions
+														</span>
+													{/if}
+												</div>
 											</div>
-										</div>
-									{/if}
+										</button>
 
-									<!-- Autofill status: which fields got populated -->
-									{#if parsing}
-										<div class="mt-3 flex items-center gap-2 text-sm font-medium text-slate-600">
-											<span class="h-3.5 w-3.5 animate-spin rounded-full border-2 border-slate-300 border-t-blue-600"></span>
-											Reading it and sorting the pieces into fields…
-										</div>
-									{:else if fillingField}
-										<div class="mt-3 flex items-center gap-2 text-sm font-semibold text-blue-700">
-											<span class="h-3.5 w-3.5 animate-spin rounded-full border-2 border-blue-200 border-t-blue-600"></span>
-											Writing in your {FIELD_LABELS[fillingField] ?? fillingField}…
-										</div>
-									{:else if parseNotice}
-										<div class="mt-3 rounded-lg bg-emerald-50 border border-emerald-200 p-3">
-											<p class="text-xs font-semibold text-emerald-700 flex items-center gap-1.5">
-												<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-												{parseNotice}
-											</p>
-											<div class="mt-2 flex flex-wrap gap-1.5">
-												{#each parsedFieldKeys as k}
-													<span class="text-[10px] font-bold uppercase tracking-wide text-emerald-700 bg-white border border-emerald-200 rounded-full px-2 py-0.5">{FIELD_LABELS[k] ?? k}</span>
-												{/each}
-											</div>
-										</div>
-									{/if}
-
-									{#if parseError}
-										<div class="mt-3 flex items-start gap-2 p-3 rounded-lg bg-amber-50 border border-amber-200">
-											<svg class="w-4 h-4 text-amber-500 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
-											<p class="text-xs text-amber-800 font-medium">{parseError}</p>
-										</div>
-									{/if}
-
-									<!-- Or paste one big blob -->
-									<div class="mt-4 pt-4 border-t border-slate-200/70">
-										<label for="paste-blob" class="block text-xs font-semibold text-slate-500 mb-2">
-											No PDF handy? Paste a resume, brag sheet, or your Common App activities:
-										</label>
-										<textarea
-											id="paste-blob"
-											bind:value={pasteBlob}
-											rows="4"
-											placeholder="Dump it all here: GPA, scores, activities, awards, essay. We'll split it into the right boxes."
-											class="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 transition-all shadow-sm resize-y font-sans"
-										></textarea>
 										<button
 											type="button"
-											onclick={() => {
-												if (!googleSignedIn) {
-													saveToStore();
-													signIn('google', { callbackUrl: '/ai' });
-													return;
-												}
-												parseAndFill(pasteBlob);
-											}}
-											disabled={googleSignedIn &&
-												(parsing || !!fillingField || pasteBlob.trim().length < 20)}
-											class="mt-2 inline-flex items-center gap-2 rounded-full bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-40"
+											class="text-sm text-slate-400 hover:text-slate-600 underline decoration-dotted underline-offset-2 transition-colors whitespace-nowrap"
+											onclick={resetInboxState}
 										>
-											<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3v4M3 5h4M6 17v4m-2-2h4"/><path d="M13 3l3.5 8.5L21 13l-8.5 1.5L11 23l-1.5-8.5L1 13l8.5-1.5z"/></svg>
-											{!googleSignedIn
-												? 'Sign in with Google to autofill'
-												: parsing
-													? 'Reading…'
-													: fillingField
-														? 'Autofilling…'
-														: 'Autofill my application'}
+											Clear inbox
 										</button>
 									</div>
-								</div>
-							</div>
 
-							<div class="space-y-7">
-								<!-- Major -->
-								<div class="space-y-2.5 relative">
-									<label
-										for="major"
-										class="block text-sm font-bold text-slate-900 flex items-center gap-2"
+									<!-- Trust + pricing clarity right at the CTA (GPT-vision: add trust
+							     signals + set price expectations next to the button). -->
+									<div
+										class="mt-4 flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 text-xs text-slate-500"
 									>
-										
-										Intended Major
-									</label>
-									<input
-										id="major"
-										type="text"
-										bind:value={major}
-										class="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 transition-all shadow-sm hover:border-slate-300 font-sans{fillClass('major')}"
-										placeholder="e.g. Computer Science, Comparative Literature"
-										onfocus={() => (showMajorDropdown = true)}
-										onblur={() => setTimeout(() => (showMajorDropdown = false), 200)}
-									/>
-									{#if showMajorDropdown && majorSuggestions.length > 0}
-										<div
-											class="absolute top-full left-0 right-0 mt-2 bg-white border border-slate-200 rounded-xl shadow-2xl z-50 overflow-hidden backdrop-blur-xl"
-										>
-											{#each majorSuggestions as m}
-												<button
-													type="button"
-													onclick={() => {
-														major = m;
-														showMajorDropdown = false;
-													}}
-													class="w-full text-left px-4 py-3 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-700 font-medium transition-colors border-b border-slate-100 last:border-0"
+										<span class="inline-flex items-center gap-1 text-[#0c0c09]">
+											{#each Array(5) as _}
+												<svg class="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 20 20"
+													><path
+														d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.07 3.3a1 1 0 00.95.68h3.46c.97 0 1.37 1.24.59 1.81l-2.8 2.03a1 1 0 00-.36 1.12l1.07 3.29c.3.92-.76 1.69-1.54 1.12l-2.8-2.03a1 1 0 00-1.18 0l-2.8 2.03c-.78.57-1.83-.2-1.54-1.12l1.07-3.29a1 1 0 00-.36-1.12L2.4 8.72c-.78-.57-.38-1.81.59-1.81h3.46a1 1 0 00.95-.68l1.07-3.3z"
+													/></svg
 												>
-													{m}
-												</button>
 											{/each}
-										</div>
-									{/if}
-								</div>
-
-								<!-- Essay -->
-								<div class="space-y-2.5">
-									<label
-										for="essay"
-										class="block text-sm font-bold text-slate-900 flex items-center gap-2"
-									>
-										
-										Personal Essay
-									</label>
-									<textarea
-										id="essay"
-										bind:value={essay}
-										rows="6"
-										class="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 transition-all shadow-sm hover:border-slate-300 font-sans resize-y{fillClass('essay')}"
-										placeholder="Paste your personal statement."
-									></textarea>
-								</div>
-
-								<!-- Supplements -->
-								<details class="rounded-2xl border border-slate-200/60 bg-slate-50/40">
-									<summary class="cursor-pointer px-5 py-4 text-sm font-bold text-slate-900 flex items-center gap-2">
-										
-										Supplemental essays <span class="ml-1 text-xs font-normal text-slate-500">(optional, sharpens per-school fit)</span>
-									</summary>
-									<div class="px-2 pb-2">
-								<div
-									class="space-y-4 bg-white p-6 rounded-2xl border border-slate-200/60"
-								>
-									<div class="flex items-center justify-between gap-3">
-										<div class="flex items-center gap-2.5">
-											
-											<h3 class="text-base font-bold text-slate-900">Supplemental Essays</h3>
-										</div>
-										<span
-											class="inline-flex items-center gap-1.5 text-[10px] bg-blue-50 text-blue-700 px-3 py-1.5 rounded-full font-bold border border-blue-200/60 shadow-sm"
-										>
-											<svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-												<path
-													d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 5.757a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zM8 16v-1h4v1a2 2 0 11-4 0zM12 14c.015-.34.208-.646.477-.859a4 4 0 10-4.954 0c.27.213.462.519.476.859h4.002z"
-												/>
-											</svg>
-One fills the rest
 										</span>
-									</div>
-
-									<div
-										class="flex items-start gap-2 p-3 rounded-lg bg-blue-50/50 border border-blue-100"
-									>
-										<svg
-											class="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0"
-											fill="currentColor"
-											viewBox="0 0 20 20"
+										<span class="font-medium text-slate-600">15,000+ applicants</span>
+										<span class="hidden sm:block h-3 w-px bg-slate-200"></span>
+										<span
+											>Free: one school unlocked · <span class="font-semibold text-slate-700"
+												>Pro: unlimited simulations + the workshop</span
+											></span
 										>
-											<path
-												fill-rule="evenodd"
-												d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-												clip-rule="evenodd"
-											/>
-										</svg>
-										<p class="text-xs text-blue-800 leading-relaxed">
-											Write one supplemental well and we read it as your baseline, then estimate your
-											fit and why-us answer for <strong>every other school</strong> from it.
-										</p>
 									</div>
 
-									<div
-										class="flex gap-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-slate-100"
-									>
-										{#each SCHOOLS as { school, slug }}
-											<button
-												type="button"
-												class="px-4 py-2 rounded-full border-2 transition-all duration-200 font-medium text-sm whitespace-nowrap
-                {activeSupTab === slug
-													? 'bg-slate-900 text-white border-slate-900 shadow-sm'
-													: 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50 hover:border-slate-300'}"
-												onclick={() => (activeSupTab = slug)}
-											>
-												{slug}
-											</button>
-										{/each}
-									</div>
-
-									<textarea
-										bind:value={supplementals[activeSupTab]}
-										placeholder="Paste your {activeSupTab} supplemental."
-										class="w-full h-48 bg-white border-2 border-slate-200 rounded-xl p-4 text-sm text-slate-900 placeholder:text-slate-400 focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 outline-none shadow-sm hover:border-slate-300 transition-all font-sans resize-y"
-									></textarea>
-								</div>
-									</div>
-								</details>
-
-								<!-- Promo Code — tucked into a disclosure so it doesn't clutter the
-								     core form (most people never have a code). -->
-								<details class="border-t border-slate-100 pt-4">
-									<summary class="cursor-pointer text-xs font-semibold text-slate-500 hover:text-slate-700 transition-colors">
-										Have an access code?
-									</summary>
-									<div class="relative mt-3 max-w-xs">
-										<input
-											id="promoCode"
-											type="text"
-											bind:value={promoCodeInput}
-											onkeydown={handlePromoCode}
-											placeholder="Type a code, hit Enter"
-											class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 font-sans transition-all"
-										/>
-										{#if hasDeepDiveAccess}
-											<div class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
-												<span class="w-2 h-2 bg-[#0c0c09] rounded-full"></span>
-												<span class="text-xs text-[#0c0c09] font-bold">Active</span>
-											</div>
-										{/if}
-									</div>
-								</details>
-
-								<!-- Activities -->
-								<div class="space-y-2.5">
-									<label
-										for="activities"
-										class="block text-sm font-bold text-slate-900 flex items-center gap-2"
-									>
-										
-										Activities / Résumé
-									</label>
-									<textarea
-										id="activities"
-										bind:value={activities}
-										rows="4"
-										class="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 resize-y font-sans shadow-sm hover:border-slate-300 transition-all{fillClass('activities')}"
-										placeholder="Paste your activities list or résumé bullets. If it's a PDF, copy the text over."
-									></textarea>
-								</div>
-							</div>
-
-							<div class="grid gap-6 md:grid-cols-2">
-								<!-- Honors -->
-								<div class="space-y-2.5">
-									<label
-										for="honors"
-										class="block text-sm font-bold text-slate-900 flex items-center gap-2"
-									>
-										
-										Honors & Awards
-									</label>
-									<textarea
-										id="honors"
-										bind:value={honors}
-										rows="3"
-										class="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 resize-y font-sans shadow-sm hover:border-slate-300 transition-all{fillClass('honors')}"
-										placeholder="Competitions, scholarships, anything you'd actually list."
-									></textarea>
-								</div>
-
-								<!-- Transcript -->
-								<div class="space-y-2.5">
-									<label
-										for="transcript"
-										class="block text-sm font-bold text-slate-900 flex items-center gap-2"
-									>
-										
-										Transcript / GPA
-									</label>
-									<textarea
-										id="transcript"
-										bind:value={transcript}
-										rows="3"
-										class="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 resize-y font-sans shadow-sm hover:border-slate-300 transition-all{fillClass('transcript')}"
-										placeholder="GPA, course rigor, test scores, and any context that matters."
-									></textarea>
-								</div>
-							</div>
-
-							<!-- ED selection + privacy note -->
-							<div class="grid gap-6 md:grid-cols-2 items-start pt-6 border-t-2 border-slate-100">
-								<div class="space-y-2.5">
-									<label
-										for="edSchool"
-										class="block text-sm font-bold text-slate-900 flex items-center gap-2"
-									>
-										
-										Early Decision / REA
-										<span class="text-xs font-normal text-slate-500">(Optional)</span>
-									</label>
-									<select
-										id="edSchool"
-										bind:value={edSlug}
-										class="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 focus:outline-none focus:ring-4 focus:ring-blue-600/10 focus:border-blue-600 shadow-sm hover:border-slate-300 transition-all font-sans cursor-pointer"
-									>
-										<option value="">No ED selected (RD only)</option>
-										{#each ED_SCHOOLS as school}
-											<option value={school.slug}>{school.label}</option>
-										{/each}
-									</select>
-									<p class="text-xs text-slate-500 flex items-center gap-1.5">
-										<svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
-											<path
-												fill-rule="evenodd"
-												d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
-												clip-rule="evenodd"
-											/>
-										</svg>
-Picking one applies that school's real early-round odds
+									<p class="mt-3 text-center text-xs leading-relaxed text-slate-500">
+										It's a prediction, not a decision, and it can miss. Treat it as a dry run, not a
+										verdict to lose sleep over.
 									</p>
-								</div>
 
-								<div class="space-y-2 flex flex-col justify-end h-full">
-									<div
-										class="flex items-start gap-2 p-4 rounded-xl bg-slate-50 border border-slate-200"
-									>
-										<svg
-											class="w-4 h-4 text-slate-400 mt-0.5 flex-shrink-0"
-											fill="currentColor"
-											viewBox="0 0 20 20"
-										>
-											<path
-												fill-rule="evenodd"
-												d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-												clip-rule="evenodd"
-											/>
-										</svg>
-										<p class="text-xs text-slate-600 leading-relaxed">
-											Your inputs go to PredictAdmit AI to be scored, and that's it. We <strong
-												class="text-slate-900">don't keep them</strong
-											>, and nothing ever reaches a college.
-										</p>
-									</div>
-								</div>
-							</div>
-
-							{#if aiError}
-								<div
-									class="flex items-start gap-3 p-4 rounded-xl bg-red-50 border-2 border-red-200"
-								>
-									<svg
-										class="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0"
-										fill="currentColor"
-										viewBox="0 0 20 20"
-									>
-										<path
-											fill-rule="evenodd"
-											d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-											clip-rule="evenodd"
-										/>
-									</svg>
-									<p class="text-sm font-bold text-red-700">{aiError}</p>
-								</div>
-							{/if}
-
-							<!-- Submit button -->
-							<div class="flex flex-col sm:flex-row items-center gap-4 pt-6">
-								<button
-									type={googleSignedIn ? 'submit' : 'button'}
-									disabled={$userProfile.isSubmittingAI}
-									onclick={!googleSignedIn
-										? () => signIn('google', { callbackUrl: '/ai' })
-										: undefined}
-									class="group relative w-full rounded-full bg-slate-900 shadow-sm transition-all duration-200 hover:bg-slate-800 active:scale-[0.99] disabled:opacity-60 disabled:cursor-not-allowed"
-								>
-									<div class="px-8 py-5">
-										<div
-											class="text-base font-bold uppercase tracking-widest text-white flex items-center justify-center gap-3"
-										>
-											{#if !googleSignedIn}
-												<svg class="w-5 h-5" viewBox="0 0 24 24">
+									{#if applicantSummary}
+										<details class="mt-6">
+											<summary
+												class="cursor-pointer font-semibold text-sm text-slate-700 hover:text-slate-900 flex items-center gap-2 transition-colors"
+											>
+												<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 													<path
-														fill="currentColor"
-														d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+														stroke-linecap="round"
+														stroke-linejoin="round"
+														stroke-width="2"
+														d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
 													/>
 													<path
-														fill="currentColor"
-														d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-													/>
-													<path
-														fill="currentColor"
-														d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
-													/>
-													<path
-														fill="currentColor"
-														d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+														stroke-linecap="round"
+														stroke-linejoin="round"
+														stroke-width="2"
+														d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
 													/>
 												</svg>
-												<span>Sign in to run your free prediction</span>
-											{:else if $userProfile.isSubmittingAI}
-												<span class="flex items-center gap-3">
-													<span
-														class="h-5 w-5 animate-spin rounded-full border-3 border-white/30 border-t-white"
-													></span>
-													<span>Reading your file...</span>
-												</span>
-											{:else}
-												<!-- Running is free for everyone signed in; the paywall is on
-												     OPENING decisions, not on running the simulation. -->
-												<span class="flex items-center gap-2.5">
-													<svg
-														class="w-5 h-5"
-														fill="none"
-														viewBox="0 0 24 24"
-														stroke="currentColor"
-													>
-														<path
-															stroke-linecap="round"
-															stroke-linejoin="round"
-															stroke-width="2"
-															d="M13 10V3L4 14h7v7l9-11h-7z"
-														/>
-													</svg>
-													Run my predictions
-												</span>
-											{/if}
-										</div>
-									</div>
-								</button>
-
-								<button
-									type="button"
-									class="text-sm text-slate-400 hover:text-slate-600 underline decoration-dotted underline-offset-2 transition-colors whitespace-nowrap"
-									onclick={resetInboxState}
-								>
-									Clear inbox
-								</button>
+												See what we read from your file
+											</summary>
+											<pre
+												class="mt-3 max-h-48 overflow-auto whitespace-pre-wrap text-xs text-slate-600 border-2 border-slate-200 rounded-xl p-4 bg-slate-50/50 font-mono">{applicantSummary}</pre>
+										</details>
+									{/if}
+								</form>
 							</div>
-
-							<!-- Trust + pricing clarity right at the CTA (GPT-vision: add trust
-							     signals + set price expectations next to the button). -->
-							<div class="mt-4 flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 text-xs text-slate-500">
-								<span class="inline-flex items-center gap-1 text-[#0c0c09]">
-									{#each Array(5) as _}
-										<svg class="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.07 3.3a1 1 0 00.95.68h3.46c.97 0 1.37 1.24.59 1.81l-2.8 2.03a1 1 0 00-.36 1.12l1.07 3.29c.3.92-.76 1.69-1.54 1.12l-2.8-2.03a1 1 0 00-1.18 0l-2.8 2.03c-.78.57-1.83-.2-1.54-1.12l1.07-3.29a1 1 0 00-.36-1.12L2.4 8.72c-.78-.57-.38-1.81.59-1.81h3.46a1 1 0 00.95-.68l1.07-3.3z" /></svg>
-									{/each}
-								</span>
-								<span class="font-medium text-slate-600">15,000+ applicants</span>
-								<span class="hidden sm:block h-3 w-px bg-slate-200"></span>
-								<span>Free: one school unlocked · <span class="font-semibold text-slate-700">Pro: unlimited simulations + the workshop</span></span>
-							</div>
-
-							<p class="mt-3 text-center text-xs leading-relaxed text-slate-500">
-								It's a prediction, not a decision, and it can miss. Treat it as a dry run, not
-								a verdict to lose sleep over.
-							</p>
-
-							{#if applicantSummary}
-								<details class="mt-6">
-									<summary
-										class="cursor-pointer font-semibold text-sm text-slate-700 hover:text-slate-900 flex items-center gap-2 transition-colors"
-									>
-										<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-											<path
-												stroke-linecap="round"
-												stroke-linejoin="round"
-												stroke-width="2"
-												d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-											/>
-											<path
-												stroke-linecap="round"
-												stroke-linejoin="round"
-												stroke-width="2"
-												d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-											/>
-										</svg>
-See what we read from your file
-									</summary>
-									<pre
-										class="mt-3 max-h-48 overflow-auto whitespace-pre-wrap text-xs text-slate-600 border-2 border-slate-200 rounded-xl p-4 bg-slate-50/50 font-mono">{applicantSummary}</pre>
-								</details>
-							{/if}
-						</form>
-					</div>
-				</Card>
-			</section>
-
-			</div>
-			<!-- Right column: countdown centered in the whitespace beside the content,
+						</Card>
+					</section>
+				</div>
+				<!-- Right column: countdown centered in the whitespace beside the content,
 			     sticky as you scroll. Always present beside the builder (it's an
 			     in-flow column, so it never overlaps the full-width inbox below). -->
-			<div class="hidden xl:flex xl:flex-1 xl:justify-center">
-				<div class="sticky top-32 w-[380px]">
-					<DeadlineCountdown
-						size="lg"
-						wrapperClass="w-full rounded-3xl border border-slate-200 bg-white p-8 shadow-xl"
-					/>
+				<div class="hidden xl:flex xl:flex-1 xl:justify-center">
+					<div class="sticky top-32 w-[380px]">
+						<DeadlineCountdown
+							size="lg"
+							wrapperClass="w-full rounded-3xl border border-slate-200 bg-white p-8 shadow-xl"
+						/>
+					</div>
 				</div>
-			</div>
 			</div>
 
 			<!-- AIMail Inbox -->
@@ -2160,12 +2266,13 @@ See what we read from your file
 					     A student must not mistake the inbox metaphor for an actual result. -->
 					<div class="px-6 py-2.5 bg-slate-50 border-b border-slate-100">
 						<p class="text-[11px] leading-snug text-slate-500">
-							These are PredictAdmit AI's best guess from what you gave it. Estimates, not real or official
-							decisions. PredictAdmit isn't affiliated with any school.
+							These are PredictAdmit AI's best guess from what you gave it. Estimates, not real or
+							official decisions. PredictAdmit isn't affiliated with any school.
 						</p>
 						<p class="mt-1 text-[11px] leading-snug font-medium text-slate-600">
-							We calibrated PredictAdmit AI to real admissions outcomes, so it's realistic rather than
-							flattering. It can still be wrong in either direction, so treat it as a gut-check, not a verdict.
+							We calibrated PredictAdmit AI to real admissions outcomes, so it's realistic rather
+							than flattering. It can still be wrong in either direction, so treat it as a
+							gut-check, not a verdict.
 						</p>
 					</div>
 					<!-- Conversion moment: the free prediction has landed. A non-Pro user who has
@@ -2177,8 +2284,13 @@ See what we read from your file
 						<div class="border-b border-slate-200 bg-slate-50 px-6 py-4">
 							<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
 								<div>
-									<p class="text-sm font-bold text-slate-900">Your predictions are in. Unlock one school free.</p>
-									<p class="mt-0.5 text-xs leading-relaxed text-slate-500">Any other school is $4.99 (deep-dive included). Or go Pro for unlimited simulations and the full essay workshop. $25 once, or $9.99/mo.</p>
+									<p class="text-sm font-bold text-slate-900">
+										Your predictions are in. Unlock one school free.
+									</p>
+									<p class="mt-0.5 text-xs leading-relaxed text-slate-500">
+										Any other school is $4.99 (deep-dive included). Or go Pro for unlimited
+										simulations and the full essay workshop. $25 once, or $9.99/mo.
+									</p>
 								</div>
 								<button
 									type="button"
@@ -2243,15 +2355,11 @@ See what we read from your file
 					{/if}
 
 					{#if deepDiveItems.length}
-						<div
-							class="border-t-2 border-slate-100 bg-slate-50 px-6 py-8 space-y-6"
-						>
+						<div class="border-t-2 border-slate-100 bg-slate-50 px-6 py-8 space-y-6">
 							<div class="flex items-center justify-between gap-3">
 								<div class="space-y-1.5">
 									<div class="flex items-center gap-2">
-										<div
-											class="w-8 h-8 rounded-lg bg-slate-900 flex items-center justify-center "
-										>
+										<div class="w-8 h-8 rounded-lg bg-slate-900 flex items-center justify-center">
 											<svg
 												class="w-4 h-4 text-white"
 												fill="none"
@@ -2271,7 +2379,7 @@ See what we read from your file
 										</p>
 									</div>
 									<p class="text-xs text-slate-600 max-w-xl leading-relaxed pl-10">
-A read on what pushed each school toward admit, deny, or waitlist for you
+										A read on what pushed each school toward admit, deny, or waitlist for you
 									</p>
 								</div>
 							</div>
@@ -2343,15 +2451,24 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 													{#each item.readers as r}
 														<div class="rounded-xl border border-slate-200 bg-white p-4">
 															<div class="flex items-center justify-between gap-2">
-																<p class="text-[11px] font-bold uppercase tracking-wide text-slate-500">{r.role}</p>
+																<p
+																	class="text-[11px] font-bold uppercase tracking-wide text-slate-500"
+																>
+																	{r.role}
+																</p>
 																<span
-																	class="shrink-0 rounded-full px-2 py-0.5 text-[10px] font-bold {r.lean === 'for'
+																	class="shrink-0 rounded-full px-2 py-0.5 text-[10px] font-bold {r.lean ===
+																	'for'
 																		? 'bg-emerald-50 text-emerald-700'
 																		: r.lean === 'against'
 																			? 'bg-rose-50 text-rose-700'
 																			: 'bg-amber-50 text-amber-700'}"
 																>
-																	{r.lean === 'for' ? 'For' : r.lean === 'against' ? 'Against' : 'Mixed'}
+																	{r.lean === 'for'
+																		? 'For'
+																		: r.lean === 'against'
+																			? 'Against'
+																			: 'Mixed'}
 																</span>
 															</div>
 															<p class="mt-2 text-sm leading-relaxed text-slate-700">{r.take}</p>
@@ -2361,25 +2478,35 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 
 												{#if item.tension}
 													<div class="rounded-xl border border-amber-200 bg-amber-50/60 p-4">
-														<p class="text-[11px] font-bold uppercase tracking-wide text-amber-700">Where the room split</p>
-														<p class="mt-1 text-sm leading-relaxed text-slate-700">{item.tension}</p>
+														<p class="text-[11px] font-bold uppercase tracking-wide text-amber-700">
+															Where the room split
+														</p>
+														<p class="mt-1 text-sm leading-relaxed text-slate-700">
+															{item.tension}
+														</p>
 													</div>
 												{/if}
 
 												{#if item.chair}
 													<div class="rounded-xl bg-slate-900 p-4 text-white">
-														<p class="text-[11px] font-bold uppercase tracking-wide text-blue-200">The chair weighs the room</p>
+														<p class="text-[11px] font-bold uppercase tracking-wide text-blue-200">
+															The chair weighs the room
+														</p>
 														<p class="mt-1 text-sm leading-relaxed text-slate-100">{item.chair}</p>
 													</div>
 												{/if}
 
 												{#if item.advice && item.advice.length}
 													<div class="rounded-xl border border-slate-200 bg-white p-4">
-														<p class="text-[11px] font-bold uppercase tracking-wide text-slate-500">What would move it</p>
+														<p class="text-[11px] font-bold uppercase tracking-wide text-slate-500">
+															What would move it
+														</p>
 														<ul class="mt-2 space-y-1.5">
 															{#each item.advice as a}
 																<li class="flex items-start gap-2 text-sm text-slate-700">
-																	<span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#0c0c09]"></span>
+																	<span
+																		class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#0c0c09]"
+																	></span>
 																	{a}
 																</li>
 															{/each}
@@ -2442,7 +2569,6 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 		</div>
 	</div>
 
-
 	<style>
 		@keyframes spin-slow {
 			from {
@@ -2468,16 +2594,32 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 			animation: paywall-plans-in 0.2s ease both;
 		}
 		@keyframes paywall-scrim-in {
-			from { opacity: 0; }
-			to { opacity: 1; }
+			from {
+				opacity: 0;
+			}
+			to {
+				opacity: 1;
+			}
 		}
 		@keyframes paywall-sheet-in {
-			from { opacity: 0; transform: translateY(24px) scale(0.98); }
-			to { opacity: 1; transform: translateY(0) scale(1); }
+			from {
+				opacity: 0;
+				transform: translateY(24px) scale(0.98);
+			}
+			to {
+				opacity: 1;
+				transform: translateY(0) scale(1);
+			}
 		}
 		@keyframes paywall-plans-in {
-			from { opacity: 0; transform: translateY(-4px); }
-			to { opacity: 1; transform: translateY(0); }
+			from {
+				opacity: 0;
+				transform: translateY(-4px);
+			}
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
 		}
 		@media (prefers-reduced-motion: reduce) {
 			.paywall-scrim,
@@ -2508,7 +2650,8 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 		class="paywall-scrim fixed inset-0 z-[10000] flex items-end justify-center overflow-y-auto bg-slate-950/70 p-0 backdrop-blur-md sm:items-center sm:p-6"
 		role="presentation"
 	>
-		<button class="absolute inset-0 cursor-default" aria-label="Close" onclick={closePaywall}></button>
+		<button class="absolute inset-0 cursor-default" aria-label="Close" onclick={closePaywall}
+		></button>
 
 		<div
 			class="paywall-sheet relative z-10 flex max-h-[95dvh] w-full max-w-md flex-col overflow-hidden rounded-t-3xl bg-white shadow-2xl sm:max-h-[90dvh] sm:rounded-3xl"
@@ -2521,19 +2664,40 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 				aria-label="Close"
 				class="absolute right-3.5 top-3.5 z-20 grid h-8 w-8 place-items-center rounded-full text-white/70 transition hover:bg-white/15 hover:text-white"
 			>
-				<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+				<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+					><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg
+				>
 			</button>
 
 			<!-- Hero. Solid brand blue, white text. The deadline pill sits up top as
 			     the urgency anchor before any price is shown. -->
-			<div class="relative shrink-0 overflow-hidden bg-slate-900 px-7 pt-8 pb-7 text-center text-white">
-				<div class="pointer-events-none absolute -top-20 -right-16 h-48 w-48 rounded-full bg-white/10 blur-2xl"></div>
+			<div
+				class="relative shrink-0 overflow-hidden bg-slate-900 px-7 pt-8 pb-7 text-center text-white"
+			>
+				<div
+					class="pointer-events-none absolute -top-20 -right-16 h-48 w-48 rounded-full bg-white/10 blur-2xl"
+				></div>
 				<div class="relative">
-					<div class="mx-auto flex w-fit items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-[11px] font-semibold ring-1 ring-white/20">
-						<svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+					<div
+						class="mx-auto flex w-fit items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-[11px] font-semibold ring-1 ring-white/20"
+					>
+						<svg
+							class="h-3.5 w-3.5"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke="currentColor"
+							stroke-width="2"
+							><path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+							/></svg
+						>
 						{nextMilestonePhrase()}
 					</div>
-					<h3 class="mt-4 font-serif text-[1.9rem] font-medium leading-[1.15] tracking-tight text-white">
+					<h3
+						class="mt-4 font-serif text-[1.9rem] font-medium leading-[1.15] tracking-tight text-white"
+					>
 						{paywallMode === 'decision'
 							? `Open ${paywallContextDecision?.school ?? 'this'} decision`
 							: paywallMode === 'deepDive'
@@ -2560,24 +2724,51 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 					<!-- The real verdict is already computed — show it BLURRED so the applicant
 					     feels their actual decision waiting, not a generic teaser. Outcome word
 					     and reasoning are their true results, just unreadable until they unlock. -->
-					<figure class="relative mb-6 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+					<figure
+						class="relative mb-6 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
+					>
 						<div class="border-b border-slate-100 px-5 py-3">
-							<p class="text-[11px] font-bold uppercase tracking-wide text-slate-500">{paywallContextDecision.school}</p>
+							<p class="text-[11px] font-bold uppercase tracking-wide text-slate-500">
+								{paywallContextDecision.school}
+							</p>
 							<p class="text-sm font-bold text-slate-900">Your admission decision</p>
 						</div>
 						<div class="space-y-3 px-5 pb-9 pt-4">
 							<div class="flex justify-center">
-								<span class="select-none rounded-full border-2 border-slate-300 px-7 py-1.5 text-lg font-black uppercase tracking-wider text-slate-900 blur-[7px]">{paywallContextDecision.outcome}</span>
+								<span
+									class="select-none rounded-full border-2 border-slate-300 px-7 py-1.5 text-lg font-black uppercase tracking-wider text-slate-900 blur-[7px]"
+									>{paywallContextDecision.outcome}</span
+								>
 							</div>
 							<p class="select-none text-[13px] leading-relaxed text-slate-600 blur-[4px]">
-								{(paywallContextDecision.academic_explanation || 'The committee read your file in full and reached a decision. Every reader weighed your academics, essays, activities, and fit before the chair made the final call.').slice(0, 240)}
+								{(
+									paywallContextDecision.academic_explanation ||
+									'The committee read your file in full and reached a decision. Every reader weighed your academics, essays, activities, and fit before the chair made the final call.'
+								).slice(0, 240)}
 							</p>
 						</div>
-						<div class="pointer-events-none absolute inset-x-0 bottom-0 flex flex-col items-center bg-gradient-to-t from-white via-white/85 to-transparent pb-3 pt-8">
-							<span class="grid h-9 w-9 place-items-center rounded-full bg-slate-900 text-white shadow-lg">
-								<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+						<div
+							class="pointer-events-none absolute inset-x-0 bottom-0 flex flex-col items-center bg-gradient-to-t from-white via-white/85 to-transparent pb-3 pt-8"
+						>
+							<span
+								class="grid h-9 w-9 place-items-center rounded-full bg-slate-900 text-white shadow-lg"
+							>
+								<svg
+									class="h-4 w-4"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke="currentColor"
+									stroke-width="2"
+									><path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+									/></svg
+								>
 							</span>
-							<span class="mt-1.5 text-xs font-bold text-slate-900">Unlock to reveal your decision</span>
+							<span class="mt-1.5 text-xs font-bold text-slate-900"
+								>Unlock to reveal your decision</span
+							>
 						</div>
 					</figure>
 				{:else}
@@ -2587,21 +2778,45 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 							<span class="h-1.5 w-1.5 rounded-full bg-slate-300"></span>
 							<span class="h-1.5 w-1.5 rounded-full bg-slate-300"></span>
 							<span class="h-1.5 w-1.5 rounded-full bg-slate-300"></span>
-							<span class="ml-2 text-[9px] font-medium text-slate-400">app.predictadmit.com/pro</span>
+							<span class="ml-2 text-[9px] font-medium text-slate-400"
+								>app.predictadmit.com/pro</span
+							>
 						</div>
-						<img src="/screenshots/pro-hub.png" alt="Inside PredictAdmit Pro: your application command center" loading="lazy" class="block w-full" />
+						<img
+							src="/screenshots/pro-hub.png"
+							alt="Inside PredictAdmit Pro: your application command center"
+							loading="lazy"
+							class="block w-full"
+						/>
 					</figure>
 				{/if}
 
 				<!-- Value anchor: what it's worth vs what it costs. -->
 				<div class="flex items-center justify-center gap-3 text-center">
 					<div class="leading-tight">
-						<p class="text-[11px] font-semibold uppercase tracking-wide text-slate-500">Private counselor</p>
-						<p class="text-sm font-bold text-slate-500 line-through decoration-slate-400">$5,000+</p>
+						<p class="text-[11px] font-semibold uppercase tracking-wide text-slate-500">
+							Private counselor
+						</p>
+						<p class="text-sm font-bold text-slate-500 line-through decoration-slate-400">
+							$5,000+
+						</p>
 					</div>
-					<svg class="h-4 w-4 shrink-0 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+					<svg
+						class="h-4 w-4 shrink-0 text-slate-400"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke="currentColor"
+						stroke-width="2"
+						><path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							d="M14 5l7 7m0 0l-7 7m7-7H3"
+						/></svg
+					>
 					<div class="leading-tight">
-						<p class="text-[11px] font-bold uppercase tracking-wide text-[#0c0c09]">PredictAdmit Pro</p>
+						<p class="text-[11px] font-bold uppercase tracking-wide text-[#0c0c09]">
+							PredictAdmit Pro
+						</p>
 						<p class="text-lg font-black text-slate-900">$9.99/mo</p>
 					</div>
 				</div>
@@ -2611,8 +2826,17 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 				<ul class="mt-4 grid grid-cols-1 gap-x-3 gap-y-2 sm:grid-cols-2">
 					{#each ['Decisions across every T30 school', 'Committee-style deep-dive on every verdict', 'AI essay editor with reader feedback', 'Per-school strategy for 50+ schools', 'AI counselor, available any time', 'Unlimited re-runs as you edit'] as benefit}
 						<li class="flex items-center gap-2 text-[13px] text-slate-700">
-							<span class="grid h-4 w-4 shrink-0 place-items-center rounded-full bg-[color-mix(in_oklab,#0c0c09_10%,transparent)] text-[#0c0c09]">
-								<svg class="h-2.5 w-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+							<span
+								class="grid h-4 w-4 shrink-0 place-items-center rounded-full bg-[color-mix(in_oklab,#0c0c09_10%,transparent)] text-[#0c0c09]"
+							>
+								<svg
+									class="h-2.5 w-2.5"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke="currentColor"
+									stroke-width="3"
+									><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg
+								>
 							</span>
 							{benefit}
 						</li>
@@ -2636,12 +2860,27 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 						disabled={checkoutLoading}
 						class="mt-2.5 w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-50 disabled:opacity-50"
 					>
-						{checkoutLoading ? 'Opening checkout…' : `Or unlock just ${paywallContextDecision.school} · $4.99`}
+						{checkoutLoading
+							? 'Opening checkout…'
+							: `Or unlock just ${paywallContextDecision.school} · $4.99`}
 					</button>
 				{/if}
 
-				<p class="mt-3 flex items-center justify-center gap-1.5 text-[11px] font-medium text-slate-500">
-					<svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+				<p
+					class="mt-3 flex items-center justify-center gap-1.5 text-[11px] font-medium text-slate-500"
+				>
+					<svg
+						class="h-3.5 w-3.5"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke="currentColor"
+						stroke-width="2"
+						><path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+						/></svg
+					>
 					See everything you get, then pick a plan
 				</p>
 
@@ -2651,7 +2890,10 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 				>
 					Not your card? Send this to a parent →
 				</button>
-				<button onclick={closePaywall} class="mt-3 w-full text-center text-xs font-medium text-slate-500 transition hover:text-slate-700">
+				<button
+					onclick={closePaywall}
+					class="mt-3 w-full text-center text-xs font-medium text-slate-500 transition hover:text-slate-700"
+				>
 					Maybe later
 				</button>
 			</div>
@@ -2680,16 +2922,22 @@ A read on what pushed each school toward admit, deny, or waitlist for you
 			class="flex w-full items-center justify-center gap-2 rounded-full bg-slate-900 py-3.5 text-base font-semibold text-white shadow-sm transition active:scale-[0.99] disabled:opacity-60"
 		>
 			{#if $userProfile.isSubmittingAI}
-				<span class="h-5 w-5 animate-spin rounded-full border-2 border-white/30 border-t-white"></span>
+				<span class="h-5 w-5 animate-spin rounded-full border-2 border-white/30 border-t-white"
+				></span>
 				Reading your file…
 			{:else}
-				<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+				<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+					><path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						d="M13 10V3L4 14h7v7l9-11h-7z"
+					/></svg
+				>
 				{googleSignedIn ? 'Run my predictions' : 'Sign in to run your free prediction'}
 			{/if}
 		</button>
 	</div>
 {/if}
-
 
 <!-- Mobile-only spacer so the fixed sticky CTA above never covers the footer's
      last line (the NACAC disclaimer). Only present while the bar is shown. -->

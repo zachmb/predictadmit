@@ -313,7 +313,6 @@
 		return { destroy: () => io.disconnect() };
 	}
 
-
 	// --- Handlers ---
 	const handleStartSimulationClick = () => {
 		// The old in-page "run the whole season" form was removed; send people to
@@ -349,7 +348,7 @@
 			ctaText: 'Predict free'
 		},
 		{
-			heading: 'Essay feedback, line by line',
+			heading: 'Line by line essay feedback',
 			sub: 'It flags the weak lines the way an admissions reader would, and tells you why. It never writes a word for you.',
 			img: '/screenshots/pro-essay.png',
 			w: 2880,
@@ -358,7 +357,7 @@
 			ctaText: 'See it'
 		},
 		{
-			heading: 'A counselor that gives it straight',
+			heading: "A 24/7 counselor that doesn't sugarcoat",
 			sub: "Ask what you'd pay a consultant $300 an hour for. Your odds, your essay, your list. Any time, no appointment.",
 			img: '/screenshots/pro-counselor.png',
 			w: 2880,
@@ -428,9 +427,10 @@
 			const bytes = new Uint8Array(await file.arrayBuffer());
 			const pdf = await getDocumentProxy(bytes);
 			const { text } = await extractText(pdf, { mergePages: true });
-			const clean = (Array.isArray(text) ? text.join('\n') : text ?? '').trim();
+			const clean = (Array.isArray(text) ? text.join('\n') : (text ?? '')).trim();
 			if (!clean) {
-				pdfError = 'Read the file but found no text — it’s likely a scan. Paste the text below instead.';
+				pdfError =
+					'Read the file but found no text — it’s likely a scan. Paste the text below instead.';
 				return;
 			}
 			heroStats = clean;
@@ -734,7 +734,10 @@
 		name="description"
 		content="PredictAdmit predicts your admissions decision at every T30 school, shows exactly why, and gives you the tools to fix it: an AI essay editor, per-school strategy, a narrative mind map, and an AI counselor. Your first prediction is free."
 	/>
-	<meta property="og:title" content="PredictAdmit: Predict your decisions, then improve your application" />
+	<meta
+		property="og:title"
+		content="PredictAdmit: Predict your decisions, then improve your application"
+	/>
 	<meta
 		property="og:description"
 		content="Predict your admissions decision at every T30 school and get the full workshop to improve your application: AI essay feedback, per-school strategy, and an AI counselor. First prediction free."
@@ -750,11 +753,15 @@
 <main class="font-sans text-slate-900 bg-[#f4f4f0] selection:bg-slate-200 selection:text-slate-900">
 	<!-- HERO SECTION — Kolly layout: wide centered container, content left-aligned
 	     at the container's left padding edge (items-start), warm cream canvas. -->
-	<section class="hero-root relative flex flex-col min-h-[100svh] pt-[100px] overflow-hidden bg-[#f4f4f0]">
+	<section
+		class="hero-root relative flex flex-col min-h-[100svh] pt-[100px] overflow-hidden bg-[#f4f4f0]"
+	>
 		<!-- Content grows to fill the space between the (overlay) nav and the
 		     carousel, and centers within it, so the hero stays balanced at any
 		     viewport height while the carousel stays pinned to the fold. -->
-		<div class="hero-content flex-1 min-h-0 flex flex-col justify-center w-full max-w-[1400px] mx-auto px-5 lg:px-10 lg:pl-20 text-left relative z-10 py-4 md:py-6">
+		<div
+			class="hero-content flex-1 min-h-0 flex flex-col justify-center w-full max-w-[1400px] mx-auto px-5 lg:px-10 lg:pl-20 text-left relative z-10 py-4 md:py-6"
+		>
 			<!-- Headline -->
 			<div class="hero-headwrap space-y-5 max-w-5xl mb-8">
 				<h1
@@ -765,9 +772,14 @@
 				<p
 					class="hero-sub text-lg md:text-xl text-slate-500 max-w-3xl leading-relaxed tracking-tight font-medium mt-5 animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-[200ms] fill-mode-both"
 				>
-					<span class="font-semibold text-slate-900 tabular-nums">{predictedCountLabel}+</span> students have
-					predicted their decisions, simulated exact portals and real acceptance letters to their dream schools, and used
-					<a href="/pro" class="font-semibold text-slate-900 underline decoration-slate-300 underline-offset-2 transition-colors hover:decoration-slate-900">Pro's</a>
+					<span class="font-semibold text-slate-900 tabular-nums">{predictedCountLabel}+</span>
+					students have predicted their decisions, simulated exact portals and real acceptance
+					letters to their dream schools, and used
+					<a
+						href="/pro"
+						class="font-semibold text-slate-900 underline decoration-slate-300 underline-offset-2 transition-colors hover:decoration-slate-900"
+						>Pro's</a
+					>
 					application help to get in.
 				</p>
 			</div>
@@ -784,7 +796,9 @@
 						role="tab"
 						aria-selected={heroMode === 'predict'}
 						on:click={() => (heroMode = 'predict')}
-						class="rounded-xl px-3 py-2 text-sm font-semibold transition-all {heroMode === 'predict' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-700'}"
+						class="rounded-xl px-3 py-2 text-sm font-semibold transition-all {heroMode === 'predict'
+							? 'bg-white text-slate-900 shadow-sm'
+							: 'text-slate-500 hover:text-slate-700'}"
 					>
 						Predict my decisions
 					</button>
@@ -793,7 +807,10 @@
 						role="tab"
 						aria-selected={heroMode === 'simulate'}
 						on:click={() => (heroMode = 'simulate')}
-						class="rounded-xl px-3 py-2 text-sm font-semibold transition-all {heroMode === 'simulate' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-700'}"
+						class="rounded-xl px-3 py-2 text-sm font-semibold transition-all {heroMode ===
+						'simulate'
+							? 'bg-white text-slate-900 shadow-sm'
+							: 'text-slate-500 hover:text-slate-700'}"
 					>
 						Simulate a school
 					</button>
@@ -803,27 +820,59 @@
 					{#if heroMode === 'predict'}
 						<div class="flex items-center justify-between gap-3 mb-3">
 							<h3 class="text-sm font-bold text-slate-900">Predict your decisions</h3>
-							<label class="shrink-0 cursor-pointer inline-flex items-center gap-2 rounded-xl border-2 border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition-all hover:border-blue-400 hover:text-blue-700 hover:bg-slate-50">
+							<label
+								class="shrink-0 cursor-pointer inline-flex items-center gap-2 rounded-xl border-2 border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition-all hover:border-blue-400 hover:text-blue-700 hover:bg-slate-50"
+							>
 								{#if pdfReading}
-									<span class="h-3.5 w-3.5 animate-spin rounded-full border-2 border-slate-300 border-t-blue-600"></span>
+									<span
+										class="h-3.5 w-3.5 animate-spin rounded-full border-2 border-slate-300 border-t-blue-600"
+									></span>
 									Reading…
 								{:else}
-									<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" /></svg>
+									<svg
+										class="w-4 h-4"
+										fill="none"
+										viewBox="0 0 24 24"
+										stroke="currentColor"
+										stroke-width="2"
+										><path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+										/></svg
+									>
 									upload application pdf
 								{/if}
-								<input type="file" accept="application/pdf" class="hidden" on:change={handleHeroPdf} />
+								<input
+									type="file"
+									accept="application/pdf"
+									class="hidden"
+									on:change={handleHeroPdf}
+								/>
 							</label>
 						</div>
 
 						{#if pdfDone}
 							<p class="mb-3 flex items-center gap-1.5 text-xs font-semibold text-emerald-600">
-								<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
+								<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"
+									><path
+										fill-rule="evenodd"
+										d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+										clip-rule="evenodd"
+									/></svg
+								>
 								Got your PDF. Review the text below, then predict.
 							</p>
 						{/if}
 						{#if pdfError}
 							<p class="mb-3 flex items-start gap-1.5 text-xs font-medium text-rose-600">
-								<svg class="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" /></svg>
+								<svg class="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 20 20"
+									><path
+										fill-rule="evenodd"
+										d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+										clip-rule="evenodd"
+									/></svg
+								>
 								{pdfError}
 							</p>
 						{/if}
@@ -846,8 +895,20 @@
 							<h3 class="text-sm font-bold text-slate-900">Rehearse a school's portal</h3>
 							<!-- Rehearse an acceptance or a rejection (sets manualOverrideMode) -->
 							<div class="grid grid-cols-2 gap-1 rounded-xl bg-slate-100 p-1 text-xs font-semibold">
-								<button type="button" on:click={() => manualOverrideMode.set('accepted')} class="rounded-lg px-2.5 py-1 transition-all {$manualOverrideMode === 'accepted' ? 'bg-white text-emerald-700 shadow-sm' : 'text-slate-500 hover:text-slate-700'}">Acceptance</button>
-								<button type="button" on:click={() => manualOverrideMode.set('denied')} class="rounded-lg px-2.5 py-1 transition-all {$manualOverrideMode !== 'accepted' ? 'bg-white text-rose-700 shadow-sm' : 'text-slate-500 hover:text-slate-700'}">Rejection</button>
+								<button
+									type="button"
+									on:click={() => manualOverrideMode.set('accepted')}
+									class="rounded-lg px-2.5 py-1 transition-all {$manualOverrideMode === 'accepted'
+										? 'bg-white text-emerald-700 shadow-sm'
+										: 'text-slate-500 hover:text-slate-700'}">Acceptance</button
+								>
+								<button
+									type="button"
+									on:click={() => manualOverrideMode.set('denied')}
+									class="rounded-lg px-2.5 py-1 transition-all {$manualOverrideMode !== 'accepted'
+										? 'bg-white text-rose-700 shadow-sm'
+										: 'text-slate-500 hover:text-slate-700'}">Rejection</button
+								>
 							</div>
 						</div>
 						<div class="relative">
@@ -859,13 +920,18 @@
 								class="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-900 outline-none placeholder:text-slate-400 shadow-sm transition-all hover:border-slate-300 focus:border-blue-600 focus:ring-4 focus:ring-blue-600/10"
 							/>
 							{#if showSearchResults}
-								<ul class="absolute left-0 right-0 top-full z-30 mt-2 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl">
+								<ul
+									class="absolute left-0 right-0 top-full z-30 mt-2 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl"
+								>
 									{#each filteredUniversities as uni, i}
 										<li>
 											<button
 												type="button"
 												on:click={() => handleUniversitySelect(uni.slug)}
-												class="flex w-full items-center justify-between gap-3 px-4 py-2.5 text-left text-sm font-medium text-slate-700 transition-colors {i === selectedIndex ? 'bg-slate-50' : 'hover:bg-slate-50'}"
+												class="flex w-full items-center justify-between gap-3 px-4 py-2.5 text-left text-sm font-medium text-slate-700 transition-colors {i ===
+												selectedIndex
+													? 'bg-slate-50'
+													: 'hover:bg-slate-50'}"
 											>
 												{uni.name}
 												<span class="text-xs text-slate-400">Open portal &rarr;</span>
@@ -875,7 +941,10 @@
 								</ul>
 							{/if}
 						</div>
-						<p class="mt-3 text-xs leading-relaxed text-slate-400">A fictional practice portal, clearly labeled as a simulation. Not a real decision or any school's system.</p>
+						<p class="mt-3 text-xs leading-relaxed text-slate-400">
+							A fictional practice portal, clearly labeled as a simulation. Not a real decision or
+							any school's system.
+						</p>
 					{/if}
 				</div>
 			</div>
@@ -883,13 +952,12 @@
 
 		<!-- School logo carousel — pinned to the very bottom of the above-the-fold
 		     on any screen height, with the content above spaced to fill the rest. -->
-		<div class="hero-carousel shrink-0 w-full max-w-[1400px] mx-auto px-5 lg:px-10 pb-5 md:pb-7 animate-in fade-in duration-1000 delay-300 fill-mode-both">
+		<div
+			class="hero-carousel shrink-0 w-full max-w-[1400px] mx-auto px-5 lg:px-10 pb-5 md:pb-7 animate-in fade-in duration-1000 delay-300 fill-mode-both"
+		>
 			<SchoolLogoMarquee />
 		</div>
 	</section>
-
-
-
 
 	<!-- SECTION 2A: PRO SCROLL-ZOOM STORY (replaces the static section header) -->
 	<ScrollZoomStory />
@@ -900,7 +968,9 @@
 			<!-- Section header (GradGPT-style handwritten eyebrow + serif head) -->
 			<div class="mb-16 text-center md:mb-24">
 				<p class="hand text-2xl md:text-3xl">what you get in Pro</p>
-				<h2 class="mt-1 font-serif text-4xl md:text-6xl font-medium tracking-tight text-slate-900 leading-[1.03]">
+				<h2
+					class="mt-1 font-serif text-4xl md:text-6xl font-medium tracking-tight text-slate-900 leading-[1.03]"
+				>
 					Everything a $300/hr counselor does
 				</h2>
 			</div>
@@ -908,7 +978,8 @@
 				{#each proCards as c, i}
 					<div
 						use:reveal={i * 80}
-						class="grid items-center gap-8 overflow-hidden rounded-[2.5rem] border border-slate-200/70 px-6 py-10 md:grid-cols-2 md:gap-16 md:px-16 md:py-20 {i % 2 ===
+						class="grid items-center gap-8 overflow-hidden rounded-[2.5rem] border border-slate-200/70 px-6 py-10 md:grid-cols-2 md:gap-16 md:px-16 md:py-20 {i %
+							2 ===
 						0
 							? 'bg-white'
 							: 'bg-[color-mix(in_oklab,#0c0c09_4%,#f4f4f0)]'}"
@@ -920,14 +991,31 @@
 							<div
 								class="overflow-hidden rounded-2xl border-[3px] border-[#0c0c09] bg-white shadow-[0_32px_80px_-28px_rgba(12,12,9,0.4)]"
 							>
-								<img src={c.img} alt={c.heading} width={c.w} height={c.h} loading="lazy" class="block h-auto w-full" />
+								<img
+									src={c.img}
+									alt={c.heading}
+									width={c.w}
+									height={c.h}
+									loading="lazy"
+									class="block h-auto w-full"
+								/>
 							</div>
 							<span class="pa-cursor pa-cursor--{['a', 'b', 'c', 'd'][i % 4]}" aria-hidden="true">
-								<svg width="26" height="26" viewBox="0 0 24 24" fill="#0c0c09" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"><path d="M5 2.5l5.6 16.5 2.3-6.9 6.9-2.3L5 2.5z" /></svg>
+								<svg
+									width="26"
+									height="26"
+									viewBox="0 0 24 24"
+									fill="#0c0c09"
+									stroke="#fff"
+									stroke-width="1.6"
+									stroke-linejoin="round"><path d="M5 2.5l5.6 16.5 2.3-6.9 6.9-2.3L5 2.5z" /></svg
+								>
 							</span>
 						</div>
 						<div class={i % 2 === 1 ? 'md:order-1' : ''}>
-							<h3 class="font-serif text-4xl md:text-[3.25rem] font-medium tracking-tight leading-[1.04] text-slate-900">
+							<h3
+								class="font-serif text-4xl md:text-[3.25rem] font-medium tracking-tight leading-[1.04] text-slate-900"
+							>
 								{c.heading}
 							</h3>
 							<p class="mt-5 max-w-lg text-lg md:text-xl leading-relaxed text-slate-600">{c.sub}</p>
@@ -943,7 +1031,10 @@
 			</div>
 
 			<div class="mt-14 text-center">
-				<a href="/pro" class="inline-flex items-center justify-center rounded-full bg-slate-900 px-8 py-4 text-base font-semibold text-white transition hover:bg-slate-800 active:scale-[0.99]">
+				<a
+					href="/pro"
+					class="inline-flex items-center justify-center rounded-full bg-slate-900 px-8 py-4 text-base font-semibold text-white transition hover:bg-slate-800 active:scale-[0.99]"
+				>
 					See everything in Pro
 				</a>
 			</div>
@@ -953,10 +1044,20 @@
 	<!-- Creator invite (cross-product recruit embed) -->
 	<section class="py-14 bg-[#f4f4f0] border-t border-slate-100">
 		<div class="max-w-[1400px] mx-auto px-5 md:px-10">
-			<aside class="flex flex-col gap-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between sm:p-8" aria-labelledby="creator-invite-title">
+			<aside
+				class="flex flex-col gap-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between sm:p-8"
+				aria-labelledby="creator-invite-title"
+			>
 				<div class="max-w-xl">
-					<h3 id="creator-invite-title" class="font-serif text-2xl font-medium tracking-tight text-slate-900">Already using PredictAdmit?</h3>
-					<p class="mt-2 text-sm leading-relaxed text-slate-500">Share your application journey as a paid creator for PredictAdmit.</p>
+					<h3
+						id="creator-invite-title"
+						class="font-serif text-2xl font-medium tracking-tight text-slate-900"
+					>
+						Already using PredictAdmit?
+					</h3>
+					<p class="mt-2 text-sm leading-relaxed text-slate-500">
+						Share your application journey as a paid creator for PredictAdmit.
+					</p>
 				</div>
 				<div class="shrink-0">
 					<div id="favente-recruit"></div>
@@ -968,35 +1069,50 @@
 	<!-- SECTION 2.5: DATA CREDIBILITY — near-full-screen dark card (Appybara "Algorithm" style) -->
 	<section class="py-20 md:py-28 bg-[#f4f4f0]">
 		<div class="max-w-[1400px] mx-auto px-5 md:px-10">
-			<div class="relative overflow-hidden rounded-[2.5rem] bg-[#0c0c09] px-7 py-14 sm:px-12 md:px-16 md:py-20">
+			<div
+				class="relative overflow-hidden rounded-[2.5rem] bg-[#0c0c09] px-7 py-14 sm:px-12 md:px-16 md:py-20"
+			>
 				<!-- watermark seal -->
-				<div class="pointer-events-none absolute -right-20 -top-24 h-80 w-80 rounded-full bg-[color-mix(in_oklab,#ffffff_6%,transparent)] blur-2xl"></div>
+				<div
+					class="pointer-events-none absolute -right-20 -top-24 h-80 w-80 rounded-full bg-[color-mix(in_oklab,#ffffff_6%,transparent)] blur-2xl"
+				></div>
 				<div class="relative grid gap-12 lg:grid-cols-2 lg:items-center">
 					<!-- Copy -->
 					<div>
-						<span class="inline-block px-3 py-1 bg-[color-mix(in_oklab,#ffffff_12%,transparent)] text-white/80 text-[10px] font-bold uppercase tracking-widest rounded-full">The numbers behind it</span>
-						<h2 class="mt-5 font-serif text-4xl md:text-[3.25rem] font-medium tracking-tight text-white leading-[1.03]">
+						<h2
+							class="font-serif text-4xl md:text-[3.25rem] font-medium tracking-tight text-white leading-[1.03]"
+						>
 							Anchored to the data schools publish.
 						</h2>
 						<p class="mt-5 text-lg text-white/60 leading-relaxed max-w-md">
-							Not a magic 8-ball. Every read starts from the public numbers colleges report, weighted by what admissions officers themselves say matters most.
+							Not a magic 8-ball. Every read starts from the public numbers colleges report,
+							weighted by what admissions officers themselves say matters most.
 						</p>
-						<a href="/methodology" class="mt-8 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#0c0c09] transition hover:bg-white/90">
+						<a
+							href="/methodology"
+							class="mt-8 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#0c0c09] transition hover:bg-white/90"
+						>
 							Read the methodology
 							<span>&rarr;</span>
 						</a>
 					</div>
 
 					<!-- Factor-weighting data card -->
-					<div class="rounded-3xl border border-white/10 bg-[color-mix(in_oklab,#ffffff_5%,transparent)] p-6 sm:p-8">
-						<p class="text-xs font-bold uppercase tracking-wide text-white/70">How much each factor counts</p>
-						<p class="mt-1 text-[11px] text-white/40">Source: NACAC Factors in the Admission Decision</p>
-						<div class="mt-5 space-y-3">
+					<div
+						class="rounded-3xl border border-white/10 bg-[color-mix(in_oklab,#ffffff_5%,transparent)] p-6 sm:p-8"
+					>
+						<div class="space-y-3">
 							{#each [{ f: 'Rigor of curriculum', w: 92 }, { f: 'Grades in college-prep courses', w: 90 }, { f: 'Application essays', w: 62 }, { f: 'Test scores', w: 58 }, { f: 'Extracurricular impact', w: 49 }, { f: 'Recommendations', w: 46 }, { f: 'Demonstrated character', w: 44 }] as row}
 								<div>
-									<div class="flex items-center justify-between text-xs font-medium text-white/70">
+									<div class="flex items-center justify-between text-xs font-medium text-white/90">
 										<span>{row.f}</span>
-										<span class="text-white/40">{row.w >= 80 ? 'Very important' : row.w >= 55 ? 'Important' : 'Considered'}</span>
+										<span class="text-white/65"
+											>{row.w >= 80
+												? 'Very important'
+												: row.w >= 55
+													? 'Important'
+													: 'Considered'}</span
+										>
 									</div>
 									<div class="mt-1.5 h-2 rounded-full bg-white/10">
 										<div class="h-2 rounded-full bg-white" style="width: {row.w}%"></div>
@@ -1004,8 +1120,9 @@
 								</div>
 							{/each}
 						</div>
-						<p class="mt-5 text-[11px] leading-relaxed text-white/40">
-							Illustrative weighting from the national survey. The AI adjusts these per school using its published data.
+						<p class="mt-5 text-[11px] leading-relaxed text-white/60">
+							Illustrative weighting from the national survey. The AI adjusts these per school using
+							its published data.
 						</p>
 					</div>
 				</div>
@@ -1017,11 +1134,14 @@
 	<section class="py-24 bg-slate-50 border-t border-slate-100">
 		<div class="max-w-[1200px] mx-auto px-5 md:px-10">
 			<div class="max-w-2xl mx-auto text-center space-y-4 mb-14">
-				<h2 class="font-serif text-4xl md:text-5xl font-medium tracking-tight text-slate-900 leading-[1.05]">
+				<h2
+					class="font-serif text-4xl md:text-5xl font-medium tracking-tight text-slate-900 leading-[1.05]"
+				>
 					Counselors charge thousands. <span class="text-[#0c0c09]">This is $9.99/mo.</span>
 				</h2>
 				<p class="text-lg text-slate-500 leading-relaxed">
-					Start free and see your first read. When you upgrade, it is $9.99 a month while you're applying, or $25 once.
+					Start free and see your first read. When you upgrade, it is $9.99 a month while you're
+					applying, or $25 once.
 				</p>
 			</div>
 
@@ -1045,21 +1165,28 @@
 						</tr>
 					</thead>
 					<tbody>
-						{#each [
-							{ f: 'Predicted decisions at every T30', free: 'One school', pro: true, con: 'Guesswork' },
-							{ f: 'Committee-style deep-dive on every verdict', free: 'One school', pro: true, con: 'Sometimes' },
-							{ f: 'Unlimited re-runs as you edit', free: false, pro: true, con: false },
-							{ f: 'Line-by-line essay feedback', free: false, pro: true, con: true },
-							{ f: 'Per-school strategy for 50+ schools', free: false, pro: true, con: true },
-							{ f: 'A counselor to ask any time', free: false, pro: true, con: 'By appointment' },
-							{ f: 'Answer in seconds, not a week', free: true, pro: true, con: false }
-						] as row}
+						{#each [{ f: 'Predicted decisions at every T30', free: 'One school', pro: true, con: 'Guesswork' }, { f: 'Committee-style deep-dive on every verdict', free: 'One school', pro: true, con: 'Sometimes' }, { f: 'Unlimited re-runs as you edit', free: false, pro: true, con: false }, { f: 'Line-by-line essay feedback', free: false, pro: true, con: true }, { f: 'Per-school strategy for 50+ schools', free: false, pro: true, con: true }, { f: 'A counselor to ask any time', free: false, pro: true, con: 'By appointment' }, { f: 'Answer in seconds, not a week', free: true, pro: true, con: false }] as row}
 							<tr class="border-b border-slate-100 last:border-0">
 								<td class="p-5 text-sm font-medium text-slate-700">{row.f}</td>
 								{#each [row.free, row.pro, row.con] as cell, i}
-									<td class="p-5 text-center align-middle {i === 1 ? 'bg-[color-mix(in_oklab,#0c0c09_4%,transparent)]' : ''}">
+									<td
+										class="p-5 text-center align-middle {i === 1
+											? 'bg-[color-mix(in_oklab,#0c0c09_4%,transparent)]'
+											: ''}"
+									>
 										{#if cell === true}
-											<svg class="mx-auto h-5 w-5 {i === 1 ? 'text-[#0c0c09]' : 'text-slate-900'}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+											<svg
+												class="mx-auto h-5 w-5 {i === 1 ? 'text-[#0c0c09]' : 'text-slate-900'}"
+												fill="none"
+												viewBox="0 0 24 24"
+												stroke="currentColor"
+												stroke-width="2.5"
+												><path
+													stroke-linecap="round"
+													stroke-linejoin="round"
+													d="M5 13l4 4L19 7"
+												/></svg
+											>
 										{:else if cell === false}
 											<span class="text-slate-300">&mdash;</span>
 										{:else}
@@ -1074,7 +1201,10 @@
 			</div>
 
 			<div class="mt-10 text-center">
-				<a href="/pro" class="inline-flex items-center justify-center rounded-full bg-slate-900 px-8 py-4 text-base font-semibold text-white transition hover:bg-slate-800 active:scale-[0.99]">
+				<a
+					href="/pro"
+					class="inline-flex items-center justify-center rounded-full bg-slate-900 px-8 py-4 text-base font-semibold text-white transition hover:bg-slate-800 active:scale-[0.99]"
+				>
 					Start free, then $9.99/mo
 				</a>
 			</div>
@@ -1085,7 +1215,9 @@
 	<section class="py-20 md:py-28 bg-[#f4f4f0] border-t border-slate-100">
 		<div class="max-w-[1400px] mx-auto px-5 md:px-10">
 			<div class="max-w-2xl mx-auto text-center mb-10">
-				<h2 class="font-serif text-4xl md:text-5xl font-medium tracking-tight text-slate-900 leading-[1.05]">
+				<h2
+					class="font-serif text-4xl md:text-5xl font-medium tracking-tight text-slate-900 leading-[1.05]"
+				>
 					Students who got in.
 				</h2>
 				<p class="mt-4 text-lg text-slate-500 leading-relaxed">
@@ -1096,12 +1228,7 @@
 			<!-- Campus photo strip (same treatment as the top of the Go Pro page): the
 			     real dream schools these students landed. -->
 			<div class="mb-12 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4">
-				{#each [
-					{ src: '/images/harvard-campus.jpg', name: 'Harvard', w: 1280, h: 853 },
-					{ src: '/images/stanford-campus.jpg', name: 'Stanford', w: 1280, h: 720 },
-					{ src: '/images/mit-dome.jpg', name: 'MIT', w: 1280, h: 960 },
-					{ src: '/images/princeton-campus.jpg', name: 'Princeton', w: 1280, h: 853 }
-				] as campus}
+				{#each [{ src: '/images/harvard-campus.jpg', name: 'Harvard', w: 1280, h: 853 }, { src: '/images/stanford-campus.jpg', name: 'Stanford', w: 1280, h: 720 }, { src: '/images/mit-dome.jpg', name: 'MIT', w: 1280, h: 960 }, { src: '/images/princeton-campus.jpg', name: 'Princeton', w: 1280, h: 853 }] as campus}
 					<div class="relative overflow-hidden rounded-2xl border border-slate-200 shadow-sm">
 						<img
 							src={campus.src}
@@ -1111,7 +1238,9 @@
 							loading="lazy"
 							class="h-28 w-full object-cover sm:h-36 lg:h-40"
 						/>
-						<span class="absolute bottom-2 left-3 rounded-full bg-black/45 px-2.5 py-1 text-[11px] font-semibold text-white">
+						<span
+							class="absolute bottom-2 left-3 rounded-full bg-black/45 px-2.5 py-1 text-[11px] font-semibold text-white"
+						>
 							{campus.name}
 						</span>
 					</div>
@@ -1119,19 +1248,18 @@
 			</div>
 
 			<div class="columns-1 sm:columns-2 lg:columns-3 gap-5 [column-fill:_balance]">
-				{#each [
-					{ quote: 'ts was lowkey genuinely accurate. ran my file before decisions dropped and it basically called it.', name: 'Miao S.', school: 'Accepted to Northwestern, Class of 2030', tint: 6 },
-					{ quote: 'The deep-dive REALLY helped me. It showed me exactly what each committee was going to catch before they caught it.', name: 'Daniel G.', school: 'Class of 2030', tint: 10 },
-					{ quote: 'The line-by-line editing got me into Stanford, and half the T20s. I cannot overstate how much the essay feedback changed my application.', name: 'Kabir K.', school: 'Accepted to Stanford, Class of 2030', tint: 14 },
-					{ quote: 'This tool helped me progress in scholarships such as the Robertson full ride to Duke.', name: 'Zachary B.', school: 'Class of 2030', tint: 8 },
-					{ quote: 'I reframed my personal statement from the free review, and the countdown is really helpful. My stats were mediocre, so I think it really did come down to my essay. Thanks PredictAdmit!', name: 'Sophia M.', school: 'Accepted to Emory, Class of 2030', tint: 12 },
-					{ quote: 'Very useful! Works better than GPT. Not sure if it is because multiple AIs talk before responding to prompts, or if it is just tuned well.', name: 'Arjun S.', school: 'Class of 2030', tint: 5 },
-					{ quote: 'I did not think to get a counselor, but my results ended up being better than my friends in terms of T20s, even with similar stats. Thanks!', name: 'Evan F.', school: 'Accepted to Berkeley, Class of 2030', tint: 16 }
-				] as t}
-					<div class="mb-5 break-inside-avoid rounded-3xl border border-slate-200 bg-white p-7" style="background-color: color-mix(in oklab, #0c0c09 {t.tint}%, #ffffff)">
+				{#each [{ quote: 'ts was lowkey genuinely accurate. ran my file before decisions dropped and it basically called it.', name: 'Miao S.', school: 'Accepted to Northwestern, Class of 2030', tint: 6 }, { quote: 'The deep-dive REALLY helped me. It showed me exactly what each committee was going to catch before they caught it.', name: 'Daniel G.', school: 'Class of 2030', tint: 10 }, { quote: 'The line-by-line editing got me into Stanford, and half the T20s. I cannot overstate how much the essay feedback changed my application.', name: 'Kabir K.', school: 'Accepted to Stanford, Class of 2030', tint: 14 }, { quote: 'This tool helped me progress in scholarships such as the Robertson full ride to Duke.', name: 'Zachary B.', school: 'Class of 2030', tint: 8 }, { quote: 'I reframed my personal statement from the free review, and the countdown is really helpful. My stats were mediocre, so I think it really did come down to my essay. Thanks PredictAdmit!', name: 'Sophia M.', school: 'Accepted to Emory, Class of 2030', tint: 12 }, { quote: 'Very useful! Works better than GPT. Not sure if it is because multiple AIs talk before responding to prompts, or if it is just tuned well.', name: 'Arjun S.', school: 'Class of 2030', tint: 5 }, { quote: 'I did not think to get a counselor, but my results ended up being better than my friends in terms of T20s, even with similar stats. Thanks!', name: 'Evan F.', school: 'Accepted to Berkeley, Class of 2030', tint: 16 }] as t}
+					<div
+						class="mb-5 break-inside-avoid rounded-3xl border border-slate-200 bg-white p-7"
+						style="background-color: color-mix(in oklab, #0c0c09 {t.tint}%, #ffffff)"
+					>
 						<div class="flex items-center gap-1 text-amber-500">
 							{#each Array(5) as _}
-								<svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+								<svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"
+									><path
+										d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+									/></svg
+								>
 							{/each}
 						</div>
 						<blockquote class="mt-4 text-lg leading-relaxed text-slate-900">
@@ -1150,22 +1278,28 @@
 	<!-- SECTION 4: FAQ — Appybara accordion: light-gray rounded rows, bold question + chevron -->
 	<section class="py-20 md:py-28 bg-white border-t border-slate-100">
 		<div class="max-w-[820px] mx-auto px-6">
-			<h2 class="font-serif text-4xl md:text-5xl font-medium tracking-tight text-slate-900 text-center mb-12">
+			<h2
+				class="font-serif text-4xl md:text-5xl font-medium tracking-tight text-slate-900 text-center mb-12"
+			>
 				Frequently asked questions
 			</h2>
 			<div class="space-y-3">
-				{#each [
-					{ q: 'Can an AI really predict my admissions decision?', a: 'It predicts, it does not promise. The read is trained on real admitted-student profiles and the factors committees actually weigh, then it scores your file the way five readers would. Treat it as a sharp dry run, not a verdict to lose sleep over.' },
-					{ q: 'What do I get for free?', a: 'Run one full simulation across every T30 school, unlock one school’s results, and open one full committee deep-dive. No card, no account beyond a Google sign-in. You only pay once it has already shown you something you did not know.' },
-					{ q: 'Does it just predict, or does it help me improve?', a: 'Both, and the improving is the point. Pro reads your essays line by line, tells you what each school weighs, and answers your questions like a counselor. The prediction shows where you stand; the workshop is how you move.' },
-					{ q: 'Will it write my essays for me?', a: 'No, on purpose. It marks what is weak and asks the questions a reader would, but it never writes or rewrites a sentence you could paste in. Colleges can revoke an offer over AI-written text, and the work has to sound like you.' },
-					{ q: 'Is this affiliated with the universities?', a: 'No. The decision portals are clearly labeled simulations, and PredictAdmit is not affiliated with, endorsed by, or connected to any school.' },
-					{ q: 'How much does it cost?', a: 'Your first prediction is free. Full access is $25 once for lifetime, or $9.99 a month. A private counselor runs thousands.' }
-				] as item}
-					<details class="group rounded-2xl bg-[#f4f4f0] border border-slate-200/70 transition hover:border-slate-300">
-						<summary class="flex cursor-pointer items-center justify-between gap-4 list-none px-6 py-5">
+				{#each [{ q: 'Can an AI really predict my admissions decision?', a: 'It predicts, it does not promise. The read is trained on real admitted-student profiles and the factors committees actually weigh, then it scores your file the way five readers would. Treat it as a sharp dry run, not a verdict to lose sleep over.' }, { q: 'What do I get for free?', a: 'Run one full simulation across every T30 school, unlock one school’s results, and open one full committee deep-dive. No card, no account beyond a Google sign-in. You only pay once it has already shown you something you did not know.' }, { q: 'Does it just predict, or does it help me improve?', a: 'Both, and the improving is the point. Pro reads your essays line by line, tells you what each school weighs, and answers your questions like a counselor. The prediction shows where you stand; the workshop is how you move.' }, { q: 'Will it write my essays for me?', a: 'No, on purpose. It marks what is weak and asks the questions a reader would, but it never writes or rewrites a sentence you could paste in. Colleges can revoke an offer over AI-written text, and the work has to sound like you.' }, { q: 'Is this affiliated with the universities?', a: 'No. The decision portals are clearly labeled simulations, and PredictAdmit is not affiliated with, endorsed by, or connected to any school.' }, { q: 'How much does it cost?', a: 'Your first prediction is free. Full access is $25 once for lifetime, or $9.99 a month. A private counselor runs thousands.' }] as item}
+					<details
+						class="group rounded-2xl bg-[#f4f4f0] border border-slate-200/70 transition hover:border-slate-300"
+					>
+						<summary
+							class="flex cursor-pointer items-center justify-between gap-4 list-none px-6 py-5"
+						>
 							<span class="text-base md:text-lg font-semibold text-slate-900">{item.q}</span>
-							<svg class="h-5 w-5 shrink-0 text-slate-400 transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
+							<svg
+								class="h-5 w-5 shrink-0 text-slate-400 transition-transform group-open:rotate-180"
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke="currentColor"
+								stroke-width="2"
+								><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg
+							>
 						</summary>
 						<p class="px-6 pb-5 -mt-1 text-slate-500 leading-relaxed">{item.a}</p>
 					</details>
@@ -1177,14 +1311,20 @@
 	<!-- CTA FOOTER — Appybara style: huge headline, pill CTA, campus building image -->
 	<section class="relative overflow-hidden bg-[#0c0c09]">
 		<div class="max-w-[1400px] mx-auto px-5 md:px-10 pt-20 md:pt-28 text-center">
-			<h2 class="font-serif text-4xl sm:text-5xl md:text-[4rem] font-medium tracking-tight text-white leading-[1.02]">
+			<h2
+				class="font-serif text-4xl sm:text-5xl md:text-[4rem] font-medium tracking-tight text-white leading-[1.02]"
+			>
 				Join {predictedCountLabel}+ students<br class="hidden sm:block" /> acing their applications.
 			</h2>
 			<p class="mt-5 text-lg text-white/60 leading-relaxed max-w-xl mx-auto">
-				Run your real application across every T30 and see where you stand. Your first prediction is free.
+				Run your real application across every T30 and see where you stand. Your first prediction is
+				free.
 			</p>
 			<div class="mt-9">
-				<a href="/ai" class="inline-flex items-center justify-center rounded-full bg-white px-9 py-4 text-base font-semibold text-[#0c0c09] transition hover:bg-white/90 active:scale-[0.99]">
+				<a
+					href="/ai"
+					class="inline-flex items-center justify-center rounded-full bg-white px-9 py-4 text-base font-semibold text-[#0c0c09] transition hover:bg-white/90 active:scale-[0.99]"
+				>
 					Get started free
 				</a>
 			</div>
@@ -1201,7 +1341,6 @@
 			</div>
 		</div>
 	</section>
-
 </main>
 
 {#if showSimDisclosure}
@@ -1211,7 +1350,10 @@
 		aria-modal="true"
 		aria-labelledby="sim-disclosure-title"
 	>
-		<div class="absolute inset-0 bg-black/50 backdrop-blur-sm" on:click={dismissSimDisclosure}></div>
+		<div
+			class="absolute inset-0 bg-black/50 backdrop-blur-sm"
+			on:click={dismissSimDisclosure}
+		></div>
 		<div class="relative z-10 w-full max-w-xl rounded-2xl bg-white p-6 shadow-2xl md:p-8">
 			<p
 				id="sim-disclosure-title"
@@ -1220,16 +1362,18 @@
 				Important disclosure: simulation only
 			</p>
 			<p class="text-[13px] leading-relaxed text-slate-600">
-				PredictAdmit is an independent educational tool and is <strong>not affiliated with,
-				endorsed by, sponsored by, or connected to</strong> any college or university shown on this
-				site. Every portal, status page, and decision letter here is a
+				PredictAdmit is an independent educational tool and is <strong
+					>not affiliated with, endorsed by, sponsored by, or connected to</strong
+				>
+				any college or university shown on this site. Every portal, status page, and decision letter
+				here is a
 				<strong>fictional simulation</strong> created for practice and preparation. Nothing on this
 				page is an official communication from any institution, and no simulated outcome reflects,
 				predicts, or affects any real application or admission decision. University names and marks
 				are the property of their respective owners and are used solely to identify the institution
-				being simulated. PredictAdmit does not access, connect to, or interact with any
-				university's actual application systems or applicant data. If you represent an institution
-				and have questions or concerns, please
+				being simulated. PredictAdmit does not access, connect to, or interact with any university's
+				actual application systems or applicant data. If you represent an institution and have
+				questions or concerns, please
 				<a href="/contact" class="font-semibold text-[#0c0c09] underline hover:text-[#003d99]"
 					>contact us</a
 				>.
