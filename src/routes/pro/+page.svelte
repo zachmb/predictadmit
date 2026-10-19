@@ -2378,231 +2378,6 @@
 				</div>
 			</div>
 
-			<!-- FREE AI CHAT TEASER (value before the ask): let a visitor talk to the
-			     blunt PredictAI for free right on the pricing page. It remembers their
-			     profile + predicted decisions, says the things counselors won't, and
-			     funnels toward pasting essays for help (the paid essay grader). -->
-			<section>
-				<div class="max-w-2xl">
-					<h2
-						class="font-serif text-4xl md:text-5xl font-medium tracking-tight text-slate-900 leading-[1.05]"
-					>
-						Talk to the admissions AI that <span class="text-[#0c0c09]"
-							>actually tells you the truth.</span
-						>
-					</h2>
-					<p class="mt-4 text-lg text-slate-500 leading-relaxed">
-						Ask it anything — your real odds, which activities are just padding, what's quietly
-						dragging your application down.
-					</p>
-				</div>
-				<div class="mt-8">
-					<AICounselor embedded signedIn={googleSignedIn} />
-				</div>
-			</section>
-
-			<!-- How it works: three concrete steps so the product is tangible. -->
-			<div class="grid gap-4 sm:grid-cols-3">
-				{#each [{ n: '1', t: 'Paste your application', d: 'Drop in your essays, activities, honors, and scores. Or upload the file and let the AI read it.' }, { n: '2', t: 'Get your decisions', d: 'Watch accept, waitlist, and deny letters land in a real-feeling inbox across every T30 school.' }, { n: '3', t: 'Fix what is weak, re-run', d: 'Use the workshop to tighten essays and framing, then run it again and watch your odds move.' }] as step}
-					<div>
-						<span class="font-serif text-4xl text-slate-300">{step.n}</span>
-						<p class="mt-3 font-bold text-slate-900">{step.t}</p>
-						<p class="mt-1 text-sm leading-relaxed text-slate-500">{step.d}</p>
-					</div>
-				{/each}
-			</div>
-
-			<!-- Stanford fee comparison: one application fee vs a month of Pro (merged in
-			     from the former standalone pricing page). -->
-			<section class="overflow-hidden rounded-[2rem] border border-slate-200 bg-white">
-				<div class="grid md:grid-cols-2">
-					<div class="relative min-h-[260px] md:min-h-full">
-						<img
-							src="/images/stanford-campus.jpg"
-							alt="A top university campus"
-							width="1280"
-							height="720"
-							loading="lazy"
-							class="absolute inset-0 h-full w-full object-cover"
-						/>
-						<span
-							class="absolute bottom-2 right-2 rounded bg-black/40 px-1.5 py-0.5 text-[9px] text-white/80"
-							>Wikimedia Commons · CC BY-SA 4.0</span
-						>
-					</div>
-					<div class="flex flex-col justify-center gap-5 p-8 sm:p-12">
-						<div class="flex items-end gap-6">
-							<div>
-								<div class="font-serif text-5xl font-medium text-slate-900">$100</div>
-								<div class="mt-1 text-sm text-slate-500">One Stanford application fee</div>
-							</div>
-							<div class="pb-2 text-xl font-medium text-slate-300">vs</div>
-							<div>
-								<div class="font-serif text-5xl font-medium text-[#0c0c09]">$9.99</div>
-								<div class="mt-1 text-sm text-slate-500">One month of Pro</div>
-							</div>
-						</div>
-						<p class="text-lg leading-relaxed text-slate-600">
-							For about a <strong class="text-slate-900">tenth of one application fee</strong>, Pro
-							gives you your real verdict at every T30, all season.
-						</p>
-						<a
-							href="/ai"
-							class="inline-flex w-fit items-center gap-1.5 rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
-						>
-							Start free <span aria-hidden="true">→</span>
-						</a>
-					</div>
-				</div>
-			</section>
-
-			<!-- Pricing: editorial three-tier (Free / Monthly / Lifetime). Buttons go
-			     straight to Stripe. Monthly is the recommended, lifted plan. -->
-			<div>
-				<div class="max-w-2xl">
-					<h2
-						class="font-serif text-4xl md:text-5xl font-medium leading-[1.1] tracking-tight text-slate-900"
-					>
-						Your first prediction is free. Upgrade when you want your verdict at every school.
-					</h2>
-					<p class="mt-5 text-lg leading-relaxed text-slate-500">
-						See where you stand for free, no card. Then go month to month while you're applying, or
-						pay once for the whole season.
-					</p>
-				</div>
-
-				<div class="mt-12 overflow-hidden rounded-[2rem] border border-slate-200 bg-slate-50">
-					<div class="grid divide-y divide-slate-200 md:grid-cols-3 md:divide-x md:divide-y-0">
-						<!-- Free -->
-						<div class="flex flex-col p-8">
-							<h3 class="font-serif text-2xl text-slate-900">Free</h3>
-							<div class="mt-3 flex items-baseline gap-1.5">
-								<span class="font-serif text-4xl font-medium text-slate-900">$0</span>
-							</div>
-							<p class="mt-4 text-sm leading-relaxed text-slate-500">
-								Run one full AI prediction and open one school's decision. See where you stand
-								before you spend a cent.
-							</p>
-							<ul class="mt-6 mb-8 space-y-2.5">
-								{#each ['One full AI prediction', "Open one school's decision", 'No credit card to start'] as f}
-									<li class="flex items-start gap-2.5 text-sm text-slate-600">
-										<svg
-											class="mt-0.5 h-4 w-4 flex-none text-slate-900"
-											fill="none"
-											viewBox="0 0 24 24"
-											stroke="currentColor"
-											stroke-width="2.5"
-											><path
-												stroke-linecap="round"
-												stroke-linejoin="round"
-												d="M5 13l4 4L19 7"
-											/></svg
-										>
-										{f}
-									</li>
-								{/each}
-							</ul>
-							<a
-								href="/ai"
-								class="mt-auto block w-full rounded-full border border-slate-300 bg-white px-5 py-3.5 text-center text-sm font-semibold text-slate-900 transition hover:bg-slate-100"
-							>
-								Start free →
-							</a>
-						</div>
-
-						<!-- Monthly: recommended, lifted in white. On mobile it jumps to the
-						     top (order-first) so the primary plan + Buy button lead the stack. -->
-						<div class="relative order-first flex flex-col bg-white p-8 md:order-none">
-							<span
-								class="absolute right-6 top-8 rounded-full bg-slate-900 px-3 py-1 text-[10px] font-semibold uppercase tracking-wide text-white"
-								>Recommended</span
-							>
-							<h3 class="font-serif text-2xl text-slate-900">Monthly</h3>
-							<div class="mt-3 flex items-baseline gap-1.5">
-								<span class="font-serif text-4xl font-medium text-slate-900">$9.99</span>
-								<span class="text-sm text-slate-400">/mo</span>
-							</div>
-							<p class="mt-1 text-xs text-slate-400">Billed monthly. Cancel anytime.</p>
-							<p class="mt-3 text-sm leading-relaxed text-slate-500">
-								Everything, while you're applying. Your verdict at every T30 school and the full
-								workshop to fix what's weak.
-							</p>
-							<ul class="mt-6 mb-8 space-y-2.5">
-								{#each ['Your verdict at every T30 school', 'The five-reader committee on every one', 'AI essay editor + per-school strategy', 'AI counselor + unlimited re-runs'] as f}
-									<li class="flex items-start gap-2.5 text-sm text-slate-700">
-										<svg
-											class="mt-0.5 h-4 w-4 flex-none text-[#0c0c09]"
-											fill="none"
-											viewBox="0 0 24 24"
-											stroke="currentColor"
-											stroke-width="2.5"
-											><path
-												stroke-linecap="round"
-												stroke-linejoin="round"
-												d="M5 13l4 4L19 7"
-											/></svg
-										>
-										{f}
-									</li>
-								{/each}
-							</ul>
-							<button
-								onclick={() => startUpgrade('monthly')}
-								disabled={isProcessing}
-								class="mt-auto w-full rounded-full bg-slate-900 px-5 py-3.5 text-sm font-semibold text-white transition hover:bg-slate-800 active:scale-[0.99] disabled:opacity-50"
-							>
-								{isProcessing ? 'Taking you to checkout…' : 'Start for $9.99/mo'}
-							</button>
-						</div>
-
-						<!-- Lifetime: pay once -->
-						<div class="flex flex-col p-8">
-							<h3 class="font-serif text-2xl text-slate-900">Lifetime</h3>
-							<div class="mt-3 flex items-baseline gap-1.5">
-								<span class="font-serif text-4xl font-medium text-slate-900">$25</span>
-								<span class="text-sm text-slate-400">once</span>
-							</div>
-							<p class="mt-1 text-xs text-slate-400">One payment. No subscription.</p>
-							<p class="mt-3 text-sm leading-relaxed text-slate-500">
-								The same full access, paid once. About two and a half months of Monthly costs the
-								same.
-							</p>
-							<ul class="mt-6 mb-8 space-y-2.5">
-								{#each ['Everything in Monthly, forever', 'Nothing to renew or cancel', 'One payment for the whole season'] as f}
-									<li class="flex items-start gap-2.5 text-sm text-slate-600">
-										<svg
-											class="mt-0.5 h-4 w-4 flex-none text-slate-900"
-											fill="none"
-											viewBox="0 0 24 24"
-											stroke="currentColor"
-											stroke-width="2.5"
-											><path
-												stroke-linecap="round"
-												stroke-linejoin="round"
-												d="M5 13l4 4L19 7"
-											/></svg
-										>
-										{f}
-									</li>
-								{/each}
-							</ul>
-							<button
-								onclick={() => startUpgrade('lifetime')}
-								disabled={isProcessing}
-								class="mt-auto w-full rounded-full border border-slate-300 bg-white px-5 py-3.5 text-sm font-semibold text-slate-900 transition hover:bg-slate-50 disabled:opacity-50"
-							>
-								Get Lifetime
-							</button>
-						</div>
-					</div>
-				</div>
-
-				<p class="mt-5 text-center text-xs text-slate-400">
-					Just one school? Run your free prediction, then unlock a single deep-dive for $4.99.
-					Secure checkout by Stripe.
-				</p>
-			</div>
-
 			<!-- Full-bleed black header band (white heading), then the feature rows. -->
 			<div class="relative left-1/2 -translate-x-1/2 w-screen bg-[#0c0c09] py-16 md:py-24">
 				<div class="mx-auto w-[92vw] max-w-[1280px]">
@@ -2848,6 +2623,231 @@
 						</div>
 					{/each}
 				</div>
+			</div>
+
+			<!-- FREE AI CHAT TEASER (value before the ask): let a visitor talk to the
+			     blunt PredictAI for free right on the pricing page. It remembers their
+			     profile + predicted decisions, says the things counselors won't, and
+			     funnels toward pasting essays for help (the paid essay grader). -->
+			<section>
+				<div class="max-w-2xl">
+					<h2
+						class="font-serif text-4xl md:text-5xl font-medium tracking-tight text-slate-900 leading-[1.05]"
+					>
+						Talk to the admissions AI that <span class="text-[#0c0c09]"
+							>actually tells you the truth.</span
+						>
+					</h2>
+					<p class="mt-4 text-lg text-slate-500 leading-relaxed">
+						Ask it anything — your real odds, which activities are just padding, what's quietly
+						dragging your application down.
+					</p>
+				</div>
+				<div class="mt-8">
+					<AICounselor embedded signedIn={googleSignedIn} />
+				</div>
+			</section>
+
+			<!-- How it works: three concrete steps so the product is tangible. -->
+			<div class="grid gap-4 sm:grid-cols-3">
+				{#each [{ n: '1', t: 'Paste your application', d: 'Drop in your essays, activities, honors, and scores. Or upload the file and let the AI read it.' }, { n: '2', t: 'Get your decisions', d: 'Watch accept, waitlist, and deny letters land in a real-feeling inbox across every T30 school.' }, { n: '3', t: 'Fix what is weak, re-run', d: 'Use the workshop to tighten essays and framing, then run it again and watch your odds move.' }] as step}
+					<div>
+						<span class="font-serif text-4xl text-slate-300">{step.n}</span>
+						<p class="mt-3 font-bold text-slate-900">{step.t}</p>
+						<p class="mt-1 text-sm leading-relaxed text-slate-500">{step.d}</p>
+					</div>
+				{/each}
+			</div>
+
+			<!-- Stanford fee comparison: one application fee vs a month of Pro (merged in
+			     from the former standalone pricing page). -->
+			<section class="overflow-hidden rounded-[2rem] border border-slate-200 bg-white">
+				<div class="grid md:grid-cols-2">
+					<div class="relative min-h-[260px] md:min-h-full">
+						<img
+							src="/images/stanford-campus.jpg"
+							alt="A top university campus"
+							width="1280"
+							height="720"
+							loading="lazy"
+							class="absolute inset-0 h-full w-full object-cover"
+						/>
+						<span
+							class="absolute bottom-2 right-2 rounded bg-black/40 px-1.5 py-0.5 text-[9px] text-white/80"
+							>Wikimedia Commons · CC BY-SA 4.0</span
+						>
+					</div>
+					<div class="flex flex-col justify-center gap-5 p-8 sm:p-12">
+						<div class="flex items-end gap-6">
+							<div>
+								<div class="font-serif text-5xl font-medium text-slate-900">$100</div>
+								<div class="mt-1 text-sm text-slate-500">One Stanford application fee</div>
+							</div>
+							<div class="pb-2 text-xl font-medium text-slate-300">vs</div>
+							<div>
+								<div class="font-serif text-5xl font-medium text-[#0c0c09]">$9.99</div>
+								<div class="mt-1 text-sm text-slate-500">One month of Pro</div>
+							</div>
+						</div>
+						<p class="text-lg leading-relaxed text-slate-600">
+							For about a <strong class="text-slate-900">tenth of one application fee</strong>, Pro
+							gives you your real verdict at every T30, all season.
+						</p>
+						<a
+							href="/ai"
+							class="inline-flex w-fit items-center gap-1.5 rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
+						>
+							Start free <span aria-hidden="true">→</span>
+						</a>
+					</div>
+				</div>
+			</section>
+
+			<!-- Pricing: editorial three-tier (Free / Monthly / Lifetime). Buttons go
+			     straight to Stripe. Monthly is the recommended, lifted plan. -->
+			<div>
+				<div class="max-w-2xl">
+					<h2
+						class="font-serif text-4xl md:text-5xl font-medium leading-[1.1] tracking-tight text-slate-900"
+					>
+						Your first prediction is free. Upgrade when you want your verdict at every school.
+					</h2>
+					<p class="mt-5 text-lg leading-relaxed text-slate-500">
+						See where you stand for free, no card. Then go month to month while you're applying, or
+						pay once for the whole season.
+					</p>
+				</div>
+
+				<div class="mt-12 overflow-hidden rounded-[2rem] border border-slate-200 bg-slate-50">
+					<div class="grid divide-y divide-slate-200 md:grid-cols-3 md:divide-x md:divide-y-0">
+						<!-- Free -->
+						<div class="flex flex-col p-8">
+							<h3 class="font-serif text-2xl text-slate-900">Free</h3>
+							<div class="mt-3 flex items-baseline gap-1.5">
+								<span class="font-serif text-4xl font-medium text-slate-900">$0</span>
+							</div>
+							<p class="mt-4 text-sm leading-relaxed text-slate-500">
+								Run one full AI prediction and open one school's decision. See where you stand
+								before you spend a cent.
+							</p>
+							<ul class="mt-6 mb-8 space-y-2.5">
+								{#each ['One full AI prediction', "Open one school's decision", 'No credit card to start'] as f}
+									<li class="flex items-start gap-2.5 text-sm text-slate-600">
+										<svg
+											class="mt-0.5 h-4 w-4 flex-none text-slate-900"
+											fill="none"
+											viewBox="0 0 24 24"
+											stroke="currentColor"
+											stroke-width="2.5"
+											><path
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												d="M5 13l4 4L19 7"
+											/></svg
+										>
+										{f}
+									</li>
+								{/each}
+							</ul>
+							<a
+								href="/ai"
+								class="mt-auto block w-full rounded-full border border-slate-300 bg-white px-5 py-3.5 text-center text-sm font-semibold text-slate-900 transition hover:bg-slate-100"
+							>
+								Start free →
+							</a>
+						</div>
+
+						<!-- Monthly: recommended, lifted in white. On mobile it jumps to the
+						     top (order-first) so the primary plan + Buy button lead the stack. -->
+						<div class="relative order-first flex flex-col bg-white p-8 md:order-none">
+							<span
+								class="absolute right-6 top-8 rounded-full bg-slate-900 px-3 py-1 text-[10px] font-semibold uppercase tracking-wide text-white"
+								>Recommended</span
+							>
+							<h3 class="font-serif text-2xl text-slate-900">Monthly</h3>
+							<div class="mt-3 flex items-baseline gap-1.5">
+								<span class="font-serif text-4xl font-medium text-slate-900">$9.99</span>
+								<span class="text-sm text-slate-400">/mo</span>
+							</div>
+							<p class="mt-1 text-xs text-slate-400">Billed monthly. Cancel anytime.</p>
+							<p class="mt-3 text-sm leading-relaxed text-slate-500">
+								Everything, while you're applying. Your verdict at every T30 school and the full
+								workshop to fix what's weak.
+							</p>
+							<ul class="mt-6 mb-8 space-y-2.5">
+								{#each ['Your verdict at every T30 school', 'The five-reader committee on every one', 'AI essay editor + per-school strategy', 'AI counselor + unlimited re-runs'] as f}
+									<li class="flex items-start gap-2.5 text-sm text-slate-700">
+										<svg
+											class="mt-0.5 h-4 w-4 flex-none text-[#0c0c09]"
+											fill="none"
+											viewBox="0 0 24 24"
+											stroke="currentColor"
+											stroke-width="2.5"
+											><path
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												d="M5 13l4 4L19 7"
+											/></svg
+										>
+										{f}
+									</li>
+								{/each}
+							</ul>
+							<button
+								onclick={() => startUpgrade('monthly')}
+								disabled={isProcessing}
+								class="mt-auto w-full rounded-full bg-slate-900 px-5 py-3.5 text-sm font-semibold text-white transition hover:bg-slate-800 active:scale-[0.99] disabled:opacity-50"
+							>
+								{isProcessing ? 'Taking you to checkout…' : 'Start for $9.99/mo'}
+							</button>
+						</div>
+
+						<!-- Lifetime: pay once -->
+						<div class="flex flex-col p-8">
+							<h3 class="font-serif text-2xl text-slate-900">Lifetime</h3>
+							<div class="mt-3 flex items-baseline gap-1.5">
+								<span class="font-serif text-4xl font-medium text-slate-900">$25</span>
+								<span class="text-sm text-slate-400">once</span>
+							</div>
+							<p class="mt-1 text-xs text-slate-400">One payment. No subscription.</p>
+							<p class="mt-3 text-sm leading-relaxed text-slate-500">
+								The same full access, paid once. About two and a half months of Monthly costs the
+								same.
+							</p>
+							<ul class="mt-6 mb-8 space-y-2.5">
+								{#each ['Everything in Monthly, forever', 'Nothing to renew or cancel', 'One payment for the whole season'] as f}
+									<li class="flex items-start gap-2.5 text-sm text-slate-600">
+										<svg
+											class="mt-0.5 h-4 w-4 flex-none text-slate-900"
+											fill="none"
+											viewBox="0 0 24 24"
+											stroke="currentColor"
+											stroke-width="2.5"
+											><path
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												d="M5 13l4 4L19 7"
+											/></svg
+										>
+										{f}
+									</li>
+								{/each}
+							</ul>
+							<button
+								onclick={() => startUpgrade('lifetime')}
+								disabled={isProcessing}
+								class="mt-auto w-full rounded-full border border-slate-300 bg-white px-5 py-3.5 text-sm font-semibold text-slate-900 transition hover:bg-slate-50 disabled:opacity-50"
+							>
+								Get Lifetime
+							</button>
+						</div>
+					</div>
+				</div>
+
+				<p class="mt-5 text-center text-xs text-slate-400">
+					Just one school? Run your free prediction, then unlock a single deep-dive for $4.99.
+					Secure checkout by Stripe.
+				</p>
 			</div>
 
 			<!-- Closing CTA -->

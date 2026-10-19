@@ -129,15 +129,42 @@
 	const EMAIL_DESIGNS = ['crest', 'banner', 'letterhead', 'sidebar', 'minimal', 'stacked'] as const;
 	type EmailDesign = (typeof EMAIL_DESIGNS)[number];
 	const EMAIL_DESIGN_BY_SLUG: Record<string, EmailDesign> = {
-		harvard: 'crest', princeton: 'letterhead', yale: 'crest', stanford: 'banner',
-		mit: 'minimal', caltech: 'minimal', columbia: 'letterhead', upenn: 'stacked',
-		duke: 'banner', jhu: 'sidebar', northwestern: 'stacked', dartmouth: 'letterhead',
-		brown: 'minimal', vanderbilt: 'crest', rice: 'sidebar', wustl: 'stacked',
-		cornell: 'sidebar', uchicago: 'letterhead', ucla: 'banner', ucberkeley: 'sidebar',
-		georgiatech: 'minimal', nyu: 'banner', usc: 'stacked', georgetown: 'crest',
-		notredame: 'crest', emory: 'stacked', uva: 'letterhead', cmu: 'minimal',
-		umich: 'banner', unc: 'sidebar', uw: 'stacked', wakeforest: 'crest',
-		uf: 'banner', wisconsin: 'sidebar', purdue: 'minimal', osu: 'banner'
+		harvard: 'crest',
+		princeton: 'letterhead',
+		yale: 'crest',
+		stanford: 'banner',
+		mit: 'minimal',
+		caltech: 'minimal',
+		columbia: 'letterhead',
+		upenn: 'stacked',
+		duke: 'banner',
+		jhu: 'sidebar',
+		northwestern: 'stacked',
+		dartmouth: 'letterhead',
+		brown: 'minimal',
+		vanderbilt: 'crest',
+		rice: 'sidebar',
+		wustl: 'stacked',
+		cornell: 'sidebar',
+		uchicago: 'letterhead',
+		ucla: 'banner',
+		ucberkeley: 'sidebar',
+		georgiatech: 'minimal',
+		nyu: 'banner',
+		usc: 'stacked',
+		georgetown: 'crest',
+		notredame: 'crest',
+		emory: 'stacked',
+		uva: 'letterhead',
+		cmu: 'minimal',
+		umich: 'banner',
+		unc: 'sidebar',
+		uw: 'stacked',
+		wakeforest: 'crest',
+		uf: 'banner',
+		wisconsin: 'sidebar',
+		purdue: 'minimal',
+		osu: 'banner'
 	};
 	function emailDesignFor(slug: string): EmailDesign {
 		if (EMAIL_DESIGN_BY_SLUG[slug]) return EMAIL_DESIGN_BY_SLUG[slug];
@@ -155,16 +182,14 @@
 
 <section id="inboxSection" bind:this={inboxSection} class="scroll-mt-24 font-sans">
 	<div
-		class="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden flex flex-col h-[min(600px,82svh)] md:h-[min(700px,86svh)]"
+		class="bg-white rounded-md shadow-sm border border-slate-300 overflow-hidden flex flex-col h-[min(600px,82svh)] md:h-[min(700px,86svh)]"
 	>
 		<!-- Header -->
 		<header
 			class="bg-white border-b border-slate-100 flex items-center justify-between px-6 py-4 z-20"
 		>
 			<div class="flex items-center gap-3">
-				<div
-					class="w-9 h-9 rounded-xl bg-[#0c0c09] flex items-center justify-center shadow-sm"
-				>
+				<div class="w-9 h-9 rounded-md bg-[#0c0c09] flex items-center justify-center shadow-sm">
 					<svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 						<path
 							stroke-linecap="round"
@@ -181,9 +206,13 @@
 			</div>
 
 			<div class="flex items-center gap-2.5">
-				<div class="hidden md:flex items-center gap-1.5 rounded-full bg-slate-50 border border-slate-200 px-3 py-1.5">
+				<div
+					class="hidden md:flex items-center gap-1.5 rounded-full bg-slate-50 border border-slate-200 px-3 py-1.5"
+				>
 					<span class="relative flex h-1.5 w-1.5">
-						<span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
+						<span
+							class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"
+						></span>
 						<span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
 					</span>
 					<span class="text-[11px] font-semibold text-slate-600">{displayEmail}</span>
@@ -211,42 +240,82 @@
 			<aside
 				class="w-52 bg-slate-50/70 border-r border-slate-200 flex-col py-5 px-4 gap-2 hidden md:flex"
 			>
-				<p class="px-3 pb-1 text-[10px] font-bold uppercase tracking-wider text-slate-400">Folders</p>
+				<p class="px-3 pb-1 text-[10px] font-bold uppercase tracking-wider text-slate-400">
+					Folders
+				</p>
 				<nav class="space-y-1">
 					<button
 						on:click={() => switchFolder('inbox')}
-						class={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-semibold transition-colors ${activeFolder === 'inbox' ? 'bg-white text-[#0c0c09] shadow-sm ring-1 ring-slate-200' : 'text-slate-600 hover:bg-slate-100'}`}
+						class={`w-full flex items-center justify-between px-3 py-2.5 rounded-md text-sm font-semibold transition-colors ${activeFolder === 'inbox' ? 'bg-white text-[#0c0c09] shadow-sm ring-1 ring-slate-200' : 'text-slate-600 hover:bg-slate-100'}`}
 					>
 						<div class="flex items-center gap-2.5">
-							<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-								<path stroke-linecap="round" stroke-linejoin="round" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+							<svg
+								class="w-4 h-4"
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke="currentColor"
+								stroke-width="2"
+							>
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+								/>
 							</svg>
 							<span>Inbox</span>
 						</div>
 						{#if unreadCount > 0}
-							<span class="text-[11px] font-bold bg-[#0c0c09] text-white px-2 py-0.5 rounded-full">{unreadCount}</span>
+							<span class="text-[11px] font-bold bg-[#0c0c09] text-white px-2 py-0.5 rounded-full"
+								>{unreadCount}</span
+							>
 						{:else if visiblePortals.length > 0}
-							<span class="text-[11px] font-bold bg-slate-200 text-slate-600 px-2 py-0.5 rounded-full">{visiblePortals.length}</span>
+							<span
+								class="text-[11px] font-bold bg-slate-200 text-slate-600 px-2 py-0.5 rounded-full"
+								>{visiblePortals.length}</span
+							>
 						{/if}
 					</button>
 
 					<button
 						on:click={() => switchFolder('sent')}
-						class={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-semibold transition-colors ${activeFolder === 'sent' ? 'bg-white text-[#0c0c09] shadow-sm ring-1 ring-slate-200' : 'text-slate-600 hover:bg-slate-100'}`}
+						class={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-md text-sm font-semibold transition-colors ${activeFolder === 'sent' ? 'bg-white text-[#0c0c09] shadow-sm ring-1 ring-slate-200' : 'text-slate-600 hover:bg-slate-100'}`}
 					>
-						<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-							<path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+						<svg
+							class="w-4 h-4"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke="currentColor"
+							stroke-width="2"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+							/>
 						</svg>
 						<span>Sent</span>
 					</button>
 				</nav>
 
-				<div class="mt-auto rounded-xl border border-slate-200 bg-white p-3">
+				<div class="mt-auto rounded-md border border-slate-200 bg-white p-3">
 					<p class="flex items-center gap-1.5 text-[11px] font-bold text-slate-700">
-						<svg class="h-3.5 w-3.5 text-[#0c0c09]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+						<svg
+							class="h-3.5 w-3.5 text-[#0c0c09]"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke="currentColor"
+							stroke-width="2.2"
+							><path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								d="M13 10V3L4 14h7v7l9-11h-7z"
+							/></svg
+						>
 						Simulation only
 					</p>
-					<p class="mt-1 text-[11px] leading-snug text-slate-400">AI predictions from your file. Not real emails or official decisions.</p>
+					<p class="mt-1 text-[11px] leading-snug text-slate-400">
+						AI predictions from your file. Not real emails or official decisions.
+					</p>
 				</div>
 			</aside>
 
@@ -260,14 +329,19 @@
 					<!-- Mobile folder switcher: the sidebar folders are desktop-only
 					     (hidden md:flex), so without this phones can't reach Sent or
 					     see the unread count. -->
-					<div class="md:hidden flex items-center gap-2 border-b border-slate-100 px-4 py-2.5 bg-white">
+					<div
+						class="md:hidden flex items-center gap-2 border-b border-slate-100 px-4 py-2.5 bg-white"
+					>
 						<button
 							on:click={() => switchFolder('inbox')}
 							class={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition-colors ${activeFolder === 'inbox' ? 'bg-[#0c0c09] text-white' : 'bg-slate-100 text-slate-600'}`}
 						>
 							Inbox
 							{#if unreadCount > 0}
-								<span class={`rounded-full px-1.5 text-[10px] font-bold ${activeFolder === 'inbox' ? 'bg-white/25 text-white' : 'bg-[#0c0c09] text-white'}`}>{unreadCount}</span>
+								<span
+									class={`rounded-full px-1.5 text-[10px] font-bold ${activeFolder === 'inbox' ? 'bg-white/25 text-white' : 'bg-[#0c0c09] text-white'}`}
+									>{unreadCount}</span
+								>
 							{/if}
 						</button>
 						<button
@@ -300,7 +374,7 @@
 								type="text"
 								bind:value={searchQuery}
 								placeholder="Search mail..."
-								class="w-full pl-10 pr-4 py-2 bg-slate-50 border-none rounded-xl text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-[color-mix(in_oklab,#0c0c09_20%,transparent)] focus:bg-white transition-all"
+								class="w-full pl-10 pr-4 py-2 bg-slate-50 border-none rounded-md text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-[color-mix(in_oklab,#0c0c09_20%,transparent)] focus:bg-white transition-all"
 							/>
 						</div>
 					</div>
@@ -319,7 +393,7 @@
 							</div>
 							<button
 								on:click={() => currentEdPortal && selectPortal(currentEdPortal)}
-								class="inline-flex items-center gap-1.5 rounded-xl bg-rose-600 px-4 py-2 text-xs font-semibold text-white shadow-sm transition-all hover:bg-rose-700 active:scale-[0.99] cursor-pointer"
+								class="inline-flex items-center gap-1.5 rounded-md bg-rose-600 px-4 py-2 text-xs font-semibold text-white shadow-sm transition-all hover:bg-rose-700 active:scale-[0.99] cursor-pointer"
 							>
 								View Simulated Decision
 							</button>
@@ -356,9 +430,21 @@
 							{:else if filteredPortals.length === 0}
 								<!-- Search matched nothing — don't leave a blank list. -->
 								<div class="flex flex-col items-center justify-center h-full text-center p-8">
-									<div class="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mb-4">
-										<svg class="w-8 h-8 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+									<div
+										class="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mb-4"
+									>
+										<svg
+											class="w-8 h-8 text-slate-300"
+											fill="none"
+											viewBox="0 0 24 24"
+											stroke="currentColor"
+										>
+											<path
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												stroke-width="2"
+												d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+											/>
 										</svg>
 									</div>
 									<h3 class="text-slate-900 font-bold mb-1">No matches</h3>
@@ -378,37 +464,109 @@
 									>
 										<!-- checkbox (decorative) -->
 										<span class="shrink-0 text-slate-300">
-											<svg class="h-[18px] w-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="3" /></svg>
+											<svg
+												class="h-[18px] w-[18px]"
+												fill="none"
+												viewBox="0 0 24 24"
+												stroke="currentColor"
+												stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="3" /></svg
+											>
 										</span>
 										<!-- star (decorative) -->
 										<span class={`shrink-0 ${unread ? 'text-slate-300' : 'text-slate-200'}`}>
-											<svg class="h-[18px] w-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6"><path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.5l2.2 4.46 4.92.72-3.56 3.47.84 4.9-4.4-2.31-4.4 2.31.84-4.9L4.4 8.68l4.92-.72 2.16-4.46z" /></svg>
+											<svg
+												class="h-[18px] w-[18px]"
+												fill="none"
+												viewBox="0 0 24 24"
+												stroke="currentColor"
+												stroke-width="1.6"
+												><path
+													stroke-linecap="round"
+													stroke-linejoin="round"
+													d="M11.48 3.5l2.2 4.46 4.92.72-3.56 3.47.84 4.9-4.4-2.31-4.4 2.31.84-4.9L4.4 8.68l4.92-.72 2.16-4.46z"
+												/></svg
+											>
 										</span>
 										<!-- sender -->
-										<span class={`w-36 sm:w-44 shrink-0 truncate text-sm ${unread ? 'font-bold text-slate-900' : 'text-slate-600'}`}>
+										<span
+											class={`w-36 sm:w-44 shrink-0 truncate text-sm ${unread ? 'font-bold text-slate-900' : 'text-slate-600'}`}
+										>
 											{portal.name}
 										</span>
 										<!-- subject — snippet -->
 										<span class="flex min-w-0 flex-1 items-center gap-2 text-sm">
 											<span class="truncate">
-												<span class={unread ? 'font-semibold text-slate-900' : 'text-slate-600'}>{portal.subject}</span>
+												<span class={unread ? 'font-semibold text-slate-900' : 'text-slate-600'}
+													>{portal.subject}</span
+												>
 												<span class="text-slate-400"> - {previewFor(portal)}</span>
 											</span>
 											{#if lockedSlugs.has(portal.slug)}
-												<span class="shrink-0 inline-flex items-center gap-1 rounded-full border border-slate-200 bg-slate-100 px-2 py-[1px] text-[9px] font-bold text-slate-500">
-													<svg class="h-2.5 w-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+												<span
+													class="shrink-0 inline-flex items-center gap-1 rounded-full border border-slate-200 bg-slate-100 px-2 py-[1px] text-[9px] font-bold text-slate-500"
+												>
+													<svg
+														class="h-2.5 w-2.5"
+														fill="none"
+														viewBox="0 0 24 24"
+														stroke="currentColor"
+														stroke-width="2.4"
+														><path
+															stroke-linecap="round"
+															stroke-linejoin="round"
+															d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+														/></svg
+													>
 													$4.99
 												</span>
 											{/if}
 										</span>
 										<!-- date (default) / action icons (hover) -->
-										<span class={`shrink-0 text-xs whitespace-nowrap group-hover:hidden ${unread ? 'font-bold text-slate-900' : 'text-slate-500'}`}>
+										<span
+											class={`shrink-0 text-xs whitespace-nowrap group-hover:hidden ${unread ? 'font-bold text-slate-900' : 'text-slate-500'}`}
+										>
 											{getReceivedLabel(portal)}
 										</span>
-										<span class="hidden shrink-0 items-center gap-1.5 text-slate-500 group-hover:flex" aria-hidden="true">
-											<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M5 8h14M5 8l1 11a2 2 0 002 2h8a2 2 0 002-2l1-11M9 8V5a2 2 0 012-2h2a2 2 0 012 2v3" /></svg>
-											<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M4 7l.7 12a2 2 0 002 1.9h10.6a2 2 0 002-1.9L20 7M9 7V5a2 2 0 012-2h2a2 2 0 012 2v2" /></svg>
-											<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l9 6 9-6M4 6h16a1 1 0 011 1v10a1 1 0 01-1 1H4a1 1 0 01-1-1V7a1 1 0 011-1z" /></svg>
+										<span
+											class="hidden shrink-0 items-center gap-1.5 text-slate-500 group-hover:flex"
+											aria-hidden="true"
+										>
+											<svg
+												class="h-4 w-4"
+												fill="none"
+												viewBox="0 0 24 24"
+												stroke="currentColor"
+												stroke-width="1.8"
+												><path
+													stroke-linecap="round"
+													stroke-linejoin="round"
+													d="M5 8h14M5 8l1 11a2 2 0 002 2h8a2 2 0 002-2l1-11M9 8V5a2 2 0 012-2h2a2 2 0 012 2v3"
+												/></svg
+											>
+											<svg
+												class="h-4 w-4"
+												fill="none"
+												viewBox="0 0 24 24"
+												stroke="currentColor"
+												stroke-width="1.8"
+												><path
+													stroke-linecap="round"
+													stroke-linejoin="round"
+													d="M4 7h16M4 7l.7 12a2 2 0 002 1.9h10.6a2 2 0 002-1.9L20 7M9 7V5a2 2 0 012-2h2a2 2 0 012 2v2"
+												/></svg
+											>
+											<svg
+												class="h-4 w-4"
+												fill="none"
+												viewBox="0 0 24 24"
+												stroke="currentColor"
+												stroke-width="1.8"
+												><path
+													stroke-linecap="round"
+													stroke-linejoin="round"
+													d="M3 8l9 6 9-6M4 6h16a1 1 0 011 1v10a1 1 0 01-1 1H4a1 1 0 01-1-1V7a1 1 0 011-1z"
+												/></svg
+											>
 										</span>
 									</button>
 								{/each}
@@ -419,16 +577,43 @@
 										href="/portals"
 										class="group flex items-center gap-3 border-b border-slate-100 bg-slate-50/60 px-4 py-4 text-left no-underline transition-colors hover:bg-slate-100"
 									>
-										<span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#0c0c09] text-white">
-											<svg class="h-[18px] w-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5z" /><path d="M6 12v5c0 1 2.7 2.5 6 2.5s6-1.5 6-2.5v-5" /></svg>
+										<span
+											class="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-[#0c0c09] text-white"
+										>
+											<svg
+												class="h-[18px] w-[18px]"
+												fill="none"
+												viewBox="0 0 24 24"
+												stroke="currentColor"
+												stroke-width="2"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												><path d="M22 10 12 5 2 10l10 5 10-5z" /><path
+													d="M6 12v5c0 1 2.7 2.5 6 2.5s6-1.5 6-2.5v-5"
+												/></svg
+											>
 										</span>
 										<span class="min-w-0 flex-1">
-											<span class="block text-sm font-semibold text-slate-900">All your decisions are in</span>
-											<span class="block text-xs text-slate-500">View every school's decision side by side on the portals page.</span>
+											<span class="block text-sm font-semibold text-slate-900"
+												>All your decisions are in</span
+											>
+											<span class="block text-xs text-slate-500"
+												>View every school's decision side by side on the portals page.</span
+											>
 										</span>
-										<span class="inline-flex shrink-0 items-center gap-1 text-xs font-semibold text-[#0c0c09] group-hover:gap-1.5 transition-all">
+										<span
+											class="inline-flex shrink-0 items-center gap-1 text-xs font-semibold text-[#0c0c09] group-hover:gap-1.5 transition-all"
+										>
 											Open portals
-											<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+											<svg
+												class="h-4 w-4"
+												fill="none"
+												viewBox="0 0 24 24"
+												stroke="currentColor"
+												stroke-width="2"
+												stroke-linecap="round"
+												stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg
+											>
 										</span>
 									</a>
 								{/if}
@@ -440,17 +625,38 @@
 									class="group relative flex w-full items-center gap-3 px-4 text-left border-b border-slate-100 h-12 bg-white transition-shadow hover:z-10 hover:shadow-[0_1px_2px_0_rgba(12,12,9,0.18),0_2px_6px_1px_rgba(12,12,9,0.1)]"
 								>
 									<span class="shrink-0 text-slate-300">
-										<svg class="h-[18px] w-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="3" /></svg>
+										<svg
+											class="h-[18px] w-[18px]"
+											fill="none"
+											viewBox="0 0 24 24"
+											stroke="currentColor"
+											stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="3" /></svg
+										>
 									</span>
 									<span class="shrink-0 text-slate-200">
-										<svg class="h-[18px] w-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6"><path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.5l2.2 4.46 4.92.72-3.56 3.47.84 4.9-4.4-2.31-4.4 2.31.84-4.9L4.4 8.68l4.92-.72 2.16-4.46z" /></svg>
+										<svg
+											class="h-[18px] w-[18px]"
+											fill="none"
+											viewBox="0 0 24 24"
+											stroke="currentColor"
+											stroke-width="1.6"
+											><path
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												d="M11.48 3.5l2.2 4.46 4.92.72-3.56 3.47.84 4.9-4.4-2.31-4.4 2.31.84-4.9L4.4 8.68l4.92-.72 2.16-4.46z"
+											/></svg
+										>
 									</span>
-									<span class="w-36 sm:w-44 shrink-0 truncate text-sm text-slate-600">To: {message.to}</span>
+									<span class="w-36 sm:w-44 shrink-0 truncate text-sm text-slate-600"
+										>To: {message.to}</span
+									>
 									<span class="min-w-0 flex-1 truncate text-sm">
 										<span class="text-slate-600">{message.subject}</span>
 										<span class="text-slate-400"> - {message.preview}</span>
 									</span>
-									<span class="shrink-0 text-xs whitespace-nowrap text-slate-500">{message.sent}</span>
+									<span class="shrink-0 text-xs whitespace-nowrap text-slate-500"
+										>{message.sent}</span
+									>
 								</button>
 							{/each}
 						{/if}
@@ -468,15 +674,50 @@
 										aria-label="Back to inbox"
 										class="mt-0.5 shrink-0 rounded-full p-1.5 text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900"
 									>
-										<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+										<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+											><path
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												stroke-width="2"
+												d="M10 19l-7-7m0 0l7-7m-7 7h18"
+											/></svg
+										>
 									</button>
 									<h1 class="min-w-0 flex-1 text-[22px] font-normal leading-snug text-slate-800">
 										{selectedPortal.subject}
-										<span class="ml-1.5 inline-block translate-y-[-1px] rounded bg-slate-100 px-1.5 py-0.5 align-middle text-[11px] font-medium text-slate-500">Simulated</span>
+										<span
+											class="ml-1.5 inline-block translate-y-[-1px] rounded bg-slate-100 px-1.5 py-0.5 align-middle text-[11px] font-medium text-slate-500"
+											>Simulated</span
+										>
 									</h1>
-									<div class="flex shrink-0 items-center gap-1 pt-1 text-slate-400" aria-hidden="true">
-										<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7"><path stroke-linecap="round" stroke-linejoin="round" d="M5 8h14M5 8l1 11a2 2 0 002 2h8a2 2 0 002-2l1-11M9 8V5a2 2 0 012-2h2a2 2 0 012 2v3" /></svg>
-										<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M4 7l.7 12a2 2 0 002 1.9h10.6a2 2 0 002-1.9L20 7M9 7V5a2 2 0 012-2h2a2 2 0 012 2v2" /></svg>
+									<div
+										class="flex shrink-0 items-center gap-1 pt-1 text-slate-400"
+										aria-hidden="true"
+									>
+										<svg
+											class="h-5 w-5"
+											fill="none"
+											viewBox="0 0 24 24"
+											stroke="currentColor"
+											stroke-width="1.7"
+											><path
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												d="M5 8h14M5 8l1 11a2 2 0 002 2h8a2 2 0 002-2l1-11M9 8V5a2 2 0 012-2h2a2 2 0 012 2v3"
+											/></svg
+										>
+										<svg
+											class="h-5 w-5"
+											fill="none"
+											viewBox="0 0 24 24"
+											stroke="currentColor"
+											stroke-width="1.7"
+											><path
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												d="M4 7h16M4 7l.7 12a2 2 0 002 1.9h10.6a2 2 0 002-1.9L20 7M9 7V5a2 2 0 012-2h2a2 2 0 012 2v2"
+											/></svg
+										>
 									</div>
 								</div>
 
@@ -486,29 +727,72 @@
 										{@const brand = brandFor(selectedPortal)}
 										<div
 											class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-base font-bold"
-											style="background-color:{brand.primaryColor};color:{readableTextColor(brand.primaryColor)}"
+											style="background-color:{brand.primaryColor};color:{readableTextColor(
+												brand.primaryColor
+											)}"
 										>
 											{selectedPortal.name[0]}
 										</div>
 									{:else}
-										<div class={`h-10 w-10 shrink-0 rounded-full flex items-center justify-center text-base font-bold ${tintFor(selectedPortal)}`}>
+										<div
+											class={`h-10 w-10 shrink-0 rounded-full flex items-center justify-center text-base font-bold ${tintFor(selectedPortal)}`}
+										>
 											{selectedPortal.name[0]}
 										</div>
 									{/if}
 									<div class="min-w-0 flex-1">
 										<div class="flex flex-wrap items-center gap-x-2 gap-y-0.5">
-											<span class="text-sm font-bold text-slate-900">{selectedPortal.name} Admissions</span>
-											<span class="truncate text-xs text-slate-500">&lt;{emailOf(selectedPortal.from)}&gt;</span>
+											<span class="text-sm font-bold text-slate-900"
+												>{selectedPortal.name} Admissions</span
+											>
+											<span class="truncate text-xs text-slate-500"
+												>&lt;{emailOf(selectedPortal.from)}&gt;</span
+											>
 										</div>
 										<div class="flex items-center gap-1 text-xs text-slate-500">
 											to me
-											<svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
+											<svg
+												class="h-3.5 w-3.5"
+												fill="none"
+												viewBox="0 0 24 24"
+												stroke="currentColor"
+												stroke-width="2"
+												><path
+													stroke-linecap="round"
+													stroke-linejoin="round"
+													d="M19 9l-7 7-7-7"
+												/></svg
+											>
 										</div>
 									</div>
 									<div class="flex shrink-0 items-center gap-3 text-slate-400">
-										<span class="whitespace-nowrap text-xs text-slate-500">{getReceivedLabel(selectedPortal)}</span>
-										<svg class="h-[18px] w-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6"><path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.5l2.2 4.46 4.92.72-3.56 3.47.84 4.9-4.4-2.31-4.4 2.31.84-4.9L4.4 8.68l4.92-.72 2.16-4.46z" /></svg>
-										<svg class="h-[18px] w-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h10a4 4 0 014 4v1M3 10l5-5M3 10l5 5" /></svg>
+										<span class="whitespace-nowrap text-xs text-slate-500"
+											>{getReceivedLabel(selectedPortal)}</span
+										>
+										<svg
+											class="h-[18px] w-[18px]"
+											fill="none"
+											viewBox="0 0 24 24"
+											stroke="currentColor"
+											stroke-width="1.6"
+											><path
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												d="M11.48 3.5l2.2 4.46 4.92.72-3.56 3.47.84 4.9-4.4-2.31-4.4 2.31.84-4.9L4.4 8.68l4.92-.72 2.16-4.46z"
+											/></svg
+										>
+										<svg
+											class="h-[18px] w-[18px]"
+											fill="none"
+											viewBox="0 0 24 24"
+											stroke="currentColor"
+											stroke-width="1.7"
+											><path
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												d="M3 10h10a4 4 0 014 4v1M3 10l5-5M3 10l5 5"
+											/></svg
+										>
 									</div>
 								</div>
 
@@ -521,43 +805,116 @@
 									{@const design = emailDesignFor(selectedPortal.slug)}
 									<div class="mt-4">
 										<div
-											class="w-full overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-slate-200"
-											style={design === 'minimal' ? `border-top:4px solid ${brand.primaryColor}` : design === 'sidebar' ? `border-left:8px solid ${brand.primaryColor}` : ''}
+											class="w-full overflow-hidden rounded-md bg-white shadow-sm ring-1 ring-slate-200"
+											style={design === 'minimal'
+												? `border-top:4px solid ${brand.primaryColor}`
+												: design === 'sidebar'
+													? `border-left:8px solid ${brand.primaryColor}`
+													: ''}
 										>
 											{#if design === 'crest'}
-												<div class="px-6 py-7 text-center" style="background-color:{brand.primaryColor};color:{onBrand}">
-													<div class="mx-auto flex h-14 w-14 items-center justify-center rounded-full font-serif text-2xl font-bold" style="box-shadow:inset 0 0 0 2px {onBrand === '#ffffff' ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.28)'}">{selectedPortal.name[0]}</div>
-													<div class="mt-3 font-serif text-xl font-bold leading-tight">{brand.logoPrimary}</div>
-													<div class="mt-1 text-[10px] font-semibold uppercase tracking-[0.2em] opacity-90">{brand.logoSecondary}</div>
-												</div>
-											{:else if design === 'banner'}
-												<div class="px-6 py-6" style="background-color:{brand.primaryColor};color:{onBrand}">
-													<div class="font-serif text-2xl font-extrabold tracking-tight leading-none">{brand.logoPrimary}</div>
-													<div class="mt-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] opacity-90">{brand.logoSecondary}</div>
-												</div>
-												<div class="h-1.5" style="background-color:{onBrand === '#ffffff' ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.18)'}"></div>
-											{:else if design === 'letterhead'}
-												<div class="flex items-center gap-3 px-6 pt-6 pb-4">
-													<div class="flex h-10 w-10 shrink-0 items-center justify-center rounded font-serif text-lg font-bold" style="background-color:{brand.primaryColor};color:{onBrand}">{selectedPortal.name[0]}</div>
-													<div class="min-w-0">
-														<div class="truncate font-serif text-lg font-bold text-slate-900">{brand.logoPrimary}</div>
-														<div class="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500">{brand.logoSecondary}</div>
+												<div
+													class="px-6 py-7 text-center"
+													style="background-color:{brand.primaryColor};color:{onBrand}"
+												>
+													<div
+														class="mx-auto flex h-14 w-14 items-center justify-center rounded-full font-serif text-2xl font-bold"
+														style="box-shadow:inset 0 0 0 2px {onBrand === '#ffffff'
+															? 'rgba(255,255,255,0.5)'
+															: 'rgba(0,0,0,0.28)'}"
+													>
+														{selectedPortal.name[0]}
+													</div>
+													<div class="mt-3 font-serif text-xl font-bold leading-tight">
+														{brand.logoPrimary}
+													</div>
+													<div
+														class="mt-1 text-[10px] font-semibold uppercase tracking-[0.2em] opacity-90"
+													>
+														{brand.logoSecondary}
 													</div>
 												</div>
-												<div class="h-0.5 w-full" style="background-color:{brand.primaryColor}"></div>
+											{:else if design === 'banner'}
+												<div
+													class="px-6 py-6"
+													style="background-color:{brand.primaryColor};color:{onBrand}"
+												>
+													<div
+														class="font-serif text-2xl font-extrabold tracking-tight leading-none"
+													>
+														{brand.logoPrimary}
+													</div>
+													<div
+														class="mt-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] opacity-90"
+													>
+														{brand.logoSecondary}
+													</div>
+												</div>
+												<div
+													class="h-1.5"
+													style="background-color:{onBrand === '#ffffff'
+														? 'rgba(255,255,255,0.4)'
+														: 'rgba(0,0,0,0.18)'}"
+												></div>
+											{:else if design === 'letterhead'}
+												<div class="flex items-center gap-3 px-6 pt-6 pb-4">
+													<div
+														class="flex h-10 w-10 shrink-0 items-center justify-center rounded font-serif text-lg font-bold"
+														style="background-color:{brand.primaryColor};color:{onBrand}"
+													>
+														{selectedPortal.name[0]}
+													</div>
+													<div class="min-w-0">
+														<div class="truncate font-serif text-lg font-bold text-slate-900">
+															{brand.logoPrimary}
+														</div>
+														<div
+															class="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500"
+														>
+															{brand.logoSecondary}
+														</div>
+													</div>
+												</div>
+												<div
+													class="h-0.5 w-full"
+													style="background-color:{brand.primaryColor}"
+												></div>
 											{:else if design === 'stacked'}
 												<div class="px-6 pt-6 pb-4">
-													<div class="flex h-12 w-12 items-center justify-center rounded-xl font-serif text-xl font-bold" style="background-color:{brand.primaryColor};color:{onBrand}">{selectedPortal.name[0]}</div>
-													<div class="mt-3 font-serif text-xl font-bold leading-tight text-slate-900">{brand.logoPrimary}</div>
-													<div class="mt-0.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500">{brand.logoSecondary}</div>
+													<div
+														class="flex h-12 w-12 items-center justify-center rounded-md font-serif text-xl font-bold"
+														style="background-color:{brand.primaryColor};color:{onBrand}"
+													>
+														{selectedPortal.name[0]}
+													</div>
+													<div
+														class="mt-3 font-serif text-xl font-bold leading-tight text-slate-900"
+													>
+														{brand.logoPrimary}
+													</div>
+													<div
+														class="mt-0.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500"
+													>
+														{brand.logoSecondary}
+													</div>
 												</div>
 												<div class="mx-6 h-px" style="background-color:{brand.primaryColor}"></div>
 											{:else}
 												<div class="flex items-center gap-2.5 px-6 pt-6 pb-3">
-													<span class="flex h-7 w-7 shrink-0 items-center justify-center rounded font-serif text-sm font-bold" style="background-color:{brand.primaryColor};color:{onBrand}">{selectedPortal.name[0]}</span>
+													<span
+														class="flex h-7 w-7 shrink-0 items-center justify-center rounded font-serif text-sm font-bold"
+														style="background-color:{brand.primaryColor};color:{onBrand}"
+														>{selectedPortal.name[0]}</span
+													>
 													<div class="min-w-0">
-														<div class="truncate text-sm font-bold text-slate-900">{brand.logoPrimary}</div>
-														<div class="text-[9px] font-semibold uppercase tracking-[0.18em] text-slate-500">{brand.logoSecondary}</div>
+														<div class="truncate text-sm font-bold text-slate-900">
+															{brand.logoPrimary}
+														</div>
+														<div
+															class="text-[9px] font-semibold uppercase tracking-[0.18em] text-slate-500"
+														>
+															{brand.logoSecondary}
+														</div>
 													</div>
 												</div>
 											{/if}
@@ -567,21 +924,55 @@
 								{:else}
 									<div class="mt-6 space-y-4 text-[15px] leading-relaxed text-slate-800">
 										<p>Dear {displayName},</p>
-										<p>The status of your application to <strong class="font-semibold text-slate-900">{selectedPortal.name}</strong> has changed. Please sign in to your portal to view the decision.</p>
+										<p>
+											The status of your application to <strong class="font-semibold text-slate-900"
+												>{selectedPortal.name}</strong
+											> has changed. Please sign in to your portal to view the decision.
+										</p>
 										<div class="mt-6">
-											<a href={`/portals/${selectedPortal.slug}`} class="inline-flex items-center justify-center rounded-md bg-[#1a73e8] px-6 py-3 text-sm font-semibold text-white no-underline shadow-sm hover:bg-[#1765cc]">View your decision</a>
+											<a
+												href={`/portals/${selectedPortal.slug}`}
+												class="inline-flex items-center justify-center rounded-md bg-[#1a73e8] px-6 py-3 text-sm font-semibold text-white no-underline shadow-sm hover:bg-[#1765cc]"
+												>View your decision</a
+											>
 										</div>
 									</div>
 								{/if}
 
 								<!-- Gmail reply / forward footer (decorative) -->
 								<div class="mt-6 flex flex-wrap gap-3" aria-hidden="true">
-									<span class="inline-flex items-center gap-2 rounded-full border border-slate-300 px-5 py-2 text-sm font-medium text-slate-600">
-										<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h10a4 4 0 014 4v1M3 10l5-5M3 10l5 5" /></svg>
+									<span
+										class="inline-flex items-center gap-2 rounded-full border border-slate-300 px-5 py-2 text-sm font-medium text-slate-600"
+									>
+										<svg
+											class="h-4 w-4"
+											fill="none"
+											viewBox="0 0 24 24"
+											stroke="currentColor"
+											stroke-width="1.8"
+											><path
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												d="M3 10h10a4 4 0 014 4v1M3 10l5-5M3 10l5 5"
+											/></svg
+										>
 										Reply
 									</span>
-									<span class="inline-flex items-center gap-2 rounded-full border border-slate-300 px-5 py-2 text-sm font-medium text-slate-600">
-										<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M21 10H11a4 4 0 00-4 4v1m14-5l-5-5m5 5l-5 5" /></svg>
+									<span
+										class="inline-flex items-center gap-2 rounded-full border border-slate-300 px-5 py-2 text-sm font-medium text-slate-600"
+									>
+										<svg
+											class="h-4 w-4"
+											fill="none"
+											viewBox="0 0 24 24"
+											stroke="currentColor"
+											stroke-width="1.8"
+											><path
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												d="M21 10H11a4 4 0 00-4 4v1m14-5l-5-5m5 5l-5 5"
+											/></svg
+										>
 										Forward
 									</span>
 								</div>
@@ -617,14 +1008,15 @@
 {#snippet emailBody(brand: any, onBrand: string, design: string, portal: PortalEmail)}
 	{@const center = design === 'crest'}
 	<div class="px-5 py-6 sm:px-7 {center ? 'text-center' : ''}">
-		<h2 class="font-serif text-xl font-bold text-slate-900">There's an update to your application.</h2>
+		<h2 class="font-serif text-xl font-bold text-slate-900">
+			There's an update to your application.
+		</h2>
 		<div class="mt-4 space-y-4 text-[15px] leading-relaxed text-slate-800">
 			<p>Dear {displayName},</p>
 			<p>
 				The status of your application to
-				<strong class="font-semibold text-slate-900">{portal.name}</strong> has changed. For your
-				security, we don't include the decision in this email. Please sign in to your applicant
-				portal to view it.
+				<strong class="font-semibold text-slate-900">{portal.name}</strong> has changed. For your security,
+				we don't include the decision in this email. Please sign in to your applicant portal to view it.
 			</p>
 			<p>Log in with the credentials you created when you applied.</p>
 		</div>
@@ -655,8 +1047,16 @@
 				</a>
 			{/if}
 		</div>
-		<div class="mt-6 flex items-start gap-2.5 rounded-lg bg-slate-50 px-4 py-3 text-left ring-1 ring-slate-200">
-			<svg class="mt-0.5 h-4 w-4 shrink-0 text-slate-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" /></svg>
+		<div
+			class="mt-6 flex items-start gap-2.5 rounded-lg bg-slate-50 px-4 py-3 text-left ring-1 ring-slate-200"
+		>
+			<svg class="mt-0.5 h-4 w-4 shrink-0 text-slate-400" fill="currentColor" viewBox="0 0 20 20"
+				><path
+					fill-rule="evenodd"
+					d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+					clip-rule="evenodd"
+				/></svg
+			>
 			<p class="text-xs leading-relaxed text-slate-500">
 				<span class="font-semibold text-slate-700">First time?</span> This is a simulation. Just tap
 				<span class="font-semibold text-slate-700">Login</span> to reveal your decision. Your details

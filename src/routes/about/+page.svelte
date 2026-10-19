@@ -147,7 +147,7 @@
 	</div>
 {/snippet}
 
-<main class="min-h-screen bg-white font-sans text-slate-900">
+<main class="min-h-screen bg-[#f4f4f0] font-sans text-slate-900">
 	<!-- Hero -->
 	<section class="relative overflow-hidden border-b border-slate-100">
 		<div class="max-w-4xl mx-auto px-6 py-24 md:py-32 text-center">

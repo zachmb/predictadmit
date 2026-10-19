@@ -7,9 +7,29 @@
 		overlayActive
 	} from '$lib/stores/ui';
 	import { page } from '$app/stores';
+	import { goto } from '$app/navigation';
 	import { onDestroy } from 'svelte';
 	import { crossfade } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
+
+	// "Back to inbox" (mail-mode nav): return to /ai and actually land the user ON the
+	// AIMail inbox, not the top of the page. The inbox mounts a tick after navigation,
+	// so retry the scroll until #inboxSection exists instead of a single best effort.
+	async function backToInbox(e: MouseEvent) {
+		e.preventDefault();
+		await goto('/ai', { noScroll: true });
+		if (typeof document === 'undefined') return;
+		let tries = 0;
+		const tryScroll = () => {
+			const el = document.getElementById('inboxSection');
+			if (el) {
+				el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+				return;
+			}
+			if (tries++ < 20) setTimeout(tryScroll, 100);
+		};
+		setTimeout(tryScroll, 80);
+	}
 
 	// Shared-element "magic move" for the active nav pill: one pill keyed across all
 	// nav items, so switching pages slides it from the old tab to the new one instead
@@ -121,6 +141,7 @@
 					<!-- Mail-nav mode: one tap back to the decision inbox. -->
 					<a
 						href="/ai"
+						on:click={backToInbox}
 						class="inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white no-underline transition-colors hover:bg-slate-800"
 					>
 						<svg
@@ -176,7 +197,7 @@
 				     only way to reach the pages on a phone. Toggles the slide-down sheet. -->
 				<button
 					type="button"
-					class="pa-burger lg:hidden"
+					class="pa-burger order-last lg:hidden"
 					class:open={menuOpen}
 					on:click={() => (menuOpen = !menuOpen)}
 					aria-label={menuOpen ? 'Close menu' : 'Open menu'}
