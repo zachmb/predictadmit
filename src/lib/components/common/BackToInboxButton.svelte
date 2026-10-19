@@ -36,16 +36,15 @@
 		// renders a tick or two after navigation, so retry a few times until the
 		// anchor exists instead of a single best-effort attempt.
 		if (typeof document !== 'undefined' && hash) {
+			// Re-scroll for ~1.5s even after the inbox mounts: the /ai page restores its
+			// own inbox state and can scroll a beat later, overriding a one-shot scroll.
 			let tries = 0;
-			const tryScroll = () => {
+			const tick = () => {
 				const el = document.querySelector(hash) as HTMLElement | null;
-				if (el) {
-					el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-					return;
-				}
-				if (tries++ < 12) setTimeout(tryScroll, 120);
+				if (el) el.scrollIntoView({ behavior: tries === 0 ? 'auto' : 'smooth', block: 'start' });
+				if (tries++ < 14) setTimeout(tick, 110);
 			};
-			setTimeout(tryScroll, 80);
+			setTimeout(tick, 60);
 		}
 	};
 </script>

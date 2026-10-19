@@ -19,16 +19,16 @@
 		e.preventDefault();
 		await goto('/ai', { noScroll: true });
 		if (typeof document === 'undefined') return;
+		// Keep re-scrolling for ~1.4s even AFTER the inbox mounts: the /ai page restores
+		// its own inbox state on load and can scroll a beat later, which used to override
+		// a single best-effort scroll (the "back to inbox doesn't land me there" bug).
 		let tries = 0;
-		const tryScroll = () => {
+		const tick = () => {
 			const el = document.getElementById('inboxSection');
-			if (el) {
-				el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-				return;
-			}
-			if (tries++ < 20) setTimeout(tryScroll, 100);
+			if (el) el.scrollIntoView({ behavior: tries === 0 ? 'auto' : 'smooth', block: 'start' });
+			if (tries++ < 14) setTimeout(tick, 100);
 		};
-		setTimeout(tryScroll, 80);
+		setTimeout(tick, 60);
 	}
 
 	// Shared-element "magic move" for the active nav pill: one pill keyed across all
