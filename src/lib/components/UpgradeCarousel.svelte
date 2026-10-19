@@ -37,21 +37,21 @@
 			title: "Perfect your applications before it's too late.",
 			body: 'The AI reads your real application and calls your decision at every T30 school: admit, deny, waitlist, or defer. Then a five-reader committee shows you exactly what drove it.',
 			icon: 'bolt',
-			shot: '/onboarding/dashboard.png'
+			shot: '/screenshots/pro-universities.png'
 		},
 		{
 			kind: 'benefit',
 			eyebrow: 'Unlimited',
 			title: 'Run it as many times as you want',
-			body: 'Change an essay, a score, an activity. Re-run across every T30 school and watch your odds move in real time.',
+			body: 'Change an essay or a score and watch your odds move across every T30.',
 			icon: 'search',
-			shot: '/onboarding/schools.png'
+			shot: '/screenshots/pro-chanceme.png'
 		},
 		{
 			kind: 'benefit',
 			eyebrow: 'The workshop',
 			title: 'Pro essay editing',
-			body: "Line-by-line AI feedback on every supplement: the honest read an admissions officer would give. You write every word; it just makes them land.",
+			body: 'Line-by-line AI feedback on every supplement: the honest read an admissions officer would give. You write every word; it just makes them land.',
 			icon: 'pencil',
 			mock: 'essay'
 		},
@@ -107,14 +107,14 @@
 
 {#if open}
 	<div
-		class="fixed inset-0 z-[10001] flex items-stretch justify-center bg-white sm:items-center sm:bg-slate-950/70 sm:p-6 sm:backdrop-blur-md"
+		class="fixed inset-0 z-[10001] flex items-stretch justify-center overflow-hidden bg-white"
 		transition:fade={{ duration: 180 }}
 		role="dialog"
 		aria-modal="true"
 		aria-label="What PredictAdmit Pro includes"
 	>
 		<div
-			class="relative flex w-full max-w-md flex-col bg-white sm:max-h-[94vh] sm:rounded-[28px] sm:shadow-2xl overflow-hidden"
+			class="relative mx-auto flex h-full w-full max-w-md flex-col overflow-hidden bg-white"
 			transition:fly={{ y: 24, duration: 260 }}
 		>
 			<!-- Top bar: back · progress · close -->
@@ -125,11 +125,22 @@
 					aria-label="Back"
 					class="grid h-9 w-9 place-items-center rounded-full text-slate-400 transition hover:bg-slate-100 hover:text-slate-700 disabled:opacity-0"
 				>
-					<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" /></svg>
+					<svg
+						class="h-5 w-5"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke="currentColor"
+						stroke-width="2"
+						><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" /></svg
+					>
 				</button>
 				<div class="flex flex-1 items-center justify-center gap-1.5">
 					{#each Array(lastStep + 1) as _, i}
-						<span class="h-1.5 rounded-full transition-all duration-300 {i === step ? 'w-7 bg-[#0c0c09]' : 'w-1.5 bg-slate-200'}"></span>
+						<span
+							class="h-1.5 rounded-full transition-all duration-300 {i === step
+								? 'w-7 bg-[#0c0c09]'
+								: 'w-1.5 bg-slate-200'}"
+						></span>
 					{/each}
 				</div>
 				<button
@@ -137,72 +148,185 @@
 					aria-label="Close"
 					class="grid h-9 w-9 place-items-center rounded-full text-slate-400 transition hover:bg-slate-100 hover:text-slate-700"
 				>
-					<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+					<svg
+						class="h-5 w-5"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke="currentColor"
+						stroke-width="2"
+						><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg
+					>
 				</button>
 			</div>
 
-			<!-- Body -->
-			<div class="flex flex-1 flex-col overflow-y-auto px-7 pb-4 pt-4">
+			<!-- Body (locked to the viewport — never scrolls) -->
+			<div class="flex min-h-0 flex-1 flex-col overflow-hidden px-7 pb-2 pt-3">
 				{#if step < nBenefits}
 					{@const s = screens[step]}
 					{#key step}
-						<div in:fly={{ x: 18, duration: 240 }} class="flex flex-1 flex-col">
+						<div in:fly={{ x: 18, duration: 240 }} class="flex min-h-0 flex-1 flex-col">
 							<div class="text-center">
-								<div class="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-[color-mix(in_oklab,#0c0c09_10%,transparent)] text-[#0c0c09]">
+								<div
+									class="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-[color-mix(in_oklab,#0c0c09_10%,transparent)] text-[#0c0c09]"
+								>
 									{#if s.icon === 'bolt'}
-										<svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+										<svg
+											class="h-7 w-7"
+											fill="none"
+											viewBox="0 0 24 24"
+											stroke="currentColor"
+											stroke-width="1.8"
+											><path
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												d="M13 10V3L4 14h7v7l9-11h-7z"
+											/></svg
+										>
 									{:else if s.icon === 'pencil'}
-										<svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
+										<svg
+											class="h-7 w-7"
+											fill="none"
+											viewBox="0 0 24 24"
+											stroke="currentColor"
+											stroke-width="1.8"
+											><path
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+											/></svg
+										>
 									{:else if s.icon === 'search'}
-										<svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+										<svg
+											class="h-7 w-7"
+											fill="none"
+											viewBox="0 0 24 24"
+											stroke="currentColor"
+											stroke-width="1.8"
+											><path
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+											/></svg
+										>
 									{:else}
-										<svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12a9 9 0 01-9 9c-1.6 0-3.1-.42-4.4-1.15L3 21l1.15-4.6A8.96 8.96 0 013 12a9 9 0 019-9 9 9 0 019 9z" /></svg>
+										<svg
+											class="h-7 w-7"
+											fill="none"
+											viewBox="0 0 24 24"
+											stroke="currentColor"
+											stroke-width="1.8"
+											><path
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												d="M8 12h.01M12 12h.01M16 12h.01M21 12a9 9 0 01-9 9c-1.6 0-3.1-.42-4.4-1.15L3 21l1.15-4.6A8.96 8.96 0 013 12a9 9 0 019-9 9 9 0 019 9z"
+											/></svg
+										>
 									{/if}
 								</div>
-								<p class="mt-4 text-[11px] font-bold uppercase tracking-[0.18em] text-[#0c0c09]">{s.eyebrow}</p>
-								<h2 class="mt-1.5 font-serif text-[28px] font-medium leading-[1.1] tracking-tight text-slate-900">{s.title}</h2>
-								<p class="mx-auto mt-3 max-w-xs text-[15px] leading-relaxed text-slate-500">{s.body}</p>
+								<h2
+									class="mt-4 font-serif text-[28px] font-medium leading-[1.1] tracking-tight text-slate-900"
+								>
+									{s.title}
+								</h2>
+								<p class="mx-auto mt-3 max-w-xs text-[15px] leading-relaxed text-slate-700">
+									{s.body}
+								</p>
 							</div>
 
-							{#if s.shot}
-								<!-- Real Pro screenshot, framed in device chrome (top bar hides the browser nav) -->
-								<div class="relative mx-auto mt-6 w-full max-w-[264px] overflow-hidden rounded-[26px] border border-slate-200 bg-slate-900 shadow-xl">
-									<div class="flex items-center gap-1.5 px-4 py-2.5">
-										<span class="h-2 w-2 rounded-full bg-white/25"></span>
-										<span class="h-2 w-2 rounded-full bg-white/25"></span>
-										<span class="h-2 w-2 rounded-full bg-white/25"></span>
-									</div>
-									<img src={s.shot} alt="PredictAdmit Pro" class="block w-full object-cover object-top" style="max-height:340px;" />
-								</div>
-							{:else if s.mock === 'essay'}
-								<!-- Essay-editing demo: a line with an AI margin note. -->
-								<div class="mx-auto mt-7 w-full max-w-[300px] rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-									<p class="text-[13px] leading-relaxed text-slate-700">
-										Ever since I was little, I have <span class="rounded bg-amber-100 px-0.5 text-amber-900 line-through decoration-amber-400/70">always been passionate about</span> helping people.
-									</p>
-									<div class="mt-3 flex items-start gap-2 rounded-xl bg-[color-mix(in_oklab,#0c0c09_6%,transparent)] p-3">
-										<div class="grid h-5 w-5 flex-none place-items-center rounded-full bg-[#0c0c09] text-white">
-											<svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+							<!-- Media region: takes the leftover height so nothing ever scrolls -->
+							<div class="relative flex min-h-0 flex-1 items-center justify-center pt-5">
+								{#if s.shot}
+									<!-- Real Pro screenshot, framed in device chrome, with a live cursor
+								     drifting + a slow push-in so it reads as a working product (like the landing). -->
+									<div
+										class="relative flex max-h-full w-full max-w-[264px] flex-col overflow-hidden rounded-[26px] border border-slate-200 bg-slate-900 shadow-xl"
+									>
+										<div class="flex flex-none items-center gap-1.5 px-4 py-2.5">
+											<span class="h-2 w-2 rounded-full bg-white/25"></span>
+											<span class="h-2 w-2 rounded-full bg-white/25"></span>
+											<span class="h-2 w-2 rounded-full bg-white/25"></span>
 										</div>
-										<p class="text-[12px] leading-snug text-slate-700">
-											Cliché opener. Start on the <span class="font-semibold">specific moment</span>. The reader has seen “passionate about helping” a thousand times.
+										<div class="min-h-0 flex-1 overflow-hidden">
+											<img
+												src={s.shot}
+												alt="PredictAdmit Pro"
+												class="ob-shot block h-full w-full object-cover object-top"
+											/>
+										</div>
+										<span class="pa-cursor pa-cursor--{step === 0 ? 'a' : 'c'}" aria-hidden="true">
+											<svg
+												width="24"
+												height="24"
+												viewBox="0 0 24 24"
+												fill="#0c0c09"
+												stroke="#fff"
+												stroke-width="1.6"
+												stroke-linejoin="round"
+												><path d="M5 2.5l5.6 16.5 2.3-6.9 6.9-2.3L5 2.5z" /></svg
+											>
+										</span>
+									</div>
+								{:else if s.mock === 'essay'}
+									<!-- Essay-editing demo: a line with an AI margin note. -->
+									<div
+										class="w-full max-w-[300px] rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
+									>
+										<p class="text-[13px] leading-relaxed text-slate-700">
+											Ever since I was little, I have <span
+												class="rounded bg-amber-100 px-0.5 text-amber-900 line-through decoration-amber-400/70"
+												>always been passionate about</span
+											> helping people.
 										</p>
-									</div>
-								</div>
-							{:else if s.mock === 'chat'}
-								<!-- Founder-advice demo: a short chat exchange. -->
-								<div class="mx-auto mt-7 w-full max-w-[300px] space-y-2.5">
-									<div class="ml-auto max-w-[80%] rounded-2xl rounded-br-md bg-slate-100 px-4 py-2.5 text-[13px] leading-snug text-slate-700">
-										Is my list too top-heavy? 9 reaches, 2 targets.
-									</div>
-									<div class="flex items-end gap-2">
-										<div class="grid h-7 w-7 flex-none place-items-center rounded-full bg-[#0c0c09] text-[11px] font-bold text-white">PA</div>
-										<div class="max-w-[80%] rounded-2xl rounded-bl-md bg-[#0c0c09] px-4 py-2.5 text-[13px] leading-snug text-white">
-											Yes. Add 3–4 targets where your profile is above their median. Want me to name them?
+										<div
+											class="mt-3 flex items-start gap-2 rounded-xl bg-[color-mix(in_oklab,#0c0c09_6%,transparent)] p-3"
+										>
+											<div
+												class="grid h-5 w-5 flex-none place-items-center rounded-full bg-[#0c0c09] text-white"
+											>
+												<svg
+													class="h-3 w-3"
+													fill="none"
+													viewBox="0 0 24 24"
+													stroke="currentColor"
+													stroke-width="2.5"
+													><path
+														stroke-linecap="round"
+														stroke-linejoin="round"
+														d="M13 10V3L4 14h7v7l9-11h-7z"
+													/></svg
+												>
+											</div>
+											<p class="text-[12px] leading-snug text-slate-700">
+												Cliché opener. Start on the <span class="font-semibold"
+													>specific moment</span
+												>. The reader has seen “passionate about helping” a thousand times.
+											</p>
 										</div>
 									</div>
-								</div>
-							{/if}
+								{:else if s.mock === 'chat'}
+									<!-- Founder-advice demo: a short chat exchange. -->
+									<div class="w-full max-w-[300px] space-y-2.5">
+										<div
+											class="ml-auto max-w-[80%] rounded-2xl rounded-br-md bg-slate-100 px-4 py-2.5 text-[13px] leading-snug text-slate-700"
+										>
+											Is my list too top-heavy? 9 reaches, 2 targets.
+										</div>
+										<div class="flex items-end gap-2">
+											<div
+												class="grid h-7 w-7 flex-none place-items-center rounded-full bg-[#0c0c09] text-[11px] font-bold text-white"
+											>
+												PA
+											</div>
+											<div
+												class="max-w-[80%] rounded-2xl rounded-bl-md bg-[#0c0c09] px-4 py-2.5 text-[13px] leading-snug text-white"
+											>
+												Yes. Add 3–4 targets where your profile is above their median. Want me to
+												name them?
+											</div>
+										</div>
+									</div>
+								{/if}
+							</div>
 						</div>
 					{/key}
 				{:else if onSocial}
@@ -211,12 +335,21 @@
 						<div class="text-center">
 							<div class="flex items-center justify-center gap-0.5 text-[#0c0c09]">
 								{#each Array(5) as _}
-									<svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.07 3.3a1 1 0 00.95.68h3.46c.97 0 1.37 1.24.59 1.81l-2.8 2.03a1 1 0 00-.36 1.12l1.07 3.29c.3.92-.76 1.69-1.54 1.12l-2.8-2.03a1 1 0 00-1.18 0l-2.8 2.03c-.78.57-1.83-.2-1.54-1.12l1.07-3.29a1 1 0 00-.36-1.12L2.4 8.72c-.78-.57-.38-1.81.59-1.81h3.46a1 1 0 00.95-.68l1.07-3.3z" /></svg>
+									<svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"
+										><path
+											d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.07 3.3a1 1 0 00.95.68h3.46c.97 0 1.37 1.24.59 1.81l-2.8 2.03a1 1 0 00-.36 1.12l1.07 3.29c.3.92-.76 1.69-1.54 1.12l-2.8-2.03a1 1 0 00-1.18 0l-2.8 2.03c-.78.57-1.83-.2-1.54-1.12l1.07-3.29a1 1 0 00-.36-1.12L2.4 8.72c-.78-.57-.38-1.81.59-1.81h3.46a1 1 0 00.95-.68l1.07-3.3z"
+										/></svg
+									>
 								{/each}
 							</div>
-							<h2 class="mt-4 font-serif text-[28px] font-medium leading-[1.1] tracking-tight text-slate-900">Applicants like you</h2>
+							<h2
+								class="mt-4 font-serif text-[28px] font-medium leading-[1.1] tracking-tight text-slate-900"
+							>
+								Applicants like you
+							</h2>
 							<p class="mx-auto mt-2 max-w-xs text-[15px] leading-relaxed text-slate-500">
-								Join <span class="font-semibold text-slate-700">15,000+ students</span> who pressure-tested their application here first.
+								Join <span class="font-semibold text-slate-700">15,000+ students</span> who pressure-tested
+								their application here first.
 							</p>
 						</div>
 						<div class="mt-6 space-y-3">
@@ -224,8 +357,14 @@
 								<div class="rounded-2xl border border-slate-200 bg-slate-50/60 p-4">
 									<p class="text-[13.5px] leading-relaxed text-slate-700">“{t.quote}”</p>
 									<div class="mt-2.5 flex items-center gap-2">
-										<div class="grid h-6 w-6 flex-none place-items-center rounded-full bg-[#0c0c09] text-[11px] font-bold text-white">{t.name[0]}</div>
-										<p class="text-xs font-semibold text-slate-600">{t.name} <span class="font-normal text-slate-400">· {t.role}</span></p>
+										<div
+											class="grid h-6 w-6 flex-none place-items-center rounded-full bg-[#0c0c09] text-[11px] font-bold text-white"
+										>
+											{t.name[0]}
+										</div>
+										<p class="text-xs font-semibold text-slate-600">
+											{t.name} <span class="font-normal text-slate-400">· {t.role}</span>
+										</p>
 									</div>
 								</div>
 							{/each}
@@ -233,24 +372,39 @@
 					</div>
 				{:else}
 					<!-- Plan picker (final step) — mymind pattern: tap a card, then continue -->
-					<div in:fly={{ x: 18, duration: 240 }}>
+					<div
+						in:fly={{ x: 18, duration: 240 }}
+						class="flex min-h-0 flex-1 flex-col justify-center"
+					>
 						<div class="text-center">
-							<h2 class="font-serif text-[28px] font-medium leading-[1.1] tracking-tight text-slate-900">Pick your plan</h2>
+							<h2
+								class="font-serif text-[28px] font-medium leading-[1.1] tracking-tight text-slate-900"
+							>
+								Pick your plan
+							</h2>
 							<p class="mx-auto mt-2 max-w-xs text-[15px] leading-relaxed text-slate-500">
 								Your first prediction is free. This unlocks the full T30, forever.
 							</p>
 						</div>
 
-						<div class="mt-6 space-y-3">
+						<div class="mt-5 space-y-2.5">
 							<button
 								onclick={() => (selectedPlan = 'monthly')}
-								class="relative w-full rounded-2xl border-2 px-5 py-4 text-left transition {selectedPlan === 'monthly' ? 'border-slate-900 bg-slate-50' : 'border-slate-200 hover:border-slate-300'}"
+								class="relative w-full rounded-2xl border-2 px-5 py-3.5 text-left transition {selectedPlan ===
+								'monthly'
+									? 'border-slate-900 bg-slate-50'
+									: 'border-slate-200 hover:border-slate-300'}"
 							>
-								<span class="absolute -top-2.5 left-5 rounded-full bg-[#0c0c09] px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">Start here</span>
+								<span
+									class="absolute -top-2.5 left-5 rounded-full bg-[#0c0c09] px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white"
+									>Start here</span
+								>
 								<div class="flex items-center justify-between gap-3">
 									<div>
 										<div class="text-base font-black text-slate-900">Monthly</div>
-										<div class="mt-0.5 text-xs text-slate-500">Full access while you're applying. Cancel anytime.</div>
+										<div class="mt-0.5 text-xs text-slate-500">
+											Full access while you're applying. Cancel anytime.
+										</div>
 									</div>
 									<div class="text-right">
 										<div class="text-xl font-black text-slate-900">$9.99</div>
@@ -261,12 +415,17 @@
 
 							<button
 								onclick={() => (selectedPlan = 'lifetime')}
-								class="w-full rounded-2xl border-2 px-5 py-4 text-left transition {selectedPlan === 'lifetime' ? 'border-slate-900 bg-slate-50' : 'border-slate-200 hover:border-slate-300'}"
+								class="w-full rounded-2xl border-2 px-5 py-3.5 text-left transition {selectedPlan ===
+								'lifetime'
+									? 'border-slate-900 bg-slate-50'
+									: 'border-slate-200 hover:border-slate-300'}"
 							>
 								<div class="flex items-center justify-between gap-3">
 									<div>
 										<div class="text-base font-black text-slate-900">Lifetime</div>
-										<div class="mt-0.5 text-xs text-slate-500">Pay once, no subscription. 2½ months of Monthly = Lifetime.</div>
+										<div class="mt-0.5 text-xs text-slate-500">
+											Pay once, no subscription. 2½ months of Monthly = Lifetime.
+										</div>
 									</div>
 									<div class="text-right">
 										<div class="text-xl font-black text-slate-900">$25</div>
@@ -276,24 +435,32 @@
 							</button>
 						</div>
 
-						<ul class="mx-auto mt-5 max-w-[17rem] space-y-1.5">
+						<ul class="mx-auto mt-3 max-w-[17rem] space-y-1">
 							{#each ['Every T30 predicted decision', 'Unlimited re-runs', 'Deep-dive on every verdict', 'Unlimited essay editing', 'AI counselor + founder advice'] as f}
 								<li class="flex items-center gap-2.5 text-sm text-slate-600">
-									<svg class="h-4 w-4 flex-none text-[#0c0c09]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+									<svg
+										class="h-4 w-4 flex-none text-[#0c0c09]"
+										fill="none"
+										viewBox="0 0 24 24"
+										stroke="currentColor"
+										stroke-width="3"
+										><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg
+									>
 									{f}
 								</li>
 							{/each}
 						</ul>
 
-						<p class="mx-auto mt-5 max-w-xs text-center text-xs text-slate-400">
-							<span class="font-semibold text-slate-600">Less than a single college application fee</span>, and it covers the full T30.
+						<p class="mx-auto mt-3 max-w-xs text-center text-xs text-slate-400">
+							<span class="font-semibold text-slate-600">Less than one application fee</span>, for
+							the full T30.
 						</p>
 					</div>
 				{/if}
 			</div>
 
 			<!-- Footer CTA -->
-			<div class="border-t border-slate-100 px-7 pb-8 pt-4">
+			<div class="border-t border-slate-100 px-7 pb-[max(1rem,env(safe-area-inset-bottom))] pt-3">
 				<button
 					onclick={next}
 					disabled={loading}
@@ -310,11 +477,91 @@
 					{/if}
 				</button>
 				{#if onPlans}
-					<p class="mt-2 text-center text-[11px] text-slate-400">Secure checkout by Stripe · cancel anytime</p>
+					<p class="mt-2 text-center text-[11px] text-slate-400">
+						Secure checkout by Stripe · cancel anytime
+					</p>
 				{:else}
-					<button onclick={() => (step = lastStep)} class="mt-3 w-full text-center text-xs font-semibold text-slate-400 transition hover:text-slate-600">Skip to plans</button>
+					<button
+						onclick={() => (step = lastStep)}
+						class="mt-3 w-full text-center text-xs font-semibold text-slate-400 transition hover:text-slate-600"
+						>Skip to plans</button
+					>
 				{/if}
 			</div>
 		</div>
 	</div>
 {/if}
+
+<style>
+	/* Product screenshots read as LIVE — a slow push-in on the image plus a cursor
+	   drifting over it, the same treatment as the landing page. */
+	.ob-shot {
+		transform-origin: 50% 0%;
+		animation: ob-shot-zoom 12s ease-in-out infinite alternate;
+		will-change: transform;
+	}
+	@keyframes ob-shot-zoom {
+		0% {
+			transform: scale(1);
+		}
+		100% {
+			transform: scale(1.06) translateY(-2%);
+		}
+	}
+
+	.pa-cursor {
+		position: absolute;
+		left: 58%;
+		top: 52%;
+		pointer-events: none;
+		filter: drop-shadow(0 2px 3px rgba(12, 12, 9, 0.25));
+	}
+	/* a — slow diagonal drift */
+	.pa-cursor--a {
+		animation: pa-cur-a 5s ease-in-out infinite;
+	}
+	@keyframes pa-cur-a {
+		0%,
+		100% {
+			transform: translate(0, 0);
+		}
+		20% {
+			transform: translate(-34px, -26px);
+		}
+		45% {
+			transform: translate(22px, -8px) scale(0.92);
+		}
+		70% {
+			transform: translate(-6px, 24px);
+		}
+	}
+	/* c — steady circular orbit */
+	.pa-cursor--c {
+		left: 60%;
+		top: 38%;
+		animation: pa-cur-c 7s linear infinite;
+	}
+	@keyframes pa-cur-c {
+		0% {
+			transform: translate(0, 0);
+		}
+		25% {
+			transform: translate(30px, 20px);
+		}
+		50% {
+			transform: translate(0, 40px);
+		}
+		75% {
+			transform: translate(-30px, 20px);
+		}
+		100% {
+			transform: translate(0, 0);
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.ob-shot,
+		.pa-cursor {
+			animation: none !important;
+		}
+	}
+</style>
