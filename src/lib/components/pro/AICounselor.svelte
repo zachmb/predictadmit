@@ -10,8 +10,7 @@
 	// the counselor API requires a signed-in user, so a signed-out visitor gets a
 	// Google sign-in prompt instead of a dead textarea. Both default to the existing
 	// Pro-dashboard behaviour so that usage is unchanged.
-	let { embedded = false, signedIn = true }: { embedded?: boolean; signedIn?: boolean } =
-		$props();
+	let { embedded = false, signedIn = true }: { embedded?: boolean; signedIn?: boolean } = $props();
 
 	// Legacy single-conversation key (migrated into a session on first load) and the
 	// new multi-session history store.
@@ -86,7 +85,12 @@
 			id = genId();
 			activeSessionId = id;
 		}
-		const session: ChatSession = { id, title: titleFrom(snap), messages: snap, updatedAt: Date.now() };
+		const session: ChatSession = {
+			id,
+			title: titleFrom(snap),
+			messages: snap,
+			updatedAt: Date.now()
+		};
 		const idx = sessions.findIndex((s) => s.id === id);
 		if (idx === -1) sessions = [session, ...sessions];
 		else {
@@ -124,7 +128,9 @@
 					if (Array.isArray(parsed)) {
 						const msgs = parsed.filter(validMsg);
 						if (msgs.length) {
-							sessions = [{ id: genId(), title: titleFrom(msgs), messages: msgs, updatedAt: Date.now() }];
+							sessions = [
+								{ id: genId(), title: titleFrom(msgs), messages: msgs, updatedAt: Date.now() }
+							];
 							persistSessions();
 						}
 					}
@@ -240,8 +246,7 @@
 			const data = await res.json().catch(() => ({}));
 
 			if (!res.ok || data?.error) {
-				errorMsg =
-					data?.error || 'Something went wrong reaching your counselor. Please try again.';
+				errorMsg = data?.error || 'Something went wrong reaching your counselor. Please try again.';
 			} else if (typeof data?.reply === 'string') {
 				messages = [...messages, { role: 'assistant', content: data.reply }];
 				syncActiveSession();
@@ -407,11 +412,22 @@
 							onclick={newChat}
 							class="flex w-full items-center justify-center gap-2 rounded-xl bg-[#0c0c09] px-3 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#2b2b22]"
 						>
-							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14" /></svg>
+							<svg
+								width="16"
+								height="16"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"><path d="M12 5v14M5 12h14" /></svg
+							>
 							New chat
 						</button>
 					</div>
-					<p class="px-4 pb-1.5 text-[11px] font-semibold uppercase tracking-wider text-slate-400">History</p>
+					<p class="px-4 pb-1.5 text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+						History
+					</p>
 					<div class="flex-1 overflow-y-auto px-2 pb-3">
 						{#if sortedSessions.length === 0}
 							<p class="px-2 py-2 text-xs leading-relaxed text-slate-400">
@@ -428,7 +444,18 @@
 											? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200'
 											: 'text-slate-600 hover:bg-white/70 hover:text-slate-900'}"
 									>
-										<svg class="h-3.5 w-3.5 shrink-0 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></svg>
+										<svg
+											class="h-3.5 w-3.5 shrink-0 text-slate-400"
+											viewBox="0 0 24 24"
+											fill="none"
+											stroke="currentColor"
+											stroke-width="2"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											><path
+												d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+											/></svg
+										>
 										<span class="truncate">{s.title}</span>
 									</button>
 									<button
@@ -437,7 +464,18 @@
 										onclick={(e) => deleteSession(s.id, e)}
 										class="absolute right-1.5 top-1/2 -translate-y-1/2 rounded-md p-1 text-slate-300 opacity-0 transition hover:bg-slate-200 hover:text-rose-500 focus:opacity-100 group-hover:opacity-100"
 									>
-										<svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" /></svg>
+										<svg
+											class="h-3.5 w-3.5"
+											viewBox="0 0 24 24"
+											fill="none"
+											stroke="currentColor"
+											stroke-width="2"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											><path
+												d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"
+											/></svg
+										>
 									</button>
 								</div>
 							{/each}
@@ -446,123 +484,134 @@
 				</aside>
 			{/if}
 			<div class="flex min-w-0 flex-1 flex-col">
-			<!-- Header -->
-			<header
-				class="flex items-center justify-between gap-3 border-b border-slate-200 px-5 py-4"
-			>
-				<div class="flex items-center gap-3">
-					<div
-						class="flex h-9 w-9 items-center justify-center rounded-full text-sm font-bold text-white"
-						style="background-color:#0c0c09"
-						aria-hidden="true"
-					>
-						AI
-					</div>
-					<div class="leading-tight">
-						<h2 class="text-base font-semibold text-slate-900">AI Counselor</h2>
-						<p class="flex items-center gap-1.5 text-xs text-slate-500">
-							<span class="inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-							PredictAI · online
-						</p>
-					</div>
-				</div>
-				<div class="flex items-center gap-2">
-					{#if !embedded}
-						<button
-							type="button"
-							onclick={() => (showHistory = !showHistory)}
-							aria-label="Chat history"
-							class="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-600 transition hover:bg-slate-50 hover:text-slate-900 md:hidden"
-						>
-							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v4l3 3M3.05 11a9 9 0 1 1 .5 4" /><path d="M3 4v4h4" /></svg>
-							History
-						</button>
-					{/if}
-					<button
-						type="button"
-						onclick={newChat}
-						class="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-600 transition hover:bg-slate-50 hover:text-slate-900 {embedded
-							? ''
-							: 'md:hidden'}"
-					>
-						<svg
-							width="16"
-							height="16"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-						>
-							<path d="M12 5v14M5 12h14" />
-						</svg>
-						New chat
-					</button>
-				</div>
-			</header>
-
-			<!-- Conversation / empty state -->
-			<div bind:this={scrollEl} class="flex-1 min-h-0 overflow-y-auto px-5 py-6">
-				{#if messages.length === 0 && !isThinking}
-					<div
-						class="mx-auto flex h-full max-w-2xl flex-col items-center justify-center text-center"
-					>
+				<!-- Header -->
+				<header class="flex items-center justify-between gap-3 border-b border-slate-200 px-5 py-4">
+					<div class="flex items-center gap-3">
 						<div
-							class="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl text-lg font-bold text-white shadow-sm"
+							class="flex h-9 w-9 items-center justify-center rounded-full text-sm font-bold text-white"
 							style="background-color:#0c0c09"
 							aria-hidden="true"
 						>
 							AI
 						</div>
-						<h3 class="text-xl font-semibold text-slate-900">Ask me anything. I'll give it to you straight.</h3>
-						<p class="mt-2 text-sm text-slate-500">
-							Your list, your essays, your activities, your real odds — the honest read a
-							counselor won't give you. No sugarcoating.
-						</p>
-
-						<div class="mt-6 grid w-full grid-cols-1 gap-3 sm:grid-cols-2">
-							{#each SUGGESTIONS as prompt}
-								<button
-									type="button"
-									onclick={() => handleSuggestion(prompt)}
-									class="group flex items-center gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3 text-left text-sm font-medium text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-[#0c0c09] hover:text-slate-900 hover:shadow"
-								>
-									<span
-										class="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[color-mix(in_oklab,#0c0c09_8%,transparent)] text-[#0c0c09] transition group-hover:bg-[#0c0c09] group-hover:text-white"
-									>
-										<svg
-											width="16"
-											height="16"
-											viewBox="0 0 24 24"
-											fill="none"
-											stroke="currentColor"
-											stroke-width="2"
-											stroke-linecap="round"
-											stroke-linejoin="round"
-										>
-											<path d="M5 12h14M13 6l6 6-6 6" />
-										</svg>
-									</span>
-									<span>{prompt}</span>
-								</button>
-							{/each}
+						<div class="leading-tight">
+							<h2 class="text-base font-semibold text-slate-900">AI Counselor</h2>
+							<p class="flex items-center gap-1.5 text-xs text-slate-500">
+								<span class="inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+								PredictAI · online
+							</p>
 						</div>
-
 					</div>
-				{:else}
-					<div class="mx-auto flex max-w-3xl flex-col gap-4">
-						{#each messages as message, i (i)}
-							{#if message.role === 'user'}
-								<div class="flex justify-end">
-									<div
-										class="max-w-[85%] whitespace-pre-wrap break-words rounded-2xl rounded-br-md px-4 py-2.5 text-sm text-white shadow-sm"
-										style="background-color:#0c0c09"
+					<div class="flex items-center gap-2">
+						{#if !embedded}
+							<button
+								type="button"
+								onclick={() => (showHistory = !showHistory)}
+								aria-label="Chat history"
+								class="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-600 transition hover:bg-slate-50 hover:text-slate-900 md:hidden"
+							>
+								<svg
+									width="16"
+									height="16"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									><path d="M12 8v4l3 3M3.05 11a9 9 0 1 1 .5 4" /><path d="M3 4v4h4" /></svg
+								>
+								History
+							</button>
+						{/if}
+						<button
+							type="button"
+							onclick={newChat}
+							class="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-600 transition hover:bg-slate-50 hover:text-slate-900 {embedded
+								? ''
+								: 'md:hidden'}"
+						>
+							<svg
+								width="16"
+								height="16"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+							>
+								<path d="M12 5v14M5 12h14" />
+							</svg>
+							New chat
+						</button>
+					</div>
+				</header>
+
+				<!-- Conversation / empty state -->
+				<div bind:this={scrollEl} class="flex-1 min-h-0 overflow-y-auto px-5 py-6">
+					{#if messages.length === 0 && !isThinking}
+						<div
+							class="mx-auto flex h-full max-w-2xl flex-col items-center justify-center px-2 text-center"
+						>
+							<div
+								class="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl text-base font-bold text-white shadow-sm"
+								style="background-color:#0c0c09"
+								aria-hidden="true"
+							>
+								AI
+							</div>
+							<h3 class="font-serif text-[28px] font-medium tracking-tight text-slate-900">
+								Ask me anything.
+							</h3>
+							<p class="mt-2.5 max-w-sm text-[15px] leading-relaxed text-slate-500">
+								The honest read on your list, your essays, and your real odds. No sugarcoating.
+							</p>
+
+							<div class="mt-7 flex flex-wrap items-center justify-center gap-2">
+								{#each SUGGESTIONS as prompt}
+									<button
+										type="button"
+										onclick={() => handleSuggestion(prompt)}
+										class="rounded-full border border-slate-200 bg-white px-4 py-2 text-[13px] font-medium text-slate-600 shadow-sm transition hover:border-[#0c0c09] hover:bg-slate-50 hover:text-slate-900 active:scale-[0.98]"
 									>
-										{message.content}
+										{prompt}
+									</button>
+								{/each}
+							</div>
+						</div>
+					{:else}
+						<div class="mx-auto flex max-w-3xl flex-col gap-4">
+							{#each messages as message, i (i)}
+								{#if message.role === 'user'}
+									<div class="flex justify-end">
+										<div
+											class="max-w-[85%] whitespace-pre-wrap break-words rounded-2xl rounded-br-md px-4 py-2.5 text-sm text-white shadow-sm"
+											style="background-color:#0c0c09"
+										>
+											{message.content}
+										</div>
 									</div>
-								</div>
-							{:else}
+								{:else}
+									<div class="flex items-start gap-2.5">
+										<div
+											class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[11px] font-bold text-white"
+											style="background-color:#0c0c09"
+											aria-hidden="true"
+										>
+											AI
+										</div>
+										<div
+											class="max-w-[85%] break-words rounded-2xl rounded-tl-md border border-slate-200 bg-white px-4 py-3 text-sm leading-relaxed text-slate-700 shadow-sm"
+										>
+											<!-- markdown is escaped before transforms in renderMarkdown() -->
+											{@html renderMarkdown(message.content)}
+										</div>
+									</div>
+								{/if}
+							{/each}
+
+							{#if isThinking}
 								<div class="flex items-start gap-2.5">
 									<div
 										class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[11px] font-bold text-white"
@@ -572,122 +621,49 @@
 										AI
 									</div>
 									<div
-										class="max-w-[85%] break-words rounded-2xl rounded-tl-md border border-slate-200 bg-white px-4 py-3 text-sm leading-relaxed text-slate-700 shadow-sm"
+										class="rounded-2xl rounded-tl-md border border-slate-200 bg-white px-4 py-3.5 shadow-sm"
 									>
-										<!-- markdown is escaped before transforms in renderMarkdown() -->
-										{@html renderMarkdown(message.content)}
+										<div class="flex items-center gap-1.5">
+											<span
+												class="h-2 w-2 animate-bounce rounded-full bg-slate-300 [animation-delay:-0.3s]"
+											></span>
+											<span
+												class="h-2 w-2 animate-bounce rounded-full bg-slate-300 [animation-delay:-0.15s]"
+											></span>
+											<span class="h-2 w-2 animate-bounce rounded-full bg-slate-300"></span>
+										</div>
 									</div>
 								</div>
 							{/if}
-						{/each}
 
-						{#if isThinking}
-							<div class="flex items-start gap-2.5">
-								<div
-									class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[11px] font-bold text-white"
-									style="background-color:#0c0c09"
-									aria-hidden="true"
-								>
-									AI
+							{#if latestOptions.length && !isThinking}
+								<div class="ml-9 flex flex-wrap gap-2 pt-1">
+									{#each latestOptions as opt}
+										<button
+											type="button"
+											onclick={() => send(opt)}
+											class="rounded-full border border-[color-mix(in_oklab,#0c0c09_20%,transparent)] bg-[color-mix(in_oklab,#0c0c09_7%,transparent)] px-3.5 py-1.5 text-sm font-medium text-[#0c0c09] transition hover:border-[#0c0c09] hover:bg-[#0c0c09] hover:text-white active:scale-[0.98]"
+										>
+											{opt}
+										</button>
+									{/each}
 								</div>
-								<div
-									class="rounded-2xl rounded-tl-md border border-slate-200 bg-white px-4 py-3.5 shadow-sm"
-								>
-									<div class="flex items-center gap-1.5">
-										<span class="h-2 w-2 animate-bounce rounded-full bg-slate-300 [animation-delay:-0.3s]"></span>
-										<span class="h-2 w-2 animate-bounce rounded-full bg-slate-300 [animation-delay:-0.15s]"></span>
-										<span class="h-2 w-2 animate-bounce rounded-full bg-slate-300"></span>
-									</div>
-								</div>
-							</div>
-						{/if}
+							{/if}
+						</div>
+					{/if}
+				</div>
 
-						{#if latestOptions.length && !isThinking}
-							<div class="ml-9 flex flex-wrap gap-2 pt-1">
-								{#each latestOptions as opt}
-									<button
-										type="button"
-										onclick={() => send(opt)}
-										class="rounded-full border border-[color-mix(in_oklab,#0c0c09_20%,transparent)] bg-[color-mix(in_oklab,#0c0c09_7%,transparent)] px-3.5 py-1.5 text-sm font-medium text-[#0c0c09] transition hover:border-[#0c0c09] hover:bg-[#0c0c09] hover:text-white active:scale-[0.98]"
-									>
-										{opt}
-									</button>
-								{/each}
-							</div>
-						{/if}
-					</div>
-				{/if}
-			</div>
-
-			<!-- Composer -->
-			<div class="border-t border-slate-200 px-5 py-4">
-				{#if errorMsg}
-					<div
-						class="mb-3 flex items-start gap-2 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-700"
-						role="alert"
-					>
-						<svg
-							class="mt-0.5 shrink-0"
-							width="14"
-							height="14"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-						>
-							<circle cx="12" cy="12" r="10" />
-							<path d="M12 8v4M12 16h.01" />
-						</svg>
-						<span>{errorMsg}</span>
-					</div>
-				{/if}
-
-				{#if needsSignIn || !signedIn}
-					<!-- Signed-out: the counselor API needs a session, so prompt Google
-					     sign-in rather than fire a request that 401s. Free to chat after. -->
-					<button
-						type="button"
-						onclick={() => signIn('google', { callbackUrl: '/pro' })}
-						class="flex w-full items-center justify-center gap-2.5 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-[#0c0c09] hover:text-slate-900"
-					>
-						<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
-							<path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" />
-							<path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.99.66-2.26 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84A11 11 0 0 0 12 23z" />
-							<path fill="#FBBC05" d="M5.84 14.1a6.6 6.6 0 0 1 0-4.2V7.06H2.18a11 11 0 0 0 0 9.88l3.66-2.84z" />
-							<path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1A11 11 0 0 0 2.18 7.06l3.66 2.84C6.71 7.31 9.14 5.38 12 5.38z" />
-						</svg>
-						Sign in with Google to chat free
-					</button>
-					<p class="mt-2 text-center text-[11px] text-slate-400">
-						Free, no card. PredictAI remembers your profile and decisions once you're in.
-					</p>
-				{:else}
-					<form
-						onsubmit={handleSubmit}
-						class="flex items-end gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2 transition focus-within:border-[#0c0c09] focus-within:bg-white"
-					>
-						<textarea
-							bind:this={textareaEl}
-							bind:value={draft}
-							oninput={autoGrow}
-							onkeydown={handleKeydown}
-							rows="1"
-							placeholder="Message your AI Counselor…"
-							disabled={isThinking}
-							class="max-h-[200px] flex-1 resize-none bg-transparent py-1.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none disabled:opacity-60"
-						></textarea>
-						<button
-							type="submit"
-							disabled={isThinking || draft.trim() === ''}
-							aria-label="Send message"
-							class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-white transition disabled:cursor-not-allowed disabled:opacity-40"
-							style="background-color:#0c0c09"
+				<!-- Composer -->
+				<div class="border-t border-slate-200 px-5 py-4">
+					{#if errorMsg}
+						<div
+							class="mb-3 flex items-start gap-2 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-700"
+							role="alert"
 						>
 							<svg
-								width="18"
-								height="18"
+								class="mt-0.5 shrink-0"
+								width="14"
+								height="14"
 								viewBox="0 0 24 24"
 								fill="none"
 								stroke="currentColor"
@@ -695,21 +671,93 @@
 								stroke-linecap="round"
 								stroke-linejoin="round"
 							>
-								<path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z" />
+								<circle cx="12" cy="12" r="10" />
+								<path d="M12 8v4M12 16h.01" />
 							</svg>
+							<span>{errorMsg}</span>
+						</div>
+					{/if}
+
+					{#if needsSignIn || !signedIn}
+						<!-- Signed-out: the counselor API needs a session, so prompt Google
+					     sign-in rather than fire a request that 401s. Free to chat after. -->
+						<button
+							type="button"
+							onclick={() => signIn('google', { callbackUrl: '/pro' })}
+							class="flex w-full items-center justify-center gap-2.5 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-[#0c0c09] hover:text-slate-900"
+						>
+							<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+								<path
+									fill="#4285F4"
+									d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"
+								/>
+								<path
+									fill="#34A853"
+									d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.99.66-2.26 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84A11 11 0 0 0 12 23z"
+								/>
+								<path
+									fill="#FBBC05"
+									d="M5.84 14.1a6.6 6.6 0 0 1 0-4.2V7.06H2.18a11 11 0 0 0 0 9.88l3.66-2.84z"
+								/>
+								<path
+									fill="#EA4335"
+									d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1A11 11 0 0 0 2.18 7.06l3.66 2.84C6.71 7.31 9.14 5.38 12 5.38z"
+								/>
+							</svg>
+							Sign in with Google to chat free
 						</button>
-					</form>
-					<div class="mt-2 flex items-center justify-center gap-x-3 gap-y-1 flex-wrap text-[11px] text-slate-400">
-						<span>PredictAI can make mistakes. Verify details with official sources.</span>
-						{#if embedded}
-							<span class="text-slate-300">·</span>
-							<a href="/essay-grader" class="font-semibold text-[#0c0c09] hover:underline">
-								Get your essay graded line-by-line →
-							</a>
-						{/if}
-					</div>
-				{/if}
-			</div>
+						<p class="mt-2 text-center text-[11px] text-slate-400">
+							Free, no card. PredictAI remembers your profile and decisions once you're in.
+						</p>
+					{:else}
+						<form
+							onsubmit={handleSubmit}
+							class="flex items-end gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2 transition focus-within:border-[#0c0c09] focus-within:bg-white"
+						>
+							<textarea
+								bind:this={textareaEl}
+								bind:value={draft}
+								oninput={autoGrow}
+								onkeydown={handleKeydown}
+								rows="1"
+								placeholder="Message your AI Counselor…"
+								disabled={isThinking}
+								class="max-h-[200px] flex-1 resize-none bg-transparent py-1.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none disabled:opacity-60"
+							></textarea>
+							<button
+								type="submit"
+								disabled={isThinking || draft.trim() === ''}
+								aria-label="Send message"
+								class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-white transition disabled:cursor-not-allowed disabled:opacity-40"
+								style="background-color:#0c0c09"
+							>
+								<svg
+									width="18"
+									height="18"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								>
+									<path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z" />
+								</svg>
+							</button>
+						</form>
+						<div
+							class="mt-2 flex items-center justify-center gap-x-3 gap-y-1 flex-wrap text-[11px] text-slate-400"
+						>
+							<span>PredictAI can make mistakes. Verify details with official sources.</span>
+							{#if embedded}
+								<span class="text-slate-300">·</span>
+								<a href="/essay-grader" class="font-semibold text-[#0c0c09] hover:underline">
+									Get your essay graded line-by-line →
+								</a>
+							{/if}
+						</div>
+					{/if}
+				</div>
 			</div>
 		</div>
 	</div>
