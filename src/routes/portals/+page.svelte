@@ -190,27 +190,6 @@
 								school scenario, or use rehearsal mode to update every portal at once.
 							</p>
 						</div>
-						{#if $userProfile.isPro || ($aiResults?.decisions?.length ?? 0) > 0}
-							<!-- Pro users: jump straight to their filed Deep Dives (the AIMail folder). -->
-							<a
-								href="/ai#deepdive"
-								class="inline-flex shrink-0 items-center gap-2 rounded-full bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800 active:scale-[0.99]"
-							>
-								<svg
-									class="h-4 w-4"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke="currentColor"
-									stroke-width="2"
-									><path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M21 21l-5.2-5.2M17 10a7 7 0 11-14 0 7 7 0 0114 0z"
-									/></svg
-								>
-								Your Deep Dives
-							</a>
-						{/if}
 					</div>
 
 					<div
