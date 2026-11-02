@@ -21,8 +21,9 @@
 	});
 
 	// ---- Live countdown -------------------------------------------------------
-	// Midnight CST (UTC-6) on Nov 1, 2026 — the classic early-application deadline.
-	const target = new Date('2026-11-01T00:00:00-06:00');
+	// Rolls automatically through the cycle, same as the /ai card: before Nov 1
+	// it counts down to the Early deadline; once Nov 1 passes it flips to the
+	// Regular Decision deadline (Jan 1), then back to Nov 1 the next cycle.
 	let now = $state(Date.now());
 
 	$effect(() => {
@@ -32,8 +33,18 @@
 		return () => clearInterval(id);
 	});
 
+	const deadline = $derived.by(() => {
+		const year = new Date(now).getFullYear();
+		const nov1 = new Date(year, 10, 1).getTime(); // Nov 1 (local midnight)
+		if (now < nov1) {
+			return { target: nov1, label: 'Early Deadlines', date: `Nov 1, ${year}` };
+		}
+		const jan1 = new Date(year + 1, 0, 1).getTime(); // Jan 1 next year
+		return { target: jan1, label: 'Regular Deadlines', date: `Jan 1, ${year + 1}` };
+	});
+
 	const countdown = $derived.by(() => {
-		let diff = Math.max(0, target.getTime() - now);
+		let diff = Math.max(0, deadline.target - now);
 		const days = Math.floor(diff / 86_400_000);
 		diff -= days * 86_400_000;
 		const hours = Math.floor(diff / 3_600_000);
@@ -203,7 +214,7 @@
 				<div class="flex items-center justify-between">
 					<div>
 						<p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Countdown</p>
-						<h3 class="mt-0.5 text-lg font-bold text-slate-900">Early Deadlines · Nov 1, 2026</h3>
+						<h3 class="mt-0.5 text-lg font-bold text-slate-900">{deadline.label} · {deadline.date}</h3>
 					</div>
 					<span class="flex items-center gap-1.5 text-xs font-semibold text-[#0c0c09]">
 						<span class="relative flex h-2 w-2">
